@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import type { Color } from '../shared';
-  import type { MouseEventHandler } from 'svelte/elements';
+  import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
   type Props = {
+    class?: ClassValue;
     children: Snippet;
     color?: Color;
     variant?: 'text' | 'contained' | 'contained-light' | 'outlined';
@@ -19,6 +20,7 @@
     size = 'medium',
     type = 'button',
     onClick,
+    class: propsClassName,
   }: Props = $props();
 
   const variantStyles = $derived.by(() => {
@@ -108,6 +110,7 @@
     'font-semibold cursor-pointer transition-colors leading-none',
     variantStyles,
     sizeClassName,
+    propsClassName,
   ]);
 </script>
 

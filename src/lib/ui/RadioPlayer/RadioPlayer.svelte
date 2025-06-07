@@ -1,13 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { ChangeEventHandler } from 'svelte/elements';
+  import type { ChangeEventHandler, ClassValue } from 'svelte/elements';
 
   type RadioPlayerProps = {
+    class?: ClassValue;
     streamUrl: string;
     storageKey?: string;
   };
 
-  const { streamUrl, storageKey = 'defaultRadio' }: RadioPlayerProps = $props();
+  const { streamUrl, storageKey = 'defaultRadio', class: className }: RadioPlayerProps = $props();
 
   const realStorageKey = $derived(`radio__${storageKey}__volume`);
 
@@ -94,7 +95,7 @@
   };
 </script>
 
-<button onclick={togglePlay} class="text-blue-600 dark:text-red-600">
+<button onclick={togglePlay} class={['text-blue-600 dark:text-red-600', className]}>
   {playing ? '⏸️' : '▶️'}
 </button>
 <input type="range" min="0" max="1" step="0.01" value={volume} oninput={updateVolume} />

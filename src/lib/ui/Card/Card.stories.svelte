@@ -7,6 +7,16 @@
     title: 'Ui/Card',
     component: Card,
     tags: ['autodocs'],
+    argTypes: {
+      class: {
+        control: { type: 'text' },
+        description: 'CSS class to apply to the card component',
+      },
+      children: {
+        control: false,
+        description: 'Content to be rendered inside the card component',
+      },
+    },
   });
 </script>
 

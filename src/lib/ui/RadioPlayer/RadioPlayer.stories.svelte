@@ -12,6 +12,12 @@
         control: 'text',
         description: 'The URL of the radio stream to play.',
       },
+      class: {
+        control: {
+          type: 'text',
+        },
+        description: 'CSS class to apply to the player component',
+      },
     },
     args: {
       streamUrl: 'https://www.aseanmotorclub.com/stream',
