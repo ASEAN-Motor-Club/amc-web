@@ -84,10 +84,10 @@
         ];
       case 'outlined':
         return [
-          'bg-transparent border',
+          'bg-white dark:bg-black border',
           error
             ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
-            : 'border-neutral-300 dark:border-neutral-700 dark:hover:border-neutral-400 hover:border-neutral-600 focus:border-neutral-500',
+            : 'border-neutral-400 dark:border-neutral-700 dark:hover:border-neutral-400 hover:border-neutral-600 focus:border-neutral-500',
         ];
     }
   });
