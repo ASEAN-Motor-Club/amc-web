@@ -132,11 +132,11 @@
   const othersClassName = $derived.by(() => {
     switch (size) {
       case 'sm':
-        return ['text-sm px-2 h-8', round ? 'rounded-full' : 'rounded-sm'];
+        return ['text-sm  h-8', round ? 'rounded-full px-3' : 'rounded-sm px-2'];
       case 'md':
-        return ['text-base px-3 h-10', round ? 'rounded-full' : 'rounded-sm'];
+        return ['text-base  h-10', round ? 'rounded-full px-4' : 'rounded-md px-3'];
       case 'lg':
-        return ['text-lg px-4 h-12', round ? 'rounded-full' : 'rounded-sm'];
+        return ['text-lg  h-12', round ? 'rounded-full px-5' : 'rounded-lg px-4'];
     }
   });
 
