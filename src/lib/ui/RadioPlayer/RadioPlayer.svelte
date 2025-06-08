@@ -25,6 +25,7 @@
   let playing = $state(false);
   let volume = $state(1);
   let stalled = $state(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let buffering = $state(false);
 
   let stalledDelay: ReturnType<typeof setTimeout> | undefined;
@@ -43,7 +44,7 @@
       }
     };
 
-    const handleStalled = (event: Event) => {
+    const handleStalled = (_: Event) => {
       stalled = true;
       stalledDelay = setTimeout(changeSrc, 1000);
     };

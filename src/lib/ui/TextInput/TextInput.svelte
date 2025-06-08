@@ -1,10 +1,5 @@
 <script lang="ts">
-  import type {
-    ChangeEventHandler,
-    ClassValue,
-    FullAutoFill,
-    MouseEventHandler,
-  } from 'svelte/elements';
+  import type { ChangeEventHandler, ClassValue, FullAutoFill } from 'svelte/elements';
 
   export type TextInputProps = {
     /**
