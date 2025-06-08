@@ -2,8 +2,6 @@
   import type { Snippet } from 'svelte';
   import type { Color } from '../shared';
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
-  import Icon from '../Icon/Icon.svelte';
-  import type { Icon as IconTypes } from '../Icon/types';
 
   export type ButtonProps = {
     /**

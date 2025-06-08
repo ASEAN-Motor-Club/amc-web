@@ -4,7 +4,6 @@
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
   import Icon, { type IconProps } from '../Icon/Icon.svelte';
   import type { Icon as IconTypes } from '../Icon/types';
-  import type { b } from 'vitest/dist/chunks/suite.d.FvehnV49.js';
 
   export type IconButtonProps = Omit<ButtonProps, 'children' | 'class'> &
     Omit<IconProps, 'size' | 'class'> & {

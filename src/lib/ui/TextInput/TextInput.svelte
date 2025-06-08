@@ -81,7 +81,6 @@
           error
             ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 dark:hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
             : 'bg-neutral-900/10 dark:bg-neutral-100/10 hover:bg-neutral-900/20 dark:hover:bg-neutral-100/20 outline-neutral-400 dark:outline-neutral-600',
-          ,
         ];
       case 'outlined':
         return [
