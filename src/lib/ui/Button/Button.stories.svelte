@@ -1,6 +1,7 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import Button from './Button.svelte';
+  import Icon from '../Icon/Icon.svelte';
 
   const { Story } = defineMeta({
     title: 'Ui/Button',
@@ -9,33 +10,26 @@
     argTypes: {
       color: {
         control: { type: 'select' },
-        description: 'The color theme of the button',
       },
       variant: {
         control: { type: 'select' },
-        description: 'The visual style variant of the button',
       },
       size: {
         control: { type: 'select' },
-        description: 'The size of the button',
       },
       type: {
         control: { type: 'select' },
-        description: 'The HTML button type attribute',
       },
       onClick: {
         control: false,
-        description: 'Event handler for button clicks',
       },
       class: {
         control: {
           type: 'text',
         },
-        description: 'CSS class to apply to the button component',
       },
       children: {
         control: false,
-        description: 'Content to be rendered inside the button component',
       },
     },
   });

@@ -2,12 +2,18 @@
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
 
-  type Props = {
+  export type CardProps = {
+    /**
+     * CSS class to apply to the card component
+     */
     class?: ClassValue;
+    /**
+     * Content to be rendered inside the card component
+     */
     children: Snippet;
   };
 
-  const { children, class: className }: Props = $props();
+  const { children, class: className }: CardProps = $props();
 </script>
 
 <div

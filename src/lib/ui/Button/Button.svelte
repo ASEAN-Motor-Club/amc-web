@@ -2,26 +2,59 @@
   import type { Snippet } from 'svelte';
   import type { Color } from '../shared';
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+  import Icon from '../Icon/Icon.svelte';
+  import type { Icon as IconTypes } from '../Icon/types';
 
-  type Props = {
+  export type ButtonProps = {
+    /**
+     * CSS class to apply to the button component
+     */
     class?: ClassValue;
-    children: Snippet;
+    /**
+     * The color theme of the button
+     * @default 'neutral'
+     */
     color?: Color;
+    /**
+     * The visual style variant of the button
+     * @default 'contained'
+     */
     variant?: 'text' | 'contained' | 'contained-light' | 'outlined';
-    size?: 'small' | 'medium' | 'large';
+    /**
+     * The size of the button
+     * @default 'md'
+     */
+    size?: 'sm' | 'md' | 'lg';
+    /**
+     * The HTML button type attribute
+     * @default 'button'
+     */
     type?: 'button' | 'submit' | 'reset';
+    /**
+     * Event handler for button clicks
+     */
     onClick?: MouseEventHandler<HTMLButtonElement>;
+    /**
+     * Content to be rendered inside the button component
+     */
+    children: Snippet;
+    /**
+     * Round the button corners
+     * @default false
+     */
+    round?: boolean;
   };
 
   const {
     children,
     color = 'neutral',
     variant = 'contained',
-    size = 'medium',
+    size = 'md',
     type = 'button',
     onClick,
     class: propsClassName,
-  }: Props = $props();
+    round,
+  }: ButtonProps = $props();
 
   const variantStyles = $derived.by(() => {
     switch (variant) {
@@ -96,20 +129,21 @@
     }
   });
 
-  const sizeClassName = $derived.by(() => {
+  const othersClassName = $derived.by(() => {
     switch (size) {
-      case 'small':
-        return 'text-sm px-2 rounded-sm h-8';
-      case 'medium':
-        return 'text-base px-3 rounded-md h-10';
-      case 'large':
-        return 'text-lg px-4 rounded-lg h-12';
+      case 'sm':
+        return ['text-sm px-2 h-8', round ? 'rounded-full' : 'rounded-sm'];
+      case 'md':
+        return ['text-base px-3 h-10', round ? 'rounded-full' : 'rounded-sm'];
+      case 'lg':
+        return ['text-lg px-4 h-12', round ? 'rounded-full' : 'rounded-sm'];
     }
   });
+
   const className = $derived.by(() => [
     'font-semibold cursor-pointer transition-colors leading-none',
     variantStyles,
-    sizeClassName,
+    othersClassName,
     propsClassName,
   ]);
 </script>

@@ -10,11 +10,9 @@
     argTypes: {
       class: {
         control: { type: 'text' },
-        description: 'CSS class to apply to the card component',
       },
       children: {
         control: false,
-        description: 'Content to be rendered inside the card component',
       },
     },
   });
@@ -25,7 +23,7 @@
     <h3 class="text-lg font-semibold">Card Title</h3>
     <p class="text-stone-600 dark:text-stone-400">This is a simple card component.</p>
     <div class="flex gap-2">
-      <Button color="primary" variant="contained-light" size="small">Button</Button>
+      <Button color="primary" variant="contained-light" size="md">Button</Button>
     </div>
   </Card>
 </Story>
