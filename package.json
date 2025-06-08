@@ -51,6 +51,7 @@
     "vitest": "^3.0.0"
   },
   "dependencies": {
-    "@inlang/paraglide-js": "^2.0.0"
+    "@inlang/paraglide-js": "^2.0.0",
+    "svelte-portal": "^2.2.1"
   }
 }

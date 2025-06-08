@@ -2,9 +2,19 @@
   import { onMount } from 'svelte';
   import type { ChangeEventHandler, ClassValue } from 'svelte/elements';
 
-  type RadioPlayerProps = {
+  export type RadioPlayerProps = {
+    /**
+     * CSS class to apply to the radio player component
+     */
     class?: ClassValue;
+    /**
+     * The URL of the radio stream to play.
+     */
     streamUrl: string;
+    /**
+     * The key used to store the volume in localStorage.
+     * @default 'defaultRadio'
+     */
     storageKey?: string;
   };
 

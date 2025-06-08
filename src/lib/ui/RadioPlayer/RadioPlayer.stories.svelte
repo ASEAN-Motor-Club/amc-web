@@ -10,17 +10,21 @@
     argTypes: {
       streamUrl: {
         control: 'text',
-        description: 'The URL of the radio stream to play.',
       },
       class: {
         control: {
           type: 'text',
         },
-        description: 'CSS class to apply to the player component',
+      },
+      storageKey: {
+        control: {
+          type: 'text',
+        },
       },
     },
     args: {
       streamUrl: 'https://www.aseanmotorclub.com/stream',
+      storageKey: 'defaultRadio',
     },
   });
 </script>
