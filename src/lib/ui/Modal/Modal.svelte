@@ -47,6 +47,8 @@
     propsClassName,
   ]);
 
+  const buttonClassName = 'fixed inset-0 -z-1 h-full w-full opacity-0';
+
   const transitionOptions = {
     duration: 150,
   };
@@ -55,17 +57,8 @@
 {#if portal}
   <Portal target={portalTarget}>
     {#if open}
-      <div
-        class={className}
-        transition:fade={{
-          duration: 150,
-        }}
-      >
-        <button
-          class="fixed inset-0 -z-1 h-full w-full opacity-0"
-          aria-hidden="true"
-          onclick={onClose}
-        ></button>
+      <div class={className} transition:fade={transitionOptions}>
+        <button class={buttonClassName} aria-hidden="true" onclick={onClose}></button>
         {@render children()}
       </div>
     {/if}
@@ -77,8 +70,7 @@
       duration: 150,
     }}
   >
-    <button class="fixed inset-0 -z-1 h-full w-full opacity-0" aria-hidden="true" onclick={onClose}
-    ></button>
+    <button class={buttonClassName} aria-hidden="true" onclick={onClose}></button>
     {@render children()}
   </div>
 {/if}
