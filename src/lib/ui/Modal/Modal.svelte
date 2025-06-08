@@ -19,7 +19,7 @@
     onClose?: () => void;
     /**
      * Renders the modal inside a portal
-     * @default false
+     * @default true
      */
     portal?: boolean;
     /**

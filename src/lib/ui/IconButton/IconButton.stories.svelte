@@ -1,7 +1,6 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import IconButton from './IconButton.svelte';
-  import Icon from '../Icon/Icon.svelte';
 
   const { Story } = defineMeta({
     title: 'Ui/IconButton',

@@ -12,13 +12,13 @@
        */
       icon: IconTypes;
       /**
-       * Css class to apply to the button component
+       * CSS class to apply to the button component
        */
-      buttonClass: ClassValue;
+      buttonClass?: ClassValue;
       /**
-       * Css class to apply to the icon component
+       * CSS class to apply to the icon component
        */
-      iconClass: ClassValue;
+      iconClass?: ClassValue;
     };
 
   const {

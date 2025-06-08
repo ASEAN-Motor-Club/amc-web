@@ -4,11 +4,11 @@
 
   export type IconProps = {
     /**
-     * The icon to display, don't forgot to add to icon_names in app.html
+     * The icon to display, don't forget to add to icon_names in app.html
      */
     icon: Icon;
     /**
-     * CSS class to apply to the button component
+     * CSS class to apply to the icon component
      */
     class?: ClassValue;
     /**
@@ -32,8 +32,8 @@
      */
     grade?: -25 | 0 | 200;
     /**
-     * CSS class to apply to the icon component
-     * defaults
+     * Size of the icon
+     * @default 'md'
      */
     size?: 'sm' | 'md' | 'lg';
   };
