@@ -1,7 +1,6 @@
 <script lang="ts">
   import Button, { type ButtonProps } from '../Button/Button.svelte';
-  import type { Color } from '../shared';
-  import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+  import type { ClassValue } from 'svelte/elements';
   import Icon, { type IconProps } from '../Icon/Icon.svelte';
   import type { Icon as IconTypes } from '../Icon/types';
 
@@ -35,6 +34,8 @@
     weight,
     opticalSize,
     grade,
+    // svelte scream about "Index signature is unused." but no index signature is used here
+    ..._
   }: IconButtonProps = $props();
 </script>
 

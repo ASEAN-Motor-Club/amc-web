@@ -72,6 +72,8 @@
             return 'text-text-dark bg-error-700 hover:bg-error-800 active:bg-error-600';
           case 'neutral':
             return 'text-text-dark bg-neutral-700 hover:bg-neutral-800 active:bg-neutral-600';
+          default:
+            return '';
         }
       case 'contained-light':
         switch (color) {
@@ -89,6 +91,8 @@
             return 'text-text dark:text-text-dark bg-error-700/10 hover:bg-error-600/20 active:bg-error-800/20';
           case 'neutral':
             return 'text-text dark:text-text-dark bg-neutral-700/10 hover:bg-neutral-600/20 active:bg-neutral-800/20';
+          default:
+            return '';
         }
       case 'outlined':
         switch (color) {
@@ -107,6 +111,7 @@
           case 'neutral':
             return 'text-neutral-700 dark:text-neutral-500 hover:bg-neutral-700/10 border-neutral-700 dark:border-neutral-500 border active:bg-neutral-600/20';
         }
+        break;
       case 'text':
         switch (color) {
           case 'primary':
@@ -123,6 +128,8 @@
             return 'text-error-700 dark:text-error-500 hover:bg-error-700/10 active:bg-error-600/20';
           case 'neutral':
             return 'text-neutral-700 dark:text-neutral-500 hover:bg-neutral-700/10 active:bg-neutral-600/20';
+          default:
+            return '';
         }
     }
   });

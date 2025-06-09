@@ -26,7 +26,7 @@
 </script>
 
 <Story name="Default">
-  {#snippet template({ children, open, onClose, ...args })}
+  {#snippet template({ children: _children, open: _open, onClose: _onClose, ...args })}
     <Button onClick={() => (modalOpen = true)}>Open Modal</Button>
     <Modal open={modalOpen} onClose={() => (modalOpen = false)} {...args}>
       <Card class="flex flex-col gap-5">

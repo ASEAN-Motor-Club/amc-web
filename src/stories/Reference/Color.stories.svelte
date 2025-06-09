@@ -105,10 +105,10 @@
 
 <Story name="Default" asChild>
   <div class="grid grid-cols-[repeat(12,max-content)] items-center gap-4">
-    {#each headers as header}
+    {#each headers as header (header)}
       <div class="justify-self-center text-xs">{header}</div>
     {/each}
-    {#each colors as color, i}
+    {#each colors as color, i (color)}
       {#if i % 12 === 0}
         <div class="text-sm">{color}</div>
       {:else}

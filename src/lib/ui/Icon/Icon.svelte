@@ -45,6 +45,7 @@
     opticalSize = 24,
     grade = 0,
     size = 'md',
+    class: propsClassName,
   }: IconProps = $props();
 
   const className = $derived.by(() => {
@@ -61,7 +62,7 @@
 
 <span
   style:font-variation-settings={`'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`}
-  class={['material-symbols-rounded select-none', className]}
+  class={['material-symbols-rounded select-none', className, propsClassName]}
 >
   {icon}
 </span>

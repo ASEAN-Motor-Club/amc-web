@@ -37,7 +37,7 @@
 <Story name="Default">Button</Story>
 
 <Story name="All Colors">
-  {#snippet template({ children, ...args })}
+  {#snippet template({ children: _, ...args })}
     <div class="flex flex-wrap gap-2">
       <Button {...args} color="primary">Primary</Button>
       <Button {...args} color="secondary">Secondary</Button>
