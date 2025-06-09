@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@inlang/paraglide-js": "^2.0.0",
+    "mt-map": "github:beam41/mt-map",
     "svelte-portal": "^2.2.1"
   }
 }
