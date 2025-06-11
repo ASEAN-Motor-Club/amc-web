@@ -23,9 +23,8 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # need to build because of paraglide
-      - name: 📖 Build project
-        run: npm run build
+      - name: 🌐 Generate i18n
+        run: npm run paraglide:compile
 
       - name: 🎨 Lint code
         run: npm run lint

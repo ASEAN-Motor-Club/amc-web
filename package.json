@@ -15,7 +15,8 @@
     "test:unit": "vitest",
     "test": "npm run test:unit -- --run",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "paraglide:compile": "npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
