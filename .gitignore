@@ -28,4 +28,4 @@ src/lib/paraglide
 *storybook.log
 storybook-static
 
-.vscode
+.vscode/settings.json
