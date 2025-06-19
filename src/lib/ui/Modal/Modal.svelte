@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import Portal from 'svelte-portal';
   import type { ClassValue } from 'svelte/elements';
+  import { cssTimeToMs } from '$lib/utils/cssTranstionToMs';
 
   export type ModalProps = {
     /**
@@ -42,22 +43,30 @@
     class: propsClassName,
   }: ModalProps = $props();
 
-  const className = $derived.by(() => [
-    'fixed inset-0 z-10000 flex items-center justify-center bg-black/20',
+  const className = $derived([
+    'fixed inset-0 z-10000 flex items-center justify-center bg-black/20 p-5',
     propsClassName,
   ]);
 
   const buttonClassName = 'fixed inset-0 -z-1 h-full w-full opacity-0';
 
-  const transitionOptions = {
-    duration: 150,
-  };
+  let duration = $state(0);
+
+  onMount(() => {
+    const computedStyle = getComputedStyle(document.documentElement);
+    duration = cssTimeToMs(computedStyle.getPropertyValue('--default-transition-duration'));
+  });
 </script>
 
 {#if portal}
   <Portal target={portalTarget}>
     {#if open}
-      <div class={className} transition:fade={transitionOptions}>
+      <div
+        class={className}
+        transition:fade={{
+          duration,
+        }}
+      >
         <button class={buttonClassName} aria-hidden="true" onclick={onClose}></button>
         {@render children()}
       </div>

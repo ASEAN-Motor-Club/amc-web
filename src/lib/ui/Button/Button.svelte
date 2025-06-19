@@ -22,7 +22,7 @@
      * The size of the button
      * @default 'md'
      */
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'xs' | 'sm' | 'md' | 'lg';
     /**
      * The HTML button type attribute
      * @default 'button'
@@ -41,6 +41,16 @@
      * @default false
      */
     round?: boolean;
+    /**
+     * Whether the button should be un-padded, useful for text variant button in modal
+     * @default false
+     */
+    unPadded?: boolean;
+    /**
+     * Whether the button should be disabled
+     * @default false
+     */
+    disabled?: boolean;
   };
 
   const {
@@ -52,6 +62,8 @@
     onClick,
     class: propsClassName,
     round,
+    unPadded,
+    disabled,
   }: ButtonProps = $props();
 
   const variantStyles = $derived.by(() => {
@@ -110,8 +122,9 @@
             return 'text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 border active:bg-error-600/20';
           case 'neutral':
             return 'text-neutral-700 dark:text-neutral-500 hover:bg-neutral-700/10 border-neutral-700 dark:border-neutral-500 border active:bg-neutral-600/20';
+          default:
+            return '';
         }
-        break;
       case 'text':
         switch (color) {
           case 'primary':
@@ -136,23 +149,42 @@
 
   const othersClassName = $derived.by(() => {
     switch (size) {
+      case 'xs':
+        return [
+          'text-xs h-5',
+          round ? 'rounded-full px-2' : 'rounded-sm px-1',
+          unPadded && '-my-0.5 -mx-1',
+        ];
       case 'sm':
-        return ['text-sm  h-8', round ? 'rounded-full px-3' : 'rounded-sm px-2'];
+        return [
+          'text-sm h-8',
+          round ? 'rounded-full px-3' : 'rounded-sm px-2',
+          unPadded && '-my-1.5 -mx-2',
+        ];
       case 'md':
-        return ['text-base  h-10', round ? 'rounded-full px-4' : 'rounded-md px-3'];
+        return [
+          'text-base h-10',
+          round ? 'rounded-full px-4' : 'rounded-md px-3',
+          unPadded && '-my-2 -mx-3',
+        ];
       case 'lg':
-        return ['text-lg  h-12', round ? 'rounded-full px-5' : 'rounded-lg px-4'];
+        return [
+          'text-lg h-12',
+          round ? 'rounded-full px-5' : 'rounded-lg px-4',
+          unPadded && '-my-2.5 -mx-4',
+        ];
     }
   });
 
-  const className = $derived.by(() => [
-    'font-semibold cursor-pointer transition-colors leading-none',
+  const className = $derived([
+    'font-semibold cursor-pointer transition leading-none whitespace-nowrap select-none flex-none',
+    disabled && 'opacity-50 pointer-events-none',
     variantStyles,
     othersClassName,
     propsClassName,
   ]);
 </script>
 
-<button class={className} onclick={onClick} {type}>
+<button class={className} onclick={onClick} {type} {disabled}>
   {@render children()}
 </button>

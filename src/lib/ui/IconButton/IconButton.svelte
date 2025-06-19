@@ -5,7 +5,7 @@
   import type { Icon as IconTypes } from '../Icon/types';
 
   export type IconButtonProps = Omit<ButtonProps, 'children' | 'class'> &
-    Omit<IconProps, 'size' | 'class'> & {
+    Omit<IconProps, 'class'> & {
       /**
        * Content to be rendered inside the button component
        */

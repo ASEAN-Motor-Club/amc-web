@@ -1,4 +1,8 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from en!"
+  "hello_world": "Hello, {name} from en!",
+  "action": {
+    "confirm": "Confirm",
+    "close": "Close"
+  }
 }
