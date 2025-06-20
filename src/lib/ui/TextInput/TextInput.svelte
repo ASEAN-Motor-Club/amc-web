@@ -1,11 +1,18 @@
 <script lang="ts">
-  import type { ChangeEventHandler, ClassValue, FullAutoFill } from 'svelte/elements';
+  import type {
+    ChangeEventHandler,
+    ClassValue,
+    FormEventHandler,
+    FullAutoFill,
+    HTMLInputAttributes,
+  } from 'svelte/elements';
+  import { getInputGroupContext } from '../InputGroup/context';
 
   export type TextInputProps = {
     /**
      * The value of the input
      */
-    value: string;
+    value: unknown;
     /**
      * The name attribute for the input
      */
@@ -48,24 +55,34 @@
      */
     onChange?: ChangeEventHandler<HTMLInputElement>;
     /**
+     * Event handler for input changes (fire after every input)
+     */
+    onInput?: FormEventHandler<HTMLInputElement>;
+    /**
      * Autocomplete attribute for the input
      * @default 'off'
      */
     autocomplete?: FullAutoFill;
-  };
+  } & Omit<
+    HTMLInputAttributes,
+    'class' | 'onchange' | 'type' | 'autocomplete' | 'value' | 'placeholder' | 'name' | 'size'
+  >;
 
   const {
     onChange,
+    onInput,
     type = 'text',
     autocomplete = 'off',
     value,
-    placeholder,
+    placeholder: propsPlaceholder,
     name,
     class: propsClassname,
     error = false,
     variant = 'outlined',
     size = 'md',
     round = false,
+    id: propsId,
+    ...inputAttributes
   }: TextInputProps = $props();
 
   const variantClassName = $derived.by(() => {
@@ -97,19 +114,30 @@
         return ['text-lg  h-12', round ? 'rounded-full px-5' : 'rounded-lg px-4'];
     }
   });
+
+  const inputGroupContext = getInputGroupContext();
+
+  const placeholder = $derived(propsPlaceholder ?? inputGroupContext?.label ?? '');
+
+  const contextId = inputGroupContext?.getId();
+
+  const id = $derived(propsId ?? contextId ?? '');
 </script>
 
 <input
   class={[
-    'flex items-center transition-colors outline-none',
+    'flex flex-none items-center transition-colors outline-none',
     variantClassName,
     othersClassName,
     propsClassname,
   ]}
   onchange={onChange}
+  oninput={onInput}
   {type}
   {autocomplete}
   {value}
   {placeholder}
   {name}
+  {id}
+  {...inputAttributes}
 />

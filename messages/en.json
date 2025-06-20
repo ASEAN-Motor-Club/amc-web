@@ -1,4 +1,86 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from en!"
+  "hello_world": "Hello, {name} from en!",
+  "action": {
+    "confirm": "Confirm",
+    "close": "Close",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "or": "or",
+  "unknown": "Unknown",
+  "track_editor": {
+    "validate": {
+      "name_empty": "Name cannot be empty.",
+      "name_must_be_string": "Route name must be a string.",
+      "name_too_long": "Name cannot be longer than {maxLength} characters.",
+      "waypoint_invalid": "Waypoint {index} key {key}: Type is invalid, expect {type}.",
+      "waypoints_min_length": "Track must have at least {minLength} waypoints.",
+      "waypoints_max_length": "Track must not exceed {maxLength} waypoints."
+    },
+    "select_track": {
+      "title": "Track Editor",
+      "drag_drop": "Drag and Drop File",
+      "select_file": "Select a File",
+      "load_from_clipboard": "Load from Clipboard",
+      "loading_track": "Loading track...",
+      "error": {
+        "title": "Something went wrong",
+        "load_error": "Cannot load file.",
+        "invalid_track": "Invalid track data:",
+        "clipboard_empty": "Clipboard is empty or does not contain valid track data.",
+        "cannot_load_track": "Cannot load track",
+        "cannot_load_track_desc": "Failed to load track data. Please check the URL.",
+        "copy_to_clipboard_failed": "Failed to copy track data to clipboard."
+      }
+    },
+    "editor": {
+      "copy_to_clipboard_failed": {
+        "title": "Error",
+        "desc": "Failed to copy track data to clipboard."
+      },
+      "copied": {
+        "title": "Copied",
+        "desc": "Track copied to clipboard."
+      },
+      "normalize_waypoints": {
+        "title": "Normalize Waypoints",
+        "desc": "Sometimes waypoint rotation is weirdly tilted. This will normalize all waypoints to be straight up (make rotation x,y = 0)."
+      },
+      "auto_rotate_waypoints": {
+        "title": "Auto Rotate Waypoints",
+        "desc": "This will automatically rotate all waypoints based on their neighbors position."
+      },
+      "delete_waypoint": {
+        "title": "Delete Waypoint",
+        "desc": "Are you sure you want to delete this waypoint?"
+      },
+      "download_title": "Download {file}",
+      "original": "Original",
+      "edited": "Edited",
+      "change_btn": "Change to {file}",
+      "clipboard": "Clipboard",
+      "file": "File",
+      "selecting_point": "Selecting point: {pointNumber}",
+      "hide": "hide",
+      "show": "show",
+      "hidden": "hidden",
+      "save_changes": "Save Changes",
+      "delete": "Delete",
+      "auto_rotate": "auto rotate",
+      "rotation_z": "Rotation (Z)",
+      "rotation_x": "Rotation (X)",
+      "rotation_y": "Rotation (Y)",
+      "translation_x": "Translation (X)",
+      "translation_y": "Translation (Y)",
+      "translation_z": "Translation (Z)",
+      "scale_x": "Scale (X)",
+      "scale_y": "Scale (Y)",
+      "scale_z": "Scale (Z)",
+      "select_point_to_edit": "Select point to start editing.",
+      "global_operations": "Global operations",
+      "normalize": "Normalize",
+      "auto_rotate_all_gates": "Auto Rotate All Gates"
+    }
+  }
 }
