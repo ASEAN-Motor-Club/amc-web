@@ -8,20 +8,21 @@ Website for ASEAN Motor Club
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4
 - **Icons**: [Material Symbols](https://fonts.google.com/icons?icon.style=Rounded) (Rounded pack)
 - **Testing**: [Vitest](https://vitest.dev/) with [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/)
-- **Internationalization**: [Paraglide](https://inlang.com/paraglide) for i18n
+- **Internationalization**: [Paraglide](https://inlang.com/paraglide)
 - **Component Development**: [Storybook](https://storybook.js.org/)
 - **Code Quality**: [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
 - **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
 
 ## 🚀 Prerequisites
 
-- **Node.js**: LTS version (recommended)
+- **Node.js**: LTS version recommended
 - **VS Code Extensions** (highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
-  - [Sherlock](https://marketplace.visualstudio.com/items?itemName=inlang.vs-code-extension) (for i18n from Paraglide)
   - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-  - [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer)
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer)
+  - [Sherlock](https://marketplace.visualstudio.com/items?itemName=inlang.vs-code-extension) (for i18n from Paraglide)
 
 ## ⚙️ VS Code Configuration
 
