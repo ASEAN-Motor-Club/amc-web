@@ -31,4 +31,11 @@ jobs:
         run: npm run build
 
       - name: 🚀 Deploy
-        run: echo 0
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          username: 'sftpuser'
+          server: '${{ secrets.SERVER_IP }}'
+          ssh_private_key: ${{ secrets.SFTP_KEY }}
+          local_path: './build/*'
+          remote_path: '/'
+          sftpArgs: '-o ConnectTimeout=5'
