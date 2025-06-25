@@ -127,13 +127,15 @@ The project includes an `<Icon />` component that uses **Material Symbols Rounde
 <Icon icon="settings" />
 ```
 
-**Important**: When using a new icon, you must add it to the `icon_names` parameter in `src/app.html`:
+**Important**: When using a new icon, you must add it to the `iconList` constant in `src/hooks.server.ts`:
 
-```html
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite,home,settings"
-/>
+```diff
+const iconList = [
+   // add imported icons here
++  'favorite',
++  'home',
++  'settings',
+];
 ```
 
 This ensures the icon fonts are loaded efficiently by only including the icons your app actually uses.

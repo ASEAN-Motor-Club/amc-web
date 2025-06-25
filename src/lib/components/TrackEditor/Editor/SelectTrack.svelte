@@ -160,7 +160,7 @@
   });
 </script>
 
-<div class="flex h-dvh w-full p-8">
+<div class="flex h-full w-full p-8">
   <Modal open={fetchFromUri} onClose={noop} class="bg-black/50 text-xl font-semibold text-white">
     {m['track_editor.select_track.loading_track']()}
   </Modal>
@@ -177,7 +177,9 @@
     ondragleave={handleDragLeave}
     ondrop={handleDrop}
   >
-    <h1 class="mb-10 text-6xl font-semibold">{m['track_editor.select_track.title']()}</h1>
+    <h1 class="mb-10 text-center text-6xl font-semibold">
+      {m['track_editor.select_track.title']()}
+    </h1>
     <p class="text-text/80 dark:text-text-dark/80 flex items-center">
       {m['track_editor.select_track.drag_drop']()}
     </p>

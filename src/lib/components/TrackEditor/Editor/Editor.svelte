@@ -153,7 +153,7 @@
   };
 </script>
 
-<div class="flex h-dvh w-full flex-col gap-4 p-4 md:flex-row">
+<div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
   <Card class="flex-1 overflow-hidden !p-0">
     <MtMap
       class="h-full"

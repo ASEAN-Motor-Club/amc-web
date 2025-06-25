@@ -4,8 +4,13 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html,
 body {
-  @apply bg-background-300 dark:bg-background-950 text-text dark:text-text-dark;
+  @apply h-full;
+}
+
+body {
+  @apply bg-background-300 dark:bg-background-950 text-text dark:text-text-dark transition-colors;
 }
 
 @theme {

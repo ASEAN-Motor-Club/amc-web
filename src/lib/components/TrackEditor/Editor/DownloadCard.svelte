@@ -63,9 +63,10 @@
   <div class="mb-2 flex items-center justify-between gap-1">
     <div class="font-medium">
       {m['track_editor.editor.download_title']({
-        file: downloadOriginal
-          ? m['track_editor.editor.original']()
-          : m['track_editor.editor.edited'](),
+        file:
+          !edited || downloadOriginal
+            ? m['track_editor.editor.original']()
+            : m['track_editor.editor.edited'](),
       })}
     </div>
     {#if edited}

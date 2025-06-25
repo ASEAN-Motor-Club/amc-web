@@ -110,7 +110,7 @@ describe('autoRotate', () => {
       ];
 
       const result = autoRotateAllWaypoints(waypoints);
-      console.log(result);
+
       expect(result[0].rotation.x).toBeCloseTo(0);
       expect(result[0].rotation.y).toBeCloseTo(0);
       expect(result[0].rotation.z).toBeCloseTo(-0.3826834323650898);

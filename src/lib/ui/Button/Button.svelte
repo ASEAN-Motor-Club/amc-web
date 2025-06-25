@@ -51,6 +51,20 @@
      * @default false
      */
     disabled?: boolean;
+    /**
+     * The HTML tag to render the button as
+     * @default 'button'
+     */
+    tag?: 'button' | 'a';
+    /**
+     * The href attribute for the button if it is an anchor tag
+     */
+    href?: string;
+    /**
+     * The target attribute for the button if it is an anchor tag
+     * @default '_self'
+     */
+    target?: '_blank' | '_self' | '_parent' | '_top';
   };
 
   const {
@@ -64,6 +78,9 @@
     round,
     unPadded,
     disabled,
+    tag = 'button',
+    href,
+    target = '_self',
   }: ButtonProps = $props();
 
   const variantStyles = $derived.by(() => {
@@ -121,7 +138,7 @@
           case 'error':
             return 'text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 border active:bg-error-600/20';
           case 'neutral':
-            return 'text-neutral-700 dark:text-neutral-500 hover:bg-neutral-700/10 border-neutral-700 dark:border-neutral-500 border active:bg-neutral-600/20';
+            return 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-700/10 border-neutral-700 dark:border-neutral-500 border active:bg-neutral-600/20';
           default:
             return '';
         }
@@ -140,7 +157,7 @@
           case 'error':
             return 'text-error-700 dark:text-error-500 hover:bg-error-700/10 active:bg-error-600/20';
           case 'neutral':
-            return 'text-neutral-700 dark:text-neutral-500 hover:bg-neutral-700/10 active:bg-neutral-600/20';
+            return 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-700/10 active:bg-neutral-600/20';
           default:
             return '';
         }
@@ -177,7 +194,7 @@
   });
 
   const className = $derived([
-    'font-semibold cursor-pointer transition leading-none whitespace-nowrap select-none flex-none',
+    'inline-flex justify-center items-center font-semibold cursor-pointer transition leading-none whitespace-nowrap select-none flex-none',
     disabled && 'opacity-50 pointer-events-none',
     variantStyles,
     othersClassName,
@@ -185,6 +202,15 @@
   ]);
 </script>
 
-<button class={className} onclick={onClick} {type} {disabled}>
+<svelte:element
+  this={tag}
+  class={className}
+  onclick={onClick}
+  {type}
+  {disabled}
+  {href}
+  role={tag}
+  target={tag === 'a' ? target : undefined}
+>
   {@render children()}
-</button>
+</svelte:element>

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import Portal from 'svelte-portal';
   import type { ClassValue } from 'svelte/elements';
-  import { cssTimeToMs } from '$lib/utils/cssTranstionToMs';
+  import { transitionDuration } from '$lib/states/transitionDuration.svelte';
 
   export type ModalProps = {
     /**
@@ -49,13 +49,6 @@
   ]);
 
   const buttonClassName = 'fixed inset-0 -z-1 h-full w-full opacity-0';
-
-  let duration = $state(0);
-
-  onMount(() => {
-    const computedStyle = getComputedStyle(document.documentElement);
-    duration = cssTimeToMs(computedStyle.getPropertyValue('--default-transition-duration'));
-  });
 </script>
 
 {#if portal}
@@ -64,10 +57,10 @@
       <div
         class={className}
         transition:fade={{
-          duration,
+          duration: transitionDuration,
         }}
       >
-        <button class={buttonClassName} aria-hidden="true" onclick={onClose}></button>
+        <button class={buttonClassName} onclick={onClose} aria-label="Close modal"></button>
         {@render children()}
       </div>
     {/if}
@@ -79,7 +72,7 @@
       duration: 150,
     }}
   >
-    <button class={buttonClassName} aria-hidden="true" onclick={onClose}></button>
+    <button class={buttonClassName} onclick={onClose} aria-label="Close modal"></button>
     {@render children()}
   </div>
 {/if}
