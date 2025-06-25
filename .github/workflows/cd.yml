@@ -37,5 +37,5 @@ jobs:
           server: '${{ secrets.SERVER_IP }}'
           ssh_private_key: ${{ secrets.SFTP_KEY }}
           local_path: './build/*'
-          remote_path: '/'
+          remote_path: '/amc-web'
           sftpArgs: '-o ConnectTimeout=5'
