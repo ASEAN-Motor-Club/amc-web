@@ -21,6 +21,7 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '$lib/utils/waypoint/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
+  import { colorCyan600, colorNeutral800, colorPrimary400, colorPrimary600, colorRed700, colorYellow400, colorYellow600 } from '$lib/tw-var';
 
   export type EditorProps = {
     /** The track data to be edited */
@@ -36,7 +37,6 @@
   let showHidden = $state<boolean>(false);
 
   const trackGroup = $derived.by(() => {
-    const computedStyle = getComputedStyle(document.documentElement);
     return {
       t: {
         points: trackData.waypoints.map((wp) => {
@@ -50,14 +50,14 @@
         trackMode: true,
         draggable: true,
         color: {
-          point: computedStyle.getPropertyValue('--color-primary-600'),
-          hover: computedStyle.getPropertyValue('--color-primary-400'),
-          selected: computedStyle.getPropertyValue('--color-cyan-600'),
-          arrowColor: computedStyle.getPropertyValue('--color-red-700'),
-          gate: computedStyle.getPropertyValue('--color-yellow-600'),
-          gateHover: computedStyle.getPropertyValue('--color-yellow-400'),
-          gateSelected: computedStyle.getPropertyValue('--color-cyan-600'),
-          outline: computedStyle.getPropertyValue('--color-neutral-800'),
+          point: colorPrimary600,
+          hover: colorPrimary400,
+          selected: colorCyan600,
+          arrowColor: colorRed700,
+          gate: colorYellow600,
+          gateHover: colorYellow400,
+          gateSelected: colorCyan600,
+          outline: colorNeutral800,
         },
       },
     } satisfies PointsGroups;

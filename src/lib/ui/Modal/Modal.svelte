@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition';
   import Portal from 'svelte-portal';
   import type { ClassValue } from 'svelte/elements';
-  import { transitionDuration } from '$lib/states/transitionDuration.svelte';
+  import { defaultTransitionDurationMs } from '$lib/tw-var';
 
   export type ModalProps = {
     /**
@@ -57,7 +57,7 @@
       <div
         class={className}
         transition:fade={{
-          duration: transitionDuration,
+          duration: defaultTransitionDurationMs,
         }}
       >
         <button class={buttonClassName} onclick={onClose} aria-label="Close modal"></button>

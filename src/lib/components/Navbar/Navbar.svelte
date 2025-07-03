@@ -8,7 +8,7 @@
   import { page } from '$app/state';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
-  import { transitionDuration } from '$lib/states/transitionDuration.svelte';
+  import { defaultTransitionDurationMs } from '$lib/tw-var';
 
   const links = [
     {
@@ -113,7 +113,7 @@
   <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start !p-0">
     <div
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
-      transition:fly={{ x: '-100%', duration: transitionDuration }}
+      transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
     >
       <a href="/" class="my-4 text-2xl font-bold" onclick={() => (menu = false)}
         >{m['site_name']()}</a
