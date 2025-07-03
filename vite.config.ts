@@ -4,10 +4,11 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import UnoCSS from '@unocss/svelte-scoped/vite';
 import { transformerDirectives } from 'unocss';
-import removeUnusedCssVars from './vite-plugin-remove-unused-css-vars';
+import devtoolsJson from 'vite-plugin-devtools-json';
 
 export default defineConfig({
   plugins: [
+    devtoolsJson(),
     UnoCSS({
       cssFileTransformers: [transformerDirectives()],
     }),
@@ -16,7 +17,6 @@ export default defineConfig({
       project: './project.inlang',
       outdir: './src/lib/paraglide',
     }),
-    removeUnusedCssVars(),
   ],
   test: {
     projects: [

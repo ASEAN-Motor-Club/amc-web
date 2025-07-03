@@ -8,6 +8,7 @@
   import { fly } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import NavbarItem from './NavbarItem.svelte';
+  import LoadClass from '$lib/ui/LoadClass/LoadClass.svelte';
 
   const links = [
     {
@@ -63,13 +64,17 @@
 <nav
   class="bg-background-100 dark:bg-background-900 shadow/10 ring-black/1 fixed flex h-14 w-full items-center px-4 ring lg:h-16"
 >
-  <IconButton
-    class={['-ml-2 mr-2 lg:hidden']}
-    variant="text"
-    icon="menu"
-    size="md"
-    onClick={() => (menu = true)}
-  />
+  <LoadClass class={['-ml-2 mr-2 lg:hidden']}>
+    {#snippet children([className])}
+      <IconButton
+        buttonClass={className}
+        variant="text"
+        icon="menu"
+        size="md"
+        onClick={() => (menu = true)}
+      />
+    {/snippet}
+  </LoadClass>
   <a href="/" class="mr-8 text-2xl font-bold leading-none">
     <span class="contents max-[375px]:hidden lg:max-xl:hidden">
       {m['site_name']()}
@@ -111,12 +116,16 @@
     </div>
   </Modal>
 
-  <IconButton
-    class={['ml-auto']}
-    variant="text"
-    round
-    icon={darkMode ? 'dark_mode' : 'light_mode'}
-    size="sm"
-    onClick={swapTheme}
-  />
+  <LoadClass class={['ml-auto']}>
+    {#snippet children([className])}
+      <IconButton
+        buttonClass={className}
+        variant="text"
+        round
+        icon={darkMode ? 'dark_mode' : 'light_mode'}
+        size="sm"
+        onClick={swapTheme}
+      />
+    {/snippet}
+  </LoadClass>
 </nav>

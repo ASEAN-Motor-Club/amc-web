@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/sveltekit';
-import unoCss from './unocss-svelte-scoped-global.css';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|ts|svelte)'],
@@ -8,9 +7,9 @@ const config: StorybookConfig = {
     name: '@storybook/sveltekit',
     options: {},
   },
+  staticDirs: ['../static'],
   previewHead: (head) => `
     ${head}
-    <style>${unoCss}</style>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"

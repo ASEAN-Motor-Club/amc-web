@@ -1,4 +1,4 @@
-import type { Vector3 } from '$lib/components/TrackEditor/types';
+import type { Vector3 } from '$lib/types';
 
 export function orientation2D(from: Vector3, to: Vector3): number {
   const dx = to.x - from.x;

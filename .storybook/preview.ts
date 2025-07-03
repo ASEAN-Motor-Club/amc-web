@@ -1,4 +1,5 @@
 import '../src/app.css';
+import './unocss-svelte-scoped-global.css';
 import type { Preview, SvelteRenderer } from '@storybook/sveltekit';
 import { withThemeByClassName } from '@storybook/addon-themes';
 

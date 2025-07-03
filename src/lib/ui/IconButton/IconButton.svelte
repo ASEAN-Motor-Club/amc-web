@@ -11,14 +11,19 @@
        */
       icon: IconTypes;
       /**
-       * CSS class to apply to the button component and icon component [buttonClass, iconClass]
+       * CSS class to apply to the button component
        */
-      class?: [ClassValue | undefined, ClassValue] | [ClassValue];
+      buttonClass?: ClassValue;
+      /**
+       * CSS class to apply to the icon component
+       */
+      iconClass?: ClassValue;
     };
 
   const {
     icon,
-    class: propsClassName,
+    buttonClass,
+    iconClass,
     color,
     variant,
     size,
@@ -32,8 +37,6 @@
     // svelte scream about "Index signature is unused." but no index signature is used here
     ..._
   }: IconButtonProps = $props();
-
-  const [buttonClass, iconClass] = $derived(propsClassName ?? []);
 </script>
 
 <Button

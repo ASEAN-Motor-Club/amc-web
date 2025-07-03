@@ -99,7 +99,7 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import * as m from '$lib/paraglide/messages.js';
+  import * as m from '$lib/paraglide/messages';
 </script>
 
 <h1>{m.hello_world()}</h1>
@@ -144,7 +144,7 @@ This ensures the icon fonts are loaded efficiently by only including the icons y
 
 This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0. Styling is applied using the [UnoCSS Svelte Scoped integration](https://unocss.dev/integrations/svelte-scoped), which provides per-component style scoping for Svelte files.
 
-**Limitations:**
+### Limitations
 
 - All utility classes must be specified in one of the following:
   - The `class` attribute or props `<div class="mb-1" />`, `<div class={["mt-1", { 'mb-1': condition, flex }]} />`
@@ -167,6 +167,25 @@ This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax 
   ```svelte
   <button class="rounded bg-red-500 px-4 py-2 text-white">Click me</button>
   ```
+
+### Using `LoadClass` for Non-`class` Props
+
+If you need to pass utility classes to a prop that is not named `class` (for example, `buttonClass`), you can use the `<LoadClass />` component. This ensures UnoCSS detects and includes the utility classes, even though they are not directly in a `class` attribute.
+
+**Example:**
+
+```svelte
+<LoadClass class={['-ml-2 mr-2 lg:hidden']}>
+  {#snippet children([className])}
+    <IconButton buttonClass={className} ... />
+  {/snippet}
+</LoadClass>
+```
+
+- Place your utility classes in the `class` prop of `LoadClass`.
+- Use the `children` slot to receive the generated class and pass it to your component's custom class prop (e.g., `buttonClass`).
+
+This pattern is only needed for props that are not named `class`.
 
 Refer to the [UnoCSS documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
 

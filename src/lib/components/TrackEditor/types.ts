@@ -1,20 +1,4 @@
-export type Quaternion = {
-  x: number;
-  y: number;
-  z: number;
-  w: number;
-};
-
-export type Vector2 = {
-  x: number;
-  y: number;
-};
-
-export type Vector3 = {
-  x: number;
-  y: number;
-  z: number;
-};
+import type { Quaternion, Vector3 } from '$lib/types';
 
 export type Waypoint = {
   rotation: Quaternion;
