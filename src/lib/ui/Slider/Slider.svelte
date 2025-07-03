@@ -62,90 +62,6 @@
 
   const id = $derived(propsId ?? contextId ?? '');
 
-  const railColorClass = $derived.by(() => {
-    switch (color) {
-      case 'primary':
-        return 'bg-primary-300';
-      case 'secondary':
-        return 'bg-secondary-300';
-      case 'info':
-        return 'bg-info-300';
-      case 'success':
-        return 'bg-success-300';
-      case 'warning':
-        return 'bg-warning-300';
-      case 'error':
-        return 'bg-error-300';
-      case 'neutral':
-        return 'bg-neutral-300';
-    }
-  });
-
-  const trackColorClass = $derived.by(() => {
-    switch (color) {
-      case 'primary':
-        return 'bg-primary-500';
-      case 'secondary':
-        return 'bg-secondary-500';
-      case 'info':
-        return 'bg-info-500';
-      case 'success':
-        return 'bg-success-500';
-      case 'warning':
-        return 'bg-warning-500';
-      case 'error':
-        return 'bg-error-500';
-      case 'neutral':
-        return 'bg-neutral-500';
-    }
-  });
-
-  const thumbColorClass = $derived.by(() => {
-    switch (color) {
-      case 'primary':
-        return 'bg-primary-700 hover:bg-primary-800';
-      case 'secondary':
-        return 'bg-secondary-700 hover:bg-secondary-800';
-      case 'info':
-        return 'bg-info-700 hover:bg-info-800';
-      case 'success':
-        return 'bg-success-700 hover:bg-success-800';
-      case 'warning':
-        return 'bg-warning-700 hover:bg-warning-800';
-      case 'error':
-        return 'bg-error-700 hover:bg-error-800';
-      case 'neutral':
-        return 'bg-neutral-700 hover:bg-neutral-800';
-    }
-  });
-
-  const sliderSizeClass = $derived.by(() => {
-    switch (size) {
-      case 'sm':
-        return 'h-4';
-      case 'md':
-        return 'h-5';
-    }
-  });
-
-  const railSizeClass = $derived.by(() => {
-    switch (size) {
-      case 'sm':
-        return 'h-1';
-      case 'md':
-        return 'h-1.25';
-    }
-  });
-
-  const thumbSizeClass = $derived.by(() => {
-    switch (size) {
-      case 'sm':
-        return 'w-3.5 h-3.5';
-      case 'md':
-        return 'w-4.5 h-4.5';
-    }
-  });
-
   let valueLocal = $derived(value);
   let slider: HTMLDivElement;
   let moving = $state(false);
@@ -193,7 +109,11 @@
 </script>
 
 <div
-  class={['relative flex  cursor-pointer items-center', sliderSizeClass, propsClassname]}
+  class={[
+    'relative flex  cursor-pointer items-center',
+    { 'h-4': size === 'sm', 'h-5': size === 'md' },
+    propsClassname,
+  ]}
   onmousedown={handleSliderMouseDown}
   bind:this={slider}
   role="slider"
@@ -203,19 +123,51 @@
   aria-valuenow={valueLocal}
 >
   <div
-    class={['flex w-full overflow-hidden rounded-full select-none', railColorClass, railSizeClass]}
+    class={[
+      'flex w-full select-none overflow-hidden rounded-full',
+      {
+        'bg-primary-300': color === 'primary',
+        'bg-secondary-300': color === 'secondary',
+        'bg-info-300': color === 'info',
+        'bg-success-300': color === 'success',
+        'bg-warning-300': color === 'warning',
+        'bg-error-300': color === 'error',
+        'bg-neutral-300': color === 'neutral',
+      },
+      { 'h-1': size === 'sm', 'h-1.25': size === 'md' },
+    ]}
   >
     <div
-      class={['h-full', trackColorClass, transition && 'transition-[width]']}
+      class={[
+        'h-full',
+        {
+          'bg-primary-500': color === 'primary',
+          'bg-secondary-500': color === 'secondary',
+          'bg-info-500': color === 'info',
+          'bg-success-500': color === 'success',
+          'bg-warning-500': color === 'warning',
+          'bg-error-500': color === 'error',
+          'bg-neutral-500': color === 'neutral',
+        },
+        transition && 'transition-[width]',
+      ]}
       style:width={`${percent}%`}
     ></div>
   </div>
   <div
     class={[
-      'absolute -translate-x-1/2 rounded-full shadow-md/30',
+      'shadow-md/30 absolute -translate-x-1/2 rounded-full',
       transition && 'transition-[left]',
-      thumbColorClass,
-      thumbSizeClass,
+      {
+        'bg-primary-700 hover:bg-primary-800': color === 'primary',
+        'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',
+        'bg-info-700 hover:bg-info-800': color === 'info',
+        'bg-success-700 hover:bg-success-800': color === 'success',
+        'bg-warning-700 hover:bg-warning-800': color === 'warning',
+        'bg-error-700 hover:bg-error-800': color === 'error',
+        'bg-neutral-700 hover:bg-neutral-800': color === 'neutral',
+      },
+      { 'h-3.5 w-3.5': size === 'sm', 'w-4.5 h-4.5': size === 'md' },
     ]}
     style:left={`${percent}%`}
   >

@@ -47,22 +47,15 @@
     size = 'md',
     class: propsClassName,
   }: IconProps = $props();
-
-  const className = $derived.by(() => {
-    switch (size) {
-      case 'sm':
-        return ['!text-[1.25rem]'];
-      case 'md':
-        return ['!text-[1.5rem]'];
-      case 'lg':
-        return ['!text-[2rem]'];
-    }
-  });
 </script>
 
 <span
   style:font-variation-settings={`'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' ${grade}, 'opsz' ${opticalSize}`}
-  class={['material-symbols-rounded select-none', className, propsClassName]}
+  class={['material-symbols-rounded select-none', {
+    '!text-[1.25rem]': size === 'sm',
+    '!text-[1.5rem]': size === 'md',
+    '!text-[2rem]': size === 'lg',
+  }, propsClassName]}
 >
   {icon}
 </span>

@@ -1,57 +1,44 @@
 <script lang="ts">
   import type { Icon as IconType } from '$lib/ui/Icon/types';
   import { m } from '$lib/paraglide/messages';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
   import IconButton from '$lib/ui/IconButton/IconButton.svelte';
   import { onMount } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { page } from '$app/state';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import NavbarItem from './NavbarItem.svelte';
 
   const links = [
     {
       href: '/map',
       label: m['navbar.map'](),
       icon: 'map',
-      hoverColorClass: 'group-hover:text-green-500',
-      activeColorClass: 'text-green-500',
     },
     {
       href: '/housing',
       label: m['navbar.housing'](),
       icon: 'home',
-      hoverColorClass: 'group-hover:text-blue-500',
-      activeColorClass: 'text-blue-500',
     },
     {
       href: '/industries',
       label: m['navbar.industries'](),
       icon: 'factory',
-      hoverColorClass: 'group-hover:text-yellow-500',
-      activeColorClass: 'text-yellow-500',
     },
     {
       href: '/radio',
       label: m['navbar.radio'](),
       icon: 'radio',
-      hoverColorClass: 'group-hover:text-orange-500',
-      activeColorClass: 'text-orange-500',
     },
     {
       href: '/track',
       label: m['navbar.track_editor'](),
       icon: 'route',
-      hoverColorClass: 'group-hover:text-red-500',
-      activeColorClass: 'text-red-500',
     },
   ] satisfies {
     href: string;
     label: string;
     icon?: IconType;
-    hoverColorClass: string;
-    activeColorClass: string;
   }[];
 
   let darkMode = $state(false);
@@ -61,6 +48,7 @@
   });
 
   const swapTheme = () => {
+    console.log('Swapping theme');
     document.documentElement.classList.toggle('dark');
     darkMode = document.documentElement.classList.contains('dark');
   };
@@ -69,11 +57,6 @@
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   });
 
-  const pageActive = (href: string) => {
-    const pathname = page.url.pathname;
-    return pathname.startsWith(href);
-  };
-
   let menu = $state(false);
 </script>
 
@@ -81,7 +64,7 @@
   class="bg-background-100 dark:bg-background-900 fixed flex h-14 w-full items-center px-4 shadow/10 ring ring-black/1 lg:h-16"
 >
   <IconButton
-    buttonClass="-ml-2 mr-2 lg:hidden"
+    class={['mr-2 -ml-2 lg:hidden']}
     variant="text"
     icon="menu"
     size="md"
@@ -96,11 +79,8 @@
     </span>
   </a>
   <div class="hidden gap-6 lg:flex">
-    {#each links as { href, label, icon, hoverColorClass, activeColorClass } (href)}
-      <a {href} class="group flex items-center gap-1">
-        <Icon {icon} class={[hoverColorClass, pageActive(href) && activeColorClass]} />
-        <span class="leading-none group-hover:underline">{label}</span>
-      </a>
+    {#each links as { href, label, icon } (href)}
+      <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
     {/each}
     <Button
       variant="contained-light"
@@ -118,11 +98,8 @@
       <a href="/" class="my-4 text-2xl font-bold" onclick={() => (menu = false)}
         >{m['site_name']()}</a
       >
-      {#each links as { href, label, icon, hoverColorClass, activeColorClass } (href)}
-        <a {href} class="group flex items-center gap-1" onclick={() => (menu = false)}>
-          <Icon {icon} class={[hoverColorClass, pageActive(href) && activeColorClass]} />
-          <span class="leading-none group-hover:underline">{label}</span>
-        </a>
+      {#each links as { href, label, icon } (href)}
+        <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
       {/each}
       <Button
         variant="contained-light"
@@ -135,7 +112,7 @@
   </Modal>
 
   <IconButton
-    buttonClass="ml-auto"
+    class={['ml-auto']}
     variant="text"
     round
     icon={darkMode ? 'dark_mode' : 'light_mode'}

@@ -42,37 +42,44 @@
     portalTarget = 'body',
     class: propsClassName,
   }: ModalProps = $props();
-
-  const className = $derived([
-    'fixed inset-0 z-10000 flex items-center justify-center bg-black/20 p-5',
-    propsClassName,
-  ]);
-
-  const buttonClassName = 'fixed inset-0 -z-1 h-full w-full opacity-0';
 </script>
 
 {#if portal}
   <Portal target={portalTarget}>
     {#if open}
       <div
-        class={className}
+        class={[
+          'z-10000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+          propsClassName,
+        ]}
         transition:fade={{
           duration: defaultTransitionDurationMs,
         }}
       >
-        <button class={buttonClassName} onclick={onClose} aria-label="Close modal"></button>
+        <button
+          class="-z-1 fixed inset-0 h-full w-full opacity-0"
+          onclick={onClose}
+          aria-label="Close modal"
+        ></button>
         {@render children()}
       </div>
     {/if}
   </Portal>
 {:else if open}
   <div
-    class={className}
+    class={[
+      'z-10000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+      propsClassName,
+    ]}
     transition:fade={{
       duration: 150,
     }}
   >
-    <button class={buttonClassName} onclick={onClose} aria-label="Close modal"></button>
+    <button
+      class="-z-1 fixed inset-0 h-full w-full opacity-0"
+      onclick={onClose}
+      aria-label="Close modal"
+    ></button>
     {@render children()}
   </div>
 {/if}

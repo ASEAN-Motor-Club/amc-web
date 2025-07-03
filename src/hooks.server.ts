@@ -16,6 +16,14 @@ const iconList = [
 
 const iconListStr = iconList.toSorted().join(',');
 
+const handleUnoCss: Handle = async ({ event, resolve }) => {
+  const response = await resolve(event, {
+    transformPageChunk: ({ html }) =>
+      html.replace('%unocss-svelte-scoped.global%', 'unocss_svelte_scoped_global_styles'),
+  });
+  return response;
+};
+
 const handleIconsReplace: Handle = ({ event, resolve }) => {
   return resolve(event, {
     transformPageChunk: ({ html }) => html.replace('%icons%', iconListStr),
@@ -31,4 +39,4 @@ const handleParaglide: Handle = ({ event, resolve }) =>
     });
   });
 
-export const handle: Handle = sequence(handleIconsReplace, handleParaglide);
+export const handle: Handle = sequence(handleUnoCss, handleIconsReplace, handleParaglide);

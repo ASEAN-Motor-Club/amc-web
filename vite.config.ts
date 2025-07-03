@@ -1,17 +1,22 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
-import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import UnoCSS from '@unocss/svelte-scoped/vite';
+import { transformerDirectives } from 'unocss';
+import removeUnusedCssVars from './vite-plugin-remove-unused-css-vars';
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    UnoCSS({
+      cssFileTransformers: [transformerDirectives()],
+    }),
     sveltekit(),
     paraglideVitePlugin({
       project: './project.inlang',
       outdir: './src/lib/paraglide',
     }),
+    removeUnusedCssVars(),
   ],
   test: {
     projects: [
