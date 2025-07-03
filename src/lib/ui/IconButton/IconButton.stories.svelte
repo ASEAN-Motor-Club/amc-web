@@ -31,16 +31,6 @@
       onClick: {
         control: false,
       },
-      buttonClass: {
-        control: {
-          type: 'text',
-        },
-      },
-      iconClass: {
-        control: {
-          type: 'text',
-        },
-      },
       icon: {
         control: {
           type: 'text',

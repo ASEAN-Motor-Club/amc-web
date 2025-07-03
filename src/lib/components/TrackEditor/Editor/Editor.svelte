@@ -21,6 +21,15 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '$lib/utils/waypoint/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
+  import {
+    colorCyan600,
+    colorNeutral800,
+    colorPrimary400,
+    colorPrimary600,
+    colorRed700,
+    colorYellow400,
+    colorYellow600,
+  } from '$lib/tw-var';
 
   export type EditorProps = {
     /** The track data to be edited */
@@ -36,7 +45,6 @@
   let showHidden = $state<boolean>(false);
 
   const trackGroup = $derived.by(() => {
-    const computedStyle = getComputedStyle(document.documentElement);
     return {
       t: {
         points: trackData.waypoints.map((wp) => {
@@ -50,14 +58,14 @@
         trackMode: true,
         draggable: true,
         color: {
-          point: computedStyle.getPropertyValue('--color-primary-600'),
-          hover: computedStyle.getPropertyValue('--color-primary-400'),
-          selected: computedStyle.getPropertyValue('--color-cyan-600'),
-          arrowColor: computedStyle.getPropertyValue('--color-red-700'),
-          gate: computedStyle.getPropertyValue('--color-yellow-600'),
-          gateHover: computedStyle.getPropertyValue('--color-yellow-400'),
-          gateSelected: computedStyle.getPropertyValue('--color-cyan-600'),
-          outline: computedStyle.getPropertyValue('--color-neutral-800'),
+          point: colorPrimary600,
+          hover: colorPrimary400,
+          selected: colorCyan600,
+          arrowColor: colorRed700,
+          gate: colorYellow600,
+          gateHover: colorYellow400,
+          gateSelected: colorCyan600,
+          outline: colorNeutral800,
         },
       },
     } satisfies PointsGroups;
@@ -153,7 +161,7 @@
   };
 </script>
 
-<div class="flex h-dvh w-full flex-col gap-4 p-4 md:flex-row">
+<div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
   <Card class="flex-1 overflow-hidden !p-0">
     <MtMap
       class="h-full"
@@ -170,11 +178,11 @@
       {selectedPointsPosition}
     />
   </Card>
-  <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
+  <div class="md:w-70 flex flex-row justify-between gap-4 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">
       {#if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-          <div class="font-medium whitespace-nowrap">
+          <div class="whitespace-nowrap font-medium">
             {m['track_editor.editor.selecting_point']({ pointNumber: selectedPointIndex + 1 })}
           </div>
           <Button
@@ -194,7 +202,7 @@
           >
           <Button onClick={handleDelete} color="error">{m['track_editor.editor.delete']()}</Button>
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.rotation_z']()} focusIndex={1}>
             {#snippet appendLabel()}
@@ -264,7 +272,7 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.translation_x']()}>
             <TextInput
@@ -296,7 +304,7 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.scale_y']()}>
             <TextInput
@@ -332,7 +340,7 @@
         <div class="text-text/60 dark:text-text-dark/60 font-medium">
           {m['track_editor.editor.select_point_to_edit']()}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <div class="font-medium">{m['track_editor.editor.global_operations']()}</div>
           <Button onClick={handleNormalize}>{m['track_editor.editor.normalize']()}</Button>

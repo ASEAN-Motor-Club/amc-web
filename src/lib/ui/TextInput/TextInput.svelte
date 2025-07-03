@@ -85,36 +85,6 @@
     ...inputAttributes
   }: TextInputProps = $props();
 
-  const variantClassName = $derived.by(() => {
-    switch (variant) {
-      case 'contained':
-        return [
-          'dark:focus:bg-neutral-500/10 focus:bg-neutral-500/10 focus:outline-solid',
-          error
-            ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 dark:hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
-            : 'bg-neutral-900/10 dark:bg-neutral-100/10 hover:bg-neutral-900/20 dark:hover:bg-neutral-100/20 outline-neutral-400 dark:outline-neutral-600',
-        ];
-      case 'outlined':
-        return [
-          'bg-white dark:bg-black border',
-          error
-            ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
-            : 'border-neutral-400 dark:border-neutral-700 dark:hover:border-neutral-400 hover:border-neutral-600 focus:border-neutral-500',
-        ];
-    }
-  });
-
-  const othersClassName = $derived.by(() => {
-    switch (size) {
-      case 'sm':
-        return ['text-sm  h-8', round ? 'rounded-full px-3' : 'rounded-sm px-2'];
-      case 'md':
-        return ['text-base  h-10', round ? 'rounded-full px-4' : 'rounded-md px-3'];
-      case 'lg':
-        return ['text-lg  h-12', round ? 'rounded-full px-5' : 'rounded-lg px-4'];
-    }
-  });
-
   const inputGroupContext = getInputGroupContext();
 
   const placeholder = $derived(propsPlaceholder ?? inputGroupContext?.label ?? '');
@@ -126,9 +96,24 @@
 
 <input
   class={[
-    'flex flex-none items-center transition-colors outline-none',
-    variantClassName,
-    othersClassName,
+    'flex flex-none items-center outline-none transition-colors',
+    // Variant classes
+    variant === 'contained' && [
+      'focus:outline-solid focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10',
+      error
+        ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 dark:hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
+        : 'bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20',
+    ],
+    variant === 'outlined' && [
+      'border bg-white dark:bg-black',
+      error
+        ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
+        : 'border-neutral-400 hover:border-neutral-600 focus:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-400',
+    ],
+    // Size/shape classes
+    size === 'sm' && ['h-8  text-sm', round ? 'rounded-full px-3' : 'rounded-sm px-2'],
+    size === 'md' && ['h-10  text-base', round ? 'rounded-full px-4' : 'rounded-md px-3'],
+    size === 'lg' && ['h-12  text-lg', round ? 'rounded-full px-5' : 'rounded-lg px-4'],
     propsClassname,
   ]}
   onchange={onChange}

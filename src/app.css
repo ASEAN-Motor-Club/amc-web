@@ -1,100 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
 
-@custom-variant dark (&:where(.dark, .dark *));
-
+html,
 body {
-  @apply bg-background-300 dark:bg-background-950 text-text dark:text-text-dark;
+  --at-apply: h-full;
 }
 
-@theme {
-  --font-sans: 'Noto Sans', sans-serif;
+body {
+  --at-apply: bg-background-300 text-text transition-colors;
+  font-family: var(--font-sans);
+}
 
-  --color-background-50: oklch(99.38% 0.001 105.51);
-  --color-background-100: oklch(98.05% 0.004 121.16);
-  --color-background-200: oklch(96.8% 0.007 115.49);
-  --color-background-300: oklch(94.61% 0.011 112.25);
-  --color-background-400: oklch(86.19% 0.029 113.55);
-  --color-background-500: oklch(77.38% 0.046 113.06);
-  --color-background-600: oklch(67.59% 0.066 114.08);
-  --color-background-700: oklch(55.25% 0.054 113.19);
-  --color-background-800: oklch(41.76% 0.039 113.67);
-  --color-background-900: oklch(26.77% 0.021 111.68);
-  --color-background-950: oklch(19.2% 0.014 114.28);
-
-  --color-text-dark: var(--color-stone-100);
-  --color-text: var(--color-stone-900);
-
-  --color-primary-50: oklch(97.76% 0.011 196.81);
-  --color-primary-100: oklch(95.27% 0.021 200.36);
-  --color-primary-200: oklch(90.2% 0.044 199.95);
-  --color-primary-300: oklch(85.89% 0.064 198.49);
-  --color-primary-400: oklch(81.52% 0.081 198.64);
-  --color-primary-500: oklch(76.87% 0.098 197.81);
-  --color-primary-600: oklch(72.97% 0.107 198.14);
-  --color-primary-700: oklch(63.87% 0.093 197.81);
-  --color-primary-800: oklch(47.92% 0.068 199.16);
-  --color-primary-900: oklch(30.41% 0.04 197.82);
-  --color-primary-950: oklch(20.36% 0.023 200.48);
-
-  --color-secondary-50: oklch(96.18% 0.014 28.11);
-  --color-secondary-100: oklch(92.65% 0.03 30.68);
-  --color-secondary-200: oklch(85.47% 0.061 29.7);
-  --color-secondary-300: oklch(78.51% 0.096 30.57);
-  --color-secondary-400: oklch(71.96% 0.132 31.44);
-  --color-secondary-500: oklch(65.93% 0.165 31.99);
-  --color-secondary-600: oklch(60.87% 0.197 32.69);
-  --color-secondary-700: oklch(49.99% 0.167 32.26);
-  --color-secondary-800: oklch(37.68% 0.12 32.45);
-  --color-secondary-900: oklch(24.21% 0.069 32.92);
-  --color-secondary-950: oklch(16.2% 0.037 33.41);
-
-  --color-info-50: oklch(96.58% 0.009 258.36);
-  --color-info-100: oklch(94.19% 0.015 247.98);
-  --color-info-200: oklch(87.22% 0.035 252.27);
-  --color-info-300: oklch(81.33% 0.052 251.19);
-  --color-info-400: oklch(75.46% 0.07 251.41);
-  --color-info-500: oklch(69.35% 0.088 252.23);
-  --color-info-600: oklch(62.62% 0.109 252.96);
-  --color-info-700: oklch(56.83% 0.123 253.24);
-  --color-info-800: oklch(50.38% 0.108 253.63);
-  --color-info-900: oklch(31.96% 0.061 252.54);
-  --color-info-950: oklch(20.92% 0.031 251.35);
-
-  --color-success-50: oklch(97.08% 0.016 166.6);
-  --color-success-100: oklch(93.96% 0.031 165.22);
-  --color-success-200: oklch(88.74% 0.06 164.76);
-  --color-success-300: oklch(83.2% 0.091 163.76);
-  --color-success-400: oklch(77.75% 0.118 161.69);
-  --color-success-500: oklch(72.87% 0.143 159.01);
-  --color-success-600: oklch(63.15% 0.124 159.22);
-  --color-success-700: oklch(51.04% 0.098 159.57);
-  --color-success-800: oklch(39.08% 0.073 159.43);
-  --color-success-900: oklch(24.44% 0.039 160.62);
-  --color-success-950: oklch(17.19% 0.023 163.66);
-
-  --color-warning-50: oklch(97.81% 0.015 80.68);
-  --color-warning-100: oklch(96.12% 0.026 82.37);
-  --color-warning-200: oklch(92.38% 0.052 81.15);
-  --color-warning-300: oklch(88.63% 0.078 81.21);
-  --color-warning-400: oklch(84.43% 0.104 80.77);
-  --color-warning-500: oklch(81% 0.125 79.19);
-  --color-warning-600: oklch(77.79% 0.142 77.9);
-  --color-warning-700: oklch(66.45% 0.135 74.01);
-  --color-warning-800: oklch(50.08% 0.099 75.18);
-  --color-warning-900: oklch(30.7% 0.058 76.28);
-  --color-warning-950: oklch(20.81% 0.035 81.28);
-
-  --color-error-50: oklch(96.29% 0.011 17.51);
-  --color-error-100: oklch(92.5% 0.021 17.62);
-  --color-error-200: oklch(84.87% 0.046 18.12);
-  --color-error-300: oklch(77.42% 0.07 18.81);
-  --color-error-400: oklch(71.12% 0.093 19.65);
-  --color-error-500: oklch(64.15% 0.122 21.03);
-  --color-error-600: oklch(57.39% 0.15 23.03);
-  --color-error-700: oklch(47.02% 0.132 23.67);
-  --color-error-800: oklch(34.9% 0.093 23.24);
-  --color-error-900: oklch(22.83% 0.052 22.09);
-  --color-error-950: oklch(16.68% 0.03 20.81);
+.dark body {
+  --at-apply: bg-background-950 text-text-dark;
 }

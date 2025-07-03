@@ -5,7 +5,7 @@ Website for ASEAN Motor Club
 ## 🛠️ Tech Stack
 
 - **Framework**: [Svelte](https://svelte.dev/) with [SvelteKit](https://kit.svelte.dev/) using [Static Adapter](https://kit.svelte.dev/docs/adapter-static)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4
+- **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
 - **Icons**: [Material Symbols](https://fonts.google.com/icons?icon.style=Rounded) (Rounded pack)
 - **Testing**: [Vitest](https://vitest.dev/) with [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/)
 - **Internationalization**: [Paraglide](https://inlang.com/paraglide)
@@ -18,7 +18,7 @@ Website for ASEAN Motor Club
 - **Node.js**: LTS version recommended
 - **VS Code Extensions** (highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
-  - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+  - [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) ([Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) should work too)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
   - [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer)
@@ -105,7 +105,7 @@ Example usage:
 <h1>{m.hello_world()}</h1>
 ```
 
-## 🎨 Component Development
+## 🧩 Component Development
 
 Components are developed using Storybook for isolated development and documentation:
 
@@ -127,16 +127,48 @@ The project includes an `<Icon />` component that uses **Material Symbols Rounde
 <Icon icon="settings" />
 ```
 
-**Important**: When using a new icon, you must add it to the `icon_names` parameter in `src/app.html`:
+**Important**: When using a new icon, you must add it to the `iconList` constant in `src/hooks.server.ts`:
 
-```html
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite,home,settings"
-/>
+```diff
+const iconList = [
+   // add imported icons here
++  'favorite',
++  'home',
++  'settings',
+];
 ```
 
 This ensures the icon fonts are loaded efficiently by only including the icons your app actually uses.
+
+## 🎨 Styling Details
+
+This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0. Styling is applied using the [UnoCSS Svelte Scoped integration](https://unocss.dev/integrations/svelte-scoped), which provides per-component style scoping for Svelte files.
+
+**Limitations:**
+
+- All utility classes must be specified in one of the following:
+  - The `class` attribute or props `<div class="mb-1" />`, `<div class={["mt-1", { 'mb-1': condition, flex }]} />`
+  - The `class:` directive `<div class:mb-1={condition} />`, `<div class:flex />`
+- Dynamic or computed class names that cannot be statically analyzed by UnoCSS will not be processed.
+- You cannot define utility classes as variables in the `<script>` block and use them in markup. UnoCSS requires all classes to be statically present in the markup for detection and processing.
+
+  **Example (not supported):**
+
+  ```svelte
+  <script>
+    const btnClass = 'bg-red-500 text-white px-4 py-2 rounded';
+  </script>
+
+  <button class={btnClass}>Click me</button>
+  ```
+
+  Instead, always write utility classes directly in the markup:
+
+  ```svelte
+  <button class="rounded bg-red-500 px-4 py-2 text-white">Click me</button>
+  ```
+
+Refer to the [UnoCSS documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
 
 ## 🤝 Collaboration Guidelines
 
