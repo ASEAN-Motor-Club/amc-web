@@ -14,7 +14,6 @@
        * CSS class to apply to the button component and icon component [buttonClass, iconClass]
        */
       class?: [ClassValue | undefined, ClassValue] | [ClassValue];
-      iconClass?: ClassValue;
     };
 
   const {

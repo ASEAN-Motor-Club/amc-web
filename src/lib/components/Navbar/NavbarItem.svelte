@@ -22,7 +22,6 @@
   <Icon
     {icon}
     class={[
-      undefined,
       pageActive
         ? {
             'text-green-500': href === '/map',
