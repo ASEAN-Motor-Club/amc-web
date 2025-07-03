@@ -21,7 +21,15 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '$lib/utils/waypoint/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
-  import { colorCyan600, colorNeutral800, colorPrimary400, colorPrimary600, colorRed700, colorYellow400, colorYellow600 } from '$lib/tw-var';
+  import {
+    colorCyan600,
+    colorNeutral800,
+    colorPrimary400,
+    colorPrimary600,
+    colorRed700,
+    colorYellow400,
+    colorYellow600,
+  } from '$lib/tw-var';
 
   export type EditorProps = {
     /** The track data to be edited */
@@ -170,11 +178,11 @@
       {selectedPointsPosition}
     />
   </Card>
-  <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
+  <div class="md:w-70 flex flex-row justify-between gap-4 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">
       {#if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-          <div class="font-medium whitespace-nowrap">
+          <div class="whitespace-nowrap font-medium">
             {m['track_editor.editor.selecting_point']({ pointNumber: selectedPointIndex + 1 })}
           </div>
           <Button
@@ -194,7 +202,7 @@
           >
           <Button onClick={handleDelete} color="error">{m['track_editor.editor.delete']()}</Button>
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.rotation_z']()} focusIndex={1}>
             {#snippet appendLabel()}
@@ -264,7 +272,7 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.translation_x']()}>
             <TextInput
@@ -296,7 +304,7 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.scale_y']()}>
             <TextInput
@@ -332,7 +340,7 @@
         <div class="text-text/60 dark:text-text-dark/60 font-medium">
           {m['track_editor.editor.select_point_to_edit']()}
         </div>
-        <div class="border-l-1 border-gray-500/50 md:border-t-1"></div>
+        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
           <div class="font-medium">{m['track_editor.editor.global_operations']()}</div>
           <Button onClick={handleNormalize}>{m['track_editor.editor.normalize']()}</Button>

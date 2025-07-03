@@ -61,16 +61,16 @@
 </script>
 
 <nav
-  class="bg-background-100 dark:bg-background-900 fixed flex h-14 w-full items-center px-4 shadow/10 ring ring-black/1 lg:h-16"
+  class="bg-background-100 dark:bg-background-900 shadow/10 ring-black/1 fixed flex h-14 w-full items-center px-4 ring lg:h-16"
 >
   <IconButton
-    class={['mr-2 -ml-2 lg:hidden']}
+    class={['-ml-2 mr-2 lg:hidden']}
     variant="text"
     icon="menu"
     size="md"
     onClick={() => (menu = true)}
   />
-  <a href="/" class="mr-8 text-2xl leading-none font-bold">
+  <a href="/" class="mr-8 text-2xl font-bold leading-none">
     <span class="contents max-[375px]:hidden lg:max-xl:hidden">
       {m['site_name']()}
     </span>

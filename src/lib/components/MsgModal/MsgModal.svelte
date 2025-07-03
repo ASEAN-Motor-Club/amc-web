@@ -43,9 +43,9 @@
 
 {@render children()}
 <Modal open={modalOpen} onClose={hideModal}>
-  <Card class="flex max-w-120 flex-col p-5">
+  <Card class="max-w-120 flex flex-col p-5">
     <h2 class="pb-4.5 text-2xl font-bold">{modalParams.title}</h2>
-    <p class="text-text/80 dark:text-text-dark/80 pb-6 text-sm whitespace-pre-line">
+    <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line pb-6 text-sm">
       {modalParams.message}
     </p>
     <div class="flex justify-end gap-6">
