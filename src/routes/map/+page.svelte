@@ -388,8 +388,7 @@
       pixel,
       (feature) => {
         const f = feature as Feature;
-        const type = f.get('type') as PointType | undefined;
-
+        const type = f.get('pointType') as PointType | undefined;
         if (type === PointType.Delivery) {
           const info = f.get('info') as DeliveryPoint;
           goto(`/industries/${info.guid}`);
