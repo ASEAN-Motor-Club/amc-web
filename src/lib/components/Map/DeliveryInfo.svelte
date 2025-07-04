@@ -43,7 +43,7 @@
         <div class="flex items-center gap-1.5">
           {cargoName[item]}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
-            <Icon class="-mb-px !text-[0.75rem]" icon="link" />
+            <div class="i-material-symbols:link-rounded -mb-px !text-[0.75rem]"></div>
           {/if}
         </div>
         <div class="relative">

@@ -1,7 +1,8 @@
-import { defineConfig, presetWind4 } from 'unocss';
+import { defineConfig, presetWind4,presetIcons } from 'unocss';
 
 export default defineConfig({
   presets: [
+    presetIcons(),
     presetWind4({
       preflights: {
         theme: true,

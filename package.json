@@ -23,6 +23,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/js": "^9.18.0",
+    "@iconify-json/material-symbols": "^1.2.29",
     "@storybook/addon-svelte-csf": "^5.0.3",
     "@storybook/addon-themes": "^9.0.5",
     "@storybook/sveltekit": "^9.0.5",
