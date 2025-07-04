@@ -463,6 +463,10 @@
         setPlayerPoints(playerData);
         playerNameLayer.setVisible(!!playerNameLayerData?.enabled);
       }
+    } else if (layer.id === layerId.Delivery) {
+      deliveryLineSource.clear(true);
+      lockPoint?.set('hover', false);
+      lockPoint = undefined;
     }
     layer.layer.forEach((l) => l.setVisible(layer.enabled));
   };
