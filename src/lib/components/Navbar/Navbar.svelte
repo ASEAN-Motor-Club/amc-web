@@ -1,45 +1,44 @@
 <script lang="ts">
-  import type { Icon as IconType } from '$lib/ui/Icon/types';
   import { m } from '$lib/paraglide/messages';
-  import IconButton from '$lib/ui/IconButton/IconButton.svelte';
-  import { onMount } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import NavbarItem from './NavbarItem.svelte';
-  import LoadClass from '$lib/ui/LoadClass/LoadClass.svelte';
+  import { page } from '$app/state';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
 
   const links = [
     {
       href: '/map',
       label: m['navbar.map'](),
-      icon: 'map',
+      icon: mapIcon,
     },
     {
       href: '/housing',
       label: m['navbar.housing'](),
-      icon: 'home',
+      icon: housingIcon,
     },
     {
       href: '/industries',
       label: m['navbar.industries'](),
-      icon: 'factory',
+      icon: industriesIcon,
     },
     {
       href: '/radio',
       label: m['navbar.radio'](),
-      icon: 'radio',
+      icon: radioIcon,
     },
     {
       href: '/track',
       label: m['navbar.track_editor'](),
-      icon: 'route',
+      icon: trackIcon,
     },
   ] satisfies {
     href: string;
     label: string;
-    icon?: IconType;
+    icon: Snippet;
   }[];
 
   let darkMode = $state(false);
@@ -61,20 +60,57 @@
   let menu = $state(false);
 </script>
 
+{#snippet mapIcon()}
+  <Icon
+    class={[
+      'i-material-symbols:map-outline-rounded group-hover:text-green-500',
+      { 'text-green-500': page.url.pathname === '/map' },
+    ]}
+  />
+{/snippet}
+
+{#snippet housingIcon()}
+  <Icon
+    class={[
+      'i-material-symbols:home-outline-rounded group-hover:text-blue-500',
+      { 'text-blue-500': page.url.pathname === '/housing' },
+    ]}
+  />
+{/snippet}
+
+{#snippet industriesIcon()}
+  <Icon
+    class={[
+      'i-material-symbols:factory-outline-rounded group-hover:text-yellow-500',
+      { 'text-yellow-500': page.url.pathname === '/industries' },
+    ]}
+  />
+{/snippet}
+
+{#snippet radioIcon()}
+  <Icon
+    class={[
+      'i-material-symbols:radio-outline-rounded group-hover:text-orange-500',
+      { 'text-orange-500': page.url.pathname === '/radio' },
+    ]}
+  />
+{/snippet}
+
+{#snippet trackIcon()}
+  <Icon
+    class={[
+      'i-material-symbols:route-outline group-hover:text-red-500',
+      { 'text-red-500': page.url.pathname === '/track' },
+    ]}
+  />
+{/snippet}
+
 <nav
-  class="bg-background-100 dark:bg-background-900 ring-black/1 fixed flex h-14 w-full items-center px-4 shadow-black/10 ring lg:h-16"
+  class="bg-background-100 dark:bg-background-900 ring-black/1 fixed flex h-14 w-full select-none items-center px-4 shadow-black/10 ring lg:h-16"
 >
-  <LoadClass class={['-ml-2 mr-2 lg:hidden']}>
-    {#snippet children([className])}
-      <IconButton
-        buttonClass={className}
-        variant="text"
-        icon="menu"
-        size="md"
-        onClick={() => (menu = true)}
-      />
-    {/snippet}
-  </LoadClass>
+  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => (menu = true)} icon>
+    <Icon class="i-material-symbols:menu-rounded" />
+  </Button>
   <a href="/" class="mr-8 text-2xl font-bold leading-none">
     <span class="contents max-[375px]:hidden lg:max-xl:hidden">
       {m['site_name']()}
@@ -115,17 +151,14 @@
       >
     </div>
   </Modal>
-
-  <LoadClass class={['ml-auto']}>
-    {#snippet children([className])}
-      <IconButton
-        buttonClass={className}
-        variant="text"
-        round
-        icon={darkMode ? 'dark_mode' : 'light_mode'}
-        size="sm"
-        onClick={swapTheme}
-      />
-    {/snippet}
-  </LoadClass>
+  <Button class="ml-auto" variant="text" round size="sm" onClick={swapTheme} icon>
+    <Icon
+      class={[
+        darkMode
+          ? `i-material-symbols:dark-mode-outline-rounded`
+          : `i-material-symbols:light-mode-outline-rounded`,
+      ]}
+      size="sm"
+    />
+  </Button>
 </nav>

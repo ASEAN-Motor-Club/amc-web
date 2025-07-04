@@ -1,6 +1,7 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import Button from './Button.svelte';
+  import Icon from '../Icon/Icon.svelte';
 
   const { Story } = defineMeta({
     title: 'Ui/Button',
@@ -46,6 +47,34 @@
       <Button {...args} color="warning">Warning</Button>
       <Button {...args} color="error">Error</Button>
       <Button {...args} color="neutral">Neutral</Button>
+    </div>
+  {/snippet}
+</Story>
+
+<Story name="Icon">
+  {#snippet template({ children: _, icon: __, ...args })}
+    <div class="flex flex-wrap gap-2">
+      <Button {...args} icon color="primary">
+        <Icon class="i-material-symbols:home-outline-rounded" size="md" />
+      </Button>
+      <Button {...args} icon color="secondary">
+        <Icon class="i-material-symbols:factory-outline-rounded" size="md" />
+      </Button>
+      <Button {...args} icon color="info">
+        <Icon class="i-material-symbols:radio-outline-rounded" size="md" />
+      </Button>
+      <Button {...args} icon color="success">
+        <Icon class="i-material-symbols:map-outline-rounded" size="md" />
+      </Button>
+      <Button {...args} icon color="warning">
+        <Icon class="i-material-symbols:route-outline" size="md" />
+      </Button>
+      <Button {...args} icon color="error">
+        <Icon class="i-material-symbols:link-rounded" size="md" />
+      </Button>
+      <Button {...args} icon color="neutral">
+        <Icon class="i-material-symbols:dashboard-outline" size="md" />
+      </Button>
     </div>
   {/snippet}
 </Story>
