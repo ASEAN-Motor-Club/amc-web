@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Poster from '$lib/assets/asean_poster.webp';
+  import Poster from '$lib/assets/asean_poster.avif';
   import { m } from '$lib/paraglide/messages';
 </script>
 
