@@ -7,7 +7,7 @@
   import { house as unmappedHouse } from '$lib/data/house';
   import { PointType } from './types';
   import { cargoName } from '$lib/data/cargo';
-  import BoldText from '$lib/ui/BoldText/BoldText.svelte';
+  import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { goto } from '$app/navigation';
   import type { Vector2 } from 'mt-map';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
@@ -152,40 +152,58 @@
             ></div>
             <div class="flex flex-col gap-0.5">
               <div class="text-text-dark">
-                <BoldText text={point.name} boldPart={searchValue} caseInSensitive />
+                <HighlightText
+                  text={point.name}
+                  highlight={searchValue}
+                  caseInSensitive
+                  tag="span"
+                  class="inline-block bg-white/20"
+                />
               </div>
               {#if point.pointType === PointType.Delivery}
                 <div class="flex flex-col text-neutral-300">
                   {#if point.supplyText}
                     <div class="text-xs">
-                      {m['map.supply']()}: <BoldText
+                      {m['map.supply']()}: <HighlightText
                         text={point.supplyText}
-                        boldPart={searchValue}
+                        highlight={searchValue}
                         caseInSensitive
+                        tag="span"
+                        class="inline-block bg-white/20"
                       />
                     </div>
                   {/if}
                   {#if point.demandText}
                     <div class="text-xs">
-                      {m['map.demand']()}: <BoldText
+                      {m['map.demand']()}: <HighlightText
                         text={point.demandText}
-                        boldPart={searchValue}
+                        highlight={searchValue}
                         caseInSensitive
+                        tag="span"
+                        class="inline-block bg-white/20"
                       />
                     </div>
                   {/if}
                 </div>
               {:else if point.pointType === PointType.House}
                 <div class="text-xs text-neutral-300">
-                  {m['map.owner']()}: <BoldText
+                  {m['map.owner']()}: <HighlightText
                     text={houseData?.[point.name]?.ownerName || m.unknown()}
-                    boldPart={searchValue}
+                    highlight={searchValue}
                     caseInSensitive
+                    tag="span"
+                    class="inline-block bg-white/20"
                   />
                 </div>
               {/if}
               <div class="text-xs text-neutral-400">
-                <BoldText text={point.location} boldPart={searchValue} caseInSensitive />
+                <HighlightText
+                  text={point.location}
+                  highlight={searchValue}
+                  caseInSensitive
+                  tag="span"
+                  class="inline-block bg-white/20"
+                />
               </div>
             </div>
           </a>
