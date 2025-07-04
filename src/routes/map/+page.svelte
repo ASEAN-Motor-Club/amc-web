@@ -515,10 +515,10 @@
             class={[
               '!px-2',
               {
-                '!bg-yellow-500 !text-text': layer.id === layerId.Delivery,
-                '!bg-cyan-500 !text-text': layer.id === layerId.House,
-                '!bg-emerald-400 !text-text': layer.id === layerId.Player,
-                '!bg-emerald-300 !text-text': layer.id === layerId.PlayerName
+                '!text-text !bg-yellow-500': layer.id === layerId.Delivery,
+                '!text-text !bg-cyan-500': layer.id === layerId.House,
+                '!text-text !bg-emerald-400': layer.id === layerId.Player,
+                '!text-text !bg-emerald-300': layer.id === layerId.PlayerName,
               },
               {
                 'opacity-50':

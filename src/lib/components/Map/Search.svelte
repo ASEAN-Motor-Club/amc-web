@@ -142,7 +142,7 @@
           <a class="flex p-2 pl-0" href={getHref(point)} onclick={(e) => handleLinkClick(e, point)}>
             <div
               class={[
-                'border-1 border-black mx-3 my-1.5 h-3 w-3 shrink-0 rounded-full',
+                'border-1 mx-3 my-1.5 h-3 w-3 shrink-0 rounded-full border-black',
                 {
                   'bg-yellow-500': point.pointType === PointType.Delivery,
                   'bg-cyan-500': point.pointType === PointType.House,
