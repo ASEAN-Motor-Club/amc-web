@@ -6,7 +6,7 @@ Website for ASEAN Motor Club
 
 - **Framework**: [Svelte](https://svelte.dev/) with [SvelteKit](https://kit.svelte.dev/) using [Static Adapter](https://kit.svelte.dev/docs/adapter-static)
 - **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
-- **Icons**: [Material Symbols](https://fonts.google.com/icons?icon.style=Rounded) (Rounded pack)
+- **Icons**: [UnoCSS Icons preset](https://unocss.dev/presets/icons) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
 - **Testing**: [Vitest](https://vitest.dev/) with [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/)
 - **Internationalization**: [Paraglide](https://inlang.com/paraglide)
 - **Component Development**: [Storybook](https://storybook.js.org/)
@@ -115,30 +115,19 @@ Components are developed using Storybook for isolated development and documentat
 
 ## 🔣 Using Icons
 
-The project includes an `<Icon />` component that uses **Material Symbols Rounded** icons:
+This project uses the **UnoCSS Icons preset** with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/).
 
-```svelte
-<script>
-  import { Icon } from '$lib/ui/Icon/Icon.svelte';
-</script>
+- **Prefer the rounded version** of icons if available (e.g., `-rounded` suffix)
+- Use the `<Icon />` component for standard icon usage:
 
-<Icon icon="favorite" />
-<Icon icon="home" />
-<Icon icon="settings" />
-```
+  ```svelte
+  <Icon class="i-material-symbols:favorite-outline-rounded" size="sm" />
+  ```
 
-**Important**: When using a new icon, you must add it to the `iconList` constant in `src/hooks.server.ts`:
+  - The `class` attribute specifies the icon (using UnoCSS icon utility)
+  - The `size` prop sets the icon size (e.g., `sm`, `md`, `lg`)
 
-```diff
-const iconList = [
-   // add imported icons here
-+  'favorite',
-+  'home',
-+  'settings',
-];
-```
-
-This ensures the icon fonts are loaded efficiently by only including the icons your app actually uses.
+Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and [Material Symbols](https://icon-sets.iconify.design/material-symbols/) for available icons and usage details.
 
 ## 🎨 Styling Details
 
@@ -177,7 +166,7 @@ If you need to pass utility classes to a prop that is not named `class` (for exa
 ```svelte
 <LoadClass class={['-ml-2 mr-2 lg:hidden']}>
   {#snippet children([className])}
-    <IconButton buttonClass={className} ... />
+    <Component buttonClass={className} ... />
   {/snippet}
 </LoadClass>
 ```

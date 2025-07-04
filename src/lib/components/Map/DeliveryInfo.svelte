@@ -1,9 +1,9 @@
 <script lang="ts">
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryCargo } from '$lib/data/types';
   import { m } from '$lib/paraglide/messages';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
 
   export type HoverInfo = {
     info: DeliveryPoint;
@@ -43,7 +43,7 @@
         <div class="flex items-center gap-1.5">
           {cargoName[item]}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
-            <div class="i-material-symbols:link-rounded -mb-px !text-[0.75rem]"></div>
+            <Icon class="i-material-symbols:link-outline-rounded -mb-px" size="xs"/>
           {/if}
         </div>
         <div class="relative">

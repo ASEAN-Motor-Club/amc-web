@@ -65,6 +65,11 @@
      * @default '_self'
      */
     target?: '_blank' | '_self' | '_parent' | '_top';
+    /**
+     * Whether the render a button as an icon button
+     * @default false
+     */
+    icon?: boolean;
   };
 
   const {
@@ -81,6 +86,7 @@
     tag = 'button',
     href,
     target = '_self',
+    icon = false,
   }: ButtonProps = $props();
 </script>
 
@@ -88,6 +94,7 @@
   this={tag}
   class={[
     'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none transition',
+    icon && 'aspect-square !p-0',
     disabled && 'pointer-events-none opacity-50',
     // Variant + color classes
     variant === 'contained' && {

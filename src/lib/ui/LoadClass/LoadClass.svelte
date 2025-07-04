@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
+  import Empty from '../Empty/Empty.svelte';
 
   export type LoadClassProps = {
     /** CSS class to load, this component is useful to get around Svelte Scoped integration */
@@ -12,7 +13,6 @@
   const { class: propsClassname, children }: LoadClassProps = $props();
 </script>
 
-<div style:display="hidden">
-  <div class={propsClassname}></div>
-</div>
+<Empty class={propsClassname} />
+
 {@render children(propsClassname)}
