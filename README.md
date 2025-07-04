@@ -75,17 +75,13 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 - `npm run lint` - Check code formatting and linting
 - `npm run format` - Format code with Prettier
 
-## 🧪 Testing
+## 🔧 Development Tools
 
-This project uses Vitest for unit testing with Testing Library for Svelte components. Tests are located alongside components or in dedicated test files.
-
-```bash
-# Run tests once
-npm run test
-
-# Run tests in watch mode
-npm run test:unit
-```
+- **ESLint**: Configured for Svelte, TypeScript, and Storybook
+- **Prettier**: Automatic code formatting with Svelte and Tailwind plugins
+- **TypeScript**: Full type safety across the project
+- **Vitest**: Fast unit testing with jsdom environment
+- **Storybook**: Component development and documentation
 
 ## 🌍 Internationalization
 
@@ -105,31 +101,7 @@ Example usage:
 <h1>{m.hello_world()}</h1>
 ```
 
-## 🧩 Component Development
-
-Components are developed using Storybook for isolated development and documentation:
-
-- Components are located in `src/lib/ui/`
-- Each component includes a `.stories.svelte` file for Storybook
-- Run `npm run storybook` to develop and test components in isolation
-
-## 🔣 Using Icons
-
-This project uses the **UnoCSS Icons preset** with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/).
-
-- **Prefer the rounded version** of icons if available (e.g., `-rounded` suffix)
-- Use the `<Icon />` component for standard icon usage:
-
-  ```svelte
-  <Icon class="i-material-symbols:favorite-outline-rounded" size="sm" />
-  ```
-
-  - The `class` attribute specifies the icon (using UnoCSS icon utility)
-  - The `size` prop sets the icon size (e.g., `sm`, `md`, `lg`)
-
-Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and [Material Symbols](https://icon-sets.iconify.design/material-symbols/) for available icons and usage details.
-
-## 🎨 Styling Details
+## 🎨 Styling
 
 This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0. Styling is applied using the [UnoCSS Svelte Scoped integration](https://unocss.dev/integrations/svelte-scoped), which provides per-component style scoping for Svelte files.
 
@@ -159,7 +131,7 @@ This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax 
 
 ### Using `LoadClass` for Non-`class` Props
 
-If you need to pass utility classes to a prop that is not named `class` (for example, `buttonClass`), you can use the `<LoadClass />` component. This ensures UnoCSS detects and includes the utility classes, even though they are not directly in a `class` attribute.
+If you need to pass utility classes to a prop that is not named `class` (e.g., `buttonClass`), you can use the `<LoadClass />` component. This ensures UnoCSS detects and includes the utility classes, even though they are not directly in a `class` attribute.
 
 **Example:**
 
@@ -177,6 +149,42 @@ If you need to pass utility classes to a prop that is not named `class` (for exa
 This pattern is only needed for props that are not named `class`.
 
 Refer to the [UnoCSS documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
+
+## 🔣 Using Icons
+
+This project uses the **UnoCSS Icons preset** with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/).
+
+- **Prefer the rounded version** of icons if available (e.g., `-rounded` suffix)
+- Use the `<Icon />` component for standard icon usage:
+
+  ```svelte
+  <Icon class="i-material-symbols:favorite-outline-rounded" size="sm" />
+  ```
+
+  - The `class` attribute specifies the icon (using UnoCSS icon utility)
+  - The `size` prop sets the icon size (`xs`, `sm`, `md`, `lg`)
+
+Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and [Material Symbols](https://icon-sets.iconify.design/material-symbols/) for available icons and usage details.
+
+## 🧪 Testing
+
+This project uses Vitest for unit testing with Testing Library for Svelte components. Tests are located alongside components or in dedicated test files.
+
+```bash
+# Run tests once
+npm run test
+
+# Run tests in watch mode
+npm run test:unit
+```
+
+## 🧩 Component Development
+
+Components are developed using Storybook for isolated development and documentation:
+
+- Components are located in `src/lib/ui/`
+- Each component includes a `.stories.svelte` file for Storybook
+- Run `npm run storybook` to develop and test components in isolation
 
 ## 🤝 Collaboration Guidelines
 
@@ -207,14 +215,6 @@ npm run lint    # Check linting
 npm run check   # Type checking
 npm run test    # Run tests
 ```
-
-## 🔧 Development Tools
-
-- **ESLint**: Configured for Svelte, TypeScript, and Storybook
-- **Prettier**: Automatic code formatting with Svelte and Tailwind plugins
-- **TypeScript**: Full type safety across the project
-- **Vitest**: Fast unit testing with jsdom environment
-- **Storybook**: Component development and documentation
 
 ---
 
