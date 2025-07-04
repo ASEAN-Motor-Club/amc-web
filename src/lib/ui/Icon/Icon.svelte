@@ -35,7 +35,7 @@
      * Size of the icon
      * @default 'md'
      */
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | 'custom';
   };
 
   const {

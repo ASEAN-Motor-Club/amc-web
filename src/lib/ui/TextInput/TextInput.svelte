@@ -2,6 +2,7 @@
   import type {
     ChangeEventHandler,
     ClassValue,
+    FocusEventHandler,
     FormEventHandler,
     FullAutoFill,
     HTMLInputAttributes,
@@ -63,6 +64,14 @@
      * @default 'off'
      */
     autocomplete?: FullAutoFill;
+    /**
+     * Event handler for focus changes
+     */
+    onFocus?: FocusEventHandler<HTMLInputElement>;
+    /**
+     * Event handler for input changes
+     */
+    onBlur?: FocusEventHandler<HTMLInputElement>;
   } & Omit<
     HTMLInputAttributes,
     'class' | 'onchange' | 'type' | 'autocomplete' | 'value' | 'placeholder' | 'name' | 'size'
@@ -82,6 +91,8 @@
     size = 'md',
     round = false,
     id: propsId,
+    onFocus,
+    onBlur,
     ...inputAttributes
   }: TextInputProps = $props();
 
@@ -125,4 +136,6 @@
   {name}
   {id}
   {...inputAttributes}
+  onfocus={onFocus}
+  onblur={onBlur}
 />

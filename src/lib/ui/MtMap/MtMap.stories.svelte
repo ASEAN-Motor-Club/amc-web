@@ -1,8 +1,8 @@
 <script module lang="ts">
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import MtMap from './MtMap.svelte';
-  import mapImage from '$lib/assets/map.png';
-  import roadImage from '$lib/assets/road.svg';
+  import mapImage from '$lib/assets/images/map.avif';
+  import roadImage from '$lib/assets/images/road.svg';
 
   const { Story } = defineMeta({
     title: 'Ui/MtMap',

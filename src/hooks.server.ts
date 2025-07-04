@@ -1,8 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { sequence } from '@sveltejs/kit/hooks';
+import type { Icon } from '$lib/ui/Icon/types';
 
-const iconList = [
+const iconList: Icon[] = [
   // add imported icons here
   'map',
   'home',
@@ -12,6 +13,7 @@ const iconList = [
   'light_mode',
   'dark_mode',
   'menu',
+  'link',
 ];
 
 const iconListStr = iconList.toSorted().join(',');

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { orientation2D, toDeg, toRad } from './vectors';
-import type { Vector3 } from '$lib/components/TrackEditor/types';
+import type { Vector3 } from '$lib/types';
 
 describe('vectors', () => {
   describe('orientation2D', () => {

@@ -1,5 +1,5 @@
 import { z } from 'zod/v4-mini';
-import { m } from '$lib/paraglide/messages.js';
+import { m } from '$lib/paraglide/messages';
 
 const createWaypointError = (iss: { path?: PropertyKey[]; expected: string }) => {
   return m['track_editor.validate.waypoint_invalid']({

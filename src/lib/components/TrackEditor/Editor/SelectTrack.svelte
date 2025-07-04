@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages.js';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import { onMount } from 'svelte';
   import type { TrackData } from '../types';
   import { trackSchema } from '$lib/utils/validateTrack';
   import type { ChangeEventHandler } from 'svelte/elements';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context.js';
+  import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { page } from '$app/state';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { noop } from 'lodash-es';
