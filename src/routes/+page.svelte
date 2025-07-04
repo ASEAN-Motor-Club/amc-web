@@ -24,7 +24,9 @@
     <div>
       <h2 class="mb-3 text-2xl font-bold">{m['site_name']()}</h2>
       <p class="text-lg">{m['home.description']()}</p>
-      <div class="text-text/75 dark:text-text-dark/75 text-sm mt-2">{m['home.copyright']({ year })}</div>
+      <div class="text-text/75 dark:text-text-dark/75 mt-2 text-sm">
+        {m['home.copyright']({ year })}
+      </div>
     </div>
     <div class="justify-self-end">
       <iframe

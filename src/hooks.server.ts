@@ -2,7 +2,6 @@ import type { Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { sequence } from '@sveltejs/kit/hooks';
 
-
 const handleUnoCss: Handle = async ({ event, resolve }) => {
   const response = await resolve(event, {
     transformPageChunk: ({ html }) =>
