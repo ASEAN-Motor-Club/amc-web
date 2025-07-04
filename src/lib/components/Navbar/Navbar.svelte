@@ -62,7 +62,7 @@
 </script>
 
 <nav
-  class="bg-background-100 dark:bg-background-900 shadow/10 ring-black/1 fixed flex h-14 w-full items-center px-4 ring lg:h-16"
+  class="bg-background-100 dark:bg-background-900 ring-black/1 fixed flex h-14 w-full items-center px-4 shadow-black/10 ring lg:h-16"
 >
   <LoadClass class={['-ml-2 mr-2 lg:hidden']}>
     {#snippet children([className])}

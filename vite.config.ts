@@ -11,6 +11,7 @@ export default defineConfig({
     devtoolsJson(),
     UnoCSS({
       cssFileTransformers: [transformerDirectives()],
+      classPrefix: '_',
     }),
     sveltekit(),
     paraglideVitePlugin({

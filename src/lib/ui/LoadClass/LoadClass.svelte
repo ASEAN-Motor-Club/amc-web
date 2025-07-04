@@ -12,7 +12,7 @@
   const { class: propsClassname, children }: LoadClassProps = $props();
 </script>
 
-<div class="hidden">
+<div style:display="hidden">
   <div class={propsClassname}></div>
 </div>
 {@render children(propsClassname)}
