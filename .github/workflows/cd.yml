@@ -30,9 +30,6 @@ jobs:
       - name: 🏗️ Build application
         run: npm run build
 
-      - name: 🗑️ Remove Map Tiles
-        run: rm -rf ./build/map-tiles
-
       - name: 🚀 Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
