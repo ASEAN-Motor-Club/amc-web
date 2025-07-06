@@ -1,8 +1,14 @@
-<script>
+<script lang="ts">
   import { m } from '$lib/paraglide/messages';
+
+  type Props = {
+    class?: string;
+  };
+
+  const { class: className }: Props = $props();
 </script>
 
-<div class="-mt-14 flex h-dvh flex-col items-center justify-center pt-14 lg:-mt-16 lg:pt-16">
+<div class={['flex h-[calc(100dvh_-_12rem)] flex-col items-center justify-center', className]}>
   <div class="i-material-symbols:car-crash-outline-rounded text-9xl text-neutral-500/50"></div>
 
   <h1 class="mt-4 px-2 text-center text-xl font-semibold">{m.not_finished()}</h1>

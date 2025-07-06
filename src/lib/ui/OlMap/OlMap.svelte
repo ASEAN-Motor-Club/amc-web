@@ -136,8 +136,12 @@
     };
   });
 
-  export const centerOn = ([x, y]: [number, number]) => {
-    map.getView().animate({ zoom: 5, center: [x, y], duration: defaultTransitionDurationMs * 4 });
+  export const centerOn = ([x, y]: [number, number], instant = false) => {
+    map.getView().animate({
+      zoom: 5,
+      center: [x, y],
+      duration: instant ? 0 : defaultTransitionDurationMs * 4,
+    });
   };
 </script>
 
