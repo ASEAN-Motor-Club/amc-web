@@ -34,7 +34,6 @@
     type DeliveryPoint,
   } from '$lib/data/deliveryPoint';
   import { goto } from '$app/navigation';
-  import { Map } from 'ol';
   import PlayerFetchWorker from '$lib/components/Map/playerFetchWorker.ts?worker';
   import type { PlayerData } from '$lib/components/Map/playerFetchWorker';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
@@ -384,33 +383,21 @@
     };
   });
 
-  const handleMapRightClick = (e: MouseEvent, map: Map) => {
-    const pixel = map.getEventPixel(e);
-    map.forEachFeatureAtPixel(
-      pixel,
-      (feature) => {
-        const f = feature as Feature;
-        const type = f.get('pointType') as PointType | undefined;
-        if (type === PointType.Delivery) {
-          const info = f.get('info') as DeliveryPoint;
-          goto(`/industries/${info.guid}`);
-        }
-        if (type === PointType.House) {
-          goto(`/housing`);
-          return true;
-        }
-
-        return true;
-      },
-      {
-        layerFilter: (layer) => {
-          return (
-            layer === deliveryPointLayer || layer === residentPointLayer || layer === houseLayer
-          );
-        },
-        hitTolerance: 10,
-      },
-    );
+  const handleMapRightClick = () => {
+    if (hoverPoint === undefined || hoverPoint.get('pointType') !== PointType.Delivery) {
+      deliveryLineSource.clear(true);
+      lockPoint?.set('hover', false);
+      lockPoint = undefined;
+      return;
+    } else {
+      lockPoint?.set('hover', false);
+      if (hoverPoint.get('pointType') === PointType.Delivery) {
+        lockPoint = hoverPoint;
+        deliveryLineSource.clear(true);
+        const deliveryPoint = lockPoint.get('info') as DeliveryPoint;
+        updateDeliveryLine(deliveryPoint);
+      }
+    }
   };
 
   const handleInfoClick = () => {
@@ -437,20 +424,35 @@
   const onClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
     const isMouse = matchMedia('(hover) and (pointer: fine)').matches;
     if (isMouse) {
-      if (hoverPoint === undefined || hoverPoint.get('pointType') !== PointType.Delivery) {
-        deliveryLineSource.clear(true);
-        lockPoint?.set('hover', false);
-        lockPoint = undefined;
-        return;
-      } else {
-        lockPoint?.set('hover', false);
-        if (hoverPoint.get('pointType') === PointType.Delivery) {
-          lockPoint = hoverPoint;
-          deliveryLineSource.clear(true);
-          const deliveryPoint = lockPoint.get('info') as DeliveryPoint;
-          updateDeliveryLine(deliveryPoint);
-        }
-      }
+      deliveryLineSource.clear(true);
+      lockPoint?.set('hover', false);
+      lockPoint = undefined;
+      e.map.forEachFeatureAtPixel(
+        e.pixel,
+        (feature) => {
+          const f = feature as Feature;
+          const type = f.get('pointType') as PointType | undefined;
+          if (type === PointType.Delivery) {
+            const info = f.get('info') as DeliveryPoint;
+            goto(`/industries/${info.guid}`);
+          }
+          if (type === PointType.House) {
+            goto(`/housing`);
+            return true;
+          }
+
+          return true;
+        },
+        {
+          layerFilter: (layer) => {
+            return (
+              layer === deliveryPointLayer || layer === residentPointLayer || layer === houseLayer
+            );
+          },
+          hitTolerance: 10,
+        },
+      );
+      return;
     }
     handlePointerMoveOrClick(e);
   };
@@ -499,6 +501,13 @@
         map.centerOn(reProjectPoint([house.coord.x, house.coord.y]), true);
       }
     }
+  });
+
+  onMount(() => {
+    return () => {
+      hoverPoint?.set('hover', false);
+      lockPoint?.set('hover', false);
+    };
   });
 </script>
 

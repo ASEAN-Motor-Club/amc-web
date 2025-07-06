@@ -122,13 +122,13 @@
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-touch:hidden mb-0.5 !bg-white/10 !px-2">
-          {m['map.left_click_lock']()}
+          {m['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
         <Button size="xs" class="media-touch:pointer-events-auto !bg-white/10 !px-2" {onClick}>
-          <span class="media-mouse:inline hidden">{m['map.right_click_info']()}</span>
-          <span class="media-touch:inline hidden">{m['map.click_info']()}</span>
+          <span class="media-mouse:inline hidden">{m['map.click_info']()}</span>
+          <span class="media-touch:inline hidden">{m['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>
