@@ -17,6 +17,7 @@ export default defineConfig({
   theme: {
     font: {
       sans: "'Noto Sans', sans-serif",
+      cursive: "'Playpen Sans', cursive",
     },
     colors: {
       background: {

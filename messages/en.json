@@ -108,7 +108,8 @@
     "click_here_info": "Click here for more info"
   },
   "home": {
-    "description": "MotorTown's premier community server in Southeast Asia, where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
+    "desc_title": "MotorTown's premier community server in Southeast Asia",
+    "description": "Where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
     "copyright": "© {year} ASEAN Motor Club. All rights reserved."
   },
   "not_finished": "Under construction, please come back later!",
