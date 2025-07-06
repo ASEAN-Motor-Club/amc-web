@@ -13,7 +13,7 @@ import {
   colorYellow500,
 } from '$lib/tw-var';
 import { deliveryPoints, type DeliveryPoint } from '$lib/data/deliveryPoint';
-import { house } from '$lib/data/house';
+import { houses } from '$lib/data/house';
 
 const [deliPoint, residentPoint] = deliveryPoints.reduce(
   (acc, point) => {
@@ -76,7 +76,7 @@ export const residentPointLayer = new WebGLVectorLayer({
 
 export const houseLayer = new WebGLVectorLayer({
   source: new VectorSource({
-    features: house.map(
+    features: houses.map(
       (point) =>
         new Feature({
           geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),

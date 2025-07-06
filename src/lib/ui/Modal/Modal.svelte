@@ -49,7 +49,7 @@
     {#if open}
       <div
         class={[
-          'z-10000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+          'z-1000000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
           propsClassName,
         ]}
         transition:fade={{
@@ -68,7 +68,7 @@
 {:else if open}
   <div
     class={[
-      'z-10000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+      'z-1000000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
       propsClassName,
     ]}
     transition:fade={{

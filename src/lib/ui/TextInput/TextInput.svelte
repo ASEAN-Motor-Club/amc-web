@@ -72,9 +72,22 @@
      * Event handler for input changes
      */
     onBlur?: FocusEventHandler<HTMLInputElement>;
+    /**
+     * Whether the input is disabled
+     * @default false
+     */
+    disabled?: boolean;
   } & Omit<
     HTMLInputAttributes,
-    'class' | 'onchange' | 'type' | 'autocomplete' | 'value' | 'placeholder' | 'name' | 'size'
+    | 'class'
+    | 'onchange'
+    | 'type'
+    | 'autocomplete'
+    | 'value'
+    | 'placeholder'
+    | 'name'
+    | 'size'
+    | 'disabled'
   >;
 
   const {
@@ -93,6 +106,7 @@
     id: propsId,
     onFocus,
     onBlur,
+    disabled,
     ...inputAttributes
   }: TextInputProps = $props();
 
@@ -112,15 +126,16 @@
     variant === 'contained' && [
       'focus:outline-solid focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10',
       error
-        ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 dark:hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
-        : 'bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20',
+        ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
+        : 'bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20',
     ],
     variant === 'outlined' && [
       'border bg-white dark:bg-black',
       error
-        ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
-        : 'border-neutral-400 hover:border-neutral-600 focus:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-400',
+        ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 dark:group-hover:border-error-600 hover:border-error-600 group-hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
+        : 'border-neutral-400 hover:border-neutral-600 focus:border-neutral-500 group-hover:border-neutral-600 dark:border-neutral-700 dark:hover:border-neutral-400 dark:group-hover:border-neutral-400',
     ],
+    disabled && 'pointer-events-none opacity-50',
     // Size/shape classes
     size === 'sm' && ['h-8  text-sm', round ? 'rounded-full px-3' : 'rounded-sm px-2'],
     size === 'md' && ['h-10  text-base', round ? 'rounded-full px-4' : 'rounded-md px-3'],
@@ -135,6 +150,7 @@
   {placeholder}
   {name}
   {id}
+  {disabled}
   {...inputAttributes}
   onfocus={onFocus}
   onblur={onBlur}

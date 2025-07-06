@@ -214,6 +214,8 @@ npm run format  # Format code
 npm run lint    # Check linting
 npm run check   # Type checking
 npm run test    # Run tests
+# or
+npm run checklist
 ```
 
 ---

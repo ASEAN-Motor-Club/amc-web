@@ -14,7 +14,7 @@ export type House = HouseJson & {
   location: string;
 };
 
-export const house = (houseJson as unknown as HouseJson[]).map((dp) => {
+export const houses = (houseJson as unknown as HouseJson[]).map((dp) => {
   const location = getLocationAtPoint(dp.coord);
 
   return {

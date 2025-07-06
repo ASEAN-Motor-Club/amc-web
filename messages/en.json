@@ -102,13 +102,24 @@
     "search_placeholder": "Search for a location",
     "supply": "Supply",
     "demand": "Demand",
-    "owner": "Owner",
     "more_results": "{count} more result, try narrow your search",
-    "size": "Size:",
-    "rent_price": "Rent price:",
-    "rent_left": "Rent left:",
-    "depot": "Depot:",
-    "depot_storage": "Depot storage:",
+    "left_click_lock": "Left click to lock supply line",
+    "right_click_info": "Right click for more info",
+    "click_info": "Click here for more info"
+  },
+  "home": {
+    "description": "MotorTown's premier community server in Southeast Asia, where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
+    "copyright": "© {year} ASEAN Motor Club. All rights reserved."
+  },
+  "not_finished": "Under construction, please come back later!",
+  "housing": {
+    "title": "Housing",
+    "owner": "Owner",
+    "size": "Size",
+    "rent_price": "Rent price",
+    "rent_left": "Rent left",
+    "depot": "Depot",
+    "depot_storage": "Depot storage",
     "vacant": "Vacant",
     "expired": "Expired",
     "minute": "minute",
@@ -118,13 +129,18 @@
     "day": "day",
     "days": "days",
     "less_than_minute": "<1 minute",
-    "left_click_lock": "Left click to lock supply line",
-    "right_click_info": "Right click for more info",
-    "click_info": "Click here for more info"
+    "search_placeholder": "Search house or owner",
+    "sort": {
+      "name": "Name",
+      "rent_left": "Rent Left",
+      "depot_storage": "Depot Storage"
+    }
   },
-  "home": {
-    "description": "MotorTown's premier community server in Southeast Asia, where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
-    "copyright": "© {year} ASEAN Motor Club. All rights reserved."
+  "view_on_map": "View on Map",
+  "industries": {
+    "title": "Industries"
   },
-  "not_finished": "Under construction, please come back later!"
+  "radio": {
+    "title": "Radio"
+  }
 }

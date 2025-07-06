@@ -47,6 +47,8 @@
   import { cargoMetadata } from '$lib/data/cargo';
   import LoadClass from '$lib/ui/LoadClass/LoadClass.svelte';
   import { m } from '$lib/paraglide/messages';
+  import { page } from '$app/state';
+  import { houses } from '$lib/data/house';
 
   const playerPointSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -487,6 +489,16 @@
     return () => {
       abortController.abort();
     };
+  });
+
+  onMount(() => {
+    const housing = page.url.searchParams.get('housing');
+    if (housing) {
+      const house = houses.find((h) => h.name === housing);
+      if (house) {
+        map.centerOn(reProjectPoint([house.coord.x, house.coord.y]), true);
+      }
+    }
   });
 </script>
 
