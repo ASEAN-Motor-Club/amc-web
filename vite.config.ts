@@ -44,4 +44,14 @@ export default defineConfig({
       },
     ],
   },
+  server: {
+    proxy: {
+      '/stream': {
+        target: 'https://www.aseanmotorclub.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/stream/, '/stream_high'),
+      },
+    },
+  },
 });
