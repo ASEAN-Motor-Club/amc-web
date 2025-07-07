@@ -142,7 +142,9 @@
     "title": "Industries"
   },
   "radio": {
-    "title": "Radio"
+    "title": "Radio",
+    "play": "Play",
+    "pause": "Pause"
   },
   "events": {
     "fastest": "Fastest!",
