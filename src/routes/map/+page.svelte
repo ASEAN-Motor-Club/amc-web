@@ -48,6 +48,7 @@
   import { m } from '$lib/paraglide/messages';
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
+  import { matchMouse } from '$lib/utils/media';
 
   const playerPointSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -413,7 +414,7 @@
   };
 
   const onPointerMove = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
-    const isMouse = matchMedia('(hover) and (pointer: fine)').matches;
+    const isMouse = matchMouse();
     if (isMouse) {
       handlePointerMoveOrClick(e);
     } else {
@@ -422,7 +423,7 @@
   };
 
   const onClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
-    const isMouse = matchMedia('(hover) and (pointer: fine)').matches;
+    const isMouse = matchMouse();
     if (isMouse) {
       deliveryLineSource.clear(true);
       lockPoint?.set('hover', false);
