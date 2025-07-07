@@ -1,16 +1,21 @@
 <script lang="ts">
   import { m } from '$lib/paraglide/messages';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import tireTrack from '$lib/assets/images/tire_tracks.avif';
+  import Card from '$lib/ui/Card/Card.svelte';
   import Player from '$lib/components/Radio/Player.svelte';
+  import tireTrack from '$lib/assets/images/tire_tracks.avif';
   import { writable } from 'svelte/store';
 
   const nowPlaying = writable<string | null>('Turbo Groove');
 </script>
 
+{#snippet playing()}
+  <span>{$nowPlaying}</span>
+{/snippet}
+
 <CommonHead>{m['radio.title']()}</CommonHead>
 
-<div class="relative min-h-screen overflow-hidden bg-gray-100 py-8 dark:bg-gray-900">
+<div class="bg-white-100 relative min-h-screen overflow-hidden py-8 dark:bg-gray-900">
   <img
     src={tireTrack}
     alt="Tire background"
@@ -19,13 +24,11 @@
   <div class="pointer-events-none absolute inset-0 bg-black/90 dark:bg-black/70"></div>
 
   <div class="relative z-10 mx-auto w-full px-3">
-    <Player streamUrl="/stream" stationName="ASEAN Motor Club Radio">
-      <span slot="current">{$nowPlaying}</span>
-    </Player>
+    <Player streamUrl="/stream" stationName="ASEAN Motor Club Radio" {playing}></Player>
   </div>
 
-  <div
-    class="bg-background/80 dark:bg-background-900/80 relative z-10 mx-auto mt-8 max-w-[700px] rounded-lg border border-gray-300 p-6 text-gray-800 backdrop-blur-sm dark:border-gray-700 dark:text-gray-200"
+  <Card
+    class="bg-background-300 dark:bg-background-900/80 relative mx-auto mt-8 max-w-[700px] rounded-lg border border-gray-300 p-6 text-gray-800 backdrop-blur-sm dark:border-gray-700 dark:text-gray-200"
   >
     <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Radio Features</h2>
     <ul class="mb-4 list-inside list-disc space-y-2">
@@ -64,10 +67,13 @@
     </p>
 
     <p class="mb-2 font-medium">
-      Place the <code class="code-snippet">RadioMod_P.pak</code> file into:
+      Place the <code
+        class="bg-background-400 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800 dark:text-gray-200"
+        >RadioMod_P.pak</code
+      > file into:
     </p>
     <pre
-      class="bg-background-200 dark:bg-background-800 mb-4 w-full overflow-x-auto rounded-md p-3 text-sm"><code
+      class="bg-background-400 dark:bg-background-800 mb-4 w-full overflow-x-auto rounded-md p-3 text-sm"><code
         class="text-black dark:text-white">steamapps\common\Motor Town\MotorTown\Content\Paks\</code
       ></pre>
     <p class="mb-2 font-medium">next to MotorTown-Windows.pak You need to RESTART the game.</p>
@@ -83,22 +89,22 @@
       </li>
       <li>
         Navigate to <code
-          class="dark:text-gray-200; bg-background-200 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800"
-          >MotorTown > Content > Paks</code
-        >
+          class="bg-background-400 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800 dark:text-gray-200"
+          >MotorTown > Content > Paks
+        </code>
       </li>
       <li>
         Place the <code
-          class="dark:text-gray-200; bg-background-200 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800"
-          >RadioMod_P.pak</code
-        >
+          class="bg-background-400 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800 dark:text-gray-200"
+          >RadioMod_P.pak
+        </code>
         file next to
         <code
-          class="dark:text-gray-200; bg-background-200 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800"
-          >MotorTown-Windows.pak</code
-        >
+          class="bg-background-400 dark:bg-background-700 rounded px-1.5 py-1 font-mono text-sm text-gray-800 dark:text-gray-200"
+          >MotorTown-Windows.pak
+        </code>
       </li>
       <li><strong>Restart the game</strong> for the mod to take effect.</li>
     </ol>
-  </div>
+  </Card>
 </div>

@@ -1,10 +1,18 @@
 <script lang="ts">
   import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { writable } from 'svelte/store';
   import { m } from '$lib/paraglide/messages';
+  import type { Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
+  import Slider from '$lib/ui/Slider/Slider.svelte';
 
-  export let streamUrl: string;
-  export let stationName = 'My Radio';
+  interface Props {
+    streamUrl: string;
+    stationName: string;
+    playing: Snippet;
+  }
+
+  let { streamUrl, stationName = 'My Radio', playing }: Props = $props();
 
   const dispatch = createEventDispatcher();
 
@@ -13,8 +21,8 @@
   let canvas: HTMLCanvasElement;
   let grillElement: HTMLDivElement; // Bind the grill div
 
-  let isPlaying = false;
-  let volume = 1;
+  const isPlaying = writable<boolean | null>(false);
+  const volume = writable(1);
 
   // Web Audio API variables
   let audioCtx: AudioContext;
@@ -100,20 +108,23 @@
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
-    if (!isPlaying) audio.play().catch(console.error);
+    if (!$isPlaying) audio.play().catch(console.error);
     else audio.pause();
-    isPlaying = !isPlaying;
+    $isPlaying = !$isPlaying;
     dispatch('playstate', { isPlaying });
   }
 
-  function onVolume(e: Event) {
-    volume = +(e.target as HTMLInputElement).value;
-    audio.volume = volume;
+  function onVolume(value: number) {
+    audio.volume = +value;
   }
 </script>
 
 <div
-  class="radio-bg border-3 mx-auto flex max-h-screen w-full max-w-[700px] flex-col overflow-hidden rounded-[10px] border-[#5a2c00] shadow-[0_10px_20px_rgba(0,0,0,0.3)] md:h-auto"
+  class="radio
+           border-3 border-3 mx-auto
+           flex max-h-screen
+           w-full
+           max-w-[700px] flex-col overflow-hidden rounded-[10px] rounded-lg border-[#5a2c00] bg-[#8b4513] bg-[linear-gradient(135deg,#c2a27c_0%,#a18361_20%,#c2a27c_40%,#a18361_60%,#c2a27c_80%,#a18361_100%)] shadow-[0_10px_20px_rgba(0,0,0,0.3)] md:h-auto"
 >
   <div
     class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-[inset_0_-2px_5px_rgba(0,0,0,0.2)]"
@@ -123,9 +134,35 @@
 
   <div class="flex flex-1 flex-col bg-[#d2b48c] md:flex-row">
     <div
-      class="left-half-bg flex h-[40vh] items-center justify-center p-4 md:h-auto md:flex-1 md:border-r-2 md:border-black/10"
+      class="flex h-[40vh] items-center justify-center bg-[#6b3410]
+              p-4 [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)] md:h-auto md:flex-1
+              md:border-r-2
+              md:border-black/10"
     >
-      <div bind:this={grillElement} class="grill h-[85%] md:h-[85%] md:w-[85%]"></div>
+      <div
+        bind:this={grillElement}
+        class=" border-3
+          bg-background-950
+          relative
+          aspect-square
+          h-[85%]
+          overflow-hidden
+          rounded-full
+          border-solid
+          border-[#555]
+          bg-gradient-to-b
+          from-[#333]
+          to-[#111]
+          transition-transform
+          duration-100
+          ease-out
+          [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)]
+          before:absolute
+          before:inset-0
+          before:content-['']
+          before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]
+          md:aspect-auto md:h-[85%] md:w-[85%]"
+      ></div>
     </div>
 
     <div class="flex h-[40vh] flex-col p-4 md:h-auto md:flex-1">
@@ -137,110 +174,30 @@
       <div
         class="flex min-h-[80px] flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-[inset_0_0_8px_rgba(0,0,0,0.4)]"
       >
-        <div class="song-glow mb-2.5 font-mono text-sm">
-          <slot name="current">No track</slot>
+        <div
+          class="song-current mb-2.5 font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
+        >
+          {#if playing}
+            {@render playing()}
+          {:else}
+            No track
+          {/if}
         </div>
         <Button onClick={togglePlay} class="mb-3">
-          {isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
+          {$isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
         </Button>
-        <input type="range" min="0" max="1" step="0.01" bind:value={volume} on:input={onVolume} />
+        <Slider
+          value={$volume}
+          onChange={(value) => onVolume(value)}
+          name="radio_volume"
+          min={0}
+          max={1}
+          size="sm"
+          class="w-full"
+        />
       </div>
     </div>
   </div>
 
   <audio bind:this={audio} src={streamUrl} preload="none" crossorigin="anonymous"></audio>
 </div>
-
-<style>
-  /* --- Style block is mostly unchanged, with one addition --- */
-
-  .radio-bg {
-    background:
-      linear-gradient(
-        135deg,
-        #c2a27c 0%,
-        #a18361 20%,
-        #c2a27c 40%,
-        #a18361 60%,
-        #c2a27c 80%,
-        #a18361 100%
-      ),
-      #8b4513;
-  }
-  .left-half-bg {
-    background:
-      linear-gradient(
-        135deg,
-        #c2a27c 0%,
-        #a18361 20%,
-        #c2a27c 40%,
-        #a18361 60%,
-        #c2a27c 80%,
-        #a18361 100%
-      ),
-      #8b4513;
-  }
-
-  .grill {
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background: linear-gradient(to bottom, #333, #111);
-    border: 3px solid #555;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-    /* Add a transition for smooth scaling */
-    transition: transform 0.1s ease-out;
-  }
-  @media (min-width: 768px) {
-    .grill {
-      aspect-ratio: auto;
-    }
-  }
-
-  .grill::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, #444, #444 2px, transparent 2px, transparent 7px),
-      repeating-linear-gradient(90deg, #444, #444 2px, transparent 2px, transparent 7px);
-  }
-
-  .song-glow {
-    color: #aaffaa;
-    text-shadow: 0 0 5px rgba(170, 255, 170, 0.7);
-  }
-
-  input[type='range'] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 90%;
-    height: 7px;
-    background: #8b4513;
-    border-radius: 5px;
-    outline: none;
-    transition: opacity 0.2s;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    background: #d2b48c;
-    border: 2px solid #5a2c00;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
-  input[type='range']::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    background: #d2b48c;
-    border: 2px solid #5a2c00;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
-</style>
