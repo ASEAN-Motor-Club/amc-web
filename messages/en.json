@@ -142,5 +142,10 @@
   },
   "radio": {
     "title": "Radio"
+  },
+  "events": {
+    "fastest": "Fastest!",
+    "open_in_editor": "Open in Track Editor",
+    "copy_track": "Copy Track"
   }
 }
