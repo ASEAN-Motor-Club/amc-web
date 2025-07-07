@@ -121,14 +121,14 @@
         {hoverInfo.location}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
-        <Button size="xs" class="media-touch:hidden mb-0.5 !bg-white/10 !px-2">
+        <Button size="xs" class="media-not-mouse:hidden mb-0.5 !bg-white/10 !px-2">
           {m['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
-        <Button size="xs" class="media-touch:pointer-events-auto !bg-white/10 !px-2" {onClick}>
+        <Button size="xs" class="media-not-mouse:pointer-events-auto !bg-white/10 !px-2" {onClick}>
           <span class="media-mouse:inline hidden">{m['map.click_info']()}</span>
-          <span class="media-touch:inline hidden">{m['map.click_here_info']()}</span>
+          <span class="media-not-mouse:inline hidden">{m['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>
