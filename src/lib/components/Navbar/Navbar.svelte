@@ -111,7 +111,7 @@
   <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => (menu = true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
-  <a href="/" class="mr-8 text-2xl font-bold leading-none">
+  <a href="/" class="font-cursive mr-8 text-2xl font-bold leading-none">
     <span class="contents max-[375px]:hidden lg:max-xl:hidden">
       {m['site_name']()}
     </span>
