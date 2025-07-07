@@ -139,7 +139,7 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-touch:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 !p-0 !ring-white/5 backdrop-blur-lg"
+          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 !p-0 !ring-white/5 backdrop-blur-lg"
         >
           {#each foundValuesSliced as point, i (point.name + point.guid)}
             {#if i > 0}

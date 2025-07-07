@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from '$lib/paraglide/messages';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import tireTrack from '$lib/assets/images/original/tire_tracks.jpg';
+  import tireTrack from '$lib/assets/images/tire_tracks.avif';
   import Player from '$lib/components/Radio/Player.svelte';
   import { writable } from 'svelte/store';
 

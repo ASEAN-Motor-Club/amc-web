@@ -116,5 +116,11 @@ export default defineConfig({
         950: 'oklch(16.68% 0.03 20.81)',
       },
     },
+    media: {
+      'not-touch': 'not (hover: none) and (pointer: coarse)',
+      'not-stylus': 'not (hover: none) and (pointer: fine)',
+      'not-pointer': 'not(hover) and (pointer: coarse)',
+      'not-mouse': 'not (hover) and (pointer: fine)',
+    },
   },
 });
