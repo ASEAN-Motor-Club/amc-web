@@ -41,7 +41,12 @@
     analyser.connect(audioCtx.destination);
     bufferLength = analyser.frequencyBinCount; // Use frequencyBinCount for frequency data
     dataArray = new Uint8Array(bufferLength);
-    const ctx = canvas.getContext('2d')!;
+    const maybeCtx = canvas.getContext('2d');
+    if (!maybeCtx) {
+      console.error('2D context not available');
+      return;
+    }
+    const ctx = maybeCtx;
 
     function draw() {
       animationId = requestAnimationFrame(draw);
