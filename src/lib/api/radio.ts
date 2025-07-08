@@ -34,7 +34,7 @@ export const getStreamUrl = (): string => {
 
 export const startNowPlayingPolling = (
   callback: (track: string) => void,
-  interval = 10000,
+  interval = 120000,
 ): AbortController => {
   const controller = new AbortController();
 
