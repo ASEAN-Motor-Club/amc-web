@@ -8,12 +8,15 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['../static'],
-  viteFinal: async (config) => {
-    const { mergeConfig } = await import('vite');
-
-    return mergeConfig(config, {
-      base: '/storybook/',
-    });
+  viteFinal: async (config, { configType }) => {
+    if (configType === 'PRODUCTION') {
+      config.base = '/storybook/';
+    }
+    return config;
   },
+  managerHead: (head, { configType }) => `
+    ${head}
+    ${configType === 'PRODUCTION' ? '<base href="/storybook/" />' : ''}
+  `,
 };
 export default config;
