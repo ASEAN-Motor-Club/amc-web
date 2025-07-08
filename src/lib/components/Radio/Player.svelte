@@ -145,7 +145,7 @@
         class="flex min-h-[80px] flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-[inset_0_0_8px_rgba(0,0,0,0.4)]"
       >
         <div
-          class="song-current mb-2.5 font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
+          class="song-current mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
         >
           {$currentTrack}
         </div>
