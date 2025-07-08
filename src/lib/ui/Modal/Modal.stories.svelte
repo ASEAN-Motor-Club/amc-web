@@ -44,17 +44,13 @@
   <Button onClick={() => (modalOpen = true)}>Open Modal</Button>
   <Modal open={modalOpen} onClose={() => (modalOpen = false)}>
     <Card class="max-w-120 flex flex-col p-5">
-      <h2 class="pb-4.5 text-2xl font-bold">Title</h2>
+      <h2 class="pb-4.5 text-2xl font-bold tracking-tight">Title</h2>
       <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line pb-6 text-sm">
         {msg}
       </p>
-      <div class="flex justify-end gap-6">
-        <Button onClick={() => (modalOpen = false)} color="primary" variant="text" unPadded
-          >Confirm</Button
-        >
-        <Button onClick={() => (modalOpen = false)} color="secondary" variant="text" unPadded
-          >Close</Button
-        >
+      <div class="-mx-3 -my-3 flex justify-end gap-2">
+        <Button onClick={() => (modalOpen = false)} color="primary" variant="text">Confirm</Button>
+        <Button onClick={() => (modalOpen = false)} color="secondary" variant="text">Close</Button>
       </div>
     </Card>
   </Modal>

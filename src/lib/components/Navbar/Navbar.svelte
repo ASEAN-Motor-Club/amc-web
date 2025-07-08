@@ -6,7 +6,6 @@
   import { fly } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import NavbarItem from './NavbarItem.svelte';
-  import { page } from '$app/state';
   import Icon from '$lib/ui/Icon/Icon.svelte';
 
   const links = [
@@ -61,48 +60,23 @@
 </script>
 
 {#snippet mapIcon()}
-  <Icon
-    class={[
-      'i-material-symbols:map-outline-rounded group-hover:text-green-500',
-      { 'text-green-500': page.url.pathname === '/map' },
-    ]}
-  />
+  <Icon class="i-material-symbols:map-outline-rounded group-hover:text-green-500" />
 {/snippet}
 
 {#snippet housingIcon()}
-  <Icon
-    class={[
-      'i-material-symbols:home-outline-rounded group-hover:text-blue-500',
-      { 'text-blue-500': page.url.pathname === '/housing' },
-    ]}
-  />
+  <Icon class="i-material-symbols:home-outline-rounded group-hover:text-blue-500" />
 {/snippet}
 
 {#snippet industriesIcon()}
-  <Icon
-    class={[
-      'i-material-symbols:factory-outline-rounded group-hover:text-yellow-500',
-      { 'text-yellow-500': page.url.pathname === '/industries' },
-    ]}
-  />
+  <Icon class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500" />
 {/snippet}
 
 {#snippet radioIcon()}
-  <Icon
-    class={[
-      'i-material-symbols:radio-outline-rounded group-hover:text-orange-500',
-      { 'text-orange-500': page.url.pathname === '/radio' },
-    ]}
-  />
+  <Icon class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500" />
 {/snippet}
 
 {#snippet trackIcon()}
-  <Icon
-    class={[
-      'i-material-symbols:route-outline group-hover:text-red-500',
-      { 'text-red-500': page.url.pathname === '/track' },
-    ]}
-  />
+  <Icon class="i-material-symbols:route-outline group-hover:text-red-500" />
 {/snippet}
 
 <nav
@@ -125,7 +99,7 @@
     {/each}
     <Button
       variant="contained-light"
-      class="hover:!bg-[#5865f2]/10 hover:!text-[#5865f2]"
+      class="!bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
       tag="a"
       href="https://discord.com/invite/Wcf8ZcEHD6"
       target="_blank">{m['navbar.join_discord']()}</Button
@@ -136,15 +110,15 @@
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
       transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
     >
-      <a href="/" class="my-4 text-2xl font-bold" onclick={() => (menu = false)}
+      <a href="/" class="my-4 text-2xl font-bold tracking-tight" onclick={() => (menu = false)}
         >{m['site_name']()}</a
       >
       {#each links as { href, label, icon } (href)}
-        <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
+        <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} menu />
       {/each}
       <Button
         variant="contained-light"
-        class="mt-4 hover:!bg-[#5865f2]/10 hover:!text-[#5865f2]"
+        class="mt-4 !bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
         tag="a"
         href="https://discord.com/invite/Wcf8ZcEHD6"
         target="_blank">{m['navbar.join_discord']()}</Button

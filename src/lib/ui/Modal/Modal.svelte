@@ -42,6 +42,24 @@
     portalTarget = 'body',
     class: propsClassName,
   }: ModalProps = $props();
+
+  $effect(() => {
+    const preventMove = (event: MouseEvent | TouchEvent) => {
+      event.preventDefault();
+    };
+
+    if (open) {
+      document.addEventListener('mousemove', preventMove, { passive: false });
+      document.addEventListener('touchmove', preventMove, { passive: false });
+      document.addEventListener('wheel', preventMove, { passive: false });
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', preventMove);
+      document.removeEventListener('touchmove', preventMove);
+      document.removeEventListener('wheel', preventMove);
+    };
+  });
 </script>
 
 {#if portal}
@@ -49,7 +67,7 @@
     {#if open}
       <div
         class={[
-          'z-1000000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+          'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/20 p-5',
           propsClassName,
         ]}
         transition:fade={{
@@ -57,7 +75,7 @@
         }}
       >
         <button
-          class="-z-1 fixed inset-0 h-full w-full opacity-0"
+          class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
           onclick={onClose}
           aria-label="Close modal"
         ></button>
@@ -68,15 +86,19 @@
 {:else if open}
   <div
     class={[
-      'z-1000000 fixed inset-0 flex items-center justify-center bg-black/20 p-5',
+      'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/20 p-5',
       propsClassName,
     ]}
     transition:fade={{
       duration: 150,
     }}
+    ontouchmove={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }}
   >
     <button
-      class="-z-1 fixed inset-0 h-full w-full opacity-0"
+      class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
       onclick={onClose}
       aria-label="Close modal"
     ></button>

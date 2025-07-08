@@ -3,7 +3,7 @@
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
 
-  let { children } = $props();
+  const { children } = $props();
 </script>
 
 <MsgModal>

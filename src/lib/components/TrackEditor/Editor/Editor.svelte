@@ -34,7 +34,7 @@
     /** The track data to be edited */
     initialTrackData: TrackData;
   };
-  let { initialTrackData }: EditorProps = $props();
+  const { initialTrackData }: EditorProps = $props();
 
   const { showModal } = getMsgModalContext();
 
@@ -187,8 +187,8 @@
             onClick={() => (showHidden = !showHidden)}
             size="xs"
             variant="text"
-            unPadded
             color="info"
+            class="-mr-1"
           >
             {showHidden ? m['track_editor.editor.hide']() : m['track_editor.editor.show']()}
             {m['track_editor.editor.hidden']()}
@@ -208,8 +208,8 @@
                 onClick={handleAutoRotatePoint}
                 size="xs"
                 variant="text"
-                unPadded
                 color="success"
+                class="-mr-1"
               >
                 {m['track_editor.editor.auto_rotate']()}
               </Button>

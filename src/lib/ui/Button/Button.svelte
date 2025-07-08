@@ -42,11 +42,6 @@
      */
     round?: boolean;
     /**
-     * Whether the button should be un-padded, useful for text variant button in modal
-     * @default false
-     */
-    unPadded?: boolean;
-    /**
      * Whether the button should be disabled
      * @default false
      */
@@ -81,7 +76,6 @@
     onClick,
     class: propsClassName,
     round,
-    unPadded,
     disabled,
     tag = 'button',
     href,
@@ -160,26 +154,10 @@
         color === 'neutral',
     },
     // Size/shape classes
-    size === 'xs' && [
-      'h-5 text-xs',
-      round ? 'rounded-full px-2' : 'rounded-sm px-1',
-      unPadded && '-mx-1 -my-0.5',
-    ],
-    size === 'sm' && [
-      'h-8 text-sm',
-      round ? 'rounded-full px-3' : 'rounded-sm px-2',
-      unPadded && '-mx-2 -my-1.5',
-    ],
-    size === 'md' && [
-      'h-10 text-base',
-      round ? 'rounded-full px-4' : 'rounded-md px-3',
-      unPadded && '-mx-3 -my-2',
-    ],
-    size === 'lg' && [
-      'h-12 text-lg',
-      round ? 'rounded-full px-5' : 'rounded-lg px-4',
-      unPadded && '-mx-4 -my-2.5',
-    ],
+    size === 'xs' && ['h-5 text-xs', round ? 'rounded-full px-2' : 'rounded-sm px-1'],
+    size === 'sm' && ['h-8 text-sm', round ? 'rounded-full px-3' : 'rounded-sm px-2'],
+    size === 'md' && ['h-10 text-base', round ? 'rounded-full px-4' : 'rounded-md px-3'],
+    size === 'lg' && ['h-12 text-lg', round ? 'rounded-full px-5' : 'rounded-lg px-4'],
     propsClassName,
   ]}
   onclick={onClick}

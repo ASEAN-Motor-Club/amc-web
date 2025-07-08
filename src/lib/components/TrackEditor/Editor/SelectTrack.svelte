@@ -171,7 +171,7 @@
     ondragleave={handleDragLeave}
     ondrop={handleDrop}
   >
-    <h1 class="mb-10 text-center text-6xl font-semibold">
+    <h1 class="mb-10 text-center text-6xl font-semibold tracking-tight">
       {m['track_editor.title']()}
     </h1>
     <p class="text-text/80 dark:text-text-dark/80 flex items-center">

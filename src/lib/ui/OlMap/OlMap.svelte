@@ -54,7 +54,7 @@
   };
 
   let target: HTMLDivElement;
-  let {
+  const {
     class: propsClassName,
     zoomClass,
     zoomInClass,
