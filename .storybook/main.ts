@@ -16,6 +16,10 @@ const config: StorybookConfig = {
   },
   managerHead: (head, { configType }) => `
     ${configType === 'PRODUCTION' ? '<base href="/storybook/" />' : ''}
+     <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Playpen+Sans:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
     ${head}
   `,
 };
