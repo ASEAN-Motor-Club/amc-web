@@ -29,7 +29,7 @@
 
   setTrackDataContext(trackData);
 
-  let { children } = $props();
+  const { children } = $props();
 </script>
 
 {@render children()}

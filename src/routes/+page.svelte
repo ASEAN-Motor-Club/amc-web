@@ -28,7 +28,9 @@
       />
     </div>
 
-    <h1 class="font-cursive px-1 text-center text-6xl font-bold">{m['site_name']()}</h1>
+    <h1 class="font-cursive px-1 text-center text-6xl font-bold tracking-tight">
+      {m['site_name']()}
+    </h1>
     <ScrollHint />
   </div>
   <div

@@ -2,6 +2,8 @@
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
   import { m } from '$lib/paraglide/messages';
+  import { getLocale } from '$lib/paraglide/runtime';
+  import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { SvelteDate } from 'svelte/reactivity';
@@ -55,7 +57,7 @@
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
-  <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-baseline">
+  <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-center">
     <h2 class="text-lg font-semibold">
       <HighlightText
         text={house.name}
@@ -65,10 +67,16 @@
         class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
       />
     </h2>
-    <a
-      class="text-text/80 dark:text-text-dark/80 text-xs underline"
-      href="/map?housing={house.name}">{m.view_on_map()}</a
+    <Button
+      tag="a"
+      size="xs"
+      variant="text"
+      href="/map?housing={house.name}"
+      class="-mr-1"
+      color="info"
     >
+      {m.view_on_map()}
+    </Button>
   </div>
 
   <div>
@@ -77,7 +85,7 @@
   </div>
   <div>
     <span class="font-semibold">{m['housing.rent_price']()}:</span>
-    {house.cost / 10}
+    {(house.cost / 10).toLocaleString(getLocale())}
   </div>
   <div>
     <span class="font-semibold">{m['housing.owner']()}:</span>

@@ -73,7 +73,7 @@
 >
 
 <div class="flex flex-col items-center p-8">
-  <h1 class="pb-5 pt-8 text-center text-7xl font-bold">
+  <h1 class="pb-5 pt-8 text-center text-7xl font-bold tracking-tight">
     {#if eventData}
       {eventData.route.routeName}
     {:else if loadingOrNoData}
@@ -88,28 +88,28 @@
     {page.params.laps === '1' ? m['events.lap']() : m['events.laps']()}
   </h2>
   <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">
-    <div class="font-semibold">
+    <div class="flex h-10 items-center font-semibold leading-none">
       #{page.params.id.substring(0, 8)}
     </div>
     <div class="border-l-1 hidden border-gray-500/50 sm:block"></div>
     <Button
       variant="text"
-      unPadded
       tag="a"
       href={`/track/?uri=https%3A%2F%2Fserver.aseanmotorclub.com%2Froutes%2F${page.params.id}.json`}
       target="_blank"
       color="primary"
       disabled={loadingOrNoData}
+      class="-mx-3"
     >
       {m['events.open_in_editor']()}
     </Button>
     <div class="border-l-1 hidden border-gray-500/50 sm:block"></div>
     <Button
       variant="text"
-      unPadded
       color="info"
       onClick={handleClipboardClick}
       disabled={loadingOrNoData}
+      class="-mx-3"
     >
       {m['events.copy_track']()}
     </Button>
