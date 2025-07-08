@@ -30,6 +30,12 @@ jobs:
       - name: 🏗️ Build application
         run: npm run build
 
+      - name: 📖 Build storybook
+        run: npm run build:storybook
+
+      - name: ⬇️ Copy storybook to build
+        run: cp -r ./storybook-static ./build/storybook
+
       - name: 🚀 Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:

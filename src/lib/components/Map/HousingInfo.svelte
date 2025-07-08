@@ -4,6 +4,7 @@
   import { PointType } from './types';
   import { SvelteDate } from 'svelte/reactivity';
   import { m } from '$lib/paraglide/messages';
+  import { getLocale } from '$lib/paraglide/runtime';
 
   export type HoverInfo = {
     name: string | undefined;
@@ -63,7 +64,7 @@
   </div>
   <div>
     <span class="font-semibold">{m['housing.rent_price']()}:</span>
-    {hoverInfo.info.cost / 10}
+    {(hoverInfo.info.cost / 10).toLocaleString(getLocale())}
   </div>
   <div>
     <span class="font-semibold">{m['housing.owner']()}:</span>

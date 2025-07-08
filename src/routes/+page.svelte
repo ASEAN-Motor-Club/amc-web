@@ -1,5 +1,7 @@
 <script lang="ts">
-  import poster from '$lib/assets/asean_poster.avif';
+  import posterX10 from '$lib/assets/images/poster/asean_poster_cut_x1.avif';
+  import posterX15 from '$lib/assets/images/poster/asean_poster_cut_x1.5.avif';
+  import posterX20 from '$lib/assets/images/poster/asean_poster_cut_x2.avif';
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
   import { m } from '$lib/paraglide/messages';
   import { SvelteDate } from 'svelte/reactivity';
@@ -9,17 +11,26 @@
   const year = $derived(date.getFullYear());
 </script>
 
+<svelte:head>
+  <title>{m['site_name']()}</title>
+</svelte:head>
+
 <div class="flex w-full flex-col items-center">
   <div
-    class="relative -mt-14 flex h-dvh flex-col items-center justify-center pt-14 lg:-mt-16 lg:pt-16"
+    class="relative -mt-14 flex h-dvh w-full flex-col items-center justify-center pt-14 lg:-mt-16 lg:pt-16"
   >
-    <img
-      src={poster}
-      alt="ASEAN Poster"
-      class="max-w-250 mx-20 mb-20 w-full px-8 sm:px-16"
-      fetchpriority="high"
-    />
-    <h1 class="font-cursive px-1 text-center text-6xl font-bold">{m['site_name']()}</h1>
+    <div class="max-w-250 mx-20 mb-20 w-full px-8 sm:px-16">
+      <img
+        srcset={`${posterX10} 1x, ${posterX15} 1.5x, ${posterX20} 2x`}
+        alt="ASEAN Poster"
+        class="aspect-ratio-1818/1162 w-full object-contain"
+        fetchpriority="high"
+      />
+    </div>
+
+    <h1 class="font-cursive px-1 text-center text-6xl font-bold tracking-tight">
+      {m['site_name']()}
+    </h1>
     <ScrollHint />
   </div>
   <div
@@ -40,6 +51,7 @@
         frameborder="0"
         sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
         class="w-75 h-[50dvh] max-w-full"
+        loading="lazy"
       ></iframe>
     </div>
   </div>

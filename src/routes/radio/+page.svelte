@@ -6,6 +6,10 @@
   import tireTrack from '$lib/assets/images/tire_tracks.avif';
 </script>
 
+<svelte:head>
+  <title>{m['radio.head']({ siteName: m['site_name_short']() })}</title>
+</svelte:head>
+
 <CommonHead>{m['radio.title']()}</CommonHead>
 
 <div class="bg-white-100 relative min-h-screen overflow-hidden py-8 dark:bg-gray-900">

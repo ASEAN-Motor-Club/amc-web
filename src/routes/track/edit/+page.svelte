@@ -4,6 +4,7 @@
   import { getTrackDataContext } from '../+layout.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
+  import { m } from '$lib/paraglide/messages';
 
   const trackData = getTrackDataContext();
 
@@ -14,6 +15,17 @@
     }
   });
 </script>
+
+<svelte:head>
+  <title
+    >{trackData.value?.routeName
+      ? m['track_editor.head_editing']({
+          routeName: trackData.value.routeName,
+          siteName: m['site_name_short'](),
+        })
+      : m['track_editor.head']({ siteName: m['site_name_short']() })}</title
+  >
+</svelte:head>
 
 {#if trackData.value}
   <Editor initialTrackData={trackData.value} />

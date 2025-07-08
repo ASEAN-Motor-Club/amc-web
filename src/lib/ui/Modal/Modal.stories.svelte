@@ -23,6 +23,8 @@
   });
 
   let modalOpen = $state(false);
+  const msg =
+    'This is a message modal. It can be used to display important information or ask for user confirmation.';
 </script>
 
 <Story name="Default">
@@ -36,4 +38,20 @@
       </Card>
     </Modal>
   {/snippet}
+</Story>
+
+<Story name="MsgModal" asChild>
+  <Button onClick={() => (modalOpen = true)}>Open Modal</Button>
+  <Modal open={modalOpen} onClose={() => (modalOpen = false)}>
+    <Card class="max-w-120 flex flex-col p-5">
+      <h2 class="pb-4.5 text-2xl font-bold tracking-tight">Title</h2>
+      <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line pb-6 text-sm">
+        {msg}
+      </p>
+      <div class="-mx-3 -my-3 flex justify-end gap-2">
+        <Button onClick={() => (modalOpen = false)} color="primary" variant="text">Confirm</Button>
+        <Button onClick={() => (modalOpen = false)} color="secondary" variant="text">Close</Button>
+      </div>
+    </Card>
+  </Modal>
 </Story>

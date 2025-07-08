@@ -38,6 +38,6 @@ export const getHousingData = async (signal: AbortSignal): Promise<HouseData> =>
       return {};
     }
     console.error('Error fetching housing data:', error);
-    return {};
+    throw error;
   }
 };

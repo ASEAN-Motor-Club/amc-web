@@ -122,7 +122,9 @@
       placeholder={m['map.search_placeholder']()}
       class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-lg hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
-      onclick={() => (focus = true)}
+      additionalAttributes={{
+        onclick: () => (focus = true),
+      }}
     />
   </div>
 

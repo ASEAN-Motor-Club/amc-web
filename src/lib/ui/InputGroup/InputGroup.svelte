@@ -30,7 +30,7 @@
      */
     focusIndex?: number;
   }
-  let {
+  const {
     label,
     appendLabel,
     class: className,
@@ -39,7 +39,7 @@
     focusIndex = 0,
   }: Props = $props();
 
-  let id = `input-group-${Math.random().toString(36).substring(2, 15)}`;
+  const id = `input-group-${Math.random().toString(36).substring(2, 15)}`;
 
   let itemCount = $state(0);
 

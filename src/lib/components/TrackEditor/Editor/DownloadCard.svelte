@@ -50,6 +50,7 @@
       const a = document.createElement('a');
       a.href = url;
       a.download = (downloadData.routeName?.trim() || 'track_updated') + '.json';
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -74,8 +75,8 @@
         onClick={() => (downloadOriginal = !downloadOriginal)}
         size="xs"
         variant="text"
-        unPadded
         color="primary"
+        class="-mr-1"
       >
         {m['track_editor.editor.change_btn']({
           file: downloadOriginal

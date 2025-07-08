@@ -12,6 +12,9 @@
   "or": "or",
   "unknown": "Unknown",
   "track_editor": {
+    "title": "Track Editor",
+    "head": "{siteName} | Track Editor",
+    "head_editing": "{siteName} | Track Editor | Editing {routeName}",
     "validate": {
       "name_empty": "Name cannot be empty.",
       "name_must_be_string": "Route name must be a string.",
@@ -21,7 +24,6 @@
       "waypoints_max_length": "Track must not exceed {maxLength} waypoints."
     },
     "select_track": {
-      "title": "Track Editor",
       "drag_drop": "Drag and Drop File",
       "select_file": "Select a File",
       "load_from_clipboard": "Load from Clipboard",
@@ -94,6 +96,7 @@
     "join_discord": "JOIN OUR DISCORD"
   },
   "map": {
+    "head": "{siteName} | Map",
     "point_of_interests": "Point of interests (click to hide)",
     "delivery_point": "Delivery Point",
     "house": "House",
@@ -114,6 +117,7 @@
   },
   "not_finished": "Under construction, please come back later!",
   "housing": {
+    "head": "{siteName} | Housing",
     "title": "Housing",
     "owner": "Owner",
     "size": "Size",
@@ -135,13 +139,19 @@
       "name": "Name",
       "rent_left": "Rent Left",
       "depot_storage": "Depot Storage"
+    },
+    "cannot_load": {
+      "title": "Cannot load housing data",
+      "desc": "Failed to load housing data. Please try again later."
     }
   },
   "view_on_map": "View on Map",
   "industries": {
+    "head": "{siteName} | Industries",
     "title": "Industries"
   },
   "radio": {
+    "head": "{siteName} | Radio",
     "title": "Radio",
     "play": "Play",
     "pause": "Pause"
@@ -171,8 +181,17 @@
     "step5": "Restart the game for the mod to take effect."
   },
   "events": {
+    "no": "No",
+    "lap": "Lap",
+    "laps": "Laps",
+    "head": "{siteName} | Event",
+    "head_loaded": "{siteName} | Event | {routeName} {lapCount} Laps Records",
     "fastest": "Fastest!",
     "open_in_editor": "Open in Track Editor",
-    "copy_track": "Copy Track"
+    "copy_track": "Copy Track",
+    "cannot_load": {
+      "title": "Cannot load event",
+      "desc": "Failed to load event data. Please try again later."
+    }
   }
 }

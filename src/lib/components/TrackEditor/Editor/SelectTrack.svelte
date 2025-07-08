@@ -61,18 +61,10 @@
     }
   };
 
-  onMount(() => {
-    const handlePaste = (event: ClipboardEvent) => {
-      const items = event.clipboardData?.items;
-      loadFromDataList(items);
-    };
-
-    document.addEventListener('paste', handlePaste);
-
-    return () => {
-      document.removeEventListener('paste', handlePaste);
-    };
-  });
+  const handlePaste = (event: ClipboardEvent) => {
+    const items = event.clipboardData?.items;
+    loadFromDataList(items);
+  };
 
   let dragOver = $state(false);
   const handleDragEnter = (event: DragEvent) => {
@@ -160,6 +152,8 @@
   });
 </script>
 
+<svelte:document onpaste={handlePaste} />
+
 <div class="flex h-full w-full p-8">
   <Modal open={fetchFromUri} onClose={noop} class="bg-black/50 text-xl font-semibold text-white">
     {m['track_editor.select_track.loading_track']()}
@@ -177,8 +171,8 @@
     ondragleave={handleDragLeave}
     ondrop={handleDrop}
   >
-    <h1 class="mb-10 text-center text-6xl font-semibold">
-      {m['track_editor.select_track.title']()}
+    <h1 class="mb-10 text-center text-6xl font-semibold tracking-tight">
+      {m['track_editor.title']()}
     </h1>
     <p class="text-text/80 dark:text-text-dark/80 flex items-center">
       {m['track_editor.select_track.drag_drop']()}
