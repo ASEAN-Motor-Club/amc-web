@@ -139,6 +139,10 @@
       "name": "Name",
       "rent_left": "Rent Left",
       "depot_storage": "Depot Storage"
+    },
+    "cannot_load": {
+      "title": "Cannot load housing data",
+      "desc": "Failed to load housing data. Please try again later."
     }
   },
   "view_on_map": "View on Map",
@@ -155,6 +159,10 @@
     "head_loaded": "{siteName} | Event | {routeName} {lapCount} Laps Records",
     "fastest": "Fastest!",
     "open_in_editor": "Open in Track Editor",
-    "copy_track": "Copy Track"
+    "copy_track": "Copy Track",
+    "cannot_load": {
+      "title": "Cannot load event",
+      "desc": "Failed to load event data. Please try again later."
+    }
   }
 }
