@@ -1,11 +1,11 @@
 // src/routes/api/now-playing/+server.ts
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { VITE_ICECAST_URL } from '$env/static/private';
+import { ICECAST_URL } from '$env/static/private';
 
 export const GET: RequestHandler = async () => {
   try {
-    const response = await fetch(`${VITE_ICECAST_URL}/status-json.xsl`);
+    const response = await fetch(`${ICECAST_URL}/status-json.xsl`);
 
     if (!response.ok) {
       return json(

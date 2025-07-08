@@ -10,6 +10,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
+    env:
+      ICECAST_STREAM_URL: ${{ vars.ICECAST_STREAM_URL || 'http://dummy-url' }}
+      ICECAST_URL: ${{ vars.ICECAST_URL || 'http://dummy-url' }}
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
