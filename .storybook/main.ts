@@ -8,5 +8,12 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ['../static'],
+  viteFinal: async (config) => {
+    const { mergeConfig } = await import('vite');
+
+    return mergeConfig(config, {
+      base: '/storybook/',
+    });
+  },
 };
 export default config;
