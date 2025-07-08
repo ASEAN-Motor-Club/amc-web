@@ -4,5 +4,9 @@
   import { m } from '$lib/paraglide/messages';
 </script>
 
+<svelte:head>
+  <title>{m['radio.head']({ siteName: m['site_name_short']() })}</title>
+</svelte:head>
+
 <CommonHead>{m['radio.title']()}</CommonHead>
 <NotFinished />

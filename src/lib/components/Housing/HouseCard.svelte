@@ -10,9 +10,10 @@
     house: House;
     houseData: HouseData | undefined;
     highlight: string;
+    loading: boolean;
   };
 
-  const { house, houseData, highlight }: HoverInfoTooltipProps = $props();
+  const { house, houseData, highlight, loading }: HoverInfoTooltipProps = $props();
 
   const currentHouseData = $derived.by(() => {
     return houseData?.[house.name];
@@ -53,67 +54,57 @@
   });
 </script>
 
-<Card
-  class={['relative overflow-hidden', !currentHouseData && 'bg-transparent !shadow-none !ring-0']}
->
-  <div
-    class={[
-      ' left-0 top-0 h-full w-full bg-neutral-500/20',
-      currentHouseData ? 'hidden' : 'absolute animate-pulse',
-    ]}
-  ></div>
-  <div class={['contents', !currentHouseData && 'invisible']}>
-    <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-baseline">
-      <h2 class="text-lg font-semibold">
-        <HighlightText
-          text={house.name}
-          {highlight}
-          caseInSensitive
-          tag="span"
-          class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
-        />
-      </h2>
-      <a
-        class="text-text/80 dark:text-text-dark/80 text-xs underline"
-        href="/map?housing={house.name}">{m.view_on_map()}</a
-      >
-    </div>
+<Card class="relative overflow-hidden" {loading}>
+  <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-baseline">
+    <h2 class="text-lg font-semibold">
+      <HighlightText
+        text={house.name}
+        {highlight}
+        caseInSensitive
+        tag="span"
+        class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
+      />
+    </h2>
+    <a
+      class="text-text/80 dark:text-text-dark/80 text-xs underline"
+      href="/map?housing={house.name}">{m.view_on_map()}</a
+    >
+  </div>
 
-    <div>
-      <span class="font-semibold">{m['housing.size']()}:</span>
-      {house.size.x / 100} x {house.size.y / 100}
-    </div>
-    <div>
-      <span class="font-semibold">{m['housing.rent_price']()}:</span>
-      {house.cost / 10}
-    </div>
-    <div>
-      <span class="font-semibold">{m['housing.owner']()}:</span>
-      {#if currentHouseData?.ownerName}
-        <HighlightText
-          text={currentHouseData.ownerName}
-          {highlight}
-          caseInSensitive
-          tag="span"
-          class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
-        />
-      {:else}
-        <span class="font-bold italic">{m['housing.vacant']()}</span>
-      {/if}
-    </div>
-    <div>
-      <span class="font-semibold">{m['housing.rent_left']()}:</span>
-      {#if currentHouseData?.ownerName}
-        {rentLeftText}
-      {:else}
-        <span class="text-text/70 dark:text-text-dark/70 italic">{m['housing.vacant']()}</span>
-      {/if}
-    </div>
-    <div>
-      <span class="font-semibold">{m['housing.depot']()}:</span> TODO
-    </div>
-    <div>
-      <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
-    </div>
+  <div>
+    <span class="font-semibold">{m['housing.size']()}:</span>
+    {house.size.x / 100} x {house.size.y / 100}
+  </div>
+  <div>
+    <span class="font-semibold">{m['housing.rent_price']()}:</span>
+    {house.cost / 10}
+  </div>
+  <div>
+    <span class="font-semibold">{m['housing.owner']()}:</span>
+    {#if currentHouseData?.ownerName}
+      <HighlightText
+        text={currentHouseData.ownerName}
+        {highlight}
+        caseInSensitive
+        tag="span"
+        class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
+      />
+    {:else}
+      <span class="font-bold italic">{m['housing.vacant']()}</span>
+    {/if}
+  </div>
+  <div>
+    <span class="font-semibold">{m['housing.rent_left']()}:</span>
+    {#if currentHouseData?.ownerName}
+      {rentLeftText}
+    {:else}
+      <span class="text-text/70 dark:text-text-dark/70 italic">{m['housing.vacant']()}</span>
+    {/if}
+  </div>
+  <div>
+    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
+  </div>
+  <div>
+    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
   </div>
 </Card>

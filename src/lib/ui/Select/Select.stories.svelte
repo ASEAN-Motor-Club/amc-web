@@ -7,7 +7,13 @@
     title: 'Ui/Select',
     component: Select,
     tags: ['autodocs'],
-    argTypes: {},
+    argTypes: {
+      value: {
+        control: 'select',
+        options: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'neutral'],
+        description: 'The value of the select input',
+      },
+    },
     args: {
       placeholder: 'Select an option',
     },

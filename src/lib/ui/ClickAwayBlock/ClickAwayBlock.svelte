@@ -16,32 +16,23 @@
 
   let clickAwayBlock: HTMLDivElement;
 
-  $effect(() => {
-    const closeMenu = (e: Event) => {
-      if (!e.target) {
-        onClickAway?.();
-        return;
-      }
-
-      if (e.target !== clickAwayBlock && !clickAwayBlock.contains(e.target as Node)) {
-        if (
-          additionalElements.every((el) =>
-            el ? e.target !== el && !el.contains(e.target as Node) : true,
-          )
-        ) {
-          onClickAway?.();
-        }
-      }
-    };
-
-    if (active) {
-      document.addEventListener('click', closeMenu);
+  const closeMenu = (e: Event) => {
+    if (!e.target) {
+      onClickAway?.();
+      return;
     }
 
-    return () => {
-      document.removeEventListener('click', closeMenu);
-    };
-  });
+    if (e.target !== clickAwayBlock && !clickAwayBlock.contains(e.target as Node)) {
+      if (
+        additionalElements.every((el) =>
+          el ? e.target !== el && !el.contains(e.target as Node) : true,
+        )
+      ) {
+        onClickAway?.();
+      }
+    }
+  };
 </script>
 
+<svelte:document onclick={active ? closeMenu : undefined} />
 <div class="contents" bind:this={clickAwayBlock}>{@render children()}</div>

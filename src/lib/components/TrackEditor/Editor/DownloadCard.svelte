@@ -50,6 +50,7 @@
       const a = document.createElement('a');
       a.href = url;
       a.download = (downloadData.routeName?.trim() || 'track_updated') + '.json';
+      a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

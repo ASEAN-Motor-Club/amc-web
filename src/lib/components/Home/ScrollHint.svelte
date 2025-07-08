@@ -1,27 +1,21 @@
 <script lang="ts">
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import Icon from '$lib/ui/Icon/Icon.svelte';
-  import { onMount } from 'svelte';
+  import type { UIEventHandler } from 'svelte/elements';
   import { fade } from 'svelte/transition';
 
   let show = $state(true);
 
-  onMount(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        show = false;
-      } else {
-        show = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  });
+  const handleScroll: UIEventHandler<Window> = (e) => {
+    if (e.currentTarget.scrollY > 0) {
+      show = false;
+    } else {
+      show = true;
+    }
+  };
 </script>
+
+<svelte:window onscroll={handleScroll} />
 
 {#if show}
   <div
