@@ -9,6 +9,10 @@
   const year = $derived(date.getFullYear());
 </script>
 
+<svelte:head>
+  <title>{m['site_name']()}</title>
+</svelte:head>
+
 <div class="flex w-full flex-col items-center">
   <div
     class="relative -mt-14 flex h-dvh flex-col items-center justify-center pt-14 lg:-mt-16 lg:pt-16"

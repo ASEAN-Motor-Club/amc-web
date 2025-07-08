@@ -4,7 +4,7 @@
   import VectorSource from 'ol/source/Vector';
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import type { MapBrowserEvent } from 'ol';
@@ -504,13 +504,15 @@
     }
   });
 
-  onMount(() => {
-    return () => {
-      hoverPoint?.set('hover', false);
-      lockPoint?.set('hover', false);
-    };
+  onDestroy(() => {
+    hoverPoint?.set('hover', false);
+    lockPoint?.set('hover', false);
   });
 </script>
+
+<svelte:head>
+  <title>{m['map.head']({ siteName: m['site_name_short']() })}</title>
+</svelte:head>
 
 <div class="relative h-full w-full bg-[#375d87]">
   <LoadClass class={['!left-[unset] !top-[unset] bottom-4 right-4']}>

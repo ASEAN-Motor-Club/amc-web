@@ -64,6 +64,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>{m['housing.head']({ siteName: m['site_name_short']() })}</title>
+</svelte:head>
 <CommonHead>{m['housing.title']()}</CommonHead>
 <div class="flex flex-col justify-between gap-2 px-8 sm:flex-row">
   <TextInput

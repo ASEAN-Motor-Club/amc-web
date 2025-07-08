@@ -78,43 +78,63 @@
     onChange?.(newValueLocal);
   };
 
-  const handleSliderMouseDown = (event: MouseEvent) => {
+  const getClientX = (event: MouseEvent | TouchEvent): number => {
+    if (event instanceof MouseEvent) {
+      return event.clientX;
+    } else if (event.touches && event.touches.length > 0) {
+      return event.touches[0].clientX;
+    }
+    return 0;
+  };
+
+  const handleSliderMouseDown = (event: MouseEvent | TouchEvent) => {
+    if (!(event instanceof TouchEvent)) {
+      event.preventDefault();
+    }
     moving = true;
     transition = true;
-    moveSlider(event.clientX);
+    moveSlider(getClientX(event));
   };
 
   $effect(() => {
-    const handleSliderMouseMove = (event: MouseEvent) => {
+    // this cannot be in svelte:document since it cannot be passive (touchmove defaults to passive)
+    const handleSliderMouseMove = (event: MouseEvent | TouchEvent) => {
+      event.preventDefault();
       transition = false;
-      moveSlider(event.clientX);
-    };
-
-    const handleSliderMouseUp = () => {
-      moving = false;
+      moveSlider(getClientX(event));
     };
 
     if (moving) {
-      document.addEventListener('mousemove', handleSliderMouseMove, { passive: true });
-      document.addEventListener('mouseup', handleSliderMouseUp, { passive: true });
+      document.addEventListener('mousemove', handleSliderMouseMove, { passive: false });
+      document.addEventListener('touchmove', handleSliderMouseMove, { passive: false });
     }
 
     return () => {
       document.removeEventListener('mousemove', handleSliderMouseMove);
-      document.removeEventListener('mouseup', handleSliderMouseUp);
+      document.removeEventListener('touchmove', handleSliderMouseMove);
     };
   });
+
+  const handleSliderMouseUp = () => {
+    moving = false;
+  };
 
   const percent = $derived(((valueLocal - min) / (max - min)) * 100);
 </script>
 
+<svelte:document
+  onmouseup={moving ? handleSliderMouseUp : undefined}
+  ontouchend={moving ? handleSliderMouseUp : undefined}
+/>
+
 <div
   class={[
-    'relative flex  cursor-pointer items-center',
+    'relative  flex cursor-pointer items-center',
     { 'h-4': size === 'sm', 'h-5': size === 'md' },
     propsClassname,
   ]}
   onmousedown={handleSliderMouseDown}
+  ontouchstart={handleSliderMouseDown}
   bind:this={slider}
   role="slider"
   tabindex="0"
@@ -156,21 +176,27 @@
   </div>
   <div
     class={[
-      'shadow-md/30 absolute -translate-x-1/2 rounded-full',
-      transition && 'transition-[left]',
-      {
-        'bg-primary-700 hover:bg-primary-800': color === 'primary',
-        'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',
-        'bg-info-700 hover:bg-info-800': color === 'info',
-        'bg-success-700 hover:bg-success-800': color === 'success',
-        'bg-warning-700 hover:bg-warning-800': color === 'warning',
-        'bg-error-700 hover:bg-error-800': color === 'error',
-        'bg-neutral-700 hover:bg-neutral-800': color === 'neutral',
-      },
+      'absolute flex -translate-x-1/2',
       { 'h-3.5 w-3.5': size === 'sm', 'w-4.5 h-4.5': size === 'md' },
+      transition && 'transition-[left]',
     ]}
     style:left={`${percent}%`}
   >
-    <input class="hidden" type="range" value={valueLocal} {name} {id} />
+    <div
+      class={[
+        'shadow-md/30 h-full w-full rounded-full transition-colors',
+        {
+          'bg-primary-700 hover:bg-primary-800': color === 'primary',
+          'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',
+          'bg-info-700 hover:bg-info-800': color === 'info',
+          'bg-success-700 hover:bg-success-800': color === 'success',
+          'bg-warning-700 hover:bg-warning-800': color === 'warning',
+          'bg-error-700 hover:bg-error-800': color === 'error',
+          'bg-neutral-700 hover:bg-neutral-800': color === 'neutral',
+        },
+      ]}
+    >
+      <input class="hidden" type="range" value={valueLocal} {name} {id} />
+    </div>
   </div>
 </div>

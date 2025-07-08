@@ -55,12 +55,22 @@
   };
 </script>
 
+<title
+  >{eventData?.route.routeName
+    ? m['events.head_loaded']({
+        routeName: eventData.route.routeName,
+        lapCount: page.params.laps === '0' ? m['events.no']() : page.params.laps,
+        siteName: m['site_name_short'](),
+      })
+    : m['events.head']({ siteName: m['site_name_short']() })}</title
+>
+
 <div class="flex flex-col items-center p-8">
   {#if eventData}
     <h1 class="pb-5 pt-8 text-center text-7xl font-bold">{eventData.route.routeName}</h1>
     <h2 class="pb-8 font-semibold">
-      {page.params.laps === '0' ? 'No' : page.params.laps}
-      {page.params.laps === '1' ? 'lap' : 'laps'}
+      {page.params.laps === '0' ? m['events.no']() : page.params.laps}
+      {page.params.laps === '1' ? m['events.lap']() : m['events.laps']()}
     </h2>
     <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">
       <div class="font-semibold">
