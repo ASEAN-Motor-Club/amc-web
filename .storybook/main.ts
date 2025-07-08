@@ -15,8 +15,8 @@ const config: StorybookConfig = {
     return config;
   },
   managerHead: (head, { configType }) => `
-    ${head}
     ${configType === 'PRODUCTION' ? '<base href="/storybook/" />' : ''}
+    ${head}
   `,
 };
 export default config;
