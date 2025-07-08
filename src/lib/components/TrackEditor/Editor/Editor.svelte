@@ -227,8 +227,10 @@
               onInput={(e) => (editingPoint.rotation.z = +e.currentTarget.value)}
               name="rotationZ"
               type="number"
-              step="any"
               size="sm"
+              additionalAttributes={{
+                step: 'any',
+              }}
             />
           </InputGroup>
           {#if showHidden}
@@ -246,8 +248,10 @@
                 onInput={(e) => (editingPoint.rotation.x = +e.currentTarget.value)}
                 name="rotationX"
                 type="number"
-                step="any"
                 size="sm"
+                additionalAttributes={{
+                  step: 'any',
+                }}
               />
             </InputGroup>
             <InputGroup label={m['track_editor.editor.rotation_y']()}>
@@ -264,8 +268,10 @@
                 onInput={(e) => (editingPoint.rotation.y = +e.currentTarget.value)}
                 name="rotationY"
                 type="number"
-                step="any"
                 size="sm"
+                additionalAttributes={{
+                  step: 'any',
+                }}
               />
             </InputGroup>
           {/if}
@@ -278,7 +284,9 @@
               onInput={(e) => (editingPoint.translation.x = +e.currentTarget.value)}
               name="translationX"
               type="number"
-              step="any"
+              additionalAttributes={{
+                step: 'any',
+              }}
             />
           </InputGroup>
           <InputGroup label={m['track_editor.editor.translation_y']()}>
@@ -287,7 +295,9 @@
               onInput={(e) => (editingPoint.translation.y = +e.currentTarget.value)}
               name="translationY"
               type="number"
-              step="any"
+              additionalAttributes={{
+                step: 'any',
+              }}
             />
           </InputGroup>
           {#if showHidden}
@@ -297,7 +307,9 @@
                 onInput={(e) => (editingPoint.translation.z = +e.currentTarget.value)}
                 name="translationZ"
                 type="number"
-                step="any"
+                additionalAttributes={{
+                  step: 'any',
+                }}
               />
             </InputGroup>
           {/if}
@@ -310,7 +322,9 @@
               onInput={(e) => (editingPoint.scale3D.y = +e.currentTarget.value)}
               name="scaleY"
               type="number"
-              step="any"
+              additionalAttributes={{
+                step: 'any',
+              }}
             />
           </InputGroup>
           {#if showHidden}
@@ -320,7 +334,9 @@
                 onInput={(e) => (editingPoint.scale3D.z = +e.currentTarget.value)}
                 name="scaleZ"
                 type="number"
-                step="any"
+                additionalAttributes={{
+                  step: 'any',
+                }}
               />
             </InputGroup>
             <InputGroup label={m['track_editor.editor.scale_x']()}>
@@ -329,7 +345,9 @@
                 onInput={(e) => (editingPoint.scale3D.x = +e.currentTarget.value)}
                 name="scaleX"
                 type="number"
-                step="any"
+                additionalAttributes={{
+                  step: 'any',
+                }}
               />
             </InputGroup>
           {/if}

@@ -72,7 +72,9 @@
     name="search"
     type="search"
     class="w-full min-w-0 sm:max-w-80 sm:flex-1"
-    oninput={onSearch}
+    additionalAttributes={{
+      oninput: onSearch,
+    }}
     disabled={!houseData}
   />
   <Select

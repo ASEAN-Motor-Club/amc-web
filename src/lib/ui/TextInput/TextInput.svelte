@@ -77,18 +77,26 @@
      * @default false
      */
     disabled?: boolean;
-  } & Omit<
-    HTMLInputAttributes,
-    | 'class'
-    | 'onchange'
-    | 'type'
-    | 'autocomplete'
-    | 'value'
-    | 'placeholder'
-    | 'name'
-    | 'size'
-    | 'disabled'
-  >;
+    /**
+     * The id of the input element
+     */
+    id?: string;
+    /**
+     * Additional HTMLInputAttributes to apply to the input element like `aria-*`, `data-*`, etc.
+     */
+    additionalAttributes?: Omit<
+      HTMLInputAttributes,
+      | 'class'
+      | 'onchange'
+      | 'type'
+      | 'autocomplete'
+      | 'value'
+      | 'placeholder'
+      | 'name'
+      | 'size'
+      | 'disabled'
+    >;
+  };
 
   const {
     onChange,
@@ -107,7 +115,7 @@
     onFocus,
     onBlur,
     disabled,
-    ...inputAttributes
+    additionalAttributes,
   }: TextInputProps = $props();
 
   const inputGroupContext = getInputGroupContext();
@@ -151,7 +159,7 @@
   {name}
   {id}
   {disabled}
-  {...inputAttributes}
+  {...additionalAttributes}
   onfocus={onFocus}
   onblur={onBlur}
 />
