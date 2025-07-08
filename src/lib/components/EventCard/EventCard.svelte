@@ -16,7 +16,7 @@
   const { time, time0, index, loading }: HoverInfoTooltipProps = $props();
 </script>
 
-<Card class="max-w-120 flex w-full flex-col items-center gap-2 sm:flex-row" loading={loading}>
+<Card class="max-w-120 flex w-full flex-col items-center gap-2 sm:flex-row" {loading}>
   <div class="flex items-center gap-2">
     <div class="aspect-1 relative flex h-12 select-none items-center justify-center">
       {#if index < 3}

@@ -14,7 +14,7 @@
     /**
      * Loading state for the card, if true, it will show a loading state
      */
-    loading: boolean;
+    loading?: boolean;
   };
 
   const { children, class: className, loading }: CardProps = $props();

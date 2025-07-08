@@ -54,7 +54,7 @@
   });
 </script>
 
-<Card class='relative overflow-hidden' loading={loading}>
+<Card class="relative overflow-hidden" {loading}>
   <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-baseline">
     <h2 class="text-lg font-semibold">
       <HighlightText

@@ -8,7 +8,7 @@
     component: Select,
     tags: ['autodocs'],
     argTypes: {
-      "value": {
+      value: {
         control: 'select',
         options: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'neutral'],
         description: 'The value of the select input',
