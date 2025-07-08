@@ -6,10 +6,10 @@
     analyser: AnalyserNode;
     width: number;
     height: number;
-    grillScale(scale: number): void;
+    grillVolume(vol: number): void;
   }
 
-  let { analyser, width, height, grillScale }: Props = $props();
+  let { analyser, width, height, grillVolume }: Props = $props();
 
   let canvas: HTMLCanvasElement;
   let animationId: number;
@@ -51,8 +51,7 @@
         sum += frequencyData[i];
       }
       const averageVolume = sum / bufferLength;
-      const scale = 1 + averageVolume / 400;
-      grillScale(scale);
+      grillVolume(averageVolume);
 
       // 2. Draw the waveform
       analyser.getByteTimeDomainData(waveformData);

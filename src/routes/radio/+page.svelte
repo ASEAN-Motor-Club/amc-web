@@ -4,14 +4,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import Player from '$lib/components/Radio/Player.svelte';
   import tireTrack from '$lib/assets/images/tire_tracks.avif';
-  import { writable } from 'svelte/store';
-
-  const nowPlaying = writable<string | null>('Turbo Groove');
 </script>
-
-{#snippet playing()}
-  <span>{$nowPlaying}</span>
-{/snippet}
 
 <CommonHead>{m['radio.title']()}</CommonHead>
 
@@ -24,7 +17,7 @@
   <div class="pointer-events-none absolute inset-0 bg-black/90 dark:bg-black/70"></div>
 
   <div class="relative z-10 mx-auto w-full px-3">
-    <Player streamUrl="/stream" stationName="ASEAN Motor Club Radio" {playing}></Player>
+    <Player stationName="ASEAN Motor Club Radio"></Player>
   </div>
 
   <Card

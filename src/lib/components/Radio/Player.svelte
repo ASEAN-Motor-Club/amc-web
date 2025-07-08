@@ -2,18 +2,16 @@
   import { onMount, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
   import { m } from '$lib/paraglide/messages';
-  import type { Snippet } from 'svelte';
+  import { startNowPlayingPolling, getStreamUrl } from '$lib/api/radio';
   import Button from '$lib/ui/Button/Button.svelte';
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import PlayerWaveform from './PlayerWaveform.svelte';
 
   interface Props {
-    streamUrl: string;
     stationName: string;
-    playing: Snippet;
   }
 
-  let { streamUrl, stationName = 'My Radio', playing }: Props = $props();
+  let { stationName = 'My Radio' }: Props = $props();
 
   let audio: HTMLAudioElement;
   let grillElement: HTMLDivElement;
@@ -24,6 +22,13 @@
   let audioCtx: AudioContext;
   const analyser = writable<AnalyserNode>();
 
+  // Track state
+  const currentTrack = writable<string>('Loading...');
+  let nowPlayingController: AbortController | null = null;
+
+  // Stream
+  const streamUrl = getStreamUrl();
+
   onMount(() => {
     audioCtx = new AudioContext();
     $analyser = audioCtx.createAnalyser();
@@ -32,9 +37,15 @@
     const source = audioCtx.createMediaElementSource(audio);
     source.connect($analyser);
     $analyser.connect(audioCtx.destination);
+
+    // Start now playing polling
+    nowPlayingController = startNowPlayingPolling((track) => {
+      currentTrack.set(track);
+    });
   });
 
   onDestroy(() => {
+    nowPlayingController?.abort();
     audioCtx?.close();
   });
 
@@ -51,9 +62,20 @@
     audio.volume = +value;
   }
 
-  function handleGrillScale(scale: number) {
+  function handleGrillVolume(vol: number) {
     if (grillElement) {
-      grillElement.style.transform = `scale(${scale})`;
+      const volume = vol;
+      const scale = 1 + volume / 400;
+      const vibrationIntensity = volume / 200;
+      const tx = (Math.random() - 0.5) * vibrationIntensity;
+      const ty = (Math.random() - 0.5) * vibrationIntensity;
+      const rotate = (Math.random() - 0.5) * vibrationIntensity * 2;
+
+      grillElement.style.transform = `
+          translate(${tx}px, ${ty}px)
+          rotate(${rotate}deg)
+          scale(${scale})
+        `;
     }
   }
 </script>
@@ -115,7 +137,7 @@
             analyser={$analyser}
             width={400}
             height={250}
-            grillScale={(scale) => handleGrillScale(scale)}
+            grillVolume={(vol) => handleGrillVolume(vol)}
           />
         {/if}
       </div>
@@ -125,11 +147,7 @@
         <div
           class="song-current mb-2.5 font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
         >
-          {#if playing}
-            {@render playing()}
-          {:else}
-            No track
-          {/if}
+          {$currentTrack}
         </div>
         <Button onClick={togglePlay} class="mb-3">
           {$isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
