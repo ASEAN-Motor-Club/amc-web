@@ -6,7 +6,7 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter({
-      fallback: 'index.html',
+      fallback: 'fallback.html',
     }),
     files: {
       assets: process.env.NODE_ENV === 'development' ? 'static_dev' : 'static',
