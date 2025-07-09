@@ -25,7 +25,7 @@
   </div>
 
   <Card
-    class="bg-background-300 dark:bg-background-900/80 relative mx-auto mt-8 max-w-[700px] rounded-lg border border-gray-300 p-6 text-gray-800 backdrop-blur-sm dark:border-gray-700 dark:text-gray-200"
+    class="bg-background-300 dark:bg-background-900/80 max-w-175 relative mx-auto mt-8 rounded-lg border border-gray-300 p-6 text-gray-800 backdrop-blur-sm dark:border-gray-700 dark:text-gray-200"
   >
     <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
       {m['radio_guide.features_title']()}

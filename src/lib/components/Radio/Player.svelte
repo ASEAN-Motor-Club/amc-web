@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { writable } from 'svelte/store';
   import { m } from '$lib/paraglide/messages';
   import { startNowPlayingPolling, getStreamUrl } from '$lib/api/radio';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -15,15 +14,15 @@
 
   let audio: HTMLAudioElement;
   let grillElement: HTMLDivElement;
-  const isPlaying = writable<boolean | null>(false);
-  const volume = writable(1);
+  let isPlaying = $state<boolean | null>(false);
+  let volume = $state(1);
 
   // Web Audio API variables
   let audioCtx: AudioContext;
-  const analyser = writable<AnalyserNode>();
+  let analyser: AnalyserNode | null = $state(null);
 
   // Track state
-  const currentTrack = writable<string>('Loading...');
+  let currentTrack = $state<string>('Loading...');
   let nowPlayingController: AbortController | null = null;
 
   // Stream
@@ -31,16 +30,16 @@
 
   onMount(() => {
     audioCtx = new AudioContext();
-    $analyser = audioCtx.createAnalyser();
-    $analyser.fftSize = 512;
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
 
     const source = audioCtx.createMediaElementSource(audio);
-    source.connect($analyser);
-    $analyser.connect(audioCtx.destination);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
 
     // Start now playing polling
     nowPlayingController = startNowPlayingPolling((track) => {
-      currentTrack.set(track);
+      currentTrack = track;
     });
   });
 
@@ -53,9 +52,9 @@
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
-    if (!$isPlaying) audio.play().catch(console.error);
+    if (!isPlaying) audio.play().catch(console.error);
     else audio.pause();
-    $isPlaying = !$isPlaying;
+    isPlaying = !isPlaying;
   }
 
   function onVolume(value: number) {
@@ -82,13 +81,13 @@
 
 <div
   class="radio
-           border-3 border-3 mx-auto
-           flex max-h-screen
-           w-full
-           max-w-[700px] flex-col overflow-hidden rounded-[10px] rounded-lg border-[#5a2c00] bg-[#8b4513] bg-[linear-gradient(135deg,#c2a27c_0%,#a18361_20%,#c2a27c_40%,#a18361_60%,#c2a27c_80%,#a18361_100%)] shadow-[0_10px_20px_rgba(0,0,0,0.3)] md:h-auto"
+           border-3 border-3 max-w-175
+           shadow-lg/30 mx-auto
+           flex
+           max-h-screen w-full flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] md:h-auto"
 >
   <div
-    class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-[inset_0_-2px_5px_rgba(0,0,0,0.2)]"
+    class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
   >
     {stationName}
   </div>
@@ -130,11 +129,11 @@
 
     <div class=" flex h-[40vh] flex-col p-4 md:h-auto md:flex-1">
       <div
-        class="mb-2.5 flex h-full min-h-[150px] flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]"
+        class="shadow-lg/50 min-h-37.5 mb-2.5 flex h-full flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black"
       >
-        {#if $analyser}
+        {#if analyser}
           <PlayerWaveform
-            analyser={$analyser}
+            {analyser}
             width={400}
             height={250}
             grillVolume={(vol) => handleGrillVolume(vol)}
@@ -142,18 +141,18 @@
         {/if}
       </div>
       <div
-        class="flex min-h-[80px] flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-[inset_0_0_8px_rgba(0,0,0,0.4)]"
+        class="shadow-lg/40 flex min-h-20 flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c]"
       >
         <div
           class="song-current mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
         >
-          {$currentTrack}
+          {currentTrack}
         </div>
         <Button onClick={togglePlay} class="mb-3">
-          {$isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
+          {isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
         </Button>
         <Slider
-          value={$volume}
+          value={volume}
           onChange={(value) => onVolume(value)}
           name="radio_volume"
           min={0}
