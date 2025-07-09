@@ -101,29 +101,26 @@
     >
       <div
         bind:this={grillElement}
-        class=" border-3
-          bg-background-950
-          max-h-100%
-          max-w-100%
-          relative
-          aspect-square
-          h-[85%]
-          overflow-hidden
-          rounded-full
-          border-solid
-          border-[#555]
-          bg-gradient-to-b
-          from-[#333]
-          to-[#111]
-          transition-transform
-          duration-100
-          ease-out
-          [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)]
-          before:absolute
-          before:inset-0
-          before:content-['']
-          before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]
-          md:aspect-auto md:h-[85%] md:!w-[85%]"
+        class="border-3
+                 bg-background-950
+                 relative
+                 aspect-square
+                 h-[85%]
+                 overflow-hidden
+                 rounded-full
+                 border-solid
+                 border-[#555]
+                 bg-gradient-to-b
+                 from-[#333]
+                 to-[#111]
+                 transition-transform
+                 duration-100
+                 ease-out
+                 [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)]
+                 before:absolute
+                 before:inset-0
+                 before:content-['']
+                 before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]"
       ></div>
     </div>
 
@@ -132,12 +129,7 @@
         class="shadow-lg/50 min-h-37.5 mb-2.5 flex h-full flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black"
       >
         {#if analyser}
-          <PlayerWaveform
-            {analyser}
-            width={400}
-            height={250}
-            grillVolume={(vol) => handleGrillVolume(vol)}
-          />
+          <PlayerWaveform {analyser} grillVolume={(vol) => handleGrillVolume(vol)} />
         {/if}
       </div>
       <div

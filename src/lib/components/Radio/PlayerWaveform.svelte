@@ -1,30 +1,18 @@
-<!-- PlayerWaveform.svelte -->
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
 
   interface Props {
     analyser: AnalyserNode;
-    width: number;
-    height: number;
     grillVolume(vol: number): void;
   }
 
-  let { analyser, width, height, grillVolume }: Props = $props();
+  // Width and height are no longer needed as props
+  let { analyser, grillVolume }: Props = $props();
 
   let canvas: HTMLCanvasElement;
   let animationId: number;
-  let pixelRatio: number = 1;
 
   onMount(() => {
-    // Get device pixel ratio
-    pixelRatio = window.devicePixelRatio || 1;
-
-    // Set canvas dimensions accounting for pixel ratio
-    canvas.width = width * pixelRatio;
-    canvas.height = height * pixelRatio;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-
     const maybeCtx = canvas.getContext('2d');
     if (!maybeCtx) {
       console.error('Failed to get 2D context');
@@ -32,73 +20,79 @@
     }
 
     const ctx = maybeCtx;
+    const freqData = new Uint8Array(analyser.frequencyBinCount);
+    const waveData = new Uint8Array(analyser.fftSize);
 
-    // Scale drawing context to match pixel ratio
-    ctx.scale(pixelRatio, pixelRatio);
+    // Use a ResizeObserver to automatically handle canvas sizing.
+    // This is more robust than passing width/height props.
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const { width, height } = entry.contentRect;
+      const dpr = window.devicePixelRatio || 1;
 
-    // Initialize analyzer data arrays
-    const bufferLength = analyser.frequencyBinCount;
-    const frequencyData = new Uint8Array(bufferLength);
-    const waveformData = new Uint8Array(analyser.fftSize);
+      // Update the canvas's internal bitmap size for high-res screens
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+
+      // Scale the drawing context so we can use CSS pixels
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    });
+
+    observer.observe(canvas);
 
     function draw() {
       animationId = requestAnimationFrame(draw);
 
-      // 1. Get frequency data for volume
-      analyser.getByteFrequencyData(frequencyData);
-      let sum = 0;
-      for (let i = 0; i < bufferLength; i++) {
-        sum += frequencyData[i];
-      }
-      const averageVolume = sum / bufferLength;
-      grillVolume(averageVolume);
+      // On each frame, get the canvas's current CSS-driven size
+      const { clientWidth: width, clientHeight: height } = canvas;
+      if (width === 0 || height === 0) return; // Skip drawing if canvas is not visible
 
-      // 2. Draw the waveform
-      analyser.getByteTimeDomainData(waveformData);
+      // --- Grill Volume ---
+      analyser.getByteFrequencyData(freqData);
+      const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
+      grillVolume(avg);
+
+      // --- Waveform Drawing ---
+      analyser.getByteTimeDomainData(waveData);
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, width, height);
 
       ctx.save();
-      ctx.font = 'bold 180px Tahoma, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      const cx = width / 2;
-      const cy = height / 2;
-      ctx.fillStyle = '#222';
-      ctx.fillText('AMC', cx, cy);
-
       ctx.globalCompositeOperation = 'source-in';
       ctx.lineWidth = 3;
       ctx.strokeStyle = 'hsl(200, 100%, 70%)';
-
       ctx.beginPath();
-      const slice = width / waveformData.length;
+
+      const sliceWidth = width / waveData.length;
       let x = 0;
 
-      for (let i = 0; i < waveformData.length; i++) {
-        const v = waveformData[i] / 128; // Convert to 0-1 range
-        const y = (v * height) / 2;
+      for (let i = 0; i < waveData.length; i++) {
+        // Normalize waveform data from [0, 255] to [-1, 1]
+        const v = waveData[i] / 128.0 - 1.0;
+        // Position the y-coordinate vertically centered in the canvas
+        const y = height / 2 + (v * height) / 2;
 
         if (i === 0) {
           ctx.moveTo(x, y);
         } else {
           ctx.lineTo(x, y);
         }
-
-        x += slice;
+        x += sliceWidth;
       }
-
       ctx.stroke();
       ctx.restore();
     }
 
     draw();
-  });
 
-  onDestroy(() => {
-    cancelAnimationFrame(animationId);
+    // The onMount function can return a cleanup function
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationId);
+    };
   });
 </script>
 
-<canvas bind:this={canvas} class="max-h-30 max-w-85 block h-auto w-full"></canvas>
+<canvas bind:this={canvas} class="block h-auto w-full"></canvas>
