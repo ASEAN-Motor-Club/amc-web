@@ -44,4 +44,20 @@ export default defineConfig({
       },
     ],
   },
+  server: {
+    proxy: {
+      '/stream': {
+        target: 'https://www.aseanmotorclub.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/stream/, '/stream_high'),
+      },
+      '/icecast-status': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/icecast-status/, '/status-json.xsl'),
+      },
+    },
+  },
 });

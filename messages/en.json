@@ -150,7 +150,36 @@
     "head": "{siteName} | Industries",
     "title": "Industries"
   },
-  "radio": { "head": "{siteName} | Radio", "title": "Radio" },
+  "radio": {
+    "head": "{siteName} | Radio",
+    "title": "Radio",
+    "play": "Play",
+    "pause": "Pause"
+  },
+  "radio_guide": {
+    "features_title": "Radio Features",
+    "song_requests": "Song requests (use",
+    "in_discord": "in Discord)",
+    "news_segments": "News segments",
+    "game_guides": "Game guides, e.g. Tuning, making money, etc.",
+    "tune_in_title": "2 ways you can tune in!",
+    "mod_method": "Use the mod to add Radio ASEAN to your game! See below for installation guide.",
+    "web_stream": "Visit our web stream:",
+    "mod_title": "Mod Installation",
+    "download_mod": "Download the mod here:",
+    "download_link": "Download RadioMod_P.pak",
+    "place_file": "Place the",
+    "file_into": "file into:",
+    "next_to": "next to MotorTown-Windows.pak",
+    "restart_game": "You need to RESTART the game.",
+    "find_folder_title": "How to find your game folder:",
+    "step1": "Open Steam > Library",
+    "step2": "Right click on your game > Manage > Browse Local Files",
+    "step3": "Navigate to",
+    "step4": "Place the",
+    "step4b": "file next to",
+    "step5": "Restart the game for the mod to take effect."
+  },
   "events": {
     "no": "No",
     "lap": "Lap",
