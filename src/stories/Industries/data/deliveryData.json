@@ -1,0 +1,29 @@
+{
+	"deliveries": [
+        {
+            "iD": 82204,
+            "cargoType": "None",
+            "cargoKey": "Fuel",
+            "numCargos": 43,
+            "colorIndex": -1,
+            "weight": 800,
+            "senderPointGuid": "5C6A24444E199BD34DA3D3AEE97B022A",
+            "receiverPointGuid": "32A0E7D2442A666BB8F2BCA7EF9AD259",
+            "timeUntilExpiresSeconds": 164.3814697265625,
+            "payment": 2895,
+            "deliveryFlags": 3
+        },{
+            "iD": 82650,
+            "cargoType": "None",
+            "cargoKey": "Cement",
+            "numCargos": 93,
+            "colorIndex": -1,
+            "weight": 1368.8680419921875,
+            "senderPointGuid": "E5456EB9422766979D2FD18BAF77493A",
+            "receiverPointGuid": "5C286EF7413EE6C125D116A47C3A6609",
+            "timeUntilExpiresSeconds": 277.2349853515625,
+            "payment": 6492,
+            "deliveryFlags": 3
+        }
+	]
+}

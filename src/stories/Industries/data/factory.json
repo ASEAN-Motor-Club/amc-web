@@ -1,0 +1,155 @@
+[
+        {
+            "deliveryPointGuid": "47152D314AE8ABEF9DB76CA1E3B3C649",
+            "inputInventory": {
+                "entries": [
+                    {
+                        "cargoKey": "HempPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "CabbagePallet",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "PowerBox",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "CornPallet",
+                        "amount": 23
+                    },
+                    {
+                        "cargoKey": "PumpkinPallet",
+                        "amount": 1
+                    },
+                    {
+                        "cargoKey": "CheesePallet",
+                        "amount": 44
+                    },
+                    {
+                        "cargoKey": "BeanPallet",
+                        "amount": 48
+                    },
+                    {
+                        "cargoKey": "BreadPallet",
+                        "amount": 8
+                    },
+                    {
+                        "cargoKey": "ToyBoxes",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "Container_20ft_01",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "BoxPallete_03",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "BoxPallete_02",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "BoxPallete_01",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "Container_40ft_01",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "OrangeBoxes",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "RicePallet",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "BottlePallete",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "MilitarySupplyBox_01_Empty",
+                        "amount": 0
+                    }
+                ]
+            },
+            "outputInventory": {
+                "entries": [
+                    {
+                        "cargoKey": "HempPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "PowerBox",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "CabbagePallet",
+                        "amount": 34
+                    },
+                    {
+                        "cargoKey": "CornPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "PumpkinPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "CheesePallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "BeanPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "BreadPallet",
+                        "amount": 50
+                    },
+                    {
+                        "cargoKey": "BoxPallete_03",
+                        "amount": 9
+                    },
+                    {
+                        "cargoKey": "BoxPallete_02",
+                        "amount": 4
+                    },
+                    {
+                        "cargoKey": "BoxPallete_01",
+                        "amount": 9
+                    },
+                    {
+                        "cargoKey": "OrangeBoxes",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "RicePallet",
+                        "amount": 18
+                    },
+                    {
+                        "cargoKey": "MilitarySupplyBox_01",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "BottlePallete",
+                        "amount": 0
+                    },
+                    {
+                        "cargoKey": "ToyBoxes",
+                        "amount": 43
+                    }
+                ]
+            },
+            "productionProgresses": [
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+]
