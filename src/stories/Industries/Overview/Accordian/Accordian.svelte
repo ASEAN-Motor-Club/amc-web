@@ -1,13 +1,11 @@
 <script lang="ts">
   import { slide } from "svelte/transition";
-  import { onMount, type Snippet } from "svelte";
+  import { type Snippet } from "svelte";
   import { INV_STATUS } from "$lib/constants";
+	import { ActiveAccordian } from "./ActiveAccordianManager.svelte";
+  import Card from "$lib/ui/Card/Card.svelte";
 
 	type AccordianProps = {
-		/**
-		 * Extend the accordian or not
-		 */
-		isExtended: boolean;
 		/**
 		 * Name of the factory
 		 */
@@ -21,35 +19,23 @@
 		 */
 		inventoryStatus: number;
 
+		index: number;
 		// Contents to be rendered in accordian when expanded
 		children: Snippet;
-
-		index: number;
-
-		onAccordianClick: (i: number) => void
 	}
 	
 	// let children: Snippet;
 	let {
-		isExtended,
 		factoryName,
 		isManufacturer,
 		inventoryStatus,
 		children,
 		index,
-		onAccordianClick
 	 }: AccordianProps = $props();
 
-	 onMount(() => {
-		console.log(`isExtended of index ${index} is:`,isExtended);
-	 })
 </script>
 
 <style>
-
-	.accordian {
-		width: 420px;
-	}
 
 	.accordianBody {
 		align-items: center;
@@ -149,11 +135,22 @@
 	}
 </style>
 
-<div class="accordian h-full"
-	class:alert={inventoryStatus === INV_STATUS.ALERT}
-	class:caution={inventoryStatus === INV_STATUS.CAUTION}
-	class:normal={inventoryStatus === INV_STATUS.NORMAL}
->
+<div class="relative !p-0 h-[46px] w-[420px]">
+<Card class={
+	[
+		"absolute accordian h-full !p-0",
+		{"absolute border-red-700 border-4 border-t-0": inventoryStatus === INV_STATUS.ALERT && isManufacturer},
+		{"border-orange-500 border-4 border-t-0": inventoryStatus === INV_STATUS.ALERT && isManufacturer},
+		{"border-yellow border-4 border-t-0": inventoryStatus === INV_STATUS.CAUTION && isManufacturer},
+		{"border-green-600 border-t-0": inventoryStatus == INV_STATUS.NORMAL && isManufacturer}
+	]
+}>
+<!-- <div class={["accordian h-full",
+	{"border-red-700 border-4 border-t-0": inventoryStatus === INV_STATUS.ALERT}]}
+		class:alert={inventoryStatus === INV_STATUS.ALERT && isManufacturer}
+		class:caution={inventoryStatus === INV_STATUS.CAUTION && isManufacturer}
+		class:normal={inventoryStatus == INV_STATUS.NORMAL && isManufacturer}
+> -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div class="panel flex justify-between cursor-pointer"
@@ -161,7 +158,13 @@
 		class:alert={inventoryStatus === INV_STATUS.ALERT && isManufacturer}
 		class:caution={inventoryStatus === INV_STATUS.CAUTION && isManufacturer}
 		class:normal={inventoryStatus == INV_STATUS.NORMAL && isManufacturer}
-		onclick={() => onAccordianClick(index)}
+		onclick={() => {
+			if (ActiveAccordian.atIndex === index) {
+				ActiveAccordian.atIndex = -1
+			} else {
+				ActiveAccordian.atIndex = index	
+			}
+		}}
 	>
 		<div class="self-center w-full">
 			{#if inventoryStatus > INV_STATUS.CAUTION}
@@ -172,10 +175,10 @@
 			</p>
 		</div>
 		<!-- Credit: https://www.svgrepo.com/svg/521469/arrow-down -->
-		<svg class:extend={isExtended} class="justify-self-end self-center" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z" fill="#ffffff"></path></g></svg>
+		<svg class:extend={ActiveAccordian.atIndex === index} class="justify-self-end self-center" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z" fill="#ffffff"></path></g></svg>
 	</div>
-	{#if isExtended}
-		<div class="absolute accordianBody pt-2 px-2 w-full z-40"
+	{#if ActiveAccordian.atIndex === index}
+		<div class="accordianBody pt-2 px-2 w-full z-9999"
 			class:critical={inventoryStatus === INV_STATUS.CRITICAL}
 			class:alert={inventoryStatus === INV_STATUS.ALERT}
 			class:caution={inventoryStatus === INV_STATUS.CAUTION}
@@ -185,4 +188,6 @@
 			{@render children()}
 		</div>
 	{/if}
+<!-- </div> -->
+</Card>
 </div>
