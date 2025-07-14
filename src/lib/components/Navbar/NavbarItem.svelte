@@ -23,8 +23,7 @@
     <span class="invisible font-bold leading-none">{label}</span>
     <span
       class={[
-        'absolute whitespace-nowrap leading-none group-hover:underline',
-        menu ? 'left-0' : 'left-1/2 -translate-x-1/2',
+        'absolute left-0 whitespace-nowrap leading-none transition-all group-hover:font-bold',
         href === page.url.pathname ? 'font-bold' : 'text-text/90 dark:text-text-dark/90',
       ]}>{label}</span
     >

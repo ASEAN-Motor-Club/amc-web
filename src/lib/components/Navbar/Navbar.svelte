@@ -60,23 +60,31 @@
 </script>
 
 {#snippet mapIcon()}
-  <Icon class="i-material-symbols:map-outline-rounded group-hover:text-green-500" />
+  <Icon
+    class="i-material-symbols:map-outline-rounded transition-colors group-hover:text-green-500"
+  />
 {/snippet}
 
 {#snippet housingIcon()}
-  <Icon class="i-material-symbols:home-outline-rounded group-hover:text-blue-500" />
+  <Icon
+    class="i-material-symbols:home-outline-rounded transition-colors group-hover:text-blue-500"
+  />
 {/snippet}
 
 {#snippet industriesIcon()}
-  <Icon class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500" />
+  <Icon
+    class="i-material-symbols:factory-outline-rounded transition-colors group-hover:text-yellow-500"
+  />
 {/snippet}
 
 {#snippet radioIcon()}
-  <Icon class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500" />
+  <Icon
+    class="i-material-symbols:radio-outline-rounded transition-colors group-hover:text-orange-500"
+  />
 {/snippet}
 
 {#snippet trackIcon()}
-  <Icon class="i-material-symbols:route-outline group-hover:text-red-500" />
+  <Icon class="i-material-symbols:route-outline transition-colors group-hover:text-red-500" />
 {/snippet}
 
 <nav
