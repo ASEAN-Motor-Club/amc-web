@@ -9,7 +9,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PointType } from '$lib/components/Map/types';
+  import { PointType, type PlayerData } from '$lib/components/Map/types';
   import {
     deliveryPointLayer,
     residentPointLayer,
@@ -34,11 +34,9 @@
     type DeliveryPoint,
   } from '$lib/data/deliveryPoint';
   import { goto } from '$app/navigation';
-  import PlayerFetchWorker from '$lib/components/Map/playerFetchWorker.ts?worker';
-  import type { PlayerData } from '$lib/components/Map/playerFetchWorker';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type HouseData } from '$lib/api/types';
+  import { DeliveryLineType, type HouseData, type PlayerEventData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -49,6 +47,8 @@
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
   import { matchMouse } from '$lib/utils/media';
+  import { getLocationAtPoint } from '$lib/data/area';
+  import { PUBLIC_API_BASE } from '$env/static/public';
 
   const playerPointSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -368,19 +368,22 @@
   };
 
   onMount(() => {
-    const worker = new PlayerFetchWorker();
-    worker.postMessage('start');
+    const evt = new EventSource(`${PUBLIC_API_BASE}/api/player_positions/`);
 
-    worker.onmessage = (e) => {
-      playerData = e.data;
-      if (!playerLayerData?.enabled) return;
-
-      setPlayerPoints(e.data);
+    evt.onmessage = (e) => {
+      const data: PlayerEventData = JSON.parse(e.data);
+      const result = Object.entries(data).map(([name, coord]) => ({
+        geometry: reProjectPoint([coord.x, coord.y]),
+        name,
+        coord,
+        location: getLocationAtPoint(coord),
+        pointType: 2,
+      }));
+      setPlayerPoints(result);
     };
 
     return () => {
-      worker.postMessage('stop');
-      worker.terminate();
+      evt.close();
     };
   });
 
