@@ -10,12 +10,15 @@
     stationName: string;
   }
 
-  let { stationName = 'My Radio' }: Props = $props();
+  const VOLUME_STORAGE_KEY = 'radioVolume';
+
+  const { stationName }: Props = $props();
 
   let audio: HTMLAudioElement;
   let grillElement: HTMLDivElement;
   let isPlaying = $state<boolean | null>(false);
-  let volume = $state(1);
+
+  let volume = $state(+(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1));
 
   // Web Audio API variables
   let audioCtx: AudioContext;
@@ -59,6 +62,8 @@
 
   function onVolume(value: number) {
     audio.volume = +value;
+    localStorage.setItem(VOLUME_STORAGE_KEY, value.toString());
+    volume = value;
   }
 
   function handleGrillVolume(vol: number) {
