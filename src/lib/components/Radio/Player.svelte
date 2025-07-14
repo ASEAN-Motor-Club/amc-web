@@ -15,7 +15,6 @@
   const { stationName }: Props = $props();
 
   let audio: HTMLAudioElement;
-  let grillElement: HTMLDivElement;
   let isPlaying = $state<boolean | null>(false);
 
   let volume = $state(+(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1));
@@ -34,7 +33,8 @@
   onMount(() => {
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 512;
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.99;
 
     const source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
@@ -66,21 +66,21 @@
     volume = value;
   }
 
-  function handleGrillVolume(vol: number) {
-    if (grillElement) {
-      const volume = vol;
-      const scale = 1 + volume / 400;
-      const vibrationIntensity = volume / 200;
-      const tx = (Math.random() - 0.5) * vibrationIntensity;
-      const ty = (Math.random() - 0.5) * vibrationIntensity;
-      const rotate = (Math.random() - 0.5) * vibrationIntensity * 2;
+  let grillTransform = $state('');
 
-      grillElement.style.transform = `
+  function handleGrillVolume(vol: number) {
+    const volume = vol;
+    const scale = 1 + volume / 400;
+    const vibrationIntensity = volume / 200;
+    const tx = (Math.random() - 0.5) * vibrationIntensity;
+    const ty = (Math.random() - 0.5) * vibrationIntensity;
+    const rotate = (Math.random() - 0.5) * vibrationIntensity * 2;
+
+    grillTransform = `
           translate(${tx}px, ${ty}px)
           rotate(${rotate}deg)
           scale(${scale})
         `;
-    }
   }
 </script>
 
@@ -105,7 +105,6 @@
               md:border-black/10"
     >
       <div
-        bind:this={grillElement}
         class="border-3
                  bg-background-950
                  relative
@@ -126,6 +125,7 @@
                  before:inset-0
                  before:content-['']
                  before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]"
+        style:transform={grillTransform}
       ></div>
     </div>
 

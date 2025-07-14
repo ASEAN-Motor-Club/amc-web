@@ -12,6 +12,9 @@
   let canvas: HTMLCanvasElement;
   let animationId: number;
 
+  let decayRate = 8;
+  let lastTime = 0;
+
   onMount(() => {
     const maybeCtx = canvas.getContext('2d');
     if (!maybeCtx) {
@@ -22,6 +25,7 @@
     const ctx = maybeCtx;
     const freqData = new Uint8Array(analyser.frequencyBinCount);
     const waveData = new Uint8Array(analyser.fftSize);
+    const prevWaveData = new Float32Array(analyser.fftSize);
 
     // Use a ResizeObserver to automatically handle canvas sizing.
     // This is more robust than passing width/height props.
@@ -41,8 +45,12 @@
 
     observer.observe(canvas);
 
-    function draw() {
+    function draw(timestamp: number) {
       animationId = requestAnimationFrame(draw);
+
+      const deltaTime = lastTime === 0 ? 0 : (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+      const decayWeight = Math.exp(-decayRate * deltaTime);
 
       // On each frame, get the canvas's current CSS-driven size
       const { clientWidth: width, clientHeight: height } = canvas;
@@ -55,6 +63,12 @@
 
       // --- Waveform Drawing ---
       analyser.getByteTimeDomainData(waveData);
+
+      for (let i = 0; i < waveData.length; i++) {
+        const current = waveData[i] / 128.0 - 1.0;
+        prevWaveData[i] = prevWaveData[i] * decayWeight + current * (1 - decayWeight);
+      }
+
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, width, height);
@@ -62,15 +76,15 @@
       ctx.save();
       ctx.globalCompositeOperation = 'source-in';
       ctx.lineWidth = 3;
+      ctx.lineJoin = 'round';
       ctx.strokeStyle = 'hsl(200, 100%, 70%)';
       ctx.beginPath();
 
-      const sliceWidth = width / waveData.length;
+      const sliceWidth = width / (waveData.length - 1);
       let x = 0;
 
       for (let i = 0; i < waveData.length; i++) {
-        // Normalize waveform data from [0, 255] to [-1, 1]
-        const v = waveData[i] / 128.0 - 1.0;
+        const v = prevWaveData[i] * 1.25;
         // Position the y-coordinate vertically centered in the canvas
         const y = height / 2 + (v * height) / 2;
 
@@ -85,7 +99,8 @@
       ctx.restore();
     }
 
-    draw();
+    // Start the animation loop
+    requestAnimationFrame(draw);
 
     // The onMount function can return a cleanup function
     return () => {
