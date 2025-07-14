@@ -33,8 +33,8 @@
   onMount(() => {
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
-    analyser.smoothingTimeConstant = 0.99;
+    analyser.fftSize = 128;
+    analyser.smoothingTimeConstant = 0;
 
     const source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
@@ -66,21 +66,18 @@
     volume = value;
   }
 
-  let grillTransform = $state('');
+  let grillTranslateX = $state(0);
+  let grillTranslateY = $state(0);
+  let grillRotate = $state(0);
+  let grillScale = $state(1);
 
   function handleGrillVolume(vol: number) {
     const volume = vol;
-    const scale = 1 + volume / 400;
+    grillScale = 1 + volume / 400;
     const vibrationIntensity = volume / 200;
-    const tx = (Math.random() - 0.5) * vibrationIntensity;
-    const ty = (Math.random() - 0.5) * vibrationIntensity;
-    const rotate = (Math.random() - 0.5) * vibrationIntensity * 2;
-
-    grillTransform = `
-          translate(${tx}px, ${ty}px)
-          rotate(${rotate}deg)
-          scale(${scale})
-        `;
+    grillTranslateX = (Math.random() - 0.5) * vibrationIntensity;
+    grillTranslateY = (Math.random() - 0.5) * vibrationIntensity;
+    grillRotate = (Math.random() - 0.5) * vibrationIntensity * 2;
   }
 </script>
 
@@ -125,7 +122,7 @@
                  before:inset-0
                  before:content-['']
                  before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]"
-        style:transform={grillTransform}
+        style:transform={`translate(${grillTranslateX}px, ${grillTranslateY}px) rotate(${grillRotate}deg) scale(${grillScale})`}
       ></div>
     </div>
 

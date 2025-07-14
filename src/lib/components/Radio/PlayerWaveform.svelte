@@ -12,8 +12,12 @@
   let canvas: HTMLCanvasElement;
   let animationId: number;
 
-  let decayRate = 8;
+  let antiDecayRate = -8;
   let lastTime = 0;
+
+  function scaleWave(x: number): number {
+    return 1 - (1 - x) * (1 - x);
+  }
 
   onMount(() => {
     const maybeCtx = canvas.getContext('2d');
@@ -48,9 +52,9 @@
     function draw(timestamp: number) {
       animationId = requestAnimationFrame(draw);
 
-      const deltaTime = lastTime === 0 ? 0 : (timestamp - lastTime) / 1000;
+      const deltaTime = (timestamp - lastTime) / 1000;
       lastTime = timestamp;
-      const decayWeight = Math.exp(-decayRate * deltaTime);
+      const decayWeight = Math.exp(antiDecayRate * deltaTime);
 
       // On each frame, get the canvas's current CSS-driven size
       const { clientWidth: width, clientHeight: height } = canvas;
@@ -84,7 +88,7 @@
       let x = 0;
 
       for (let i = 0; i < waveData.length; i++) {
-        const v = prevWaveData[i] * 1.25;
+        const v = scaleWave(Math.abs(prevWaveData[i])) * Math.sign(prevWaveData[i]);
         // Position the y-coordinate vertically centered in the canvas
         const y = height / 2 + (v * height) / 2;
 
