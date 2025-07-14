@@ -103,7 +103,6 @@
       ctx.restore();
     }
 
-    // Start the animation loop
     requestAnimationFrame(draw);
 
     // The onMount function can return a cleanup function
