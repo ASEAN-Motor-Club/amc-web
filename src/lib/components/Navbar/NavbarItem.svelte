@@ -7,13 +7,11 @@
     label,
     icon,
     onClick,
-    menu,
   }: {
     href: string;
     label: string;
     icon: Snippet;
     onClick: () => void;
-    menu?: boolean;
   } = $props();
 </script>
 

@@ -7,12 +7,9 @@ export const getEventInfo = async (
   signal: AbortSignal,
 ): Promise<EventInfo> => {
   try {
-    const response = await fetch(
-      `${PUBLIC_API_BASE}/api/route_info/${id}/laps/${laps}`,
-      {
-        signal: signal,
-      },
-    );
+    const response = await fetch(`${PUBLIC_API_BASE}/api/route_info/${id}/laps/${laps}`, {
+      signal: signal,
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
