@@ -1,4 +1,5 @@
 import type { EventInfo } from './types';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const getEventInfo = async (
   id: string,
@@ -7,7 +8,7 @@ export const getEventInfo = async (
 ): Promise<EventInfo> => {
   try {
     const response = await fetch(
-      `https://server.aseanmotorclub.com/api/route_info/${id}/laps/${laps}`,
+      `${PUBLIC_API_BASE}/api/route_info/${id}/laps/${laps}`,
       {
         signal: signal,
       },
