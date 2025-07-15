@@ -184,7 +184,7 @@
   >
     <div
       class={[
-        'shadow-md shadow-black/30 h-full w-full rounded-full transition-colors',
+        'h-full w-full rounded-full shadow-md shadow-black/30 transition-colors',
         {
           'bg-primary-700 hover:bg-primary-800': color === 'primary',
           'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',
