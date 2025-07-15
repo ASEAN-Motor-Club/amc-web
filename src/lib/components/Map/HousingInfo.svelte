@@ -46,11 +46,17 @@
 
     // Show only the highest applicable unit
     if (days > 0) {
-      return `${days} ${days === 1 ? m['housing.day']() : m['housing.days']()}`;
+      return m['housing.days']({
+        days,
+      });
     } else if (hours > 0) {
-      return `${hours} ${hours === 1 ? m['housing.hour']() : m['housing.hours']()}`;
+      return m['housing.hours']({
+        hours,
+      });
     } else if (minutes > 0) {
-      return `${minutes} ${minutes === 1 ? m['housing.minute']() : m['housing.minutes']()}`;
+      return m['housing.minutes']({
+        minutes,
+      });
     } else {
       return m['housing.less_than_minute']();
     }

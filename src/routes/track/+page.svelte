@@ -2,13 +2,13 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import SelectTrack from '$lib/components/TrackEditor/Editor/SelectTrack.svelte';
-  import type { TrackData } from '$lib/components/TrackEditor/types';
+  import type { Track } from '$lib/schema/track';
   import { m } from '$lib/paraglide/messages';
   import { getTrackDataContext } from './+layout.svelte';
 
   const trackData = getTrackDataContext();
 
-  const handleSelect = (track: TrackData | undefined) => {
+  const handleSelect = (track: Track | undefined) => {
     trackData.value = track;
     const params = page.url.searchParams.toString();
     goto('/track/edit' + (params && `?${params}`));

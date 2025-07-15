@@ -60,23 +60,44 @@
 </script>
 
 {#snippet mapIcon()}
-  <Icon class="i-material-symbols:map-outline-rounded group-hover:text-green-500" />
+  <Icon
+    class="i-material-symbols:map-outline-rounded transition-colors group-hover:text-green-500"
+  />
 {/snippet}
 
 {#snippet housingIcon()}
-  <Icon class="i-material-symbols:home-outline-rounded group-hover:text-blue-500" />
+  <Icon
+    class="i-material-symbols:home-outline-rounded transition-colors group-hover:text-blue-500"
+  />
 {/snippet}
 
 {#snippet industriesIcon()}
-  <Icon class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500" />
+  <Icon
+    class="i-material-symbols:factory-outline-rounded transition-colors group-hover:text-yellow-500"
+  />
 {/snippet}
 
 {#snippet radioIcon()}
-  <Icon class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500" />
+  <Icon
+    class="i-material-symbols:radio-outline-rounded transition-colors group-hover:text-orange-500"
+  />
 {/snippet}
 
 {#snippet trackIcon()}
-  <Icon class="i-material-symbols:route-outline group-hover:text-red-500" />
+  <Icon class="i-material-symbols:route-outline transition-colors group-hover:text-red-500" />
+{/snippet}
+
+{#snippet menuItems()}
+  {#each links as { href, label, icon } (href)}
+    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
+  {/each}
+  <Button
+    variant="contained-light"
+    class="!bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
+    tag="a"
+    href="https://discord.com/invite/Wcf8ZcEHD6"
+    target="_blank">{m['navbar.join_discord']()}</Button
+  >
 {/snippet}
 
 <nav
@@ -94,35 +115,21 @@
     </span>
   </a>
   <div class="hidden gap-6 lg:flex">
-    {#each links as { href, label, icon } (href)}
-      <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
-    {/each}
-    <Button
-      variant="contained-light"
-      class="!bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
-      tag="a"
-      href="https://discord.com/invite/Wcf8ZcEHD6"
-      target="_blank">{m['navbar.join_discord']()}</Button
-    >
+    {@render menuItems()}
   </div>
   <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start !p-0">
     <div
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
       transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
     >
-      <a href="/" class="my-4 text-2xl font-bold tracking-tight" onclick={() => (menu = false)}
-        >{m['site_name']()}</a
+      <a
+        href="/"
+        class="font-cursive my-4 text-2xl font-bold tracking-tight"
+        onclick={() => (menu = false)}
       >
-      {#each links as { href, label, icon } (href)}
-        <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} menu />
-      {/each}
-      <Button
-        variant="contained-light"
-        class="mt-4 !bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
-        tag="a"
-        href="https://discord.com/invite/Wcf8ZcEHD6"
-        target="_blank">{m['navbar.join_discord']()}</Button
-      >
+        {m['site_name']()}
+      </a>
+      {@render menuItems()}
     </div>
   </Modal>
   <Button class="ml-auto" variant="text" round size="sm" onClick={swapTheme} icon>

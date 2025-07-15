@@ -5,7 +5,6 @@
     type PointMoveEventDetail,
     type PointsGroups,
   } from '$lib/ui/MtMap/MtMap.svelte';
-  import type { TrackData, WaypointEuler } from '../types';
   import mapImage from '$lib/assets/images/map.avif';
   import Card from '$lib/ui/Card/Card.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -13,12 +12,12 @@
   import InputGroup from '$lib/ui/InputGroup/InputGroup.svelte';
   import DownloadCard from './DownloadCard.svelte';
   import { cloneDeep, isEqual } from 'lodash-es';
-  import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '$lib/utils/waypoint';
+  import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
   import { Quaternion } from 'quaternion';
   import { toRad } from '$lib/utils/math/vectors';
-  import { normalizedWaypoints } from '$lib/utils/waypoint/normalized';
+  import { normalizedWaypoints } from '../utils/normalized';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { autoRotateAllWaypoints, autoRotateWaypoint } from '$lib/utils/waypoint/autoRotate';
+  import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import {
     colorCyan600,
@@ -29,10 +28,11 @@
     colorYellow400,
     colorYellow600,
   } from '$lib/tw-var';
+  import type { Track, WaypointEuler } from '$lib/schema/track';
 
   export type EditorProps = {
     /** The track data to be edited */
-    initialTrackData: TrackData;
+    initialTrackData: Track;
   };
   const { initialTrackData }: EditorProps = $props();
 

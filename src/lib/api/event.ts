@@ -1,4 +1,5 @@
 import type { EventInfo } from './types';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const getEventInfo = async (
   id: string,
@@ -6,12 +7,9 @@ export const getEventInfo = async (
   signal: AbortSignal,
 ): Promise<EventInfo> => {
   try {
-    const response = await fetch(
-      `https://server.aseanmotorclub.com/api/route_info/${id}/laps/${laps}`,
-      {
-        signal: signal,
-      },
-    );
+    const response = await fetch(`${PUBLIC_API_BASE}/api/route_info/${id}/laps/${laps}`, {
+      signal: signal,
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -24,7 +22,7 @@ export const getEventInfo = async (
     if (error instanceof DOMException && error.name === 'AbortError') {
       console.log('Fetch aborted');
       return {
-        route: { waypoints: [] },
+        route: { waypoints: [], routeName: '' },
         best_times: [],
       };
     }

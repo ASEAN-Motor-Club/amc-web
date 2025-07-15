@@ -1,9 +1,9 @@
-import type { Waypoint } from '$lib/components/TrackEditor/types';
 import Quat, { Quaternion } from 'quaternion';
 import { WP_EULER_ORDER } from '.';
-import { orientation2D } from '../math/vectors';
-import { averageRotation } from '../math/rotation/average';
-import { normalizedRotation } from '../math/rotation/normalized';
+import { orientation2D } from '$lib/utils/math/vectors';
+import { averageRotation } from './average';
+import { normalizedRotation } from '$lib/utils/math/rotation/normalized';
+import type { Waypoint } from '$lib/schema/track';
 
 export function normalizedWaypoints(waypoints: Waypoint[]): Waypoint[] {
   return waypoints.map((wp, i) => {

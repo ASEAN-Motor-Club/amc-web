@@ -11,10 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ICECAST_STREAM_URL: ${{ vars.ICECAST_STREAM_URL || 'http://dummy-url' }}
-      ICECAST_URL: ${{ vars.ICECAST_URL || 'http://dummy-url' }}
+      PUBLIC_API_BASE: ${{ vars.PUBLIC_API_BASE }}
 
     steps:
+      - name: 🚨 Check required env vars
+        run: |
+          if [ -z "$PUBLIC_API_BASE" ]; then
+            echo "Error: PUBLIC_API_BASE is not set"
+            exit 1
+          fi
+
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 

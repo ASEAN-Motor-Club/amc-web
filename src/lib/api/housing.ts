@@ -1,4 +1,5 @@
 import type { HouseData } from '$lib/api/types';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 type GetHousingDataResponse = Record<
   string,
@@ -14,7 +15,7 @@ type GetHousingDataResponse = Record<
 
 export const getHousingData = async (signal: AbortSignal): Promise<HouseData> => {
   try {
-    const response = await fetch('https://server.aseanmotorclub.com/api/housing/', {
+    const response = await fetch(`${PUBLIC_API_BASE}/api/housing/`, {
       signal: signal,
     });
     if (!response.ok) {

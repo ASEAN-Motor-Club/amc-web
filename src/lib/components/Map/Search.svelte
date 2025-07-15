@@ -2,10 +2,9 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
-  import type { PlayerData } from './playerFetchWorker';
   import { deliveryPoints as unmappedDeliveryPoints } from '$lib/data/deliveryPoint';
   import { houses as unmappedHouse } from '$lib/data/house';
-  import { PointType } from './types';
+  import { PointType, type PlayerData } from './types';
   import { cargoName } from '$lib/data/cargo';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { goto } from '$app/navigation';

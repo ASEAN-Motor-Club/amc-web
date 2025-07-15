@@ -10,12 +10,14 @@
     stationName: string;
   }
 
-  let { stationName = 'My Radio' }: Props = $props();
+  const VOLUME_STORAGE_KEY = 'radioVolume';
+
+  const { stationName }: Props = $props();
 
   let audio: HTMLAudioElement;
-  let grillElement: HTMLDivElement;
   let isPlaying = $state<boolean | null>(false);
-  let volume = $state(1);
+
+  let volume = $state(+(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1));
 
   // Web Audio API variables
   let audioCtx: AudioContext;
@@ -31,7 +33,8 @@
   onMount(() => {
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 512;
+    analyser.fftSize = 128;
+    analyser.smoothingTimeConstant = 0;
 
     const source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
@@ -59,23 +62,22 @@
 
   function onVolume(value: number) {
     audio.volume = +value;
+    localStorage.setItem(VOLUME_STORAGE_KEY, value.toString());
+    volume = value;
   }
 
-  function handleGrillVolume(vol: number) {
-    if (grillElement) {
-      const volume = vol;
-      const scale = 1 + volume / 400;
-      const vibrationIntensity = volume / 200;
-      const tx = (Math.random() - 0.5) * vibrationIntensity;
-      const ty = (Math.random() - 0.5) * vibrationIntensity;
-      const rotate = (Math.random() - 0.5) * vibrationIntensity * 2;
+  let grillTranslateX = $state(0);
+  let grillTranslateY = $state(0);
+  let grillRotate = $state(0);
+  let grillScale = $state(1);
 
-      grillElement.style.transform = `
-          translate(${tx}px, ${ty}px)
-          rotate(${rotate}deg)
-          scale(${scale})
-        `;
-    }
+  function handleGrillVolume(vol: number) {
+    const volume = vol;
+    grillScale = 1 + volume / 400;
+    const vibrationIntensity = volume / 200;
+    grillTranslateX = (Math.random() - 0.5) * vibrationIntensity;
+    grillTranslateY = (Math.random() - 0.5) * vibrationIntensity;
+    grillRotate = (Math.random() - 0.5) * vibrationIntensity * 2;
   }
 </script>
 
@@ -100,7 +102,6 @@
               md:border-black/10"
     >
       <div
-        bind:this={grillElement}
         class="border-3
                  bg-background-950
                  relative
@@ -121,6 +122,7 @@
                  before:inset-0
                  before:content-['']
                  before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)]"
+        style:transform={`translate(${grillTranslateX}px, ${grillTranslateY}px) rotate(${grillRotate}deg) scale(${grillScale})`}
       ></div>
     </div>
 

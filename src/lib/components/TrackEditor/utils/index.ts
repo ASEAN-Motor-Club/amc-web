@@ -1,6 +1,6 @@
-import type { WaypointEuler, Waypoint } from '$lib/components/TrackEditor/types';
 import Quat, { Quaternion } from 'quaternion';
-import { toDeg, toRad } from '../math/vectors';
+import { toDeg, toRad } from '$lib/utils/math/vectors';
+import type { Waypoint, WaypointEuler } from '$lib/schema/track';
 
 export const WP_EULER_ORDER = 'XYZ';
 

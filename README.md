@@ -98,7 +98,7 @@ Example usage:
   import * as m from '$lib/paraglide/messages';
 </script>
 
-<h1>{m.hello_world()}</h1>
+<h1>{m.site_name()}</h1>
 ```
 
 ## 🎨 Styling

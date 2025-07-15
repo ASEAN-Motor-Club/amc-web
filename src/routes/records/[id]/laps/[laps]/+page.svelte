@@ -66,7 +66,7 @@
   >{eventData?.route.routeName
     ? m['events.head_loaded']({
         routeName: eventData.route.routeName,
-        lapCount: page.params.laps === '0' ? m['events.no']() : page.params.laps,
+        laps: page.params.laps,
         siteName: m['site_name_short'](),
       })
     : m['events.head']({ siteName: m['site_name_short']() })}</title
@@ -84,8 +84,9 @@
     {/if}
   </h1>
   <h2 class="pb-8 font-semibold">
-    {page.params.laps === '0' ? m['events.no']() : page.params.laps}
-    {page.params.laps === '1' ? m['events.lap']() : m['events.laps']()}
+    {m['events.laps']({
+      laps: page.params.laps,
+    })}
   </h2>
   <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">
     <div class="flex h-10 items-center font-semibold leading-none">
