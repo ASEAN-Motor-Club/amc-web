@@ -85,7 +85,7 @@ async function removeUnusedCssVars() {
     // Step 1: Find all CSS files and collect all used CSS variables
     const cssFiles = await glob(path.join(assetsDir, '*.css').replace(/\\/g, '/'));
     const usedVars = new Set();
-    const varUsageRegex = /var\((--[^,)]+)/g;
+    const varUsageRegex = /var\(\s*(--[^,)\s]+)/g;
 
     for (const file of cssFiles) {
       const content = await fs.readFile(file, 'utf-8');
