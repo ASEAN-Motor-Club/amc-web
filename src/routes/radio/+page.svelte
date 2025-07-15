@@ -12,7 +12,7 @@
 
 <CommonHead>{m['radio.title']()}</CommonHead>
 
-<div class="bg-white-100 relative min-h-screen overflow-hidden py-8 dark:bg-gray-900">
+<div class="bg-white relative min-h-screen overflow-hidden py-8 dark:bg-gray-900">
   <img
     src={tireTrack}
     alt="Tire background"
@@ -32,7 +32,7 @@
     </h2>
     <ul class="mb-4 list-inside list-disc space-y-2">
       <li>
-        {m['radio_guide.song_requests']()} <code class="code-snippet">/song_request</code>
+        {m['radio_guide.song_requests']()} <code>/song_request</code>
         {m['radio_guide.in_discord']()}
       </li>
       <li>{m['radio_guide.news_segments']()}</li>
@@ -50,7 +50,7 @@
           href="https://www.aseanmotorclub.com/stream"
           target="_blank"
           rel="noopener noreferrer"
-          class="dark:text-blue-400; text-blue-600 hover:underline"
+          class="dark:text-blue-400 text-blue-600 hover:underline"
           >https://www.aseanmotorclub.com/stream</a
         >
       </li>
@@ -65,7 +65,7 @@
       {m['radio_guide.download_mod']()}
       <a
         href="https://www.aseanmotorclub.com/static/RadioMod_P.pak"
-        class="dark:text-blue-400; font-semibold text-blue-600 hover:underline"
+        class="dark:text-blue-400 font-semibold text-blue-600 hover:underline"
         download>{m['radio_guide.download_link']()}</a
       >
     </p>

@@ -148,7 +148,30 @@ If you need to pass utility classes to a prop that is not named `class` (e.g., `
 
 This pattern is only needed for props that are not named `class`.
 
-Refer to the [UnoCSS documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
+### UnoCSS vs Tailwind CSS Compatibility
+
+While UnoCSS with the Wind4 preset aims to match Tailwind CSS syntax as closely as possible, **some Tailwind CSS classes might not work** in UnoCSS. This can happen because:
+
+- UnoCSS may not have implemented certain Tailwind utilities yet
+- There might be slight differences in class naming or behavior
+- Custom Tailwind plugins or configurations may not be available in UnoCSS
+
+#### Checking for Unsupported Classes
+
+To identify classes that might not be supported by UnoCSS in your built application, run:
+
+```bash
+npm run check:uno-classes
+```
+
+This script scans your built files and reports any classes that don't start with `_` (UnoCSS-generated classes). Review the output to ensure all your utility classes are properly processed by UnoCSS.
+
+**Note**: The script automatically filters out:
+
+- Svelte generated classes (starting with `svelte-`)
+- Tailwind `group` class
+
+If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or refer to the [UnoCSS Svelte Scoped documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
 
 ## 🔣 Using Icons
 
