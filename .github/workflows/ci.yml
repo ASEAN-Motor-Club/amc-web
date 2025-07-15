@@ -1,5 +1,6 @@
 name: 🔍 Integration check
-
+permissions:
+  contents: read
 on:
   push:
     branches: [main]
