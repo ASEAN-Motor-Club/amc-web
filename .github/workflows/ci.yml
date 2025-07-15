@@ -10,17 +10,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
-    env:
-      PUBLIC_API_BASE: ${{ vars.PUBLIC_API_BASE }}
-
     steps:
-      - name: 🚨 Check required env vars
-        run: |
-          if [ -z "$PUBLIC_API_BASE" ]; then
-            echo "Error: PUBLIC_API_BASE is not set"
-            exit 1
-          fi
-
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
