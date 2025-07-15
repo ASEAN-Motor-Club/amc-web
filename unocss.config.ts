@@ -117,10 +117,10 @@ export default defineConfig({
       },
     },
     media: {
-      'not-touch': 'not (hover: none) and (pointer: coarse)',
-      'not-stylus': 'not (hover: none) and (pointer: fine)',
-      'not-pointer': 'not(hover) and (pointer: coarse)',
-      'not-mouse': 'not (hover) and (pointer: fine)',
+      'not-touch': 'not ((hover: none) and (pointer: coarse))',
+      'not-stylus': 'not ((hover: none) and (pointer: fine))',
+      'not-pointer': 'not ((hover) and (pointer: coarse))',
+      'not-mouse': 'not ((hover) and (pointer: fine))',
     },
   },
 });
