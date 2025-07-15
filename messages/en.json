@@ -1,6 +1,5 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from en!",
   "site_name_short": "AMC",
   "site_name": "ASEAN Motor Club",
   "action": {
@@ -65,7 +64,7 @@
       "change_btn": "Change to {file}",
       "clipboard": "Clipboard",
       "file": "File",
-      "selecting_point": "Selecting point: {pointNumber}",
+      "selected_point": "Selected point: {pointNumber}",
       "hide": "hide",
       "show": "show",
       "hidden": "hidden",
@@ -84,7 +83,8 @@
       "select_point_to_edit": "Select point to start editing.",
       "global_operations": "Global operations",
       "normalize": "Normalize",
-      "auto_rotate_all_gates": "Auto Rotate All Gates"
+      "auto_rotate_all_gates": "Auto Rotate All Gates",
+      "selecting_point": "Selecting point: {pointNumber}"
     }
   },
   "navbar": {
@@ -105,7 +105,17 @@
     "search_placeholder": "Search for a location",
     "supply": "Supply",
     "demand": "Demand",
-    "more_results": "{count} more result, try narrow your search",
+    "more_results": [
+      {
+        "declarations": ["input count"],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "{count} more result, try narrow your search",
+          "p=other": "{count} more results, try narrow your search",
+          "count=*": "{count} more result, try narrow your search"
+        }
+      }
+    ],
     "click_lock": "Right click to lock supply line",
     "click_info": "Left click for more info",
     "click_here_info": "Click here for more info"
@@ -127,12 +137,39 @@
     "depot_storage": "Depot storage",
     "vacant": "Vacant",
     "expired": "Expired",
-    "minute": "minute",
-    "minutes": "minutes",
-    "hour": "hour",
-    "hours": "hours",
-    "day": "day",
-    "days": "days",
+    "minutes": [
+      {
+        "declarations": ["input minutes", "local p = minutes: plural"],
+        "selectors": ["p"],
+        "match": {
+          "0": "minutes",
+          "p=one": "{minutes} minute",
+          "p=other": "{minutes} minutes"
+        }
+      }
+    ],
+    "hours": [
+      {
+        "declarations": ["input hours", "local p = hours: plural"],
+        "selectors": ["p"],
+        "match": {
+          "0": "hours",
+          "p=one": "{hours} hour",
+          "p=other": "{hours} hours"
+        }
+      }
+    ],
+    "days": [
+      {
+        "declarations": ["input days", "local p = days: plural"],
+        "selectors": ["p"],
+        "match": {
+          "0": "days",
+          "p=one": "{days} day",
+          "p=other": "{days} days"
+        }
+      }
+    ],
     "less_than_minute": "<1 minute",
     "search_placeholder": "Search house or owner",
     "sort": {
@@ -143,7 +180,10 @@
     "cannot_load": {
       "title": "Cannot load housing data",
       "desc": "Failed to load housing data. Please try again later."
-    }
+    },
+    "minute": "minute",
+    "hour": "hour",
+    "day": "day"
   },
   "view_on_map": "View on Map",
   "industries": {
@@ -181,17 +221,44 @@
     "step5": "Restart the game for the mod to take effect."
   },
   "events": {
-    "no": "No",
-    "lap": "Lap",
-    "laps": "Laps",
+    "laps": [
+      {
+        "declarations": ["input laps", "local p = laps: plural"],
+        "selectors": ["p"],
+        "match": {
+          "0": "Laps",
+          "p=one": "{laps} lap",
+          "laps=0, p=other": "No laps",
+          "laps=*, p=other": "{laps} laps"
+        }
+      }
+    ],
     "head": "{siteName} | Event",
-    "head_loaded": "{siteName} | Event | {routeName} {lapCount} Laps Records",
+    "head_loaded": [
+      {
+        "declarations": [
+          "input siteName",
+          "input routeName",
+          "input laps",
+          "local p = laps: plural"
+        ],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "{siteName} | Event | {routeName} {laps} Lap Records",
+          "laps=0, p=other": "{siteName} | Event | {routeName} No Laps Records",
+          "laps=*, p=other": "{siteName} | Event | {routeName} {laps} Laps Records"
+        }
+      }
+    ],
     "fastest": "Fastest!",
     "open_in_editor": "Open in Track Editor",
     "copy_track": "Copy Track",
     "cannot_load": {
       "title": "Cannot load event",
       "desc": "Failed to load event data. Please try again later."
-    }
-  }
+    },
+    "no": "No",
+    "lap": "Lap"
+  },
+  "hello_world": "Hello, {name} from en!"
 }

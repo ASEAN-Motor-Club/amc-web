@@ -1,4 +1,4 @@
-import type { TrackData } from '$lib/components/TrackEditor/types';
+import type { Track } from '$lib/schema/track';
 import type { Vector2 } from '../types';
 
 export type HouseData = Record<string, House>;
@@ -11,14 +11,14 @@ export type House = {
 
 export type PlayerEventData = Record<string, Vector2>;
 
-export enum DeliveryLineType {
+export const enum DeliveryLineType {
   Supply,
   Demand,
   Drop,
 }
 
 export type EventInfo = {
-  route: TrackData;
+  route: Track;
   best_times: BestTime[];
 };
 

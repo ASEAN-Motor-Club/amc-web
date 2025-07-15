@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { trackSchema } from './validateTrack';
+import { trackSchema } from './track';
 
 // Mock the paraglide messages
 vi.mock('$lib/paraglide/messages', () => ({

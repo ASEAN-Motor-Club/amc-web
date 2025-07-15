@@ -40,13 +40,25 @@
 
     let parts = [];
     if (days > 0) {
-      parts.push(`${days} ${days === 1 ? m['housing.day']() : m['housing.days']()}`);
+      parts.push(
+        m['housing.days']({
+          days,
+        }),
+      );
     }
     if (hours > 0) {
-      parts.push(`${hours} ${hours === 1 ? m['housing.hour']() : m['housing.hours']()}`);
+      parts.push(
+        m['housing.hours']({
+          hours,
+        }),
+      );
     }
     if (minutes > 0) {
-      parts.push(`${minutes} ${minutes === 1 ? m['housing.minute']() : m['housing.minutes']()}`);
+      parts.push(
+        m['housing.minutes']({
+          minutes,
+        }),
+      );
     }
     if (parts.length > 0) {
       return parts.join(' ');

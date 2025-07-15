@@ -1,6 +1,6 @@
-import type { Vector2 } from "$lib/types";
+import type { Vector2 } from '$lib/types';
 
-export enum PointType {
+export const enum PointType {
   Delivery,
   House,
   Player,

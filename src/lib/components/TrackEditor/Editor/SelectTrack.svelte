@@ -2,8 +2,7 @@
   import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import { onMount } from 'svelte';
-  import type { TrackData } from '../types';
-  import { trackSchema } from '$lib/utils/validateTrack';
+  import { trackSchema, type Track } from '$lib/schema/track';
   import type { ChangeEventHandler } from 'svelte/elements';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { page } from '$app/state';
@@ -11,7 +10,7 @@
   import { noop } from 'lodash-es';
 
   export type SelectTrackProps = {
-    onSelect: (trackData: TrackData) => void;
+    onSelect: (trackData: Track) => void;
   };
 
   const { onSelect }: SelectTrackProps = $props();

@@ -1,10 +1,11 @@
 <script module lang="ts">
+  import type { Track } from '$lib/schema/track';
   import { getContext, setContext } from 'svelte';
 
   const key = {};
 
   export type TrackDataContext = {
-    value: TrackData | undefined;
+    value: Track | undefined;
   };
 
   export function setTrackDataContext(trackData: TrackDataContext) {
@@ -21,8 +22,6 @@
 </script>
 
 <script lang="ts">
-  import type { TrackData } from '$lib/components/TrackEditor/types';
-
   let trackData = $state<TrackDataContext>({
     value: undefined,
   });

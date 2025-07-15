@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { normalizedWaypoints } from './normalized';
-import type { Waypoint } from '$lib/components/TrackEditor/types';
+import type { Waypoint } from '$lib/schema/track';
 
 describe('normalizedWaypoints', () => {
   it('should return an empty array when given an empty array', () => {

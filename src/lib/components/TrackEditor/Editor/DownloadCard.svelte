@@ -3,12 +3,12 @@
   import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
-  import type { TrackData } from '../types';
+  import type { Track } from '$lib/schema/track';
 
   type Props = {
     edited: boolean;
-    initialTrackData: TrackData;
-    trackData: TrackData;
+    initialTrackData: Track;
+    trackData: Track;
   };
 
   const { edited, initialTrackData, trackData }: Props = $props();
