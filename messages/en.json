@@ -107,12 +107,11 @@
     "demand": "Demand",
     "more_results": [
       {
-        "declarations": ["input count"],
+        "declarations": ["input count", "local p = count: plural"],
         "selectors": ["p"],
         "match": {
           "p=one": "{count} more result, try narrow your search",
-          "p=other": "{count} more results, try narrow your search",
-          "count=*": "{count} more result, try narrow your search"
+          "p=other": "{count} more results, try narrow your search"
         }
       }
     ],
@@ -142,7 +141,6 @@
         "declarations": ["input minutes", "local p = minutes: plural"],
         "selectors": ["p"],
         "match": {
-          "0": "minutes",
           "p=one": "{minutes} minute",
           "p=other": "{minutes} minutes"
         }
@@ -153,7 +151,6 @@
         "declarations": ["input hours", "local p = hours: plural"],
         "selectors": ["p"],
         "match": {
-          "0": "hours",
           "p=one": "{hours} hour",
           "p=other": "{hours} hours"
         }
@@ -164,7 +161,6 @@
         "declarations": ["input days", "local p = days: plural"],
         "selectors": ["p"],
         "match": {
-          "0": "days",
           "p=one": "{days} day",
           "p=other": "{days} days"
         }
@@ -224,9 +220,8 @@
     "laps": [
       {
         "declarations": ["input laps", "local p = laps: plural"],
-        "selectors": ["p"],
+        "selectors": ["p", "laps"],
         "match": {
-          "0": "Laps",
           "p=one": "{laps} lap",
           "laps=0, p=other": "No laps",
           "laps=*, p=other": "{laps} laps"
@@ -242,7 +237,7 @@
           "input laps",
           "local p = laps: plural"
         ],
-        "selectors": ["p"],
+        "selectors": ["p", "laps"],
         "match": {
           "p=one": "{siteName} | Event | {routeName} {laps} Lap Records",
           "laps=0, p=other": "{siteName} | Event | {routeName} No Laps Records",
@@ -259,6 +254,5 @@
     },
     "no": "No",
     "lap": "Lap"
-  },
-  "hello_world": "Hello, {name} from en!"
+  }
 }
