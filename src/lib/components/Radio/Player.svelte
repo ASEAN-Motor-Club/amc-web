@@ -82,11 +82,10 @@
 </script>
 
 <div
-  class="radio
-           border-3 border-3 max-w-175
-           shadow-lg/30 mx-auto
-           flex
-           max-h-screen w-full flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] md:h-auto"
+  class="border-3 border-3 max-w-175
+           mx-auto flex max-h-screen
+           w-full
+           flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30 md:h-auto"
 >
   <div
     class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
@@ -104,6 +103,7 @@
       <div
         class="border-3
                  bg-background-950
+                 bg-linear-to-b
                  relative
                  aspect-square
                  h-[85%]
@@ -111,7 +111,6 @@
                  rounded-full
                  border-solid
                  border-[#555]
-                 bg-gradient-to-b
                  from-[#333]
                  to-[#111]
                  transition-transform
@@ -126,19 +125,19 @@
       ></div>
     </div>
 
-    <div class=" flex h-[40vh] flex-col p-4 md:h-auto md:flex-1">
+    <div class="flex h-[40vh] flex-col p-4 md:h-auto md:flex-1">
       <div
-        class="shadow-lg/50 min-h-37.5 mb-2.5 flex h-full flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black"
+        class="min-h-37.5 mb-2.5 flex h-full flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-lg shadow-black/50"
       >
         {#if analyser}
           <PlayerWaveform {analyser} grillVolume={(vol) => handleGrillVolume(vol)} />
         {/if}
       </div>
       <div
-        class="shadow-lg/40 flex min-h-20 flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c]"
+        class="flex min-h-20 flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-lg shadow-black/40"
       >
         <div
-          class="song-current mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
+          class="mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
         >
           {currentTrack}
         </div>

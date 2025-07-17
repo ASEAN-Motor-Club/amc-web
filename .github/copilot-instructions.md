@@ -96,6 +96,7 @@ npm run format             # Prettier formatting
 npm run lint               # ESLint + Prettier check
 npm run check              # TypeScript + Svelte check
 npm run test               # Run all tests
+npm run check:uno-classes  # Check for non-UnoCSS classes in build output
 ```
 
 ## Build Process Specifics
@@ -129,10 +130,11 @@ src/
 ## Common Gotchas
 
 1. **UnoCSS Classes**: Must be statically analyzable - no variables in `<script>` blocks
-2. **i18n**: Never hardcode user-facing strings - always use `m['key']()`
-3. **Svelte 5**: Use new runes syntax, not legacy `$:` reactive statements
-4. **Context**: UI components often depend on parent context (InputGroup, Select, etc.)
-5. **Static Generation**: All data must be available at build time or loaded client-side
+2. **UnoCSS Compatibility**: Some Tailwind classes might not work in UnoCSS - use `npm run check:uno-classes` to verify
+3. **i18n**: Never hardcode user-facing strings - always use `m['key']()`
+4. **Svelte 5**: Use new runes syntax, not legacy `$:` reactive statements
+5. **Context**: UI components often depend on parent context (InputGroup, Select, etc.)
+6. **Static Generation**: All data must be available at build time or loaded client-side
 
 ## External Dependencies
 

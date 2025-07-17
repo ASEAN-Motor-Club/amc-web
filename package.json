@@ -19,7 +19,8 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
     "paraglide:compile": "npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-    "checklist": "npm run format && npm run lint && npm run paraglide:compile && npm run check && npm run test"
+    "checklist": "npm run format && npm run lint && npm run paraglide:compile && npm run check && npm run test",
+    "check:uno-classes": "npm run build && node scripts/find-non-uno-classes.js"
   },
   "devDependencies": {
     "@eslint/compat": "1.3.1",
