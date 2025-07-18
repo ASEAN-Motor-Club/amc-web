@@ -43,12 +43,12 @@
 
 {@render children()}
 <Modal open={modalOpen} onClose={hideModal}>
-  <Card class="max-w-120 flex flex-col p-5">
+  <Card class="max-w-120 flex min-w-60 flex-col p-5">
     <h2 class="pb-4.5 text-2xl font-bold tracking-tight">{modalParams.title}</h2>
-    <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line pb-6 text-sm">
+    <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line text-sm">
       {modalParams.message}
     </p>
-    <div class="-mx-3 -my-3 flex justify-end gap-2">
+    <div class="-mx-3 -my-3 flex justify-end gap-2 pt-6">
       {#if modalParams.confirmAction}
         <Button onClick={handleConfirm} color="primary" variant="text">
           {modalParams.confirmText || m['action.confirm']()}

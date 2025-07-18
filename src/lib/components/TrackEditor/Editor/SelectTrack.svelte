@@ -132,13 +132,16 @@
 
   let fetchFromUri = $state(false);
 
+  const PROXY_URL = 'https://www.aseanmotorclub.com/proxy';
+
   onMount(() => {
     const abortController = new AbortController();
 
     const uri = page.url.searchParams.get('uri');
     if (!uri) return;
     fetchFromUri = true;
-    tryFetchTrack(uri, abortController.signal).then((trackData) => {
+    const proxiedUri = `${PROXY_URL}?url=${encodeURIComponent(uri)}`;
+    tryFetchTrack(proxiedUri, abortController.signal).then((trackData) => {
       if (trackData) {
         parseTrackData(trackData);
       }

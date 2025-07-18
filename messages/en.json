@@ -254,5 +254,29 @@
     },
     "no": "No",
     "lap": "Lap"
+  },
+  "championship": {
+    "head": "{siteName} | AMC Cup SS {seasonNo}",
+    "event": {
+      "title": "Event on {date}",
+      "sub_event": [
+        {
+          "match": {
+            "o=one": "First Event:",
+            "o=two": "Second Event:",
+            "o=few": "Third Event:",
+            "o=other": "{no}th Event:"
+          }
+        }
+      ],
+      "more_info": "More info"
+    },
+    "coming_soon": "Coming soon!",
+    "title": "AMC Championship Cup",
+    "season": "Season {seasonNo}",
+    "team_standing": "Team Standing",
+    "personal_standing": "Personal Standing",
+    "coming_back": "Come back when the season starts for standing",
+    "schedule": "Schedule"
   }
 }

@@ -34,6 +34,11 @@
       label: m['navbar.track_editor'](),
       icon: trackIcon,
     },
+    {
+      href: '/championship',
+      label: 'AMC Cup',
+      icon: trophyIcon,
+    },
   ] satisfies {
     href: string;
     label: string;
@@ -87,6 +92,10 @@
   <Icon class="i-material-symbols:route-outline transition-colors group-hover:text-red-500" />
 {/snippet}
 
+{#snippet trophyIcon()}
+  <Icon class="i-material-symbols:trophy-rounded text-amber-500 transition-colors" />
+{/snippet}
+
 {#snippet menuItems()}
   {#each links as { href, label, icon } (href)}
     <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
@@ -101,20 +110,20 @@
 {/snippet}
 
 <nav
-  class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-14 w-full select-none items-center px-4 shadow-black/10 ring lg:h-16"
+  class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-14 w-full select-none items-center px-4 shadow-black/10 ring min-[1075px]:h-16"
 >
-  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => (menu = true)} icon>
+  <Button class="-ml-2 mr-2 min-[1075px]:hidden" variant="text" onClick={() => (menu = true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-cursive mr-8 text-2xl font-bold leading-none">
-    <span class="contents max-[375px]:hidden lg:max-xl:hidden">
-      {m['site_name']()}
-    </span>
-    <span class="hidden max-[375px]:contents lg:max-xl:contents">
+    <span class="contents max-[1075px]:hidden">
       {m['site_name_short']()}
     </span>
+    <span class="hidden max-[1075px]:contents">
+      {m['site_name']()}
+    </span>
   </a>
-  <div class="hidden gap-6 lg:flex">
+  <div class="hidden gap-6 min-[1075px]:flex">
     {@render menuItems()}
   </div>
   <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start !p-0">

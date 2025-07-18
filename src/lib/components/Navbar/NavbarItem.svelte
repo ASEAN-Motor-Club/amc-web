@@ -23,6 +23,7 @@
       class={[
         'absolute left-0 whitespace-nowrap leading-none transition-all group-hover:font-bold',
         href === page.url.pathname ? 'font-bold' : 'text-text/90 dark:text-text-dark/90',
+        href === '/championship' ? '!text-amber-600 dark:!text-amber-400' : '',
       ]}>{label}</span
     >
   </div>
