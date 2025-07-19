@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { PointType, type PlayerData } from './types';
+  import { type PlayerData } from './types';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
 
   export type HoverInfo = {
-    name: string | undefined;
-    pixelCoord: [number, number];
-    pointType: PointType.Player;
     info: PlayerData;
   };
 

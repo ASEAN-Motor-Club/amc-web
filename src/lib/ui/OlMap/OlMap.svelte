@@ -12,7 +12,7 @@
   import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
   import { MAP_SIZE } from './utils';
-  import type { MapBrowserEvent, MapEvent } from 'ol';
+  import type { MapBrowserEvent } from 'ol';
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
 
@@ -51,10 +51,6 @@
      * Callback for pointer right click events
      */
     onRightClick?: (e: MouseEvent, map: Map) => void;
-    /**
-     * Callback for map move start events
-     */
-    onMoveStart?: (e: MapEvent) => void;
     /**
      * Callback for pointer drag events
      */
