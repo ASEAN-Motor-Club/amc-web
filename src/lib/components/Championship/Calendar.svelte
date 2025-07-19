@@ -1,15 +1,16 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { getLocale } from '$lib/paraglide/runtime';
   import Card from '$lib/ui/Card/Card.svelte';
   import EventButton from './EventButton.svelte';
-  import EventModal from './EventModal.svelte';
 
   type CalendarProps = {
     month: number;
     year: number;
+    onEventClick: (day: number, month: number, year: number) => void;
   };
 
-  const { month, year }: CalendarProps = $props();
+  const { month, year, onEventClick }: CalendarProps = $props();
 
   const startOffset = $derived(new Date(year, month - 1, 1).getDay());
   const daysInLastMonth = $derived(new Date(year, month - 1, 0).getDate());
@@ -44,10 +45,13 @@
     else return offsetDay + 1 - startOffset - daysMonth;
   };
 
-  let openedEventDay: number | undefined = $state(undefined);
-
   const openEvent = (index: number) => {
-    openedEventDay = getOffsetDayOfWeek(index) + 1 - startOffset;
+    const openedEventDay = getOffsetDayOfWeek(index) + 1 - startOffset;
+    goto(
+      `?date=${year}-${String(month).padStart(2, '0')}-${String(openedEventDay).padStart(2, '0')}`,
+      { replaceState: true, noScroll: true },
+    );
+    onEventClick(openedEventDay, month, year);
   };
 
   const days = $derived.by(() => {
@@ -77,5 +81,3 @@
     {/each}
   </div>
 </Card>
-
-<EventModal {month} {year} day={openedEventDay} onClose={() => (openedEventDay = undefined)} />

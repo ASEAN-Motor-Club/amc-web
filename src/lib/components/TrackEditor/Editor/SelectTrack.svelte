@@ -8,6 +8,7 @@
   import { page } from '$app/state';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { noop } from 'lodash-es';
+  import { PUBLIC_PROXY_URL } from '$env/static/public';
 
   export type SelectTrackProps = {
     onSelect: (trackData: Track) => void;
@@ -132,15 +133,13 @@
 
   let fetchFromUri = $state(false);
 
-  const PROXY_URL = 'https://www.aseanmotorclub.com/proxy';
-
   onMount(() => {
     const abortController = new AbortController();
 
     const uri = page.url.searchParams.get('uri');
     if (!uri) return;
     fetchFromUri = true;
-    const proxiedUri = `${PROXY_URL}?url=${encodeURIComponent(uri)}`;
+    const proxiedUri = `${PUBLIC_PROXY_URL}?url=${encodeURIComponent(uri)}`;
     tryFetchTrack(proxiedUri, abortController.signal).then((trackData) => {
       if (trackData) {
         parseTrackData(trackData);

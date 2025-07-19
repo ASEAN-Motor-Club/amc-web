@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { m } from '$lib/paraglide/messages';
   import { startNowPlayingPolling, getStreamUrl } from '$lib/api/radio';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -25,12 +25,54 @@
 
   // Track state
   let currentTrack = $state<string>('Loading...');
-  let nowPlayingController: AbortController | null = null;
+
+  // Restart mechanism
+  const maxRestartAttempts = 50;
+  let restartAttempts = $state(0);
+  let restartTimeout: ReturnType<typeof setTimeout> | undefined;
 
   // Stream
   const streamUrl = getStreamUrl();
 
+  function handleAudioStall() {
+    if (restartAttempts < maxRestartAttempts && isPlaying) {
+      restartAttempts++;
+      console.warn(`Audio stalled. Attempting restart ${restartAttempts}/${maxRestartAttempts}`);
+      restartAudio();
+    } else if (restartAttempts >= maxRestartAttempts) {
+      console.error('Maximum restart attempts reached. Stopping playback.');
+      isPlaying = false;
+      currentTrack = 'Connection failed';
+    }
+  }
+
+  function handleAudioError(event: Event) {
+    if (restartAttempts < maxRestartAttempts && isPlaying) {
+      restartAttempts++;
+      console.warn(
+        `Audio error occurred. Attempting restart ${restartAttempts}/${maxRestartAttempts}`,
+        event,
+      );
+      restartAudio();
+    } else if (restartAttempts >= maxRestartAttempts) {
+      console.error('Maximum restart attempts reached after error. Stopping playback.');
+      isPlaying = false;
+      currentTrack = 'Connection failed';
+    }
+  }
+
+  function restartAudio() {
+    clearTimeout(restartTimeout);
+    restartTimeout = setTimeout(() => {
+      if (isPlaying) {
+        audio.load();
+        audio.play();
+      }
+    }, 1000);
+  }
+
   onMount(() => {
+    audio.volume = volume;
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 128;
@@ -40,23 +82,37 @@
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
 
-    // Start now playing polling
-    nowPlayingController = startNowPlayingPolling((track) => {
+    const nowPlayingController = startNowPlayingPolling((track) => {
       currentTrack = track;
     });
-  });
 
-  onDestroy(() => {
-    nowPlayingController?.abort();
-    audioCtx?.close();
+    // Add audio event listeners for restart mechanism
+    audio.addEventListener('stalled', handleAudioStall);
+    audio.addEventListener('error', handleAudioError);
+
+    return () => {
+      nowPlayingController?.abort();
+      audioCtx?.close();
+      if (restartTimeout) {
+        clearTimeout(restartTimeout);
+      }
+      audio.removeEventListener('stalled', handleAudioStall);
+      audio.removeEventListener('error', handleAudioError);
+    };
   });
 
   function togglePlay() {
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
-    if (!isPlaying) audio.play().catch(console.error);
-    else audio.pause();
+    if (!isPlaying) {
+      restartAttempts = 0;
+      audio.play().catch(() => {
+        handleAudioError(new Event('error'));
+      });
+    } else {
+      audio.pause();
+    }
     isPlaying = !isPlaying;
   }
 

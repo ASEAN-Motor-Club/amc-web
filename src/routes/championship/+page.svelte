@@ -1,11 +1,49 @@
-<script>
+<script lang="ts">
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
   import Card from '$lib/ui/Card/Card.svelte';
   import Calendar from '$lib/components/Championship/Calendar.svelte';
   import { m } from '$lib/paraglide/messages';
+  import EventModal from '$lib/components/Championship/EventModal.svelte';
+  import { page } from '$app/state';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { mappedEvents } from '$lib/data/event';
 
   const seasonNo = 2;
+
+  let openedEventDay: number | undefined = $state(undefined);
+  let openedEventMonth: number | undefined = $state(undefined);
+  let openedEventYear: number | undefined = $state(undefined);
+
+  const openEvent = (day: number, month: number, year: number) => {
+    openedEventDay = day;
+    openedEventMonth = month;
+    openedEventYear = year;
+  };
+
+  const closeEvent = () => {
+    openedEventDay = undefined;
+    openedEventMonth = undefined;
+    openedEventYear = undefined;
+    goto(`?`, { replaceState: true, noScroll: true });
+  };
+
+  onMount(() => {
+    const [year, month, day] = page.url.searchParams.get('date')?.split('-') ?? [];
+    if (
+      year &&
+      month &&
+      day &&
+      (mappedEvents.get(+year)?.get(+month)?.get(+day) ?? []).length > 0
+    ) {
+      openedEventYear = +year;
+      openedEventMonth = +month;
+      openedEventDay = +day;
+    } else {
+      closeEvent();
+    }
+  });
 </script>
 
 <svelte:head>
@@ -49,5 +87,11 @@
   </div>
 
   <h4 class="pb-8 text-4xl font-semibold tracking-tight">{m['championship.schedule']()}</h4>
-  <Calendar month={7} year={2025} />
+  <Calendar month={7} year={2025} onEventClick={openEvent} />
 </div>
+<EventModal
+  month={openedEventMonth}
+  year={openedEventYear}
+  day={openedEventDay}
+  onClose={closeEvent}
+/>
