@@ -17,6 +17,7 @@ jobs:
 
     env:
       PUBLIC_API_BASE: ${{ vars.PUBLIC_API_BASE }}
+      PUBLIC_PROXY_URL: ${{ vars.PUBLIC_PROXY_URL }}
 
     steps:
       - name: 📥 Checkout code

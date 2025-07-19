@@ -78,3 +78,34 @@
     </div>
   {/snippet}
 </Story>
+
+<Story name="Append Icon">
+  {#snippet template({ children: _, icon: __, size: ___, ...args })}
+    <div class="flex flex-wrap gap-2">
+      <Button {...args} size="xs">
+        {#snippet appendIcon()}
+          <Icon class="i-material-symbols:pause-rounded" />
+        {/snippet}
+        Pause
+      </Button>
+      <Button {...args} size="sm">
+        {#snippet appendIcon()}
+          <Icon class="i-material-symbols:pause-rounded" />
+        {/snippet}
+        Pause
+      </Button>
+      <Button {...args} size="md">
+        {#snippet appendIcon()}
+          <Icon class="i-material-symbols:pause-rounded" />
+        {/snippet}
+        Pause
+      </Button>
+      <Button {...args} size="lg">
+        {#snippet appendIcon()}
+          <Icon class="i-material-symbols:pause-rounded" />
+        {/snippet}
+        Pause
+      </Button>
+    </div>
+  {/snippet}
+</Story>
