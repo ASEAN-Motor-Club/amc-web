@@ -39,8 +39,6 @@
       const { width, height } = entry.contentRect;
       const dpr = window.devicePixelRatio || 1;
 
-      console.log(dpr);
-
       // Update the canvas's internal bitmap size for high-res screens
       canvas.width = width * dpr;
       canvas.height = height * dpr;

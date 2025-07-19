@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { PointType } from './types';
+  import { PointType, type PlayerData } from './types';
   import Card from '$lib/ui/Card/Card.svelte';
   import DeliveryInfo from './DeliveryInfo.svelte';
   import HousingInfo from './HousingInfo.svelte';
@@ -10,6 +10,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import type { HouseData } from '$lib/api/types';
   import { m } from '$lib/paraglide/messages';
+  import PlayerInfo from './PlayerInfo.svelte';
 
   export type HoverInfo = {
     name: string | undefined;
@@ -22,7 +23,7 @@
       }
     | {
         pointType: PointType.Player;
-        info: never;
+        info: PlayerData;
       }
     | {
         pointType: PointType.House;
@@ -114,6 +115,8 @@
           <DeliveryInfo {hoverInfo} />
         {:else if hoverInfo.pointType === PointType.House}
           <HousingInfo {hoverInfo} {houseData} />
+        {:else if hoverInfo.pointType === PointType.Player}
+          <PlayerInfo {hoverInfo} />
         {/if}
       {/if}
       <div class="border-t-1 my-0.5 w-full border-neutral-100/20"></div>

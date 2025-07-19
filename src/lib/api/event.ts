@@ -20,7 +20,7 @@ export const getEventInfo = async (
     return data;
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      console.log('Fetch aborted');
+      console.info('Fetch aborted');
       return {
         route: { waypoints: [], routeName: '' },
         best_times: [],

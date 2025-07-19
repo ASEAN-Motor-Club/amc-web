@@ -117,7 +117,12 @@
     ],
     "click_lock": "Right click to lock supply line",
     "click_info": "Left click for more info",
-    "click_here_info": "Click here for more info"
+    "click_here_info": "Click here for more info",
+    "player_info": {
+      "driving": "Driving {vehicle}",
+      "on_foot": "On foot/Passenger",
+      "unknown_vehicle": "unknown vehicle"
+    }
   },
   "home": {
     "desc_title": "MotorTown's premier community server in Southeast Asia",

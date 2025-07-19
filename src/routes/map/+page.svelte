@@ -351,20 +351,34 @@
   const playerLayerData = $derived(layersData.find((layer) => layer.id === layerId.Player));
 
   let playerData: PlayerData[] = $state([]);
+  let playerStickyFocusGuid: string | undefined = undefined;
+  let initialFocus = true;
 
   const setPlayerPoints = (data: PlayerData[]) => {
     playerPointSource.clear(true);
     playerPointSource.addFeatures(
       data.map(
-        ({ geometry, name, location }: PlayerData) =>
+        (playerData: PlayerData) =>
           new Feature({
-            geometry: new Point(geometry),
-            name,
+            geometry: new Point(playerData.geometry),
+            name: playerData.name,
             pointType: PointType.Player,
-            location,
+            location: playerData.location,
+            info: playerData,
           }),
       ),
     );
+    if (playerStickyFocusGuid) {
+      const initialPlayer = data.find((p) => p.guid === playerStickyFocusGuid);
+      if (initialPlayer) {
+        map.centerOn(
+          reProjectPoint([initialPlayer.coord.x, initialPlayer.coord.y]),
+          0,
+          initialFocus,
+        );
+        initialFocus = false;
+      }
+    }
   };
 
   onMount(() => {
@@ -378,7 +392,10 @@
         coord,
         location: getLocationAtPoint(coord),
         pointType: 2,
+        vehicleKey: coord.vehicle_key,
+        guid: coord.unique_id,
       }));
+      playerData = result;
       setPlayerPoints(result);
     };
 
@@ -416,7 +433,7 @@
     }
   };
 
-  const onPointerMove = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+  const handlePointerMove = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
     const isMouse = matchMouse();
     if (isMouse) {
       handlePointerMoveOrClick(e);
@@ -425,7 +442,7 @@
     }
   };
 
-  const onClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+  const handleClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
     const isMouse = matchMouse();
     if (isMouse) {
       deliveryLineSource.clear(true);
@@ -481,6 +498,12 @@
   let map: OlMap;
 
   const handleSearchClick = (point: SearchPoint) => {
+    if (point.pointType === PointType.Player) {
+      playerStickyFocusGuid = point.guid;
+      initialFocus = true;
+    } else {
+      playerStickyFocusGuid = undefined;
+    }
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
 
@@ -502,8 +525,20 @@
     if (housing) {
       const house = houses.find((h) => h.name === housing);
       if (house) {
-        map.centerOn(reProjectPoint([house.coord.x, house.coord.y]), true);
+        map.centerOn(reProjectPoint([house.coord.x, house.coord.y]), 0);
       }
+      return;
+    }
+    const deliveryGuid = page.url.searchParams.get('delivery');
+    if (deliveryGuid) {
+      const deliveryPoint = deliveryPointsMap.get(deliveryGuid);
+      if (deliveryPoint) {
+        map.centerOn(reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]), 0);
+      }
+    }
+    const playerGuid = page.url.searchParams.get('player');
+    if (playerGuid) {
+      playerStickyFocusGuid = playerGuid;
     }
   });
 
@@ -511,6 +546,10 @@
     hoverPoint?.set('hover', false);
     lockPoint?.set('hover', false);
   });
+
+  const handlePointerDrag = () => {
+    playerStickyFocusGuid = undefined;
+  };
 </script>
 
 <svelte:head>
@@ -524,10 +563,11 @@
         {layers}
         class="h-full w-full"
         zoomClass={className}
-        {onPointerMove}
-        {onClick}
+        onPointerMove={handlePointerMove}
+        onClick={handleClick}
         onRightClick={handleMapRightClick}
         bind:this={map}
+        onPointerDrag={handlePointerDrag}
       />
     {/snippet}
   </LoadClass>

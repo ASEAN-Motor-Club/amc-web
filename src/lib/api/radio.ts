@@ -13,7 +13,7 @@ export const getNowPlaying = async (signal?: AbortSignal): Promise<string> => {
     return data?.icestats?.source?.title || 'Unknown Track';
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      console.log('Now Playing fetch aborted');
+      console.info('Now Playing fetch aborted');
       return 'Unknown Track';
     }
     console.error('Error fetching now playing:', error);

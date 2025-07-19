@@ -12,4 +12,6 @@ export type PlayerData = {
   pointType: PointType.Player;
   location: string;
   coord: Vector2;
+  vehicleKey: string | 'None';
+  guid: string;
 };

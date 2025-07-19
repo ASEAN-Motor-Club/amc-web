@@ -1,5 +1,5 @@
 import type { Track } from '$lib/schema/track';
-import type { Vector2 } from '../types';
+import type { Vector3 } from '../types';
 
 export type HouseData = Record<string, House>;
 
@@ -9,7 +9,7 @@ export type House = {
   rentLeft: Date;
 };
 
-export type PlayerEventData = Record<string, Vector2>;
+export type PlayerEventData = Record<string, Vector3 & { vehicle_key: string; unique_id: string }>;
 
 export const enum DeliveryLineType {
   Supply,
