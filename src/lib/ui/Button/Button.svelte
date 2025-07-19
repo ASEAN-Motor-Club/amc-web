@@ -2,6 +2,7 @@
   import type { Snippet } from 'svelte';
   import type { Color } from '../shared';
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+  import { setBtnIconSizeContext } from './context';
 
   export type ButtonProps = {
     /**
@@ -65,6 +66,10 @@
      * @default false
      */
     icon?: boolean;
+    /**
+     * append Icon to the button, size will be automatically adjust
+     */
+    appendIcon?: Snippet;
   };
 
   const {
@@ -81,7 +86,12 @@
     href,
     target = '_self',
     icon = false,
+    appendIcon,
   }: ButtonProps = $props();
+
+  setBtnIconSizeContext({
+    getSize: () => size,
+  });
 </script>
 
 <svelte:element
@@ -167,5 +177,20 @@
   role={tag}
   target={tag === 'a' ? target : undefined}
 >
+  {#if appendIcon}
+    <span
+      class={[
+        'inline-flex',
+        {
+          '-ml-0.25 mr-0.5': size === 'xs',
+          '-ml-0.5 mr-1': size === 'sm',
+          '-ml-1 mr-2': size === 'md',
+          '-ml-2 mr-2.5': size === 'lg',
+        },
+      ]}
+    >
+      {@render appendIcon()}
+    </span>
+  {/if}
   {@render children()}
 </svelte:element>

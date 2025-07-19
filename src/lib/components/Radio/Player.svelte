@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { m } from '$lib/paraglide/messages';
   import { startNowPlayingPolling, getStreamUrl } from '$lib/api/radio';
   import Button from '$lib/ui/Button/Button.svelte';
   import Slider from '$lib/ui/Slider/Slider.svelte';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
   import PlayerWaveform from './PlayerWaveform.svelte';
 
   interface Props {
@@ -25,12 +26,54 @@
 
   // Track state
   let currentTrack = $state<string>('Loading...');
-  let nowPlayingController: AbortController | null = null;
+
+  // Restart mechanism
+  const maxRestartAttempts = 50;
+  let restartAttempts = $state(0);
+  let restartTimeout: ReturnType<typeof setTimeout> | undefined;
 
   // Stream
   const streamUrl = getStreamUrl();
 
+  function handleAudioStall() {
+    if (restartAttempts < maxRestartAttempts && isPlaying) {
+      restartAttempts++;
+      console.warn(`Audio stalled. Attempting restart ${restartAttempts}/${maxRestartAttempts}`);
+      restartAudio();
+    } else if (restartAttempts >= maxRestartAttempts) {
+      console.error('Maximum restart attempts reached. Stopping playback.');
+      isPlaying = false;
+      currentTrack = 'Connection failed';
+    }
+  }
+
+  function handleAudioError(event: Event) {
+    if (restartAttempts < maxRestartAttempts && isPlaying) {
+      restartAttempts++;
+      console.warn(
+        `Audio error occurred. Attempting restart ${restartAttempts}/${maxRestartAttempts}`,
+        event,
+      );
+      restartAudio();
+    } else if (restartAttempts >= maxRestartAttempts) {
+      console.error('Maximum restart attempts reached after error. Stopping playback.');
+      isPlaying = false;
+      currentTrack = 'Connection failed';
+    }
+  }
+
+  function restartAudio() {
+    clearTimeout(restartTimeout);
+    restartTimeout = setTimeout(() => {
+      if (isPlaying) {
+        audio.load();
+        audio.play();
+      }
+    }, 1000);
+  }
+
   onMount(() => {
+    audio.volume = volume;
     audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 128;
@@ -40,23 +83,37 @@
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
 
-    // Start now playing polling
-    nowPlayingController = startNowPlayingPolling((track) => {
+    const nowPlayingController = startNowPlayingPolling((track) => {
       currentTrack = track;
     });
-  });
 
-  onDestroy(() => {
-    nowPlayingController?.abort();
-    audioCtx?.close();
+    // Add audio event listeners for restart mechanism
+    audio.addEventListener('stalled', handleAudioStall);
+    audio.addEventListener('error', handleAudioError);
+
+    return () => {
+      nowPlayingController?.abort();
+      audioCtx?.close();
+      if (restartTimeout) {
+        clearTimeout(restartTimeout);
+      }
+      audio.removeEventListener('stalled', handleAudioStall);
+      audio.removeEventListener('error', handleAudioError);
+    };
   });
 
   function togglePlay() {
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
-    if (!isPlaying) audio.play().catch(console.error);
-    else audio.pause();
+    if (!isPlaying) {
+      restartAttempts = 0;
+      audio.play().catch(() => {
+        handleAudioError(new Event('error'));
+      });
+    } else {
+      audio.pause();
+    }
     isPlaying = !isPlaying;
   }
 
@@ -83,9 +140,9 @@
 
 <div
   class="border-3 border-3 max-w-175
-           mx-auto flex max-h-screen
-           w-full
-           flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30 md:h-auto"
+           mx-auto flex
+           h-auto
+           w-full flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30"
 >
   <div
     class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
@@ -95,10 +152,8 @@
 
   <div class="flex flex-1 flex-col bg-[#d2b48c] md:flex-row">
     <div
-      class="flex h-[40vh] items-center justify-center bg-[#6b3410]
-              p-4 [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)] md:h-auto md:flex-1
-              md:border-r-2
-              md:border-black/10"
+      class="aspect-3 md:aspect-1 flex h-full flex-[1_0_auto] items-center justify-center
+              bg-[#6b3410] p-4 [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)]"
     >
       <div
         class="border-3
@@ -125,24 +180,31 @@
       ></div>
     </div>
 
-    <div class="flex h-[40vh] flex-col p-4 md:h-auto md:flex-1">
+    <div class="flex flex-1 flex-col p-4">
       <div
-        class="min-h-37.5 mb-2.5 flex h-full flex-[2] items-center justify-center overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-lg shadow-black/50"
+        class="flex-grow-1 mb-2.5 flex min-h-40 overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-lg shadow-black/50"
       >
         {#if analyser}
           <PlayerWaveform {analyser} grillVolume={(vol) => handleGrillVolume(vol)} />
         {/if}
       </div>
       <div
-        class="flex min-h-20 flex-1 flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-lg shadow-black/40"
+        class="flex flex-col items-center justify-center rounded-md bg-[#5a2c00] p-3 text-[#d2b48c] shadow-lg shadow-black/40"
       >
         <div
           class="mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
         >
           {currentTrack}
         </div>
-        <Button onClick={togglePlay} class="mb-3">
-          {isPlaying ? `❚❚ ${m['radio.pause']()}` : `▶ ${m['radio.play']()}`}
+        <Button onClick={togglePlay} class="mb-3" color="primary">
+          {#snippet appendIcon()}
+            {#if isPlaying}
+              <Icon class="i-material-symbols:pause-rounded" />
+            {:else}
+              <Icon class="i-material-symbols:play-arrow-rounded" />
+            {/if}
+          {/snippet}
+          {isPlaying ? m['radio.pause']() : m['radio.play']()}
         </Button>
         <Slider
           value={volume}
@@ -152,6 +214,7 @@
           max={1}
           size="sm"
           class="w-full"
+          color="secondary"
         />
       </div>
     </div>

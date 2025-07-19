@@ -9,6 +9,7 @@
   // Width and height are no longer needed as props
   let { analyser, grillVolume }: Props = $props();
 
+  let canvasCover: HTMLDivElement;
   let canvas: HTMLCanvasElement;
   let animationId: number;
 
@@ -38,6 +39,8 @@
       const { width, height } = entry.contentRect;
       const dpr = window.devicePixelRatio || 1;
 
+      console.log(dpr);
+
       // Update the canvas's internal bitmap size for high-res screens
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -47,7 +50,7 @@
       ctx.scale(dpr, dpr);
     });
 
-    observer.observe(canvas);
+    observer.observe(canvasCover);
 
     function draw(timestamp: number) {
       animationId = requestAnimationFrame(draw);
@@ -113,4 +116,6 @@
   });
 </script>
 
-<canvas bind:this={canvas} class="block h-auto w-full"></canvas>
+<div class="relative w-full" bind:this={canvasCover}>
+  <canvas bind:this={canvas} class="absolute block h-full w-full" width="0" height="0"></canvas>
+</div>

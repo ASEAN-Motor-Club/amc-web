@@ -189,6 +189,7 @@
   "radio": {
     "head": "{siteName} | Radio",
     "title": "Radio",
+    "station_name": "ASEAN Motor Club Radio",
     "play": "Play",
     "pause": "Pause"
   },

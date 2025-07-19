@@ -130,7 +130,7 @@
 <div
   class={[
     'relative  flex cursor-pointer items-center',
-    { 'h-4': size === 'sm', 'h-5': size === 'md' },
+    { 'h-4 min-h-4': size === 'sm', 'h-5 min-h-5': size === 'md' },
     propsClassname,
   ]}
   onmousedown={handleSliderMouseDown}
