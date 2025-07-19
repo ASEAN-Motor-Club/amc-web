@@ -12,7 +12,7 @@
   import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
   import { MAP_SIZE } from './utils';
-  import type { MapBrowserEvent } from 'ol';
+  import type { MapBrowserEvent, MapEvent } from 'ol';
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
 
@@ -51,6 +51,14 @@
      * Callback for pointer right click events
      */
     onRightClick?: (e: MouseEvent, map: Map) => void;
+    /**
+     * Callback for map move start events
+     */
+    onMoveStart?: (e: MapEvent) => void;
+    /**
+     * Callback for pointer drag events
+     */
+    onPointerDrag?: (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => void;
   };
 
   let target: HTMLDivElement;
@@ -63,6 +71,7 @@
     onPointerMove,
     onClick,
     onRightClick,
+    onPointerDrag,
   }: OlMapProps = $props();
 
   onMount(() => {
@@ -128,19 +137,30 @@
 
     map.getViewport().addEventListener('contextmenu', handleContextMenu);
 
+    const handlePointerDrag = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+      onPointerDrag?.(e);
+    };
+
+    map.on('pointerdrag', handlePointerDrag);
+
     return () => {
       map.un('pointermove', handlePointerMove);
       map.un('click', handleClick);
+      map.un('pointerdrag', handlePointerDrag);
       map.getViewport().removeEventListener('contextmenu', handleContextMenu);
       map.setTarget();
     };
   });
 
-  export const centerOn = ([x, y]: [number, number], instant = false) => {
+  export const centerOn = (
+    [x, y]: [number, number],
+    duration = defaultTransitionDurationMs * 4,
+    zoom = true,
+  ) => {
     map.getView().animate({
-      zoom: 5,
+      zoom: zoom ? 5 : undefined,
       center: [x, y],
-      duration: instant ? 0 : defaultTransitionDurationMs * 4,
+      duration: duration,
     });
   };
 </script>

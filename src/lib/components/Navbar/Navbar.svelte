@@ -52,7 +52,6 @@
   });
 
   const swapTheme = () => {
-    console.log('Swapping theme');
     document.documentElement.classList.toggle('dark');
     darkMode = document.documentElement.classList.contains('dark');
   };

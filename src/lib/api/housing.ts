@@ -35,7 +35,7 @@ export const getHousingData = async (signal: AbortSignal): Promise<HouseData> =>
     return houseData;
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') {
-      console.log('Fetch aborted');
+      console.info('Fetch aborted');
       return {};
     }
     console.error('Error fetching housing data:', error);

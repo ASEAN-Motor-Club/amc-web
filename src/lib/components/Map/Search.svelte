@@ -14,6 +14,7 @@
   import type { HouseData } from '$lib/api/types';
   import { m } from '$lib/paraglide/messages';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
+  import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
 
   export type SearchPoint = {
     guid?: string;
@@ -60,8 +61,13 @@
     searchValue = event.currentTarget.value;
   };
 
+  const playerVehicleMap = $derived.by(() => {
+    return new Map(playerData.map((player) => [player.guid, player.vehicleKey]));
+  });
+
   const foundValues: SearchPoint[] = $derived.by(() => {
-    if (!searchValue || !focus) return [];
+    if (!focus) return [];
+    if (!searchValue) return [...playerData];
     const search = searchValue.trim().toLowerCase();
     const player = playerData.filter(
       (player) =>
@@ -94,7 +100,7 @@
       case PointType.House:
         return `?house=${point.name}`;
       case PointType.Player:
-        return `?player=${point.name}`;
+        return `?player=${point.guid}`;
     }
   };
 
@@ -107,7 +113,7 @@
 
   const maxShow = 50;
 
-  const foundValuesSliced = $derived(foundValues.slice(0, maxShow));
+  const foundValuesSliced = $derived(searchValue ? foundValues.slice(0, maxShow) : foundValues);
 
   let inputElement: HTMLDivElement | undefined = $state();
 </script>
@@ -206,6 +212,10 @@
                       class="inline-block bg-white/20"
                     />
                   </div>
+                {:else if point.pointType === PointType.Player}
+                  <div class="text-xs text-neutral-300">
+                    <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
+                  </div>
                 {/if}
                 <div class="text-xs text-neutral-400">
                   <HighlightText
@@ -219,7 +229,7 @@
               </div>
             </a>
           {/each}
-          {#if foundValues.length > maxShow}
+          {#if searchValue && foundValues.length > maxShow}
             <div class="px-3 py-2 italic text-neutral-300">
               {m['map.more_results']({ count: foundValues.length - maxShow })}
             </div>
