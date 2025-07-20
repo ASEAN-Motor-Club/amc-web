@@ -9,6 +9,6 @@
   const { class: className, children }: Props = $props();
 </script>
 
-<div class={['flex justify-between p-8', className]}>
+<div class={['flex p-8', className]}>
   <h1 class="text-5xl font-bold tracking-tight">{@render children()}</h1>
 </div>

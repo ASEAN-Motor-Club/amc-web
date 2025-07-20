@@ -277,7 +277,13 @@
       ],
       "sub_event_single": "Event:",
       "sub_event_race": "{name} race",
-      "more_info": "More info"
+      "more_info": "More info",
+      "official": "Official",
+      "unofficial": "Unofficial",
+      "event_type": {
+        "championship": "championship",
+        "warmup": "warm-up"
+      }
     },
     "coming_soon": "Coming soon!",
     "title": "AMC Championship Cup",

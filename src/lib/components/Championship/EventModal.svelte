@@ -28,9 +28,9 @@
   const getEventType = (type: EventType) => {
     switch (type) {
       case EventType.Championship:
-        return 'championship';
+        return m['championship.event.event_type.championship']();
       case EventType.Warmup:
-        return 'warm-up';
+        return m['championship.event.event_type.warmup']();
     }
   };
 
@@ -57,15 +57,20 @@
                 event.official
                   ? 'text-emerald-600 dark:text-emerald-400'
                   : 'text-amber-600 dark:text-amber-400',
-              ]}>{event.official ? 'Official' : 'Unofficial'} {getEventType(event.eventType)}</span
+              ]}
+              >{event.official
+                ? m['championship.event.official']()
+                : m['championship.event.unofficial']()}
+              {getEventType(event.eventType)}</span
             >
           </div>
-          <h3 class="overflow-hidden text-ellipsis whitespace-nowrap py-1 text-lg font-medium">
+          <h3 class="my-1 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium">
             {event.title}
           </h3>
-          <p class="text-text/80 dark:text-text-dark/80 text-sm">
+          <p class="text-text/90 dark:text-text-dark/90 my-1 text-sm">
             {event.description}
-            <br />
+          </p>
+          <p class="text-text/80 dark:text-text-dark/80 my-0.5 text-sm">
             {#each event.subEvent as subEvent, i (i)}
               {#if event.subEvent.length > 1}
                 {m['championship.event.sub_event']({
@@ -79,7 +84,7 @@
                 <a
                   href={'/track?uri=' + encodeURIComponent(subEvent.track)}
                   target="_blank"
-                  class="text-blue-600 hover:underline dark:text-blue-400"
+                  class="text-blue-600/80 hover:underline dark:text-blue-400/80"
                   >{m['championship.event.sub_event_race']({ name: subEvent.title })}</a
                 >
               {:else}
