@@ -64,16 +64,23 @@
             {event.title}
           </h3>
           <p class="text-text/80 dark:text-text-dark/80 text-sm">
+            {event.description}
+            <br />
             {#each event.subEvent as subEvent, i (i)}
-              {m['championship.event.sub_event']({
-                no: i + 1,
-                o: new Intl.PluralRules(getLocale(), { type: 'ordinal' }).select(i + 1),
-              })}
+              {#if event.subEvent.length > 1}
+                {m['championship.event.sub_event']({
+                  no: i + 1,
+                  o: new Intl.PluralRules(getLocale(), { type: 'ordinal' }).select(i + 1),
+                })}
+              {:else}
+                {m['championship.event.sub_event_single']()}
+              {/if}
               {#if subEvent.track}
                 <a
                   href={'/track?uri=' + encodeURIComponent(subEvent.track)}
                   target="_blank"
-                  class="text-blue-600 hover:underline dark:text-blue-400">{subEvent.title}</a
+                  class="text-blue-600 hover:underline dark:text-blue-400"
+                  >{m['championship.event.sub_event_race']({ name: subEvent.title })}</a
                 >
               {:else}
                 {subEvent.title}

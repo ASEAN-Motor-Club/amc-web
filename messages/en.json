@@ -262,7 +262,7 @@
     "lap": "Lap"
   },
   "championship": {
-    "head": "{siteName} | AMC Cup SS {seasonNo}",
+    "head": "{siteName} | AMC Cup Season {seasonNo}",
     "event": {
       "title": "Event on {date}",
       "sub_event": [
@@ -275,6 +275,8 @@
           }
         }
       ],
+      "sub_event_single": "Event:",
+      "sub_event_race": "{name} race",
       "more_info": "More info"
     },
     "coming_soon": "Coming soon!",

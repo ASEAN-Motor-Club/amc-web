@@ -10,6 +10,7 @@ type EventData = {
   official: boolean;
   eventType: EventType;
   link: string;
+  description: string;
   subEvent: {
     title: string;
     track?: string;
@@ -24,6 +25,7 @@ const events: EventData[] = [
     official: true,
     eventType: EventType.Warmup,
     link: 'https://discord.com/events/1341775494026231859/1395711626119872532',
+    description: 'A warm-up event before the opening of our second season!',
     subEvent: [
       {
         title: 'Any car (up to 240HP)',

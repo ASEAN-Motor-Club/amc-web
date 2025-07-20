@@ -25,11 +25,11 @@
   icon
   round
   variant={haveEvent ? 'contained' : 'text'}
-  color={haveEvent ? (today ? 'secondary' : 'primary') : 'neutral'}
+  color={haveEvent ? (today ? 'success' : 'info') : 'neutral'}
   disabled={!haveEvent || !currentMonth}
   class={{
     'opacity-100': currentMonth,
-    'ring-secondary-700 ring': today,
+    'ring-success-700 ring': today,
   }}
   {onClick}
 >
