@@ -8,7 +8,7 @@
 
 <MsgModal>
   <Navbar />
-  <main class="h-full min-h-dvh pt-14 lg:pt-16">
+  <main class="h-full min-h-dvh pt-16">
     {@render children()}
   </main>
 </MsgModal>

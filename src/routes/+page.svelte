@@ -16,9 +16,7 @@
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
-  <div
-    class="relative -mt-14 flex h-dvh w-full flex-col items-center justify-center pt-14 lg:-mt-16 lg:pt-16"
-  >
+  <div class="relative -mt-16 flex h-dvh w-full flex-col items-center justify-center pt-16">
     <div class="max-w-250 mx-20 mb-20 w-full px-8 sm:px-16">
       <img
         srcset={`${posterX10} 1x, ${posterX15} 1.5x, ${posterX20} 2x`}
@@ -34,7 +32,7 @@
     <ScrollHint />
   </div>
   <div
-    class="max-w-300 pt-30 -mt-14 grid min-h-dvh items-center gap-8 px-8 py-16 sm:px-16 md:grid-cols-2 lg:-mt-16 lg:pt-32"
+    class="max-w-300 -mt-16 grid min-h-dvh items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
       <h2 class="font-cursive mb-3 text-2xl font-semibold">{m['home.desc_title']()}</h2>

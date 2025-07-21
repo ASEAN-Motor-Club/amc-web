@@ -33,6 +33,7 @@
       href: '/track',
       label: m['navbar.track_editor'](),
       icon: trackIcon,
+      exact: false,
     },
     {
       href: '/championship',
@@ -42,7 +43,8 @@
   ] satisfies {
     href: string;
     label: string;
-    icon: Snippet;
+    icon: Snippet<[boolean]>;
+    exact?: boolean;
   }[];
 
   let darkMode = $state(false);
@@ -63,32 +65,49 @@
   let menu = $state(false);
 </script>
 
-{#snippet mapIcon()}
+{#snippet mapIcon(pathMatch: boolean)}
   <Icon
-    class="i-material-symbols:map-outline-rounded transition-colors group-hover:text-green-500"
+    class={[
+      'i-material-symbols:map-outline-rounded transition-colors group-hover:text-green-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
   />
 {/snippet}
 
-{#snippet housingIcon()}
+{#snippet housingIcon(pathMatch: boolean)}
   <Icon
-    class="i-material-symbols:home-outline-rounded transition-colors group-hover:text-blue-500"
+    class={[
+      'i-material-symbols:home-outline-rounded transition-colors group-hover:text-blue-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
   />
 {/snippet}
 
-{#snippet industriesIcon()}
+{#snippet industriesIcon(pathMatch: boolean)}
   <Icon
-    class="i-material-symbols:factory-outline-rounded transition-colors group-hover:text-yellow-500"
+    class={[
+      'i-material-symbols:factory-outline-rounded transition-colors group-hover:text-yellow-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
   />
 {/snippet}
 
-{#snippet radioIcon()}
+{#snippet radioIcon(pathMatch: boolean)}
   <Icon
-    class="i-material-symbols:radio-outline-rounded transition-colors group-hover:text-orange-500"
+    class={[
+      'i-material-symbols:radio-outline-rounded transition-colors group-hover:text-orange-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
   />
 {/snippet}
 
-{#snippet trackIcon()}
-  <Icon class="i-material-symbols:route-outline transition-colors group-hover:text-red-500" />
+{#snippet trackIcon(pathMatch: boolean)}
+  <Icon
+    class={[
+      'i-material-symbols:route-outline transition-colors group-hover:text-red-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
+  />
 {/snippet}
 
 {#snippet trophyIcon()}
@@ -96,8 +115,8 @@
 {/snippet}
 
 {#snippet menuItems()}
-  {#each links as { href, label, icon } (href)}
-    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} />
+  {#each links as { href, label, icon, exact } (href)}
+    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} {exact} />
   {/each}
   <Button
     variant="contained-light"
@@ -109,7 +128,7 @@
 {/snippet}
 
 <nav
-  class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-14 w-full select-none items-center px-4 shadow-black/10 ring min-[1075px]:h-16"
+  class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-16 w-full select-none items-center px-4 shadow-black/10 ring"
 >
   <Button class="-ml-2 mr-2 min-[1075px]:hidden" variant="text" onClick={() => (menu = true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
