@@ -85,4 +85,4 @@ export const teams = [
   },
 ];
 
-export const teamsRaceOnly = teams.slice(2)
+export const teamsRaceOnly = teams.slice(2);
