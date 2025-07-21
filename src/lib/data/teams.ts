@@ -1,0 +1,88 @@
+import devImg from '$lib/assets/teams/dev.png';
+
+export const teams = [
+  {
+    tag: 'DOT',
+    name: 'Department of Transportation',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1377198483731251330',
+  },
+  {
+    tag: 'DEV',
+    name: 'Department of Engineering Ventures',
+    description:
+      'The DEV is here to make your online experience even better and more seamless for everyone!',
+    logo: devImg,
+    bg: '#092547',
+    text: '#95ed2f',
+    link: 'https://discord.com/channels/1341775494026231859/1385653393208377538',
+  },
+  {
+    tag: 'ROT',
+    name: 'BRAIN-ROT',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1375128511580340298',
+  },
+  {
+    tag: 'TRUST',
+    name: 'In TRUST we Trust.',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1373958405139595355',
+  },
+  {
+    tag: 'テク',
+    name: 'Team Teku',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1373967982744830042',
+  },
+  {
+    tag: 'CAR',
+    name: 'Chronically Average Racers',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1373951531916726422',
+  },
+  {
+    tag: 'CV',
+    name: 'Cool Vibrations',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1374754321786339441',
+  },
+  {
+    tag: 'KAT',
+    name: 'Keep Applying Throttle',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1375132314186682519',
+  },
+  {
+    tag: 'GOAT',
+    name: 'Greatest of All Time',
+    description: '',
+    logo: undefined,
+    bg: '#000000',
+    text: '#ffffff',
+    link: 'https://discord.com/channels/1341775494026231859/1374209511455461526',
+  },
+];
+
+export const teamsRaceOnly = teams.slice(2)

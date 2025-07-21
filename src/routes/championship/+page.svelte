@@ -1,51 +1,14 @@
 <script lang="ts">
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Calendar from '$lib/components/Championship/Calendar.svelte';
+  import Standing from '$lib/components/Championship/Standing.svelte';
   import { m } from '$lib/paraglide/messages';
-  import EventModal from '$lib/components/Championship/EventModal.svelte';
-  import { page } from '$app/state';
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { mappedEvents } from '$lib/data/event';
   import videoWebm from '$lib/assets/videos/videoplayback.webm';
   import videoMP4 from '$lib/assets/videos/videoplayback.mp4';
+  import CalendarGroup from '$lib/components/Championship/CalendarGroup.svelte';
+  import Teams from '$lib/components/Championship/Teams.svelte';
 
   const seasonNo = 2;
-
-  let openedEventDay: number | undefined = $state(undefined);
-  let openedEventMonth: number | undefined = $state(undefined);
-  let openedEventYear: number | undefined = $state(undefined);
-
-  const openEvent = (day: number, month: number, year: number) => {
-    openedEventDay = day;
-    openedEventMonth = month;
-    openedEventYear = year;
-  };
-
-  const closeEvent = () => {
-    openedEventDay = undefined;
-    openedEventMonth = undefined;
-    openedEventYear = undefined;
-    goto(`?`, { replaceState: true, noScroll: true });
-  };
-
-  onMount(() => {
-    const [year, month, day] = page.url.searchParams.get('date')?.split('-') ?? [];
-    if (
-      year &&
-      month &&
-      day &&
-      (mappedEvents.get(+year)?.get(+month)?.get(+day) ?? []).length > 0
-    ) {
-      openedEventYear = +year;
-      openedEventMonth = +month;
-      openedEventDay = +day;
-    } else {
-      closeEvent();
-    }
-  });
 </script>
 
 <svelte:head>
@@ -76,38 +39,9 @@
       </h2>
     </div>
   </div>
-  <div class="flex flex-col items-center p-8 pt-0">
-    <h4 class="pt-18 pb-8 text-4xl font-semibold tracking-tight">Standing</h4>
-    <div class="flex w-full flex-col items-center justify-center gap-4 sm:flex-row">
-      <Card class="max-w-120 overflow-hidden">
-        <h4 class="-m-4 mb-0 bg-neutral-500/10 p-4 text-xl font-medium">
-          {m['championship.team_standing']()}
-        </h4>
-        <div
-          class="aspect-1 text-text/60 dark:text-text-dark/60 flex w-full items-center justify-center text-center text-sm italic"
-        >
-          {m['championship.coming_back']()}
-        </div>
-      </Card>
-      <Card class="max-w-120 overflow-hidden">
-        <h4 class="-m-4 mb-0 bg-neutral-500/10 p-4 text-xl font-medium">
-          {m['championship.personal_standing']()}
-        </h4>
-        <div
-          class="aspect-1 text-text/60 dark:text-text-dark/60 flex w-full items-center justify-center text-center text-sm italic"
-        >
-          {m['championship.coming_back']()}
-        </div>
-      </Card>
-    </div>
-
-    <h4 class="pt-18 pb-8 text-4xl font-semibold tracking-tight">{m['championship.schedule']()}</h4>
-    <Calendar month={7} year={2025} onEventClick={openEvent} />
+  <div class="flex w-full flex-col items-center p-8 pt-0">
+    <Teams />
+    <Standing />
+    <CalendarGroup />
   </div>
 </div>
-<EventModal
-  month={openedEventMonth}
-  year={openedEventYear}
-  day={openedEventDay}
-  onClose={closeEvent}
-/>
