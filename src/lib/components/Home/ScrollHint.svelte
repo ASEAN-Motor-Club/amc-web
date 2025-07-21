@@ -19,7 +19,7 @@
 
 {#if show}
   <div
-    class="bottom-13 absolute flex animate-bounce"
+    class="bottom-5 absolute left-1/2 flex -translate-x-1/2 animate-bounce"
     transition:fade={{ duration: defaultTransitionDurationMs }}
   >
     <Icon class="i-material-symbols:keyboard-double-arrow-down-rounded" size="lg" />

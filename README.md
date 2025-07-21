@@ -117,7 +117,7 @@ This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax 
 
   ```svelte
   <script>
-    const btnClass = 'bg-red-500 text-white px-4 py-2 rounded';
+    const btnClass = 'bg-red-500 text-text-dark px-4 py-2 rounded';
   </script>
 
   <button class={btnClass}>Click me</button>
@@ -126,7 +126,7 @@ This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax 
   Instead, always write utility classes directly in the markup:
 
   ```svelte
-  <button class="rounded bg-red-500 px-4 py-2 text-white">Click me</button>
+  <button class="text-text-dark rounded bg-red-500 px-4 py-2">Click me</button>
   ```
 
 ### Using `LoadClass` for Non-`class` Props

@@ -31,7 +31,7 @@
           ]}
         ></div>
       {/if}
-      <div class={['font-bold', index < 3 && 'top-2.25 absolute text-sm  text-white']}>
+      <div class={['font-bold', index < 3 && 'top-2.25 text-text-dark absolute  text-sm']}>
         {index + 1}
       </div>
       {#if index < 3}

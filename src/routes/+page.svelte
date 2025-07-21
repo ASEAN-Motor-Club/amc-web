@@ -1,10 +1,8 @@
 <script lang="ts">
-  import posterX10 from '$lib/assets/images/poster/asean_poster_cut_x1.avif';
-  import posterX15 from '$lib/assets/images/poster/asean_poster_cut_x1.5.avif';
-  import posterX20 from '$lib/assets/images/poster/asean_poster_cut_x2.avif';
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
   import { m } from '$lib/paraglide/messages';
   import { SvelteDate } from 'svelte/reactivity';
+  import posterVid from '$lib/assets/videos/background_trailer.mp4';
 
   const date = new SvelteDate();
 
@@ -16,19 +14,23 @@
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
-  <div class="relative -mt-16 flex h-dvh w-full flex-col items-center justify-center pt-16">
-    <div class="max-w-250 mx-20 mb-20 w-full px-8 sm:px-16">
-      <img
-        srcset={`${posterX10} 1x, ${posterX15} 1.5x, ${posterX20} 2x`}
-        alt="ASEAN Poster"
-        class="aspect-ratio-1818/1162 w-full object-contain"
-        fetchpriority="high"
-      />
+  <div class="relative -mt-16 h-dvh w-full pt-16">
+    <div class="relative flex h-full w-full flex-col items-center justify-center bg-black p-8">
+      <video
+        autoplay
+        loop
+        muted
+        class="z-0 absolute h-full w-full object-cover"
+        src={posterVid}
+        playsinline
+      >
+      </video>
+      <div class="z-1 absolute h-full w-full bg-black/50"></div>
+      <h1 class="z-100 font-cursive text-center text-6xl font-bold tracking-tight">
+        {m['site_name']()}
+      </h1>
     </div>
 
-    <h1 class="font-cursive px-1 text-center text-6xl font-bold tracking-tight">
-      {m['site_name']()}
-    </h1>
     <ScrollHint />
   </div>
   <div
