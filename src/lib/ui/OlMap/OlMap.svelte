@@ -11,7 +11,7 @@
   import { Zoom } from 'ol/control';
   import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
-  import { MAP_SIZE } from './utils';
+  import { MAP_REAL_SIZE } from './utils';
   import type { MapBrowserEvent } from 'ol';
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
@@ -74,8 +74,8 @@
     const projection = new Projection({
       code: 'customData',
       units: 'pixels',
-      extent: [0, 0, MAP_SIZE, MAP_SIZE],
-      worldExtent: [0, 0, MAP_SIZE, MAP_SIZE],
+      extent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
+      worldExtent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
     });
 
     const zoom = new Zoom({
@@ -108,7 +108,12 @@
         center: getCenter(projection.getExtent()),
         zoom: 1,
         maxZoom: 8,
-        extent: [0 - MAP_SIZE, 0 - MAP_SIZE, MAP_SIZE + MAP_SIZE, MAP_SIZE + MAP_SIZE],
+        extent: [
+          0 - MAP_REAL_SIZE,
+          0 - MAP_REAL_SIZE,
+          MAP_REAL_SIZE + MAP_REAL_SIZE,
+          MAP_REAL_SIZE + MAP_REAL_SIZE,
+        ],
       }),
     });
 
