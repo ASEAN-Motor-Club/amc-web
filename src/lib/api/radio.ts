@@ -28,7 +28,7 @@ export const getStreamUrl = (): string => {
 export const startNowPlayingPolling = (
   callback: (track: string) => void,
   interval = 120000, // 2 minutes
-): AbortController => {
+): (() => void) => {
   const controller = new AbortController();
 
   const fetchAndUpdate = async () => {
@@ -52,5 +52,7 @@ export const startNowPlayingPolling = (
     clearInterval(timer);
   });
 
-  return controller;
+  return () => {
+    controller.abort();
+  };
 };

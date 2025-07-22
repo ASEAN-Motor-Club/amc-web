@@ -57,6 +57,10 @@ export default defineConfig({
         secure: true,
         rewrite: (path) => path.replace(/^\/icecast-status/, '/status-json.xsl'),
       },
+      '/login/token': {
+        target: 'http://api.aseanmotorclub.com',
+        secure: true,
+      },
     },
   },
 });
