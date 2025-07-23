@@ -17,7 +17,7 @@ export default defineConfig({
   theme: {
     font: {
       sans: "'Noto Sans', sans-serif",
-      'sans-alt': "Koulen, sans-serif",
+      'sans-alt': 'Koulen, sans-serif',
     },
     colors: {
       background: {
