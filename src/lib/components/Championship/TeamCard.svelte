@@ -9,7 +9,12 @@
   const { team }: TeamCardProps = $props();
 </script>
 
-<Card
+<Card tag="a" href={team.link} target="_blank">
+  <h5 class="text-xl font-semibold">
+    [{team.tag}] {team.name}
+  </h5>
+</Card>
+<!-- <Card
   class="max-w-120 !ring-[var(--team-text)]/10 !shadow-[var(--team-text)]/10 hover:!ring-[var(--team-text)]/50 hover:!shadow-[var(--team-text)]/50 relative flex h-40 w-full justify-between overflow-hidden !bg-[var(--team-bg)] !p-0 text-[var(--team-text)] transition-all"
   style="--team-bg:{team.bg};--team-text:{team.text}"
   tag="a"
@@ -32,4 +37,4 @@
       <img src={team.logo} alt="{team.name} Logo" class="aspect-1 h-full object-cover" />
     </div>
   {/if}
-</Card>
+</Card> -->
