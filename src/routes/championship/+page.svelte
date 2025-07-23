@@ -30,10 +30,10 @@
         />
       </div>
       <h3 class="pb-5 pt-8 font-semibold">{m['championship.coming_soon']()}</h3>
-      <h1 class="pb-8 text-center text-4xl font-bold tracking-tight sm:text-7xl">
+      <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
         {m['championship.title']()}
       </h1>
-      <h2 class="text-2xl font-semibold sm:text-3xl">
+      <h2 class="font-sans-alt text-2xl font-semibold sm:text-3xl">
         {m['championship.season']({ seasonNo })}
       </h2>
     </div>

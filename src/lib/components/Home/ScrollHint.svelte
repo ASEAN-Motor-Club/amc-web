@@ -19,9 +19,9 @@
 
 {#if show}
   <div
-    class="bottom-5 absolute left-1/2 flex -translate-x-1/2 animate-bounce"
+    class="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 animate-bounce"
     transition:fade={{ duration: defaultTransitionDurationMs }}
   >
-    <Icon class="i-material-symbols:keyboard-double-arrow-down-rounded" size="lg" />
+    <Icon class="i-material-symbols:keyboard-arrow-down-rounded text-text-dark" size="lg" />
   </div>
 {/if}
