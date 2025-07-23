@@ -83,7 +83,7 @@
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
 
-    const nowPlayingController = startNowPlayingPolling((track) => {
+    const stopPolling = startNowPlayingPolling((track) => {
       currentTrack = track;
     });
 
@@ -92,7 +92,7 @@
     audio.addEventListener('error', handleAudioError);
 
     return () => {
-      nowPlayingController?.abort();
+      stopPolling();
       audioCtx?.close();
       if (restartTimeout) {
         clearTimeout(restartTimeout);

@@ -156,7 +156,11 @@
 <svelte:document onpaste={handlePaste} />
 
 <div class="flex h-full w-full p-8">
-  <Modal open={fetchFromUri} onClose={noop} class="bg-black/50 text-xl font-semibold text-white">
+  <Modal
+    open={fetchFromUri}
+    onClose={noop}
+    class="text-text-dark bg-black/50 text-xl font-semibold"
+  >
     {m['track_editor.select_track.loading_track']()}
   </Modal>
   <div

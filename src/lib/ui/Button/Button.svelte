@@ -51,7 +51,7 @@
      * The HTML tag to render the button as
      * @default 'button'
      */
-    tag?: 'button' | 'a';
+    tag?: 'button' | 'a' | 'div';
     /**
      * The href attribute for the button if it is an anchor tag
      */

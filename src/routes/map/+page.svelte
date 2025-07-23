@@ -36,7 +36,7 @@
   import { goto } from '$app/navigation';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type HouseData, type PlayerEventData } from '$lib/api/types';
+  import { DeliveryLineType, type HouseData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -48,7 +48,7 @@
   import { houses } from '$lib/data/house';
   import { matchMouse } from '$lib/utils/media';
   import { getLocationAtPoint } from '$lib/data/area';
-  import { PUBLIC_API_BASE } from '$env/static/public';
+  import { getPlayerRealtimePosition } from '$lib/api/player';
 
   const playerPointSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -381,26 +381,45 @@
     }
   };
 
-  onMount(() => {
-    const evt = new EventSource(`${PUBLIC_API_BASE}/api/player_positions/`);
-
-    evt.onmessage = (e) => {
-      const data: PlayerEventData = JSON.parse(e.data);
+  const getPlayerRealtimePositionCall = () => {
+    stopPolling = getPlayerRealtimePosition((data) => {
       const result = Object.entries(data).map(([name, coord]) => ({
         geometry: reProjectPoint([coord.x, coord.y]),
         name,
         coord,
         location: getLocationAtPoint(coord),
-        pointType: 2,
+        pointType: PointType.Player as const,
         vehicleKey: coord.vehicle_key,
         guid: coord.unique_id,
       }));
       playerData = result;
       setPlayerPoints(result);
+    });
+  };
+
+  let stopPolling: (() => void) | undefined = undefined;
+
+  onMount(() => {
+    const startPolling = () => {
+      console.log(document.hidden);
+      stopPolling?.();
+      if (document.hidden) {
+        stopPolling = undefined;
+        playerData = [];
+        setPlayerPoints([]);
+        return;
+      }
+      getPlayerRealtimePositionCall();
     };
 
+    document.addEventListener('visibilitychange', startPolling);
+
+    if (!document.hidden) {
+      getPlayerRealtimePositionCall();
+    }
     return () => {
-      evt.close();
+      document.removeEventListener('visibilitychange', startPolling);
+      stopPolling?.();
     };
   });
 

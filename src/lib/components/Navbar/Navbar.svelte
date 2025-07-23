@@ -7,6 +7,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import NavbarItem from './NavbarItem.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { PUBLIC_DISCORD_LINK } from '$env/static/public';
 
   const links = [
     {
@@ -122,7 +123,7 @@
     variant="contained-light"
     class="!bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
     tag="a"
-    href="https://discord.com/invite/Wcf8ZcEHD6"
+    href={PUBLIC_DISCORD_LINK}
     target="_blank">{m['navbar.join_discord']()}</Button
   >
 {/snippet}
@@ -133,7 +134,7 @@
   <Button class="-ml-2 mr-2 min-[1075px]:hidden" variant="text" onClick={() => (menu = true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
-  <a href="/" class="font-cursive mr-8 text-2xl font-bold leading-none">
+  <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
     <span class="contents max-[1075px]:hidden">
       {m['site_name_short']()}
     </span>
@@ -151,7 +152,7 @@
     >
       <a
         href="/"
-        class="font-cursive my-4 text-2xl font-bold tracking-tight"
+        class="font-sans-alt my-4 text-2xl tracking-[100%]"
         onclick={() => (menu = false)}
       >
         {m['site_name']()}
