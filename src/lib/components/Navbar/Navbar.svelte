@@ -152,7 +152,7 @@
     >
       <a
         href="/"
-        class="font-sans-alt my-4 text-2xl font-bold tracking-[100%]"
+        class="font-sans-alt my-4 text-2xl tracking-[100%]"
         onclick={() => (menu = false)}
       >
         {m['site_name']()}

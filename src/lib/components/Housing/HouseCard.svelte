@@ -69,8 +69,8 @@
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
-  <div class="mb-2 flex w-full flex-col justify-between sm:flex-row sm:items-center">
-    <h2 class="text-lg font-semibold">
+  <div class="mb-2 flex w-full items-center justify-between">
+    <h2 class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
       <HighlightText
         text={house.name}
         {highlight}
