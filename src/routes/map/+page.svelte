@@ -381,23 +381,45 @@
     }
   };
 
-  onMount(() => {
-    const stopPolling = getPlayerRealtimePosition((data) => {
+  const getPlayerRealtimePositionCall = () => {
+    stopPolling = getPlayerRealtimePosition((data) => {
       const result = Object.entries(data).map(([name, coord]) => ({
         geometry: reProjectPoint([coord.x, coord.y]),
         name,
         coord,
         location: getLocationAtPoint(coord),
-        pointType: 2,
+        pointType: PointType.Player as const,
         vehicleKey: coord.vehicle_key,
         guid: coord.unique_id,
       }));
       playerData = result;
       setPlayerPoints(result);
     });
+  };
 
+  let stopPolling: (() => void) | undefined = undefined;
+
+  onMount(() => {
+    const startPolling = () => {
+      console.log(document.hidden);
+      stopPolling?.();
+      if (document.hidden) {
+        stopPolling = undefined;
+        playerData = [];
+        setPlayerPoints([]);
+        return;
+      }
+      getPlayerRealtimePositionCall();
+    };
+
+    document.addEventListener('visibilitychange', startPolling);
+
+    if (!document.hidden) {
+      getPlayerRealtimePositionCall();
+    }
     return () => {
-      stopPolling();
+      document.removeEventListener('visibilitychange', startPolling);
+      stopPolling?.();
     };
   });
 
