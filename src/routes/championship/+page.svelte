@@ -214,39 +214,43 @@
     </h4>
   </div>
   <div class="w-full">
-    <div class="relative flex w-full flex-col">
+    <div class="flex w-full flex-col">
       {#each teamsRaceOnly as team, i (team.tag)}
         <div
-          class={[
-            'left-0 top-0 flex h-lvh w-full flex-col items-center overflow-hidden !bg-[var(--team-bg)] p-8 pt-24 text-[var(--team-text)]',
-            team.logo ? 'justify-between' : 'justify-center',
-          ]}
+          class="h-lvh !bg-[var(--team-bg)] text-[var(--team-text)]"
           style="--team-bg:{team.bg};--team-text:{team.text}"
           bind:this={teamTriggers[i]}
         >
-          {#if team.logo}
-            <img
-              src={team.logo}
-              alt="Team Logo"
-              class={[
-                'aspect-1 md:w-100 lg:w-125 my-4 w-40 overflow-hidden rounded-2xl bg-neutral-500/10 object-contain sm:my-8',
-                team.logo ? '' : 'invisible',
-              ]}
-              fetchpriority="high"
-            />
-          {/if}
-          <div bind:this={teamText[i]}>
-            <h4
-              class="my-4 text-center text-4xl font-semibold tracking-tight text-[var(--team-text)] sm:my-8"
-            >
-              [{team.tag}] {team.name}
-            </h4>
-            <p class=" text-center text-sm text-[var(--team-text)] sm:my-8">
-              {team.description}
-            </p>
-            <p class="my-4 text-center text-sm text-[var(--team-text)] sm:my-8">
-              Members: {team.members.join(', ')}
-            </p>
+          <div
+            class={[
+              'flex h-dvh w-full flex-col items-center p-8 pt-24',
+              team.logo ? 'justify-between' : 'justify-center',
+            ]}
+          >
+            {#if team.logo}
+              <img
+                src={team.logo}
+                alt="Team Logo"
+                class={[
+                  'aspect-1 md:w-100 lg:w-125 my-4 w-40 overflow-hidden rounded-2xl bg-neutral-500/10 object-contain sm:my-8',
+                  team.logo ? '' : 'invisible',
+                ]}
+                fetchpriority="high"
+              />
+            {/if}
+            <div bind:this={teamText[i]}>
+              <h4
+                class="my-4 text-center text-4xl font-semibold tracking-tight text-[var(--team-text)] sm:my-8"
+              >
+                [{team.tag}] {team.name}
+              </h4>
+              <p class=" text-center text-sm text-[var(--team-text)] sm:my-8">
+                {team.description}
+              </p>
+              <p class="my-4 text-center text-sm text-[var(--team-text)] sm:my-8">
+                Members: {team.members.join(', ')}
+              </p>
+            </div>
           </div>
         </div>
       {/each}
