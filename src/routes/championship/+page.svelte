@@ -218,7 +218,7 @@
       {#each teamsRaceOnly as team, i (team.tag)}
         <div
           class={[
-            'left-0 top-0 flex h-svh w-full flex-col items-center overflow-hidden !bg-[var(--team-bg)] p-8 pt-24 text-[var(--team-text)]',
+            'left-0 top-0 flex h-dvh w-full flex-col items-center overflow-hidden !bg-[var(--team-bg)] p-8 pt-24 text-[var(--team-text)]',
             team.logo ? 'justify-between' : 'justify-center',
           ]}
           style="--team-bg:{team.bg};--team-text:{team.text}"
