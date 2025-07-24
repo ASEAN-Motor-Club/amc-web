@@ -12,6 +12,9 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { teamsRaceOnly } from '$lib/data/teams';
   import CalendarGroup from '$lib/components/Championship/CalendarGroup.svelte';
+  import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
+  import Lottie from '$lib/ui/Lottie/Lottie.svelte';
+  import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
 
   const seasonNo = 2;
 
@@ -33,10 +36,9 @@
         scrollTrigger: {
           trigger: hintTrigger,
           start: 'top top',
-          end: '+=100',
+          end: '+=500',
           scrub: true,
           pin: true,
-          pinSpacing: true,
           anticipatePin: 1,
         },
       })
@@ -180,10 +182,16 @@
   <title>{m['championship.head']({ siteName: m['site_name_short'](), seasonNo })}</title>
 </svelte:head>
 
+<ScrollHint fixed />
 <div class="-mt-16 flex flex-col items-center overflow-x-hidden">
   <div class="flex h-svh w-full items-center justify-center p-8 pt-24" bind:this={hintTrigger}>
-    <div bind:this={hintContainer} class="text-text/80 dark:text-text-dark/80 text-sm">
-      {m['championship.scroll_hint']()}
+    <div bind:this={hintContainer}>
+      <div class="size-90 relative flex select-none items-center justify-center">
+        <div class="i-material-symbols:trophy h-full w-full text-amber-500"></div>
+        <div class="absolute h-full w-full">
+          <Lottie animationData={lottieSpark} loop autoplay speed={0.9} />
+        </div>
+      </div>
     </div>
   </div>
   <div

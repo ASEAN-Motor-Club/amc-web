@@ -9,6 +9,18 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { PUBLIC_DISCORD_LINK } from '$env/static/public';
   import NavbarPageLoading from './NavbarPageLoading.svelte';
+  import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
+  import Lottie from '$lib/ui/Lottie/Lottie.svelte';
+
+  const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
+
+  let loop = $state<boolean | number>(10);
+
+  onMount(() => {
+    if (localStorage.getItem(NAVBAR_AMC_HOVERED_KEY) === '1') {
+      loop = false;
+    }
+  });
 
   const links = [
     {
@@ -41,12 +53,17 @@
       href: '/championship',
       label: 'AMC Cup',
       icon: trophyIcon,
+      onMouseOver: () => {
+        loop = false;
+        localStorage.setItem(NAVBAR_AMC_HOVERED_KEY, '1');
+      },
     },
   ] satisfies {
     href: string;
     label: string;
     icon: Snippet<[boolean]>;
     exact?: boolean;
+    onMouseOver?: () => void;
   }[];
 
   let darkMode = $state(false);
@@ -113,12 +130,17 @@
 {/snippet}
 
 {#snippet trophyIcon()}
-  <Icon class="i-material-symbols:trophy-rounded text-amber-500 transition-colors" />
+  <div class="relative flex select-none items-center justify-center">
+    <Icon class="i-material-symbols:trophy-rounded text-amber-500 transition-colors" />
+    <div class="absolute h-full w-full">
+      <Lottie animationData={lottieSpark} {loop} autoplay />
+    </div>
+  </div>
 {/snippet}
 
 {#snippet menuItems()}
-  {#each links as { href, label, icon, exact } (href)}
-    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} {exact} />
+  {#each links as { href, label, icon, exact, onMouseOver } (href)}
+    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} {exact} {onMouseOver} />
   {/each}
   <Button
     variant="contained-light"

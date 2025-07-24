@@ -8,12 +8,14 @@
     icon,
     onClick,
     exact = true,
+    onMouseOver,
   }: {
     href: string;
     label: string;
     icon: Snippet<[boolean]>;
     onClick: () => void;
     exact?: boolean;
+    onMouseOver?: () => void;
   } = $props();
 
   const pathMatch = $derived.by(() => {
@@ -24,7 +26,8 @@
   });
 </script>
 
-<a {href} class="group flex items-center gap-1" onclick={onClick}>
+<!-- svelte-ignore a11y_mouse_events_have_key_events -->
+<a {href} class="group flex items-center gap-1" onclick={onClick} onmouseover={onMouseOver}>
   {@render icon(pathMatch)}
   <div class="relative flex items-center">
     <span class="invisible font-bold leading-none">{label}</span>
