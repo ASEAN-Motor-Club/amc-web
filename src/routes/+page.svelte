@@ -9,6 +9,13 @@
   const date = new SvelteDate();
 
   const year = $derived(date.getFullYear());
+
+  const features = $derived([
+    m['home.friendly_community'](),
+    m['home.regular_events'](),
+    m['home.ig_live_radio'](),
+    m['home.ig_bot'](),
+  ]);
 </script>
 
 <svelte:head>
@@ -16,7 +23,7 @@
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
-  <div class="relative -mt-16 h-dvh w-full pt-16">
+  <div class="relative -mt-16 h-svh w-full pt-16">
     <div class="relative flex h-full w-full justify-center bg-black">
       <video
         autoplay
@@ -39,7 +46,12 @@
             color="success"
             tag="a"
           >
-            <div class="aspect-1 mr-2 w-2 rounded-full bg-[currentColor]"></div>
+            <div class="relative mr-2 flex size-2">
+              <div
+                class="opacity-1 absolute size-full animate-ping rounded-full bg-[currentColor]"
+              ></div>
+              <div class="size-full rounded-full bg-[currentColor]"></div>
+            </div>
             {m['home.live_server_no_count']()}
           </Button>
         </div>
@@ -49,30 +61,16 @@
           {m['site_name']()}
         </h1>
         <div class="sm:mb-15 mb-6 flex flex-wrap justify-center gap-1.5 sm:justify-start">
-          <Button
-            variant="contained"
-            target="_blank"
-            size="xs"
-            round
-            class="pointer-events-none h-6 px-2.5 font-medium"
-            tag="div">{m['home.regular_events']()}</Button
-          >
-          <Button
-            variant="contained"
-            target="_blank"
-            size="xs"
-            round
-            class="pointer-events-none h-6 px-2.5 font-medium"
-            tag="div">{m['home.ig_live_radio']()}</Button
-          >
-          <Button
-            variant="contained"
-            target="_blank"
-            size="xs"
-            round
-            class="pointer-events-none h-6 px-2.5 font-medium"
-            tag="div">{m['home.ig_bot']()}</Button
-          >
+          {#each features as feature (feature)}
+            <Button
+              variant="contained"
+              target="_blank"
+              size="xs"
+              round
+              class="pointer-events-none h-6 px-2.5 font-medium"
+              tag="div">{feature}</Button
+            >
+          {/each}
         </div>
         <div class="flex justify-center gap-2 sm:justify-start">
           <div class="rounded-md bg-black">
@@ -88,7 +86,7 @@
             variant="outlined"
             tag="a"
             href="/radio"
-            class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/15 backdrop-blur-xs"
+            class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/12.5 backdrop-blur-xs"
             >{m['home.listen_radio']()}</Button
           >
         </div>
@@ -97,7 +95,7 @@
     <ScrollHint />
   </div>
   <div
-    class="max-w-340 -mt-16 grid min-h-dvh w-full items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
+    class="max-w-340 -mt-16 grid min-h-svh w-full items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
       <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">{m['home.desc_title']()}</h2>

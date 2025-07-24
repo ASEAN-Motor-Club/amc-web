@@ -15,8 +15,9 @@
 
   const haveEvent = $derived((mappedEvents.get(year)?.get(month)?.get(day)?.length ?? 0) > 0);
 
+  const date = new SvelteDate();
+
   const today = $derived.by(() => {
-    const date = new SvelteDate();
     return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year;
   });
 </script>

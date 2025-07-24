@@ -177,7 +177,7 @@
   <div
     class={[
       'absolute flex -translate-x-1/2',
-      { 'h-3.5 w-3.5': size === 'sm', 'w-4.5 h-4.5': size === 'md' },
+      { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
       transition && 'transition-[left]',
     ]}
     style:left={`${percent}%`}

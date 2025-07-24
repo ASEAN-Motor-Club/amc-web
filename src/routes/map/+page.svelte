@@ -25,6 +25,8 @@
     colorGreen500,
     adjustOpacity,
     colorYellow500,
+    colorRed200,
+    colorRed400,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -49,6 +51,51 @@
   import { matchMouse } from '$lib/utils/media';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getPlayerRealtimePosition } from '$lib/api/player';
+  import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
+  import { getMsgModalContext } from '$lib/components/MsgModal/context';
+
+  let pinsData = $state<Pins>([]);
+  const havePins = $derived(pinsData.length > 0);
+
+  const pinsSource = new VectorSource({
+    features: [] as Feature<Point>[],
+  });
+
+  const pinsLayer = new WebGLVectorLayer({
+    source: pinsSource,
+    style: {
+      'circle-radius': 5,
+      'circle-fill-color': ['match', ['get', 'hover'], 1, colorRed200, colorRed400],
+      'circle-stroke-color': 'black',
+      'circle-stroke-width': 1,
+      'circle-rotate-with-view': false,
+      'circle-displacement': [0, 0],
+    },
+  });
+
+  const PinLabelsStyle = new Style({
+    text: new Text({
+      font: `${textXs} ${fontSans}`,
+      offsetY: -14,
+      fill: new Fill({
+        color: 'black',
+      }),
+      stroke: new Stroke({
+        color: 'white',
+        width: 3,
+      }),
+    }),
+  });
+
+  const pinLabelsLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: pinsSource,
+    style: (feature) => {
+      PinLabelsStyle.getText()?.setText(feature.get('label') as string);
+      return PinLabelsStyle;
+    },
+  });
 
   const playerPointSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -254,47 +301,74 @@
     ]);
   };
 
-  const layers = [
+  const layers = $derived([
     deliveryLineLayer,
     deliveryPointLayer,
     residentPointLayer,
     houseLayer,
     playerPointLayer,
     playerNameLayer,
-  ];
+    ...(havePins ? [pinsLayer, pinLabelsLayer] : []),
+  ]);
 
   const layerId = {
     Delivery: 0,
     House: 1,
     Player: 2,
     PlayerName: 3,
+    Pins: 4,
+    PinLabels: 5,
   };
 
+  const deliveryLayerData = $state({
+    id: layerId.Delivery,
+    name: m['map.delivery_point'](),
+    layer: [deliveryPointLayer, residentPointLayer],
+    enabled: true,
+  });
+
+  const houseLayerData = $state({
+    id: layerId.House,
+    name: m['map.house'](),
+    layer: [houseLayer],
+    enabled: true,
+  });
+
+  const playerNameLayerData = $state({
+    id: layerId.PlayerName,
+    name: m['map.player_name'](),
+    layer: [playerNameLayer],
+    enabled: true,
+  });
+
+  const playerLayerData = $state({
+    id: layerId.Player,
+    name: m['map.player'](),
+    layer: [playerPointLayer],
+    enabled: true,
+  });
+
+  const pinsLayerData = $state({
+    id: layerId.Pins,
+    name: m['map.pins'](),
+    layer: [pinsLayer],
+    enabled: true,
+  });
+
+  const pinLabelsLayerData = $state({
+    id: layerId.PinLabels,
+    name: m['map.pin_labels'](),
+    layer: [pinLabelsLayer],
+    enabled: true,
+  });
+
   const layersData = $state([
-    {
-      id: layerId.Delivery,
-      name: m['map.delivery_point'](),
-      layer: [deliveryPointLayer, residentPointLayer],
-      enabled: true,
-    },
-    {
-      id: layerId.House,
-      name: m['map.house'](),
-      layer: [houseLayer],
-      enabled: true,
-    },
-    {
-      id: layerId.Player,
-      name: m['map.player'](),
-      layer: [playerPointLayer],
-      enabled: true,
-    },
-    {
-      id: layerId.PlayerName,
-      name: m['map.player_name'](),
-      layer: [playerNameLayer],
-      enabled: true,
-    },
+    deliveryLayerData,
+    houseLayerData,
+    playerLayerData,
+    playerNameLayerData,
+    pinsLayerData,
+    pinLabelsLayerData,
   ]);
 
   let lockPoint: Feature | undefined = undefined;
@@ -324,7 +398,12 @@
       },
       {
         layerFilter: (layer) => {
-          return layer !== playerNameLayer && layer !== deliveryLineLayer;
+          return (
+            layer !== playerNameLayer &&
+            layer !== deliveryLineLayer &&
+            layer !== pinLabelsLayer &&
+            layer !== pinsLayer
+          );
         },
         hitTolerance: 10,
       },
@@ -345,10 +424,6 @@
     }
     hoverInfo = currentHoverInfo;
   };
-
-  const playerNameLayerData = $derived(layersData.find((layer) => layer.id === layerId.PlayerName));
-
-  const playerLayerData = $derived(layersData.find((layer) => layer.id === layerId.Player));
 
   let playerData: PlayerData[] = $state([]);
   let playerStickyFocusGuid: string | undefined = undefined;
@@ -497,14 +572,22 @@
     handlePointerMoveOrClick(e);
   };
 
-  const onHideShowClick = (layer: (typeof layersData)[number]) => {
-    layer.enabled = !layer.enabled;
+  const onHideShowClick = (layer: (typeof layersData)[number], forceTo?: boolean) => {
+    layer.enabled = forceTo !== undefined ? forceTo : !layer.enabled;
     if (layer.id === layerId.Player) {
       if (!layer.enabled) {
         playerNameLayer.setVisible(false);
       } else {
         setPlayerPoints(playerData);
         playerNameLayer.setVisible(!!playerNameLayerData?.enabled);
+      }
+    }
+    if (layer.id === layerId.Pins) {
+      if (!layer.enabled) {
+        pinLabelsLayer.setVisible(false);
+      } else {
+        setPlayerPoints(playerData);
+        pinLabelsLayer.setVisible(!!pinLabelsLayerData?.enabled);
       }
     } else if (layer.id === layerId.Delivery) {
       deliveryLineSource.clear(true);
@@ -517,6 +600,20 @@
   let map: OlMap;
 
   const handleSearchClick = (point: SearchPoint) => {
+    switch (point.pointType) {
+      case PointType.Delivery:
+        onHideShowClick(deliveryLayerData, true);
+        break;
+      case PointType.House:
+        onHideShowClick(houseLayerData, true);
+        break;
+      case PointType.Player:
+        onHideShowClick(playerLayerData, true);
+        break;
+      case PointType.Pin:
+        onHideShowClick(pinsLayerData, true);
+        break;
+    }
     if (point.pointType === PointType.Player) {
       playerStickyFocusGuid = point.guid;
       initialFocus = true;
@@ -539,6 +636,8 @@
     };
   });
 
+  const { showModal } = getMsgModalContext();
+
   onMount(() => {
     const housing = page.url.searchParams.get('housing');
     if (housing) {
@@ -559,6 +658,40 @@
     if (playerGuid) {
       playerStickyFocusGuid = playerGuid;
     }
+    const pins = page.url.searchParams.get('pins');
+    if (pins) {
+      try {
+        const pinsJson = pinsSchema.parse(JSON.parse(pins));
+        pinsData = pinsJson.map((p, i) => ({
+          ...p,
+          pointType: PointType.Pin,
+          label: p.label ?? m['map.pin_no']({ index: i + 1 }),
+        }));
+        pinsSource.addFeatures(
+          pinsData.map(
+            (p: Pin) =>
+              new Feature({
+                geometry: new Point(reProjectPoint([p.x, p.y])),
+                label: p.label,
+                pointType: PointType.Pin,
+              }),
+          ),
+        );
+        const focusIndex = page.url.searchParams.get('focus_index');
+        if (focusIndex) {
+          const focusPin = pinsData[+focusIndex];
+          if (focusPin) {
+            map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), 0);
+          }
+        }
+      } catch (e) {
+        console.error('Invalid pins data:', e);
+        showModal({
+          title: m['map.pins_invalid.title'](),
+          message: m['map.pins_invalid.desc'](),
+        });
+      }
+    }
   });
 
   onDestroy(() => {
@@ -569,6 +702,12 @@
   const handlePointerDrag = () => {
     playerStickyFocusGuid = undefined;
   };
+
+  const layersDataCheckPins = $derived(
+    havePins
+      ? layersData
+      : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
+  );
 </script>
 
 <svelte:head>
@@ -593,13 +732,13 @@
   <div
     class="pointer-events-none absolute left-0 top-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
   >
-    <Search {playerData} {houseData} onPointClick={handleSearchClick} />
+    <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
     <Card
       class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 !p-1.5 !ring-white/5 backdrop-blur-lg"
     >
       <h2 class="text-text-dark mb-1 text-xs">{m['map.point_of_interests']()}</h2>
       <div class="flex flex-wrap gap-2">
-        {#each layersData as layer (layer.name)}
+        {#each layersDataCheckPins as layer (layer.name)}
           <Button
             class={[
               '!px-2',
@@ -608,14 +747,19 @@
                 '!text-text !bg-cyan-500': layer.id === layerId.House,
                 '!text-text !bg-emerald-400': layer.id === layerId.Player,
                 '!text-text !bg-emerald-300': layer.id === layerId.PlayerName,
+                '!text-text !bg-red-400': layer.id === layerId.Pins,
+                '!text-text !bg-red-300': layer.id === layerId.PinLabels,
               },
               {
                 'opacity-50':
-                  !layer.enabled || (layer.id === layerId.PlayerName && !playerLayerData?.enabled),
+                  !layer.enabled ||
+                  (layer.id === layerId.PlayerName && !playerLayerData?.enabled) ||
+                  (layer.id === layerId.PinLabels && !pinsLayerData?.enabled),
               },
             ]}
             size="xs"
-            disabled={layer.id === layerId.PlayerName && !playerLayerData?.enabled}
+            disabled={(layer.id === layerId.PlayerName && !playerLayerData?.enabled) ||
+              (layer.id === layerId.PinLabels && !pinsLayerData?.enabled)}
             onClick={() => onHideShowClick(layer)}
           >
             {layer.name}

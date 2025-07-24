@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div class="flex flex-col items-center">
-  <div class="-mt-16 h-dvh w-full pt-16">
+  <div class="-mt-16 h-svh w-full pt-16">
     <div class="flex h-full w-full flex-col items-center justify-center p-8">
       <div class="max-w-250 flex-shrink-1 min-h-0 w-full">
         <img

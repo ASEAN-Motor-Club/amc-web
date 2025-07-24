@@ -122,7 +122,14 @@
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",
       "unknown_vehicle": "unknown vehicle"
-    }
+    },
+    "pins_invalid": {
+      "title": "Invalid Pin",
+      "desc": "The pin you provided is invalid."
+    },
+    "pins": "Pins",
+    "pin_labels": "Pin Labels",
+    "pin_no": "Pin {index}"
   },
   "home": {
     "desc_title": "MotorTown's premier community server in Southeast Asia",
@@ -132,7 +139,8 @@
     "listen_radio": "Listen to AMC Radio",
     "regular_events": "Regular Events",
     "ig_live_radio": "In-game Live Radio",
-    "ig_bot": "In-game help BOT",
+    "ig_bot": "In-game Help BOT",
+    "friendly_community": "Friendly Community",
     "live_server_no_count": "Live Server",
     "live_server": [
       {

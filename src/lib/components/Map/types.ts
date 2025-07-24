@@ -4,6 +4,7 @@ export const enum PointType {
   Delivery,
   House,
   Player,
+  Pin,
 }
 
 export type PlayerData = {
