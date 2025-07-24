@@ -70,14 +70,26 @@
     onPointerDrag,
   }: OlMapProps = $props();
 
-  onMount(() => {
-    const projection = new Projection({
-      code: 'customData',
-      units: 'pixels',
-      extent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
-      worldExtent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
-    });
+  const projection = new Projection({
+    code: 'customData',
+    units: 'pixels',
+    extent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
+    worldExtent: [0, 0, MAP_REAL_SIZE, MAP_REAL_SIZE],
+  });
 
+  const tileLayer = new WebGLTileLayer({
+    source: new ImageTile({
+      url: '/map_tiles/{z}_{x}_{y}.avif',
+      minZoom: 2,
+      maxZoom: 6,
+      wrapX: false,
+      projection: projection,
+    }),
+  });
+
+  const allLayers = $derived([tileLayer, ...(layers ?? [])]);
+
+  onMount(() => {
     const zoom = new Zoom({
       className: clsx('ol-zoom', zoomClass),
       zoomInClassName: clsx('ol-zoom-in', zoomInClass),
@@ -90,18 +102,7 @@
     map = new Map({
       interactions,
       controls: [zoom],
-      layers: [
-        new WebGLTileLayer({
-          source: new ImageTile({
-            url: '/map_tiles/{z}_{x}_{y}.avif',
-            minZoom: 2,
-            maxZoom: 6,
-            wrapX: false,
-            projection: projection,
-          }),
-        }),
-        ...(layers ?? []),
-      ],
+      layers: allLayers,
       target: target,
       view: new View({
         projection: projection,
@@ -164,6 +165,10 @@
       duration: duration,
     });
   };
+
+  $effect(() => {
+    map.setLayers(allLayers);
+  });
 </script>
 
 <div class={propsClassName} bind:this={target}></div>

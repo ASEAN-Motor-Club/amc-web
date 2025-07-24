@@ -122,7 +122,14 @@
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",
       "unknown_vehicle": "unknown vehicle"
-    }
+    },
+    "pins_invalid": {
+      "title": "Invalid Pin",
+      "desc": "The pin you provided is invalid."
+    },
+    "pins": "Pins",
+    "pin_labels": "Pin Labels",
+    "pin_no": "Pin {index}"
   },
   "home": {
     "desc_title": "MotorTown's premier community server in Southeast Asia",

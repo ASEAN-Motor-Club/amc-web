@@ -15,12 +15,13 @@
   import { m } from '$lib/paraglide/messages';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
+  import type { Pins } from '$lib/schema/pin';
 
   export type SearchPoint = {
     guid?: string;
     name: string;
     coord: Vector2;
-    location: string;
+    location?: string;
   } & (
     | {
         pointType: PointType.Delivery;
@@ -28,7 +29,7 @@
         demandText?: string;
       }
     | {
-        pointType: PointType.House | PointType.Player;
+        pointType: PointType.House | PointType.Player | PointType.Pin;
       }
   );
 
@@ -50,9 +51,19 @@
     playerData: PlayerData[];
     onPointClick?: (point: SearchPoint) => void;
     houseData: HouseData | undefined;
+    pinsData: Pins;
   };
 
-  const { playerData, onPointClick, houseData }: SearchProps = $props();
+  const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
+
+  const pinsData = $derived.by(() => {
+    return pinsDataProps.map((pin) => ({
+      ...pin,
+      pointType: PointType.Pin,
+      name: pin.label,
+      coord: pin as Vector2,
+    }));
+  });
 
   let searchValue = $state('');
   let focus = $state(false);
@@ -67,8 +78,11 @@
 
   const foundValues: SearchPoint[] = $derived.by(() => {
     if (!focus) return [];
-    if (!searchValue) return [...playerData];
+    if (!searchValue) return [...pinsData, ...playerData];
     const search = searchValue.trim().toLowerCase();
+
+    const pins = pinsData?.filter((pin) => pin.label?.toLowerCase().includes(search)) ?? [];
+
     const player = playerData.filter(
       (player) =>
         player.name.toLowerCase().includes(search) ||
@@ -90,7 +104,7 @@
         houseData?.[point.name]?.ownerName.toLowerCase().includes(search),
     );
 
-    return [...player, ...housePoints, ...delivery];
+    return [...pins, ...player, ...housePoints, ...delivery];
   });
 
   const getHref = (point: SearchPoint) => {
@@ -101,13 +115,17 @@
         return `?house=${point.name}`;
       case PointType.Player:
         return `?player=${point.guid}`;
+      default:
+        return '';
     }
   };
 
   const handleLinkClick = (event: Event, point: SearchPoint) => {
     focus = false;
     event.preventDefault();
-    goto(getHref(point), { replaceState: true, noScroll: true, keepFocus: true });
+    if (point.pointType !== PointType.Pin) {
+      goto(getHref(point), { replaceState: true, noScroll: true, keepFocus: true });
+    }
     onPointClick?.(point);
   };
 
@@ -164,6 +182,7 @@
                     'bg-yellow-500': point.pointType === PointType.Delivery,
                     'bg-cyan-500': point.pointType === PointType.House,
                     'bg-emerald-400': point.pointType === PointType.Player,
+                    'bg-red-400': point.pointType === PointType.Pin,
                   },
                 ]}
               ></div>
@@ -217,15 +236,17 @@
                     <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
                   </div>
                 {/if}
-                <div class="text-xs text-neutral-400">
-                  <HighlightText
-                    text={point.location}
-                    highlight={searchValue}
-                    caseInSensitive
-                    tag="span"
-                    class="inline-block bg-white/20"
-                  />
-                </div>
+                {#if point.location}
+                  <div class="text-xs text-neutral-400">
+                    <HighlightText
+                      text={point.location}
+                      highlight={searchValue}
+                      caseInSensitive
+                      tag="span"
+                      class="inline-block bg-white/20"
+                    />
+                  </div>
+                {/if}
               </div>
             </a>
           {/each}
