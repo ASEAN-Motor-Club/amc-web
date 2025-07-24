@@ -62,14 +62,14 @@
 
 <Card>
   <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">{monthName} {year}</h4>
-  <div class="grid grid-cols-7 place-items-center gap-2 pb-4">
+  <div class="grid grid-cols-7 place-items-center pb-4 sm:gap-2">
     {#each Array(7) as _, i (i)}
       <span class="text-xs font-semibold">
         {days[(i + (firstDayOfWeek - 1)) % 7]}
       </span>
     {/each}
   </div>
-  <div class="grid grid-cols-7 grid-rows-6 gap-2">
+  <div class="grid grid-cols-7 grid-rows-6 sm:gap-2">
     {#each Array(6 * 7) as _, i (i)}
       <EventButton
         currentMonth={isCurrentMonth(i)}

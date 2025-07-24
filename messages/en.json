@@ -312,9 +312,12 @@
     "coming_soon": "Coming soon!",
     "title": "AMC Championship Cup",
     "season": "Season {seasonNo}",
+    "standing": "Standing",
     "team_standing": "Team Standing",
     "personal_standing": "Personal Standing",
     "coming_back": "Come back when the season starts for standing",
-    "schedule": "Schedule"
+    "schedule": "Schedule",
+    "teams": "Teams",
+    "scroll_hint": "Scroll to begin!"
   }
 }
