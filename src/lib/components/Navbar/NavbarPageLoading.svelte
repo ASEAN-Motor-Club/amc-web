@@ -7,7 +7,7 @@
   let speedUp = $state(false);
   let widthFull = $state(false);
 
-  let showDelayId: number;
+  let showDelayId: ReturnType<typeof setTimeout> | undefined = undefined;
   let prevTo: string | undefined;
 
   $effect(() => {
