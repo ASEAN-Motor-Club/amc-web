@@ -132,7 +132,8 @@
     "listen_radio": "Listen to AMC Radio",
     "regular_events": "Regular Events",
     "ig_live_radio": "In-game Live Radio",
-    "ig_bot": "In-game help BOT",
+    "ig_bot": "In-game Help BOT",
+    "friendly_community": "Friendly Community",
     "live_server_no_count": "Live Server",
     "live_server": [
       {

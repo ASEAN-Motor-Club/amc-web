@@ -196,7 +196,7 @@
         >
           {currentTrack}
         </div>
-        <Button onClick={togglePlay} class="mb-3" color="primary">
+        <Button onClick={togglePlay} class="mb-3" color="info">
           {#snippet appendIcon()}
             {#if isPlaying}
               <Icon class="i-material-symbols:pause-rounded" />
@@ -214,7 +214,7 @@
           max={1}
           size="sm"
           class="w-full"
-          color="secondary"
+          color="info"
         />
       </div>
     </div>

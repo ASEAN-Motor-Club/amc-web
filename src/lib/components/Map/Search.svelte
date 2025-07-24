@@ -159,7 +159,7 @@
             >
               <div
                 class={[
-                  'border-1 mx-3 my-1.5 h-3 w-3 shrink-0 rounded-full border-black',
+                  'border-1 mx-3 my-1.5 size-3 shrink-0 rounded-full border-black',
                   {
                     'bg-yellow-500': point.pointType === PointType.Delivery,
                     'bg-cyan-500': point.pointType === PointType.House,

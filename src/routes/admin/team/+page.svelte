@@ -228,7 +228,7 @@
           </div>
           {#if team.logo}
             <div class="mt-2">
-              <img src={team.logo} alt="Logo preview" class="h-16 w-16 rounded object-cover" />
+              <img src={team.logo} alt="Logo preview" class="size-16 rounded object-cover" />
             </div>
           {/if}
         </div>

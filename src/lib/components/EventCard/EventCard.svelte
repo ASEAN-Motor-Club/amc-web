@@ -18,7 +18,7 @@
 
 <Card class="max-w-120 flex w-full flex-col items-center gap-2 sm:flex-row" {loading}>
   <div class="flex items-center gap-2">
-    <div class="aspect-1 relative flex h-12 select-none items-center justify-center">
+    <div class="relative flex size-12 select-none items-center justify-center">
       {#if index < 3}
         <div
           class={[

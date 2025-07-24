@@ -8,6 +8,7 @@
   import NavbarItem from './NavbarItem.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { PUBLIC_DISCORD_LINK } from '$env/static/public';
+  import NavbarPageLoading from './NavbarPageLoading.svelte';
 
   const links = [
     {
@@ -171,3 +172,4 @@
     />
   </Button>
 </nav>
+<NavbarPageLoading />
