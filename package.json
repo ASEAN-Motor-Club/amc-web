@@ -61,6 +61,7 @@
   "dependencies": {
     "@inlang/paraglide-js": "2.2.0",
     "clsx": "2.1.1",
+    "gsap": "3.13.0",
     "lodash-es": "4.17.21",
     "lottie-web": "5.13.0",
     "mt-map": "github:beam41/mt-map",

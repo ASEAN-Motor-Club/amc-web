@@ -41,7 +41,9 @@
   });
 </script>
 
-<h4 class="pt-18 pb-8 text-4xl font-semibold tracking-tight">{m['championship.schedule']()}</h4>
+<h4 class="pb-8 text-center text-4xl font-semibold tracking-tight">
+  {m['championship.schedule']()}
+</h4>
 <Calendar month={7} year={2025} onEventClick={openEvent} />
 <EventModal
   month={openedEventMonth}

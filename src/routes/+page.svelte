@@ -92,7 +92,9 @@
         </div>
       </div>
     </div>
-    <ScrollHint />
+    <div class="dark contents">
+      <ScrollHint />
+    </div>
   </div>
   <div
     class="max-w-340 -mt-16 grid min-h-svh w-full items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
