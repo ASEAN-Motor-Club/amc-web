@@ -17,8 +17,10 @@ jobs:
 
     env:
       PUBLIC_API_BASE: ${{ vars.PUBLIC_API_BASE }}
+      PUBLIC_API_NEW_BASE: ${{ vars.PUBLIC_API_NEW_BASE }}
       PUBLIC_PROXY_URL: ${{ vars.PUBLIC_PROXY_URL }}
       PUBLIC_DISCORD_LINK: ${{ vars.PUBLIC_DISCORD_LINK }}
+      PUBLIC_DISCORD_EVENT_BASE: ${{ vars.PUBLIC_DISCORD_EVENT_BASE }}
 
     steps:
       - name: 📥 Checkout code
