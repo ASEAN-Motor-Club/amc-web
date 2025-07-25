@@ -1,108 +1,91 @@
 <script lang="ts">
-  import { EventType, mappedEvents } from '$lib/data/event';
+  import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
+  import type { ScheduledEvent } from '$lib/api/types';
   import { m } from '$lib/paraglide/messages';
-  import { getLocale } from '$lib/paraglide/runtime';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
+  import { isSameDay } from 'date-fns';
+  import { dateTimeFormat, format, timeFormat } from '$lib/localeFormat/date';
+  import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
+  import './markdown.css';
 
   type EventModalProps = {
     day: number | undefined;
     month: number | undefined;
     year: number | undefined;
+    events: ScheduledEvent[];
     onClose: () => void;
   };
 
-  const { day, month, year, onClose }: EventModalProps = $props();
+  const { day, month, year, onClose, events }: EventModalProps = $props();
 
-  const events = $derived(
-    day && month && year ? (mappedEvents.get(year)?.get(month)?.get(day) ?? []) : [],
+  const eventsToday = $derived.by(() => {
+    if (!day || !month || !year) return [];
+
+    const date = new Date(year, month - 1, day);
+
+    return events.filter((event) => {
+      const eventStart = new Date(event.start_time);
+      const eventEnd = new Date(event.start_time);
+      return isSameDay(eventStart, date) || isSameDay(eventEnd, date);
+    });
+  });
+
+  const formattedDate = $derived(
+    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), m['config.dateFull']()),
   );
 
-  const dateFormat = $derived(
-    new Intl.DateTimeFormat(getLocale(), {
-      dateStyle: 'full',
-    }).format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1)),
-  );
+  const eventMultiDay = (event: ScheduledEvent) => {
+    return !isSameDay(new Date(event.start_time), new Date(event.end_time));
+  };
 
-  const getEventType = (type: EventType) => {
-    switch (type) {
-      case EventType.Championship:
-        return m['championship.event.event_type.championship']();
-      case EventType.Warmup:
-        return m['championship.event.event_type.warmup']();
+  $effect(() => {
+    if (events.length > 0 && eventsToday.length === 0) {
+      onClose();
     }
-  };
-
-  const timeFormat = (time: string) => {
-    return new Intl.DateTimeFormat(getLocale(), {
-      timeStyle: 'short',
-    }).format(new Date(time));
-  };
+  });
 </script>
 
-<Modal open={!!(day && month && year)} {onClose}>
-  <Card class="max-w-100% w-150 flex flex-col p-5">
-    <h2 class="pb-4.5 text-2xl font-bold tracking-tight">
-      {m['championship.event.title']({ date: dateFormat })}
-    </h2>
-    <div>
-      {#each events as event (event.id)}
+<Modal open={!!(day && month && year) && events.length > 0 && eventsToday.length > 0} {onClose}>
+  <Card class="max-w-100% w-150 max-h-100% flex flex-col p-5">
+    <h1 class="pb-4.5 text-2xl font-bold tracking-tight">
+      {m['championship.event.title']({ date: formattedDate })}
+    </h1>
+    <div class="-mx-5 -my-1.5 min-h-0 flex-1 overflow-y-auto px-5 py-1.5">
+      {#each eventsToday as event (event.id)}
         <Card>
-          <div class="flex justify-between">
-            <span class="text-sm">{timeFormat(event.date)}</span>
-            <span
-              class={[
-                'text-sm',
-                event.official
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-amber-600 dark:text-amber-400',
-              ]}
-              >{event.official
-                ? m['championship.event.official']()
-                : m['championship.event.unofficial']()}
-              {getEventType(event.eventType)}</span
-            >
+          <div class="text-primary-800 dark:text-primary-500 mb-1 text-xs">
+            {#if eventMultiDay(event)}
+              {dateTimeFormat(new Date(event.start_time))} - {dateTimeFormat(
+                new Date(event.end_time),
+              )}
+            {:else}
+              {timeFormat(new Date(event.start_time))} - {timeFormat(new Date(event.end_time))}
+            {/if}
           </div>
-          <h3 class="my-1 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium">
-            {event.title}
-          </h3>
-          <p class="text-text/90 dark:text-text-dark/90 my-1 text-sm">
-            {event.description}
-          </p>
-          <p class="text-text/80 dark:text-text-dark/80 my-0.5 text-sm">
-            {#each event.subEvent as subEvent, i (i)}
-              {#if event.subEvent.length > 1}
-                {m['championship.event.sub_event']({
-                  no: i + 1,
-                  o: new Intl.PluralRules(getLocale(), { type: 'ordinal' }).select(i + 1),
-                })}
-              {:else}
-                {m['championship.event.sub_event_single']()}
-              {/if}
-              {#if subEvent.track}
-                <a
-                  href={'/track?uri=' + encodeURIComponent(subEvent.track)}
-                  target="_blank"
-                  class="text-blue-600/80 hover:underline dark:text-blue-400/80"
-                  >{m['championship.event.sub_event_race']({ name: subEvent.title })}</a
-                >
-              {:else}
-                {subEvent.title}
-              {/if}
-              <br />
-            {/each}
-          </p>
-
+          <h1 class="text-2xl font-semibold tracking-tight">
+            {event.name}
+          </h1>
+          <div class="wrap-anywhere event-markdown my-4 text-sm opacity-80">
+            <MarkdownText text={event.description} />
+          </div>
           <div class="-mx-2 -mb-2">
-            <Button color="info" variant="text" size="sm" tag="a" href={event.link} target="_blank">
+            <Button
+              color="info"
+              variant="text"
+              size="sm"
+              tag="a"
+              href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
+              target="_blank"
+            >
               {m['championship.event.more_info']()}
             </Button>
           </div>
         </Card>
       {/each}
     </div>
-    <div class="-mx-3 -my-3 flex justify-end pt-6">
+    <div class="-mx-3 -mb-3 flex justify-end pt-3">
       <Button onClick={onClose} color="secondary" variant="text">
         {m['action.close']()}
       </Button>

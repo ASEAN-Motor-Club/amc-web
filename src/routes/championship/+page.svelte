@@ -7,31 +7,66 @@
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
   import Standing from '$lib/components/Championship/Standing.svelte';
   import { m } from '$lib/paraglide/messages';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy, tick } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { teamsRaceOnly } from '$lib/data/teams';
   import CalendarGroup from '$lib/components/Championship/CalendarGroup.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
+  import { getTeams } from '$lib/api/teams';
+  import type { ScheduledEvent, Team } from '$lib/api/types';
+  import { getEvents } from '$lib/api/championship';
+  import { format } from '$lib/localeFormat/date';
 
   const seasonNo = 2;
+  const startDate = new Date('2025-07-26T20:00:00+07:00');
 
   let hintTrigger: HTMLDivElement;
   let hintContainer: HTMLDivElement;
-  let headerTrigger: HTMLDivElement;
-  let imageContainer: HTMLDivElement;
-  let textContainer: HTMLDivElement;
-  let teamTitleTriggers: HTMLDivElement;
-  let teamTriggers: HTMLDivElement[] = [];
-  let teamText: HTMLDivElement[] = [];
-  let standingTriggers: HTMLDivElement;
+  let headerTrigger: HTMLDivElement | undefined = $state();
+  let imageContainer: HTMLDivElement | undefined = $state();
+  let textContainer: HTMLDivElement | undefined = $state();
+  let teamTitleTriggers: HTMLDivElement | undefined = $state();
+  let teamTriggers: HTMLDivElement[] = $state([]);
+  let teamText: HTMLDivElement[] = $state([]);
+  let standingTriggers: HTMLDivElement | undefined = $state();
 
-  onMount(() => {
+  // GSAP Timeline variables
+  let tlHint: gsap.core.Timeline | undefined;
+  let tlHead: gsap.core.Timeline | undefined;
+  let tlTeamTitle: gsap.core.Timeline | undefined;
+  let tlTeams: gsap.core.Timeline[] = [];
+  let tlStanding: gsap.core.Timeline | undefined;
+  let abortController: AbortController = new AbortController();
+
+  let teams = $state<Team[]>([]);
+  let events = $state<ScheduledEvent[]>([]);
+  let loading = $state(true);
+
+  onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const tlHint = gsap
+    teams = await getTeams(abortController.signal);
+    getEvents(abortController.signal).then((eventsData) => {
+      events = eventsData;
+    });
+
+    loading = false;
+
+    await tick();
+
+    if (
+      !headerTrigger ||
+      !imageContainer ||
+      !textContainer ||
+      !teamTitleTriggers ||
+      !standingTriggers
+    ) {
+      return;
+    }
+
+    tlHint = gsap
       .timeline({
         scrollTrigger: {
           trigger: hintTrigger,
@@ -51,7 +86,7 @@
         0,
       );
 
-    const tlHead = gsap
+    tlHead = gsap
       .timeline({
         scrollTrigger: {
           trigger: headerTrigger,
@@ -85,18 +120,24 @@
       )
       .to({}, { duration: 2 });
 
-    const tlTeamTitle = gsap.timeline({
-      scrollTrigger: {
-        trigger: teamTitleTriggers,
-        start: 'top top',
-        end: '+=100%',
-        scrub: true,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
+    tlTeamTitle = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: teamTitleTriggers,
+          start: 'top top',
+          end: '+=1000',
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          scrub: true,
+        },
+      })
+      .to(teamTitleTriggers.children, {
+        scale: 0,
+        ease: 'power2.out',
+      });
 
-    const tlTeams = teamTriggers.map((trigger, i) =>
+    tlTeams = teamTriggers.map((trigger, i) =>
       gsap
         .timeline({
           scrollTrigger: {
@@ -134,7 +175,7 @@
         .to({}, { duration: 3 }),
     );
 
-    const tlStanding = gsap
+    tlStanding = gsap
       .timeline({
         scrollTrigger: {
           trigger: standingTriggers,
@@ -167,14 +208,15 @@
         0,
       )
       .to({}, { duration: 3 });
+  });
 
-    return () => {
-      tlHint.kill();
-      tlHead.kill();
-      tlTeamTitle.kill();
-      tlTeams.forEach((tlTeam) => tlTeam.kill());
-      tlStanding.kill();
-    };
+  onDestroy(() => {
+    tlHint?.kill();
+    tlHead?.kill();
+    tlTeamTitle?.kill();
+    tlTeams.forEach((tlTeam) => tlTeam?.kill());
+    tlStanding?.kill();
+    abortController?.abort();
   });
 </script>
 
@@ -182,8 +224,7 @@
   <title>{m['championship.head']({ siteName: m['site_name_short'](), seasonNo })}</title>
 </svelte:head>
 
-<ScrollHint fixed />
-<div class="-mt-16 flex flex-col items-center overflow-x-hidden">
+{#snippet top()}
   <div class="flex h-svh w-full items-center justify-center p-8 pt-24" bind:this={hintTrigger}>
     <div bind:this={hintContainer}>
       <div class="size-90 relative flex select-none items-center justify-center">
@@ -208,7 +249,11 @@
       />
     </div>
     <div class="contents" bind:this={textContainer}>
-      <h3 class="pb-5 pt-8 font-semibold">{m['championship.coming_soon']()}</h3>
+      <h3 class="pb-5 pt-8 font-semibold">
+        {m['championship.starting_from']({
+          date: format(startDate, m['config.dateFull']()),
+        })}
+      </h3>
       <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
         {m['championship.title']()}
       </h1>
@@ -217,59 +262,63 @@
       </h2>
     </div>
   </div>
-  <div class="h-svh w-full pb-8 pt-24" bind:this={teamTitleTriggers}>
-    <h4 class="pt-18 pb-8 text-center text-4xl font-semibold tracking-tight">
-      {m['championship.teams']()}
-    </h4>
-  </div>
-  <div class="flex w-full flex-col">
-    {#each teamsRaceOnly as team, i (team.tag)}
-      <div
-        class="h-lvh !bg-[var(--team-bg)] text-[var(--team-text)]"
-        style="--team-bg:{team.bg};--team-text:{team.text}"
-        bind:this={teamTriggers[i]}
-      >
+{/snippet}
+
+<div class="-mt-16 flex flex-col items-center overflow-x-hidden">
+  {#if loading}
+    {@render top()}
+  {:else}
+    <ScrollHint fixed />
+    {@render top()}
+    <div
+      class="flex h-dvh w-full flex-col items-center justify-center p-8 pt-24"
+      bind:this={teamTitleTriggers}
+    >
+      <h4 class="text-center text-4xl font-semibold tracking-tight">
+        {m['championship.teams']()}
+      </h4>
+    </div>
+    <div class="flex w-full flex-col">
+      {#each teams as team, i (team.id)}
         <div
-          class={[
-            'flex h-dvh w-full flex-col items-center p-8 pt-24',
-            team.logo ? 'justify-between' : 'justify-center',
-          ]}
+          class="h-lvh !bg-[var(--team-bg)] text-[var(--team-text)]"
+          style="--team-bg:{team.bg_color};--team-text:{team.text_color}"
+          bind:this={teamTriggers[i]}
         >
-          {#if team.logo}
-            <img
-              src={team.logo}
-              alt="Team Logo"
-              class={[
-                'aspect-1 md:w-100 lg:w-125 my-4 w-40 overflow-hidden rounded-2xl bg-neutral-500/10 object-contain sm:my-8',
-                team.logo ? '' : 'invisible',
-              ]}
-              fetchpriority="high"
-            />
-          {/if}
-          <div bind:this={teamText[i]}>
-            <h4
-              class="my-4 text-center text-4xl font-semibold tracking-tight text-[var(--team-text)] sm:my-8"
-            >
-              [{team.tag}] {team.name}
-            </h4>
-            <p class=" text-center text-sm text-[var(--team-text)] sm:my-8">
-              {team.description}
-            </p>
-            <p class="my-4 text-center text-sm text-[var(--team-text)] sm:my-8">
-              Members: {team.members.join(', ')}
-            </p>
+          <div class="flex h-dvh w-full flex-col items-center justify-evenly p-8 pt-24">
+            {#if team.logo}
+              <div class="min-h-0 w-full max-w-40 md:max-w-80">
+                <img
+                  src={team.logo}
+                  alt={m['championship.team_logo_alt']({ team: team.name })}
+                  class={[
+                    'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-neutral-500/10 object-contain',
+                    team.logo ? '' : 'invisible',
+                  ]}
+                  fetchpriority="high"
+                />
+              </div>
+            {/if}
+            <div class="flex flex-col gap-4 sm:gap-8" bind:this={teamText[i]}>
+              <h4 class="text-center text-4xl font-semibold tracking-tight text-[var(--team-text)]">
+                [{team.tag}] {team.name}
+              </h4>
+              <p class="text-center text-sm text-[var(--team-text)]">
+                {team.description}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    {/each}
-  </div>
-  <div
-    class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
-    bind:this={standingTriggers}
-  >
-    <Standing />
-  </div>
-  <div class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24">
-    <CalendarGroup />
-  </div>
+      {/each}
+    </div>
+    <div
+      class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
+      bind:this={standingTriggers}
+    >
+      <Standing />
+    </div>
+    <div class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24">
+      <CalendarGroup {events} />
+    </div>
+  {/if}
 </div>
