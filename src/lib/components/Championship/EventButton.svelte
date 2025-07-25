@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { mappedEvents } from '$lib/data/event';
   import Button from '$lib/ui/Button/Button.svelte';
   import { SvelteDate } from 'svelte/reactivity';
 
@@ -9,11 +8,19 @@
     month: number;
     day: number;
     onClick: () => void;
+    dateWithEvents: Set<string>;
   };
 
-  const { currentMonth, year, month, day, onClick }: EventButtonProps = $props();
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
+    onClick();
+  };
 
-  const haveEvent = $derived((mappedEvents.get(year)?.get(month)?.get(day)?.length ?? 0) > 0);
+  const { currentMonth, year, month, day, onClick, dateWithEvents }: EventButtonProps = $props();
+
+  const haveEvent = $derived(
+    dateWithEvents.has(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`),
+  );
 
   const date = new SvelteDate();
 
@@ -32,7 +39,9 @@
     'opacity-100': currentMonth,
     'ring-success-700 ring': today,
   }}
-  {onClick}
+  onClick={handleClick}
+  tag="a"
+  href={`?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`}
 >
   {day}
 </Button>

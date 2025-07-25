@@ -1,0 +1,45 @@
+.event-markdown {
+  & > div > *:not(:last-child) {
+    @apply: mb-2;
+  }
+
+  h1 {
+    @apply: text-2xl font-medium tracking-tight;
+  }
+
+  h2 {
+    @apply: text-xl font-medium;
+  }
+
+  h3 {
+    @apply: text-lg font-medium;
+  }
+
+  h4 {
+    @apply: text-base font-medium;
+  }
+
+  h5 {
+    @apply: text-sm font-medium;
+  }
+
+  h6 {
+    @apply: text-xs font-medium;
+  }
+
+  p {
+    @apply: text-sm;
+  }
+
+  a {
+    @apply: text-blue-600;
+  }
+
+  .dark & a {
+    @apply: text-blue-400;
+  }
+
+  a:hover {
+    @apply: underline;
+  }
+}

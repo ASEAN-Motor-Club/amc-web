@@ -1,5 +1,95 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
+  "config": {
+    "omitDayFormat": "MMMM yyyy",
+    "dateFormat": "dd MMM yyyy",
+    "timeFormat": "HH:mm",
+    "dateTimeFormat": "dd/MM/yyyy HH:mm",
+    "dateFull": "EEEE, dd MMMM yyyy",
+    "firstDayOfWeek": "0",
+    "days": {
+      "narrow": {
+        "0": "S",
+        "1": "M",
+        "2": "T",
+        "3": "W",
+        "4": "T",
+        "5": "F",
+        "6": "S"
+      },
+      "short": {
+        "0": "Su",
+        "1": "Mo",
+        "2": "Tu",
+        "3": "We",
+        "4": "Th",
+        "5": "Fr",
+        "6": "Sa"
+      },
+      "abbreviated": {
+        "0": "Sun",
+        "1": "Mon",
+        "2": "Tue",
+        "3": "Wed",
+        "4": "Thu",
+        "5": "Fri",
+        "6": "Sat"
+      },
+      "wide": {
+        "0": "Sunday",
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday"
+      }
+    },
+    "months": {
+      "narrow": {
+        "0": "J",
+        "1": "F",
+        "2": "M",
+        "3": "A",
+        "4": "M",
+        "5": "J",
+        "6": "J",
+        "7": "A",
+        "8": "S",
+        "9": "O",
+        "10": "N",
+        "11": "D"
+      },
+      "abbreviated": {
+        "0": "Jan",
+        "1": "Feb",
+        "2": "Mar",
+        "3": "Apr",
+        "4": "May",
+        "5": "Jun",
+        "6": "Jul",
+        "7": "Aug",
+        "8": "Sep",
+        "9": "Oct",
+        "10": "Nov",
+        "11": "Dec"
+      },
+      "wide": {
+        "0": "January",
+        "1": "February",
+        "2": "March",
+        "3": "April",
+        "4": "May",
+        "5": "June",
+        "6": "July",
+        "7": "August",
+        "8": "September",
+        "9": "October",
+        "10": "November",
+        "11": "December"
+      }
+    }
+  },
   "site_name_short": "AMC",
   "site_name": "ASEAN Motor Club",
   "action": {
@@ -310,6 +400,7 @@
       }
     },
     "coming_soon": "Coming soon!",
+    "starting_from": "From {date}",
     "title": "AMC Championship Cup",
     "season": "Season {seasonNo}",
     "standing": "Standing",
@@ -318,6 +409,7 @@
     "coming_back": "Come back when the season starts for standing",
     "schedule": "Schedule",
     "teams": "Teams",
-    "scroll_hint": "Scroll to begin!"
+    "scroll_hint": "Scroll to begin!",
+    "team_logo_alt": "{team} Logo"
   }
 }

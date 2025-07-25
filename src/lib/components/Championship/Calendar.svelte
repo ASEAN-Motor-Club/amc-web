@@ -1,31 +1,26 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { getLocale } from '$lib/paraglide/runtime';
+  import { m } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
+  import { format } from '$lib/localeFormat/date';
   import EventButton from './EventButton.svelte';
 
   type CalendarProps = {
     month: number;
     year: number;
     onEventClick: (day: number, month: number, year: number) => void;
+    dateWithEvents: Set<string>;
   };
 
-  const { month, year, onEventClick }: CalendarProps = $props();
+  const { month, year, onEventClick, dateWithEvents }: CalendarProps = $props();
 
   const startOffset = $derived(new Date(year, month - 1, 1).getDay());
   const daysInLastMonth = $derived(new Date(year, month - 1, 0).getDate());
   const daysMonth = $derived(new Date(year, month, 0).getDate());
 
   const firstDayOfWeek = $derived.by(() => {
-    const locale = new Intl.Locale(getLocale());
-    // NOTE: getWeekInfo is not available in firefox for now
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (locale as any).getWeekInfo?.().firstDay ?? 7;
+    return +m['config.firstDayOfWeek']();
   });
-
-  const monthName = $derived(
-    new Date(year, month - 1).toLocaleString(getLocale(), { month: 'long' }),
-  );
 
   const offsetWeek = $derived(firstDayOfWeek > startOffset);
 
@@ -54,18 +49,21 @@
     onEventClick(openedEventDay, month, year);
   };
 
+  type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
   const days = $derived.by(() => {
-    const { format } = new Intl.DateTimeFormat(getLocale(), { weekday: 'short' });
-    return Array.from({ length: 7 }, (_, day) => format(new Date(Date.UTC(2025, 8, day + 1))));
+    return Array.from({ length: 7 }, (_, day) => m[`config.days.short.${day as Day}`]());
   });
 </script>
 
 <Card>
-  <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">{monthName} {year}</h4>
+  <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
+    {format(new Date(year, month - 1, 1), m['config.omitDayFormat']())}
+  </h4>
   <div class="grid grid-cols-7 place-items-center pb-4 sm:gap-2">
     {#each Array(7) as _, i (i)}
       <span class="text-xs font-semibold">
-        {days[(i + (firstDayOfWeek - 1)) % 7]}
+        {days[(i + firstDayOfWeek) % 7]}
       </span>
     {/each}
   </div>
@@ -77,6 +75,7 @@
         day={getDay(i)}
         {year}
         onClick={() => openEvent(i)}
+        {dateWithEvents}
       />
     {/each}
   </div>

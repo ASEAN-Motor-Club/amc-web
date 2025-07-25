@@ -28,37 +28,25 @@
   let currentTrack = $state<string>('Loading...');
 
   // Restart mechanism
-  const maxRestartAttempts = 50;
-  let restartAttempts = $state(0);
   let restartTimeout: ReturnType<typeof setTimeout> | undefined;
 
   // Stream
-  const streamUrl = getStreamUrl();
+  let streamUrl = $state(getStreamUrl());
 
   function handleAudioStall() {
-    if (restartAttempts < maxRestartAttempts && isPlaying) {
-      restartAttempts++;
-      console.warn(`Audio stalled. Attempting restart ${restartAttempts}/${maxRestartAttempts}`);
+    if (isPlaying) {
+      console.warn(`Audio stalled. Attempting restart`);
       restartAudio();
-    } else if (restartAttempts >= maxRestartAttempts) {
-      console.error('Maximum restart attempts reached. Stopping playback.');
-      isPlaying = false;
-      currentTrack = 'Connection failed';
     }
   }
 
   function handleAudioError(event: Event) {
-    if (restartAttempts < maxRestartAttempts && isPlaying) {
-      restartAttempts++;
+    if ( isPlaying) {
       console.warn(
-        `Audio error occurred. Attempting restart ${restartAttempts}/${maxRestartAttempts}`,
+        `Audio error occurred. Attempting restart`,
         event,
       );
       restartAudio();
-    } else if (restartAttempts >= maxRestartAttempts) {
-      console.error('Maximum restart attempts reached after error. Stopping playback.');
-      isPlaying = false;
-      currentTrack = 'Connection failed';
     }
   }
 
@@ -107,12 +95,12 @@
       audioCtx.resume();
     }
     if (!isPlaying) {
-      restartAttempts = 0;
       audio.play().catch(() => {
         handleAudioError(new Event('error'));
       });
     } else {
       audio.pause();
+      streamUrl = getStreamUrl();
     }
     isPlaying = !isPlaying;
   }

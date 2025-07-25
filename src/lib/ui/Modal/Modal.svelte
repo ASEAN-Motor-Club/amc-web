@@ -44,20 +44,12 @@
   }: ModalProps = $props();
 
   $effect(() => {
-    const preventMove = (event: MouseEvent | TouchEvent) => {
-      event.preventDefault();
-    };
-
     if (open) {
-      document.addEventListener('mousemove', preventMove, { passive: false });
-      document.addEventListener('touchmove', preventMove, { passive: false });
-      document.addEventListener('wheel', preventMove, { passive: false });
+      document.body.style.overflowY = 'hidden';
     }
 
     return () => {
-      document.removeEventListener('mousemove', preventMove);
-      document.removeEventListener('touchmove', preventMove);
-      document.removeEventListener('wheel', preventMove);
+      document.body.style.overflowY = '';
     };
   });
 </script>

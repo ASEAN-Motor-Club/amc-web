@@ -38,3 +38,23 @@ export type BestTime = {
   event_hash: string;
   net_time: number;
 };
+
+export type Team = {
+  id: number;
+  name: string;
+  tag: string;
+  description: string;
+  logo: string | null;
+  bg_color: string;
+  text_color: string;
+};
+
+export type ScheduledEvent = {
+  id: number;
+  name: string;
+  start_time: string;
+  end_time: string;
+  discord_event_id: string;
+  race_setup: number;
+  description: string;
+};

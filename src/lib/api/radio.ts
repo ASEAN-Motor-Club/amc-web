@@ -22,7 +22,7 @@ export const getNowPlaying = async (signal?: AbortSignal): Promise<string> => {
 };
 
 export const getStreamUrl = (): string => {
-  return '/stream_high';
+  return '/stream_high?t=' + Date.now();
 };
 
 export const startNowPlayingPolling = (
