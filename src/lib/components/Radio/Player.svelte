@@ -41,11 +41,8 @@
   }
 
   function handleAudioError(event: Event) {
-    if ( isPlaying) {
-      console.warn(
-        `Audio error occurred. Attempting restart`,
-        event,
-      );
+    if (isPlaying) {
+      console.warn(`Audio error occurred. Attempting restart`, event);
       restartAudio();
     }
   }
