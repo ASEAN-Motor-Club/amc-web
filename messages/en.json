@@ -397,7 +397,9 @@
       "event_type": {
         "championship": "championship",
         "warmup": "warm-up"
-      }
+      },
+      "results": "Results",
+      "event_results": "{event} Results"
     },
     "coming_soon": "Coming soon!",
     "starting_from": "From {date}",

@@ -70,7 +70,7 @@
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="mb-2 flex w-full items-center justify-between">
-    <h2 class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
+    <h2 class="flex-1 truncate text-lg font-semibold">
       <HighlightText
         text={house.name}
         {highlight}

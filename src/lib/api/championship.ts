@@ -1,5 +1,5 @@
 import { PUBLIC_API_NEW_BASE } from '$env/static/public';
-import type { PersonalStanding, ScheduledEvent, TeamStanding } from './types';
+import type { EventResult, PersonalStanding, ScheduledEvent, TeamStanding } from './types';
 
 export const getEvents = async (signal: AbortSignal): Promise<ScheduledEvent[]> => {
   try {
@@ -67,6 +67,34 @@ export const getPersonalStandings = async (
     }
 
     const data = (await response.json()) as PersonalStanding[];
+
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.info('Fetch aborted');
+      return [];
+    }
+    console.error('Error fetching teams:', error);
+    throw error;
+  }
+};
+
+export const getEventResult = async (
+  id: number,
+  signal: AbortSignal,
+): Promise<EventResult[]> => {
+  try {
+    const response = await fetch(
+      `${PUBLIC_API_NEW_BASE}/scheduled_events/${id}/results/`,
+      {
+        signal: signal,
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as EventResult[];
 
     return data;
   } catch (error) {

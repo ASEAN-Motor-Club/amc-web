@@ -73,3 +73,32 @@ export type PersonalStanding = {
   team_id: number | null;
   team_name: string | null;
 };
+
+export type EventResult = {
+  character: Character;
+  net_time: number | null;
+  championship_point: EventResultPoint | null;
+  finished: boolean;
+  laps: number;
+  section_index: number;
+  first_section_total_time_seconds: number | null;
+  last_section_total_time_seconds: number;
+};
+
+export type EventResultPoint = {
+  team: Team | null;
+  points: number;
+};
+
+export type Character = {
+  player_id: string;
+  id: number;
+  name: string;
+  driver_level: number;
+  bus_level: number;
+  taxi_level: number;
+  police_level: number;
+  truck_level: number;
+  wrecker_level: number | null;
+  racer_level: number;
+};

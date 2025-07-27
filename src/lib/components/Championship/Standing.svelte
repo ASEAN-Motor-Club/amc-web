@@ -39,7 +39,7 @@
 <div
   class="-my-8 flex w-full flex-row items-center gap-4 overflow-x-auto p-8 sm:m-0 sm:my-0 sm:justify-center sm:overflow-x-visible"
 >
-  <Card class="sm:min-w-unset w-full min-w-full max-w-80 overflow-hidden !p-0 sm:flex-1">
+  <Card class="sm:min-w-unset max-w-100 w-full min-w-full overflow-hidden !p-0 sm:flex-1">
     <h4 class="bg-neutral-500/10 p-4 text-xl font-medium">
       {m['championship.team_standing']()}
     </h4>
@@ -54,18 +54,29 @@
           {m['championship.loading']()}
         </div>
       {:else}
-        {#each teamStandings as standing (standing.team_id)}
+        {#each teamStandings as standing, index (standing.team_id)}
           <div
-            class="flex items-center justify-between border-b border-neutral-500/10 p-4 text-sm last:border-0"
+            class={[
+              'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0',
+              {
+                'text-amber-600 dark:text-amber-500': index === 0,
+                'text-gray-700 dark:text-gray-400': index === 1,
+                'text-amber-700 dark:text-amber-600': index === 2,
+              },
+            ]}
           >
-            <span>{standing.team_name}</span>
-            <span>{standing.total_points}</span>
+            <div>{index + 1}</div>
+            <div class="truncate">
+              <span class="font-bold">[{standing.team_tag}]</span>
+              {standing.team_name}
+            </div>
+            <div class="text-right font-bold">{standing.total_points}</div>
           </div>
         {/each}
       {/if}
     </div>
   </Card>
-  <Card class="sm:min-w-unset w-full  min-w-full max-w-80 overflow-hidden !p-0 sm:flex-1">
+  <Card class="sm:min-w-unset max-w-100  w-full min-w-full overflow-hidden !p-0 sm:flex-1">
     <h4 class="bg-neutral-500/10 p-4 text-xl font-medium">
       {m['championship.personal_standing']()}
     </h4>
@@ -80,12 +91,22 @@
           {m['championship.loading']()}
         </div>
       {:else}
-        {#each personalStandings as standing (standing.player_id)}
+        {#each personalStandings as standing, index (standing.player_id)}
           <div
-            class="flex items-center justify-between border-b border-neutral-500/10 p-4 text-sm last:border-0"
+            class={[
+              'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0',
+              {
+                'text-amber-600 dark:text-amber-500': index === 0,
+                'text-gray-700 dark:text-gray-400': index === 1,
+                'text-amber-700 dark:text-amber-600': index === 2,
+              },
+            ]}
           >
-            <span>{standing.character_name}</span>
-            <span>{standing.total_points}</span>
+            <div>{index + 1}</div>
+            <div class="truncate">{standing.character_name}</div>
+            <div class="text-right font-bold">
+              {standing.total_points}
+            </div>
           </div>
         {/each}
       {/if}
