@@ -4,6 +4,7 @@
   import Portal from 'svelte-portal';
   import type { ClassValue } from 'svelte/elements';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { modalCounter } from './ModalCounter.svelte';
 
   export type ModalProps = {
     /**
@@ -43,13 +44,24 @@
     class: propsClassName,
   }: ModalProps = $props();
 
+  const id = Math.random().toString(36).substring(2, 15);
+
   $effect(() => {
     if (open) {
+      modalCounter.add(id);
       document.body.style.overflowY = 'hidden';
+    } else {
+      modalCounter.delete(id);
+      if (modalCounter.size === 0) {
+        document.body.style.overflowY = '';
+      }
     }
 
     return () => {
-      document.body.style.overflowY = '';
+      modalCounter.delete(id);
+      if (modalCounter.size === 0) {
+        document.body.style.overflowY = '';
+      }
     };
   });
 </script>

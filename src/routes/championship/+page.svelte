@@ -18,6 +18,9 @@
   import type { ScheduledEvent, Team } from '$lib/api/types';
   import { getEvents } from '$lib/api/championship';
   import { format } from '$lib/localeFormat/date';
+  import { page } from '$app/state';
+  import EventModal from '$lib/components/Championship/EventModal.svelte';
+  import { goto } from '$app/navigation';
 
   const seasonNo = 2;
   const startDate = new Date('2025-07-26T20:00:00+07:00');
@@ -31,6 +34,7 @@
   let teamTriggers: HTMLDivElement[] = $state([]);
   let teamText: HTMLDivElement[] = $state([]);
   let standingTriggers: HTMLDivElement | undefined = $state();
+  let scheduleDiv: HTMLDivElement | undefined = $state();
 
   // GSAP Timeline variables
   let tlHint: gsap.core.Timeline | undefined;
@@ -48,9 +52,6 @@
     gsap.registerPlugin(ScrollTrigger);
 
     teams = await getTeams(abortController.signal);
-    getEvents(abortController.signal).then((eventsData) => {
-      events = eventsData;
-    });
 
     loading = false;
 
@@ -218,6 +219,34 @@
     tlStanding?.kill();
     abortController?.abort();
   });
+
+  let openedEventDay: number | undefined = $state(undefined);
+  let openedEventMonth: number | undefined = $state(undefined);
+  let openedEventYear: number | undefined = $state(undefined);
+
+  const openEvent = (day: number, month: number, year: number) => {
+    openedEventDay = day;
+    openedEventMonth = month;
+    openedEventYear = year;
+  };
+
+  const closeEvent = () => {
+    openedEventDay = undefined;
+    openedEventMonth = undefined;
+    openedEventYear = undefined;
+    goto(`?`, { replaceState: true, noScroll: true });
+  };
+
+  onMount(async () => {
+    events = await getEvents(abortController.signal);
+    const date = page.url.searchParams.get('date');
+    if (date) {
+      const [year, month, day] = date.split('-');
+      openedEventYear = +year;
+      openedEventMonth = +month;
+      openedEventDay = +day;
+    }
+  });
 </script>
 
 <svelte:head>
@@ -312,13 +341,23 @@
       {/each}
     </div>
     <div
-      class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
+      class="flex h-svh w-full flex-col items-center justify-center px-0 py-8 pt-24 sm:py-8"
       bind:this={standingTriggers}
     >
-      <Standing />
+      <Standing season={seasonNo} />
     </div>
-    <div class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24">
-      <CalendarGroup {events} />
+    <div
+      class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
+      bind:this={scheduleDiv}
+    >
+      <CalendarGroup {events} {openEvent} />
     </div>
   {/if}
 </div>
+<EventModal
+  month={openedEventMonth}
+  year={openedEventYear}
+  day={openedEventDay}
+  {events}
+  onClose={closeEvent}
+/>

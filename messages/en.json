@@ -397,7 +397,11 @@
       "event_type": {
         "championship": "championship",
         "warmup": "warm-up"
-      }
+      },
+      "results": "Results",
+      "event_results": "{event} Results",
+      "dnf": "DNF",
+      "no_results": "No results yet"
     },
     "coming_soon": "Coming soon!",
     "starting_from": "From {date}",
@@ -407,6 +411,7 @@
     "team_standing": "Team Standing",
     "personal_standing": "Personal Standing",
     "coming_back": "Come back when the season starts for standing",
+    "loading": "Loading...",
     "schedule": "Schedule",
     "teams": "Teams",
     "scroll_hint": "Scroll to begin!",

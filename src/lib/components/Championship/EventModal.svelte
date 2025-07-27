@@ -5,10 +5,12 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { isSameDay } from 'date-fns';
+  import { isSameDay, isBefore } from 'date-fns';
   import { dateTimeFormat, format, timeFormat } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import './markdown.css';
+  import { SvelteDate } from 'svelte/reactivity';
+  import ResultsModal from './ResultsModal.svelte';
 
   type EventModalProps = {
     day: number | undefined;
@@ -20,15 +22,15 @@
 
   const { day, month, year, onClose, events }: EventModalProps = $props();
 
+  let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
+
   const eventsToday = $derived.by(() => {
     if (!day || !month || !year) return [];
 
     const date = new Date(year, month - 1, day);
 
     return events.filter((event) => {
-      const eventStart = new Date(event.start_time);
-      const eventEnd = new Date(event.start_time);
-      return isSameDay(eventStart, date) || isSameDay(eventEnd, date);
+      return isSameDay(event.start_time, date) || isSameDay(event.start_time, date);
     });
   });
 
@@ -37,19 +39,27 @@
   );
 
   const eventMultiDay = (event: ScheduledEvent) => {
-    return !isSameDay(new Date(event.start_time), new Date(event.end_time));
+    return !isSameDay(event.start_time, event.end_time);
   };
 
-  $effect(() => {
-    if (events.length > 0 && eventsToday.length === 0) {
-      onClose();
-    }
-  });
+  const date = new SvelteDate();
+
+  const pastEventTime = (event: ScheduledEvent) => {
+    return isBefore(event.start_time, date);
+  };
+
+  const openResultsModal = (event: ScheduledEvent) => {
+    resultsModalEvent = event;
+  };
+
+  const closeResultsModal = () => {
+    resultsModalEvent = undefined;
+  };
 </script>
 
-<Modal open={!!(day && month && year) && events.length > 0 && eventsToday.length > 0} {onClose}>
-  <Card class="max-w-100% w-150 max-h-100% flex flex-col p-5">
-    <h1 class="pb-4.5 text-2xl font-bold tracking-tight">
+<Modal open={!!(day && month && year)} {onClose}>
+  <Card class="w-150 flex max-h-full max-w-full flex-col p-5">
+    <h1 class="pb-5 text-2xl font-bold tracking-tight">
       {m['championship.event.title']({ date: formattedDate })}
     </h1>
     <div class="-mx-5 -my-1.5 min-h-0 flex-1 overflow-y-auto px-5 py-1.5">
@@ -57,11 +67,9 @@
         <Card>
           <div class="text-primary-800 dark:text-primary-500 mb-1 text-xs">
             {#if eventMultiDay(event)}
-              {dateTimeFormat(new Date(event.start_time))} - {dateTimeFormat(
-                new Date(event.end_time),
-              )}
+              {dateTimeFormat(event.start_time)} - {dateTimeFormat(event.end_time)}
             {:else}
-              {timeFormat(new Date(event.start_time))} - {timeFormat(new Date(event.end_time))}
+              {timeFormat(event.start_time)} - {timeFormat(event.end_time)}
             {/if}
           </div>
           <h1 class="text-2xl font-semibold tracking-tight">
@@ -70,7 +78,7 @@
           <div class="wrap-anywhere event-markdown my-4 text-sm opacity-80">
             <MarkdownText text={event.description} />
           </div>
-          <div class="-mx-2 -mb-2">
+          <div class="-m-2 flex gap-1">
             <Button
               color="info"
               variant="text"
@@ -81,6 +89,16 @@
             >
               {m['championship.event.more_info']()}
             </Button>
+            {#if pastEventTime(event)}
+              <Button
+                color="secondary"
+                variant="text"
+                size="sm"
+                onClick={() => openResultsModal(event)}
+              >
+                {m['championship.event.results']()}
+              </Button>
+            {/if}
           </div>
         </Card>
       {/each}
@@ -92,3 +110,5 @@
     </div>
   </Card>
 </Modal>
+
+<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} />
