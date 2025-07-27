@@ -399,7 +399,9 @@
         "warmup": "warm-up"
       },
       "results": "Results",
-      "event_results": "{event} Results"
+      "event_results": "{event} Results",
+      "dnf": "DNF",
+      "no_results": "No results yet"
     },
     "coming_soon": "Coming soon!",
     "starting_from": "From {date}",

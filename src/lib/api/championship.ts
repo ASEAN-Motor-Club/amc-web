@@ -79,17 +79,11 @@ export const getPersonalStandings = async (
   }
 };
 
-export const getEventResult = async (
-  id: number,
-  signal: AbortSignal,
-): Promise<EventResult[]> => {
+export const getEventResult = async (id: number, signal: AbortSignal): Promise<EventResult[]> => {
   try {
-    const response = await fetch(
-      `${PUBLIC_API_NEW_BASE}/scheduled_events/${id}/results/`,
-      {
-        signal: signal,
-      },
-    );
+    const response = await fetch(`${PUBLIC_API_NEW_BASE}/scheduled_events/${id}/results/`, {
+      signal: signal,
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

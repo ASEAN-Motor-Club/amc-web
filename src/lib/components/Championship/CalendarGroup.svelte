@@ -27,4 +27,3 @@
 <div class="flex gap-8">
   <Calendar month={7} year={2025} onEventClick={openEvent} {dateWithEvents} />
 </div>
-

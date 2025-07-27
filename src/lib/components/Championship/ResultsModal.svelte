@@ -68,7 +68,7 @@
           </div>
         {:else if results.length === 0}
           <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            No results available
+            {m['championship.event.no_results']()}
           </div>
         {:else}
           {#each results as result, index (result.character.id)}
@@ -105,7 +105,7 @@
                   {#if result.finished}
                     {formatResultTime(result)}
                   {:else}
-                    <span class="text-xs italic opacity-50">DNF</span>
+                    <span class="text-xs italic opacity-50">{m['championship.event.dnf']()}</span>
                   {/if}
                 </div>
               </div>
