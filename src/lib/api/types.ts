@@ -58,3 +58,18 @@ export type ScheduledEvent = {
   race_setup: number;
   description: string;
 };
+
+export type TeamStanding = {
+  total_points: number;
+  team_id: number;
+  team_tag: string;
+  team_name: string;
+};
+
+export type PersonalStanding = {
+  total_points: number;
+  player_id: number;
+  character_name: string;
+  team_id: number | null;
+  team_name: string | null;
+};

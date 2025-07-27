@@ -39,15 +39,9 @@
   const eventMultiDay = (event: ScheduledEvent) => {
     return !isSameDay(new Date(event.start_time), new Date(event.end_time));
   };
-
-  $effect(() => {
-    if (events.length > 0 && eventsToday.length === 0) {
-      onClose();
-    }
-  });
 </script>
 
-<Modal open={!!(day && month && year) && events.length > 0 && eventsToday.length > 0} {onClose}>
+<Modal open={!!(day && month && year)} {onClose}>
   <Card class="max-w-100% w-150 max-h-100% flex flex-col p-5">
     <h1 class="pb-4.5 text-2xl font-bold tracking-tight">
       {m['championship.event.title']({ date: formattedDate })}
@@ -70,7 +64,7 @@
           <div class="wrap-anywhere event-markdown my-4 text-sm opacity-80">
             <MarkdownText text={event.description} />
           </div>
-          <div class="-mx-2 -mb-2">
+          <div class="-m-2">
             <Button
               color="info"
               variant="text"

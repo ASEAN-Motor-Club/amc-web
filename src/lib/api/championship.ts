@@ -1,5 +1,5 @@
 import { PUBLIC_API_NEW_BASE } from '$env/static/public';
-import type { ScheduledEvent } from './types';
+import type { PersonalStanding, ScheduledEvent, TeamStanding } from './types';
 
 export const getEvents = async (signal: AbortSignal): Promise<ScheduledEvent[]> => {
   try {
@@ -11,6 +11,62 @@ export const getEvents = async (signal: AbortSignal): Promise<ScheduledEvent[]> 
     }
 
     const data = (await response.json()) as ScheduledEvent[];
+
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.info('Fetch aborted');
+      return [];
+    }
+    console.error('Error fetching teams:', error);
+    throw error;
+  }
+};
+
+export const getTeamStandings = async (
+  season: number,
+  signal: AbortSignal,
+): Promise<TeamStanding[]> => {
+  try {
+    const response = await fetch(
+      `${PUBLIC_API_NEW_BASE}/championships/${season - 1}/team_standings/`,
+      {
+        signal: signal,
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as TeamStanding[];
+
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.info('Fetch aborted');
+      return [];
+    }
+    console.error('Error fetching teams:', error);
+    throw error;
+  }
+};
+
+export const getPersonalStandings = async (
+  season: number,
+  signal: AbortSignal,
+): Promise<PersonalStanding[]> => {
+  try {
+    const response = await fetch(
+      `${PUBLIC_API_NEW_BASE}/championships/${season - 1}/personal_standings/`,
+      {
+        signal: signal,
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as PersonalStanding[];
 
     return data;
   } catch (error) {

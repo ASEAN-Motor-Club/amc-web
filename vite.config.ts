@@ -69,6 +69,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: true,
         },
+        '/championships': {
+          target: env.VITE_API_NEW_BASE,
+          changeOrigin: true,
+          secure: true,
+        },
       },
     },
   };

@@ -4,6 +4,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import { format } from '$lib/localeFormat/date';
   import EventButton from './EventButton.svelte';
+  import type { Day } from 'date-fns';
 
   type CalendarProps = {
     month: number;
@@ -48,8 +49,6 @@
     );
     onEventClick(openedEventDay, month, year);
   };
-
-  type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
   const days = $derived.by(() => {
     return Array.from({ length: 7 }, (_, day) => m[`config.days.short.${day as Day}`]());
