@@ -3,7 +3,7 @@ import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const getEventInfo = async (
   id: string,
-  laps: string,
+  laps: string | number,
   signal: AbortSignal,
 ): Promise<EventInfo> => {
   try {

@@ -22,6 +22,7 @@
   import EventModal from '$lib/components/Championship/EventModal.svelte';
   import { goto } from '$app/navigation';
   import ResultsModal from '$lib/components/Championship/ResultsModal.svelte';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
 
   const seasonNo = 2;
   const startDate = new Date('2025-07-26T20:00:00+07:00');
@@ -235,7 +236,7 @@
     openedEventDay = undefined;
     openedEventMonth = undefined;
     openedEventYear = undefined;
-    const newParams = new URLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('date');
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
@@ -248,7 +249,7 @@
 
   const closeResultsModal = () => {
     resultsModalEvent = undefined;
-    const newParams = new URLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('event');
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };

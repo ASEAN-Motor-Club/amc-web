@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from '$lib/ui/Button/Button.svelte';
-  import { SvelteDate } from 'svelte/reactivity';
+  import { SvelteDate, SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
 
   type EventButtonProps = {
@@ -9,7 +9,7 @@
     month: number;
     day: number;
     onClick: () => void;
-    dateWithEvents: Map<string, EventType>;
+    dateWithEvents: SvelteMap<string, EventType>;
   };
 
   const handleClick = (e: MouseEvent) => {

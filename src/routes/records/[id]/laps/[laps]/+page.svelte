@@ -17,6 +17,16 @@
 
   onMount(() => {
     const abortController = new AbortController();
+    if (!page.params.id || !page.params.laps) {
+      showModal({
+        title: m['events.cannot_load.title'](),
+        message: m['events.cannot_load.desc'](),
+        cancelAction: () => {
+          goto('/');
+        },
+      });
+      return;
+    }
     getEventInfo(page.params.id, page.params.laps, abortController.signal)
       .then((data) => {
         eventData = data;
@@ -66,7 +76,7 @@
   >{eventData?.route.routeName
     ? m['events.head_loaded']({
         routeName: eventData.route.routeName,
-        laps: page.params.laps,
+        laps: page.params.laps ?? 0,
         siteName: m['site_name_short'](),
       })
     : m['events.head']({ siteName: m['site_name_short']() })}</title
@@ -85,12 +95,12 @@
   </h1>
   <h2 class="pb-8 font-semibold">
     {m['events.laps']({
-      laps: page.params.laps,
+      laps: page.params.laps ?? 0,
     })}
   </h2>
   <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">
     <div class="flex h-10 items-center font-semibold leading-none">
-      #{page.params.id.substring(0, 8)}
+      #{page.params.id?.substring(0, 8)}
     </div>
     <div class="border-l-1 hidden border-gray-500/50 sm:block"></div>
     <Button

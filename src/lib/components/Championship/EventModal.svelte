@@ -9,7 +9,7 @@
   import { dateTimeFormat, format, timeFormat } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import './markdown.css';
-  import { SvelteDate } from 'svelte/reactivity';
+  import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
 
@@ -57,7 +57,7 @@
   };
 
   const openEvent = (event: ScheduledEvent) => {
-    const newParams = new URLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.append('event', event.id.toString());
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
     openResultsModal(event);

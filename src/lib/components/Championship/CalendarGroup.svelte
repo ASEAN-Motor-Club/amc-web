@@ -6,6 +6,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { EventType } from './types';
+  import { SvelteMap } from 'svelte/reactivity';
 
   type CalendarGroupProps = {
     events: ScheduledEvent[];
@@ -15,7 +16,7 @@
   const { events, openEvent }: CalendarGroupProps = $props();
 
   const dateWithEvents = $derived.by(() => {
-    const map = new Map<string, EventType>();
+    const map = new SvelteMap<string, EventType>();
     events.forEach((event) => {
       const endTimeExclusive = addMilliseconds(event.end_time, -1);
       const dateRange = eachDayOfInterval({ start: event.start_time, end: endTimeExclusive });

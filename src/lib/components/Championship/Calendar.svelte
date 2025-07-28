@@ -6,12 +6,13 @@
   import EventButton from './EventButton.svelte';
   import type { Day } from 'date-fns';
   import type { EventType } from './types';
+  import type { SvelteMap } from 'svelte/reactivity';
 
   type CalendarProps = {
     month: number;
     year: number;
     onEventClick: (day: number, month: number, year: number) => void;
-    dateWithEvents: Map<string, EventType>;
+    dateWithEvents: SvelteMap<string, EventType>;
   };
 
   const { month, year, onEventClick, dateWithEvents }: CalendarProps = $props();

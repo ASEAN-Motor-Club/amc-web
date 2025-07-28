@@ -53,6 +53,7 @@
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
+  import { SvelteSet } from 'svelte/reactivity';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -172,7 +173,7 @@
       ]);
     }
 
-    const connectedDrop: Set<DeliveryCargo> = new Set();
+    const connectedDrop: SvelteSet<DeliveryCargo> = new SvelteSet();
 
     if (deliveryPoint.dropPoint) {
       deliveryPoint.dropPoint.forEach((dropPointGuid) => {
