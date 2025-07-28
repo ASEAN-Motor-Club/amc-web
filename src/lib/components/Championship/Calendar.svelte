@@ -29,11 +29,6 @@
     return day + firstDayOfWeek - (offsetWeek ? 7 : 0);
   };
 
-  const isCurrentMonth = (index: number) => {
-    const offsetDay = getOffsetDayOfWeek(index);
-    return offsetDay >= startOffset && offsetDay < startOffset + daysMonth;
-  };
-
   const getDay = (index: number) => {
     const offsetDay = getOffsetDayOfWeek(index);
     if (offsetDay < startOffset) return daysInLastMonth + offsetDay + 1 - startOffset;
@@ -41,13 +36,29 @@
     else return offsetDay + 1 - startOffset - daysMonth;
   };
 
+  const getMonth = (index: number) => {
+    const offsetDay = getOffsetDayOfWeek(index);
+    if (offsetDay < startOffset) return month === 1 ? 12 : month - 1;
+    else if (offsetDay < startOffset + daysMonth) return month;
+    else return month === 12 ? 1 : month + 1;
+  };
+
+  const getYear = (index: number) => {
+    const offsetDay = getOffsetDayOfWeek(index);
+    if (offsetDay < startOffset && month === 1) return year - 1;
+    else if (offsetDay >= startOffset + daysMonth && month === 12) return year + 1;
+    else return year;
+  };
+
   const openEvent = (index: number) => {
-    const openedEventDay = getOffsetDayOfWeek(index) + 1 - startOffset;
+    const eventDay = getDay(index);
+    const eventMonth = getMonth(index);
+    const eventYear = getYear(index);
     goto(
-      `?date=${year}-${String(month).padStart(2, '0')}-${String(openedEventDay).padStart(2, '0')}`,
+      `?date=${eventYear}-${String(eventMonth).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`,
       { replaceState: true, noScroll: true },
     );
-    onEventClick(openedEventDay, month, year);
+    onEventClick(eventDay, eventMonth, eventYear);
   };
 
   const days = $derived.by(() => {
@@ -59,20 +70,20 @@
   <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
     {format(new Date(year, month - 1, 1), m['config.omitDayFormat']())}
   </h4>
-  <div class="grid grid-cols-7 place-items-center pb-4 sm:gap-2">
+  <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}
       <span class="text-xs font-semibold">
         {days[(i + firstDayOfWeek) % 7]}
       </span>
     {/each}
   </div>
-  <div class="grid grid-cols-7 grid-rows-6 sm:gap-2">
+  <div class="-m-3 mt-0 grid grid-cols-7 grid-rows-6 place-items-center gap-1 sm:m-0 sm:gap-2">
     {#each Array(6 * 7) as _, i (i)}
       <EventButton
-        currentMonth={isCurrentMonth(i)}
-        {month}
+        currentMonth={month}
+        month={getMonth(i)}
         day={getDay(i)}
-        {year}
+        year={getYear(i)}
         onClick={() => openEvent(i)}
         {dateWithEvents}
       />
