@@ -1,11 +1,16 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "config": {
-    "omitDayFormat": "MMMM yyyy",
-    "dateFormat": "dd MMM yyyy",
-    "timeFormat": "HH:mm",
-    "dateTimeFormat": "dd/MM/yyyy HH:mm",
-    "dateFull": "EEEE, dd MMMM yyyy",
+    "calendarFormat": "MMMM yyyy",
+    "dateFormat": "d MMM yyyy",
+    "timeFormat": "H:mm",
+    "dateTimeFormat": "d MMM yyyy H:mm",
+    "dateFull": "EEEE, d MMMM yyyy",
+    "scheduleFormat": {
+      "sameDay": "H:mm",
+      "sameYear": "d MMM H:mm",
+      "crossYear": "d MMM yyyy H:mm"
+    },
     "firstDayOfWeek": "0",
     "days": {
       "narrow": {

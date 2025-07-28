@@ -70,7 +70,7 @@
 
 <Card>
   <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
-    {format(new Date(year, month - 1, 1), m['config.omitDayFormat']())}
+    {format(new Date(year, month - 1, 1), m['config.calendarFormat']())}
   </h4>
   <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}

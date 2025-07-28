@@ -5,8 +5,8 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { isSameDay, isBefore, isAfter, differenceInHours } from 'date-fns';
-  import { dateTimeFormat, format, timeFormat } from '$lib/localeFormat/date';
+  import { isSameDay, isBefore, isAfter, differenceInHours, isSameYear } from 'date-fns';
+  import { format } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import './markdown.css';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
@@ -42,8 +42,14 @@
     format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), m['config.dateFull']()),
   );
 
-  const eventCrossDay = (event: ScheduledEvent) => {
-    return !isSameDay(event.start_time, event.end_time);
+  const formatEventStyle = (event: ScheduledEvent) => {
+    const sameDay = isSameDay(event.start_time, event.end_time);
+    const sameYear = isSameYear(event.start_time, event.end_time);
+    return sameDay
+      ? m['config.scheduleFormat.sameDay']()
+      : sameYear
+        ? m['config.scheduleFormat.sameYear']()
+        : m['config.scheduleFormat.crossYear']();
   };
 
   const eventIsSingle = (event: ScheduledEvent) => {
@@ -69,7 +75,9 @@
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
       {m['championship.event.title']({ date: formattedDate })}
     </h1>
-    <div class="-mx-5 -my-1.5 min-h-0 flex-1 overflow-y-auto px-5 py-1.5">
+    <div
+      class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
+    >
       {#each eventsToday as event (event.id)}
         <Card>
           <div
@@ -80,11 +88,10 @@
                 : 'text-warning-800 dark:text-warning-500',
             ]}
           >
-            {#if eventCrossDay(event)}
-              {dateTimeFormat(event.start_time)} - {dateTimeFormat(event.end_time)}
-            {:else}
-              {timeFormat(event.start_time)} - {timeFormat(event.end_time)}
-            {/if}
+            {format(event.start_time, formatEventStyle(event))} &ndash; {format(
+              event.end_time,
+              formatEventStyle(event),
+            )}
           </div>
           <h1 class="text-2xl font-semibold tracking-tight">
             {event.name}
@@ -112,7 +119,7 @@
         </Card>
       {/each}
     </div>
-    <div class="-mx-3 -mb-3 flex justify-end pt-3">
+    <div class="-mx-3 -mb-3 flex justify-end pt-2">
       <Button onClick={onClose} color="secondary" variant="text">
         {m['action.close']()}
       </Button>

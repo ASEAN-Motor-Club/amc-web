@@ -55,27 +55,3 @@ export const format = (
     locale: getLocaleConfig(),
   });
 };
-
-export const dateFormat = (date: DateArg<Date>, options?: Omit<FormatOptions, 'locale'>) => {
-  return dateFnsFormat(date, m['config.dateFormat'](), {
-    ...options,
-    locale: getLocaleConfig(),
-  });
-};
-
-export const timeFormat = (time: DateArg<Date>, options?: Omit<FormatOptions, 'locale'>) => {
-  return dateFnsFormat(time, m['config.timeFormat'](), {
-    ...options,
-    locale: getLocaleConfig(),
-  });
-};
-
-export const dateTimeFormat = (
-  dateTime: DateArg<Date>,
-  options?: Omit<FormatOptions, 'locale'>,
-) => {
-  return dateFnsFormat(dateTime, m['config.dateTimeFormat'](), {
-    ...options,
-    locale: getLocaleConfig(),
-  });
-};

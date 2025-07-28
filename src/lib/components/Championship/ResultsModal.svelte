@@ -53,7 +53,9 @@
         ? m['championship.event.event_results']({ event: event.name })
         : m['championship.event.results']()}
     </h1>
-    <div class="min-h-0 flex-1 overflow-y-auto">
+    <div
+      class="min-h-0 flex-1 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5"
+    >
       <div
         class={[
           'flex w-full',
