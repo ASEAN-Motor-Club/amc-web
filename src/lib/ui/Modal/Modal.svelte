@@ -5,7 +5,6 @@
   import type { ClassValue } from 'svelte/elements';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { modalCounter } from './ModalCounter.svelte';
-  import { getScrollbarWidth } from '$lib/utils/getScrollbarWidth';
 
   export type ModalProps = {
     /**
