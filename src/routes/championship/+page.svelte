@@ -21,6 +21,7 @@
   import { page } from '$app/state';
   import EventModal from '$lib/components/Championship/EventModal.svelte';
   import { goto } from '$app/navigation';
+  import ResultsModal from '$lib/components/Championship/ResultsModal.svelte';
 
   const seasonNo = 2;
   const startDate = new Date('2025-07-26T20:00:00+07:00');
@@ -234,7 +235,22 @@
     openedEventDay = undefined;
     openedEventMonth = undefined;
     openedEventYear = undefined;
-    goto(`?`, { replaceState: true, noScroll: true });
+    const newParams = new URLSearchParams(page.url.searchParams);
+    newParams.delete('date');
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+  };
+
+  let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
+
+  const openResultsModal = (event: ScheduledEvent) => {
+    resultsModalEvent = event;
+  };
+
+  const closeResultsModal = () => {
+    resultsModalEvent = undefined;
+    const newParams = new URLSearchParams(page.url.searchParams);
+    newParams.delete('event');
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
 
   onMount(async () => {
@@ -245,6 +261,13 @@
       openedEventYear = +year;
       openedEventMonth = +month;
       openedEventDay = +day;
+    }
+    const eventId = page.url.searchParams.get('event');
+    if (eventId) {
+      const event = events.find((e) => e.id === +eventId);
+      if (event) {
+        resultsModalEvent = event;
+      }
     }
   });
 </script>
@@ -341,13 +364,13 @@
       {/each}
     </div>
     <div
-      class="flex h-svh w-full flex-col items-center justify-center px-0 py-8 pt-24 sm:py-8"
+      class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24 sm:py-8"
       bind:this={standingTriggers}
     >
       <Standing season={seasonNo} />
     </div>
     <div
-      class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
+      class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24"
       bind:this={scheduleDiv}
     >
       <CalendarGroup {events} {openEvent} />
@@ -360,4 +383,6 @@
   day={openedEventDay}
   {events}
   onClose={closeEvent}
+  {openResultsModal}
 />
+<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} />

@@ -49,18 +49,18 @@
   $effect(() => {
     if (open) {
       modalCounter.add(id);
-      document.body.style.overflowY = 'hidden';
+      document.documentElement.style.overflowY = 'hidden';
     } else {
       modalCounter.delete(id);
       if (modalCounter.size === 0) {
-        document.body.style.overflowY = '';
+        document.documentElement.style.overflowY = '';
       }
     }
 
     return () => {
       modalCounter.delete(id);
       if (modalCounter.size === 0) {
-        document.body.style.overflowY = '';
+        document.documentElement.style.overflowY = '';
       }
     };
   });
@@ -90,7 +90,7 @@
 {:else if open}
   <div
     class={[
-      'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/20 p-5',
+      'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/40 p-5',
       propsClassName,
     ]}
     transition:fade={{

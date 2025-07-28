@@ -5,12 +5,13 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { isSameDay, isBefore } from 'date-fns';
+  import { isSameDay, isBefore, isAfter } from 'date-fns';
   import { dateTimeFormat, format, timeFormat } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import './markdown.css';
   import { SvelteDate } from 'svelte/reactivity';
-  import ResultsModal from './ResultsModal.svelte';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/state';
 
   type EventModalProps = {
     day: number | undefined;
@@ -18,11 +19,10 @@
     year: number | undefined;
     events: ScheduledEvent[];
     onClose: () => void;
+    openResultsModal: (event: ScheduledEvent) => void;
   };
 
-  const { day, month, year, onClose, events }: EventModalProps = $props();
-
-  let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
+  const { day, month, year, onClose, events, openResultsModal }: EventModalProps = $props();
 
   const eventsToday = $derived.by(() => {
     if (!day || !month || !year) return [];
@@ -30,7 +30,11 @@
     const date = new Date(year, month - 1, day);
 
     return events.filter((event) => {
-      return isSameDay(event.start_time, date) || isSameDay(event.start_time, date);
+      return (
+        isSameDay(event.start_time, date) ||
+        isSameDay(event.end_time, date) ||
+        (isBefore(date, event.end_time) && isAfter(date, event.start_time))
+      );
     });
   });
 
@@ -48,12 +52,11 @@
     return isBefore(event.start_time, date);
   };
 
-  const openResultsModal = (event: ScheduledEvent) => {
-    resultsModalEvent = event;
-  };
-
-  const closeResultsModal = () => {
-    resultsModalEvent = undefined;
+  const openEvent = (event: ScheduledEvent) => {
+    const newParams = new URLSearchParams(page.url.searchParams);
+    newParams.append('event', event.id.toString());
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+    openResultsModal(event);
   };
 </script>
 
@@ -90,12 +93,7 @@
               {m['championship.event.more_info']()}
             </Button>
             {#if pastEventTime(event)}
-              <Button
-                color="secondary"
-                variant="text"
-                size="sm"
-                onClick={() => openResultsModal(event)}
-              >
+              <Button color="secondary" variant="text" size="sm" onClick={() => openEvent(event)}>
                 {m['championship.event.results']()}
               </Button>
             {/if}
@@ -110,5 +108,3 @@
     </div>
   </Card>
 </Modal>
-
-<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} />
