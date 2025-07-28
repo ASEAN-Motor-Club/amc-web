@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from '$lib/ui/Button/Button.svelte';
   import { SvelteDate } from 'svelte/reactivity';
+  import { EventType } from './types';
 
   type EventButtonProps = {
     currentMonth: number;
@@ -8,7 +9,7 @@
     month: number;
     day: number;
     onClick: () => void;
-    dateWithEvents: Set<string>;
+    dateWithEvents: Map<string, EventType>;
   };
 
   const handleClick = (e: MouseEvent) => {
@@ -18,9 +19,11 @@
 
   const { currentMonth, year, month, day, onClick, dateWithEvents }: EventButtonProps = $props();
 
-  const haveEvent = $derived(
-    dateWithEvents.has(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`),
+  const eventToday = $derived(
+    dateWithEvents.get(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`),
   );
+
+  const haveEvent = $derived(eventToday !== undefined);
 
   const date = new SvelteDate();
 
@@ -33,7 +36,13 @@
   icon
   round
   variant={haveEvent ? 'contained' : 'text'}
-  color={haveEvent ? (today ? 'success' : 'info') : 'neutral'}
+  color={haveEvent
+    ? today
+      ? 'success'
+      : eventToday === EventType.Single
+        ? 'primary'
+        : 'warning'
+    : 'neutral'}
   disabled={!haveEvent}
   class={[
     month === currentMonth ? 'opacity-100' : 'opacity-50',

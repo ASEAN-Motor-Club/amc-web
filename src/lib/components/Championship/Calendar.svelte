@@ -5,12 +5,13 @@
   import { format } from '$lib/localeFormat/date';
   import EventButton from './EventButton.svelte';
   import type { Day } from 'date-fns';
+  import type { EventType } from './types';
 
   type CalendarProps = {
     month: number;
     year: number;
     onEventClick: (day: number, month: number, year: number) => void;
-    dateWithEvents: Set<string>;
+    dateWithEvents: Map<string, EventType>;
   };
 
   const { month, year, onEventClick, dateWithEvents }: CalendarProps = $props();
