@@ -75,46 +75,31 @@
   });
 </script>
 
+{#snippet modalBase()}
+  {#if open}
+    <div
+      class={[
+        'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/50 p-5',
+        propsClassName,
+      ]}
+      transition:fade={{
+        duration: defaultTransitionDurationMs,
+      }}
+    >
+      <button
+        class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
+        onclick={onClose}
+        aria-label="Close modal"
+      ></button>
+      {@render children()}
+    </div>
+  {/if}
+{/snippet}
+
 {#if portal}
   <Portal target={portalTarget}>
-    {#if open}
-      <div
-        class={[
-          'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/50 p-5',
-          propsClassName,
-        ]}
-        transition:fade={{
-          duration: defaultTransitionDurationMs,
-        }}
-      >
-        <button
-          class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
-          onclick={onClose}
-          aria-label="Close modal"
-        ></button>
-        {@render children()}
-      </div>
-    {/if}
+    {@render modalBase()}
   </Portal>
 {:else if open}
-  <div
-    class={[
-      'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/50 p-5',
-      propsClassName,
-    ]}
-    transition:fade={{
-      duration: 150,
-    }}
-    ontouchmove={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }}
-  >
-    <button
-      class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
-      onclick={onClose}
-      aria-label="Close modal"
-    ></button>
-    {@render children()}
-  </div>
+  {@render modalBase()}
 {/if}
