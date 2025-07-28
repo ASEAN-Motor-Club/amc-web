@@ -46,13 +46,21 @@
 
   const id = Math.random().toString(36).substring(2, 15);
 
+  function isPageScrollable(): boolean {
+    return document.documentElement.scrollHeight > document.documentElement.clientHeight;
+  }
+
   $effect(() => {
     if (open) {
       modalCounter.add(id);
+      if (isPageScrollable()) {
+        document.documentElement.style.scrollbarGutter = 'stable';
+      }
       document.documentElement.style.overflowY = 'hidden';
     } else {
       modalCounter.delete(id);
       if (modalCounter.size === 0) {
+        document.documentElement.style.scrollbarGutter = '';
         document.documentElement.style.overflowY = '';
       }
     }
@@ -60,6 +68,7 @@
     return () => {
       modalCounter.delete(id);
       if (modalCounter.size === 0) {
+        document.documentElement.style.scrollbarGutter = '';
         document.documentElement.style.overflowY = '';
       }
     };

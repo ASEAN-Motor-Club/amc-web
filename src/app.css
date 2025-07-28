@@ -4,8 +4,7 @@ body {
 }
 
 body {
-  --at-apply: bg-background-300 text-text transition-colors;
-  font-family: var(--font-sans);
+  --at-apply: font-sans bg-background-300 text-text transition-colors;
 }
 
 .dark body {
