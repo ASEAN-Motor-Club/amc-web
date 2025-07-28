@@ -2,9 +2,10 @@
   import { m } from '$lib/paraglide/messages';
   import Calendar from './Calendar.svelte';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { eachDayOfInterval, format } from 'date-fns';
+  import { addMilliseconds, differenceInHours, eachDayOfInterval, format } from 'date-fns';
   import Button from '$lib/ui/Button/Button.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { EventType } from './types';
 
   type CalendarGroupProps = {
     events: ScheduledEvent[];
@@ -14,15 +15,25 @@
   const { events, openEvent }: CalendarGroupProps = $props();
 
   const dateWithEvents = $derived.by(() => {
-    const set = new Set<string>();
+    const map = new Map<string, EventType>();
     events.forEach((event) => {
-      const dateRange = eachDayOfInterval({ start: event.start_time, end: event.end_time });
+      const endTimeExclusive = addMilliseconds(event.end_time, -1);
+      const dateRange = eachDayOfInterval({ start: event.start_time, end: endTimeExclusive });
+      const isSingle = differenceInHours(event.end_time, event.start_time) <= 24;
 
       dateRange.forEach((date) => {
-        set.add(format(date, 'yyyy-MM-dd'));
+        const dateFormatted = format(date, 'yyyy-MM-dd');
+        if (isSingle) {
+          map.set(format(date, 'yyyy-MM-dd'), EventType.Single);
+          return;
+        }
+        if (map.has(dateFormatted)) {
+          return;
+        }
+        map.set(format(date, 'yyyy-MM-dd'), EventType.MultiDay);
       });
     });
-    return set;
+    return map;
   });
 
   let currentMonth = $state(new Date().getMonth() + 1);
