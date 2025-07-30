@@ -88,7 +88,7 @@
   };
 
   const handleSliderMouseDown = (event: MouseEvent | TouchEvent) => {
-    if (!(event instanceof TouchEvent)) {
+    if (event instanceof MouseEvent) {
       event.preventDefault();
     }
     moving = true;
