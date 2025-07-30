@@ -173,11 +173,7 @@
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
       transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
     >
-      <a
-        href="/"
-        class="font-sans-alt my-4 text-2xl tracking-[100%]"
-        onclick={() => (menu = false)}
-      >
+      <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
         {m['site_name']()}
       </a>
       {@render menuItems()}
