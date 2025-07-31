@@ -36,7 +36,7 @@
 
   const getTeamTag = (result: EventResult) => {
     const tag = result.championship_point?.team?.tag;
-    return (tag && `[${tag}]`) || '';
+    return tag ? `[${tag}]` : '';
   };
 
   const formatResultTime = (result: EventResult) => {
@@ -94,12 +94,14 @@
                 <span class="font-bold">{getTeamTag(result)}</span>
               </div>
               <div class="text-center">
-                {#if result.finished}
-                  <div class="font-bold">
-                    {result.championship_point?.points || 0}
-                  </div>
-                {:else}
-                  <div class="text-xs font-bold opacity-50">-</div>
+                {#if result.championship_point}
+                  {#if result.finished}
+                    <div class="font-bold">
+                      {result.championship_point.points}
+                    </div>
+                  {:else}
+                    <div class="text-xs font-bold opacity-50">-</div>
+                  {/if}
                 {/if}
               </div>
               <div class="text-right">
