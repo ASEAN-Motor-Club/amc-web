@@ -2,7 +2,7 @@
   import { m as msg } from '$lib/paraglide/messages';
   import Calendar from './Calendar.svelte';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { addMilliseconds, differenceInHours, eachDayOfInterval, format } from 'date-fns';
+  import { addMilliseconds, eachDayOfInterval, format } from 'date-fns';
   import Button from '$lib/ui/Button/Button.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { EventType } from './types';
@@ -20,11 +20,9 @@
     events.forEach((event) => {
       const endTimeExclusive = addMilliseconds(event.end_time, -1);
       const dateRange = eachDayOfInterval({ start: event.start_time, end: endTimeExclusive });
-      const isSingle = differenceInHours(event.end_time, event.start_time) <= 24;
-
       dateRange.forEach((date) => {
         const dateFormatted = format(date, 'yyyy-MM-dd');
-        if (isSingle) {
+        if (!event.time_trial) {
           map.set(format(date, 'yyyy-MM-dd'), EventType.Single);
           return;
         }
