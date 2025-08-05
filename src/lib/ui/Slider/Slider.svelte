@@ -2,10 +2,12 @@
   import type { ClassValue } from 'svelte/elements';
   import { getInputGroupContext } from '../InputGroup/context';
   import type { Color } from '../shared';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   export type TextInputProps = {
     /**
-     * The value of the input
+     * value of the input
      */
     value: number;
     /**
@@ -65,7 +67,7 @@
   let valueLocal = $derived(value);
   let slider: HTMLDivElement;
   let moving = $state(false);
-  let transition = $state(true);
+  let doTransition = $state(true);
 
   const moveSlider = (clientX: number) => {
     const rect = slider.getBoundingClientRect();
@@ -92,7 +94,7 @@
       event.preventDefault();
     }
     moving = true;
-    transition = true;
+    doTransition = true;
     moveSlider(getClientX(event));
   };
 
@@ -100,7 +102,7 @@
     // this cannot be in svelte:document since it cannot be passive (touchmove defaults to passive)
     const handleSliderMouseMove = (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
-      transition = false;
+      doTransition = false;
       moveSlider(getClientX(event));
     };
 
@@ -120,6 +122,17 @@
   };
 
   const percent = $derived(((valueLocal - min) / (max - min)) * 100);
+
+  const containerSizeClasses = $derived.by(() => {
+    switch (size) {
+      case 'sm':
+        return 'h-4 min-h-4';
+      case 'md':
+        return 'h-5 min-h-5';
+      default:
+        return '';
+    }
+  });
 </script>
 
 <svelte:document
@@ -128,11 +141,11 @@
 />
 
 <div
-  class={[
-    'relative  flex cursor-pointer items-center',
-    { 'h-4 min-h-4': size === 'sm', 'h-5 min-h-5': size === 'md' },
-    propsClassname,
-  ]}
+  class={twMerge(
+    'relative flex cursor-pointer items-center',
+    containerSizeClasses,
+    clsx(propsClassname),
+  )}
   onmousedown={handleSliderMouseDown}
   ontouchstart={handleSliderMouseDown}
   bind:this={slider}
@@ -169,7 +182,7 @@
           'bg-error-500': color === 'error',
           'bg-neutral-500': color === 'neutral',
         },
-        transition && 'transition-[width]',
+        doTransition && 'transition-[width]',
       ]}
       style:width={`${percent}%`}
     ></div>
@@ -178,7 +191,7 @@
     class={[
       'absolute flex -translate-x-1/2',
       { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
-      transition && 'transition-[left]',
+      doTransition && 'transition-[left]',
     ]}
     style:left={`${percent}%`}
   >

@@ -26,7 +26,7 @@
 {#if show}
   <div
     class={[
-      'bottom-5 left-1/2 z-20 flex -translate-x-1/2 animate-bounce',
+      'bottom-1 left-1/2 z-20 flex -translate-x-1/2 animate-bounce',
       fixed ? 'fixed' : 'absolute',
     ]}
     transition:fade={{ duration: defaultTransitionDurationMs }}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
@@ -30,7 +30,7 @@
 
     // If rent has expired
     if (rentLeft <= 0) {
-      return m['housing.expired']();
+      return msg['housing.expired']();
     }
 
     // Convert milliseconds to different units
@@ -41,21 +41,21 @@
     let parts = [];
     if (days > 0) {
       parts.push(
-        m['housing.days']({
+        msg['housing.days']({
           days,
         }),
       );
     }
     if (hours > 0) {
       parts.push(
-        m['housing.hours']({
+        msg['housing.hours']({
           hours,
         }),
       );
     }
     if (minutes > 0) {
       parts.push(
-        m['housing.minutes']({
+        msg['housing.minutes']({
           minutes,
         }),
       );
@@ -63,7 +63,7 @@
     if (parts.length > 0) {
       return parts.join(' ');
     } else {
-      return m['housing.less_than_minute']();
+      return msg['housing.less_than_minute']();
     }
   });
 </script>
@@ -87,20 +87,20 @@
       class="-mr-1"
       color="info"
     >
-      {m.view_on_map()}
+      {msg.view_on_map()}
     </Button>
   </div>
 
   <div>
-    <span class="font-semibold">{m['housing.size']()}:</span>
+    <span class="font-semibold">{msg['housing.size']()}:</span>
     {house.size.x / 100} x {house.size.y / 100}
   </div>
   <div>
-    <span class="font-semibold">{m['housing.rent_price']()}:</span>
+    <span class="font-semibold">{msg['housing.rent_price']()}:</span>
     {(house.cost / 10).toLocaleString(getLocale())}
   </div>
   <div>
-    <span class="font-semibold">{m['housing.owner']()}:</span>
+    <span class="font-semibold">{msg['housing.owner']()}:</span>
     {#if currentHouseData?.ownerName}
       <HighlightText
         text={currentHouseData.ownerName}
@@ -110,21 +110,21 @@
         class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
       />
     {:else}
-      <span class="font-bold italic">{m['housing.vacant']()}</span>
+      <span class="font-bold italic">{msg['housing.vacant']()}</span>
     {/if}
   </div>
   <div>
-    <span class="font-semibold">{m['housing.rent_left']()}:</span>
+    <span class="font-semibold">{msg['housing.rent_left']()}:</span>
     {#if currentHouseData?.ownerName}
       {rentLeftText}
     {:else}
-      <span class="text-text/70 dark:text-text-dark/70 italic">{m['housing.vacant']()}</span>
+      <span class="text-text/70 dark:text-text-dark/70 italic">{msg['housing.vacant']()}</span>
     {/if}
   </div>
   <div>
-    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
+    <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
   </div>
   <div>
-    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
+    <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
   </div>
 </Card>

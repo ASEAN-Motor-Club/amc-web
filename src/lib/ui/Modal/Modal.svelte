@@ -5,6 +5,8 @@
   import type { ClassValue } from 'svelte/elements';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { modalCounter } from './ModalCounter.svelte';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   export type ModalProps = {
     /**
@@ -78,10 +80,10 @@
 {#snippet modalBase()}
   {#if open}
     <div
-      class={[
+      class={twMerge(
         'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/50 p-5',
-        propsClassName,
-      ]}
+        clsx(propsClassName),
+      )}
       transition:fade={{
         duration: defaultTransitionDurationMs,
       }}

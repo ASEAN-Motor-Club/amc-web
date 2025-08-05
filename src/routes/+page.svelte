@@ -1,6 +1,6 @@
 <script lang="ts">
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { SvelteDate } from 'svelte/reactivity';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -11,15 +11,15 @@
   const year = $derived(date.getFullYear());
 
   const features = $derived([
-    m['home.friendly_community'](),
-    m['home.regular_events'](),
-    m['home.ig_live_radio'](),
-    m['home.ig_bot'](),
+    msg['home.friendly_community'](),
+    msg['home.regular_events'](),
+    msg['home.ig_live_radio'](),
+    msg['home.ig_bot'](),
   ]);
 </script>
 
 <svelte:head>
-  <title>{m['site_name']()}</title>
+  <title>{msg['site_name']()}</title>
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
@@ -52,13 +52,13 @@
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
-            {m['home.live_server_no_count']()}
+            {msg['home.live_server_no_count']()}
           </Button>
         </div>
         <h1
           class="z-100 text-text-dark font-sans-alt pointer-events-none mb-4 select-none text-center text-7xl sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
-          {m['site_name']()}
+          {msg['site_name']()}
         </h1>
         <div class="sm:mb-15 mb-6 flex flex-wrap justify-center gap-1.5 sm:justify-start">
           {#each features as feature (feature)}
@@ -79,7 +79,7 @@
               class=" !bg-[#5865f2] hover:!bg-[#5865f2]/80"
               tag="a"
               href={PUBLIC_DISCORD_LINK}
-              target="_blank">{m['home.join_discord']()}</Button
+              target="_blank">{msg['home.join_discord']()}</Button
             >
           </div>
           <Button
@@ -87,7 +87,7 @@
             tag="a"
             href="/radio"
             class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/12.5 backdrop-blur-xs"
-            >{m['home.listen_radio']()}</Button
+            >{msg['home.listen_radio']()}</Button
           >
         </div>
       </div>
@@ -100,10 +100,10 @@
     class="max-w-340 -mt-16 grid min-h-svh w-full items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
-      <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">{m['home.desc_title']()}</h2>
-      <p class="text-lg">{m['home.description']()}</p>
+      <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">{msg['home.desc_title']()}</h2>
+      <p class="text-lg">{msg['home.description']()}</p>
       <div class="text-text/75 dark:text-text-dark/75 mt-2 text-sm">
-        {m['home.copyright']({ year })}
+        {msg['home.copyright']({ year })}
       </div>
     </div>
     <div class="justify-self-end">

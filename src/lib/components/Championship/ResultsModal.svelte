@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import { getEventResult } from '$lib/api/championship';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
+  import './markdown.css';
 
   type ResultsModalProps = {
     event: ScheduledEvent | undefined;
@@ -50,8 +51,8 @@
   <Card class="w-150 flex max-h-full max-w-full flex-col p-0">
     <h1 class="p-5 text-2xl font-bold tracking-tight">
       {event
-        ? m['championship.event.event_results']({ event: event.name })
-        : m['championship.event.results']()}
+        ? msg['championship.event.event_results']({ event: event.name })
+        : msg['championship.event.results']()}
     </h1>
     <div
       class="min-h-0 flex-1 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5"
@@ -66,11 +67,11 @@
       >
         {#if loading}
           <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            {m['championship.loading']()}
+            {msg['championship.loading']()}
           </div>
         {:else if results.length === 0}
           <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            {m['championship.event.no_results']()}
+            {msg['championship.event.no_results']()}
           </div>
         {:else}
           {#each results as result, index (result.character.id)}
@@ -109,7 +110,7 @@
                   {#if result.finished}
                     {formatResultTime(result)}
                   {:else}
-                    <span class="text-xs italic opacity-50">{m['championship.event.dnf']()}</span>
+                    <span class="text-xs italic opacity-50">{msg['championship.event.dnf']()}</span>
                   {/if}
                 </div>
               </div>
@@ -120,7 +121,7 @@
     </div>
     <div class="flex justify-end p-2">
       <Button onClick={onClose} color="secondary" variant="text">
-        {m['action.close']()}
+        {msg['action.close']()}
       </Button>
     </div>
   </Card>

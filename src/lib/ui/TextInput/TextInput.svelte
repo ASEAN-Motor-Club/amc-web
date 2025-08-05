@@ -8,6 +8,8 @@
     HTMLInputAttributes,
   } from 'svelte/elements';
   import { getInputGroupContext } from '../InputGroup/context';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   export type TextInputProps = {
     /**
@@ -125,31 +127,53 @@
   const contextId = inputGroupContext?.getId();
 
   const id = $derived(propsId ?? contextId ?? '');
+
+  const variantClasses = $derived.by(() => {
+    switch (variant) {
+      case 'contained': {
+        const baseClasses =
+          'focus:outline-solid focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10';
+        if (error) {
+          return `${baseClasses} placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800`;
+        } else {
+          return `${baseClasses} bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20`;
+        }
+      }
+      case 'outlined': {
+        const borderBase = 'border bg-white dark:bg-black';
+        if (error) {
+          return `${borderBase} placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 dark:group-hover:border-error-600 hover:border-error-600 group-hover:border-error-600 focus:border-error-500 focus:dark:border-error-700`;
+        } else {
+          return `${borderBase} border-neutral-400 hover:border-neutral-600 focus:border-neutral-500 group-hover:border-neutral-600 dark:border-neutral-700 dark:hover:border-neutral-400 dark:group-hover:border-neutral-400`;
+        }
+      }
+      default:
+        return '';
+    }
+  });
+
+  const sizeClasses = $derived.by(() => {
+    switch (size) {
+      case 'sm':
+        return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-sm px-2'}`;
+      case 'md':
+        return `h-10 text-base ${round ? 'rounded-full px-4' : 'rounded-md px-3'}`;
+      case 'lg':
+        return `h-12 text-lg ${round ? 'rounded-full px-5' : 'rounded-lg px-4'}`;
+      default:
+        return '';
+    }
+  });
 </script>
 
 <input
-  class={[
+  class={twMerge(
     'flex flex-none items-center outline-none transition-colors',
-    // Variant classes
-    variant === 'contained' && [
-      'focus:outline-solid focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10',
-      error
-        ? 'placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800'
-        : 'bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20',
-    ],
-    variant === 'outlined' && [
-      'border bg-white dark:bg-black',
-      error
-        ? 'placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 dark:group-hover:border-error-600 hover:border-error-600 group-hover:border-error-600 focus:border-error-500 focus:dark:border-error-700'
-        : 'border-neutral-400 hover:border-neutral-600 focus:border-neutral-500 group-hover:border-neutral-600 dark:border-neutral-700 dark:hover:border-neutral-400 dark:group-hover:border-neutral-400',
-    ],
+    variantClasses,
+    sizeClasses,
     disabled && 'pointer-events-none opacity-50',
-    // Size/shape classes
-    size === 'sm' && ['h-8  text-sm', round ? 'rounded-full px-3' : 'rounded-sm px-2'],
-    size === 'md' && ['h-10  text-base', round ? 'rounded-full px-4' : 'rounded-md px-3'],
-    size === 'lg' && ['h-12  text-lg', round ? 'rounded-full px-5' : 'rounded-lg px-4'],
-    propsClassname,
-  ]}
+    clsx(propsClassname),
+  )}
   onchange={onChange}
   oninput={onInput}
   {type}

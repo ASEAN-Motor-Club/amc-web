@@ -6,7 +6,7 @@
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
   import Standing from '$lib/components/Championship/Standing.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { onMount, onDestroy, tick } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -274,7 +274,7 @@
 </script>
 
 <svelte:head>
-  <title>{m['championship.head']({ siteName: m['site_name_short'](), seasonNo })}</title>
+  <title>{msg['championship.head']({ siteName: msg['site_name_short'](), seasonNo })}</title>
 </svelte:head>
 
 {#snippet top()}
@@ -303,15 +303,15 @@
     </div>
     <div class="contents" bind:this={textContainer}>
       <h3 class="pb-5 pt-8 font-semibold">
-        {m['championship.starting_from']({
-          date: format(startDate, m['config.dateFull']()),
+        {msg['championship.starting_from']({
+          date: format(startDate, msg['config.dateFull']()),
         })}
       </h3>
       <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
-        {m['championship.title']()}
+        {msg['championship.title']()}
       </h1>
       <h2 class="font-sans-alt text-2xl font-semibold sm:text-3xl">
-        {m['championship.season']({ seasonNo })}
+        {msg['championship.season']({ seasonNo })}
       </h2>
     </div>
   </div>
@@ -328,7 +328,7 @@
       bind:this={teamTitleTriggers}
     >
       <h4 class="text-center text-4xl font-semibold tracking-tight">
-        {m['championship.teams']()}
+        {msg['championship.teams']()}
       </h4>
     </div>
     <div class="flex w-full flex-col">
@@ -343,7 +343,7 @@
               <div class="min-h-0 w-full max-w-40 md:max-w-80">
                 <img
                   src={team.logo}
-                  alt={m['championship.team_logo_alt']({ team: team.name })}
+                  alt={msg['championship.team_logo_alt']({ team: team.name })}
                   class={[
                     'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-neutral-500/10 object-contain',
                     team.logo ? '' : 'invisible',

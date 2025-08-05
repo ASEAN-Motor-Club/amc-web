@@ -1,6 +1,8 @@
 <script lang="ts">
+  import clsx from 'clsx';
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
+  import { twMerge } from 'tailwind-merge';
 
   export type CardProps = {
     /**
@@ -37,11 +39,12 @@
 
 <svelte:element
   this={tag}
-  class={[
-    'bg-background-200 dark:bg-background-900 dark:shadow-white/3 rounded-md p-4 shadow-md ring ring-black/5 dark:ring-white/5',
-    loading && 'relative !bg-transparent !shadow-none !ring-0',
-    className,
-  ]}
+  class={twMerge(
+    loading
+      ? 'relative bg-transparent'
+      : 'bg-background-200 dark:bg-background-900 dark:shadow-white/3 rounded-md p-4 shadow-md ring ring-black/5 dark:ring-white/5',
+    clsx(className),
+  )}
   {...othersCardProps}
 >
   {#if loading}

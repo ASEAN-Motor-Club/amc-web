@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import Calendar from './Calendar.svelte';
   import type { ScheduledEvent } from '$lib/api/types';
   import { addMilliseconds, differenceInHours, eachDayOfInterval, format } from 'date-fns';
@@ -60,7 +60,7 @@
 </script>
 
 <h4 class="pb-8 text-center text-4xl font-semibold tracking-tight">
-  {m['championship.schedule']()}
+  {msg['championship.schedule']()}
 </h4>
 <div class="flex items-center gap-8">
   <Button icon round class="hidden sm:flex" onClick={prevMonth}>

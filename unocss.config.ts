@@ -1,6 +1,9 @@
-import { defineConfig, presetWind4, presetIcons } from 'unocss';
+import { defineConfig, presetWind4, presetIcons, transformerDirectives } from 'unocss';
+import extractorSvelte from '@unocss/extractor-svelte';
 
 export default defineConfig({
+  transformers: [transformerDirectives()],
+  extractors: [extractorSvelte()],
   presets: [
     presetIcons({
       extraProperties: {
@@ -8,11 +11,7 @@ export default defineConfig({
         'user-select': 'none',
       },
     }),
-    presetWind4({
-      preflights: {
-        theme: true,
-      },
-    }),
+    presetWind4(),
   ],
   theme: {
     font: {

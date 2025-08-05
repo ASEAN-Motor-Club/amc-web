@@ -95,58 +95,17 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import * as m from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
-<h1>{m.site_name()}</h1>
+<h1>{msg.site_name()}</h1>
 ```
+
+**Important**: The import must be renamed from `m` to `msg` to prevent UnoCSS from interpreting it as a margin utility class during static analysis.
 
 ## 🎨 Styling
 
-This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0. Styling is applied using the [UnoCSS Svelte Scoped integration](https://unocss.dev/integrations/svelte-scoped), which provides per-component style scoping for Svelte files.
-
-### Limitations
-
-- All utility classes must be specified in one of the following:
-  - The `class` attribute or props `<div class="mb-1" />`, `<div class={["mt-1", { 'mb-1': condition, flex }]} />`
-  - The `class:` directive `<div class:mb-1={condition} />`, `<div class:flex />`
-- Dynamic or computed class names that cannot be statically analyzed by UnoCSS will not be processed.
-- You cannot define utility classes as variables in the `<script>` block and use them in markup. UnoCSS requires all classes to be statically present in the markup for detection and processing.
-
-  **Example (not supported):**
-
-  ```svelte
-  <script>
-    const btnClass = 'bg-red-500 text-text-dark px-4 py-2 rounded';
-  </script>
-
-  <button class={btnClass}>Click me</button>
-  ```
-
-  Instead, always write utility classes directly in the markup:
-
-  ```svelte
-  <button class="text-text-dark rounded bg-red-500 px-4 py-2">Click me</button>
-  ```
-
-### Using `LoadClass` for Non-`class` Props
-
-If you need to pass utility classes to a prop that is not named `class` (e.g., `buttonClass`), you can use the `<LoadClass />` component. This ensures UnoCSS detects and includes the utility classes, even though they are not directly in a `class` attribute.
-
-**Example:**
-
-```svelte
-<LoadClass class={['-ml-2 mr-2 lg:hidden']}>
-  {#snippet children([className])}
-    <Component buttonClass={className} ... />
-  {/snippet}
-</LoadClass>
-```
-
-- Place your utility classes in the `class` prop of `LoadClass`.
-- Use the `children` slot to receive the generated class and pass it to your component's custom class prop (e.g., `buttonClass`).
-
-This pattern is only needed for props that are not named `class`.
+This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0.
 
 ### UnoCSS vs Tailwind CSS Compatibility
 
@@ -156,22 +115,7 @@ While UnoCSS with the Wind4 preset aims to match Tailwind CSS syntax as closely 
 - There might be slight differences in class naming or behavior
 - Custom Tailwind plugins or configurations may not be available in UnoCSS
 
-#### Checking for Unsupported Classes
-
-To identify classes that might not be supported by UnoCSS in your built application, run:
-
-```bash
-npm run check:uno-classes
-```
-
-This script scans your built files and reports any classes that don't start with `_` (UnoCSS-generated classes). Review the output to ensure all your utility classes are properly processed by UnoCSS.
-
-**Note**: The script automatically filters out:
-
-- Svelte generated classes (starting with `svelte-`)
-- Tailwind `group` class
-
-If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or refer to the [UnoCSS Svelte Scoped documentation](https://unocss.dev/integrations/svelte-scoped) for more details and best practices.
+If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or configuration options.
 
 ## 🔣 Using Icons
 

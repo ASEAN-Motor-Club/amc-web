@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { onMount, type Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -25,27 +25,27 @@
   const links = [
     {
       href: '/map',
-      label: m['navbar.map'](),
+      label: msg['navbar.map'](),
       icon: mapIcon,
     },
     {
       href: '/housing',
-      label: m['navbar.housing'](),
+      label: msg['navbar.housing'](),
       icon: housingIcon,
     },
     {
       href: '/industries',
-      label: m['navbar.industries'](),
+      label: msg['navbar.industries'](),
       icon: industriesIcon,
     },
     {
       href: '/radio',
-      label: m['navbar.radio'](),
+      label: msg['navbar.radio'](),
       icon: radioIcon,
     },
     {
       href: '/track',
-      label: m['navbar.track_editor'](),
+      label: msg['navbar.track_editor'](),
       icon: trackIcon,
       exact: false,
     },
@@ -144,10 +144,10 @@
   {/each}
   <Button
     variant="contained-light"
-    class="!bg-[#5865f2]/15 !text-[#5865f2] hover:!bg-[#5865f2]/25 dark:!bg-[#5865f2]/10 dark:hover:!bg-[#5865f2]/20"
+    class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
     tag="a"
     href={PUBLIC_DISCORD_LINK}
-    target="_blank">{m['navbar.join_discord']()}</Button
+    target="_blank">{msg['navbar.join_discord']()}</Button
   >
 {/snippet}
 
@@ -159,22 +159,22 @@
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
     <span class="contents max-[1075px]:hidden">
-      {m['site_name_short']()}
+      {msg['site_name_short']()}
     </span>
     <span class="hidden max-[1075px]:contents">
-      {m['site_name']()}
+      {msg['site_name']()}
     </span>
   </a>
   <div class="hidden gap-6 min-[1075px]:flex">
     {@render menuItems()}
   </div>
-  <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start !p-0">
+  <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start p-0">
     <div
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
       transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
     >
       <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
-        {m['site_name']()}
+        {msg['site_name']()}
       </a>
       {@render menuItems()}
     </div>

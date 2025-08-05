@@ -1,12 +1,12 @@
 <script>
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import NotFinished from '$lib/components/NotFinished/NotFinished.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
 <svelte:head>
-  <title>{m['industries.head']({ siteName: m['site_name_short']() })}</title>
+  <title>{msg['industries.head']({ siteName: msg['site_name_short']() })}</title>
 </svelte:head>
 
-<CommonHead>{m['industries.title']()}</CommonHead>
+<CommonHead>{msg['industries.title']()}</CommonHead>
 <NotFinished />

@@ -9,7 +9,7 @@
   import Select from '$lib/ui/Select/Select.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
 
   let houseData: HouseData | undefined = $state(undefined);
@@ -27,8 +27,8 @@
       .catch((error) => {
         console.error('Error fetching housing data:', error);
         showModal({
-          title: m['housing.cannot_load.title'](),
-          message: m['housing.cannot_load.desc'](),
+          title: msg['housing.cannot_load.title'](),
+          message: msg['housing.cannot_load.desc'](),
         });
       });
 
@@ -77,14 +77,14 @@
 </script>
 
 <svelte:head>
-  <title>{m['housing.head']({ siteName: m['site_name_short']() })}</title>
+  <title>{msg['housing.head']({ siteName: msg['site_name_short']() })}</title>
 </svelte:head>
 
-<CommonHead>{m['housing.title']()}</CommonHead>
+<CommonHead>{msg['housing.title']()}</CommonHead>
 <div class="flex flex-col justify-between gap-2 px-8 sm:flex-row">
   <TextInput
     value={searchValue}
-    placeholder={m['housing.search_placeholder']()}
+    placeholder={msg['housing.search_placeholder']()}
     name="search"
     type="search"
     class="w-full min-w-0 sm:max-w-80 sm:flex-1"
@@ -99,14 +99,14 @@
     onChange={handleSortChange}
     class="sm:max-w-45 w-full flex-shrink-0"
   >
-    <SelectOption id="name" value={m['housing.sort.name']()}>
-      {m['housing.sort.name']()}
+    <SelectOption id="name" value={msg['housing.sort.name']()}>
+      {msg['housing.sort.name']()}
     </SelectOption>
-    <SelectOption id="rentLeft" value={m['housing.sort.rent_left']()}>
-      {m['housing.sort.rent_left']()}
+    <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()}>
+      {msg['housing.sort.rent_left']()}
     </SelectOption>
-    <SelectOption id="depotStorage" value={m['housing.sort.depot_storage']()}>
-      {m['housing.sort.depot_storage']()}
+    <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()}>
+      {msg['housing.sort.depot_storage']()}
     </SelectOption>
   </Select>
 </div>
