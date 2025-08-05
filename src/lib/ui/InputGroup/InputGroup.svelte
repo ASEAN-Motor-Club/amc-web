@@ -11,7 +11,7 @@
      */
     label: string;
     /**
-     * CSS class to apply to the input group container
+     * CSS class to apply to the input group
      */
     class?: ClassValue;
     /**

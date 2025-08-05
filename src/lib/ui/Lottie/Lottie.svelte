@@ -12,18 +12,20 @@
 
   const { animationData, autoplay, loop, class: className, speed }: LottieProps = $props();
 
-  let container: HTMLDivElement;
+  let lottieEl: HTMLDivElement;
 
   let animation: AnimationItem;
 
   onMount(() => {
+    // @unocss-skip-start
     animation = lottie.loadAnimation({
-      container,
+      container: lottieEl,
       renderer: 'svg',
       loop,
       autoplay,
       animationData,
     });
+    // @unocss-skip-end
 
     return () => {
       animation.destroy();
@@ -43,4 +45,4 @@
   });
 </script>
 
-<div class={className} bind:this={container}></div>
+<div class={className} bind:this={lottieEl}></div>
