@@ -54,9 +54,10 @@ export type ScheduledEvent = {
   name: string;
   start_time: string;
   end_time: string;
-  discord_event_id: string;
+  discord_event_id: string | null;
   race_setup: number;
   description: string;
+  time_trial: boolean;
 };
 
 export type TeamStanding = {

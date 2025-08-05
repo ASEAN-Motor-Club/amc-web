@@ -246,7 +246,8 @@
           "p=other": "Live Server - {players} Players Online"
         }
       }
-    ]
+    ],
+    "iframe_discord": "ASEAN Motor Club Discord"
   },
   "not_finished": "Under construction, please come back later!",
   "housing": {

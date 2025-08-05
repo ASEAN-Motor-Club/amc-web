@@ -27,16 +27,17 @@
   const seasonNo = 2;
   const startDate = new Date('2025-07-26T20:00:00+07:00');
 
-  let hintTrigger: HTMLDivElement;
-  let hintContainer: HTMLDivElement;
-  let headerTrigger: HTMLDivElement | undefined = $state();
-  let imageContainer: HTMLDivElement | undefined = $state();
-  let textContainer: HTMLDivElement | undefined = $state();
+  let champTrigger: HTMLDivElement;
+  let champContainer: HTMLDivElement;
+  let headerTrigger: HTMLDivElement;
+  let imageContainer: HTMLDivElement;
+  let textContainer: HTMLDivElement;
+
+  let standingTriggers: HTMLDivElement;
+  let scheduleTrigger: HTMLDivElement;
   let teamTitleTriggers: HTMLDivElement | undefined = $state();
   let teamTriggers: HTMLDivElement[] = $state([]);
   let teamText: HTMLDivElement[] = $state([]);
-  let standingTriggers: HTMLDivElement | undefined = $state();
-  let scheduleDiv: HTMLDivElement | undefined = $state();
 
   // GSAP Timeline variables
   let tlHint: gsap.core.Timeline | undefined;
@@ -44,6 +45,7 @@
   let tlTeamTitle: gsap.core.Timeline | undefined;
   let tlTeams: gsap.core.Timeline[] = [];
   let tlStanding: gsap.core.Timeline | undefined;
+  let tlSchedule: gsap.core.Timeline | undefined;
   let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
@@ -53,26 +55,10 @@
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    teams = await getTeams(abortController.signal);
-
-    loading = false;
-
-    await tick();
-
-    if (
-      !headerTrigger ||
-      !imageContainer ||
-      !textContainer ||
-      !teamTitleTriggers ||
-      !standingTriggers
-    ) {
-      return;
-    }
-
     tlHint = gsap
       .timeline({
         scrollTrigger: {
-          trigger: hintTrigger,
+          trigger: champTrigger,
           start: 'top top',
           end: '+=500',
           scrub: true,
@@ -81,7 +67,7 @@
         },
       })
       .to(
-        hintContainer,
+        champContainer,
         {
           scale: 0,
           ease: 'power2.out',
@@ -123,6 +109,87 @@
       )
       .to({}, { duration: 2 });
 
+    tlStanding = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: standingTriggers,
+          start: 'top top',
+          end: '+=2000',
+          scrub: true,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          onToggle: (self) => {
+            if (self.isActive && page.url.hash !== '#standing') {
+              goto('#standing', { replaceState: true, noScroll: true });
+            } else if (!self.isActive && page.url.hash === '#standing') {
+              goto('?', { replaceState: true, noScroll: true });
+            }
+          },
+        },
+      })
+      .from(
+        standingTriggers.children[1].children[0],
+        {
+          x: -100,
+          opacity: 0,
+          ease: 'power2.out',
+          duration: 1,
+        },
+        0,
+      )
+      .from(
+        standingTriggers.children[1].children[1],
+        {
+          x: 100,
+          opacity: 0,
+          ease: 'power2.out',
+          duration: 1,
+        },
+        0,
+      )
+      .to({}, { duration: 3 });
+
+    tlSchedule = gsap.timeline({
+      scrollTrigger: {
+        trigger: scheduleTrigger,
+        start: 'top top',
+        end: '+=1000',
+        scrub: true,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        onToggle: (self) => {
+          if (self.isActive && page.url.hash !== '#schedule') {
+            goto('#schedule', { replaceState: true, noScroll: true });
+          } else if (!self.isActive && page.url.hash === '#schedule') {
+            goto('?', { replaceState: true, noScroll: true });
+          }
+        },
+      },
+    });
+
+    const initialHash = page.url.hash;
+    setTimeout(() => {
+      if (initialHash === '#standing' && standingTriggers) {
+        const rect = standingTriggers.getBoundingClientRect();
+        window.scrollTo({
+          top: window.scrollY + rect.top + 2000 / 3,
+          behavior: 'instant',
+        });
+      } else if (initialHash === '#schedule' && scheduleTrigger) {
+        scheduleTrigger.scrollIntoView({ behavior: 'instant' });
+      }
+    }, 0);
+
+    teams = await getTeams(abortController.signal);
+    loading = false;
+    await tick();
+
+    if (!teamTitleTriggers) {
+      return;
+    }
+
     tlTeamTitle = gsap
       .timeline({
         scrollTrigger: {
@@ -133,6 +200,13 @@
           pinSpacing: true,
           anticipatePin: 1,
           scrub: true,
+          onToggle: (self) => {
+            if (self.isActive && page.url.hash !== '#teams') {
+              goto('#teams', { replaceState: true, noScroll: true });
+            } else if (!self.isActive && page.url.hash === '#teams') {
+              goto('?', { replaceState: true, noScroll: true });
+            }
+          },
         },
       })
       .to(teamTitleTriggers.children, {
@@ -151,6 +225,17 @@
             pinSpacing: true,
             anticipatePin: 1,
             scrub: true,
+            onToggle: (self) => {
+              const teamTag = teams[i]?.tag;
+              if (teamTag) {
+                const expectedHash = `#team-${teamTag}`;
+                if (self.isActive && page.url.hash !== expectedHash) {
+                  goto(expectedHash, { replaceState: true, noScroll: true });
+                } else if (!self.isActive && page.url.hash === expectedHash) {
+                  goto('?', { replaceState: true, noScroll: true });
+                }
+              }
+            },
           },
         })
         .from(
@@ -178,39 +263,21 @@
         .to({}, { duration: 3 }),
     );
 
-    tlStanding = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: standingTriggers,
-          start: 'top top',
-          end: '+=2000',
-          scrub: true,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-        },
-      })
-      .from(
-        standingTriggers.children[1].children[0],
-        {
-          x: -100,
-          opacity: 0,
-          ease: 'power2.out',
-          duration: 1,
-        },
-        0,
-      )
-      .from(
-        standingTriggers.children[1].children[1],
-        {
-          x: 100,
-          opacity: 0,
-          ease: 'power2.out',
-          duration: 1,
-        },
-        0,
-      )
-      .to({}, { duration: 3 });
+    setTimeout(() => {
+      if (initialHash === '#teams' && teamTitleTriggers) {
+        teamTitleTriggers.scrollIntoView({ behavior: 'instant' });
+      } else if (initialHash.startsWith('#team-') && teamTriggers) {
+        const teamTag = decodeURIComponent(initialHash.replace('#team-', ''));
+        const teamIndex = teams.findIndex((team) => team.tag === teamTag);
+        if (teamIndex !== -1 && teamTriggers[teamIndex]) {
+          const rect = teamTriggers[teamIndex].getBoundingClientRect();
+          window.scrollTo({
+            top: window.scrollY + rect.top + 2000 / 3,
+            behavior: 'instant',
+          });
+        }
+      }
+    }, 0);
   });
 
   onDestroy(() => {
@@ -219,6 +286,7 @@
     tlTeamTitle?.kill();
     tlTeams.forEach((tlTeam) => tlTeam?.kill());
     tlStanding?.kill();
+    tlSchedule?.kill();
     abortController?.abort();
   });
 
@@ -276,10 +344,10 @@
 <svelte:head>
   <title>{msg['championship.head']({ siteName: msg['site_name_short'](), seasonNo })}</title>
 </svelte:head>
-
-{#snippet top()}
-  <div class="flex h-svh w-full items-center justify-center p-8 pt-24" bind:this={hintTrigger}>
-    <div bind:this={hintContainer}>
+<ScrollHint fixed />
+<div class="-mt-16 flex flex-col items-center overflow-x-hidden">
+  <div class="flex h-svh w-full items-center justify-center p-8 pt-24" bind:this={champTrigger}>
+    <div bind:this={champContainer}>
       <div class="size-90 relative flex select-none items-center justify-center">
         <div class="i-material-symbols:trophy h-full w-full text-amber-500"></div>
         <div class="absolute h-full w-full">
@@ -315,14 +383,19 @@
       </h2>
     </div>
   </div>
-{/snippet}
-
-<div class="-mt-16 flex flex-col items-center overflow-x-hidden">
-  {#if loading}
-    {@render top()}
-  {:else}
-    <ScrollHint fixed />
-    {@render top()}
+  <div
+    class="flex h-svh w-full flex-col items-center justify-center pb-8 pt-24"
+    bind:this={standingTriggers}
+  >
+    <Standing season={seasonNo} />
+  </div>
+  <div
+    class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24"
+    bind:this={scheduleTrigger}
+  >
+    <CalendarGroup {events} {openEvent} />
+  </div>
+  {#if !loading}
     <div
       class="flex h-dvh w-full flex-col items-center justify-center p-8 pt-24"
       bind:this={teamTitleTriggers}
@@ -363,18 +436,6 @@
           </div>
         </div>
       {/each}
-    </div>
-    <div
-      class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24 sm:py-8"
-      bind:this={standingTriggers}
-    >
-      <Standing season={seasonNo} />
-    </div>
-    <div
-      class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24"
-      bind:this={scheduleDiv}
-    >
-      <CalendarGroup {events} {openEvent} />
     </div>
   {/if}
 </div>

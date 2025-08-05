@@ -61,7 +61,7 @@
         class={[
           'flex w-full',
           loading || results.length === 0
-            ? 'aspect-ratio-1 items-center justify-center'
+            ? 'aspect-16/9 items-center justify-center'
             : 'flex-col overflow-y-auto',
         ]}
       >

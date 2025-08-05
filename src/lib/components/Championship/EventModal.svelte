@@ -5,7 +5,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { isSameDay, isBefore, isAfter, differenceInHours, isSameYear } from 'date-fns';
+  import { isSameDay, isBefore, isAfter, isSameYear } from 'date-fns';
   import { format } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
@@ -51,10 +51,6 @@
         : msg['config.scheduleFormat.crossYear']();
   };
 
-  const eventIsSingle = (event: ScheduledEvent) => {
-    return differenceInHours(event.end_time, event.start_time) <= 24;
-  };
-
   const date = new SvelteDate();
 
   const pastEventTime = (event: ScheduledEvent) => {
@@ -82,9 +78,9 @@
           <div
             class={[
               'mb-1 text-xs',
-              eventIsSingle(event)
-                ? 'text-primary-800 dark:text-primary-500'
-                : 'text-warning-800 dark:text-warning-500',
+              event.time_trial
+                ? 'text-warning-800 dark:text-warning-500'
+                : 'text-primary-800 dark:text-primary-500',
             ]}
           >
             {format(event.start_time, formatEventStyle(event))} &ndash; {format(
@@ -99,16 +95,18 @@
             <MarkdownText text={event.description} />
           </div>
           <div class="-m-2 flex gap-1">
-            <Button
-              color="info"
-              variant="text"
-              size="sm"
-              tag="a"
-              href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
-              target="_blank"
-            >
-              {msg['championship.event.more_info']()}
-            </Button>
+            {#if event.discord_event_id}
+              <Button
+                color="info"
+                variant="text"
+                size="sm"
+                tag="a"
+                href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
+                target="_blank"
+              >
+                {msg['championship.event.more_info']()}
+              </Button>
+            {/if}
             {#if pastEventTime(event)}
               <Button color="secondary" variant="text" size="sm" onClick={() => openEvent(event)}>
                 {msg['championship.event.results']()}

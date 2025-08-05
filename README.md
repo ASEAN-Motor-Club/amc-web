@@ -107,6 +107,10 @@ Example usage:
 
 This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0.
 
+### UnoCSS Quirks
+
+UnoCSS has a quirk where it can interpret text in comments and even variable names as utility classes. This can lead to unexpected or unmatched classes being generated in your CSS output.
+
 ### UnoCSS vs Tailwind CSS Compatibility
 
 While UnoCSS with the Wind4 preset aims to match Tailwind CSS syntax as closely as possible, **some Tailwind CSS classes might not work** in UnoCSS. This can happen because:
@@ -115,7 +119,9 @@ While UnoCSS with the Wind4 preset aims to match Tailwind CSS syntax as closely 
 - There might be slight differences in class naming or behavior
 - Custom Tailwind plugins or configurations may not be available in UnoCSS
 
-If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or configuration options.
+### Debugging UnoCSS Issues
+
+For both UnoCSS quirks and compatibility issues, you can use [http://localhost:5173/\_\_unocss](http://localhost:5173/__unocss) while running the dev server to debug your styling problems. This tool helps you check for unexpected classes being generated, identify why a class isn't being applied, and find unmatched or ignored classes in your project. If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or configuration options.
 
 ## 🔣 Using Icons
 
