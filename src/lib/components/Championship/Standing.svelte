@@ -91,7 +91,8 @@
           {msg['championship.loading']()}
         </div>
       {:else}
-        {#each personalStandings as standing, index (standing.player_id)}
+        <!-- TODO: index is temp fix until duplicate data removed from api -->
+        {#each personalStandings as standing, index (standing.player_id + '-' + index)}
           <div
             class={[
               'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0',
