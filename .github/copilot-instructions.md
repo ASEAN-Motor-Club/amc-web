@@ -8,35 +8,10 @@ This is a **SvelteKit static site** using modern Svelte 5 with TypeScript, built
 
 - **Svelte 5**: Uses new runes syntax (`$state`, `$derived`, `$effect`, `$props`) and snippets
 - **UnoCSS with Wind4 preset**: Tailwind CSS v4.0 syntax with Svelte Scoped integration
-- **Paraglide i18n**: All user-facing text must use `m['message.key']()` from `$lib/paraglide/messages`
+- **Paraglide i18n**: All user-facing text must use `msg['message.key']()` from `$lib/paraglide/messages`
 - **Static generation**: Build outputs to `build/` directory with prerendered pages
 
 ## Critical Development Patterns
-
-### Styling with UnoCSS
-
-UnoCSS requires **static class detection**. Never use dynamic class variables:
-
-```svelte
-<!-- ❌ Wrong - UnoCSS won't detect -->
-<script>
-  const buttonClass = 'bg-red-500 px-4';
-</script>
-<button class={buttonClass}>
-
-<!-- ✅ Correct - classes directly in markup -->
-<button class="bg-red-500 px-4">
-```
-
-For non-`class` props, use the `LoadClass` component:
-
-```svelte
-<LoadClass class={['-ml-2 mr-2 lg:hidden']}>
-  {#snippet children([className])}
-    <Component buttonClass={className} />
-  {/snippet}
-</LoadClass>
-```
 
 ### Internationalization (Required)
 
@@ -44,11 +19,13 @@ Every user-facing string must use Paraglide:
 
 ```svelte
 <script>
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
-<h1>{m['site_name']()}</h1><p>{m['radio.title']()}</p>
+<h1>{msg['site_name']()}</h1><p>{msg['radio.title']()}</p>
 ```
+
+**Important**: The import must be renamed from `m` to `msg` to prevent UnoCSS from interpreting it as a margin utility class during static analysis.
 
 ### Component Architecture
 

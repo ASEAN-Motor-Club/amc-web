@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { BestTime } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
@@ -31,7 +31,7 @@
           ]}
         ></div>
       {/if}
-      <div class={['font-bold', index < 3 && 'top-2.25 text-text-dark absolute  text-sm']}>
+      <div class={['font-bold', index < 3 && 'top-2.25 text-text-dark absolute text-sm']}>
         {index + 1}
       </div>
       {#if index < 3}
@@ -68,7 +68,7 @@
       {#if index > 0}
         (+{time && time0 ? formatTime(time.net_time - time0.net_time) : '.'})
       {:else}
-        {m['events.fastest']()}
+        {msg['events.fastest']()}
       {/if}
     </div>
   </div>

@@ -2,6 +2,8 @@
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { setInputGroupContext } from './context';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   interface Props {
     /**
@@ -54,12 +56,12 @@
   });
 </script>
 
-<div class={['flex flex-col gap-1', className]}>
+<div class={twMerge('flex flex-col gap-1', clsx(className))}>
   <div
-    class={[
+    class={twMerge(
       'text-text/80 dark:text-text-dark/80 flex items-center justify-between text-xs font-semibold',
-      labelClass,
-    ]}
+      clsx(labelClass),
+    )}
   >
     <label for={`${id}-${focusIndex}`}>{label}</label>
     {@render appendLabel?.()}

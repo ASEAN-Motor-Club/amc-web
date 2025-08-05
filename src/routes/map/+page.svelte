@@ -44,8 +44,7 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
-  import LoadClass from '$lib/ui/LoadClass/LoadClass.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
   import { matchMouse } from '$lib/utils/media';
@@ -323,42 +322,42 @@
 
   const deliveryLayerData = $state({
     id: layerId.Delivery,
-    name: m['map.delivery_point'](),
+    name: msg['map.delivery_point'](),
     layer: [deliveryPointLayer, residentPointLayer],
     enabled: true,
   });
 
   const houseLayerData = $state({
     id: layerId.House,
-    name: m['map.house'](),
+    name: msg['map.house'](),
     layer: [houseLayer],
     enabled: true,
   });
 
   const playerNameLayerData = $state({
     id: layerId.PlayerName,
-    name: m['map.player_name'](),
+    name: msg['map.player_name'](),
     layer: [playerNameLayer],
     enabled: true,
   });
 
   const playerLayerData = $state({
     id: layerId.Player,
-    name: m['map.player'](),
+    name: msg['map.player'](),
     layer: [playerPointLayer],
     enabled: true,
   });
 
   const pinsLayerData = $state({
     id: layerId.Pins,
-    name: m['map.pins'](),
+    name: msg['map.pins'](),
     layer: [pinsLayer],
     enabled: true,
   });
 
   const pinLabelsLayerData = $state({
     id: layerId.PinLabels,
-    name: m['map.pin_labels'](),
+    name: msg['map.pin_labels'](),
     layer: [pinLabelsLayer],
     enabled: true,
   });
@@ -666,7 +665,7 @@
         pinsData = pinsJson.map((p, i) => ({
           ...p,
           pointType: PointType.Pin,
-          label: p.label ?? m['map.pin_no']({ index: i + 1 }),
+          label: p.label ?? msg['map.pin_no']({ index: i + 1 }),
         }));
         pinsSource.addFeatures(
           pinsData.map(
@@ -688,8 +687,8 @@
       } catch (e) {
         console.error('Invalid pins data:', e);
         showModal({
-          title: m['map.pins_invalid.title'](),
-          message: m['map.pins_invalid.desc'](),
+          title: msg['map.pins_invalid.title'](),
+          message: msg['map.pins_invalid.desc'](),
         });
       }
     }
@@ -712,24 +711,20 @@
 </script>
 
 <svelte:head>
-  <title>{m['map.head']({ siteName: m['site_name_short']() })}</title>
+  <title>{msg['map.head']({ siteName: msg['site_name_short']() })}</title>
 </svelte:head>
 
 <div class="relative h-full w-full bg-[#375d87]">
-  <LoadClass class={['!left-[unset] !top-[unset] bottom-4 right-4']}>
-    {#snippet children([className])}
-      <OlMap
-        {layers}
-        class="h-full w-full"
-        zoomClass={className}
-        onPointerMove={handlePointerMove}
-        onClick={handleClick}
-        onRightClick={handleMapRightClick}
-        bind:this={map}
-        onPointerDrag={handlePointerDrag}
-      />
-    {/snippet}
-  </LoadClass>
+  <OlMap
+    {layers}
+    class="h-full w-full"
+    zoomClass="!left-[unset] !top-[unset] bottom-4 right-4"
+    onPointerMove={handlePointerMove}
+    onClick={handleClick}
+    onRightClick={handleMapRightClick}
+    bind:this={map}
+    onPointerDrag={handlePointerDrag}
+  />
   <div
     class="pointer-events-none absolute left-0 top-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
   >
@@ -737,7 +732,7 @@
     <Card
       class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 !p-1.5 !ring-white/5 backdrop-blur-lg"
     >
-      <h2 class="text-text-dark mb-1 text-xs">{m['map.point_of_interests']()}</h2>
+      <h2 class="text-text-dark mb-1 text-xs">{msg['map.point_of_interests']()}</h2>
       <div class="flex flex-wrap gap-2">
         {#each layersDataCheckPins as layer (layer.name)}
           <Button

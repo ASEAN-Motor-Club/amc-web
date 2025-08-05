@@ -2,9 +2,9 @@ import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
-import UnoCSS from '@unocss/svelte-scoped/vite';
-import { transformerDirectives } from 'unocss';
+import UnoCSS from 'unocss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
+import { analyzer } from 'vite-bundle-analyzer';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -12,14 +12,16 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       devtoolsJson(),
-      UnoCSS({
-        cssFileTransformers: [transformerDirectives()],
-        classPrefix: '_',
-      }),
+      UnoCSS(),
       sveltekit(),
       paraglideVitePlugin({
         project: './project.inlang',
         outdir: './src/lib/paraglide',
+      }),
+      analyzer({
+        enabled: false,
+        analyzerMode: 'static',
+        exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
       }),
     ],
     test: {

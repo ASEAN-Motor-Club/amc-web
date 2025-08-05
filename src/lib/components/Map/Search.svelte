@@ -12,7 +12,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import type { HouseData } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
@@ -142,7 +142,7 @@
       value={searchValue}
       name="search"
       type="search"
-      placeholder={m['map.search_placeholder']()}
+      placeholder={msg['map.search_placeholder']()}
       class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-lg hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
@@ -164,7 +164,7 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 !p-0 !ring-white/5 backdrop-blur-lg"
+          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
         >
           {#each foundValuesSliced as point, i (point.name + point.guid)}
             {#if i > 0}
@@ -200,7 +200,7 @@
                   <div class="flex flex-col text-neutral-300">
                     {#if point.supplyText}
                       <div class="text-xs">
-                        {m['map.supply']()}: <HighlightText
+                        {msg['map.supply']()}: <HighlightText
                           text={point.supplyText}
                           highlight={searchValue}
                           caseInSensitive
@@ -211,7 +211,7 @@
                     {/if}
                     {#if point.demandText}
                       <div class="text-xs">
-                        {m['map.demand']()}: <HighlightText
+                        {msg['map.demand']()}: <HighlightText
                           text={point.demandText}
                           highlight={searchValue}
                           caseInSensitive
@@ -223,8 +223,8 @@
                   </div>
                 {:else if point.pointType === PointType.House}
                   <div class="text-xs text-neutral-300">
-                    {m['housing.owner']()}: <HighlightText
-                      text={houseData?.[point.name]?.ownerName || m.unknown()}
+                    {msg['housing.owner']()}: <HighlightText
+                      text={houseData?.[point.name]?.ownerName || msg.unknown()}
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
@@ -252,7 +252,7 @@
           {/each}
           {#if searchValue && foundValues.length > maxShow}
             <div class="px-3 py-2 italic text-neutral-300">
-              {m['map.more_results']({ count: foundValues.length - maxShow })}
+              {msg['map.more_results']({ count: foundValues.length - maxShow })}
             </div>
           {/if}
         </Card>

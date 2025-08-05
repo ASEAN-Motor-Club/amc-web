@@ -1,4 +1,5 @@
 <script lang="ts">
+  import 'virtual:uno.css';
   import '../app.css';
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';

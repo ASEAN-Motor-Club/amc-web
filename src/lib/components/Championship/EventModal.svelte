@@ -1,14 +1,13 @@
 <script lang="ts">
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { isSameDay, isBefore, isAfter, differenceInHours, isSameYear } from 'date-fns';
   import { format } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
-  import './markdown.css';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
@@ -39,17 +38,17 @@
   });
 
   const formattedDate = $derived(
-    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), m['config.dateFull']()),
+    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), msg['config.dateFull']()),
   );
 
   const formatEventStyle = (event: ScheduledEvent) => {
     const sameDay = isSameDay(event.start_time, event.end_time);
     const sameYear = isSameYear(event.start_time, event.end_time);
     return sameDay
-      ? m['config.scheduleFormat.sameDay']()
+      ? msg['config.scheduleFormat.sameDay']()
       : sameYear
-        ? m['config.scheduleFormat.sameYear']()
-        : m['config.scheduleFormat.crossYear']();
+        ? msg['config.scheduleFormat.sameYear']()
+        : msg['config.scheduleFormat.crossYear']();
   };
 
   const eventIsSingle = (event: ScheduledEvent) => {
@@ -73,7 +72,7 @@
 <Modal open={!!(day && month && year)} {onClose}>
   <Card class="w-150 flex max-h-full max-w-full flex-col p-5">
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
-      {m['championship.event.title']({ date: formattedDate })}
+      {msg['championship.event.title']({ date: formattedDate })}
     </h1>
     <div
       class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
@@ -108,11 +107,11 @@
               href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
               target="_blank"
             >
-              {m['championship.event.more_info']()}
+              {msg['championship.event.more_info']()}
             </Button>
             {#if pastEventTime(event)}
               <Button color="secondary" variant="text" size="sm" onClick={() => openEvent(event)}>
-                {m['championship.event.results']()}
+                {msg['championship.event.results']()}
               </Button>
             {/if}
           </div>
@@ -121,7 +120,7 @@
     </div>
     <div class="-mx-3 -mb-3 flex justify-end pt-2">
       <Button onClick={onClose} color="secondary" variant="text">
-        {m['action.close']()}
+        {msg['action.close']()}
       </Button>
     </div>
   </Card>

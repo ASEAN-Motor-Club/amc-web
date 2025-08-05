@@ -3,6 +3,8 @@
   import type { Color } from '../shared';
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
   import { setBtnIconSizeContext } from './context';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   export type ButtonProps = {
     /**
@@ -92,84 +94,123 @@
   setBtnIconSizeContext({
     getSize: () => size,
   });
+
+  const variantClassName = $derived.by(() => {
+    switch (variant) {
+      case 'contained': {
+        const containedBase = 'text-text-dark';
+        switch (color) {
+          case 'primary':
+            return `${containedBase} bg-primary-700 hover:bg-primary-800 active:bg-primary-600`;
+          case 'secondary':
+            return `${containedBase} bg-secondary-700 hover:bg-secondary-800 active:bg-secondary-600`;
+          case 'info':
+            return `${containedBase} bg-info-700 hover:bg-info-800 active:bg-info-600`;
+          case 'success':
+            return `${containedBase} bg-success-700 hover:bg-success-800 active:bg-success-600`;
+          case 'warning':
+            return `${containedBase} bg-warning-700 hover:bg-warning-800 active:bg-warning-600`;
+          case 'error':
+            return `${containedBase} bg-error-700 hover:bg-error-800 active:bg-error-600`;
+          case 'neutral':
+            return `${containedBase} bg-neutral-700 hover:bg-neutral-800 active:bg-neutral-600`;
+          default:
+            return '';
+        }
+      }
+      case 'contained-light': {
+        const containedLightBase = 'text-text dark:text-text-dark';
+        switch (color) {
+          case 'primary':
+            return `${containedLightBase} bg-primary-700/10 hover:bg-primary-600/20 active:bg-primary-800/20`;
+          case 'secondary':
+            return `${containedLightBase} bg-secondary-700/10 hover:bg-secondary-600/20 active:bg-secondary-800/20`;
+          case 'info':
+            return `${containedLightBase} bg-info-700/10 hover:bg-info-600/20 active:bg-info-800/20`;
+          case 'success':
+            return `${containedLightBase} bg-success-700/10 hover:bg-success-600/20 active:bg-success-800/20`;
+          case 'warning':
+            return `${containedLightBase} bg-warning-700/10 hover:bg-warning-600/20 active:bg-warning-800/20`;
+          case 'error':
+            return `${containedLightBase} bg-error-700/10 hover:bg-error-600/20 active:bg-error-800/20`;
+          case 'neutral':
+            return `${containedLightBase} bg-neutral-700/10 hover:bg-neutral-600/20 active:bg-neutral-800/20`;
+          default:
+            return '';
+        }
+      }
+      case 'outlined': {
+        const outlinedBase = 'border';
+        switch (color) {
+          case 'primary':
+            return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-600/20 ${outlinedBase}`;
+          case 'secondary':
+            return `text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 border-secondary-700 dark:border-secondary-500 active:bg-secondary-600/20 ${outlinedBase}`;
+          case 'info':
+            return `text-info-700 dark:text-info-500 hover:bg-info-700/10 border-info-700 dark:border-info-500 active:bg-info-600/20 ${outlinedBase}`;
+          case 'success':
+            return `text-success-700 dark:text-success-500 hover:bg-success-700/10 border-success-700 dark:border-success-500 active:bg-success-600/20 ${outlinedBase}`;
+          case 'warning':
+            return `text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 border-warning-700 dark:border-warning-500 active:bg-warning-600/20 ${outlinedBase}`;
+          case 'error':
+            return `text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 active:bg-error-600/20 ${outlinedBase}`;
+          case 'neutral':
+            return `${outlinedBase} border-neutral-700 text-neutral-600 hover:bg-neutral-700/10 active:bg-neutral-600/20 dark:border-neutral-500 dark:text-neutral-400`;
+          default:
+            return '';
+        }
+      }
+      case 'text': {
+        switch (color) {
+          case 'primary':
+            return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 active:bg-primary-600/20`;
+          case 'secondary':
+            return `text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 active:bg-secondary-600/20`;
+          case 'info':
+            return `text-info-700 dark:text-info-500 hover:bg-info-700/10 active:bg-info-600/20`;
+          case 'success':
+            return `text-success-700 dark:text-success-500 hover:bg-success-700/10 active:bg-success-600/20`;
+          case 'warning':
+            return `text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 active:bg-warning-600/20`;
+          case 'error':
+            return `text-error-700 dark:text-error-500 hover:bg-error-700/10 active:bg-error-600/20`;
+          case 'neutral':
+            return 'text-neutral-600 hover:bg-neutral-700/10 active:bg-neutral-600/20 dark:text-neutral-400';
+          default:
+            return '';
+        }
+      }
+      default:
+        return '';
+    }
+  });
+
+  const sizeClasses = $derived.by(() => {
+    switch (size) {
+      case 'xs':
+        return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1'}`;
+      case 'sm':
+        return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-sm px-2'}`;
+      case 'md':
+        return `h-10 text-base ${round ? 'rounded-full px-4' : 'rounded-md px-3'}`;
+      case 'lg':
+        return `h-12 text-lg ${round ? 'rounded-full px-5' : 'rounded-lg px-4'}`;
+      default:
+        return '';
+    }
+  });
 </script>
 
 <svelte:element
   this={tag}
-  class={[
+  class={twMerge(
     'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none transition',
-    icon && 'aspect-square !p-0',
+    variantClassName,
+    sizeClasses,
+    icon && 'aspect-square p-0',
     disabled && 'pointer-events-none opacity-50',
-    // Variant + color classes
-    variant === 'contained' && {
-      'text-text-dark bg-primary-700 hover:bg-primary-800 active:bg-primary-600':
-        color === 'primary',
-      'text-text-dark bg-secondary-700 hover:bg-secondary-800 active:bg-secondary-600':
-        color === 'secondary',
-      'text-text-dark bg-info-700 hover:bg-info-800 active:bg-info-600': color === 'info',
-      'text-text-dark bg-success-700 hover:bg-success-800 active:bg-success-600':
-        color === 'success',
-      'text-text-dark bg-warning-700 hover:bg-warning-800 active:bg-warning-600':
-        color === 'warning',
-      'text-text-dark bg-error-700 hover:bg-error-800 active:bg-error-600': color === 'error',
-      'text-text-dark bg-neutral-700 hover:bg-neutral-800 active:bg-neutral-600':
-        color === 'neutral',
-    },
-    variant === 'contained-light' && {
-      'text-text dark:text-text-dark bg-primary-700/10 hover:bg-primary-600/20 active:bg-primary-800/20':
-        color === 'primary',
-      'text-text dark:text-text-dark bg-secondary-700/10 hover:bg-secondary-600/20 active:bg-secondary-800/20':
-        color === 'secondary',
-      'text-text dark:text-text-dark bg-info-700/10 hover:bg-info-600/20 active:bg-info-800/20':
-        color === 'info',
-      'text-text dark:text-text-dark bg-success-700/10 hover:bg-success-600/20 active:bg-success-800/20':
-        color === 'success',
-      'text-text dark:text-text-dark bg-warning-700/10 hover:bg-warning-600/20 active:bg-warning-800/20':
-        color === 'warning',
-      'text-text dark:text-text-dark bg-error-700/10 hover:bg-error-600/20 active:bg-error-800/20':
-        color === 'error',
-      'text-text dark:text-text-dark bg-neutral-700/10 hover:bg-neutral-600/20 active:bg-neutral-800/20':
-        color === 'neutral',
-    },
-    variant === 'outlined' && {
-      'text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-600/20 border':
-        color === 'primary',
-      'text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 border-secondary-700 dark:border-secondary-500 active:bg-secondary-600/20 border':
-        color === 'secondary',
-      'text-info-700 dark:text-info-500 hover:bg-info-700/10 border-info-700 dark:border-info-500 active:bg-info-600/20 border':
-        color === 'info',
-      'text-success-700 dark:text-success-500 hover:bg-success-700/10 border-success-700 dark:border-success-500 active:bg-success-600/20 border':
-        color === 'success',
-      'text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 border-warning-700 dark:border-warning-500 active:bg-warning-600/20 border':
-        color === 'warning',
-      'text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 active:bg-error-600/20 border':
-        color === 'error',
-      'border border-neutral-700 text-neutral-600 hover:bg-neutral-700/10 active:bg-neutral-600/20 dark:border-neutral-500 dark:text-neutral-400':
-        color === 'neutral',
-    },
-    variant === 'text' && {
-      'text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 active:bg-primary-600/20':
-        color === 'primary',
-      'text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 active:bg-secondary-600/20':
-        color === 'secondary',
-      'text-info-700 dark:text-info-500 hover:bg-info-700/10 active:bg-info-600/20':
-        color === 'info',
-      'text-success-700 dark:text-success-500 hover:bg-success-700/10 active:bg-success-600/20':
-        color === 'success',
-      'text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 active:bg-warning-600/20':
-        color === 'warning',
-      'text-error-700 dark:text-error-500 hover:bg-error-700/10 active:bg-error-600/20':
-        color === 'error',
-      'text-neutral-600 hover:bg-neutral-700/10 active:bg-neutral-600/20 dark:text-neutral-400':
-        color === 'neutral',
-    },
-    // Size/shape classes
-    size === 'xs' && ['h-5 text-xs', round ? 'rounded-full px-2' : 'rounded-sm px-1'],
-    size === 'sm' && ['h-8 text-sm', round ? 'rounded-full px-3' : 'rounded-sm px-2'],
-    size === 'md' && ['h-10 text-base', round ? 'rounded-full px-4' : 'rounded-md px-3'],
-    size === 'lg' && ['h-12 text-lg', round ? 'rounded-full px-5' : 'rounded-lg px-4'],
-    propsClassName,
-  ]}
+    clsx(propsClassName),
+  )}
   onclick={onClick}
   {type}
   {disabled}

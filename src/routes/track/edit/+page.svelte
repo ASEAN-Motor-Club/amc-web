@@ -4,7 +4,7 @@
   import { getTrackDataContext } from '../+layout.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
 
   const trackData = getTrackDataContext();
 
@@ -19,11 +19,11 @@
 <svelte:head>
   <title
     >{trackData.value?.routeName
-      ? m['track_editor.head_editing']({
+      ? msg['track_editor.head_editing']({
           routeName: trackData.value.routeName,
-          siteName: m['site_name_short'](),
+          siteName: msg['site_name_short'](),
         })
-      : m['track_editor.head']({ siteName: m['site_name_short']() })}</title
+      : msg['track_editor.head']({ siteName: msg['site_name_short']() })}</title
   >
 </svelte:head>
 

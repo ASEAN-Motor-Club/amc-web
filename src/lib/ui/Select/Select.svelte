@@ -76,6 +76,8 @@
   import { setSelectContext } from './context';
   import { SvelteMap } from 'svelte/reactivity';
   import Icon from '../Icon/Icon.svelte';
+  import { twMerge } from 'tailwind-merge';
+  import clsx from 'clsx';
 
   const {
     value,
@@ -126,10 +128,10 @@
   const displayedValue = $derived(optionMap.get(value) ?? '');
 </script>
 
-<div class={['relative flex w-full items-center', propsClassname]}>
+<div class={twMerge('relative flex w-full items-center', clsx(propsClassname))}>
   <button class="group w-full cursor-pointer" onclick={handleInputClick}>
     <TextInput
-      class={['pointer-events-none w-full pr-10', inputClass]}
+      class={twMerge('pointer-events-none w-full pr-10', clsx(inputClass))}
       type="text"
       autocomplete="off"
       value={displayedValue}
@@ -146,10 +148,10 @@
 
   <Icon
     class={[
-      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 !text-[1.75rem] transition-transform',
+      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 transition-transform',
       open && 'rotate-180',
     ]}
-    size="custom"
+    size="!text-[1.75rem]"
   />
 
   <ClickAwayBlock onClickAway={() => (open = false)} active={open}>
@@ -158,7 +160,9 @@
         class="z-6000 absolute top-full mt-1 w-full"
         transition:slide={{ duration: defaultTransitionDurationMs }}
       >
-        <Card class={['flex w-full cursor-pointer select-none flex-col !p-0', menuClass]}>
+        <Card
+          class={twMerge('flex w-full cursor-pointer select-none flex-col p-0', clsx(menuClass))}
+        >
           {@render children()}
         </Card>
       </div>

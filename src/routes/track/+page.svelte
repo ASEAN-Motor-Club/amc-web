@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import SelectTrack from '$lib/components/TrackEditor/Editor/SelectTrack.svelte';
   import type { Track } from '$lib/schema/track';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import { getTrackDataContext } from './+layout.svelte';
 
   const trackData = getTrackDataContext();
@@ -17,8 +17,8 @@
 
 <svelte:head>
   <title
-    >{m['track_editor.head']({
-      siteName: m['site_name_short'](),
+    >{msg['track_editor.head']({
+      siteName: msg['site_name_short'](),
     })}</title
   >
 </svelte:head>

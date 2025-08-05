@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import MtMap, {
     type PointClickEventDetail,
     type PointMoveEventDetail,
@@ -112,10 +112,10 @@
 
   const handleNormalize = () => {
     showModal({
-      title: m['track_editor.editor.normalize_waypoints.title'](),
-      message: m['track_editor.editor.normalize_waypoints.desc'](),
-      confirmText: m['action.confirm'](),
-      cancelText: m['action.cancel'](),
+      title: msg['track_editor.editor.normalize_waypoints.title'](),
+      message: msg['track_editor.editor.normalize_waypoints.desc'](),
+      confirmText: msg['action.confirm'](),
+      cancelText: msg['action.cancel'](),
       confirmAction: () => {
         zoomFit = true;
         trackData.waypoints = normalizedWaypoints(trackData.waypoints);
@@ -125,10 +125,10 @@
 
   const handleAutoRotate = () => {
     showModal({
-      title: m['track_editor.editor.auto_rotate_waypoints.title'](),
-      message: m['track_editor.editor.auto_rotate_waypoints.desc'](),
-      confirmText: m['action.confirm'](),
-      cancelText: m['action.cancel'](),
+      title: msg['track_editor.editor.auto_rotate_waypoints.title'](),
+      message: msg['track_editor.editor.auto_rotate_waypoints.desc'](),
+      confirmText: msg['action.confirm'](),
+      cancelText: msg['action.cancel'](),
       confirmAction: () => {
         zoomFit = true;
         trackData.waypoints = autoRotateAllWaypoints(trackData.waypoints);
@@ -138,10 +138,10 @@
 
   const handleDelete = () => {
     showModal({
-      title: m['track_editor.editor.delete_waypoint.title'](),
-      message: m['track_editor.editor.delete_waypoint.desc'](),
-      confirmText: m['action.delete'](),
-      cancelText: m['action.cancel'](),
+      title: msg['track_editor.editor.delete_waypoint.title'](),
+      message: msg['track_editor.editor.delete_waypoint.desc'](),
+      confirmText: msg['action.delete'](),
+      cancelText: msg['action.cancel'](),
       confirmAction: () => {
         if (selectedPointIndex !== undefined) {
           trackData.waypoints.splice(selectedPointIndex, 1);
@@ -161,7 +161,7 @@
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
-  <Card class="flex-1 overflow-hidden !p-0">
+  <Card class="flex-1 overflow-hidden p-0">
     <MtMap
       class="h-full"
       groups={trackGroup}
@@ -181,7 +181,7 @@
       {#if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
           <div class="whitespace-nowrap font-medium">
-            {m['track_editor.editor.selecting_point']({ pointNumber: selectedPointIndex + 1 })}
+            {msg['track_editor.editor.selecting_point']({ pointNumber: selectedPointIndex + 1 })}
           </div>
           <Button
             onClick={() => (showHidden = !showHidden)}
@@ -190,19 +190,20 @@
             color="info"
             class="-mr-1"
           >
-            {showHidden ? m['track_editor.editor.hide']() : m['track_editor.editor.show']()}
-            {m['track_editor.editor.hidden']()}
+            {showHidden ? msg['track_editor.editor.hide']() : msg['track_editor.editor.show']()}
+            {msg['track_editor.editor.hidden']()}
           </Button>
         </div>
         <div class="flex flex-col gap-2">
           <Button disabled={!localDirty} onClick={handleSaveChanges}
-            >{m['track_editor.editor.save_changes']()}</Button
+            >{msg['track_editor.editor.save_changes']()}</Button
           >
-          <Button onClick={handleDelete} color="error">{m['track_editor.editor.delete']()}</Button>
+          <Button onClick={handleDelete} color="error">{msg['track_editor.editor.delete']()}</Button
+          >
         </div>
         <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
-          <InputGroup label={m['track_editor.editor.rotation_z']()} focusIndex={1}>
+          <InputGroup label={msg['track_editor.editor.rotation_z']()} focusIndex={1}>
             {#snippet appendLabel()}
               <Button
                 onClick={handleAutoRotatePoint}
@@ -211,7 +212,7 @@
                 color="success"
                 class="-mr-1"
               >
-                {m['track_editor.editor.auto_rotate']()}
+                {msg['track_editor.editor.auto_rotate']()}
               </Button>
             {/snippet}
             <Slider
@@ -234,7 +235,7 @@
             />
           </InputGroup>
           {#if showHidden}
-            <InputGroup label={m['track_editor.editor.rotation_x']()}>
+            <InputGroup label={msg['track_editor.editor.rotation_x']()}>
               <Slider
                 value={editingPoint?.rotation.x}
                 onChange={(value) => (editingPoint.rotation.x = value)}
@@ -254,7 +255,7 @@
                 }}
               />
             </InputGroup>
-            <InputGroup label={m['track_editor.editor.rotation_y']()}>
+            <InputGroup label={msg['track_editor.editor.rotation_y']()}>
               <Slider
                 value={editingPoint?.rotation.y}
                 onChange={(value) => (editingPoint.rotation.y = value)}
@@ -278,7 +279,7 @@
         </div>
         <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
-          <InputGroup label={m['track_editor.editor.translation_x']()}>
+          <InputGroup label={msg['track_editor.editor.translation_x']()}>
             <TextInput
               value={editingPoint?.translation.x}
               onInput={(e) => (editingPoint.translation.x = +e.currentTarget.value)}
@@ -289,7 +290,7 @@
               }}
             />
           </InputGroup>
-          <InputGroup label={m['track_editor.editor.translation_y']()}>
+          <InputGroup label={msg['track_editor.editor.translation_y']()}>
             <TextInput
               value={editingPoint?.translation.y}
               onInput={(e) => (editingPoint.translation.y = +e.currentTarget.value)}
@@ -301,7 +302,7 @@
             />
           </InputGroup>
           {#if showHidden}
-            <InputGroup label={m['track_editor.editor.translation_z']()}>
+            <InputGroup label={msg['track_editor.editor.translation_z']()}>
               <TextInput
                 value={editingPoint?.translation.z}
                 onInput={(e) => (editingPoint.translation.z = +e.currentTarget.value)}
@@ -316,7 +317,7 @@
         </div>
         <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
-          <InputGroup label={m['track_editor.editor.scale_y']()}>
+          <InputGroup label={msg['track_editor.editor.scale_y']()}>
             <TextInput
               value={editingPoint?.scale3D.y}
               onInput={(e) => (editingPoint.scale3D.y = +e.currentTarget.value)}
@@ -328,7 +329,7 @@
             />
           </InputGroup>
           {#if showHidden}
-            <InputGroup label={m['track_editor.editor.scale_z']()}>
+            <InputGroup label={msg['track_editor.editor.scale_z']()}>
               <TextInput
                 value={editingPoint?.scale3D.z}
                 onInput={(e) => (editingPoint.scale3D.z = +e.currentTarget.value)}
@@ -339,7 +340,7 @@
                 }}
               />
             </InputGroup>
-            <InputGroup label={m['track_editor.editor.scale_x']()}>
+            <InputGroup label={msg['track_editor.editor.scale_x']()}>
               <TextInput
                 value={editingPoint?.scale3D.x}
                 onInput={(e) => (editingPoint.scale3D.x = +e.currentTarget.value)}
@@ -354,14 +355,14 @@
         </div>
       {:else}
         <div class="text-text/60 dark:text-text-dark/60 font-medium">
-          {m['track_editor.editor.select_point_to_edit']()}
+          {msg['track_editor.editor.select_point_to_edit']()}
         </div>
         <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
         <div class="flex flex-col gap-2">
-          <div class="font-medium">{m['track_editor.editor.global_operations']()}</div>
-          <Button onClick={handleNormalize}>{m['track_editor.editor.normalize']()}</Button>
+          <div class="font-medium">{msg['track_editor.editor.global_operations']()}</div>
+          <Button onClick={handleNormalize}>{msg['track_editor.editor.normalize']()}</Button>
           <Button onClick={handleAutoRotate}
-            >{m['track_editor.editor.auto_rotate_all_gates']()}</Button
+            >{msg['track_editor.editor.auto_rotate_all_gates']()}</Button
           >
         </div>
       {/if}

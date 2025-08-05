@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import { page } from '$app/state';
+  import { twMerge } from 'tailwind-merge';
 
   const {
     href,
@@ -32,11 +33,11 @@
   <div class="relative flex items-center">
     <span class="invisible font-bold leading-none">{label}</span>
     <span
-      class={[
+      class={twMerge(
         'absolute left-0 whitespace-nowrap leading-none transition-all group-hover:font-bold',
         pathMatch ? 'font-bold' : 'text-text/80 dark:text-text-dark/80',
-        href === '/championship' ? '!text-amber-600 dark:!text-amber-400' : '',
-      ]}>{label}</span
+        href === '/championship' ? 'text-amber-600 dark:text-amber-400' : '',
+      )}>{label}</span
     >
   </div>
 </a>

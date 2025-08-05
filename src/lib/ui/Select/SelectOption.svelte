@@ -23,6 +23,8 @@
   import { type Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { getSelectContext } from './context';
+  import clsx from 'clsx';
+  import { twMerge } from 'tailwind-merge';
 
   const { id, value, class: className, children }: SelectOptionProps<T> = $props();
 
@@ -41,9 +43,9 @@
 </script>
 
 <button
-  class={[
+  class={twMerge(
     'cursor-pointer px-4 py-2 text-left transition-colors hover:bg-neutral-500/10',
-    className,
-  ]}
+    clsx(className),
+  )}
   onclick={handleClick}>{@render children()}</button
 >

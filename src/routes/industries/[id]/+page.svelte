@@ -1,9 +1,9 @@
 <script>
   import NotFinished from '$lib/components/NotFinished/NotFinished.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
 <svelte:head>
-  <title>{m['industries.head']({ siteName: m['site_name_short']() })}</title>
+  <title>{msg['industries.head']({ siteName: msg['site_name_short']() })}</title>
 </svelte:head>
 <NotFinished />

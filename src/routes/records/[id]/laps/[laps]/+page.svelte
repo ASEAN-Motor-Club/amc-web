@@ -5,7 +5,7 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import type { EventInfo } from '$lib/api/types';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import EventCard from '$lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
 
@@ -19,8 +19,8 @@
     const abortController = new AbortController();
     if (!page.params.id || !page.params.laps) {
       showModal({
-        title: m['events.cannot_load.title'](),
-        message: m['events.cannot_load.desc'](),
+        title: msg['events.cannot_load.title'](),
+        message: msg['events.cannot_load.desc'](),
         cancelAction: () => {
           goto('/');
         },
@@ -34,8 +34,8 @@
       .catch((error) => {
         console.error('Error fetching event data:', error);
         showModal({
-          title: m['events.cannot_load.title'](),
-          message: m['events.cannot_load.desc'](),
+          title: msg['events.cannot_load.title'](),
+          message: msg['events.cannot_load.desc'](),
           cancelAction: () => {
             goto('/');
           },
@@ -56,15 +56,15 @@
       .writeText(downloadJson)
       .then(() => {
         showModal({
-          title: m['track_editor.editor.copied.title'](),
-          message: m['track_editor.editor.copied.desc'](),
+          title: msg['track_editor.editor.copied.title'](),
+          message: msg['track_editor.editor.copied.desc'](),
         });
       })
       .catch((err) => {
         console.error('Failed to copy:', err);
         showModal({
-          title: m['track_editor.editor.copy_to_clipboard_failed.title'](),
-          message: m['track_editor.editor.copy_to_clipboard_failed.desc'](),
+          title: msg['track_editor.editor.copy_to_clipboard_failed.title'](),
+          message: msg['track_editor.editor.copy_to_clipboard_failed.desc'](),
         });
       });
   };
@@ -74,12 +74,12 @@
 
 <title
   >{eventData?.route.routeName
-    ? m['events.head_loaded']({
+    ? msg['events.head_loaded']({
         routeName: eventData.route.routeName,
         laps: page.params.laps ?? 0,
-        siteName: m['site_name_short'](),
+        siteName: msg['site_name_short'](),
       })
-    : m['events.head']({ siteName: m['site_name_short']() })}</title
+    : msg['events.head']({ siteName: msg['site_name_short']() })}</title
 >
 
 <div class="flex flex-col items-center p-8">
@@ -94,7 +94,7 @@
     {/if}
   </h1>
   <h2 class="pb-8 font-semibold">
-    {m['events.laps']({
+    {msg['events.laps']({
       laps: page.params.laps ?? 0,
     })}
   </h2>
@@ -112,7 +112,7 @@
       disabled={loadingOrNoData}
       class="-mx-3"
     >
-      {m['events.open_in_editor']()}
+      {msg['events.open_in_editor']()}
     </Button>
     <div class="border-l-1 hidden border-gray-500/50 sm:block"></div>
     <Button
@@ -122,7 +122,7 @@
       disabled={loadingOrNoData}
       class="-mx-3"
     >
-      {m['events.copy_track']()}
+      {msg['events.copy_track']()}
     </Button>
   </div>
 

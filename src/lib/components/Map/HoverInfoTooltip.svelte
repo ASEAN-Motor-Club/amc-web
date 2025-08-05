@@ -9,7 +9,7 @@
   import type { House } from '$lib/data/house';
   import Button from '$lib/ui/Button/Button.svelte';
   import type { HouseData } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m as msg } from '$lib/paraglide/messages';
   import PlayerInfo from './PlayerInfo.svelte';
 
   export type HoverInfo = {
@@ -46,11 +46,11 @@
 
     switch (hoverInfo.pointType) {
       case PointType.Delivery:
-        return m['map.delivery_point']();
+        return msg['map.delivery_point']();
       case PointType.Player:
-        return m['map.player']();
+        return msg['map.player']();
       case PointType.House:
-        return m['map.house']();
+        return msg['map.house']();
     }
   });
 
@@ -101,7 +101,7 @@
     bind:this={tooltip}
   >
     <Card
-      class="text-text-dark !shadow-white/3 media-mouse:m-2 m-1 flex select-none flex-col gap-0.5 whitespace-nowrap !bg-neutral-900/50 !px-1.5 !py-1 !ring-white/5 backdrop-blur-lg"
+      class="text-text-dark shadow-white/3 media-mouse:m-2 m-1 flex select-none flex-col gap-0.5 whitespace-nowrap !bg-neutral-900/50 px-1.5 py-1 ring-white/5 backdrop-blur-lg"
     >
       <div class="text-xs font-semibold">
         {typeText}
@@ -124,14 +124,18 @@
         {hoverInfo.location}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
-        <Button size="xs" class="media-not-mouse:hidden mb-0.5 !bg-white/10 !px-2">
-          {m['map.click_lock']()}
+        <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">
+          {msg['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
-        <Button size="xs" class="media-not-mouse:pointer-events-auto !bg-white/10 !px-2" {onClick}>
-          <span class="media-mouse:inline hidden">{m['map.click_info']()}</span>
-          <span class="media-not-mouse:inline hidden">{m['map.click_here_info']()}</span>
+        <Button
+          size="xs"
+          class="media-not-mouse:pointer-events-auto mb-0.5 bg-white/10 px-2"
+          {onClick}
+        >
+          <span class="media-mouse:inline hidden">{msg['map.click_info']()}</span>
+          <span class="media-not-mouse:inline hidden">{msg['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>
