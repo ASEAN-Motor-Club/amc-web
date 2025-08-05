@@ -129,7 +129,11 @@
         </Button>
       {/if}
       {#if typeHasMoreInfo}
-        <Button size="xs" class="media-not-mouse:pointer-events-auto bg-white/10 px-2 mb-0.5" {onClick}>
+        <Button
+          size="xs"
+          class="media-not-mouse:pointer-events-auto mb-0.5 bg-white/10 px-2"
+          {onClick}
+        >
           <span class="media-mouse:inline hidden">{msg['map.click_info']()}</span>
           <span class="media-not-mouse:inline hidden">{msg['map.click_here_info']()}</span>
         </Button>
