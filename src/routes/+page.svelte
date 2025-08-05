@@ -108,7 +108,7 @@
     </div>
     <div class="justify-self-end">
       <iframe
-        title="ASEAN Motor Club Discord"
+        title={msg['home.iframe_discord']()}
         src="https://discordapp.com/widget?id=1341775494026231859&theme=dark"
         allowtransparency
         frameborder="0"

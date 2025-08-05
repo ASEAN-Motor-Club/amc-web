@@ -1,0 +1,21 @@
+{
+  "name": "ASEAN Motor Club",
+  "short_name": "AMC",
+  "description": "MotorTown's premier community server in Southeast Asia",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "oklch(19.2% 0.014 114.28)",
+  "background_color": "oklch(19.2% 0.014 114.28)",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["games", "entertainment", "social"],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
