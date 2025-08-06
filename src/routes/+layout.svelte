@@ -4,13 +4,53 @@
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
   import { m as msg } from '$lib/paraglide/messages';
+  import { onMount } from 'svelte';
+  import { colorBackground100, colorBackground900 } from '$lib/tw-var';
 
   const { children } = $props();
+
+  let color = $state<string | undefined>();
+
+  onMount(() => {
+    const updateThemeColor = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      color = isDark ? colorBackground900 : colorBackground100;
+    };
+
+    updateThemeColor();
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          updateThemeColor();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  });
 </script>
 
 <svelte:head>
   <title>{msg['site_name']()}</title>
   <meta name="description" content={msg['home.desc_title']()} />
+  <meta
+    name="theme-color"
+    content={color ?? colorBackground100}
+    media="(prefers-color-scheme: light)"
+  />
+  <meta
+    name="theme-color"
+    content={color ?? colorBackground900}
+    media="(prefers-color-scheme: dark)"
+  />
 </svelte:head>
 
 <MsgModal>
