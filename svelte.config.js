@@ -11,6 +11,14 @@ const config = {
     files: {
       assets: process.env.NODE_ENV === 'development' ? 'static_dev' : 'static',
     },
+    prerender: {
+      handleHttpError: ({ path, _, message }) => {
+        if (path === '/stream_high') {
+          return;
+        }
+        throw new Error(message);
+      },
+    },
   },
 };
 

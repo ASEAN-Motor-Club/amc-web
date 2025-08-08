@@ -18,7 +18,11 @@
   let audio: HTMLAudioElement;
   let isPlaying = $state<boolean | null>(false);
 
-  let volume = $state(+(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1));
+  let volume = $state(1);
+
+  onMount(() => {
+    volume = +(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1);
+  });
 
   // Web Audio API variables
   let audioCtx: AudioContext;
