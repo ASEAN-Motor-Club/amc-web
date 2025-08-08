@@ -42,7 +42,16 @@ export default ts.config(
         projectService: true,
         extraFileExtensions: ['.svelte'],
         parser: ts.parser,
-        svelteConfig,
+        svelteConfig: {
+          ...svelteConfig,
+          kit: {
+            ...svelteConfig.kit,
+            prerender: {
+              ...svelteConfig.kit.prerender,
+              handleHttpError: undefined,
+            },
+          },
+        },
       },
     },
   },
