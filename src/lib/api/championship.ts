@@ -23,6 +23,31 @@ export const getEvents = async (signal: AbortSignal): Promise<ScheduledEvent[]> 
   }
 };
 
+export const getEvent = async (
+  id: number | string,
+  signal: AbortSignal,
+): Promise<ScheduledEvent | undefined> => {
+  try {
+    const response = await fetch(`${PUBLIC_API_NEW_BASE}/api/scheduled_events/${id}/`, {
+      signal: signal,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as ScheduledEvent;
+
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.info('Fetch aborted');
+      return undefined;
+    }
+    console.error('Error fetching teams:', error);
+    throw error;
+  }
+};
+
 export const getTeamStandings = async (
   season: number,
   signal: AbortSignal,
@@ -79,7 +104,10 @@ export const getPersonalStandings = async (
   }
 };
 
-export const getEventResult = async (id: number, signal: AbortSignal): Promise<EventResult[]> => {
+export const getEventResult = async (
+  id: number | string,
+  signal: AbortSignal,
+): Promise<EventResult[]> => {
   try {
     const response = await fetch(`${PUBLIC_API_NEW_BASE}/scheduled_events/${id}/results/`, {
       signal: signal,

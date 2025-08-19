@@ -40,9 +40,10 @@
 <svelte:element
   this={tag}
   class={twMerge(
+    'rounded-md p-4',
     loading
       ? 'relative bg-transparent'
-      : 'bg-background-200 dark:bg-background-900 dark:shadow-white/3 rounded-md p-4 shadow-md ring ring-black/5 dark:ring-white/5',
+      : 'bg-background-200 dark:bg-background-900 dark:shadow-white/3 shadow-md ring ring-black/5 dark:ring-white/5',
     clsx(className),
   )}
   {...othersCardProps}
