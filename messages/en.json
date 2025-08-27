@@ -178,8 +178,7 @@
       "select_point_to_edit": "Select point to start editing.",
       "global_operations": "Global operations",
       "normalize": "Normalize",
-      "auto_rotate_all_gates": "Auto Rotate All Gates",
-      "selecting_point": "Selecting point: {pointNumber}"
+      "auto_rotate_all_gates": "Auto Rotate All Gates"
     }
   },
   "navbar": {

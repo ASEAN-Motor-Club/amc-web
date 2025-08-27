@@ -181,7 +181,7 @@
       {#if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
           <div class="whitespace-nowrap font-medium">
-            {msg['track_editor.editor.selecting_point']({ pointNumber: selectedPointIndex + 1 })}
+            {msg['track_editor.editor.selected_point']({ pointNumber: selectedPointIndex + 1 })}
           </div>
           <Button
             onClick={() => (showHidden = !showHidden)}
