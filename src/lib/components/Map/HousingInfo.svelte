@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { House } from '$lib/data/house';
   import type { HouseData } from '$lib/api/types';
-  import { PointType } from './types';
+  import type { PointType } from './types';
   import { SvelteDate } from 'svelte/reactivity';
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';

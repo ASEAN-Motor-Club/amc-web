@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from '$lib/ui/Button/Button.svelte';
-  import { SvelteDate, SvelteMap } from 'svelte/reactivity';
+  import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
 
   type EventButtonProps = {

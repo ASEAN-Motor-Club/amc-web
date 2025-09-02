@@ -33,6 +33,7 @@ export default ts.config(
           destructuredArrayIgnorePattern: '^_',
         },
       ],
+      '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
   {
