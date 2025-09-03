@@ -37,7 +37,7 @@
   onclick={onClick}
   onmouseover={onMouseOver}
   target={external ? '_blank' : undefined}
-  rel={external ? 'noopener noreferrer' : undefined}
+  rel={external ? 'noreferrer' : undefined}
 >
   {@render icon(pathMatch)}
   <div class="relative flex items-center">

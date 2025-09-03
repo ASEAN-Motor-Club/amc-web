@@ -22,7 +22,7 @@
     const walkChildren = (element: Element) => {
       if (element instanceof HTMLAnchorElement) {
         element.target = '_blank';
-        element.rel = 'noopener noreferrer';
+        element.rel = 'noreferrer';
       }
       Array.from(element.children).forEach(walkChildren);
     };

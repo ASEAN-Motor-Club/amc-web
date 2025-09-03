@@ -72,7 +72,7 @@
             <a
               href="https://www.aseanmotorclub.com/stream"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               class="text-blue-600 hover:underline dark:text-blue-400"
               >https://www.aseanmotorclub.com/stream</a
             >
@@ -89,7 +89,7 @@
           <a
             href="https://www.aseanmotorclub.com/static/RadioMod_P.pak"
             class="font-semibold text-blue-600 hover:underline dark:text-blue-400"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             download>{msg['radio_guide.download_link']()}</a
           >
         </p>

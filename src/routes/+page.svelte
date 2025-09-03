@@ -64,7 +64,6 @@
           {#each features as feature (feature)}
             <Button
               variant="contained"
-              target="_blank"
               size="xs"
               round
               class="pointer-events-none h-6 px-2.5 font-medium"
@@ -80,7 +79,7 @@
               tag="a"
               href={PUBLIC_DISCORD_LINK}
               target="_blank"
-              rel="noopener noreferrer">{msg['home.join_discord']()}</Button
+              rel="noreferrer">{msg['home.join_discord']()}</Button
             >
           </div>
           <Button

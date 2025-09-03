@@ -172,7 +172,7 @@
     tag="a"
     href={PUBLIC_DISCORD_LINK}
     target="_blank"
-    rel="noopener noreferrer">{msg['navbar.join_discord']()}</Button
+    rel="noreferrer">{msg['navbar.join_discord']()}</Button
   >
 {/snippet}
 

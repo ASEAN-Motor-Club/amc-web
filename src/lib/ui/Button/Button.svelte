@@ -27,15 +27,6 @@
      */
     size?: 'xs' | 'sm' | 'md' | 'lg';
     /**
-     * The HTML button type attribute
-     * @default 'button'
-     */
-    type?: 'button' | 'submit' | 'reset';
-    /**
-     * Event handler for button clicks
-     */
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-    /**
      * Content to be rendered inside the button component
      */
     children: Snippet;
@@ -50,24 +41,6 @@
      */
     disabled?: boolean;
     /**
-     * The HTML tag to render the button as
-     * @default 'button'
-     */
-    tag?: 'button' | 'a' | 'div';
-    /**
-     * The href attribute for the button if it is an anchor tag
-     */
-    href?: string;
-    /**
-     * The target attribute for the button if it is an anchor tag
-     * @default '_self'
-     */
-    target?: '_blank' | '_self' | '_parent' | '_top';
-    /**
-     * The rel attribute for the button if it is an anchor tag
-     */
-    rel?: string;
-    /**
      * Whether the render a button as an icon button
      * @default false
      */
@@ -80,25 +53,73 @@
      * append Icon to the button, size will be automatically adjust
      */
     appendIcon?: Snippet;
-  };
+  } & (
+    | {
+        /**
+         * The HTML tag to render the button as
+         * @default 'button'
+         */
+        tag?: 'button';
+        /**
+         * The HTML button type attribute
+         * @default 'button'
+         */
+        type?: 'button' | 'submit' | 'reset';
+        /**
+         * Event handler for button clicks
+         */
+        onClick?: MouseEventHandler<HTMLButtonElement>;
+      }
+    | {
+        /**
+         * The HTML tag to render the button as
+         * @default 'button'
+         */
+        tag: 'a';
+        /**
+         * The href attribute for the button if it is an anchor tag
+         */
+        href: string;
+        /**
+         * The target attribute for the button if it is an anchor tag
+         * @default '_self'
+         */
+        target?: '_blank' | '_self' | '_parent' | '_top';
+        /**
+         * The rel attribute for the button if it is an anchor tag
+         */
+        rel?: string;
+        /**
+         * Event handler for button clicks
+         */
+        onClick?: MouseEventHandler<HTMLAnchorElement>;
+      }
+    | {
+        /**
+         * The HTML tag to render the button as
+         * @default 'button'
+         */
+        tag: 'div';
+        /**
+         * Event handler for button clicks
+         */
+        onClick?: MouseEventHandler<HTMLDivElement>;
+      }
+  );
 
   const {
     children,
     color = 'neutral',
     variant = 'contained',
     size = 'md',
-    type = 'button',
     onClick,
     class: propsClassName,
     round,
     disabled,
-    tag = 'button',
-    href,
-    target = '_self',
-    rel,
     icon = false,
     prependIcon,
     appendIcon,
+    ...props
   }: ButtonProps = $props();
 
   setBtnIconSizeContext({
@@ -212,7 +233,7 @@
 </script>
 
 <svelte:element
-  this={tag}
+  this={props.tag ?? 'button'}
   class={twMerge(
     'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none transition',
     variantClassName,
@@ -221,13 +242,13 @@
     disabled && 'pointer-events-none opacity-50',
     clsx(propsClassName),
   )}
-  onclick={onClick}
-  {type}
+  onclick={onClick as MouseEventHandler<HTMLDivElement>}
+  type={props.tag === 'button' ? (props.type ?? 'button') : undefined}
   {disabled}
-  {href}
-  role={tag}
-  target={tag === 'a' ? target : undefined}
-  rel={tag === 'a' ? rel : undefined}
+  href={props.tag === 'a' ? props.href : undefined}
+  role={props.tag ?? 'button'}
+  target={props.tag === 'a' ? (props.target ?? '_self') : undefined}
+  rel={props.tag === 'a' ? props.rel : undefined}
 >
   {#if prependIcon}
     <span

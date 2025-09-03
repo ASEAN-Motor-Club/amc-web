@@ -93,7 +93,7 @@
       tag="a"
       href="{PUBLIC_DISCORD_EVENT_BASE}/{eventData?.discord_event_id}"
       target="_blank"
-      rel="noopener noreferrer"
+      rel="noreferrer"
       color="primary"
       disabled={loadingOrNoData}
       class="-mx-3"

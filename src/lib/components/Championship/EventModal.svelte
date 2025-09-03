@@ -103,7 +103,7 @@
                 tag="a"
                 href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
               >
                 {msg['championship.event.more_info']()}
               </Button>
