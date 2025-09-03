@@ -89,6 +89,7 @@
           <a
             href="https://www.aseanmotorclub.com/static/RadioMod_P.pak"
             class="font-semibold text-blue-600 hover:underline dark:text-blue-400"
+            rel="noopener noreferrer"
             download>{msg['radio_guide.download_link']()}</a
           >
         </p>

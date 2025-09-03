@@ -64,6 +64,10 @@
      */
     target?: '_blank' | '_self' | '_parent' | '_top';
     /**
+     * The rel attribute for the button if it is an anchor tag
+     */
+    rel?: string;
+    /**
      * Whether the render a button as an icon button
      * @default false
      */
@@ -91,6 +95,7 @@
     tag = 'button',
     href,
     target = '_self',
+    rel,
     icon = false,
     prependIcon,
     appendIcon,
@@ -222,6 +227,7 @@
   {href}
   role={tag}
   target={tag === 'a' ? target : undefined}
+  rel={tag === 'a' ? rel : undefined}
 >
   {#if prependIcon}
     <span

@@ -50,6 +50,12 @@
       exact: false,
     },
     {
+      href: 'https://wiki.aseanmotorclub.com/',
+      label: 'Wiki',
+      icon: wikiIcon,
+      external: true,
+    },
+    {
       href: '/championship',
       label: 'AMC Cup',
       icon: trophyIcon,
@@ -63,6 +69,7 @@
     label: string;
     icon: Snippet<[boolean]>;
     exact?: boolean;
+    external?: boolean;
     onMouseOver?: () => void;
   }[];
 
@@ -129,6 +136,15 @@
   />
 {/snippet}
 
+{#snippet wikiIcon(pathMatch: boolean)}
+  <Icon
+    class={[
+      'i-material-symbols:book-outline-rounded transition-colors group-hover:text-teal-500',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+    ]}
+  />
+{/snippet}
+
 {#snippet trophyIcon()}
   <div class="relative flex select-none items-center justify-center">
     <Icon class="i-material-symbols:trophy-rounded text-amber-500 transition-colors" />
@@ -139,15 +155,24 @@
 {/snippet}
 
 {#snippet menuItems()}
-  {#each links as { href, label, icon, exact, onMouseOver } (href)}
-    <NavbarItem {href} {label} {icon} onClick={() => (menu = false)} {exact} {onMouseOver} />
+  {#each links as { href, label, icon, exact, external, onMouseOver } (href)}
+    <NavbarItem
+      {href}
+      {label}
+      {icon}
+      onClick={() => (menu = false)}
+      {exact}
+      {external}
+      {onMouseOver}
+    />
   {/each}
   <Button
     variant="contained-light"
     class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
     tag="a"
     href={PUBLIC_DISCORD_LINK}
-    target="_blank">{msg['navbar.join_discord']()}</Button
+    target="_blank"
+    rel="noopener noreferrer">{msg['navbar.join_discord']()}</Button
   >
 {/snippet}
 

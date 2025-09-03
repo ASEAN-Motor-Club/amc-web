@@ -79,7 +79,8 @@
               class=" !bg-[#5865f2] hover:!bg-[#5865f2]/80"
               tag="a"
               href={PUBLIC_DISCORD_LINK}
-              target="_blank">{msg['home.join_discord']()}</Button
+              target="_blank"
+              rel="noopener noreferrer">{msg['home.join_discord']()}</Button
             >
           </div>
           <Button
