@@ -325,7 +325,7 @@ export const colorError950 = 'oklch(16.68% 0.03 20.81)';
 export const defaultTransitionDuration = '150ms';
 export const defaultTransitionDurationMs = 150;
 
-export const fontSans = "'Noto Sans', sans-serif";
+export const fontSans = "'Noto Sans', 'Noto Sans JP', sans-serif";
 
 export const textXs = '0.75rem';
 

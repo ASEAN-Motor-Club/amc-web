@@ -6,7 +6,7 @@ import { sequence } from '@sveltejs/kit/hooks';
 let cachedFontCSS: string | null = null;
 
 const GOOGLE_FONTS_URL =
-  'https://fonts.googleapis.com/css2?family=Koulen&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap';
+  'https://fonts.googleapis.com/css2?family=Koulen&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap';
 
 async function fetchGoogleFonts(): Promise<string> {
   if (cachedFontCSS) {
