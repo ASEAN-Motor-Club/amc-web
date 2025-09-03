@@ -5,89 +5,52 @@
   import poster1818 from '$lib/assets/images/poster/asean_poster_w1818.avif';
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
-  import Standing from '$lib/components/Championship/Standing.svelte';
   import { m as msg } from '$lib/paraglide/messages';
   import { onMount, onDestroy, tick } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import CalendarGroup from '$lib/components/Championship/CalendarGroup.svelte';
-  import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
-  import Lottie from '$lib/ui/Lottie/Lottie.svelte';
-  import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
   import { getTeams } from '$lib/api/teams';
-  import type { ScheduledEvent, Team } from '$lib/api/types';
-  import { getEvents } from '$lib/api/championship';
+  import type { Team } from '$lib/api/types';
   import { format } from '$lib/localeFormat/date';
   import { page } from '$app/state';
-  import EventModal from '$lib/components/Championship/EventModal.svelte';
   import { goto } from '$app/navigation';
-  import ResultsModal from '$lib/components/Championship/ResultsModal.svelte';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
+  import Button from '$lib/ui/Button/Button.svelte';
 
-  const seasonNo = 2;
-  const startDate = new Date('2025-07-26T20:00:00+07:00');
+  const startDate = new Date(PUBLIC_SEASON_START_DATE);
 
-  let champTrigger: HTMLDivElement;
-  let champContainer: HTMLDivElement;
   let headerTrigger: HTMLDivElement;
   let imageContainer: HTMLDivElement;
   let textContainer: HTMLDivElement;
 
-  let standingTriggers: HTMLDivElement;
-  let scheduleTrigger: HTMLDivElement;
-  let teamTitleTriggers: HTMLDivElement | undefined = $state();
   let teamTriggers: HTMLDivElement[] = $state([]);
   let teamText: HTMLDivElement[] = $state([]);
 
   // GSAP Timeline variables
-  let tlHint: gsap.core.Timeline | undefined;
   let tlHead: gsap.core.Timeline | undefined;
-  let tlTeamTitle: gsap.core.Timeline | undefined;
   let tlTeams: gsap.core.Timeline[] = [];
-  let tlStanding: gsap.core.Timeline | undefined;
-  let tlSchedule: gsap.core.Timeline | undefined;
   let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
-  let events = $state<ScheduledEvent[]>([]);
+
   let loading = $state(true);
 
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
-
-    tlHint = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: champTrigger,
-          start: 'top top',
-          end: '+=500',
-          scrub: true,
-          pin: true,
-          anticipatePin: 1,
-        },
-      })
-      .to(
-        champContainer,
-        {
-          scale: 0,
-          ease: 'power2.out',
-        },
-        0,
-      );
 
     tlHead = gsap
       .timeline({
         scrollTrigger: {
           trigger: headerTrigger,
           start: 'top top',
-          end: '+=2000',
+          end: '+=1000',
           scrub: true,
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
         },
       })
-      .from(
+      .to(
         imageContainer,
         {
           scale: 0,
@@ -96,7 +59,7 @@
         },
         0,
       )
-      .from(
+      .to(
         textContainer.children,
         {
           y: 50,
@@ -106,113 +69,11 @@
           duration: 0.5,
         },
         0.5,
-      )
-      .to({}, { duration: 2 });
-
-    tlStanding = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: standingTriggers,
-          start: 'top top',
-          end: '+=2000',
-          scrub: true,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          onToggle: (self) => {
-            if (self.isActive && page.url.hash !== '#standing') {
-              goto('#standing', { replaceState: true, noScroll: true });
-            } else if (!self.isActive && page.url.hash === '#standing') {
-              goto('?', { replaceState: true, noScroll: true });
-            }
-          },
-        },
-      })
-      .from(
-        standingTriggers.children[1].children[0],
-        {
-          x: -100,
-          opacity: 0,
-          ease: 'power2.out',
-          duration: 1,
-        },
-        0,
-      )
-      .from(
-        standingTriggers.children[1].children[1],
-        {
-          x: 100,
-          opacity: 0,
-          ease: 'power2.out',
-          duration: 1,
-        },
-        0,
-      )
-      .to({}, { duration: 3 });
-
-    tlSchedule = gsap.timeline({
-      scrollTrigger: {
-        trigger: scheduleTrigger,
-        start: 'top top',
-        end: '+=1000',
-        scrub: true,
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        onToggle: (self) => {
-          if (self.isActive && page.url.hash !== '#schedule') {
-            goto('#schedule', { replaceState: true, noScroll: true });
-          } else if (!self.isActive && page.url.hash === '#schedule') {
-            goto('?', { replaceState: true, noScroll: true });
-          }
-        },
-      },
-    });
-
-    const initialHash = page.url.hash;
-    setTimeout(() => {
-      if (initialHash === '#standing' && standingTriggers) {
-        const rect = standingTriggers.getBoundingClientRect();
-        window.scrollTo({
-          top: window.scrollY + rect.top + 2000 / 3,
-          behavior: 'instant',
-        });
-      } else if (initialHash === '#schedule' && scheduleTrigger) {
-        scheduleTrigger.scrollIntoView({ behavior: 'instant' });
-      }
-    }, 0);
+      );
 
     teams = await getTeams(abortController.signal);
     loading = false;
     await tick();
-
-    if (!teamTitleTriggers) {
-      return;
-    }
-
-    tlTeamTitle = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: teamTitleTriggers,
-          start: 'top top',
-          end: '+=1000',
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          scrub: true,
-          onToggle: (self) => {
-            if (self.isActive && page.url.hash !== '#teams') {
-              goto('#teams', { replaceState: true, noScroll: true });
-            } else if (!self.isActive && page.url.hash === '#teams') {
-              goto('?', { replaceState: true, noScroll: true });
-            }
-          },
-        },
-      })
-      .to(teamTitleTriggers.children, {
-        scale: 0,
-        ease: 'power2.out',
-      });
 
     tlTeams = teamTriggers.map((trigger, i) =>
       gsap
@@ -220,7 +81,7 @@
           scrollTrigger: {
             trigger: trigger,
             start: 'top top',
-            end: '+=2000',
+            end: '+=1500',
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
@@ -263,10 +124,10 @@
         .to({}, { duration: 3 }),
     );
 
+    const initialHash = page.url.hash;
+
     setTimeout(() => {
-      if (initialHash === '#teams' && teamTitleTriggers) {
-        teamTitleTriggers.scrollIntoView({ behavior: 'instant' });
-      } else if (initialHash.startsWith('#team-') && teamTriggers) {
+      if (initialHash.startsWith('#team-') && teamTriggers) {
         const teamTag = decodeURIComponent(initialHash.replace('#team-', ''));
         const teamIndex = teams.findIndex((team) => team.tag === teamTag);
         if (teamIndex !== -1 && teamTriggers[teamIndex]) {
@@ -280,84 +141,34 @@
     }, 0);
   });
 
+  const onTeamClick = () => {
+    if (teamTriggers && teamTriggers[0]) {
+      const rect = teamTriggers[0].getBoundingClientRect();
+      window.scrollTo({
+        top: window.scrollY + rect.top + 2000 / 3,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   onDestroy(() => {
-    tlHint?.kill();
     tlHead?.kill();
-    tlTeamTitle?.kill();
     tlTeams.forEach((tlTeam) => tlTeam?.kill());
-    tlStanding?.kill();
-    tlSchedule?.kill();
     abortController?.abort();
-  });
-
-  let openedEventDay: number | undefined = $state(undefined);
-  let openedEventMonth: number | undefined = $state(undefined);
-  let openedEventYear: number | undefined = $state(undefined);
-
-  const openEvent = (day: number, month: number, year: number) => {
-    openedEventDay = day;
-    openedEventMonth = month;
-    openedEventYear = year;
-  };
-
-  const closeEvent = () => {
-    openedEventDay = undefined;
-    openedEventMonth = undefined;
-    openedEventYear = undefined;
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
-    newParams.delete('date');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
-  };
-
-  let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
-
-  const openResultsModal = (event: ScheduledEvent) => {
-    resultsModalEvent = event;
-  };
-
-  const closeResultsModal = () => {
-    resultsModalEvent = undefined;
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
-    newParams.delete('event');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
-  };
-
-  onMount(async () => {
-    events = await getEvents(abortController.signal);
-    const date = page.url.searchParams.get('date');
-    if (date) {
-      const [year, month, day] = date.split('-');
-      openedEventYear = +year;
-      openedEventMonth = +month;
-      openedEventDay = +day;
-    }
-    const eventId = page.url.searchParams.get('event');
-    if (eventId) {
-      const event = events.find((e) => e.id === +eventId);
-      if (event) {
-        resultsModalEvent = event;
-      }
-    }
   });
 </script>
 
 <svelte:head>
-  <title>{msg['championship.head']({ siteName: msg['site_name_short'](), seasonNo })}</title>
+  <title
+    >{msg['championship.head']({
+      siteName: msg['site_name_short'](),
+      seasonNo: PUBLIC_SEASON_NO,
+    })}</title
+  >
 </svelte:head>
-<ScrollHint fixed />
 <div class="-mt-16 flex flex-col items-center overflow-x-hidden">
-  <div class="flex h-svh w-full items-center justify-center p-8 pt-24" bind:this={champTrigger}>
-    <div bind:this={champContainer}>
-      <div class="size-90 relative flex select-none items-center justify-center">
-        <div class="i-material-symbols:trophy h-full w-full text-amber-500"></div>
-        <div class="absolute h-full w-full">
-          <Lottie animationData={lottieSpark} loop autoplay speed={0.9} />
-        </div>
-      </div>
-    </div>
-  </div>
   <div
-    class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24"
+    class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24 md:p-20 md:pt-36"
     bind:this={headerTrigger}
   >
     <div class="max-w-250 flex-shrink-1 aspect-ratio-1818/1162 min-h-0 w-full">
@@ -378,32 +189,18 @@
       <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
         {msg['championship.title']()}
       </h1>
-      <h2 class="font-sans-alt text-2xl font-semibold sm:text-3xl">
-        {msg['championship.season']({ seasonNo })}
+      <h2 class="font-sans-alt pb-8 text-2xl font-semibold sm:text-3xl">
+        {msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
+      <div class="flex gap-3">
+        <Button class="w-36" variant="contained" onClick={() => goto('/championship/details')}
+          >Event Details</Button
+        >
+        <Button class="w-36" variant="contained" onClick={onTeamClick}>Our Teams</Button>
+      </div>
     </div>
-  </div>
-  <div
-    class="flex h-svh w-full flex-col items-center justify-center pb-8 pt-24"
-    bind:this={standingTriggers}
-  >
-    <Standing season={seasonNo} />
-  </div>
-  <div
-    class="flex h-svh w-full flex-col items-center justify-center py-8 pt-24"
-    bind:this={scheduleTrigger}
-  >
-    <CalendarGroup {events} {openEvent} />
   </div>
   {#if !loading}
-    <div
-      class="flex h-dvh w-full flex-col items-center justify-center p-8 pt-24"
-      bind:this={teamTitleTriggers}
-    >
-      <h4 class="text-center text-4xl font-semibold tracking-tight">
-        {msg['championship.teams']()}
-      </h4>
-    </div>
     <div class="flex w-full flex-col">
       {#each teams as team, i (team.id)}
         <div
@@ -411,7 +208,9 @@
           style="--team-bg:{team.bg_color};--team-text:{team.text_color}"
           bind:this={teamTriggers[i]}
         >
-          <div class="flex h-dvh w-full flex-col items-center justify-evenly p-8 pt-24">
+          <div
+            class="flex h-dvh w-full flex-col items-center justify-evenly p-8 pt-24 md:p-20 md:pt-36"
+          >
             {#if team.logo}
               <div class="min-h-0 w-full max-w-40 md:max-w-80">
                 <img
@@ -439,12 +238,3 @@
     </div>
   {/if}
 </div>
-<EventModal
-  month={openedEventMonth}
-  year={openedEventYear}
-  day={openedEventDay}
-  {events}
-  onClose={closeEvent}
-  {openResultsModal}
-/>
-<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} />

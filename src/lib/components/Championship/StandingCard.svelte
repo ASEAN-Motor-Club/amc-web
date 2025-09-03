@@ -1,0 +1,46 @@
+<script lang="ts">
+  import Card from '$lib/ui/Card/Card.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
+  import type { Snippet } from 'svelte';
+
+  type StandingCardProps = {
+    title: string;
+    loading: boolean;
+    children: Snippet<
+      [{ getStandingRowClass: (index: number) => (string | Record<string, boolean>)[] }]
+    >;
+  };
+
+  const { title, loading, children }: StandingCardProps = $props();
+
+  const getStandingRowClass = (index: number) => {
+    return [
+      'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0',
+      {
+        'text-amber-600 dark:text-amber-500': index === 0,
+        'text-gray-700 dark:text-gray-400': index === 1,
+        'text-amber-700 dark:text-amber-600': index === 2,
+      },
+    ];
+  };
+</script>
+
+<Card class="sm:min-w-unset h-101 sm:w-90 min-w-full overflow-hidden !p-0 sm:flex-1">
+  <h4 class="bg-neutral-500/10 p-4 text-xl font-medium">
+    {title}
+  </h4>
+  <div
+    class={[
+      'h-86 flex w-full',
+      loading ? 'items-center justify-center' : 'flex-col overflow-y-auto',
+    ]}
+  >
+    {#if loading}
+      <div class="text-text/60 dark:text-text-dark/60 pt-4 text-center text-sm italic">
+        {msg['championship.loading']()}
+      </div>
+    {:else}
+      {@render children({ getStandingRowClass })}
+    {/if}
+  </div>
+</Card>

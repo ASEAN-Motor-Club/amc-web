@@ -1,19 +1,13 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
   import Calendar from './Calendar.svelte';
-  import type { ScheduledEvent } from '$lib/api/types';
   import { addMilliseconds, eachDayOfInterval, format } from 'date-fns';
   import Button from '$lib/ui/Button/Button.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { EventType } from './types';
   import { SvelteMap } from 'svelte/reactivity';
+  import { getChampionshipContext } from './context';
 
-  type CalendarGroupProps = {
-    events: ScheduledEvent[];
-    openEvent: (day: number, month: number, year: number) => void;
-  };
-
-  const { events, openEvent }: CalendarGroupProps = $props();
+  const { events, openEvent } = getChampionshipContext();
 
   const dateWithEvents = $derived.by(() => {
     const map = new SvelteMap<string, EventType>();
@@ -57,9 +51,6 @@
   };
 </script>
 
-<h4 class="pb-8 text-center text-4xl font-semibold tracking-tight">
-  {msg['championship.schedule']()}
-</h4>
 <div class="flex items-center gap-8">
   <Button icon round class="hidden sm:flex" onClick={prevMonth}>
     <Icon class="i-material-symbols:arrow-left-rounded" />
@@ -69,7 +60,7 @@
     <Icon class="i-material-symbols:arrow-right-rounded" />
   </Button>
 </div>
-<div class="flex items-center gap-8 pt-8 sm:hidden">
+<div class="flex items-center justify-center gap-8 pt-8 sm:hidden">
   <Button icon round onClick={prevMonth}>
     <Icon class="i-material-symbols:arrow-left-rounded" />
   </Button>

@@ -83,25 +83,25 @@
   {#snippet template({ children: _, icon: __, size: ___, ...args })}
     <div class="flex flex-wrap gap-2">
       <Button {...args} size="xs">
-        {#snippet appendIcon()}
+        {#snippet prependIcon()}
           <Icon class="i-material-symbols:pause-rounded" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="sm">
-        {#snippet appendIcon()}
+        {#snippet prependIcon()}
           <Icon class="i-material-symbols:pause-rounded" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="md">
-        {#snippet appendIcon()}
+        {#snippet prependIcon()}
           <Icon class="i-material-symbols:pause-rounded" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="lg">
-        {#snippet appendIcon()}
+        {#snippet prependIcon()}
           <Icon class="i-material-symbols:pause-rounded" />
         {/snippet}
         Pause

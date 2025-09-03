@@ -163,7 +163,7 @@
           {currentTrack}
         </div>
         <Button onClick={togglePlay} class="mb-3" color="info">
-          {#snippet appendIcon()}
+          {#snippet prependIcon()}
             {#if isPlaying}
               <Icon class="i-material-symbols:pause-rounded" />
             {:else}

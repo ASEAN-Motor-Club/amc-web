@@ -69,6 +69,10 @@
      */
     icon?: boolean;
     /**
+     * prepend Icon to the button, size will be automatically adjust
+     */
+    prependIcon?: Snippet;
+    /**
      * append Icon to the button, size will be automatically adjust
      */
     appendIcon?: Snippet;
@@ -88,6 +92,7 @@
     href,
     target = '_self',
     icon = false,
+    prependIcon,
     appendIcon,
   }: ButtonProps = $props();
 
@@ -218,7 +223,7 @@
   role={tag}
   target={tag === 'a' ? target : undefined}
 >
-  {#if appendIcon}
+  {#if prependIcon}
     <span
       class={[
         'inline-flex',
@@ -230,8 +235,23 @@
         },
       ]}
     >
-      {@render appendIcon()}
+      {@render prependIcon()}
     </span>
   {/if}
   {@render children()}
+  {#if appendIcon}
+    <span
+      class={[
+        'inline-flex',
+        {
+          '-mr-0.25 ml-0.5': size === 'xs',
+          '-mr-0.5 ml-1': size === 'sm',
+          '-mr-1 ml-2': size === 'md',
+          '-mr-2 ml-2.5': size === 'lg',
+        },
+      ]}
+    >
+      {@render appendIcon()}
+    </span>
+  {/if}
 </svelte:element>
