@@ -7,7 +7,8 @@
   import { PointType, type PlayerData } from './types';
   import { cargoName } from '$lib/data/cargo';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
-  import { goto } from '$app/navigation';
+  import { replaceState } from '$app/navigation';
+  import { page } from '$app/state';
   import type { Vector2 } from 'mt-map';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
@@ -124,7 +125,7 @@
     focus = false;
     event.preventDefault();
     if (point.pointType !== PointType.Pin) {
-      goto(getHref(point), { replaceState: true, noScroll: true, keepFocus: true });
+      replaceState(getHref(point), page.state);
     }
     onPointClick?.(point);
   };

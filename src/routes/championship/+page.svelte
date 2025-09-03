@@ -13,7 +13,7 @@
   import type { Team } from '$lib/api/types';
   import { format } from '$lib/localeFormat/date';
   import { page } from '$app/state';
-  import { goto } from '$app/navigation';
+  import { goto, replaceState } from '$app/navigation';
   import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
   import Button from '$lib/ui/Button/Button.svelte';
 
@@ -91,9 +91,9 @@
               if (teamTag) {
                 const expectedHash = `#team-${teamTag}`;
                 if (self.isActive && page.url.hash !== expectedHash) {
-                  goto(expectedHash, { replaceState: true, noScroll: true });
+                  replaceState(expectedHash, page.state);
                 } else if (!self.isActive && page.url.hash === expectedHash) {
-                  goto('?', { replaceState: true, noScroll: true });
+                  replaceState('', page.state);
                 }
               }
             },
@@ -133,7 +133,7 @@
         if (teamIndex !== -1 && teamTriggers[teamIndex]) {
           const rect = teamTriggers[teamIndex].getBoundingClientRect();
           window.scrollTo({
-            top: window.scrollY + rect.top + 2000 / 3,
+            top: window.scrollY + rect.top + 1500 / 3,
             behavior: 'instant',
           });
         }
@@ -145,7 +145,7 @@
     if (teamTriggers && teamTriggers[0]) {
       const rect = teamTriggers[0].getBoundingClientRect();
       window.scrollTo({
-        top: window.scrollY + rect.top + 2000 / 3,
+        top: window.scrollY + rect.top + 1500 / 3,
         behavior: 'smooth',
       });
     }

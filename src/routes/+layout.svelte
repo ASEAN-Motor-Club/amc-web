@@ -5,7 +5,9 @@
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
   import { m as msg } from '$lib/paraglide/messages';
   import { onMount } from 'svelte';
-  import { colorBackground100, colorBackground900 } from '$lib/tw-var';
+  import { colorBackground100, colorBackground900, defaultTransitionDurationMs } from '$lib/tw-var';
+  import { fade } from 'svelte/transition';
+  import { page } from '$app/state';
 
   const { children } = $props();
 
@@ -55,7 +57,9 @@
 
 <MsgModal>
   <Navbar />
-  <main class="h-full min-h-dvh pt-16">
-    {@render children()}
-  </main>
+  {#key page.route.id}
+    <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
+      {@render children()}
+    </main>
+  {/key}
 </MsgModal>

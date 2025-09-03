@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { replaceState } from '$app/navigation';
   import { page } from '$app/state';
   import { getEvents } from '$lib/api/championship';
   import type { ScheduledEvent } from '$lib/api/types';
@@ -28,7 +28,7 @@
     openedEventYear = undefined;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('date');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+    replaceState(`?${newParams.toString()}`, page.state);
   };
 
   let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
@@ -41,7 +41,7 @@
     resultsModalEvent = undefined;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('event');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+    replaceState(`?${newParams.toString()}`, page.state);
   };
 
   onMount(async () => {

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { replaceState } from '$app/navigation';
+  import { page } from '$app/state';
   import { m as msg } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import { format } from '$lib/localeFormat/date';
@@ -56,10 +57,8 @@
     const eventDay = getDay(index);
     const eventMonth = getMonth(index);
     const eventYear = getYear(index);
-    goto(
-      `?date=${eventYear}-${String(eventMonth).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`,
-      { replaceState: true, noScroll: true },
-    );
+    const newUrl = `?date=${eventYear}-${String(eventMonth).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`;
+    replaceState(newUrl, page.state);
     onEventClick(eventDay, eventMonth, eventYear);
   };
 
