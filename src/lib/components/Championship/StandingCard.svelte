@@ -1,6 +1,6 @@
 <script lang="ts">
   import Card from '$lib/ui/Card/Card.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import type { Snippet } from 'svelte';
 
   type StandingCardProps = {
@@ -24,8 +24,6 @@
     ];
   };
 
-  const classPulse =
-    'inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent';
 </script>
 
 <Card class="sm:min-w-unset h-101 sm:w-90 min-w-full !p-0 sm:flex-1 overflow-hidden">
@@ -38,9 +36,9 @@
         <div
           class="grid grid-cols-[1fr_6fr_1fr] gap-3 border-b border-neutral-500/10 px-4 py-3 last:border-0"
         >
-          <div class={classPulse}>.</div>
-          <div class={classPulse}>.</div>
-          <div class={classPulse}>.</div>
+          <TextSkeleton />
+          <TextSkeleton />
+          <TextSkeleton />
         </div>
       {/each}
     {:else}

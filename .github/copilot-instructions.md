@@ -33,17 +33,37 @@ Every user-facing string must use Paraglide:
 - **Feature Components**: In `src/lib/components/` organized by feature domain
 - **Context Pattern**: UI components use Svelte context for composition (see `InputGroup` with `TextInput`, `Select`, `Slider`)
 
-Example component structure:
+### Svelte 5 Component Creation Guidelines
+
+- **Use Svelte 5 runes syntax only** (`$props`, `$state`, `$derived`, `$effect`). Do not use legacy `$:` reactive statements.
+- **Props must be properly typed and documented** using TypeScript JSDoc comments for each prop.
+- **Class props**: If your component accepts a `class` prop, type it as `ClassValue` from `svelte/elements`.
+- **Class merging**: If your component extends an existing class, use `twMerge(existingClass, clsx(propsClassName))` to merge classes safely.
+
+#### Minimal Example
 
 ```svelte
 <script lang="ts">
-  type ComponentProps = {
-    value: string;
-    onChange?: (value: string) => void;
+  import clsx from 'clsx';
+  import type { ClassValue } from 'svelte/elements';
+  import { twMerge } from 'tailwind-merge';
+
+  export type TextSkeletonProps = {
+    /**
+     * CSS class to apply to the text skeleton component
+     */
+    class?: ClassValue;
   };
 
-  const { value, onChange }: ComponentProps = $props();
+  const { class: propsClassName }: TextSkeletonProps = $props();
 </script>
+
+<span
+  class={twMerge(
+    'inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent',
+    clsx(propsClassName),
+  )}>.</span
+>
 ```
 
 ### Icons & Assets

@@ -9,6 +9,7 @@
   import { goto } from '$app/navigation';
   import { getEvent, getEventResult } from '$lib/api/championship';
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
+  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
 
   const { showModal } = getMsgModalContext();
 
@@ -81,10 +82,7 @@
     {#if eventData}
       {eventData.name}
     {:else if loadingOrNoData}
-      <span
-        class="w-100 inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent"
-        >.</span
-      >
+      <TextSkeleton class="w-100" />
     {/if}
   </h1>
   <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">

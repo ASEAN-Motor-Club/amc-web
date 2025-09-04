@@ -4,6 +4,7 @@
   import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
+  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
   import './markdown.css';
@@ -58,9 +59,6 @@
       openEvent(date.getDate(), date.getMonth() + 1, date.getFullYear());
     }
   };
-
-  const classPulse =
-    'inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent';
 </script>
 
 <Modal {open} {onClose}>
@@ -88,13 +86,11 @@
                   'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-3 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
                 ]}
               >
-                <div class={classPulse}>.</div>
-                <div class={classPulse}>
-                  <div class="truncate">.</div>
-                </div>
-                <div class={classPulse}>.</div>
-                <div class={classPulse}>.</div>
-                <div class={classPulse}>.</div>
+                <TextSkeleton />
+                <TextSkeleton />
+                <TextSkeleton />
+                <TextSkeleton />
+                <TextSkeleton />
               </div>
             {/each}
           </div>
