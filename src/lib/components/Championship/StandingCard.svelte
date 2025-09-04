@@ -23,10 +23,9 @@
       },
     ];
   };
-
 </script>
 
-<Card class="sm:min-w-unset h-101 sm:w-90 min-w-full !p-0 sm:flex-1 overflow-hidden">
+<Card class="sm:min-w-unset h-101 sm:w-90 min-w-full overflow-hidden !p-0 sm:flex-1">
   <h4 class="bg-neutral-500/10 p-4 text-xl font-medium">
     {title}
   </h4>
