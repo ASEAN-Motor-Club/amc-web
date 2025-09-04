@@ -34,6 +34,7 @@ export default ts.config(
         },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
+      'svelte/no-navigation-without-resolve': 'off',
     },
   },
   {

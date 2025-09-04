@@ -90,9 +90,9 @@
               const teamTag = teams[i]?.tag;
               if (teamTag) {
                 const expectedHash = `#team-${teamTag}`;
-                if (self.isActive && page.url.hash !== expectedHash) {
+                if (self.isActive) {
                   replaceState(expectedHash, page.state);
-                } else if (!self.isActive && page.url.hash === expectedHash) {
+                } else if (!self.isActive) {
                   replaceState('', page.state);
                 }
               }
@@ -193,10 +193,12 @@
         {msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
       <div class="flex gap-3">
-        <Button class="w-36" variant="contained" onClick={() => goto('/championship/details')}
-          >Event Details</Button
-        >
-        <Button class="w-36" variant="contained" onClick={onTeamClick}>Our Teams</Button>
+        <Button class="w-36" variant="contained" tag="a" href="/championship/details">
+          {msg['championship.event_details']()}
+        </Button>
+        <Button class="w-36" variant="contained" onClick={onTeamClick}>
+          {msg['championship.our_teams']()}
+        </Button>
       </div>
     </div>
   </div>

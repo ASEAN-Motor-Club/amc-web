@@ -7,11 +7,11 @@
   import { SvelteMap } from 'svelte/reactivity';
   import { getChampionshipContext } from './context';
 
-  const { events, openEvent } = getChampionshipContext();
+  const championshipContext = getChampionshipContext();
 
   const dateWithEvents = $derived.by(() => {
     const map = new SvelteMap<string, EventType>();
-    events.forEach((event) => {
+    championshipContext.events.forEach((event) => {
       const endTimeExclusive = addMilliseconds(event.end_time, -1);
       const dateRange = eachDayOfInterval({ start: event.start_time, end: endTimeExclusive });
       dateRange.forEach((date) => {
@@ -55,7 +55,12 @@
   <Button icon round class="hidden sm:flex" onClick={prevMonth}>
     <Icon class="i-material-symbols:arrow-left-rounded" />
   </Button>
-  <Calendar month={currentMonth} year={currentYear} onEventClick={openEvent} {dateWithEvents} />
+  <Calendar
+    month={currentMonth}
+    year={currentYear}
+    onEventClick={championshipContext.openEvent}
+    {dateWithEvents}
+  />
   <Button icon round class="hidden sm:flex" onClick={nextMonth}>
     <Icon class="i-material-symbols:arrow-right-rounded" />
   </Button>

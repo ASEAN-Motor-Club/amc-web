@@ -73,7 +73,6 @@
     | {
         /**
          * The HTML tag to render the button as
-         * @default 'button'
          */
         tag: 'a';
         /**
@@ -82,7 +81,6 @@
         href: string;
         /**
          * The target attribute for the button if it is an anchor tag
-         * @default '_self'
          */
         target?: '_blank' | '_self' | '_parent' | '_top';
         /**
@@ -97,7 +95,6 @@
     | {
         /**
          * The HTML tag to render the button as
-         * @default 'button'
          */
         tag: 'div';
         /**
@@ -243,11 +240,11 @@
     clsx(propsClassName),
   )}
   onclick={onClick as MouseEventHandler<HTMLDivElement>}
-  type={props.tag === 'button' ? (props.type ?? 'button') : undefined}
+  type={props.tag !== 'button' ? undefined : (props.type ?? 'button')}
   {disabled}
   href={props.tag === 'a' ? props.href : undefined}
   role={props.tag ?? 'button'}
-  target={props.tag === 'a' ? (props.target ?? '_self') : undefined}
+  target={props.tag === 'a' ? props.target : undefined}
   rel={props.tag === 'a' ? props.rel : undefined}
 >
   {#if prependIcon}

@@ -23,22 +23,26 @@
       },
     ];
   };
+
+  const classPulse =
+    'inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent';
 </script>
 
-<Card class="sm:min-w-unset h-101 sm:w-90 min-w-full overflow-hidden !p-0 sm:flex-1">
+<Card class="sm:min-w-unset h-101 sm:w-90 min-w-full !p-0 sm:flex-1 overflow-hidden">
   <h4 class="bg-neutral-500/10 p-4 text-xl font-medium">
     {title}
   </h4>
-  <div
-    class={[
-      'h-86 flex w-full',
-      loading ? 'items-center justify-center' : 'flex-col overflow-y-auto',
-    ]}
-  >
+  <div class={['h-86 flex w-full flex-col', loading ? 'overflow-y-hidden' : 'overflow-y-auto']}>
     {#if loading}
-      <div class="text-text/60 dark:text-text-dark/60 pt-4 text-center text-sm italic">
-        {msg['championship.loading']()}
-      </div>
+      {#each Array(8) as _, index (index)}
+        <div
+          class="grid grid-cols-[1fr_6fr_1fr] gap-3 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+        >
+          <div class={classPulse}>.</div>
+          <div class={classPulse}>.</div>
+          <div class={classPulse}>.</div>
+        </div>
+      {/each}
     {:else}
       {@render children({ getStandingRowClass })}
     {/if}

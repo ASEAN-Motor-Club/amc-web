@@ -9,7 +9,6 @@
   import { format } from '$lib/localeFormat/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
-  import { replaceState } from '$app/navigation';
   import { page } from '$app/state';
 
   type EventModalProps = {
@@ -57,11 +56,15 @@
     return isBefore(event.start_time, date);
   };
 
-  const openEvent = (event: ScheduledEvent) => {
+  const openEvent = (e: Event, event: ScheduledEvent) => {
+    e.preventDefault();
+    openResultsModal(event);
+  };
+
+  const getParams = (event: ScheduledEvent) => {
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.append('event', event.id.toString());
-    replaceState(`?${newParams.toString()}`, page.state);
-    openResultsModal(event);
+    return newParams.toString();
   };
 </script>
 
@@ -109,7 +112,14 @@
               </Button>
             {/if}
             {#if pastEventTime(event)}
-              <Button color="secondary" variant="text" size="sm" onClick={() => openEvent(event)}>
+              <Button
+                color="secondary"
+                variant="text"
+                size="sm"
+                tag="a"
+                href="?{getParams(event)}"
+                onClick={(e) => openEvent(e, event)}
+              >
                 {msg['championship.event.results']()}
               </Button>
             {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { replaceState } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { getEvents } from '$lib/api/championship';
   import type { ScheduledEvent } from '$lib/api/types';
@@ -12,11 +12,14 @@
   let events = $state<ScheduledEvent[]>([]);
   let abortController: AbortController = new AbortController();
 
+  let resultsModalOpen = $state(false);
   let openedEventDay: number | undefined = $state(undefined);
   let openedEventMonth: number | undefined = $state(undefined);
   let openedEventYear: number | undefined = $state(undefined);
 
   const openEvent = (day: number, month: number, year: number) => {
+    const newUrl = `?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
     openedEventDay = day;
     openedEventMonth = month;
     openedEventYear = year;
@@ -28,20 +31,24 @@
     openedEventYear = undefined;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('date');
-    replaceState(`?${newParams.toString()}`, page.state);
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true, keepFocus: true });
   };
 
   let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
 
   const openResultsModal = (event: ScheduledEvent) => {
+    const newParams = new SvelteURLSearchParams(page.url.searchParams);
+    newParams.append('event', event.id.toString());
+    goto(`?${newParams.toString()}`);
     resultsModalEvent = event;
+    resultsModalOpen = true;
   };
 
   const closeResultsModal = () => {
-    resultsModalEvent = undefined;
+    resultsModalOpen = false;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('event');
-    replaceState(`?${newParams.toString()}`, page.state);
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true, keepFocus: true });
   };
 
   onMount(async () => {
@@ -82,4 +89,9 @@
   onClose={closeEvent}
   {openResultsModal}
 />
-<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} />
+<ResultsModal
+  open={resultsModalOpen}
+  event={resultsModalEvent}
+  onClose={closeResultsModal}
+  {openEvent}
+/>

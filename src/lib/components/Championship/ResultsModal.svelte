@@ -9,11 +9,13 @@
   import './markdown.css';
 
   type ResultsModalProps = {
+    open: boolean;
     event: ScheduledEvent | undefined;
     onClose: () => void;
+    openEvent: (day: number, month: number, year: number) => void;
   };
 
-  const { event, onClose }: ResultsModalProps = $props();
+  const { open, event, onClose, openEvent }: ResultsModalProps = $props();
 
   let loading = $state(true);
   let results: EventResult[] = $state([]);
@@ -45,9 +47,23 @@
       return formatTime(result.net_time);
     }
   };
+
+  const eventDate = $derived(event ? new Date(event.start_time) : new Date());
+
+  const onViewEvent = (e: Event) => {
+    e.preventDefault();
+    if (event) {
+      const date = new Date(eventDate);
+      onClose();
+      openEvent(date.getDate(), date.getMonth() + 1, date.getFullYear());
+    }
+  };
+
+  const classPulse =
+    'inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent';
 </script>
 
-<Modal open={!!event} {onClose}>
+<Modal {open} {onClose}>
   <Card class="w-150 flex max-h-full max-w-full flex-col p-0">
     <h1 class="p-5 text-2xl font-bold tracking-tight">
       {event
@@ -59,15 +75,28 @@
     >
       <div
         class={[
-          'flex w-full',
-          loading || results.length === 0
-            ? 'aspect-16/9 items-center justify-center'
-            : 'flex-col overflow-y-auto',
+          'aspect-9/16 md:aspect-1 flex w-full flex-col overflow-y-hidden',
+          !loading && results.length === 0 && 'items-center justify-center',
+          !loading && results.length > 0 && '!overflow-y-auto',
         ]}
       >
         {#if loading}
           <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            {msg['championship.loading']()}
+            {#each Array(32) as _, index (index)}
+              <div
+                class={[
+                  'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-3 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
+                ]}
+              >
+                <div class={classPulse}>.</div>
+                <div class={classPulse}>
+                  <div class="truncate">.</div>
+                </div>
+                <div class={classPulse}>.</div>
+                <div class={classPulse}>.</div>
+                <div class={classPulse}>.</div>
+              </div>
+            {/each}
           </div>
         {:else if results.length === 0}
           <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
@@ -119,7 +148,16 @@
         {/if}
       </div>
     </div>
-    <div class="flex justify-end p-2">
+    <div class="flex justify-between p-2">
+      <Button
+        onClick={onViewEvent}
+        color="info"
+        variant="text"
+        tag="a"
+        href={`?date=${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`}
+      >
+        {msg['championship.event.view_event']()}
+      </Button>
       <Button onClick={onClose} color="secondary" variant="text">
         {msg['action.close']()}
       </Button>

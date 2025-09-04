@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { replaceState } from '$app/navigation';
-  import { page } from '$app/state';
   import { m as msg } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import { format } from '$lib/localeFormat/date';
@@ -57,8 +55,6 @@
     const eventDay = getDay(index);
     const eventMonth = getMonth(index);
     const eventYear = getYear(index);
-    const newUrl = `?date=${eventYear}-${String(eventMonth).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`;
-    replaceState(newUrl, page.state);
     onEventClick(eventDay, eventMonth, eventYear);
   };
 
@@ -67,7 +63,7 @@
   });
 </script>
 
-<Card>
+<Card class="overflow-hidden">
   <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
     {format(new Date(year, month - 1, 1), msg['config.calendarFormat']())}
   </h4>

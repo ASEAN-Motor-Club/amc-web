@@ -29,7 +29,7 @@
 </script>
 
 <div
-  class="-mx-8 flex flex-row items-center gap-4 overflow-x-auto px-8 sm:mx-0 sm:justify-center sm:px-0"
+  class="-mx-8 flex flex-row items-center gap-4 overflow-x-auto px-8 py-4 sm:mx-0 sm:justify-center sm:overflow-x-visible sm:p-0"
 >
   <StandingCard title={msg['championship.team_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}

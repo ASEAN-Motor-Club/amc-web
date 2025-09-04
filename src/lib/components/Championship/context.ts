@@ -4,7 +4,7 @@ import type { ScheduledEvent } from '$lib/api/types';
 const key = {};
 
 export type ChampionshipContext = {
-  readonly events: ScheduledEvent[];
+  events: ScheduledEvent[];
   openEvent: (day: number, month: number, year: number) => void;
 };
 
