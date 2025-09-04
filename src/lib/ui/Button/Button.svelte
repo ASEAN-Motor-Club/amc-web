@@ -240,7 +240,7 @@
     clsx(propsClassName),
   )}
   onclick={onClick as MouseEventHandler<HTMLDivElement>}
-  type={props.tag !== 'button' ? undefined : (props.type ?? 'button')}
+  type={props.tag === 'button' || props.tag === undefined ? (props.type ?? 'button') : undefined}
   {disabled}
   href={props.tag === 'a' ? props.href : undefined}
   role={props.tag ?? 'button'}

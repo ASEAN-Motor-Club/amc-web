@@ -85,7 +85,14 @@
   };
 
   const handleLoadFromClipboard = async () => {
-    const clipboard = await navigator.clipboard.readText();
+    let clipboard: string;
+    try {
+      clipboard = await navigator.clipboard.readText();
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+    
     if (!clipboard) {
       showModal({
         title: msg['track_editor.select_track.error.title'](),

@@ -163,7 +163,7 @@
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
   <Card class="flex-1 overflow-hidden p-0">
     <MtMap
-      class="h-full"
+      class="h-full brightness-200 contrast-80"
       groups={trackGroup}
       {zoomFit}
       {mapImage}

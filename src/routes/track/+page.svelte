@@ -4,9 +4,7 @@
   import SelectTrack from '$lib/components/TrackEditor/Editor/SelectTrack.svelte';
   import type { Track } from '$lib/schema/track';
   import { m as msg } from '$lib/paraglide/messages';
-  import { getTrackDataContext } from './+layout.svelte';
-
-  const trackData = getTrackDataContext();
+  import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
 
   const handleSelect = (track: Track | undefined) => {
     trackData.value = track;

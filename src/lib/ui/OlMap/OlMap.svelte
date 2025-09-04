@@ -85,6 +85,10 @@
       wrapX: false,
       projection: projection,
     }),
+    style: {
+      exposure: 0.5,
+      gamma: 1.5,
+    },
   });
 
   const allLayers = $derived([tileLayer, ...(layers ?? [])]);
