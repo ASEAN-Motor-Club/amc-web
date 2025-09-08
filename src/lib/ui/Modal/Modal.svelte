@@ -8,7 +8,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 
-  export type ModalProps = {
+  export interface ModalProps {
     /**
      * Whether the modal is open or not
      */
@@ -35,7 +35,7 @@
      * CSS class to apply to the modal component
      */
     class?: ClassValue;
-  };
+  }
 
   const {
     open,

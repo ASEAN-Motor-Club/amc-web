@@ -16,6 +16,7 @@ export default ts.config(
   includeIgnoreFile(gitignorePath),
   js.configs.recommended,
   ...ts.configs.strict,
+  ...ts.configs.stylistic,
   ...svelte.configs.recommended,
   prettier,
   ...svelte.configs.prettier,

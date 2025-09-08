@@ -2,20 +2,20 @@ import { getContext, setContext } from 'svelte';
 
 const key = {};
 
-export type ModalParams = {
+export interface ModalParams {
   title: string;
   message: string;
   confirmAction?: () => void;
   cancelAction?: () => void;
   confirmText?: string;
   cancelText?: string;
-};
+}
 
-export type MsgModalContext = {
+export interface MsgModalContext {
   showModal: (params: ModalParams) => void;
   hideModal: () => void;
   readonly isOpen: boolean;
-};
+}
 
 export function setMsgModalContext(msgModal: MsgModalContext) {
   setContext(key, msgModal);

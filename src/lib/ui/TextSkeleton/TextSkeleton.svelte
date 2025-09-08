@@ -3,12 +3,12 @@
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
 
-  export type TextSkeletonProps = {
+  export interface TextSkeletonProps {
     /**
      * CSS class to apply to the text skeleton component
      */
     class?: ClassValue;
-  };
+  }
 
   const { class: propsClassName }: TextSkeletonProps = $props();
 </script>

@@ -3,14 +3,14 @@
   import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
 
-  type EventButtonProps = {
+  interface EventButtonProps {
     currentMonth: number;
     year: number;
     month: number;
     day: number;
     onClick: () => void;
     dateWithEvents: SvelteMap<string, EventType>;
-  };
+  }
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();

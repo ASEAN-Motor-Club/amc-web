@@ -72,18 +72,6 @@ describe('trackSchema', () => {
       }
     });
 
-    it('should reject route name that is too long', () => {
-      const trackWithLongName = {
-        ...validTrack,
-        routeName: '12345678901234567', // 17 characters
-      };
-      const result = trackSchema.safeParse(trackWithLongName);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Route name cannot exceed 16 characters');
-      }
-    });
-
     it('should reject non-string route name', () => {
       const trackWithInvalidName = {
         ...validTrack,

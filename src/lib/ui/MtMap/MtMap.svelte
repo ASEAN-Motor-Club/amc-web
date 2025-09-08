@@ -15,7 +15,7 @@
   export type PointHoverEventDetail = MotorTownMapEvent['mt-map:point-hover']['detail'];
   export type PointMoveEventDetail = MotorTownMapEvent['mt-map:point-move']['detail'];
 
-  export type MtMapProps = {
+  export interface MtMapProps {
     /*
      * The class to apply to the map element
      */
@@ -67,7 +67,7 @@
      * Callback fired when a point is moved/dragged in draggable group
      */
     onPointMove?: (event: PointMoveEventDetail) => void;
-  };
+  }
 
   const {
     class: propsClassName,

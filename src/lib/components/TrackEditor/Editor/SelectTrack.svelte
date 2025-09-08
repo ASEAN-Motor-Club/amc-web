@@ -10,9 +10,9 @@
   import { noop } from 'lodash-es';
   import { PUBLIC_PROXY_URL } from '$env/static/public';
 
-  export type SelectTrackProps = {
+  export interface SelectTrackProps {
     onSelect: (trackData: Track) => void;
-  };
+  }
 
   const { onSelect }: SelectTrackProps = $props();
 
@@ -92,7 +92,7 @@
       console.error(error);
       return;
     }
-    
+
     if (!clipboard) {
       showModal({
         title: msg['track_editor.select_track.error.title'](),

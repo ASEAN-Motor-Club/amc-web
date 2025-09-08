@@ -11,14 +11,14 @@
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
   import { page } from '$app/state';
 
-  type EventModalProps = {
+  interface EventModalProps {
     day: number | undefined;
     month: number | undefined;
     year: number | undefined;
     events: ScheduledEvent[];
     onClose: () => void;
     openResultsModal: (event: ScheduledEvent) => void;
-  };
+  }
 
   const { day, month, year, onClose, events, openResultsModal }: EventModalProps = $props();
 

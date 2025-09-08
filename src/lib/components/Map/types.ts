@@ -7,7 +7,7 @@ export const enum PointType {
   Pin,
 }
 
-export type PlayerData = {
+export interface PlayerData {
   geometry: [number, number];
   name: string;
   pointType: PointType.Player;
@@ -15,4 +15,4 @@ export type PlayerData = {
   coord: Vector2;
   vehicleKey: string | 'None';
   guid: string;
-};
+}

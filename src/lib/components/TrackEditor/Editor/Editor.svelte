@@ -30,10 +30,10 @@
   } from '$lib/tw-var';
   import type { Track, WaypointEuler } from '$lib/schema/track';
 
-  export type EditorProps = {
+  export interface EditorProps {
     /** The track data to be edited */
     initialTrackData: Track;
-  };
+  }
   const { initialTrackData }: EditorProps = $props();
 
   const { showModal } = getMsgModalContext();
@@ -163,7 +163,7 @@
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
   <Card class="flex-1 overflow-hidden p-0">
     <MtMap
-      class="h-full brightness-200 contrast-80"
+      class="contrast-80 h-full brightness-200"
       groups={trackGroup}
       {zoomFit}
       {mapImage}

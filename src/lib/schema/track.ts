@@ -40,10 +40,7 @@ const waypointSchema = z.object({
 export const trackSchema = z.object({
   routeName: z
     .string(m['track_editor.validate.name_must_be_string']())
-    .check(
-      z.minLength(1, m['track_editor.validate.name_empty']()),
-      z.maxLength(16, m['track_editor.validate.name_too_long']({ maxLength: 16 })),
-    ),
+    .check(z.minLength(1, m['track_editor.validate.name_empty']())),
   waypoints: z
     .array(waypointSchema)
     .check(
@@ -55,8 +52,8 @@ export const trackSchema = z.object({
 export type Waypoint = z.infer<typeof waypointSchema>;
 export type Track = z.infer<typeof trackSchema>;
 
-export type WaypointEuler = {
+export interface WaypointEuler {
   rotation: Vector3;
   translation: Vector3;
   scale3D: Vector3;
-};
+}

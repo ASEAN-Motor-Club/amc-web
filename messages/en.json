@@ -223,7 +223,8 @@
     },
     "pins": "Pins",
     "pin_labels": "Pin Labels",
-    "pin_no": "Pin {index}"
+    "pin_no": "Pin {index}",
+    "last_updated": "Last updated"
   },
   "home": {
     "desc_title": "MotorTown's premier community server in Southeast Asia",
@@ -394,5 +395,6 @@
       },
       "pts": "{points}pts"
     }
-  }
+  },
+  "distance_ago": "{distance} ago"
 }

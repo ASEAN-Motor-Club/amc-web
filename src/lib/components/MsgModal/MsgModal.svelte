@@ -6,9 +6,9 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import { m as msg } from '$lib/paraglide/messages';
 
-  type Props = {
+  interface Props {
     children: Snippet;
-  };
+  }
 
   const { children }: Props = $props();
 

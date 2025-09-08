@@ -5,11 +5,11 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import type { Track } from '$lib/schema/track';
 
-  type Props = {
+  interface Props {
     edited: boolean;
     initialTrackData: Track;
     trackData: Track;
-  };
+  }
 
   const { edited, initialTrackData, trackData }: Props = $props();
 

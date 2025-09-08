@@ -38,7 +38,7 @@
   import { goto } from '$app/navigation';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type HouseData } from '$lib/api/types';
+  import { DeliveryLineType, type DeliveryPointInfo, type HouseData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -52,7 +52,8 @@
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { SvelteSet } from 'svelte/reactivity';
+  import { SvelteMap, SvelteSet } from 'svelte/reactivity';
+  import { startDeliveryPointsPolling } from '$lib/api/delivery';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -172,12 +173,12 @@
       ]);
     }
 
-    const connectedDrop: SvelteSet<DeliveryCargo> = new SvelteSet();
+    const connectedDrop = new SvelteSet<DeliveryCargo>();
 
     if (deliveryPoint.dropPoint) {
       deliveryPoint.dropPoint.forEach((dropPointGuid) => {
         const dropPoint = deliveryPointsMap.get(dropPointGuid) as DeliveryPoint;
-        Object.keys(dropPoint.storage).forEach((cargoType) => {
+        Object.keys(dropPoint.demandStorage).forEach((cargoType) => {
           connectedDrop.add(cargoType as DeliveryCargo);
         });
         allDropPointLink.push([deliveryPoint, dropPoint]);
@@ -457,7 +458,7 @@
   };
 
   const getPlayerRealtimePositionCall = () => {
-    stopPolling = getPlayerRealtimePosition((data) => {
+    return getPlayerRealtimePosition((data) => {
       const result = Object.entries(data).map(([name, coord]) => ({
         geometry: reProjectPoint([coord.x, coord.y]),
         name,
@@ -476,7 +477,6 @@
 
   onMount(() => {
     const startPolling = () => {
-      console.log(document.hidden);
       stopPolling?.();
       if (document.hidden) {
         stopPolling = undefined;
@@ -484,7 +484,7 @@
         setPlayerPoints([]);
         return;
       }
-      getPlayerRealtimePositionCall();
+      stopPolling = getPlayerRealtimePositionCall();
     };
 
     document.addEventListener('visibilitychange', startPolling);
@@ -708,6 +708,23 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
+
+  let deliveryPointInfosLoading = $state(true);
+  let deliveryPointInfos = new SvelteMap<string, DeliveryPointInfo>();
+
+  onMount(() => {
+    const stopPolling = startDeliveryPointsPolling((data) => {
+      deliveryPointInfos.clear();
+      data.forEach((info) => {
+        deliveryPointInfos.set(info.guid, info);
+      });
+      deliveryPointInfosLoading = false;
+    });
+
+    return () => {
+      stopPolling();
+    };
+  });
 </script>
 
 <svelte:head>
@@ -765,5 +782,11 @@
     </Card>
   </div>
 
-  <HoverInfoTooltip {hoverInfo} {houseData} onClick={handleInfoClick} />
+  <HoverInfoTooltip
+    {hoverInfo}
+    {houseData}
+    onClick={handleInfoClick}
+    {deliveryPointInfos}
+    {deliveryPointInfosLoading}
+  />
 </div>

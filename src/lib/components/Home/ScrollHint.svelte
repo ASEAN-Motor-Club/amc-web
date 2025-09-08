@@ -4,9 +4,9 @@
   import type { UIEventHandler } from 'svelte/elements';
   import { fade } from 'svelte/transition';
 
-  export type ScrollHintProps = {
+  export interface ScrollHintProps {
     fixed?: boolean;
-  };
+  }
 
   const { fixed = false }: ScrollHintProps = $props();
 

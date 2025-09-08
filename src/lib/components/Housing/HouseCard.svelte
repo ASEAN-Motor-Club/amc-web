@@ -8,12 +8,12 @@
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { SvelteDate } from 'svelte/reactivity';
 
-  export type HoverInfoTooltipProps = {
+  export interface HoverInfoTooltipProps {
     house: House;
     houseData: HouseData | undefined;
     highlight: string;
     loading: boolean;
-  };
+  }
 
   const { house, houseData, highlight, loading }: HoverInfoTooltipProps = $props();
 
@@ -121,10 +121,10 @@
       <span class="text-text/70 dark:text-text-dark/70 italic">{msg['housing.vacant']()}</span>
     {/if}
   </div>
-  <div>
+  <!-- <div>
     <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
   </div>
   <div>
     <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
-  </div>
+  </div> -->
 </Card>

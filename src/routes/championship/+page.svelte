@@ -13,7 +13,7 @@
   import type { Team } from '$lib/api/types';
   import { format } from '$lib/localeFormat/date';
   import { page } from '$app/state';
-  import { goto, replaceState } from '$app/navigation';
+  import { replaceState } from '$app/navigation';
   import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
   import Button from '$lib/ui/Button/Button.svelte';
 

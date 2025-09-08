@@ -9,37 +9,39 @@ import type {
   DeliveryCargoType,
 } from './types';
 import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-export type DeliveryPointJson = {
+
+export interface DeliveryPointJson {
   type: DeliveryPointType;
   name: string;
   coord: Vector3;
   guid: string;
   prod?: ProductionConfig[];
   /** storage number is maxStorage */
-  storage: Record<DeliveryCargo, number>;
+  demandStorage: Record<DeliveryCargo, number>;
+  supplyStorage: Record<DeliveryCargo, number>;
   /** demand number is paymentMultiplier */
   demand?: Record<DeliveryCargo, number>;
   dropPoint?: string[];
   maxDist?: number;
   maxReceiveDist?: number;
-};
+}
 
-export type ProductionConfig = {
+export interface ProductionConfig {
   input?: Record<DeliveryCargo, number>;
   output?: Record<DeliveryCargo, number>;
   prodTime: number;
   prodSpeedMul: number;
   foodSupply?: number;
-};
+}
 
-export type DeliveryPoint = DeliveryPointJson & {
+export interface DeliveryPoint extends DeliveryPointJson {
   location: string;
   allSupply: DeliveryCargo[];
   allDemand: DeliveryCargo[];
   allSupplyKey: DeliveryCargoKey[];
   allDemandKey: DeliveryCargoKey[];
   parent?: string;
-};
+}
 
 const supplyMap = new Map<DeliveryCargo, string[]>();
 const demandMap = new Map<DeliveryCargo, string[]>();

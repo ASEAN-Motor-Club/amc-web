@@ -7,7 +7,6 @@
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
 
   onMount(() => {
-    console.log(trackData.value);
     if (!trackData.value) {
       const params = page.url.searchParams.toString();
       goto('/track' + (params && `?${params}`), { replaceState: true });

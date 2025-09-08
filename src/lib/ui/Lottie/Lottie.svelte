@@ -2,13 +2,13 @@
   import type { ClassValue } from 'svelte/elements';
   import lottie, { type AnimationItem } from 'lottie-web/build/player/lottie_light';
   import { onMount } from 'svelte';
-  type LottieProps = {
+  interface LottieProps {
     animationData: unknown;
     autoplay?: boolean;
     loop?: boolean | number;
     class?: ClassValue;
     speed?: number;
-  };
+  }
 
   const { animationData, autoplay, loop, class: className, speed }: LottieProps = $props();
 

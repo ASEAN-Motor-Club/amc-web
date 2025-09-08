@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type Snippet } from 'svelte';
 
-  export type ClickAwayBlockProps = {
+  export interface ClickAwayBlockProps {
     /** The content to render inside the block */
     children: Snippet;
     /** Whether the check is active, usually this is based on whether the children is visible and/or focused */
@@ -10,7 +10,7 @@
     onClickAway?: () => void;
     /** Additional elements to exclude from click away */
     additionalElements?: (Element | undefined)[];
-  };
+  }
 
   const { children, active, onClickAway, additionalElements = [] }: ClickAwayBlockProps = $props();
 

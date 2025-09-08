@@ -2,17 +2,17 @@ import type { Vector2, Vector3 } from '$lib/types';
 import houseJson from '$lib/assets/data/out_house.json';
 import { getLocationAtPoint } from './area';
 
-export type HouseJson = {
+export interface HouseJson {
   name: string;
   coord: Vector3;
   size: Vector2;
   /** server rent cost should be divide by 10 */
   cost: number;
-};
+}
 
-export type House = HouseJson & {
+export interface House extends HouseJson {
   location: string;
-};
+}
 
 export const houses = (houseJson as unknown as HouseJson[]).map((dp) => {
   const location = getLocationAtPoint(dp.coord);
