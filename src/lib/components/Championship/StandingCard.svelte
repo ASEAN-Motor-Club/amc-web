@@ -3,13 +3,13 @@
   import { m as msg } from '$lib/paraglide/messages';
   import type { Snippet } from 'svelte';
 
-  type StandingCardProps = {
+  interface StandingCardProps {
     title: string;
     loading: boolean;
     children: Snippet<
       [{ getStandingRowClass: (index: number) => (string | Record<string, boolean>)[] }]
     >;
-  };
+  }
 
   const { title, loading, children }: StandingCardProps = $props();
 

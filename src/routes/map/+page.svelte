@@ -38,7 +38,7 @@
   import { goto } from '$app/navigation';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type HouseData } from '$lib/api/types';
+  import { DeliveryLineType, type DeliveryPointInfo, type HouseData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -52,7 +52,8 @@
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { SvelteSet } from 'svelte/reactivity';
+  import { SvelteMap, SvelteSet } from 'svelte/reactivity';
+  import { getDeliveryPointInfos } from '$lib/api/delivery';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -172,7 +173,7 @@
       ]);
     }
 
-    const connectedDrop: SvelteSet<DeliveryCargo> = new SvelteSet();
+    const connectedDrop = new SvelteSet<DeliveryCargo>();
 
     if (deliveryPoint.dropPoint) {
       deliveryPoint.dropPoint.forEach((dropPointGuid) => {
@@ -708,6 +709,30 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
+
+  let deliveryPointInfosLoading = $state(true);
+  let deliveryPointInfos = new SvelteMap<string, DeliveryPointInfo>();
+
+  onMount(() => {
+    const abortController = new AbortController();
+    getDeliveryPointInfos(abortController.signal)
+      .then((data) => {
+        deliveryPointInfos.clear();
+        data.forEach((info) => {
+          deliveryPointInfos.set(info.guid, info);
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching delivery point infos:', error);
+      })
+      .finally(() => {
+        deliveryPointInfosLoading = false;
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  });
 </script>
 
 <svelte:head>
@@ -765,5 +790,11 @@
     </Card>
   </div>
 
-  <HoverInfoTooltip {hoverInfo} {houseData} onClick={handleInfoClick} />
+  <HoverInfoTooltip
+    {hoverInfo}
+    {houseData}
+    onClick={handleInfoClick}
+    {deliveryPointInfos}
+    {deliveryPointInfosLoading}
+  />
 </div>

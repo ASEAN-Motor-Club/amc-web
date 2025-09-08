@@ -2,11 +2,11 @@ import { getContext, setContext } from 'svelte';
 
 const key = {};
 
-export type SelectContext<T> = {
+export interface SelectContext<T> {
   readonly onSelect: (id: T) => void;
   readonly addOption: (id: T, value: string) => void;
   readonly getOption: (id: T) => string;
-};
+}
 
 export function setSelectContext<T>(context: SelectContext<T>) {
   setContext(key, context);

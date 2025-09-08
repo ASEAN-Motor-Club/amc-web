@@ -4,9 +4,9 @@
 
   const key = {};
 
-  export type TrackDataContext = {
+  export interface TrackDataContext {
     value: Track | undefined;
-  };
+  }
 
   export function setTrackDataContext(trackData: TrackDataContext) {
     setContext(key, trackData);

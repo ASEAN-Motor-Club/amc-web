@@ -4,7 +4,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 
-  export type IconProps = {
+  export interface IconProps {
     /**
      * Icon and CSS class to apply to the icon component, preferably icon should use rounded version.
      */
@@ -14,7 +14,7 @@
      * @default 'md'
      */
     size?: 'xs' | 'sm' | 'md' | 'lg' | `!text-${string}`;
-  };
+  }
 
   const { size = 'md', class: propsClassName }: IconProps = $props();
 

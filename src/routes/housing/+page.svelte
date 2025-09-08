@@ -105,9 +105,9 @@
     <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()}>
       {msg['housing.sort.rent_left']()}
     </SelectOption>
-    <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()}>
+    <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()}>
       {msg['housing.sort.depot_storage']()}
-    </SelectOption>
+    </SelectOption> -->
   </Select>
 </div>
 <div

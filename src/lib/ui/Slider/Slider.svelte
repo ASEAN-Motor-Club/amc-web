@@ -5,7 +5,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 
-  export type TextInputProps = {
+  export interface TextInputProps {
     /**
      * value of the input
      */
@@ -44,7 +44,7 @@
      * @default 'md'
      */
     size?: 'sm' | 'md';
-  };
+  }
 
   const {
     onChange,

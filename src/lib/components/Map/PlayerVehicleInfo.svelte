@@ -2,9 +2,9 @@
   import vehiclesKey from '$lib/assets/data/vehicles_key.json';
   import { m as msg } from '$lib/paraglide/messages';
 
-  export type playerVehicleInfoProps = {
+  export interface playerVehicleInfoProps {
     vehicleKey: string | 'None';
-  };
+  }
 
   const { vehicleKey }: playerVehicleInfoProps = $props();
 </script>

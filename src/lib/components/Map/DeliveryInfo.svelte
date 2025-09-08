@@ -4,16 +4,20 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { m as msg } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
+  import type { DeliveryPointInfo } from '$lib/api/types';
+  import type { SvelteMap } from 'svelte/reactivity';
 
-  export type HoverInfo = {
+  export interface HoverInfo {
     info: DeliveryPoint;
-  };
+  }
 
-  export type HoverInfoTooltipProps = {
+  export interface HoverInfoTooltipProps {
     hoverInfo: HoverInfo;
-  };
+    deliveryPointInfosLoading: boolean;
+    deliveryPointInfos: SvelteMap<string, DeliveryPointInfo>;
+  }
 
-  const { hoverInfo }: HoverInfoTooltipProps = $props();
+  const { hoverInfo, deliveryPointInfos, deliveryPointInfosLoading }: HoverInfoTooltipProps = $props();
 
   const hasDropPoint = (item: DeliveryCargo) => {
     return hoverInfo.info.dropPoint?.some((drop) =>
@@ -29,7 +33,20 @@
       <div class="flex justify-between gap-10">
         <div>{cargoName[item]}</div>
         <div class="relative">
-          <span class="absolute right-full">TODO</span>/{hoverInfo.info.storage[item]}
+          <span class="absolute right-full">
+            {#if deliveryPointInfosLoading}
+              ...
+            {:else}
+              {#if deliveryPointInfos.get(hoverInfo.info.guid)}
+                {deliveryPointInfos.get(hoverInfo.info.guid)?.supply[item]}
+              {:else}
+                0
+              {/if}
+            {/if}
+          </span>
+          {#if !item.startsWith('Type::')}
+            /{hoverInfo.info.storage[item]}
+          {/if}
         </div>
       </div>
     {/each}
@@ -47,7 +64,10 @@
           {/if}
         </div>
         <div class="relative">
-          <span class="absolute right-full">TODO</span>/{hoverInfo.info.storage[item]}
+          <span class="absolute right-full">TODO</span>
+          {#if !item.startsWith('Type::')}
+            /{hoverInfo.info.storage[item]}
+          {/if}
         </div>
       </div>
     {/each}

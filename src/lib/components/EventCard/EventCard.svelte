@@ -6,12 +6,12 @@
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
   import { formatTime } from '$lib/utils/formatTime';
 
-  export type HoverInfoTooltipProps = {
+  export interface HoverInfoTooltipProps {
     time: EventResult | undefined;
     time0: EventResult | undefined;
     index: number;
     loading: boolean;
-  };
+  }
 
   const { time, time0, index, loading }: HoverInfoTooltipProps = $props();
 

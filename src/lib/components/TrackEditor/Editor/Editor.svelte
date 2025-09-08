@@ -30,10 +30,10 @@
   } from '$lib/tw-var';
   import type { Track, WaypointEuler } from '$lib/schema/track';
 
-  export type EditorProps = {
+  export interface EditorProps {
     /** The track data to be edited */
     initialTrackData: Track;
-  };
+  }
   const { initialTrackData }: EditorProps = $props();
 
   const { showModal } = getMsgModalContext();

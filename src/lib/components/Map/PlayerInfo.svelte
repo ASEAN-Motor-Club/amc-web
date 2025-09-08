@@ -2,13 +2,13 @@
   import { type PlayerData } from './types';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
 
-  export type HoverInfo = {
+  export interface HoverInfo {
     info: PlayerData;
-  };
+  }
 
-  export type HoverInfoTooltipProps = {
+  export interface HoverInfoTooltipProps {
     hoverInfo: HoverInfo;
-  };
+  }
 
   const { hoverInfo }: HoverInfoTooltipProps = $props();
 </script>

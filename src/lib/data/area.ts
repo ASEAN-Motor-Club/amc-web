@@ -27,8 +27,7 @@ const areaVolumeWithBBox = areaVolume.map((area) => {
 export const getLocationAtPoint = (point: Vector2) => {
   const matchArea: typeof areaVolumeWithBBox = [];
 
-  for (let idx = 0; idx < areaVolumeWithBBox.length; idx++) {
-    const area = areaVolumeWithBBox[idx];
+  for (const area of areaVolumeWithBBox) {
     const inBoundingBox =
       point.x >= area.box.minX &&
       point.x <= area.box.maxX &&

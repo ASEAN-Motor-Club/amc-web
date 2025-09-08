@@ -18,7 +18,7 @@
 
   let map: Map;
 
-  export type OlMapProps = {
+  export interface OlMapProps {
     /**
      * Others layer to display on the map, usually map points. Please use utils/reProjectPoint to convert coordinates
      */
@@ -55,7 +55,7 @@
      * Callback for pointer drag events
      */
     onPointerDrag?: (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => void;
-  };
+  }
 
   let target: HTMLDivElement;
   const {

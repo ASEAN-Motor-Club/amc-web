@@ -9,12 +9,12 @@
   import type { EventType } from './types';
   import type { SvelteMap } from 'svelte/reactivity';
 
-  type CalendarProps = {
+  interface CalendarProps {
     month: number;
     year: number;
     onEventClick: (day: number, month: number, year: number) => void;
     dateWithEvents: SvelteMap<string, EventType>;
-  };
+  }
 
   const { month, year, onEventClick, dateWithEvents }: CalendarProps = $props();
 

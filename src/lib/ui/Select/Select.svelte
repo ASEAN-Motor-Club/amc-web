@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type SelectProps<T> = {
+  export interface SelectProps<T> {
     /**
      * The value of the input (id)
      */
@@ -61,7 +61,7 @@
      * The id of the input
      */
     id?: string;
-  };
+  }
 </script>
 
 <script generics="T extends string | number" lang="ts">

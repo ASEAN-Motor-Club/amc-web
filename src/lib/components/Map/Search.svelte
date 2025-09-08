@@ -48,12 +48,12 @@
     pointType: PointType.House,
   }));
 
-  export type SearchProps = {
+  export interface SearchProps {
     playerData: PlayerData[];
     onPointClick?: (point: SearchPoint) => void;
     houseData: HouseData | undefined;
     pinsData: Pins;
-  };
+  }
 
   const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
 

@@ -8,10 +8,10 @@
   import { formatTime } from '$lib/utils/formatTime';
   import './markdown.css';
 
-  type ResultsModalProps = {
+  interface ResultsModalProps {
     event: ScheduledEvent | undefined;
     onClose: () => void;
-  };
+  }
 
   const { event, onClose }: ResultsModalProps = $props();
 

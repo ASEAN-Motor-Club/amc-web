@@ -1,9 +1,9 @@
 <script lang="ts">
   import { m as msg } from '$lib/paraglide/messages';
 
-  type Props = {
+  interface Props {
     class?: string;
-  };
+  }
 
   const { class: className }: Props = $props();
 </script>

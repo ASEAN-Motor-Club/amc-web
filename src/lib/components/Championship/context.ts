@@ -3,10 +3,10 @@ import type { ScheduledEvent } from '$lib/api/types';
 
 const key = {};
 
-export type ChampionshipContext = {
+export interface ChampionshipContext {
   readonly events: ScheduledEvent[];
   openEvent: (day: number, month: number, year: number) => void;
-};
+}
 
 export function setChampionshipContext(context: ChampionshipContext) {
   setContext(key, context);

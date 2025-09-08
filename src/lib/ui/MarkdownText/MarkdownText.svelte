@@ -2,9 +2,9 @@
   import { marked } from 'marked';
   import DOMPurify from 'dompurify';
 
-  export type MarkdownTextProps = {
+  export interface MarkdownTextProps {
     text: string;
-  };
+  }
 
   const { text }: MarkdownTextProps = $props();
 

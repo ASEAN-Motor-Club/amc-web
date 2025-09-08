@@ -6,17 +6,17 @@
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
 
-  export type HoverInfo = {
+  export interface HoverInfo {
     name: string | undefined;
     pixelCoord: [number, number];
     pointType: PointType.House;
     info: House;
-  };
+  }
 
-  export type HoverInfoTooltipProps = {
+  export interface HoverInfoTooltipProps {
     hoverInfo: HoverInfo;
     houseData: HouseData | undefined;
-  };
+  }
 
   const { hoverInfo, houseData }: HoverInfoTooltipProps = $props();
 
@@ -90,10 +90,10 @@
       {rentLeftText}
     </div>
   {/if}
-  <div>
+  <!-- <div>
     <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
   </div>
   <div>
     <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
-  </div>
+  </div> -->
 </div>

@@ -1,13 +1,14 @@
+import type { DeliveryCargo, DeliveryCargoKey } from '$lib/data/types';
 import type { Track } from '$lib/schema/track';
-import type { Vector3 } from '../types';
+import type { EmptyObject, Vector3 } from '../types';
 
 export type HouseData = Record<string, House>;
 
-export type House = {
+export interface House {
   housingKey: string;
   ownerName: string;
   rentLeft: Date;
-};
+}
 
 export type PlayerEventData = Record<string, Vector3 & { vehicle_key: string; unique_id: string }>;
 
@@ -17,12 +18,12 @@ export const enum DeliveryLineType {
   Drop,
 }
 
-export type EventInfo = {
+export interface EventInfo {
   route: Track;
   best_times: BestTime[];
-};
+}
 
-export type BestTime = {
+export interface BestTime {
   rank: string;
   name: string;
   unique_id: string;
@@ -37,9 +38,9 @@ export type BestTime = {
   last_modified: number;
   event_hash: string;
   net_time: number;
-};
+}
 
-export type Team = {
+export interface Team {
   id: number;
   name: string;
   tag: string;
@@ -47,9 +48,9 @@ export type Team = {
   logo: string | null;
   bg_color: string;
   text_color: string;
-};
+}
 
-export type ScheduledEvent = {
+export interface ScheduledEvent {
   id: number;
   name: string;
   start_time: string;
@@ -58,24 +59,24 @@ export type ScheduledEvent = {
   race_setup: number;
   description: string;
   time_trial: boolean;
-};
+}
 
-export type TeamStanding = {
+export interface TeamStanding {
   total_points: number;
   team_id: number;
   team_tag: string;
   team_name: string;
-};
+}
 
-export type PersonalStanding = {
+export interface PersonalStanding {
   total_points: number;
   player_id: number;
   character_name: string;
   team_id: number | null;
   team_name: string | null;
-};
+}
 
-export type EventResult = {
+export interface EventResult {
   character: Character;
   net_time: number | null;
   championship_point: EventResultPoint | null;
@@ -84,14 +85,14 @@ export type EventResult = {
   section_index: number;
   first_section_total_time_seconds: number | null;
   last_section_total_time_seconds: number;
-};
+}
 
-export type EventResultPoint = {
+export interface EventResultPoint {
   team: Team | null;
   points: number;
-};
+}
 
-export type Character = {
+export interface Character {
   player_id: string;
   id: number;
   name: string;
@@ -102,4 +103,44 @@ export type Character = {
   truck_level: number;
   wrecker_level: number | null;
   racer_level: number;
-};
+}
+
+export interface DeliveryPointInfo {
+  coord: Vector3;
+  guid: string;
+  name: string;
+  type: string;
+  data: DeliveryPointInfoData;
+  last_updated: string;
+}
+
+export interface DeliveryPointInfoData {
+  deliveries: Delivery[] | EmptyObject;
+  inputInventory: InputInventoryElement[] | EmptyObject;
+  outputInventory: InputInventoryElement[] | EmptyObject;
+}
+
+export interface Delivery {
+  iD: number;
+  weight: number;
+  cargoKey: DeliveryCargoKey;
+  cargoType: number;
+  numCargos: number;
+  colorIndex: number;
+  senderPoint: string;
+  pathDistance: number;
+  pathSpeedKPH: number;
+  timerSeconds: number;
+  deliveryFlags: number;
+  receiverPoint: string;
+  pathClimbHeight: number;
+  registeredTimeSeconds: number;
+  paymentMultiplierByDemand: number;
+  paymentMultiplierBySupply: number;
+  paymentMultiplierByBalanceConfig: number;
+}
+
+export interface InputInventoryElement {
+  amount: number;
+  cargoKey: DeliveryCargoKey;
+}

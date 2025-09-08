@@ -11,7 +11,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 
-  export type TextInputProps = {
+  export interface TextInputProps {
     /**
      * The value of the input
      */
@@ -98,7 +98,7 @@
       | 'size'
       | 'disabled'
     >;
-  };
+  }
 
   const {
     onChange,

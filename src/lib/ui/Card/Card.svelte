@@ -4,7 +4,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
 
-  export type CardProps = {
+  export interface CardProps {
     /**
      * CSS class to apply to the card component
      */
@@ -26,7 +26,7 @@
      * Additional properties that can be passed to the card component
      */
     [key: string]: unknown;
-  };
+  }
 
   const {
     children,

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type SelectOptionProps<T> = {
+  export interface SelectOptionProps<T> {
     /**
      * The id of the option
      */
@@ -16,7 +16,7 @@
      * The content of the option
      */
     children: Snippet;
-  };
+  }
 </script>
 
 <script lang="ts" generics="T extends string | number">

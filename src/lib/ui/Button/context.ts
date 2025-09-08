@@ -2,9 +2,9 @@ import { getContext, setContext } from 'svelte';
 
 const key = {};
 
-export type BtnIconSizeContext = {
+export interface BtnIconSizeContext {
   getSize: () => 'xs' | 'sm' | 'md' | 'lg';
-};
+}
 
 export function setBtnIconSizeContext(context: BtnIconSizeContext) {
   setContext(key, context);

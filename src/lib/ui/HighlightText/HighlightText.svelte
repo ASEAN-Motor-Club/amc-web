@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ClassValue } from 'svelte/elements';
 
-  type HighlightTextProps = {
+  interface HighlightTextProps {
     text: string;
     highlight: string;
     caseInSensitive?: boolean;
@@ -14,7 +14,7 @@
      * @default 'b'
      */
     tag?: string;
-  };
+  }
   const {
     text,
     highlight,
