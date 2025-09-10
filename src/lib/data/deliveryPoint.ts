@@ -64,14 +64,14 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
     ),
   ).sort() as DeliveryCargo[];
 
-  allSupply.forEach((supply) => {
+  for (const supply of allSupply) {
     if (!supplyMap.has(supply)) {
       supplyMap.set(supply, []);
     }
     supplyMap.get(supply)?.push(dp.guid);
-  });
+  }
 
-  allDemand.forEach((demand) => {
+  for (const demand of allDemand) {
     if (!demandMap.has(demand)) {
       demandMap.set(demand, []);
     }
@@ -82,7 +82,7 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
       }
       demandMapNoResident.get(demand)?.push(dp.guid);
     }
-  });
+  }
 
   const allSupplyKey = allSupply.flatMap((s) =>
     s.startsWith('Type::') ? outCargoKey[s as DeliveryCargoType] : s,
@@ -92,14 +92,14 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
     s.startsWith('Type::') ? outCargoKey[s as DeliveryCargoType] : s,
   ) as DeliveryCargoKey[];
 
-  allSupplyKey.forEach((supply) => {
+  for (const supply of allSupplyKey) {
     if (!supplyKeyMap.has(supply)) {
       supplyKeyMap.set(supply, []);
     }
     supplyKeyMap.get(supply)?.push(dp.guid);
-  });
+  }
 
-  allDemandKey.forEach((demand) => {
+  for (const demand of allDemandKey) {
     if (!demandKeyMap.has(demand)) {
       demandKeyMap.set(demand, []);
     }
@@ -110,7 +110,7 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
       }
       demandKeyMapNoResident.get(demand)?.push(dp.guid);
     }
-  });
+  }
 
   const point = {
     ...dp,
@@ -126,24 +126,24 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
   return point;
 });
 
-deliveryPoints.forEach((dp) => {
+for (const dp of deliveryPoints) {
   if (dp.dropPoint) {
-    dp.dropPoint.forEach((dropPointGuid) => {
+    for (const dropPointGuid of dp.dropPoint) {
       const dropPoint = deliveryPointsMap.get(dropPointGuid);
       if (dropPoint) {
         dropPoint.parent = dp.guid;
 
-        dropPoint.allDemand.forEach((dropPointDemand) => {
+        for (const dropPointDemand of dropPoint.allDemand) {
           const demand = demandMap.get(dropPointDemand);
           if (demand) {
             const newDemand = demand.filter((d) => d !== dp.guid);
             demandMap.set(dropPointDemand, newDemand);
           }
-        });
+        }
       }
-    });
+    }
   }
-});
+}
 
 export {
   supplyMap,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type PlayerData } from './types';
+  import type { PlayerData } from './types';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
 
   export interface HoverInfo {

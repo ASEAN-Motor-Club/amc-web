@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import Portal from 'svelte-portal';
   import type { ClassValue } from 'svelte/elements';

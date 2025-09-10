@@ -11,21 +11,21 @@
 
   const dateWithEvents = $derived.by(() => {
     const map = new SvelteMap<string, EventType>();
-    championshipContext.events.forEach((event) => {
+    for (const event of championshipContext.events) {
       const endTimeExclusive = addMilliseconds(event.end_time, -1);
       const dateRange = eachDayOfInterval({ start: event.start_time, end: endTimeExclusive });
-      dateRange.forEach((date) => {
+      for (const date of dateRange) {
         const dateFormatted = format(date, 'yyyy-MM-dd');
         if (!event.time_trial) {
           map.set(format(date, 'yyyy-MM-dd'), EventType.Single);
-          return;
+          continue;
         }
         if (map.has(dateFormatted)) {
-          return;
+          continue;
         }
         map.set(format(date, 'yyyy-MM-dd'), EventType.MultiDay);
-      });
-    });
+      }
+    }
     return map;
   });
 

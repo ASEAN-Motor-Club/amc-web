@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts" generics="T extends string | number">
-  import { type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { getSelectContext } from './context';
   import clsx from 'clsx';

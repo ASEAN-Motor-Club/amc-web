@@ -176,33 +176,41 @@
     const connectedDrop = new SvelteSet<DeliveryCargo>();
 
     if (deliveryPoint.dropPoint) {
-      deliveryPoint.dropPoint.forEach((dropPointGuid) => {
+      for (const dropPointGuid of deliveryPoint.dropPoint) {
         const dropPoint = deliveryPointsMap.get(dropPointGuid) as DeliveryPoint;
-        Object.keys(dropPoint.demandStorage).forEach((cargoType) => {
+        for (const cargoType of dropPoint.allDemand) {
           connectedDrop.add(cargoType as DeliveryCargo);
-        });
+        }
         allDropPointLink.push([deliveryPoint, dropPoint]);
-      });
+      }
     }
 
     const allSupplyDestinations = uniq(
       deliveryPoint.allSupplyKey
-        .map((d) => [cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
-        .flatMap(([d, dps]) =>
+        .map((d) => [d, cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
+        .flatMap(([d, cd, dps]) =>
           dps.map((dp) => {
             const point = deliveryPointsMap.get(dp) as DeliveryPoint;
-            if (d.minDist || d.maxDist || deliveryPoint.maxDist || point.maxReceiveDist) {
+            if (point.dropPoint) {
+              const hasConnectedDrop = point.dropPoint.some((dropPointGuid) =>
+                deliveryPointsMap.get(dropPointGuid)?.allDemandKey.includes(d),
+              );
+              if (hasConnectedDrop) {
+                return undefined;
+              }
+            }
+            if (cd.minDist || cd.maxDist || deliveryPoint.maxDist || point.maxReceiveDist) {
               const dist = Math.hypot(
                 point.coord.x - deliveryPoint.coord.x,
                 point.coord.y - deliveryPoint.coord.y,
               );
-              if (d.minDist) {
-                if (dist < d.minDist) {
+              if (cd.minDist) {
+                if (dist < cd.minDist) {
                   return undefined;
                 }
               }
-              if (d.maxDist) {
-                if (dist > d.maxDist) {
+              if (cd.maxDist) {
+                if (dist > cd.maxDist) {
                   return undefined;
                 }
               }
@@ -230,21 +238,21 @@
       deliveryPoint.allDemandKey
         .filter((d) => !connectedDrop.has(d))
         .map((d) => [cargoMetadata[d], supplyKeyMap.get(d) ?? []] as const)
-        .flatMap(([d, dps]) =>
+        .flatMap(([cd, dps]) =>
           dps.map((dp) => {
             const point = deliveryPointsMap.get(dp) as DeliveryPoint;
-            if (d.minDist || d.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
+            if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
               const dist = Math.hypot(
                 point.coord.x - deliveryPoint.coord.x,
                 point.coord.y - deliveryPoint.coord.y,
               );
-              if (d.minDist) {
-                if (dist < d.minDist) {
+              if (cd.minDist) {
+                if (dist < cd.minDist) {
                   return undefined;
                 }
               }
-              if (d.maxDist) {
-                if (dist > d.maxDist) {
+              if (cd.maxDist) {
+                if (dist > cd.maxDist) {
                   return undefined;
                 }
               }
@@ -260,10 +268,10 @@
               }
             }
             if (point.dropPoint) {
-              point.dropPoint.forEach((dropPointGuid) => {
+              for (const dropPointGuid of point.dropPoint) {
                 const dropPoint = deliveryPointsMap.get(dropPointGuid) as DeliveryPoint;
                 allDropPointLink.push([point, dropPoint]);
-              });
+              }
             }
             return point;
           }),
@@ -594,7 +602,9 @@
       lockPoint?.set('hover', false);
       lockPoint = undefined;
     }
-    layer.layer.forEach((l) => l.setVisible(layer.enabled));
+    for (const l of layer.layer) {
+      l.setVisible(layer.enabled);
+    }
   };
 
   let map: OlMap;
@@ -715,9 +725,9 @@
   onMount(() => {
     const stopPolling = startDeliveryPointsPolling((data) => {
       deliveryPointInfos.clear();
-      data.forEach((info) => {
+      for (const info of data) {
         deliveryPointInfos.set(info.guid, info);
-      });
+      }
       deliveryPointInfosLoading = false;
     });
 

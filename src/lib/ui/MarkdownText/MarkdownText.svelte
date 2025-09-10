@@ -24,10 +24,14 @@
         element.target = '_blank';
         element.rel = 'noreferrer';
       }
-      Array.from(element.children).forEach(walkChildren);
+      for (const child of Array.from(element.children)) {
+        walkChildren(child);
+      }
     };
 
-    Array.from(textContainer.children).forEach(walkChildren);
+    for (const child of Array.from(textContainer.children)) {
+      walkChildren(child);
+    }
   });
 </script>
 

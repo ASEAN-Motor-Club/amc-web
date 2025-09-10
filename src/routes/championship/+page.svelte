@@ -27,8 +27,7 @@
   let teamText: HTMLDivElement[] = $state([]);
 
   // GSAP Timeline variables
-  let tlHead: gsap.core.Timeline | undefined;
-  let tlTeams: gsap.core.Timeline[] = [];
+  let scrollContext: gsap.Context;
   let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
@@ -38,91 +37,94 @@
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    tlHead = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: headerTrigger,
-          start: 'top top',
-          end: '+=1000',
-          scrub: true,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-        },
-      })
-      .to(
-        imageContainer,
-        {
-          scale: 0,
-          ease: 'power2.out',
-          duration: 0.5,
-        },
-        0,
-      )
-      .to(
-        textContainer.children,
-        {
-          y: 50,
-          opacity: 0,
-          stagger: 0.1,
-          ease: 'power2.out',
-          duration: 0.5,
-        },
-        0.5,
-      );
-
     teams = await getTeams(abortController.signal);
     loading = false;
     await tick();
 
-    tlTeams = teamTriggers.map((trigger, i) =>
+    scrollContext = gsap.context(() => {
       gsap
         .timeline({
           scrollTrigger: {
-            trigger: trigger,
+            trigger: headerTrigger,
             start: 'top top',
-            end: '+=1500',
+            end: '+=1000',
+            scrub: true,
             pin: true,
             pinSpacing: true,
             anticipatePin: 1,
-            scrub: true,
-            onToggle: (self) => {
-              const teamTag = teams[i]?.tag;
-              if (teamTag) {
-                const expectedHash = `#team-${teamTag}`;
-                if (self.isActive) {
-                  replaceState(expectedHash, page.state);
-                } else if (!self.isActive) {
-                  replaceState('', page.state);
-                }
-              }
-            },
           },
         })
-        .from(
-          trigger.children,
+        .to(
+          imageContainer,
           {
-            x: 50,
-            opacity: 0,
-            stagger: 0.1,
+            scale: 0,
             ease: 'power2.out',
             duration: 0.5,
           },
           0,
         )
-        .from(
-          teamText[i].children,
+        .to(
+          textContainer.children,
           {
-            x: -50,
+            y: 50,
             opacity: 0,
             stagger: 0.1,
             ease: 'power2.out',
             duration: 0.5,
           },
           0.5,
-        )
-        .to({}, { duration: 3 }),
-    );
+        );
+
+      for (let i = 0; i < teamTriggers.length; i++) {
+        const trigger = teamTriggers[i];
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: trigger,
+              start: 'top top',
+              end: '+=1500',
+              pin: true,
+              pinSpacing: true,
+              anticipatePin: 1,
+              scrub: true,
+              onToggle: (self) => {
+                const teamTag = teams[i]?.tag;
+                if (teamTag) {
+                  const expectedHash = `#team-${teamTag}`;
+                  if (self.isActive) {
+                    replaceState(expectedHash, page.state);
+                  } else if (!self.isActive) {
+                    replaceState('', page.state);
+                  }
+                }
+              },
+            },
+          })
+          .from(
+            trigger.children,
+            {
+              x: 50,
+              opacity: 0,
+              stagger: 0.1,
+              ease: 'power2.out',
+              duration: 0.5,
+            },
+            0,
+          )
+          .from(
+            teamText[i].children,
+            {
+              x: -50,
+              opacity: 0,
+              stagger: 0.1,
+              ease: 'power2.out',
+              duration: 0.5,
+            },
+            0.5,
+          )
+          .to({}, { duration: 3 });
+      }
+    });
 
     const initialHash = page.url.hash;
 
@@ -152,8 +154,7 @@
   };
 
   onDestroy(() => {
-    tlHead?.kill();
-    tlTeams.forEach((tlTeam) => tlTeam?.kill());
+    scrollContext?.revert();
     abortController?.abort();
   });
 </script>

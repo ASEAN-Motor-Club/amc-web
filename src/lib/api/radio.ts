@@ -1,6 +1,6 @@
 // src/lib/api/radio.ts
 
-export const getNowPlaying = async (signal?: AbortSignal): Promise<string> => {
+export const getNowPlaying = async (signal: AbortSignal): Promise<string> => {
   try {
     // Fetch directly from our own /icecast-status endpoint
     const response = await fetch('/icecast-status', { signal });

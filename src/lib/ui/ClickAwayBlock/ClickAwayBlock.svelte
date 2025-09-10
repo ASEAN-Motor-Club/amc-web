@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type Snippet } from 'svelte';
+  import type { Snippet } from 'svelte';
 
   export interface ClickAwayBlockProps {
     /** The content to render inside the block */

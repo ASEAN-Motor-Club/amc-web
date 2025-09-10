@@ -22,11 +22,11 @@
     updateThemeColor();
 
     const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+      for (const mutation of mutations) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
           updateThemeColor();
         }
-      });
+      }
     });
 
     observer.observe(document.documentElement, {
