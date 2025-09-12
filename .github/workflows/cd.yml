@@ -47,12 +47,11 @@ jobs:
         run: cp -r ./storybook-static ./build/storybook
 
       - name: 🚀 Deploy
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        uses: burnett01/rsync-deployments@7.1.0
         with:
-          username: 'sftpuser'
-          server: '${{ secrets.SERVER_IP }}'
-          ssh_private_key: ${{ secrets.SFTP_KEY }}
-          sftp_only: true
-          local_path: './build/*'
-          remote_path: '/amc-web'
-          sftpArgs: '-o ConnectTimeout=5'
+          switches: -avzr --delete
+          path: './build/'
+          remote_path: ''
+          remote_user: 'sftpuser'
+          remote_host: '${{ secrets.SERVER_IP }}'
+          remote_key: ${{ secrets.SFTP_KEY }}
