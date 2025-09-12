@@ -2,7 +2,6 @@
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import MtMap from './MtMap.svelte';
   import mapImage from '$lib/assets/images/map.avif';
-  import roadImage from '$lib/assets/images/road.svg';
 
   const { Story } = defineMeta({
     title: 'Ui/MtMap',
@@ -39,7 +38,6 @@
         },
       },
       mapImage: mapImage,
-      roadImage: roadImage,
     },
   });
 </script>
