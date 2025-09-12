@@ -26,8 +26,8 @@ export default defineConfig({
   ],
   theme: {
     font: {
-      sans: "'Noto Sans', 'Noto Sans JP', sans-serif",
-      'sans-alt': 'Koulen, sans-serif',
+      sans: "'Noto Sans', 'Noto Sans JP', 'Noto Sans Thai Looped', sans-serif",
+      'sans-alt': 'Koulen, Kanit, sans-serif',
       mono: "'Noto Sans Mono', monospace",
     },
     colors: {

@@ -7,7 +7,7 @@
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-  import { formatDistance } from '$lib/date';
+  import { formatDistanceStrict } from '$lib/date';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -112,7 +112,7 @@
 {/if}
 <div class="text-xs">
   <span class="font-semibold">{msg['map.last_updated']()}:</span>
-  {msg['distance_ago']({
-    distance: formatDistance(date, deliveryPointInfo?.last_updated ?? new Date()),
+  {formatDistanceStrict(deliveryPointInfo?.last_updated ?? new Date(), date, {
+    addSuffix: true,
   })}
 </div>

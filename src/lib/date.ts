@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-restricted-imports */
 import {
   format as dateFnsFormat,
-  formatDistance as dateFnsFormatDistance,
+  formatDistanceStrict as dateFnsFormatDistanceStrict,
+  formatDuration as dateFnsFormatDuration,
   type DateArg,
   type FormatOptions,
-  type FormatDistanceOptions,
+  type FormatDistanceStrictOptions,
+  type FormatDurationOptions,
+  type Duration,
 } from 'date-fns';
 
 export {
@@ -14,8 +17,24 @@ export {
   isBefore,
   isAfter,
   isSameYear,
+  intervalToDuration,
 } from 'date-fns';
-export { enUS } from 'date-fns/locale';
+
+import { enUS, th } from 'date-fns/locale';
+import { getLocale } from './paraglide/runtime';
+export { enUS };
+
+const getDateFnsLocale = () => {
+  const locale = getLocale();
+  switch (locale) {
+    case 'en':
+      return enUS;
+    case 'th':
+      return th;
+    default:
+      return enUS;
+  }
+};
 
 export const format = (
   date: DateArg<Date>,
@@ -24,15 +43,27 @@ export const format = (
 ) => {
   return dateFnsFormat(date, format, {
     ...options,
+    locale: getDateFnsLocale(),
   });
 };
 
-export const formatDistance = (
+export const formatDistanceStrict = (
   laterDate: DateArg<Date>,
   earlierDate: DateArg<Date>,
-  options?: Omit<FormatDistanceOptions, 'locale'>,
+  options?: Omit<FormatDistanceStrictOptions, 'locale'>,
 ) => {
-  return dateFnsFormatDistance(laterDate, earlierDate, {
+  return dateFnsFormatDistanceStrict(laterDate, earlierDate, {
     ...options,
+    locale: getDateFnsLocale(),
+  });
+};
+
+export const formatDuration = (
+  duration: Duration,
+  options?: Omit<FormatDurationOptions, 'locale'>,
+) => {
+  return dateFnsFormatDuration(duration, {
+    ...options,
+    locale: getDateFnsLocale(),
   });
 };

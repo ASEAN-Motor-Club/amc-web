@@ -29,7 +29,6 @@
     "validate": {
       "name_empty": "Name cannot be empty.",
       "name_must_be_string": "Route name must be a string.",
-      "name_too_long": "Name cannot be longer than {maxLength} characters.",
       "waypoint_invalid": "Waypoint {index} key {key}: Type is invalid, expect {type}.",
       "waypoints_min_length": "Track must have at least {minLength} waypoints.",
       "waypoints_max_length": "Track must not exceed {maxLength} waypoints."
@@ -45,8 +44,7 @@
         "invalid_track": "Invalid track data:",
         "clipboard_empty": "Clipboard is empty or does not contain valid track data.",
         "cannot_load_track": "Cannot load track",
-        "cannot_load_track_desc": "Failed to load track data. Please check the URL.",
-        "copy_to_clipboard_failed": "Failed to copy track data to clipboard."
+        "cannot_load_track_desc": "Failed to load track data. Please check the URL."
       }
     },
     "editor": {
@@ -169,7 +167,6 @@
   "housing": {
     "head": "{siteName} | Housing",
     "title": "Housing",
-    "owner": "Owner",
     "size": "Size",
     "rent_price": "Rent price",
     "rent_left": "Rent left",
@@ -180,37 +177,6 @@
     "owned_house": "{owner}'s House",
     "id": "ID",
     "expired": "Expired",
-    "minutes": [
-      {
-        "declarations": ["input minutes", "local p = minutes: plural"],
-        "selectors": ["p"],
-        "match": {
-          "p=one": "{minutes} minute",
-          "p=other": "{minutes} minutes"
-        }
-      }
-    ],
-    "hours": [
-      {
-        "declarations": ["input hours", "local p = hours: plural"],
-        "selectors": ["p"],
-        "match": {
-          "p=one": "{hours} hour",
-          "p=other": "{hours} hours"
-        }
-      }
-    ],
-    "days": [
-      {
-        "declarations": ["input days", "local p = days: plural"],
-        "selectors": ["p"],
-        "match": {
-          "p=one": "{days} day",
-          "p=other": "{days} days"
-        }
-      }
-    ],
-    "less_than_minute": "<1 minute",
     "search_placeholder": "Search house or owner",
     "sort": {
       "name": "Name",
@@ -221,10 +187,7 @@
     "cannot_load": {
       "title": "Cannot load housing data",
       "desc": "Failed to load housing data. Please try again later."
-    },
-    "minute": "minute",
-    "hour": "hour",
-    "day": "day"
+    }
   },
   "view_on_map": "View on Map",
   "industries": {
@@ -247,42 +210,20 @@
     "our_teams": "Our Teams",
     "event": {
       "title": "Event on {date}",
-      "sub_event": [
-        {
-          "match": {
-            "o=one": "First Event:",
-            "o=two": "Second Event:",
-            "o=few": "Third Event:",
-            "o=other": "{no}th Event:"
-          }
-        }
-      ],
-      "sub_event_single": "Event:",
-      "sub_event_race": "{name} race",
       "more_info": "More info",
-      "official": "Official",
-      "unofficial": "Unofficial",
-      "event_type": {
-        "championship": "championship",
-        "warmup": "warm-up"
-      },
       "results": "Results",
       "event_results": "{event} Results",
       "dnf": "DNF",
       "no_results": "No results yet",
       "view_event": "View Event"
     },
-    "coming_soon": "Coming soon!",
     "starting_from": "From {date}",
     "title": "AMC Championship Cup",
     "season": "Season {seasonNo}",
     "standing": "Standing",
     "team_standing": "Team Standing",
     "personal_standing": "Personal Standing",
-    "coming_back": "Come back when the season starts for standing",
     "schedule": "Schedule",
-    "teams": "Teams",
-    "scroll_hint": "Scroll to begin!",
     "team_logo_alt": "{team} Logo",
     "results": {
       "head": "{siteName} | Results",
@@ -294,6 +235,5 @@
       },
       "pts": "{points}pts"
     }
-  },
-  "distance_ago": "{distance} ago"
+  }
 }

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
+  import { formatDuration, intervalToDuration, isBefore } from '$lib/date';
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -26,45 +27,17 @@
       return '';
     }
 
-    let rentLeft = currentHouseData.rentLeft.getTime() - SvelteDate.now();
-
     // If rent has expired
-    if (rentLeft <= 0) {
+    if (isBefore(currentHouseData.rentLeft, SvelteDate.now())) {
       return msg['housing.expired']();
     }
 
-    // Convert milliseconds to different units
-    const minutes = Math.floor((rentLeft / (1000 * 60)) % 60);
-    const hours = Math.floor((rentLeft / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(rentLeft / (1000 * 60 * 60 * 24));
+    const duration = intervalToDuration({
+      start: SvelteDate.now(),
+      end: currentHouseData.rentLeft,
+    });
 
-    let parts = [];
-    if (days > 0) {
-      parts.push(
-        msg['housing.days']({
-          days,
-        }),
-      );
-    }
-    if (hours > 0) {
-      parts.push(
-        msg['housing.hours']({
-          hours,
-        }),
-      );
-    }
-    if (minutes > 0) {
-      parts.push(
-        msg['housing.minutes']({
-          minutes,
-        }),
-      );
-    }
-    if (parts.length > 0) {
-      return parts.join(' ');
-    } else {
-      return msg['housing.less_than_minute']();
-    }
+    return formatDuration(duration, { format: ['days', 'hours', 'minutes'] });
   });
 </script>
 

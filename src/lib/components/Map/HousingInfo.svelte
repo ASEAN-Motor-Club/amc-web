@@ -5,6 +5,8 @@
   import { SvelteDate } from 'svelte/reactivity';
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
+  import { isBefore } from '$lib/date';
+  import { formatDistanceStrict } from '$lib/date';  
 
   export interface HoverInfo {
     name: string | undefined;
@@ -32,34 +34,14 @@
       return '...';
     }
 
-    let rentLeft = currentHouseData.rentLeft.getTime() - SvelteDate.now();
-
     // If rent has expired
-    if (rentLeft <= 0) {
+    if (isBefore(currentHouseData.rentLeft, SvelteDate.now())) {
       return msg['housing.expired']();
     }
 
-    // Convert milliseconds to different units
-    const minutes = Math.floor(rentLeft / (1000 * 60));
-    const hours = Math.floor(rentLeft / (1000 * 60 * 60));
-    const days = Math.floor(rentLeft / (1000 * 60 * 60 * 24));
-
-    // Show only the highest applicable unit
-    if (days > 0) {
-      return msg['housing.days']({
-        days,
-      });
-    } else if (hours > 0) {
-      return msg['housing.hours']({
-        hours,
-      });
-    } else if (minutes > 0) {
-      return msg['housing.minutes']({
-        minutes,
-      });
-    } else {
-      return msg['housing.less_than_minute']();
-    }
+    return formatDistanceStrict(currentHouseData.rentLeft, new Date(), {
+      roundingMethod: 'floor',
+    });
   });
 </script>
 

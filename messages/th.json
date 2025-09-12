@@ -1,3 +1,239 @@
 {
-  "$schema": "https://inlang.com/schema/inlang-message-format"
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "format": {
+    "calendarFormat": "MMMM yyyy",
+    "dateFormat": "d MMM yyyy",
+    "timeFormat": "H:mm",
+    "dateTimeFormat": "d MMM yyyy H:mm",
+    "dateFull": "EEEE, d MMMM yyyy",
+    "scheduleFormat": {
+      "sameDay": "H:mm",
+      "sameYear": "d MMM H:mm",
+      "crossYear": "d MMM yyyy H:mm"
+    }
+  },
+  "site_name_short": "AMC",
+  "site_name": "Asean Motor Club",
+  "action": {
+    "confirm": "ยืนยัน",
+    "close": "ปิด",
+    "delete": "ลบ",
+    "cancel": "ยกเลิก"
+  },
+  "or": "หรือ",
+  "unknown": "ไม่ทราบ",
+  "track_editor": {
+    "title": "เครื่องมือแก้ไขสนาม",
+    "head": "{siteName} | เครื่องมือแก้ไขสนาม",
+    "head_editing": "{siteName} | เครื่องมือแก้ไขสนาม | กำลังแก้ไข {routeName}",
+    "validate": {
+      "name_empty": "ชื่อต้องไม่เป็นค่าว่าง",
+      "name_must_be_string": "ชื่อเส้นทางต้องเป็นข้อความ",
+      "waypoint_invalid": "จุดที่ {index} คีย์ {key}: ประเภทไม่ถูกต้อง คาดหวัง {type}",
+      "waypoints_min_length": "สนามต้องมีจุดอย่างน้อย {minLength} จุด",
+      "waypoints_max_length": "สนามต้องไม่เกิน {maxLength} จุด"
+    },
+    "select_track": {
+      "drag_drop": "ลากและวางไฟล์",
+      "select_file": "เลือกไฟล์",
+      "load_from_clipboard": "โหลดจากคลิปบอร์ด",
+      "loading_track": "กำลังโหลดสนาม...",
+      "error": {
+        "title": "เกิดข้อผิดพลาด",
+        "load_error": "ไม่สามารถโหลดไฟล์ได้",
+        "invalid_track": "ข้อมูลสนามไม่ถูกต้อง:",
+        "clipboard_empty": "คลิปบอร์ดว่างเปล่าหรือไม่มีข้อมูลสนามที่ถูกต้อง",
+        "cannot_load_track": "ไม่สามารถโหลดสนามได้",
+        "cannot_load_track_desc": "ไม่สามารถโหลดข้อมูลสนาม กรุณาตรวจสอบ URL"
+      }
+    },
+    "editor": {
+      "copy_to_clipboard_failed": {
+        "title": "ข้อผิดพลาด",
+        "desc": "ไม่สามารถคัดลอกข้อมูลสนามไปยังคลิปบอร์ดได้"
+      },
+      "copied": {
+        "title": "คัดลอกแล้ว",
+        "desc": "คัดลอกสนามไปยังคลิปบอร์ดแล้ว"
+      },
+      "normalize_waypoints": {
+        "title": "ปรับจุดให้เป็นมาตรฐาน",
+        "desc": "บางครั้งการหมุนของจุดอาจเอียงแปลกๆ การทำนี้จะปรับจุดทั้งหมดให้ตั้งตรง (ทำให้การหมุน x,y = 0)"
+      },
+      "auto_rotate_waypoints": {
+        "title": "หมุนจุดอัตโนมัติ",
+        "desc": "จะหมุนจุดทั้งหมดโดยอัตโนมัติตามตำแหน่งของจุดข้างเคียง"
+      },
+      "delete_waypoint": {
+        "title": "ลบจุด",
+        "desc": "คุณแน่ใจหรือไม่ว่าต้องการลบจุดนี้?"
+      },
+      "download_title": "ดาวน์โหลด {file}",
+      "original": "ต้นฉบับ",
+      "edited": "แก้ไขแล้ว",
+      "change_btn": "เปลี่ยนเป็น {file}",
+      "clipboard": "คลิปบอร์ด",
+      "file": "ไฟล์",
+      "selected_point": "จุดที่เลือก: {pointNumber}",
+      "hide_more": "ซ่อนอื่นๆ",
+      "show_more": "แสดงอื่นๆ",
+      "save_changes": "บันทึกการเปลี่ยนแปลง",
+      "delete": "ลบ",
+      "auto_rotate": "หมุนอัตโนมัติ",
+      "rotation_z": "การหมุน (Z)",
+      "rotation_x": "การหมุน (X)",
+      "rotation_y": "การหมุน (Y)",
+      "translation_x": "การเลื่อน (X)",
+      "translation_y": "การเลื่อน (Y)",
+      "translation_z": "การเลื่อน (Z)",
+      "scale_x": "ขนาด (X)",
+      "scale_y": "ขนาด (Y)",
+      "scale_z": "ขนาด (Z)",
+      "select_point_to_edit": "เลือกจุดเพื่อเริ่มแก้ไข",
+      "global_operations": "การดำเนินการทั่วไป",
+      "normalize": "ปรับให้เป็นมาตรฐาน",
+      "auto_rotate_all_gates": "หมุนประตูทั้งหมดอัตโนมัติ"
+    }
+  },
+  "navbar": {
+    "track_editor": "เครื่องมือแก้ไขสนาม",
+    "map": "แผนที่",
+    "housing": "ที่อยู่อาศัย",
+    "industries": "อุตสาหกรรม",
+    "radio": "วิทยุ",
+    "join_discord": "เข้าร่วม DISCORD ของเรา"
+  },
+  "map": {
+    "head": "{siteName} | แผนที่",
+    "point_of_interests": "จุดที่น่าสนใจ (คลิกเพื่อซ่อน)",
+    "delivery_point": "จุดส่งของ",
+    "house": "บ้าน",
+    "player": "ผู้เล่น",
+    "player_name": "ชื่อผู้เล่น",
+    "search_placeholder": "ค้นหาสถานที่",
+    "supply": "จุดผลิต",
+    "demand": "จุดต้องการ",
+    "more_results": [
+      {
+        "declarations": ["input count", "local p = count: plural"],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "มีผลลัพธ์อีก {count} รายการ ลองค้นหาให้เจาะจงมากขึ้น",
+          "p=other": "มีผลลัพธ์อีก {count} รายการ ลองค้นหาให้เจาะจงมากขึ้น"
+        }
+      }
+    ],
+    "click_lock": "คลิกขวาเพื่อล็อคเส้นจ่าย",
+    "click_info": "คลิกซ้ายเพื่อดูข้อมูลเพิ่มเติม",
+    "click_here_info": "คลิกที่นี่เพื่อดูข้อมูลเพิ่มเติม",
+    "player_info": {
+      "driving": "กำลังขับ {vehicle}",
+      "on_foot": "เดินเท้า/ผู้โดยสาร",
+      "unknown_vehicle": "ยานพาหนะไม่ทราบ"
+    },
+    "pins_invalid": {
+      "title": "หมุดไม่ถูกต้อง",
+      "desc": "หมุดที่คุณระบุไม่ถูกต้อง"
+    },
+    "pins": "หมุด",
+    "pin_labels": "ป้ายชื่อหมุด",
+    "pin_no": "หมุด {index}",
+    "last_updated": "อัปเดตล่าสุด"
+  },
+  "home": {
+    "desc_title": "เซิร์ฟเวอร์ชุมชนชั้นนำของ MotorTown ในเอเชียตะวันออกเฉียงใต้",
+    "description": "ที่ซึ่งผู้เล่นที่เป็นมิตรและมีความหลงใหลจะพุ่งความสามารถของตนไปสู่ขีดจำกัด แข่งขันข้ามภูมิประเทศที่หลากหลาย ออกแบบลิเวอรี่ที่สะดุดตา และปรับแต่งรถของคุณเพื่อเอาชนะในกิจกรรมสุดสัปดาห์ของเรา เราจัดการแข่งขันเป็นประจำและการแข่งขันเชิงสร้างสรรค์ และยังมีสถานีวิทยุของเราเองด้วย เข้าร่วม Discord ของเรา เพื่อมีส่วนร่วมและติดตามข่าวสาร!",
+    "copyright": "© {year} Asean Motor Club สงวนสิทธิ์ทั้งหมด",
+    "join_discord": "เข้าร่วม Discord",
+    "listen_radio": "ฟังวิทยุ AMC",
+    "regular_events": "กิจกรรมประจำ",
+    "ig_live_radio": "วิทยุสดในเกม",
+    "ig_bot": "บอทช่วยเหลือในเกม",
+    "friendly_community": "ชุมชนที่เป็นมิตร",
+    "live_server_no_count": "เซิร์ฟเวอร์สด",
+    "live_server": [
+      {
+        "declarations": ["input players", "local p = players: plural"],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "เซิร์ฟเวอร์สด - ผู้เล่น {players} คนออนไลน์",
+          "p=other": "เซิร์ฟเวอร์สด - ผู้เล่น {players} คนออนไลน์"
+        }
+      }
+    ],
+    "iframe_discord": "Discord Asean Motor Club"
+  },
+  "not_finished": "อยู่ระหว่างการก่อสร้าง กรุณากลับมาใหม่ภายหลัง!",
+  "housing": {
+    "head": "{siteName} | ที่อยู่อาศัย",
+    "title": "ที่อยู่อาศัย",
+    "size": "ขนาด",
+    "rent_price": "ราคาค่าเช่า",
+    "rent_left": "เวลาเช่าคงเหลือ",
+    "depot": "คลังสินค้า",
+    "depot_storage": "พื้นที่เก็บของคลัง",
+    "vacant_house": "บ้านว่าง",
+    "vacant": "ว่าง",
+    "owned_house": "บ้านของ {owner}",
+    "id": "ID",
+    "expired": "หมดอายุแล้ว",
+    "search_placeholder": "ค้นหาบ้านหรือเจ้าของ",
+    "sort": {
+      "name": "ชื่อ",
+      "id": "ID",
+      "rent_left": "เวลาเช่าคงเหลือ",
+      "depot_storage": "พื้นที่เก็บของคลัง"
+    },
+    "cannot_load": {
+      "title": "ไม่สามารถโหลดข้อมูลที่อยู่อาศัยได้",
+      "desc": "ไม่สามารถโหลดข้อมูลที่อยู่อาศัย กรุณาลองใหม่ภายหลัง"
+    }
+  },
+  "view_on_map": "ดูบนแผนที่",
+  "industries": {
+    "head": "{siteName} | อุตสาหกรรม",
+    "title": "อุตสาหกรรม"
+  },
+  "radio": {
+    "head": "{siteName} | วิทยุ",
+    "title": "วิทยุ",
+    "station_name": "วิทยุ Asean Motor Club",
+    "play": "เล่น",
+    "pause": "หยุดชั่วคราว"
+  },
+  "radio_guide": {
+    "content_markdown": "# คุณสมบัติวิทยุ\n\n- ขอเพลง (ใช้ `/song_request` ใน Discord)\n- ข่าวสาร\n- คู่มือเกม เช่น การปรับแต่ง การหาเงิน ฯลฯ\n\n## 2 วิธีที่คุณสามารถฟังได้!\n\n- ใช้ม็อดเพื่อเพิ่มวิทยุ Asean Motor Club ลงในเกมของคุณ! ดูคู่มือการติดตั้งด้านล่าง\n- เยี่ยมชมเว็บสตรีมของเรา: [https://www.aseanmotorclub.com/stream](https://www.aseanmotorclub.com/stream)\n\n---\n\n## การติดตั้งม็อด\n\nดาวน์โหลดม็อดที่นี่: [ดาวน์โหลด RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\nวางไฟล์ `RadioMod_P.pak` ใน:\n\n```\nsteamapps\\common\\Motor Town\\MotorTown\\Content\\Paks\\\n```\n\nข้างๆ `MotorTown-Windows.pak` **คุณต้องรีสตาร์ทเกม**\n\n## วิธีหาโฟลเดอร์เกมของคุณ:\n\n1. เปิด Steam > Library\n2. คลิกขวาที่เกมของคุณ > Manage > Browse Local Files\n3. ไปที่ `MotorTown > Content > Paks`\n4. วางไฟล์ `RadioMod_P.pak` ข้างๆ `MotorTown-Windows.pak`\n5. **รีสตาร์ทเกมเพื่อให้ม็อดทำงาน**"
+  },
+  "championship": {
+    "head": "{siteName} | ถ้วย AMC ฤดูกาลที่ {seasonNo}",
+    "event_details": "รายละเอียดกิจกรรม",
+    "our_teams": "ทีมของเรา",
+    "event": {
+      "title": "กิจกรรมเมื่อ {date}",
+      "more_info": "ข้อมูลเพิ่มเติม",
+      "results": "ผลลัพธ์",
+      "event_results": "ผลลัพธ์ {event}",
+      "dnf": "DNF",
+      "no_results": "ยังไม่มีผลลัพธ์",
+      "view_event": "ดูกิจกรรม"
+    },
+    "starting_from": "เริ่มตั้งแต่ {date}",
+    "title": "ถ้วยแชมเปี้ยนชิพ AMC",
+    "season": "ฤดูกาลที่ {seasonNo}",
+    "standing": "อันดับ",
+    "team_standing": "อันดับทีม",
+    "personal_standing": "อันดับส่วนบุคคล",
+    "schedule": "ตารางการแข่งขัน",
+    "team_logo_alt": "โลโก้ {team}",
+    "results": {
+      "head": "{siteName} | ผลลัพธ์",
+      "head_loaded": "{siteName} | ผลลัพธ์ {name}",
+      "fastest": "เร็วที่สุด!",
+      "cannot_load": {
+        "title": "ไม่สามารถโหลดกิจกรรมได้",
+        "desc": "ไม่สามารถโหลดข้อมูลกิจกรรม กรุณาลองใหม่ภายหลัง"
+      },
+      "pts": "{points}คะแนน"
+    }
+  }
 }
