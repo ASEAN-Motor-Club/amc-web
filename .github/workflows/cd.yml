@@ -51,7 +51,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: './build/'
-          remote_path: ''
+          remote_path: '/'
           remote_user: 'sftpuser'
           remote_host: '${{ secrets.SERVER_IP }}'
           remote_key: ${{ secrets.SFTP_KEY }}
