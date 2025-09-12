@@ -6,7 +6,7 @@
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import { isBefore } from '$lib/date';
-  import { formatDistanceStrict } from '$lib/date';  
+  import { formatDistanceStrict } from '$lib/date';
 
   export interface HoverInfo {
     name: string | undefined;

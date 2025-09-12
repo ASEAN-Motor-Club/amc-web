@@ -20,9 +20,9 @@ export {
   intervalToDuration,
 } from 'date-fns';
 
-import { 
-  enUS, 
-  // th 
+import {
+  enUS,
+  // th
 } from 'date-fns/locale';
 import { getLocale } from './paraglide/runtime';
 export { enUS };
