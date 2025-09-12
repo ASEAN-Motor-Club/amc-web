@@ -109,18 +109,10 @@
     onChange={handleSortChange}
     class="sm:max-w-45 w-full flex-shrink-0"
   >
-    <SelectOption id="name" value={msg['housing.sort.name']()}>
-      {msg['housing.sort.name']()}
-    </SelectOption>
-    <SelectOption id="id" value={msg['housing.sort.id']()}>
-      {msg['housing.sort.id']()}
-    </SelectOption>
-    <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()}>
-      {msg['housing.sort.rent_left']()}
-    </SelectOption>
-    <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()}>
-      {msg['housing.sort.depot_storage']()}
-    </SelectOption> -->
+    <SelectOption id="name" value={msg['housing.sort.name']()} />
+    <SelectOption id="id" value={msg['housing.sort.id']()} />
+    <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()} />
+    <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
   </Select>
 </div>
 <div

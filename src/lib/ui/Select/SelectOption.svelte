@@ -13,9 +13,9 @@
      */
     class?: ClassValue;
     /**
-     * The content of the option
+     * The content of the option leave empty to use value
      */
-    children: Snippet;
+    children?: Snippet;
   }
 </script>
 
@@ -47,5 +47,11 @@
     'cursor-pointer px-4 py-2 text-left hover:bg-neutral-500/10 motion-safe:transition-colors',
     clsx(className),
   )}
-  onclick={handleClick}>{@render children()}</button
+  onclick={handleClick}
 >
+  {#if children}
+    {@render children()}
+  {:else}
+    {value}
+  {/if}
+</button>

@@ -23,13 +23,13 @@
 <Story name="Default">
   {#snippet template({ children: _, ...args })}
     <Select {...args}>
-      <SelectOption id="primary" value="Primary">Primary</SelectOption>
-      <SelectOption id="secondary" value="Secondary">Secondary</SelectOption>
-      <SelectOption id="info" value="Info">Info</SelectOption>
-      <SelectOption id="success" value="Success">Success</SelectOption>
-      <SelectOption id="warning" value="Warning">Warning</SelectOption>
-      <SelectOption id="error" value="Error">Error</SelectOption>
-      <SelectOption id="neutral" value="Neutral">Neutral</SelectOption>
+      <SelectOption id="primary" value="Primary" />
+      <SelectOption id="secondary" value="Secondary" />
+      <SelectOption id="info" value="Info" />
+      <SelectOption id="success" value="Success" />
+      <SelectOption id="warning" value="Warning" />
+      <SelectOption id="error" value="Error" />
+      <SelectOption id="neutral" value="Neutral" />
     </Select>
   {/snippet}
 </Story>
