@@ -182,7 +182,7 @@
           'bg-error-500': color === 'error',
           'bg-neutral-500': color === 'neutral',
         },
-        doTransition && 'transition-[width]',
+        doTransition && 'motion-safe:transition-[width]',
       ]}
       style:width={`${percent}%`}
     ></div>
@@ -191,13 +191,13 @@
     class={[
       'absolute flex -translate-x-1/2',
       { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
-      doTransition && 'transition-[left]',
+      doTransition && 'motion-safe:transition-[left]',
     ]}
     style:left={`${percent}%`}
   >
     <div
       class={[
-        'h-full w-full rounded-full shadow-md shadow-black/30 transition-colors',
+        'h-full w-full rounded-full shadow-md shadow-black/30 motion-safe:transition-colors',
         {
           'bg-primary-700 hover:bg-primary-800': color === 'primary',
           'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',

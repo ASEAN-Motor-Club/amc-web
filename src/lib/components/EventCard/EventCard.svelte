@@ -5,6 +5,7 @@
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
   import { formatTime } from '$lib/utils/formatTime';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   export interface HoverInfoTooltipProps {
     time: EventResult | undefined;
@@ -37,7 +38,12 @@
     </div>
     {#if index < 3}
       <div class="absolute h-full w-full">
-        <Lottie animationData={lottieSpark} loop autoplay speed={1 - index * 0.1} />
+        <Lottie
+          animationData={lottieSpark}
+          loop
+          autoplay={!prefersReducedMotion.current}
+          speed={1 - index * 0.1}
+        />
       </div>
     {/if}
   </div>

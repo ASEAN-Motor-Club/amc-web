@@ -12,6 +12,7 @@
   import { m as msg } from '$lib/paraglide/messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   export type HoverInfo = {
     name: string | undefined;
@@ -103,7 +104,7 @@
 
 {#if hoverInfo}
   <div
-    transition:fade={{ duration: defaultTransitionDurationMs }}
+    transition:fade={{ duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs }}
     class="pointer-events-none absolute"
     style:left="{tooltipPosition[0]}px"
     style:top="{tooltipPosition[1]}px"
@@ -116,7 +117,15 @@
         {typeText}
       </div>
       <div class="text-sm">
-        {hoverInfo.name}
+        {#if hoverInfo.pointType === PointType.House}
+          {houseData?.[hoverInfo.info.name]?.ownerName
+            ? msg['housing.owned_house']({
+                owner: houseData?.[hoverInfo.info.name]?.ownerName,
+              })
+            : msg['housing.vacant_house']()}
+        {:else}
+          {hoverInfo.name}
+        {/if}
       </div>
       {#if hoverInfo.info}
         <div class="border-t-1 my-0.5 w-full border-neutral-100/20"></div>

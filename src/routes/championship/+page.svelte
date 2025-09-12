@@ -11,7 +11,7 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { getTeams } from '$lib/api/teams';
   import type { Team } from '$lib/api/types';
-  import { format } from '$lib/localeFormat/date';
+  import { format } from '$lib/date';
   import { page } from '$app/state';
   import { replaceState } from '$app/navigation';
   import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
@@ -27,7 +27,7 @@
   let teamText: HTMLDivElement[] = $state([]);
 
   // GSAP Timeline variables
-  let scrollContext: gsap.Context;
+  let scrollContext: gsap.MatchMedia;
   let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
@@ -41,90 +41,100 @@
     loading = false;
     await tick();
 
-    scrollContext = gsap.context(() => {
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: headerTrigger,
-            start: 'top top',
-            end: '+=1000',
-            scrub: true,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-          },
-        })
-        .to(
-          imageContainer,
-          {
-            scale: 0,
-            ease: 'power2.out',
-            duration: 0.5,
-          },
-          0,
-        )
-        .to(
-          textContainer.children,
-          {
-            y: 50,
-            opacity: 0,
-            stagger: 0.1,
-            ease: 'power2.out',
-            duration: 0.5,
-          },
-          0.5,
-        );
+    scrollContext = gsap.matchMedia();
 
-      for (let i = 0; i < teamTriggers.length; i++) {
-        const trigger = teamTriggers[i];
+    scrollContext.add(
+      {
+        default: '(prefers-reduced-motion: no-preference)',
+        reduced: '(prefers-reduced-motion: reduce)',
+      },
+      (context) => {
+        const { reduced } = context.conditions as { reduced: boolean };
         gsap
           .timeline({
             scrollTrigger: {
-              trigger: trigger,
+              trigger: headerTrigger,
               start: 'top top',
-              end: '+=1500',
+              end: '+=1000',
+              scrub: true,
               pin: true,
               pinSpacing: true,
               anticipatePin: 1,
-              scrub: true,
-              onToggle: (self) => {
-                const teamTag = teams[i]?.tag;
-                if (teamTag) {
-                  const expectedHash = `#team-${teamTag}`;
-                  if (self.isActive) {
-                    replaceState(expectedHash, page.state);
-                  } else if (!self.isActive) {
-                    replaceState('', page.state);
-                  }
-                }
-              },
             },
           })
-          .from(
-            trigger.children,
+          .to(
+            imageContainer,
             {
-              x: 50,
-              opacity: 0,
-              stagger: 0.1,
+              scale: reduced ? 1 : 0,
+              opacity: reduced ? 0 : 1,
               ease: 'power2.out',
               duration: 0.5,
             },
             0,
           )
-          .from(
-            teamText[i].children,
+          .to(
+            textContainer.children,
             {
-              x: -50,
+              y: reduced ? 0 : 50,
               opacity: 0,
               stagger: 0.1,
               ease: 'power2.out',
               duration: 0.5,
             },
             0.5,
-          )
-          .to({}, { duration: 3 });
-      }
-    });
+          );
+
+        for (let i = 0; i < teamTriggers.length; i++) {
+          const trigger = teamTriggers[i];
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: trigger,
+                start: 'top top',
+                end: '+=1500',
+                pin: true,
+                pinSpacing: true,
+                anticipatePin: 1,
+                scrub: true,
+                onToggle: (self) => {
+                  const teamTag = teams[i]?.tag;
+                  if (teamTag) {
+                    const expectedHash = `#team-${teamTag}`;
+                    if (self.isActive) {
+                      replaceState(expectedHash, page.state);
+                    } else if (!self.isActive) {
+                      replaceState('', page.state);
+                    }
+                  }
+                },
+              },
+            })
+            .from(
+              trigger.children,
+              {
+                x: reduced ? 0 : 50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: 'power2.out',
+                duration: 0.5,
+              },
+              0,
+            )
+            .from(
+              teamText[i].children,
+              {
+                x: reduced ? 0 : -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: 'power2.out',
+                duration: 0.5,
+              },
+              0.5,
+            )
+            .to({}, { duration: 3 });
+        }
+      },
+    );
 
     const initialHash = page.url.hash;
 
@@ -184,7 +194,7 @@
     <div class="contents" bind:this={textContainer}>
       <h3 class="pb-5 pt-8 font-semibold">
         {msg['championship.starting_from']({
-          date: format(startDate, msg['config.dateFull']()),
+          date: format(startDate, msg['format.dateFull']()),
         })}
       </h3>
       <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">

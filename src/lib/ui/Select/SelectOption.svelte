@@ -44,7 +44,7 @@
 
 <button
   class={twMerge(
-    'cursor-pointer px-4 py-2 text-left transition-colors hover:bg-neutral-500/10',
+    'cursor-pointer px-4 py-2 text-left hover:bg-neutral-500/10 motion-safe:transition-colors',
     clsx(className),
   )}
   onclick={handleClick}>{@render children()}</button

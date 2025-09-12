@@ -37,6 +37,18 @@ export default ts.config(
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-import-type-side-effects': 'error',
       'svelte/no-navigation-without-resolve': 'off',
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'date-fns',
+              message: 'Use unified imports from $lib/date instead',
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
     },
   },
   {

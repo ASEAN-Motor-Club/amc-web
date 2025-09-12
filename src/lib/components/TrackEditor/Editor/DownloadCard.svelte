@@ -76,7 +76,7 @@
         size="xs"
         variant="text"
         color="primary"
-        class="-mr-1"
+        class="-mr-1.5"
       >
         {msg['track_editor.editor.change_btn']({
           file: downloadOriginal

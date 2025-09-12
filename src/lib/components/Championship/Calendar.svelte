@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m as msg } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { format } from '$lib/localeFormat/date';
+  import { enUS, format } from '$lib/date';
   import EventButton from './EventButton.svelte';
   import type { Day } from 'date-fns';
   import type { EventType } from './types';
@@ -20,9 +20,7 @@
   const daysInLastMonth = $derived(new Date(year, month - 1, 0).getDate());
   const daysMonth = $derived(new Date(year, month, 0).getDate());
 
-  const firstDayOfWeek = $derived.by(() => {
-    return +msg['config.firstDayOfWeek']();
-  });
+  const firstDayOfWeek = 0;
 
   const offsetWeek = $derived(firstDayOfWeek > startOffset);
 
@@ -59,13 +57,13 @@
   };
 
   const days = $derived.by(() => {
-    return Array.from({ length: 7 }, (_, day) => msg[`config.days.short.${day as Day}`]());
+    return Array.from({ length: 7 }, (_, day) => enUS.localize.day(day as Day, { width: 'short' }));
   });
 </script>
 
 <Card class="overflow-hidden">
   <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
-    {format(new Date(year, month - 1, 1), msg['config.calendarFormat']())}
+    {format(new Date(year, month - 1, 1), msg['format.calendarFormat']())}
   </h4>
   <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}

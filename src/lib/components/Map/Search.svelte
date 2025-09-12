@@ -16,6 +16,7 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   export type SearchPoint = {
     guid?: string;
@@ -33,6 +34,15 @@
       }
   );
 
+  export interface SearchProps {
+    playerData: PlayerData[];
+    onPointClick?: (point: SearchPoint) => void;
+    houseData: HouseData | undefined;
+    pinsData: Pins;
+  }
+
+  const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
+
   const deliveryPoints = unmappedDeliveryPoints
     .filter((point) => point.type !== 'Resident_C')
     .map((point) => ({
@@ -42,19 +52,14 @@
       demandText: point.allDemand.map((i) => cargoName[i]).join(', '),
     }));
 
-  const house = unmappedHouse.map((point) => ({
-    ...point,
-    pointType: PointType.House,
-  }));
-
-  export interface SearchProps {
-    playerData: PlayerData[];
-    onPointClick?: (point: SearchPoint) => void;
-    houseData: HouseData | undefined;
-    pinsData: Pins;
-  }
-
-  const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
+  const house = $derived(
+    unmappedHouse.map((point) => ({
+      ...point,
+      name: houseData?.[point.name]?.ownerName ?? '',
+      guid: point.name,
+      pointType: PointType.House,
+    })),
+  );
 
   const pinsData = $derived.by(() => {
     return pinsDataProps.map((pin) => ({
@@ -99,9 +104,9 @@
 
     const housePoints = house.filter(
       (point) =>
-        point.name.toLowerCase().includes(search) ||
+        (point.name || msg['housing.vacant']()).toLowerCase().includes(search) ||
         point.location.toLowerCase().includes(search) ||
-        houseData?.[point.name]?.ownerName.toLowerCase().includes(search),
+        point.guid.toLowerCase().includes(search),
     );
 
     return [...pins, ...player, ...housePoints, ...delivery];
@@ -112,7 +117,7 @@
       case PointType.Delivery:
         return `?delivery=${point.guid}`;
       case PointType.House:
-        return `?house=${point.name}`;
+        return `?house=${point.guid}`;
       case PointType.Player:
         return `?player=${point.guid}`;
       default:
@@ -160,7 +165,7 @@
       <div
         class="flex min-h-0 w-full shrink"
         transition:fade={{
-          duration: defaultTransitionDurationMs,
+          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
       >
         <Card
@@ -189,11 +194,17 @@
               <div class="flex flex-col gap-0.5">
                 <div class="text-text-dark">
                   <HighlightText
-                    text={point.name}
+                    text={point.pointType === PointType.House
+                      ? point.name
+                        ? msg['housing.owned_house']({
+                            owner: point.name,
+                          })
+                        : msg['housing.vacant_house']()
+                      : point.name}
                     highlight={searchValue}
                     caseInSensitive
                     tag="span"
-                    class="inline-block bg-white/20"
+                    highlightClass="inline-block bg-white/20"
                   />
                 </div>
                 {#if point.pointType === PointType.Delivery}
@@ -205,7 +216,7 @@
                           highlight={searchValue}
                           caseInSensitive
                           tag="span"
-                          class="inline-block bg-white/20"
+                          highlightClass="inline-block bg-white/20"
                         />
                       </div>
                     {/if}
@@ -216,19 +227,19 @@
                           highlight={searchValue}
                           caseInSensitive
                           tag="span"
-                          class="inline-block bg-white/20"
+                          highlightClass="inline-block bg-white/20"
                         />
                       </div>
                     {/if}
                   </div>
                 {:else if point.pointType === PointType.House}
                   <div class="text-xs text-neutral-300">
-                    {msg['housing.owner']()}: <HighlightText
-                      text={houseData?.[point.name]?.ownerName || msg.unknown()}
+                    {msg['housing.id']()}: <HighlightText
+                      text={point.guid || msg.unknown()}
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
-                      class="inline-block bg-white/20"
+                      highlightClass="inline-block bg-white/20"
                     />
                   </div>
                 {:else if point.pointType === PointType.Player}
@@ -243,7 +254,7 @@
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
-                      class="inline-block bg-white/20"
+                      highlightClass="inline-block bg-white/20"
                     />
                   </div>
                 {/if}

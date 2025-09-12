@@ -2,6 +2,7 @@
   import { navigating } from '$app/state';
   import { fade } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   let show = $state(false);
   let speedUp = $state(false);
@@ -43,7 +44,7 @@
   <div
     class="z-100000 pointer-events-none fixed top-16 flex w-full select-none"
     transition:fade={{
-      duration: defaultTransitionDurationMs,
+      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
     }}
   >
     <div

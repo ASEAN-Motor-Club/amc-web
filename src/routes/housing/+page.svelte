@@ -46,7 +46,9 @@
       const searchLower = searchValue.trim().toLowerCase();
       return (
         house.name.toLowerCase().includes(searchLower) ||
-        houseData?.[house.name].ownerName.toLowerCase().includes(searchLower)
+        (houseData?.[house.name].ownerName || msg['housing.vacant']())
+          .toLowerCase()
+          .includes(searchLower)
       );
     }),
   );
@@ -60,16 +62,24 @@
   const sortedHouses = $derived.by(() => {
     switch (sortValue) {
       case 'name':
+        return filteredHouses.toSorted((a, b) => {
+          const houseA = houseData?.[a.name];
+          const houseB = houseData?.[b.name];
+          return (houseA?.ownerName || '').localeCompare(houseB?.ownerName || '');
+        });
+      case 'id':
         return filteredHouses.toSorted((a, b) => a.name.localeCompare(b.name));
       case 'rentLeft':
         return filteredHouses.toSorted((a, b) => {
-          const aRentLeft = houseData?.[a.name]?.rentLeft.getTime() || 0;
-          const bRentLeft = houseData?.[b.name]?.rentLeft.getTime() || 0;
+          const houseA = houseData?.[a.name];
+          const houseB = houseData?.[b.name];
+          const aRentLeft = houseA?.ownerName ? houseA?.rentLeft.getTime() || 0 : -Infinity;
+          const bRentLeft = houseB?.ownerName ? houseB?.rentLeft.getTime() || 0 : -Infinity;
           return aRentLeft - bRentLeft;
         });
-      case 'depotStorage':
-        // TODO: not implemented yet
-        return filteredHouses.toSorted((a, b) => a.name.localeCompare(b.name));
+      // case 'depotStorage':
+      //   // TODO: not implemented yet
+      //   return filteredHouses.toSorted((a, b) => a.name.localeCompare(b.name));
       default:
         return filteredHouses;
     }
@@ -101,6 +111,9 @@
   >
     <SelectOption id="name" value={msg['housing.sort.name']()}>
       {msg['housing.sort.name']()}
+    </SelectOption>
+    <SelectOption id="id" value={msg['housing.sort.id']()}>
+      {msg['housing.sort.id']()}
     </SelectOption>
     <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()}>
       {msg['housing.sort.rent_left']()}

@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { colorNeutral400 } from '$lib/tw-var';
   import { onMount } from 'svelte';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   interface Props {
     analyser: AnalyserNode;
@@ -82,7 +84,7 @@
       ctx.globalCompositeOperation = 'source-in';
       ctx.lineWidth = 3;
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = 'hsl(200, 100%, 70%)';
+      ctx.strokeStyle = colorNeutral400;
       ctx.beginPath();
 
       const sliceWidth = width / (waveData.length - 1);
@@ -104,7 +106,9 @@
       ctx.restore();
     }
 
-    requestAnimationFrame(draw);
+    if (!prefersReducedMotion.current) {
+      requestAnimationFrame(draw);
+    }
 
     // The onMount function can return a cleanup function
     return () => {

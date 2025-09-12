@@ -8,7 +8,7 @@
     /**
      * CSS class to apply to the highlight part of the text
      */
-    class?: ClassValue;
+    highlightClass?: ClassValue;
     /**
      * Highlight text tag
      * @default 'b'
@@ -19,7 +19,7 @@
     text,
     highlight,
     caseInSensitive,
-    class: propsClassname,
+    highlightClass,
     tag = 'b',
   }: HighlightTextProps = $props();
 
@@ -54,6 +54,6 @@
 <span class="contents">
   {#each parts as { text, highlight }, i (i)}{#if highlight}<svelte:element
         this={tag}
-        class={propsClassname}>{text}</svelte:element
+        class={highlightClass}>{text}</svelte:element
       >{:else}{text}{/if}{/each}
 </span>

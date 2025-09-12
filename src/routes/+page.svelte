@@ -5,6 +5,7 @@
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
   import { PUBLIC_DISCORD_LINK } from '$env/static/public';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   const date = new SvelteDate();
 
@@ -26,7 +27,7 @@
   <div class="relative -mt-16 h-svh w-full pt-16">
     <div class="relative flex h-full w-full justify-center bg-black">
       <video
-        autoplay
+        autoplay={!prefersReducedMotion.current}
         loop
         muted
         class="absolute z-0 h-full w-full object-cover"
@@ -48,7 +49,7 @@
           >
             <div class="relative mr-2 flex size-2">
               <div
-                class="opacity-1 absolute size-full animate-ping rounded-full bg-[currentColor]"
+                class="opacity-1 absolute size-full rounded-full bg-[currentColor] motion-safe:animate-ping"
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>

@@ -7,7 +7,6 @@
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
-  import './markdown.css';
 
   interface ResultsModalProps {
     open: boolean;

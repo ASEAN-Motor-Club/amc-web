@@ -7,7 +7,7 @@
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-  import { formatDistance } from 'date-fns';
+  import { formatDistance } from '$lib/date';
 
   export interface HoverInfo {
     info: DeliveryPoint;

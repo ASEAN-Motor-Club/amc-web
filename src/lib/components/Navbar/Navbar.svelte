@@ -11,6 +11,7 @@
   import NavbarPageLoading from './NavbarPageLoading.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
 
@@ -94,7 +95,7 @@
 {#snippet mapIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:map-outline-rounded transition-colors group-hover:text-green-500',
+      'i-material-symbols:map-outline-rounded group-hover:text-green-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -103,7 +104,7 @@
 {#snippet housingIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:home-outline-rounded transition-colors group-hover:text-blue-500',
+      'i-material-symbols:home-outline-rounded group-hover:text-blue-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -112,7 +113,7 @@
 {#snippet industriesIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:factory-outline-rounded transition-colors group-hover:text-yellow-500',
+      'i-material-symbols:factory-outline-rounded group-hover:text-yellow-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -121,7 +122,7 @@
 {#snippet radioIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:radio-outline-rounded transition-colors group-hover:text-orange-500',
+      'i-material-symbols:radio-outline-rounded group-hover:text-orange-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -130,7 +131,7 @@
 {#snippet trackIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:route-outline transition-colors group-hover:text-red-500',
+      'i-material-symbols:route-outline group-hover:text-red-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -139,7 +140,7 @@
 {#snippet wikiIcon(pathMatch: boolean)}
   <Icon
     class={[
-      'i-material-symbols:book-outline-rounded transition-colors group-hover:text-teal-500',
+      'i-material-symbols:book-outline-rounded group-hover:text-teal-500 motion-safe:transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
     ]}
   />
@@ -147,9 +148,9 @@
 
 {#snippet trophyIcon()}
   <div class="relative flex select-none items-center justify-center">
-    <Icon class="i-material-symbols:trophy-rounded text-amber-500 transition-colors" />
+    <Icon class="i-material-symbols:trophy-rounded text-amber-500 motion-safe:transition-colors" />
     <div class="absolute h-full w-full">
-      <Lottie animationData={lottieSpark} {loop} autoplay />
+      <Lottie animationData={lottieSpark} {loop} autoplay={!prefersReducedMotion.current} />
     </div>
   </div>
 {/snippet}
@@ -196,7 +197,10 @@
   <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start p-0">
     <div
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
-      transition:fly={{ x: '-100%', duration: defaultTransitionDurationMs }}
+      transition:fly={{
+        x: '-100%',
+        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+      }}
     >
       <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
         {msg['site_name']()}

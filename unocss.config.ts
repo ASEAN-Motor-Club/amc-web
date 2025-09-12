@@ -1,4 +1,10 @@
-import { defineConfig, presetWind4, presetIcons, transformerDirectives } from 'unocss';
+import {
+  defineConfig,
+  presetWind4,
+  presetIcons,
+  transformerDirectives,
+  presetTypography,
+} from 'unocss';
 import extractorSvelte from '@unocss/extractor-svelte';
 
 export default defineConfig({
@@ -12,11 +18,17 @@ export default defineConfig({
       },
     }),
     presetWind4(),
+    presetTypography({
+      colorScheme: {
+        hr: [500, 500],
+      },
+    }),
   ],
   theme: {
     font: {
       sans: "'Noto Sans', 'Noto Sans JP', sans-serif",
       'sans-alt': 'Koulen, sans-serif',
+      mono: "'Noto Sans Mono', monospace",
     },
     colors: {
       background: {

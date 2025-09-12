@@ -10,6 +10,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import InputGroup from '$lib/ui/InputGroup/InputGroup.svelte';
+  import Divider from '$lib/ui/Divider/Divider.svelte';
   import DownloadCard from './DownloadCard.svelte';
   import { cloneDeep, isEqual } from 'lodash-es';
   import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
@@ -188,10 +189,11 @@
             size="xs"
             variant="text"
             color="info"
-            class="-mr-1"
+            class="-mr-1.5"
           >
-            {showHidden ? msg['track_editor.editor.hide']() : msg['track_editor.editor.show']()}
-            {msg['track_editor.editor.hidden']()}
+            {showHidden
+              ? msg['track_editor.editor.hide_more']()
+              : msg['track_editor.editor.show_more']()}
           </Button>
         </div>
         <div class="flex flex-col gap-2">
@@ -201,7 +203,8 @@
           <Button onClick={handleDelete} color="error">{msg['track_editor.editor.delete']()}</Button
           >
         </div>
-        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
+        <Divider vertical spacing={false} class="md:hidden" />
+        <Divider spacing={false} class="hidden md:block" />
         <div class="flex flex-col gap-2">
           <InputGroup label={msg['track_editor.editor.rotation_z']()} focusIndex={1}>
             {#snippet appendLabel()}
@@ -210,7 +213,7 @@
                 size="xs"
                 variant="text"
                 color="success"
-                class="-mr-1"
+                class="-mr-1.5"
               >
                 {msg['track_editor.editor.auto_rotate']()}
               </Button>
@@ -277,7 +280,8 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
+        <Divider vertical spacing={false} class="md:hidden" />
+        <Divider spacing={false} class="hidden md:block" />
         <div class="flex flex-col gap-2">
           <InputGroup label={msg['track_editor.editor.translation_x']()}>
             <TextInput
@@ -315,7 +319,8 @@
             </InputGroup>
           {/if}
         </div>
-        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
+        <Divider vertical spacing={false} class="md:hidden" />
+        <Divider spacing={false} class="hidden md:block" />
         <div class="flex flex-col gap-2">
           <InputGroup label={msg['track_editor.editor.scale_y']()}>
             <TextInput
@@ -357,7 +362,8 @@
         <div class="text-text/60 dark:text-text-dark/60 font-medium">
           {msg['track_editor.editor.select_point_to_edit']()}
         </div>
-        <div class="border-l-1 md:border-t-1 border-gray-500/50"></div>
+        <Divider vertical spacing={false} class="md:hidden" />
+        <Divider spacing={false} class="hidden md:block" />
         <div class="flex flex-col gap-2">
           <div class="font-medium">{msg['track_editor.editor.global_operations']()}</div>
           <Button onClick={handleNormalize}>{msg['track_editor.editor.normalize']()}</Button>

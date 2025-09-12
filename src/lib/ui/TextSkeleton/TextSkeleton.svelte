@@ -15,7 +15,7 @@
 
 <span
   class={twMerge(
-    `inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent`,
+    `inline-block select-none rounded-md bg-neutral-500/20 text-transparent motion-safe:animate-pulse`,
     clsx(propsClassName),
   )}>.</span
 >

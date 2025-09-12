@@ -65,24 +65,16 @@
 
 <div class="flex flex-col text-xs">
   <div>
+    <span class="font-semibold">{msg['housing.id']()}:</span>
+    {hoverInfo.info.name}
+  </div>
+  <div>
     <span class="font-semibold">{msg['housing.size']()}:</span>
     {hoverInfo.info.size.x / 100} x {hoverInfo.info.size.y / 100}
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_price']()}:</span>
     {(hoverInfo.info.cost / 10).toLocaleString(getLocale())}
-  </div>
-  <div>
-    <span class="font-semibold">{msg['housing.owner']()}:</span>
-    {#if currentHouseData}
-      {#if currentHouseData.ownerName}
-        {currentHouseData.ownerName}
-      {:else}
-        <span class="font-bold italic">{msg['housing.vacant']()}</span>
-      {/if}
-    {:else}
-      ...
-    {/if}
   </div>
   {#if currentHouseData?.ownerName}
     <div>

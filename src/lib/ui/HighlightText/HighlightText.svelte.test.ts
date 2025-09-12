@@ -27,7 +27,7 @@ describe('HighlightText', () => {
     const output = render(HighlightText, {
       text: 'Gangjung, Gangjung',
       highlight: 'Gang',
-      class: 'text-red-500',
+      highlightClass: 'text-red-500',
     });
 
     expect(output.baseElement.innerHTML.replaceAll('<!---->', '')).toContain(

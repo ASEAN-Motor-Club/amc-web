@@ -78,6 +78,7 @@
   import Icon from '../Icon/Icon.svelte';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   const {
     value,
@@ -148,7 +149,7 @@
 
   <Icon
     class={[
-      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 transition-transform',
+      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 motion-safe:transition-transform',
       open && 'rotate-180',
     ]}
     size="!text-[1.75rem]"
@@ -158,7 +159,9 @@
     {#if open}
       <div
         class="z-6000 absolute top-full mt-1 w-full"
-        transition:slide={{ duration: defaultTransitionDurationMs }}
+        transition:slide={{
+          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+        }}
       >
         <Card
           class={twMerge('flex w-full cursor-pointer select-none flex-col p-0', clsx(menuClass))}

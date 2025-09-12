@@ -1,12 +1,12 @@
 import * as z from 'zod/mini';
-import { m } from '$lib/paraglide/messages';
+import { m as msg } from '$lib/paraglide/messages';
 import type { Vector3 } from '$lib/types';
 
 const createWaypointError = (iss: { path?: PropertyKey[]; expected: string }) => {
-  return m['track_editor.validate.waypoint_invalid']({
-    index: typeof iss.path?.[1] === 'number' ? iss.path?.[1] + 1 : (iss.path?.[1] ?? m.unknown()),
+  return msg['track_editor.validate.waypoint_invalid']({
+    index: typeof iss.path?.[1] === 'number' ? iss.path?.[1] + 1 : (iss.path?.[1] ?? msg.unknown()),
     key:
-      (iss.path?.[2].toString() ?? m.unknown()) +
+      (iss.path?.[2].toString() ?? msg.unknown()) +
       (iss.path?.[3] !== undefined ? '.' + iss.path[3].toString() : ''),
     type: iss.expected,
   });
@@ -39,13 +39,13 @@ const waypointSchema = z.object({
 
 export const trackSchema = z.object({
   routeName: z
-    .string(m['track_editor.validate.name_must_be_string']())
-    .check(z.minLength(1, m['track_editor.validate.name_empty']())),
+    .string(msg['track_editor.validate.name_must_be_string']())
+    .check(z.minLength(1, msg['track_editor.validate.name_empty']())),
   waypoints: z
     .array(waypointSchema)
     .check(
-      z.minLength(2, m['track_editor.validate.waypoints_min_length']({ minLength: 2 })),
-      z.maxLength(50, m['track_editor.validate.waypoints_max_length']({ maxLength: 50 })),
+      z.minLength(2, msg['track_editor.validate.waypoints_min_length']({ minLength: 2 })),
+      z.maxLength(50, msg['track_editor.validate.waypoints_max_length']({ maxLength: 50 })),
     ),
 });
 

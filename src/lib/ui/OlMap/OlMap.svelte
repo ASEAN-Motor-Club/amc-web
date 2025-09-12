@@ -15,6 +15,7 @@
   import type { MapBrowserEvent } from 'ol';
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   let map: Map;
 
@@ -98,7 +99,7 @@
       className: clsx('ol-zoom', zoomClass),
       zoomInClassName: clsx('ol-zoom-in', zoomInClass),
       zoomOutClassName: clsx('ol-zoom-out', zoomOutClass),
-      duration: defaultTransitionDurationMs * 2,
+      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
     });
 
     const interactions = defaults({ altShiftDragRotate: false, pinchRotate: false });

@@ -140,7 +140,7 @@
         }
       }
       case 'outlined': {
-        const borderBase = 'border bg-white dark:bg-black';
+        const borderBase = 'border bg-white dark:bg-neutral-900';
         if (error) {
           return `${borderBase} placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-600 dark:group-hover:border-error-600 hover:border-error-600 group-hover:border-error-600 focus:border-error-500 focus:dark:border-error-700`;
         } else {
@@ -168,7 +168,7 @@
 
 <input
   class={twMerge(
-    'flex flex-none items-center outline-none transition-colors',
+    'flex flex-none items-center outline-none motion-safe:transition-colors',
     variantClasses,
     sizeClasses,
     disabled && 'pointer-events-none opacity-50',

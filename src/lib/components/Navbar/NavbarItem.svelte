@@ -44,7 +44,7 @@
     <span class="invisible font-bold leading-none">{label}</span>
     <span
       class={twMerge(
-        'absolute left-0 whitespace-nowrap leading-none transition-all group-hover:font-bold',
+        'absolute left-0 whitespace-nowrap leading-none group-hover:font-bold motion-safe:transition-all',
         pathMatch ? 'font-bold' : 'text-text/80 dark:text-text-dark/80',
         href === '/championship' ? 'text-amber-600 dark:text-amber-400' : '',
       )}>{label}</span

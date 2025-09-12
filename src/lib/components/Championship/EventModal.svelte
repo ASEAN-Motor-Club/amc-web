@@ -5,8 +5,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { isSameDay, isBefore, isAfter, isSameYear } from 'date-fns';
-  import { format } from '$lib/localeFormat/date';
+  import { format, isAfter, isBefore, isSameDay, isSameYear } from '$lib/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
   import { page } from '$app/state';
@@ -37,17 +36,17 @@
   });
 
   const formattedDate = $derived(
-    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), msg['config.dateFull']()),
+    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), msg['format.dateFull']()),
   );
 
   const formatEventStyle = (event: ScheduledEvent) => {
     const sameDay = isSameDay(event.start_time, event.end_time);
     const sameYear = isSameYear(event.start_time, event.end_time);
     return sameDay
-      ? msg['config.scheduleFormat.sameDay']()
+      ? msg['format.scheduleFormat.sameDay']()
       : sameYear
-        ? msg['config.scheduleFormat.sameYear']()
-        : msg['config.scheduleFormat.crossYear']();
+        ? msg['format.scheduleFormat.sameYear']()
+        : msg['format.scheduleFormat.crossYear']();
   };
 
   const date = new SvelteDate();
@@ -94,8 +93,8 @@
           <h1 class="text-2xl font-semibold tracking-tight">
             {event.name}
           </h1>
-          <div class="wrap-anywhere event-markdown my-4 text-sm opacity-80">
-            <MarkdownText text={event.description} />
+          <div class="wrap-anywhere my-4 text-sm opacity-80">
+            <MarkdownText size="sm" text={event.description} />
           </div>
           <div class="-m-2 flex gap-1">
             {#if event.discord_event_id}

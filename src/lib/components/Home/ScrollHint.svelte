@@ -2,6 +2,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { UIEventHandler } from 'svelte/elements';
+  import { prefersReducedMotion } from 'svelte/motion';
   import { fade } from 'svelte/transition';
 
   export interface ScrollHintProps {
@@ -26,10 +27,10 @@
 {#if show}
   <div
     class={[
-      'bottom-1 left-1/2 z-20 flex -translate-x-1/2 animate-bounce',
+      'bottom-1 left-1/2 z-20 flex -translate-x-1/2 motion-safe:animate-bounce',
       fixed ? 'fixed' : 'absolute',
     ]}
-    transition:fade={{ duration: defaultTransitionDurationMs }}
+    transition:fade={{ duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs }}
   >
     <Icon
       class="i-material-symbols:keyboard-arrow-down-rounded text-text dark:text-text-dark"

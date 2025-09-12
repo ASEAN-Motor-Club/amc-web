@@ -216,7 +216,7 @@
   const sizeClasses = $derived.by(() => {
     switch (size) {
       case 'xs':
-        return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1'}`;
+        return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1.5'}`;
       case 'sm':
         return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-sm px-2'}`;
       case 'md':
@@ -232,7 +232,7 @@
 <svelte:element
   this={props.tag ?? 'button'}
   class={twMerge(
-    'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none transition',
+    'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none motion-safe:transition',
     variantClassName,
     sizeClasses,
     icon && 'aspect-square p-0',

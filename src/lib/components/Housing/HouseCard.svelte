@@ -70,13 +70,19 @@
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="mb-2 flex w-full items-center justify-between">
-    <h2 class="flex-1 truncate text-lg font-semibold">
+    <h2
+      class={['flex-1 truncate text-lg font-semibold', currentHouseData?.ownerName ? '' : 'italic']}
+    >
       <HighlightText
-        text={house.name}
+        text={currentHouseData?.ownerName
+          ? msg['housing.owned_house']({
+              owner: currentHouseData.ownerName,
+            })
+          : msg['housing.vacant_house']()}
         {highlight}
         caseInSensitive
         tag="span"
-        class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
+        highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
       />
     </h2>
     <Button
@@ -84,7 +90,7 @@
       size="xs"
       variant="text"
       href="/map?housing={house.name}"
-      class="-mr-1"
+      class="-mr-1.5"
       color="info"
     >
       {msg.view_on_map()}
@@ -92,26 +98,22 @@
   </div>
 
   <div>
+    <span class="font-semibold">{msg['housing.id']()}:</span>
+    <HighlightText
+      text={house.name}
+      {highlight}
+      caseInSensitive
+      tag="span"
+      highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
+    />
+  </div>
+  <div>
     <span class="font-semibold">{msg['housing.size']()}:</span>
     {house.size.x / 100} x {house.size.y / 100}
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_price']()}:</span>
     {(house.cost / 10).toLocaleString(getLocale())}
-  </div>
-  <div>
-    <span class="font-semibold">{msg['housing.owner']()}:</span>
-    {#if currentHouseData?.ownerName}
-      <HighlightText
-        text={currentHouseData.ownerName}
-        {highlight}
-        caseInSensitive
-        tag="span"
-        class="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
-      />
-    {:else}
-      <span class="font-bold italic">{msg['housing.vacant']()}</span>
-    {/if}
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_left']()}:</span>

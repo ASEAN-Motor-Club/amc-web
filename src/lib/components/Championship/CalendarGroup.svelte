@@ -1,6 +1,6 @@
 <script lang="ts">
   import Calendar from './Calendar.svelte';
-  import { addMilliseconds, eachDayOfInterval, format } from 'date-fns';
+  import { addMilliseconds, eachDayOfInterval, format } from '$lib/date';
   import Button from '$lib/ui/Button/Button.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { EventType } from './types';

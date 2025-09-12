@@ -12,7 +12,13 @@
   "categories": ["games", "entertainment", "social"],
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon_white.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon_white.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "any maskable"
