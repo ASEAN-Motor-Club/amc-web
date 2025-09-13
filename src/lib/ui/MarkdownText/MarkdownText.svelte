@@ -65,7 +65,7 @@
 </script>
 
 <section
-  class={['prose dark:prose-invert prose-neutral contents', proseSize]}
+  class={['prose dark:prose-invert prose-neutral !prose-cyan contents', proseSize]}
   bind:this={textContainer}
 >
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
