@@ -94,7 +94,7 @@
             {event.name}
           </h1>
           <div class="wrap-anywhere my-4 text-sm opacity-80">
-            <MarkdownText size="sm" text={event.description} />
+            <MarkdownText size="prose-sm" text={event.description} />
           </div>
           <div class="-m-2 flex gap-1">
             {#if event.discord_event_id}

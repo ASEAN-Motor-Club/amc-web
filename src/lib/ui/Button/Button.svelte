@@ -171,17 +171,17 @@
         const outlinedBase = 'border';
         switch (color) {
           case 'primary':
-            return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-600/20`;
           case 'secondary':
-            return `text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 border-secondary-700 dark:border-secondary-500 active:bg-secondary-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 border-secondary-700 dark:border-secondary-500 active:bg-secondary-600/20`;
           case 'info':
-            return `text-info-700 dark:text-info-500 hover:bg-info-700/10 border-info-700 dark:border-info-500 active:bg-info-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-info-700 dark:text-info-500 hover:bg-info-700/10 border-info-700 dark:border-info-500 active:bg-info-600/20`;
           case 'success':
-            return `text-success-700 dark:text-success-500 hover:bg-success-700/10 border-success-700 dark:border-success-500 active:bg-success-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-success-700 dark:text-success-500 hover:bg-success-700/10 border-success-700 dark:border-success-500 active:bg-success-600/20`;
           case 'warning':
-            return `text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 border-warning-700 dark:border-warning-500 active:bg-warning-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 border-warning-700 dark:border-warning-500 active:bg-warning-600/20`;
           case 'error':
-            return `text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 active:bg-error-600/20 ${outlinedBase}`;
+            return `${outlinedBase} text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 active:bg-error-600/20`;
           case 'neutral':
             return `${outlinedBase} border-neutral-700 text-neutral-600 hover:bg-neutral-700/10 active:bg-neutral-600/20 dark:border-neutral-500 dark:text-neutral-400`;
           default:

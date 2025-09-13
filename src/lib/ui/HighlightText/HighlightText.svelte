@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ClassValue } from 'svelte/elements';
 
+  // @unocss-skip-start
   interface HighlightTextProps {
     text: string;
     highlight: string;
@@ -22,6 +23,7 @@
     highlightClass,
     tag = 'b',
   }: HighlightTextProps = $props();
+  // @unocss-skip-end
 
   const highlightCaseSensitive = $derived(caseInSensitive ? highlight.toLowerCase() : highlight);
 
