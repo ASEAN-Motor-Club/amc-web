@@ -483,25 +483,23 @@
 
   let stopPolling: (() => void) | undefined = undefined;
 
-  onMount(() => {
-    const startPolling = () => {
-      stopPolling?.();
-      if (document.hidden) {
-        stopPolling = undefined;
-        playerData = [];
-        setPlayerPoints([]);
-        return;
-      }
-      stopPolling = getPlayerRealtimePositionCall();
-    };
-
-    document.addEventListener('visibilitychange', startPolling);
-
-    if (!document.hidden) {
-      getPlayerRealtimePositionCall();
+  const startPolling = () => {
+    stopPolling?.();
+    if (document.hidden) {
+      stopPolling = undefined;
+      playerData = [];
+      setPlayerPoints([]);
+      return;
     }
+    stopPolling = getPlayerRealtimePositionCall();
+  };
+
+  onMount(() => {
+    if (!document.hidden) {
+      stopPolling = getPlayerRealtimePositionCall();
+    }
+
     return () => {
-      document.removeEventListener('visibilitychange', startPolling);
       stopPolling?.();
     };
   });
@@ -736,6 +734,8 @@
     };
   });
 </script>
+
+<svelte:document onvisibilitychange={startPolling} />
 
 <svelte:head>
   <title>{msg['map.head']({ siteName: msg['site_name_short']() })}</title>
