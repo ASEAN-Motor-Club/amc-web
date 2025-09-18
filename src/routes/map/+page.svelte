@@ -54,6 +54,10 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteMap, SvelteSet } from 'svelte/reactivity';
   import { startDeliveryPointsPolling } from '$lib/api/delivery';
+  import * as z from 'zod/mini';
+
+  // LocalStorage utility functions for layer state persistence
+  const DISABLED_DATA_STORAGE_KEY = 'mapDisabledLayer';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -334,6 +338,7 @@
     name: msg['map.delivery_point'](),
     layer: [deliveryPointLayer, residentPointLayer],
     enabled: true,
+    color: '!bg-yellow-500',
   });
 
   const houseLayerData = $state({
@@ -341,6 +346,7 @@
     name: msg['map.house'](),
     layer: [houseLayer],
     enabled: true,
+    color: '!bg-cyan-500',
   });
 
   const playerNameLayerData = $state({
@@ -348,6 +354,7 @@
     name: msg['map.player_name'](),
     layer: [playerNameLayer],
     enabled: true,
+    color: '!bg-emerald-300',
   });
 
   const playerLayerData = $state({
@@ -355,6 +362,7 @@
     name: msg['map.player'](),
     layer: [playerPointLayer],
     enabled: true,
+    color: '!bg-emerald-400',
   });
 
   const pinsLayerData = $state({
@@ -362,6 +370,7 @@
     name: msg['map.pins'](),
     layer: [pinsLayer],
     enabled: true,
+    color: '!bg-red-400',
   });
 
   const pinLabelsLayerData = $state({
@@ -369,6 +378,7 @@
     name: msg['map.pin_labels'](),
     layer: [pinLabelsLayer],
     enabled: true,
+    color: '!bg-red-300',
   });
 
   const layersData = $state([
@@ -379,6 +389,41 @@
     pinsLayerData,
     pinLabelsLayerData,
   ]);
+
+  onMount(() => {
+    try {
+      const stringArraySchema = z.array(z.enum(layerId));
+      const savedLayer = JSON.parse(localStorage.getItem(DISABLED_DATA_STORAGE_KEY) ?? '');
+      const result = stringArraySchema.safeParse(savedLayer);
+      if (result.success) {
+        for (const layer of result.data) {
+          const layerData = layersData.find((l) => l.id === layer);
+          if (layerData) {
+            layerData.enabled = false;
+            for (const l of layerData.layer) {
+              l.setVisible(false);
+            }
+            if (layerData.id === layerId.Player) {
+              playerNameLayer.setVisible(false);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load layer state:', e);
+    }
+  });
+
+  $effect(() => {
+    if (typeof window !== 'undefined') {
+      const disabledLayer = layersData
+        .filter(
+          (layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels && !layer.enabled,
+        )
+        .map((layer) => layer.id);
+      localStorage.setItem(DISABLED_DATA_STORAGE_KEY, JSON.stringify(disabledLayer));
+    }
+  });
 
   let lockPoint: Feature | undefined = undefined;
   let hoverPoint: Feature | undefined = undefined;
@@ -764,15 +809,8 @@
         {#each layersDataCheckPins as layer (layer.name)}
           <Button
             class={[
-              '!px-2',
-              {
-                '!text-text !bg-yellow-500': layer.id === layerId.Delivery,
-                '!text-text !bg-cyan-500': layer.id === layerId.House,
-                '!text-text !bg-emerald-400': layer.id === layerId.Player,
-                '!text-text !bg-emerald-300': layer.id === layerId.PlayerName,
-                '!text-text !bg-red-400': layer.id === layerId.Pins,
-                '!text-text !bg-red-300': layer.id === layerId.PinLabels,
-              },
+              '!text-text !px-2',
+              layer.color,
               {
                 'opacity-50':
                   !layer.enabled ||

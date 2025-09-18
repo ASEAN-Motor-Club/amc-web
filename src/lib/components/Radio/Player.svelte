@@ -24,7 +24,13 @@
   let volume = $state(1);
 
   onMount(() => {
-    volume = +(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1);
+    let vol = +(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1);
+    if (Number.isNaN(vol)) {
+      vol = 1;
+    }
+    vol = Math.min(Math.max(vol, 0), 1);
+    localStorage.setItem(VOLUME_STORAGE_KEY, vol.toString());
+    volume = vol;
   });
 
   // Web Audio API variables

@@ -46,6 +46,11 @@ export default ts.config(
               message: 'Use unified imports from $lib/date instead',
               allowTypeImports: true,
             },
+            {
+              name: 'zod',
+              message: 'Use zod/mini instead for smaller bundle size',
+              allowTypeImports: true,
+            },
           ],
         },
       ],

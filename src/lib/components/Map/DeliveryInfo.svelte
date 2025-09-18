@@ -63,7 +63,10 @@
 
 {#if hoverInfo.info.allSupply.length}
   <div class="flex flex-col text-xs">
-    <div class="font-semibold">{msg['map.supply']()}</div>
+    <div class="font-semibold">
+      <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
+      {msg['map.supply']()}
+    </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
         <div>{cargoName[item]}</div>
@@ -85,13 +88,16 @@
 {/if}
 {#if hoverInfo.info.allDemand.length}
   <div class="flex flex-col text-xs">
-    <div class="font-semibold">{msg['map.demand']()}</div>
+    <div class="font-semibold">
+      <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
+      {msg['map.demand']()}
+    </div>
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
         <div class="flex items-center gap-1.5">
           {cargoName[item]}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
-            <Icon class="i-material-symbols:link-rounded -mb-px" size="xs" />
+            <Icon class="i-material-symbols:link-rounded -mb-px text-yellow-500" size="xs" />
           {/if}
         </div>
         <div class="relative">
