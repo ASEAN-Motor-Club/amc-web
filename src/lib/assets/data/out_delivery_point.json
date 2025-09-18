@@ -11,8 +11,8 @@
     "prod": [
       {
         "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
+          "CheeseBox": 1,
+          "MeatBox": 1
         },
         "output": {
           "Burger_01_Signature": 10
@@ -22,8 +22,8 @@
       }
     ],
     "demandStorage": {
-      "CheeseBox": 30,
-      "MeatBox": 30
+      "MeatBox": 30,
+      "CheeseBox": 30
     },
     "supplyStorage": {
       "Burger_01_Signature": 30
@@ -42,8 +42,8 @@
     "prod": [
       {
         "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
+          "CheeseBox": 1,
+          "MeatBox": 1
         },
         "output": {
           "Burger_01_Signature": 10
@@ -53,8 +53,8 @@
       }
     ],
     "demandStorage": {
-      "MeatBox": 30,
-      "CheeseBox": 30
+      "CheeseBox": 30,
+      "MeatBox": 30
     },
     "supplyStorage": {
       "Burger_01_Signature": 30
@@ -180,8 +180,8 @@
     },
     "guid": "0fbac1084a0209fdb770e7bad3e9d86c",
     "demand": {
-      "Oil": 1.0,
-      "Fuel": 1.0
+      "Fuel": 1.0,
+      "Oil": 1.0
     },
     "demandStorage": {
       "Oil": 30,
@@ -287,16 +287,16 @@
       }
     ],
     "demand": {
-      "WoodPlank_14ft_5t": 1.0,
-      "PlasticPipes_6m": 1.0,
       "Fuel": 1.0,
-      "lHBeam_6m": 1.0
+      "PlasticPipes_6m": 1.0,
+      "lHBeam_6m": 1.0,
+      "WoodPlank_14ft_5t": 1.0
     },
     "demandStorage": {
-      "Fuel": 10,
       "PlasticPipes_6m": 10,
-      "lHBeam_6m": 10,
       "Concrete": 100,
+      "Fuel": 10,
+      "lHBeam_6m": 10,
       "WoodPlank_14ft_5t": 20
     },
     "supplyStorage": {
@@ -368,21 +368,21 @@
       }
     ],
     "demand": {
-      "Fuel": 1.0,
-      "WoodPlank_14ft_5t": 1.0,
       "PlasticPipes_6m": 1.0,
-      "lHBeam_6m": 1.0
+      "lHBeam_6m": 1.0,
+      "Fuel": 1.0,
+      "WoodPlank_14ft_5t": 1.0
     },
     "demandStorage": {
-      "Concrete": 100,
-      "PlasticPipes_6m": 10,
       "lHBeam_6m": 10,
-      "WoodPlank_14ft_5t": 20,
-      "Fuel": 10
+      "PlasticPipes_6m": 10,
+      "Fuel": 10,
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20
     },
     "supplyStorage": {
-      "FineSand": 100,
-      "Sand": 100
+      "Sand": 100,
+      "FineSand": 100
     }
   },
   {
@@ -451,14 +451,14 @@
     "demand": {
       "WoodPlank_14ft_5t": 1.0,
       "lHBeam_6m": 1.0,
-      "PlasticPipes_6m": 1.0,
-      "Fuel": 1.0
+      "Fuel": 1.0,
+      "PlasticPipes_6m": 1.0
     },
     "demandStorage": {
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
       "Concrete": 100,
       "lHBeam_6m": 10,
+      "Fuel": 10,
+      "PlasticPipes_6m": 10,
       "WoodPlank_14ft_5t": 20
     },
     "supplyStorage": {
@@ -530,19 +530,343 @@
       }
     ],
     "demand": {
-      "WoodPlank_14ft_5t": 2.0,
-      "Fuel": 2.0
+      "Fuel": 2.0,
+      "WoodPlank_14ft_5t": 2.0
     },
     "demandStorage": {
-      "PlasticPipes_6m": 100,
+      "lHBeam_6m": 100,
+      "Concrete": 100,
       "WoodPlank_14ft_5t": 20,
       "Fuel": 10,
-      "lHBeam_6m": 100,
-      "Concrete": 100
+      "PlasticPipes_6m": 100
     },
     "supplyStorage": {
       "Sand": 100,
       "FineSand": 100
+    }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": "Sado Construction Site ",
+    "coord": {
+      "x": -319858.75,
+      "y": 1136825.8,
+      "z": -16288.583
+    },
+    "guid": "cdb8083c4e5fab3940ab25bc8d413a24",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1.0,
+      "lHBeam_6m": 1.0,
+      "Fuel": 1.0,
+      "PlasticPipes_6m": 1.0
+    },
+    "demandStorage": {
+      "PlasticPipes_6m": 10,
+      "Fuel": 10,
+      "Concrete": 100,
+      "lHBeam_6m": 10,
+      "WoodPlank_14ft_5t": 20
+    },
+    "supplyStorage": {
+      "Sand": 100,
+      "FineSand": 100
+    }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": "Ara Construction Site ",
+    "coord": {
+      "x": 306920.44,
+      "y": 1223239.1,
+      "z": -15796.308
+    },
+    "guid": "c9706ffb47e057140a3262bee1d6a896",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1.0,
+      "Fuel": 1.0,
+      "PlasticPipes_6m": 1.0,
+      "lHBeam_6m": 1.0
+    },
+    "demandStorage": {
+      "Fuel": 10,
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20,
+      "PlasticPipes_6m": 10,
+      "lHBeam_6m": 10
+    },
+    "supplyStorage": {
+      "FineSand": 100,
+      "Sand": 100
+    }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": "Gwangjin Construction Site ",
+    "coord": {
+      "x": 202240.72,
+      "y": 822449.0,
+      "z": -486.9842
+    },
+    "guid": "8cad4d0043db2bca9bc364baf5140826",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1.0,
+      "Fuel": 1.0,
+      "lHBeam_6m": 1.0,
+      "PlasticPipes_6m": 1.0
+    },
+    "demandStorage": {
+      "lHBeam_6m": 10,
+      "Fuel": 10,
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20,
+      "PlasticPipes_6m": 10
+    },
+    "supplyStorage": {
+      "Sand": 100,
+      "FineSand": 100
+    }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": "Sanho Construction Site ",
+    "coord": {
+      "x": -821255.44,
+      "y": 1515218.9,
+      "z": -20992.576
+    },
+    "guid": "6b2b74e64f8c4de999dd8893cbe8773d",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "Fuel": 1.0,
+      "lHBeam_6m": 1.0,
+      "PlasticPipes_6m": 1.0,
+      "WoodPlank_14ft_5t": 1.0
+    },
+    "demandStorage": {
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20,
+      "PlasticPipes_6m": 10,
+      "lHBeam_6m": 10,
+      "Fuel": 10
+    },
+    "supplyStorage": {
+      "FineSand": 100,
+      "Sand": 100
     }
   },
   {
@@ -609,21 +933,21 @@
       }
     ],
     "demand": {
+      "WoodPlank_14ft_5t": 1.0,
       "lHBeam_6m": 1.0,
       "Fuel": 1.0,
-      "WoodPlank_14ft_5t": 1.0,
       "PlasticPipes_6m": 1.0
     },
     "demandStorage": {
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
-      "WoodPlank_14ft_5t": 20,
       "Concrete": 100,
-      "lHBeam_6m": 10
+      "WoodPlank_14ft_5t": 20,
+      "PlasticPipes_6m": 10,
+      "lHBeam_6m": 10,
+      "Fuel": 10
     },
     "supplyStorage": {
-      "FineSand": 100,
-      "Sand": 100
+      "Sand": 100,
+      "FineSand": 100
     }
   },
   {
@@ -690,21 +1014,21 @@
       }
     ],
     "demand": {
-      "PlasticPipes_6m": 1.0,
-      "lHBeam_6m": 1.0,
       "Fuel": 1.0,
-      "WoodPlank_14ft_5t": 1.0
+      "lHBeam_6m": 1.0,
+      "WoodPlank_14ft_5t": 1.0,
+      "PlasticPipes_6m": 1.0
     },
     "demandStorage": {
-      "Concrete": 100,
+      "PlasticPipes_6m": 10,
       "WoodPlank_14ft_5t": 20,
       "Fuel": 10,
-      "PlasticPipes_6m": 10,
+      "Concrete": 100,
       "lHBeam_6m": 10
     },
     "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
+      "FineSand": 100,
+      "Sand": 100
     }
   },
   {
@@ -771,21 +1095,102 @@
       }
     ],
     "demand": {
-      "WoodPlank_14ft_5t": 1.0,
       "Fuel": 1.0,
       "lHBeam_6m": 1.0,
-      "PlasticPipes_6m": 1.0
+      "PlasticPipes_6m": 1.0,
+      "WoodPlank_14ft_5t": 1.0
+    },
+    "demandStorage": {
+      "lHBeam_6m": 10,
+      "WoodPlank_14ft_5t": 20,
+      "Fuel": 10,
+      "PlasticPipes_6m": 10,
+      "Concrete": 100
+    },
+    "supplyStorage": {
+      "Sand": 100,
+      "FineSand": 100
+    }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": "Ara Construction Site ",
+    "coord": {
+      "x": 372307.3,
+      "y": 1128079.5,
+      "z": -18900.0
+    },
+    "guid": "0f0ce05643dabcbc05af558932011bd6",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5.0,
+        "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600.0,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1.0,
+      "Fuel": 1.0,
+      "PlasticPipes_6m": 1.0,
+      "lHBeam_6m": 1.0
     },
     "demandStorage": {
       "WoodPlank_14ft_5t": 20,
       "Concrete": 100,
       "lHBeam_6m": 10,
-      "PlasticPipes_6m": 10,
-      "Fuel": 10
+      "Fuel": 10,
+      "PlasticPipes_6m": 10
     },
     "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
+      "FineSand": 100,
+      "Sand": 100
     }
   },
   {
@@ -898,21 +1303,22 @@
       },
       {
         "input": {
-          "Type::SmallPackage": 1
+          "Type::SmallPackage": 4
         },
         "output": {
-          "Type::SmallPackage": 10
+          "Type::LargePackage": 1
         },
         "prodTime": 1.0,
         "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "Type::SmallPackage": 10,
-      "Type::LargePackage": 10
+      "Type::LargePackage": 6,
+      "Type::SmallPackage": 50
     },
     "supplyStorage": {
-      "Type::SmallPackage": 10
+      "Type::SmallPackage": 10,
+      "Type::LargePackage": 10
     },
     "maxDist": 150000.0
   },
@@ -938,21 +1344,22 @@
       },
       {
         "input": {
-          "Type::SmallPackage": 1
+          "Type::SmallPackage": 4
         },
         "output": {
-          "Type::SmallPackage": 10
+          "Type::LargePackage": 1
         },
         "prodTime": 1.0,
         "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "Type::SmallPackage": 10,
-      "Type::LargePackage": 10
+      "Type::LargePackage": 6,
+      "Type::SmallPackage": 50
     },
     "supplyStorage": {
-      "Type::SmallPackage": 10
+      "Type::SmallPackage": 10,
+      "Type::LargePackage": 10
     },
     "maxDist": 150000.0
   },
@@ -978,21 +1385,22 @@
       },
       {
         "input": {
-          "Type::SmallPackage": 1
+          "Type::SmallPackage": 4
         },
         "output": {
-          "Type::SmallPackage": 10
+          "Type::LargePackage": 1
         },
         "prodTime": 1.0,
         "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
-      "Type::SmallPackage": 10
+      "Type::LargePackage": 6,
+      "Type::SmallPackage": 50
     },
     "supplyStorage": {
-      "Type::SmallPackage": 10
+      "Type::SmallPackage": 10,
+      "Type::LargePackage": 10
     },
     "maxDist": 150000.0
   },
@@ -1023,14 +1431,14 @@
     },
     "guid": "fa89df514b876032f2161690911f3504",
     "demand": {
-      "Type::Container": 1.0,
       "Container_20ft_01": 1.0,
+      "Type::Container": 1.0,
       "Container_40ft_01": 1.0
     },
     "demandStorage": {
-      "Container_20ft_01": 60,
+      "Type::Container": 60,
       "Container_40ft_01": 30,
-      "Type::Container": 60
+      "Container_20ft_01": 60
     },
     "supplyStorage": {}
   },
@@ -1077,8 +1485,8 @@
       },
       {
         "input": {
-          "Type::Container": 1,
-          "CrudeOil": 10
+          "CrudeOil": 10,
+          "Type::Container": 1
         },
         "output": {
           "Oil": 30
@@ -1088,14 +1496,14 @@
       }
     ],
     "demandStorage": {
-      "CrudeOil": 300,
       "Type::Container": 60,
-      "Container_40ft_01": 30,
-      "Container_20ft_01": 60
+      "CrudeOil": 300,
+      "Container_20ft_01": 60,
+      "Container_40ft_01": 30
     },
     "supplyStorage": {
-      "Fuel": 500,
-      "Oil": 500
+      "Oil": 500,
+      "Fuel": 500
     },
     "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
   },
@@ -1118,8 +1526,8 @@
       },
       {
         "input": {
-          "Fuel": 5,
-          "WoodPlank_14ft_5t": 1
+          "WoodPlank_14ft_5t": 1,
+          "Fuel": 5
         },
         "output": {
           "CrudeOil": 20
@@ -1133,8 +1541,8 @@
       "WoodPlank_14ft_5t": 1.0
     },
     "demandStorage": {
-      "Fuel": 100,
-      "WoodPlank_14ft_5t": 100
+      "WoodPlank_14ft_5t": 100,
+      "Fuel": 100
     },
     "supplyStorage": {
       "CrudeOil": 300
@@ -1192,8 +1600,8 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 50,
-      "Type::Container": 50
+      "Type::Container": 50,
+      "Type::LargePackage": 50
     },
     "supplyStorage": {
       "BreadPallet": 50,
@@ -1312,8 +1720,8 @@
     "type": "Factory_Cement_Drop_C",
     "name": "Seongsan Concrete Factory Cement Drop",
     "coord": {
-      "x": 309235.6,
-      "y": -40912.977,
+      "x": 308782.44,
+      "y": -41124.285,
       "z": -22000.006
     },
     "guid": "5c286ef7413ee6c125d116a47c3a6609",
@@ -1360,8 +1768,8 @@
       "Milk": 100
     },
     "supplyStorage": {
-      "CheeseBox": 100,
-      "CheesePallet": 100
+      "CheesePallet": 100,
+      "CheeseBox": 100
     },
     "dropPoint": ["2e9c137343574cefc1799d9b3cef645f"]
   },
@@ -1386,17 +1794,17 @@
     "type": "Factory_Concrete_C",
     "name": "Seongsan Concrete Factory",
     "coord": {
-      "x": 308714.56,
-      "y": -39664.434,
+      "x": 308261.4,
+      "y": -39875.742,
       "z": -22000.006
     },
     "guid": "a24215bf42a1c9cefc2f85900084a6d6",
     "prod": [
       {
         "input": {
+          "Fuel": 1,
           "Type::Sand": 10,
-          "Cement": 10,
-          "Fuel": 1
+          "Cement": 10
         },
         "output": {
           "Concrete": 10
@@ -1407,8 +1815,8 @@
     ],
     "demandStorage": {
       "Fuel": 100,
-      "Cement": 100,
-      "Type::Sand": 100
+      "Type::Sand": 100,
+      "Cement": 100
     },
     "supplyStorage": {
       "Concrete": 300
@@ -1423,8 +1831,8 @@
     "type": "Factory_Concrete_SandDump_C",
     "name": "Seongsan Concrete Factory Sand Drop",
     "coord": {
-      "x": 307760.3,
-      "y": -38327.133,
+      "x": 307307.16,
+      "y": -38538.44,
       "z": -21696.678
     },
     "guid": "40d0f8e9487a886b65ec228b03c149f0",
@@ -1488,8 +1896,8 @@
       {
         "input": {
           "Container_20ft_01": 2,
-          "SmallBox": 2,
-          "BoxPallete_01": 6
+          "BoxPallete_01": 6,
+          "SmallBox": 2
         },
         "output": {
           "FormulaSCM": 1
@@ -1499,8 +1907,8 @@
       },
       {
         "input": {
-          "Container_20ft_01": 2,
           "SteelCoil_10t": 1,
+          "Container_20ft_01": 2,
           "BoxPallete_01": 6
         },
         "output": {
@@ -1511,17 +1919,17 @@
       }
     ],
     "demand": {
-      "SmallBox": 1.0,
       "Container_30ft_5t": 1.0,
-      "SteelCoil_10t": 1.0,
-      "BoxPallete_01": 1.0
+      "SmallBox": 1.0,
+      "BoxPallete_01": 1.0,
+      "SteelCoil_10t": 1.0
     },
     "demandStorage": {
       "SmallBox": 10,
       "BoxPallete_01": 20,
       "Container_20ft_01": 2,
-      "SteelCoil_10t": 3,
-      "Container_30ft_5t": 5
+      "Container_30ft_5t": 5,
+      "SteelCoil_10t": 3
     },
     "supplyStorage": {
       "FormulaSCM": 2
@@ -1540,8 +1948,8 @@
     "prod": [
       {
         "input": {
-          "WoodPlank_14ft_5t": 2,
-          "PlasticPallete": 1
+          "PlasticPallete": 1,
+          "WoodPlank_14ft_5t": 2
         },
         "output": {
           "Type::Furniture": 10
@@ -1562,9 +1970,9 @@
       "Fuel": 1.0
     },
     "demandStorage": {
-      "WoodPlank_14ft_5t": 100,
       "PlasticPallete": 30,
-      "Fuel": 20
+      "Fuel": 20,
+      "WoodPlank_14ft_5t": 100
     },
     "supplyStorage": {
       "Type::Furniture": 30
@@ -1672,9 +2080,9 @@
       }
     ],
     "demandStorage": {
+      "Log_20ft": 50,
       "Fuel": 10,
-      "Log_Oak_12ft": 50,
-      "Log_20ft": 50
+      "Log_Oak_12ft": 50
     },
     "supplyStorage": {
       "WoodPlank_14ft_5t": 100
@@ -1720,8 +2128,8 @@
       }
     ],
     "demandStorage": {
-      "Log_Oak_12ft": 100,
       "Log_20ft": 100,
+      "Log_Oak_12ft": 100,
       "Fuel": 10
     },
     "supplyStorage": {
@@ -1778,8 +2186,8 @@
       },
       {
         "input": {
-          "Oil": 20,
-          "Type::Container": 1
+          "Type::Container": 1,
+          "Oil": 20
         },
         "output": {
           "PlasticPipes_6m": 20
@@ -1796,13 +2204,13 @@
       }
     ],
     "demandStorage": {
+      "Oil": 200,
       "Type::Container": 20,
-      "Type::LargePackage": 200,
-      "Oil": 200
+      "Type::LargePackage": 200
     },
     "supplyStorage": {
-      "PlasticPipes_6m": 200,
-      "PlasticPallete": 200
+      "PlasticPallete": 200,
+      "PlasticPipes_6m": 200
     },
     "dropPoint": ["66548d0e48da78a9dfa5e392abb2cb8c"]
   },
@@ -1847,12 +2255,12 @@
     "prod": [
       {
         "input": {
-          "Container_20ft_01": 2,
-          "lHBeam_6m": 2,
           "SteelCoil_10t": 3,
-          "Oil": 2,
+          "Container_20ft_01": 2,
+          "Fuel": 1,
           "PlasticPallete": 2,
-          "Fuel": 1
+          "Oil": 2,
+          "lHBeam_6m": 2
         },
         "output": {
           "Terra": 1
@@ -1862,12 +2270,12 @@
       }
     ],
     "demandStorage": {
-      "lHBeam_6m": 30,
+      "PlasticPallete": 30,
+      "Oil": 30,
       "Fuel": 20,
       "Container_20ft_01": 10,
       "SteelCoil_10t": 30,
-      "PlasticPallete": 30,
-      "Oil": 30
+      "lHBeam_6m": 30
     },
     "supplyStorage": {
       "Terra": 5
@@ -1903,8 +2311,8 @@
       },
       {
         "input": {
-          "PlasticPallete": 3,
-          "Type::LargePackage": 1
+          "Type::LargePackage": 1,
+          "PlasticPallete": 3
         },
         "output": {
           "ToyBoxes": 6
@@ -1914,8 +2322,8 @@
       }
     ],
     "demandStorage": {
-      "Type::Container": 100,
       "PlasticPallete": 100,
+      "Type::Container": 100,
       "Type::LargePackage": 100
     },
     "supplyStorage": {
@@ -1962,9 +2370,9 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
+      "Fuel": 5,
       "QuicklimePallet": 6,
-      "Fuel": 5
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
       "BeanPallet": 10
@@ -2010,9 +2418,9 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
+      "Fuel": 5,
       "QuicklimePallet": 6,
-      "Fuel": 5
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
       "CabbagePallet": 10
@@ -2065,13 +2473,13 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
       "QuicklimePallet": 6,
-      "Fuel": 5
+      "Fuel": 5,
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
-      "CornBox": 3,
-      "CornPallet": 10
+      "CornPallet": 10,
+      "CornBox": 3
     }
   },
   {
@@ -2121,8 +2529,8 @@
       }
     ],
     "demandStorage": {
-      "Fuel": 5,
       "Type::LargePackage": 10,
+      "Fuel": 5,
       "QuicklimePallet": 6
     },
     "supplyStorage": {
@@ -2178,12 +2586,12 @@
     ],
     "demandStorage": {
       "Type::LargePackage": 10,
-      "QuicklimePallet": 6,
-      "Fuel": 5
+      "Fuel": 5,
+      "QuicklimePallet": 6
     },
     "supplyStorage": {
-      "CornPallet": 10,
-      "CornBox": 3
+      "CornBox": 3,
+      "CornPallet": 10
     }
   },
   {
@@ -2226,9 +2634,9 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
+      "Fuel": 5,
       "QuicklimePallet": 6,
-      "Fuel": 5
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
       "HempPallet": 10
@@ -2274,8 +2682,8 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
       "Fuel": 5,
+      "Type::LargePackage": 10,
       "QuicklimePallet": 6
     },
     "supplyStorage": {
@@ -2411,8 +2819,8 @@
       }
     ],
     "demandStorage": {
-      "Fuel": 10,
-      "Type::LargePackage": 10
+      "Type::LargePackage": 10,
+      "Fuel": 10
     },
     "supplyStorage": {
       "Milk": 10
@@ -2451,8 +2859,8 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
-      "Fuel": 20
+      "Fuel": 20,
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
       "Milk": 200
@@ -2505,13 +2913,13 @@
       }
     ],
     "demandStorage": {
-      "Type::LargePackage": 10,
       "QuicklimePallet": 6,
-      "Fuel": 5
+      "Fuel": 5,
+      "Type::LargePackage": 10
     },
     "supplyStorage": {
-      "RicePallet": 10,
-      "Rice": 3
+      "Rice": 3,
+      "RicePallet": 10
     }
   },
   {
@@ -2555,8 +2963,8 @@
     ],
     "demandStorage": {
       "Type::LargePackage": 10,
-      "QuicklimePallet": 30,
-      "Fuel": 50
+      "Fuel": 50,
+      "QuicklimePallet": 30
     },
     "supplyStorage": {
       "SunflowerSeed": 500
@@ -2572,8 +2980,8 @@
     },
     "guid": "b30d9a6a480fe326011b069b78ecf229",
     "demand": {
-      "CheeseBox": 1.0,
-      "MeatBox": 1.0
+      "MeatBox": 1.0,
+      "CheeseBox": 1.0
     },
     "demandStorage": {
       "CheeseBox": 30,
@@ -2595,8 +3003,8 @@
       "MeatBox": 1.0
     },
     "demandStorage": {
-      "CheeseBox": 30,
-      "MeatBox": 30
+      "MeatBox": 30,
+      "CheeseBox": 30
     },
     "supplyStorage": {}
   },
@@ -2642,8 +3050,8 @@
     "type": "FuelDemand_C",
     "name": "Seongsan Concrete Factory Fuel Drop",
     "coord": {
-      "x": 308735.56,
-      "y": -43111.902,
+      "x": 308282.4,
+      "y": -43323.215,
       "z": -22000.787
     },
     "guid": "b5ab8e98422d4909a907599fef3e13c9",
@@ -3058,8 +3466,8 @@
       }
     ],
     "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30
+      "SteelCoil_10t": 30,
+      "lHBeam_6m": 30
     },
     "supplyStorage": {}
   },
@@ -3214,8 +3622,8 @@
       "Log_20ft": 1.0
     },
     "demandStorage": {
-      "Log_20ft": 50,
-      "Log_Oak_12ft": 50
+      "Log_Oak_12ft": 50,
+      "Log_20ft": 50
     },
     "supplyStorage": {}
   },
@@ -3229,12 +3637,12 @@
     },
     "guid": "43c8d713415d39be76c42f9cc4c0db7e",
     "demand": {
-      "Log_Oak_12ft": 1.0,
-      "Log_20ft": 1.0
+      "Log_20ft": 1.0,
+      "Log_Oak_12ft": 1.0
     },
     "demandStorage": {
-      "Log_Oak_12ft": 50,
-      "Log_20ft": 50
+      "Log_20ft": 50,
+      "Log_Oak_12ft": 50
     },
     "supplyStorage": {}
   },
@@ -3248,8 +3656,8 @@
     },
     "guid": "f6ba0c254c1d2258122fc984769f43f9",
     "demand": {
-      "Log_Oak_12ft": 1.0,
-      "Log_20ft": 1.0
+      "Log_20ft": 1.0,
+      "Log_Oak_12ft": 1.0
     },
     "demandStorage": {
       "Log_20ft": 50,
@@ -3593,8 +4001,8 @@
       },
       {
         "input": {
-          "Fuel": 3,
-          "WoodPlank_14ft_5t": 1
+          "WoodPlank_14ft_5t": 1,
+          "Fuel": 3
         },
         "output": {
           "Coal": 30
@@ -3604,12 +4012,12 @@
       }
     ],
     "demand": {
-      "Fuel": 1.0,
-      "WoodPlank_14ft_5t": 1.0
+      "WoodPlank_14ft_5t": 1.0,
+      "Fuel": 1.0
     },
     "demandStorage": {
-      "Fuel": 100,
-      "WoodPlank_14ft_5t": 100
+      "WoodPlank_14ft_5t": 100,
+      "Fuel": 100
     },
     "supplyStorage": {
       "Coal": 200
@@ -3656,8 +4064,8 @@
       },
       {
         "input": {
-          "Fuel": 3,
-          "WoodPlank_14ft_5t": 1
+          "WoodPlank_14ft_5t": 1,
+          "Fuel": 3
         },
         "output": {
           "IronOre": 30
@@ -3667,12 +4075,12 @@
       }
     ],
     "demand": {
-      "WoodPlank_14ft_5t": 1.0,
-      "Fuel": 1.0
+      "Fuel": 1.0,
+      "WoodPlank_14ft_5t": 1.0
     },
     "demandStorage": {
-      "Fuel": 100,
-      "WoodPlank_14ft_5t": 100
+      "WoodPlank_14ft_5t": 100,
+      "Fuel": 100
     },
     "supplyStorage": {
       "IronOre": 100
@@ -3839,8 +4247,8 @@
     "prod": [
       {
         "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
+          "CheeseBox": 1,
+          "MeatBox": 1
         },
         "output": {
           "Pizza_01_Premium": 20
@@ -3850,8 +4258,8 @@
       }
     ],
     "demandStorage": {
-      "CheeseBox": 30,
-      "MeatBox": 30
+      "MeatBox": 30,
+      "CheeseBox": 30
     },
     "supplyStorage": {
       "Pizza_01_Premium": 30
@@ -3870,8 +4278,8 @@
     "prod": [
       {
         "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
+          "CheeseBox": 1,
+          "MeatBox": 1
         },
         "output": {
           "Pizza_01_Premium": 20
@@ -3893,19 +4301,195 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": 287407.2,
-      "y": 1379328.6,
-      "z": -21990.34
+      "x": -449083.6,
+      "y": 1056677.8,
+      "z": -20094.682
     },
-    "guid": "a0cdd49240f4f3074324639b84078dfc",
+    "guid": "4fe251c74864660c7483ffa0910e9aef",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -452218.56,
+      "y": 1022664.3,
+      "z": -20105.271
+    },
+    "guid": "af5217a448808b839dd0a7a9b2607fc9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -529299.44,
+      "y": 959526.56,
+      "z": -20002.453
+    },
+    "guid": "7d9b4f5b4dceca9a6cd8ccb263beee72",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -537086.3,
+      "y": 963539.75,
+      "z": -19999.576
+    },
+    "guid": "4f90c1644d58d936a4ad01b1103ee683",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -559432.9,
+      "y": 967928.2,
+      "z": -19997.031
+    },
+    "guid": "1b056fa647248f49693e3e8bbfa370b6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
       "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 287407.2,
+      "y": 1379328.6,
+      "z": -21990.34
+    },
+    "guid": "a0cdd49240f4f3074324639b84078dfc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -3920,15 +4504,26 @@
       "z": -21998.203
     },
     "guid": "d71698d64f26eaea4d7749aa1c9b4d3d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -3942,15 +4537,26 @@
       "z": -22002.406
     },
     "guid": "53de50d54d460e2662c514a766731e4c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -3964,15 +4570,26 @@
       "z": -21998.332
     },
     "guid": "4023eec44eeb129ae5a78084d1f1017c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -3986,14 +4603,25 @@
       "z": -21987.553
     },
     "guid": "24d28409401383b0b71196afec0774dc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -4008,14 +4636,25 @@
       "z": -21989.633
     },
     "guid": "aff6017d41e6da856bcfd3879d90ba06",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4030,15 +4669,26 @@
       "z": -21990.111
     },
     "guid": "9334801b46a0c741d985868f51e946df",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4052,14 +4702,25 @@
       "z": -21998.42
     },
     "guid": "3dcae9b24122d878524e3cb4c6167042",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4074,15 +4735,26 @@
       "z": -21999.85
     },
     "guid": "7c4ea5a040915fb72d0ea082954d4274",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4096,15 +4768,26 @@
       "z": -21995.867
     },
     "guid": "c10bbae44f325e8b40427e81fd2061e1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4118,15 +4801,26 @@
       "z": -21998.33
     },
     "guid": "b7bd649b40afdc726c379694419ef426",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4140,15 +4834,26 @@
       "z": -21998.43
     },
     "guid": "cdd1388448fa10dbed3fbaafa5ce9409",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4162,15 +4867,26 @@
       "z": -21999.023
     },
     "guid": "809f2ad743f0481eb6edaa9bfc61fe07",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4184,15 +4900,26 @@
       "z": -21998.518
     },
     "guid": "af05826941c3a4445a6a71b59bff1ad2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4206,15 +4933,26 @@
       "z": -21998.172
     },
     "guid": "7a798b82478478762a582e8c73e6026b",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4228,15 +4966,26 @@
       "z": -21991.67
     },
     "guid": "9cca8bce48f7fca190084b87055b9fc3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4250,15 +4999,26 @@
       "z": -21991.752
     },
     "guid": "197c58aa46c45cd147c569af6b83a351",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4272,15 +5032,26 @@
       "z": -22000.512
     },
     "guid": "30abfef5480e66c434151fbe671c5e9d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4294,15 +5065,26 @@
       "z": -21990.104
     },
     "guid": "fff6884c430f3acf3e2ea89e72e8e514",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4316,15 +5098,26 @@
       "z": -21992.982
     },
     "guid": "e85df83a43859947f31bf8ab1ca6e596",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4338,15 +5131,26 @@
       "z": -21993.371
     },
     "guid": "87920e734e137b9f6477f480e8fef328",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4360,14 +5164,25 @@
       "z": -21999.523
     },
     "guid": "d751b4ce462b349366d698bac3d51fab",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4382,15 +5197,26 @@
       "z": -21999.08
     },
     "guid": "0f1cb00340e4a2ab818267a9cec23d24",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4404,15 +5230,26 @@
       "z": -21999.705
     },
     "guid": "a27270b0427ab7ae04496b8ad2cac42e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4426,15 +5263,26 @@
       "z": -21989.646
     },
     "guid": "730bbe494ecc51d3f91366a1f346dbc9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Food": 5,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4448,15 +5296,26 @@
       "z": -21994.295
     },
     "guid": "51444e4141e63362a18a18af74458ade",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4470,15 +5329,26 @@
       "z": -21998.72
     },
     "guid": "8824998640317d45ae6bebadaa056cb6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4492,14 +5362,25 @@
       "z": -21998.506
     },
     "guid": "2aa79856481d14622981f6935c87ad3f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4514,6 +5395,16 @@
       "z": -21988.908
     },
     "guid": "2af4ad4648ed4debac3cdd8548f1d98e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
@@ -4522,7 +5413,8 @@
     "demandStorage": {
       "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4536,15 +5428,26 @@
       "z": -21990.982
     },
     "guid": "7a00d5b7446aa0c35e2b958dab8aa7c1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4558,14 +5461,25 @@
       "z": -21993.342
     },
     "guid": "74c8405647ce1dac721158b36eeaa5bf",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4580,15 +5494,26 @@
       "z": -21990.127
     },
     "guid": "b910f25f4f11f176935344bd60d8c2e2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4602,14 +5527,25 @@
       "z": -22002.428
     },
     "guid": "419f14014eea350e482d9684ffc6add9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -4624,14 +5560,25 @@
       "z": -21994.63
     },
     "guid": "67a50a3b40e18c3d6c133baeaa7287ea",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -4646,15 +5593,26 @@
       "z": -22002.105
     },
     "guid": "0255bde0484663662382ad88a258ca92",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4668,14 +5626,25 @@
       "z": -21988.889
     },
     "guid": "7e60f90041885bd1be5c53a28e905f35",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -4690,15 +5659,26 @@
       "z": -21999.363
     },
     "guid": "854c09cd415a781f5bea55b2b755bc33",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4712,15 +5692,26 @@
       "z": -22002.438
     },
     "guid": "cfb5718c4a486fe79ab9d1ade4e4034e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4734,15 +5725,26 @@
       "z": -22002.365
     },
     "guid": "7fc3b35640166f71f3c70981de41ed95",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4756,15 +5758,26 @@
       "z": -21994.883
     },
     "guid": "c7f9d8c24e4b85b974248485e971a282",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4778,15 +5791,26 @@
       "z": -21990.467
     },
     "guid": "801c20ea4f48d2f0d8254eb9d39489fc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4800,15 +5824,26 @@
       "z": -21990.693
     },
     "guid": "647b8bdf496a5a9f077ee0a5213f33fc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4822,15 +5857,26 @@
       "z": -21990.312
     },
     "guid": "fe33914e4fe10ee37c1c04a3f232443f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4844,15 +5890,26 @@
       "z": -21994.97
     },
     "guid": "31ed64054d6e4d562db7cfa9e17ff198",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4866,15 +5923,26 @@
       "z": -21996.512
     },
     "guid": "5a2d72ef4419a0b1e3b51184104ae3e1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4888,15 +5956,26 @@
       "z": -21991.352
     },
     "guid": "49265d3c4d37309f848803b74235dc42",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4910,15 +5989,26 @@
       "z": -21999.873
     },
     "guid": "12e81fad4666bebf9e33c59933e82260",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4932,15 +6022,26 @@
       "z": -21990.826
     },
     "guid": "b216a29c4178904728f27aae52864b84",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4954,15 +6055,26 @@
       "z": -21994.127
     },
     "guid": "5f11a5264596936daf6bb7b69bc8f556",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4976,15 +6088,26 @@
       "z": -21987.559
     },
     "guid": "00fac6094968c9ea8d69238cbb5cce28",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -4998,15 +6121,26 @@
       "z": -21991.012
     },
     "guid": "f7824db3431c757ee2aba3b177fd61c9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5020,13 +6154,24 @@
       "z": -21996.318
     },
     "guid": "8f1984cf4b510c5acab5b5b682b43aaa",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
       "Type::Furniture": 4
     },
@@ -5042,15 +6187,26 @@
       "z": -21991.074
     },
     "guid": "1f3d76b54c4e3bab6ceb8f912f27933d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5064,15 +6220,26 @@
       "z": -21991.375
     },
     "guid": "90254d584d3e03acc9a20ea04ed17a2e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5086,15 +6253,26 @@
       "z": -21987.543
     },
     "guid": "26440a4d42dbd7c05440b0aed1e9b1c5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5108,15 +6286,26 @@
       "z": -21989.408
     },
     "guid": "e429e0bf4ca61bbcbce4b7a4b3dfcc7e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5130,36 +6319,25 @@
       "z": -21444.314
     },
     "guid": "640e5e5c48901f56785ec492449f1038",
-    "demand": {
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
-    },
-    "demandStorage": {
-      "Type::Furniture": 4,
-      "Type::Food": 5,
-      "Type::SmallPackage": 4
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000.0
-  },
-  {
-    "type": "Resident_C",
-    "name": "Resident",
-    "coord": {
-      "x": -83795.56,
-      "y": 150322.12,
-      "z": -21226.934
-    },
-    "guid": "09214e174860b50ec03d53b691561bd4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5169,19 +6347,30 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": -75198.9,
-      "y": 161669.45,
-      "z": -21510.994
+      "x": -84830.71,
+      "y": 149475.73,
+      "z": -21225.326
     },
-    "guid": "f72e606740774b76b911e095e4dccaa2",
+    "guid": "09214e174860b50ec03d53b691561bd4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -5191,20 +6380,856 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": -65626.35,
-      "y": 169689.92,
-      "z": -21729.531
+      "x": 290739.5,
+      "y": 859567.94,
+      "z": -8529.719
     },
-    "guid": "db7a15f3455065841c3766a8809bd225",
+    "guid": "3ced74a341a9abdb7d0686a8ceb540f3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 306028.66,
+      "y": 860377.25,
+      "z": -5978.564
+    },
+    "guid": "46b6472d48eff705e6bc5d8b487b0138",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 293444.88,
+      "y": 856844.56,
+      "z": -8182.816
+    },
+    "guid": "105ce282495e57cf49b693ae9cf82743",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 289668.3,
+      "y": 868064.7,
+      "z": -9127.036
+    },
+    "guid": "91fe5f1f415c13707f5ed193e2dea4e4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 274600.0,
+      "y": 871550.0,
+      "z": -9498.442
+    },
+    "guid": "a248367a4c7c8571f50821ba347032a3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 266673.7,
+      "y": 865788.4,
+      "z": -7507.881
+    },
+    "guid": "74926fa442a81e9e66937fa7caaa1fd9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 280006.22,
+      "y": 862316.1,
+      "z": -8007.9326
+    },
+    "guid": "83e62aa540fa3585e8908bbe4aebc06b",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 282307.5,
+      "y": 870345.25,
+      "z": -9958.325
+    },
+    "guid": "0e1a07ce4d34364a6a79c7be427816da",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 275839.78,
+      "y": 864527.6,
+      "z": -8595.426
+    },
+    "guid": "3803f73a47e3e2e14299e883201629fc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 288478.7,
+      "y": 853140.94,
+      "z": -7962.6113
+    },
+    "guid": "acdeed3a40059ea39c300cb2ffc1cc4d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 285831.8,
+      "y": 857111.06,
+      "z": -8005.513
+    },
+    "guid": "a3b7dac64c91d2346d2d7bb4b8eca3fd",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 276700.0,
+      "y": 868800.0,
+      "z": -9512.533
+    },
+    "guid": "c9214c6347b598bb1d13e088ab99aa5e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 282581.62,
+      "y": 845970.44,
+      "z": -6026.437
+    },
+    "guid": "ac4d8c824acaa128b37e17a9ab4827ef",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 272200.0,
+      "y": 848150.0,
+      "z": -7000.0
+    },
+    "guid": "16dbf2fd4e03e4f6aee223854c71ea8a",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 264185.72,
+      "y": 857423.4,
+      "z": -6500.0
+    },
+    "guid": "f24beb934a7071322a576182ed8068f3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 269084.1,
+      "y": 854405.8,
+      "z": -6984.41
+    },
+    "guid": "3531140d4b3aa1755914a189e0ca7dbd",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 277980.0,
+      "y": 854030.0,
+      "z": -7983.4106
+    },
+    "guid": "a09fffed4f41d882ec703aa60588dfc6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 270145.0,
+      "y": 862355.0,
+      "z": -7065.7866
+    },
+    "guid": "85e3ed0547a58375aea725a9089227af",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 305431.6,
+      "y": 875581.3,
+      "z": -10871.932
+    },
+    "guid": "06d70cb845297c0e7f5294abd8296428",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 300880.0,
+      "y": 889200.0,
+      "z": -9500.12
+    },
+    "guid": "4104f3cb41e885bc4db7b190a40b9f2a",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 264890.0,
+      "y": 878780.0,
+      "z": -9000.046
+    },
+    "guid": "592530ac4e4b6ecdb75aa5a034d562a8",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 265621.06,
+      "y": 874430.8,
+      "z": -8998.536
+    },
+    "guid": "47012db7499008fefa26d6b11fa5420c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 283312.8,
+      "y": 852123.5,
+      "z": -7065.7866
+    },
+    "guid": "a44cc5c54ca03d4ceeb0339e29a8ae7e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 271675.4,
+      "y": 889218.44,
+      "z": -10872.011
+    },
+    "guid": "4948e3b64dbec068cf9eda9609322bef",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -75933.586,
+      "y": 160891.06,
+      "z": -21495.934
+    },
+    "guid": "f72e606740774b76b911e095e4dccaa2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -66487.33,
+      "y": 170200.36,
+      "z": -21766.277
+    },
+    "guid": "db7a15f3455065841c3766a8809bd225",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5218,15 +7243,26 @@
       "z": -20098.41
     },
     "guid": "07d1ea71421f76a2abe98593534ed99a",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5235,33 +7271,21 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": -48104.438,
-      "y": 139681.4,
-      "z": -19642.078
+      "x": -47262.71,
+      "y": 140383.61,
+      "z": -19621.893
     },
     "guid": "e238b42c46767b72eeb5fa9e6f0f1cc6",
-    "demand": {
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
-    },
-    "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000.0
-  },
-  {
-    "type": "Resident_C",
-    "name": "Resident",
-    "coord": {
-      "x": -84491.34,
-      "y": 168869.64,
-      "z": -21972.29
-    },
-    "guid": "56e291564a1d8db8f2d0aab0d6978b60",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
@@ -5270,7 +7294,41 @@
     "demandStorage": {
       "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -86315.8,
+      "y": 168164.17,
+      "z": -21979.979
+    },
+    "guid": "56e291564a1d8db8f2d0aab0d6978b60",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5284,15 +7342,26 @@
       "z": -22085.0
     },
     "guid": "f90ecaa541438dc48dd66f8aa6fbc07d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5306,15 +7375,26 @@
       "z": -21514.074
     },
     "guid": "0ee39ce04872f8fe3e0288b14fd9bdab",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5328,15 +7408,26 @@
       "z": -21803.148
     },
     "guid": "d8b8731c4d53cfa6d14f96bede4b20a5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5350,14 +7441,25 @@
       "z": -21969.068
     },
     "guid": "de2f49bb480cc08d4eeababd0986c4d5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5372,13 +7474,24 @@
       "z": -22085.7
     },
     "guid": "2a627f81447f66249548a9bb04ca2971",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
     },
@@ -5394,14 +7507,25 @@
       "z": -21309.836
     },
     "guid": "4af8fb064b4788b0c21acdad47412a21",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5416,10 +7540,21 @@
       "z": -20990.053
     },
     "guid": "d8cd99a440ce803a43d322b50c2c147d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5429,34 +7564,27 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": -49351.664,
-      "y": 153060.02,
-      "z": -20986.943
-    },
-    "guid": "7e2a57f04669b31adbe2a8a7b3a29ffe",
-    "demand": {
-      "Type::Food": 1.0
-    },
-    "demandStorage": {
-      "Type::Food": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000.0
-  },
-  {
-    "type": "Resident_C",
-    "name": "Resident",
-    "coord": {
-      "x": -79767.82,
-      "y": 147579.83,
-      "z": -20883.914
+      "x": -79675.48,
+      "y": 148420.11,
+      "z": -20929.773
     },
     "guid": "6e1ef3de4f9bfeab35297cb7e6a85a2f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5465,15 +7593,26 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": 11122.187,
-      "y": 150723.28,
+      "x": 9458.36,
+      "y": 147255.2,
       "z": -20845.0
     },
     "guid": "2f7a942e4a1d88410d88979f0178c6db",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5488,15 +7627,26 @@
       "z": -22100.023
     },
     "guid": "a4a6a5904a102b1fa67fd9adbe9b1305",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5510,15 +7660,26 @@
       "z": -22295.0
     },
     "guid": "7a90e12e432d5a5f528845836de557cc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5532,14 +7693,25 @@
       "z": -22295.0
     },
     "guid": "d54659f24eb2f66b3ed9f89d195eae02",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -5554,15 +7726,26 @@
       "z": -22195.0
     },
     "guid": "8bc500914310ac53507468b166bb3771",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5576,15 +7759,26 @@
       "z": -21990.576
     },
     "guid": "6ac429cf4d459399ab8530b8aa1c1fb5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5598,13 +7792,24 @@
       "z": -21739.553
     },
     "guid": "96116cf54a0e3659204a9fa11f025145",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
     },
@@ -5620,15 +7825,26 @@
       "z": -21026.502
     },
     "guid": "b60d602b4a5e84166244388b1866e169",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5642,13 +7858,24 @@
       "z": -21929.697
     },
     "guid": "216b20704948440952b7aab7e755ef9c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
     },
@@ -5664,15 +7891,26 @@
       "z": -21929.697
     },
     "guid": "a9f5f3b248f98ec72809f2a1f5d558df",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5686,15 +7924,26 @@
       "z": -21929.697
     },
     "guid": "4ac7506d44628390010da398ad082383",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5708,13 +7957,24 @@
       "z": -21600.027
     },
     "guid": "b8ee5a21483f54903e6412b258e9cb27",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
     },
@@ -5730,15 +7990,26 @@
       "z": -21600.027
     },
     "guid": "2f2b11e34e77fd4be7eb83abd8b1347f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5752,14 +8023,25 @@
       "z": -22050.24
     },
     "guid": "2c50401d4ed313c058822192d1ab1b09",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -5774,15 +8056,26 @@
       "z": -21960.156
     },
     "guid": "af91d17b4fce897edb18a7a568ac05bf",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5796,15 +8089,26 @@
       "z": -21896.705
     },
     "guid": "2a4da21e47f9e1afedf8bf9e5a55230d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5818,15 +8122,26 @@
       "z": -21988.395
     },
     "guid": "15275ca34c26bbb95c45b6984e83408f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5840,15 +8155,26 @@
       "z": -21900.021
     },
     "guid": "9b6598b145209c7367f56185f3044b30",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5862,15 +8188,26 @@
       "z": -22058.918
     },
     "guid": "cdf17d194cf1e78b1459b19c0fd4d9c1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5884,14 +8221,25 @@
       "z": -22046.375
     },
     "guid": "7ac21b8d4b7ff0f0ffd48e8b6955a1b5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -5906,14 +8254,25 @@
       "z": -21960.156
     },
     "guid": "3e48fbb14312054599d1fbb2abb89b0c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -5928,15 +8287,26 @@
       "z": -22279.658
     },
     "guid": "e465a9fe4ef9a0287bc462ab5fa44b64",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5950,14 +8320,25 @@
       "z": -21997.074
     },
     "guid": "061f265b406ce820ca24a095a56b9a1d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
       "Type::Food": 5,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -5972,15 +8353,26 @@
       "z": -21894.752
     },
     "guid": "776f9a0d4feb1ce2e5a860bbfc66d919",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -5994,15 +8386,26 @@
       "z": -21966.346
     },
     "guid": "24321777490c18409cab1b9211644162",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6016,15 +8419,26 @@
       "z": -21692.43
     },
     "guid": "a41201dc4fa0215560e684ac6b21771f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6038,15 +8452,26 @@
       "z": -21981.623
     },
     "guid": "13ca3a8b4d44a048ce0fa1a46e3e9ca8",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6060,15 +8485,26 @@
       "z": -21849.82
     },
     "guid": "c4a1bbe8488088d27aa7cd8d80e10005",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6082,15 +8518,26 @@
       "z": -21819.143
     },
     "guid": "0fb498684e049b1512d8418077df60fa",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6104,14 +8551,25 @@
       "z": -21741.951
     },
     "guid": "c51663154c21daec50d5b9ade6825948",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -6126,14 +8584,25 @@
       "z": -21040.62
     },
     "guid": "61ffdc19438cdce180404394d13635f9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -6148,15 +8617,26 @@
       "z": -21057.44
     },
     "guid": "162ff0a742798304de548f9e593227bd",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Food": 5,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6170,14 +8650,25 @@
       "z": -22129.244
     },
     "guid": "faceb5b34944d40a4d238887946d7ee2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -6192,15 +8683,26 @@
       "z": -19898.047
     },
     "guid": "72943ba84c813cf679ff73831d5e2985",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6214,6 +8716,16 @@
       "z": -19868.35
     },
     "guid": "4436dfac49a0f960e9925f8ee788778a",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
@@ -6222,7 +8734,8 @@
     "demandStorage": {
       "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6236,15 +8749,26 @@
       "z": -20372.945
     },
     "guid": "f3ba92844b8f95fc5cf0b1afba099e92",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6258,15 +8782,26 @@
       "z": -20479.69
     },
     "guid": "e33e531d4e175736c2649381f0e55e33",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6280,15 +8815,26 @@
       "z": -21252.867
     },
     "guid": "868cea544e5fed3c8f21e584c6d2b5a3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6302,15 +8848,26 @@
       "z": -20944.928
     },
     "guid": "0ee144bc4ff7908f8ab6b186de1885b8",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6324,15 +8881,26 @@
       "z": -20630.723
     },
     "guid": "c342cf5d41bf07a1b65692b70e40749d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6346,14 +8914,25 @@
       "z": -20418.996
     },
     "guid": "7c9242c8496db35daa88fb9ac79304d1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Furniture": 1.0
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -6368,15 +8947,26 @@
       "z": -20208.842
     },
     "guid": "6f42f9ee42aae37825df19b68df05aa6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Food": 1.0,
       "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6390,15 +8980,26 @@
       "z": -22110.186
     },
     "guid": "e6d53df04876951b9d255289370d637d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6412,14 +9013,25 @@
       "z": -20104.883
     },
     "guid": "ffc2f27e46a70d29ef6f50b0d756732b",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
       "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4
     },
     "supplyStorage": {},
@@ -6434,15 +9046,26 @@
       "z": -22060.176
     },
     "guid": "68b73b6a486ee66784dd64a1ee9b6ac5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6456,15 +9079,26 @@
       "z": -21993.566
     },
     "guid": "44ca290145a4276951cbb3a2ae11b4b9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
-      "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6478,15 +9112,26 @@
       "z": -22015.873
     },
     "guid": "87daa7cb4fdb487027e5c0a489fdcb3e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6500,15 +9145,26 @@
       "z": -21681.654
     },
     "guid": "684dae5f41436187f8e045986209845e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5,
-      "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::Furniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6522,13 +9178,24 @@
       "z": -21770.863
     },
     "guid": "1ea047904d1da050b65afca88cab7a16",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
       "Type::Furniture": 4
     },
@@ -6544,15 +9211,26 @@
       "z": -21445.006
     },
     "guid": "7761c8d642a354f01e2742b28318bdee",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6566,15 +9244,26 @@
       "z": -21796.975
     },
     "guid": "b3ab822a438972c24d00a494077a668d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Food": 5,
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6588,15 +9277,26 @@
       "z": -21577.158
     },
     "guid": "0eeeb7c04294fe06470099bf8b0287f6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
       "Type::Furniture": 4,
-      "Type::Food": 5
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6610,15 +9310,26 @@
       "z": -21548.457
     },
     "guid": "05acf1cf49d1dbcc9fdccd8efcffa3f4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::SmallPackage": 1.0,
       "Type::Furniture": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Food": 5,
-      "Type::SmallPackage": 4,
-      "Type::Furniture": 4
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6627,16 +9338,27 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": 12415.795,
-      "y": 129383.375,
+      "x": 15910.335,
+      "y": 130839.01,
       "z": -20424.506
     },
     "guid": "8586723244a4b8b720f5e082ccd59883",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0
     },
     "demandStorage": {
-      "Type::Food": 5
+      "Type::Food": 5,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6650,14 +9372,25 @@
       "z": -22100.018
     },
     "guid": "df7e192249a530c7db3f3ab78277dab7",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
       "Type::Food": 1.0,
-      "Type::SmallPackage": 1.0
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -6672,15 +9405,26 @@
       "z": -21142.98
     },
     "guid": "08575c464f00c55237bc459b77a146ec",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
-      "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
     },
     "demandStorage": {
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
-      "Type::Food": 5
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6694,13 +9438,24 @@
       "z": -21410.695
     },
     "guid": "2c6ec1664e0b7c56f0fe9387c5822626",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
-      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
       "Type::SmallPackage": 1.0,
-      "Type::Food": 1.0
+      "Type::Furniture": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
       "Type::Furniture": 4,
       "Type::Food": 5
     },
@@ -6716,14 +9471,124 @@
       "z": -22009.262
     },
     "guid": "8ee9866e48cab96c5405268957e928ef",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -87696.06,
+      "y": 163019.56,
+      "z": -21656.89
+    },
+    "guid": "d338c2cc4c88f974fdd3fb9e089295ae",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -79849.695,
+      "y": 166216.58,
+      "z": -21825.154
+    },
+    "guid": "55c311fa4371fc14a89cae841e3891dc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Furniture": 1.0,
       "Type::Food": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
+      "GroceryBag": 3,
       "Type::Furniture": 4,
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -91805.836,
+      "y": 170315.95,
+      "z": -21876.0
+    },
+    "guid": "1a52cb354560abbf7bef56b2cd1297c0",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
       "Type::Food": 5
     },
     "supplyStorage": {},
@@ -6733,20 +9598,1747 @@
     "type": "Resident_C",
     "name": "Resident",
     "coord": {
-      "x": -88995.914,
-      "y": 162203.89,
-      "z": -21643.387
+      "x": -96609.07,
+      "y": 168602.33,
+      "z": -21731.256
     },
-    "guid": "d338c2cc4c88f974fdd3fb9e089295ae",
+    "guid": "9add2a804af2d490c995acb4c93f41a5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -96579.4,
+      "y": 161564.16,
+      "z": -21428.92
+    },
+    "guid": "aed038d24490b15c039d7dac42700bae",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -97158.7,
+      "y": 155207.86,
+      "z": -21146.9
+    },
+    "guid": "91b95eec4aed15003356ba842385c8b9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -86220.98,
+      "y": 149433.05,
+      "z": -21119.967
+    },
+    "guid": "4f2651384dce02b4731bdcb5a18b2bd0",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -70220.26,
+      "y": 163215.95,
+      "z": -21470.943
+    },
+    "guid": "3ef0b89245487904393b9f9283726a85",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -66754.23,
+      "y": 163962.33,
+      "z": -21513.635
+    },
+    "guid": "3d9d62ad4a645d6a3eaa18b0311155c6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -59947.574,
+      "y": 165548.8,
+      "z": -21317.78
+    },
+    "guid": "8f8291bf4d1d779fa7d8c79f55bb4431",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -58705.9,
+      "y": 163239.38,
+      "z": -21279.994
+    },
+    "guid": "313c4b594d71a2404eac2e9248aaeb77",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -46527.7,
+      "y": 153738.47,
+      "z": -20898.703
+    },
+    "guid": "8cc02feb4eb6fe4d8db060b7a215060e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -43105.14,
+      "y": 148608.92,
+      "z": -20156.996
+    },
+    "guid": "e61ce9b94da8d6b6df485dbc57f6889b",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -36689.586,
+      "y": 142102.9,
+      "z": -20062.535
+    },
+    "guid": "7bbaa03e4448c2abc5fba3bdc68b0460",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -36376.668,
+      "y": 134191.16,
+      "z": -19870.0
+    },
+    "guid": "0a254d894ebf5a961c62f7af8f46ecd9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -41178.363,
+      "y": 136522.94,
+      "z": -19620.0
+    },
+    "guid": "6db8bf5b408b749f7dcf41b64c7bc7fd",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
     "demand": {
       "Type::Food": 1.0,
       "Type::Furniture": 1.0,
       "Type::SmallPackage": 1.0
     },
     "demandStorage": {
-      "Type::SmallPackage": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -44338.227,
+      "y": 136635.62,
+      "z": -19598.3
+    },
+    "guid": "10d266774aecf53a21deca8ab6bf954e",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -51483.42,
+      "y": 136899.16,
+      "z": -19650.516
+    },
+    "guid": "d568adfb44bfa73bf83c46afe943bca6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -53986.832,
+      "y": 137528.0,
+      "z": -19519.922
+    },
+    "guid": "2f087bf145beb1348cff05b072827b5d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -61087.24,
+      "y": 141480.12,
+      "z": -19603.756
+    },
+    "guid": "9b1aaa52439b7ea1eee2958828cfa502",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -58919.637,
+      "y": 140526.56,
+      "z": -19452.984
+    },
+    "guid": "c1035c2e4f75feb8123c3783e49ab7c0",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -67862.67,
+      "y": 137673.92,
+      "z": -19674.242
+    },
+    "guid": "d78bf7d341b2726696671fad36f34923",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -68734.13,
+      "y": 142978.16,
+      "z": -20185.0
+    },
+    "guid": "3935915a41f01f493cfae884b7ef1877",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -1137.096,
+      "y": 129914.016,
+      "z": -19992.555
+    },
+    "guid": "a035ac7145ea5d494b872cb173431312",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -7797.0103,
+      "y": 130882.72,
+      "z": -20014.68
+    },
+    "guid": "83efc23141f00047db9ef591da509ac2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -18049.742,
+      "y": 132613.36,
+      "z": -20104.578
+    },
+    "guid": "cdb51aad425cda44ef689fb67e142c21",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
       "Type::Food": 5,
       "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": -18309.057,
+      "y": 136995.92,
+      "z": -20103.844
+    },
+    "guid": "bca26e8344b80d864918829c6a6b2fae",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 109255.016,
+      "y": 625521.8,
+      "z": -8000.006
+    },
+    "guid": "5fec350b4ed60811abf863950b9586ed",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 93753.44,
+      "y": 610680.1,
+      "z": -8000.1177
+    },
+    "guid": "65abe37247777fee35353c911211f2eb",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 91034.445,
+      "y": 634465.3,
+      "z": -8000.069
+    },
+    "guid": "a16c56f740471f1ad4756584e802404c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 110386.19,
+      "y": 627053.56,
+      "z": -8000.006
+    },
+    "guid": "668ceac84835fcd9d11f78947aaf54c9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 106171.39,
+      "y": 636321.9,
+      "z": -8000.006
+    },
+    "guid": "dd653e64406eeb95000e57a0131822d8",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 101655.82,
+      "y": 635564.3,
+      "z": -8000.006
+    },
+    "guid": "915c3f9243eb8fcded2da6940d85312f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 102342.02,
+      "y": 641765.44,
+      "z": -8000.006
+    },
+    "guid": "6b298306416c393229a8bab16ab869ba",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 99524.17,
+      "y": 639802.1,
+      "z": -8000.006
+    },
+    "guid": "c542dc174d958e993251c3a08a53a2d6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 84603.414,
+      "y": 659949.94,
+      "z": -9100.066
+    },
+    "guid": "9ec99a324f912ee1f72d289960212e30",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 66123.83,
+      "y": 635852.7,
+      "z": -8400.545
+    },
+    "guid": "c43057b047e6727268f1909a4d339ca5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 64006.395,
+      "y": 637113.9,
+      "z": -8393.748
+    },
+    "guid": "4ba4ebc84a427622cf0d949d64632c88",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 67749.914,
+      "y": 639736.5,
+      "z": -8400.871
+    },
+    "guid": "5d62c05b4079bc4c109974b28f923d4c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 65749.09,
+      "y": 641833.9,
+      "z": -8400.871
+    },
+    "guid": "e2c11cbd441f7d4a1cdfdd949a2c79dd",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 63295.734,
+      "y": 644610.06,
+      "z": -8388.331
+    },
+    "guid": "0ea988544566870a8f71948e170491ed",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 66736.97,
+      "y": 646805.2,
+      "z": -8593.392
+    },
+    "guid": "c9ff912144550fc6e151fcb2d2a84517",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 68850.8,
+      "y": 645049.44,
+      "z": -8601.6045
+    },
+    "guid": "4bd546364c742e8afcaf7cb30c32d46c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 72082.16,
+      "y": 642499.94,
+      "z": -8589.993
+    },
+    "guid": "56877dd34dd1aad950af92a0c982f3ee",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 73324.17,
+      "y": 665757.7,
+      "z": -9100.098
+    },
+    "guid": "c9786df14cbe2aeaa1b4a2876672b0d0",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 69928.664,
+      "y": 663160.3,
+      "z": -9100.066
+    },
+    "guid": "d1c7ab194a9d53ed2bdbe78e7fc35e82",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 63211.3,
+      "y": 668624.56,
+      "z": -9800.106
+    },
+    "guid": "ffb7fd904b69937b4ee0d7a87907cc84",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::Food": 5,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 66172.81,
+      "y": 671403.8,
+      "z": -9800.106
+    },
+    "guid": "a78dda38427f935dcfa157a80873bad9",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 67021.36,
+      "y": 674033.56,
+      "z": -9800.106
+    },
+    "guid": "c6b709ef486896e885c084ad9607eaef",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4,
+      "GroceryBag": 3
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 70178.27,
+      "y": 677893.56,
+      "z": -9798.586
+    },
+    "guid": "8f4523f642f5fd21bf82069fc9e9db2d",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 68642.52,
+      "y": 683914.7,
+      "z": -9800.106
+    },
+    "guid": "b82df4d449ca8b9150b1afa28dec4b13",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 58466.62,
+      "y": 672471.6,
+      "z": -9800.106
+    },
+    "guid": "0a41aed94acb9bfc09b688b6c1eecac2",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 63013.207,
+      "y": 673705.8,
+      "z": -9804.767
+    },
+    "guid": "21b4a7614adcb6fa777384a75b0fbe60",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 66612.39,
+      "y": 679531.2,
+      "z": -9800.106
+    },
+    "guid": "02a7be1249d4064e873c19a5bec4b4dc",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Furniture": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::Food": 5,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Furniture": 4
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 62748.074,
+      "y": 678791.94,
+      "z": -9774.94
+    },
+    "guid": "4c50854349d03724db171197f3233b41",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0,
+      "Type::Furniture": 1.0
+    },
+    "demandStorage": {
+      "Type::Furniture": 4,
+      "GroceryBag": 3,
+      "Type::SmallPackage": 3,
+      "Type::Food": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000.0
+  },
+  {
+    "type": "Resident_C",
+    "name": "Resident",
+    "coord": {
+      "x": 61810.023,
+      "y": 676528.6,
+      "z": -9800.106
+    },
+    "guid": "01249bcc4108f4c972bea980e8a843b5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200.0,
+        "prodSpeedMul": 1.0,
+        "foodSupply": 1.0
+      }
+    ],
+    "demand": {
+      "Type::Furniture": 1.0,
+      "Type::SmallPackage": 1.0,
+      "Type::Food": 1.0
+    },
+    "demandStorage": {
+      "Type::SmallPackage": 3,
+      "GroceryBag": 3,
+      "Type::Furniture": 4,
+      "Type::Food": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000.0
@@ -6797,8 +11389,8 @@
     "prod": [
       {
         "input": {
-          "Limestone": 5,
           "IronOre": 20,
+          "Limestone": 5,
           "Coal": 30
         },
         "output": {
@@ -6809,8 +11401,8 @@
       }
     ],
     "demandStorage": {
-      "Limestone": 200,
       "Coal": 200,
+      "Limestone": 200,
       "IronOre": 100
     },
     "supplyStorage": {
@@ -6834,9 +11426,9 @@
     "prod": [
       {
         "input": {
+          "Coal": 12,
           "Limestone": 2,
-          "IronOre": 8,
-          "Coal": 12
+          "IronOre": 8
         },
         "output": {
           "lHBeam_6m": 1
@@ -6847,8 +11439,8 @@
     ],
     "demandStorage": {
       "Coal": 200,
-      "Limestone": 200,
-      "IronOre": 100
+      "IronOre": 100,
+      "Limestone": 200
     },
     "supplyStorage": {
       "lHBeam_6m": 30
@@ -7325,23 +11917,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
+      "Type::LargePackage": 3,
+      "CheesePallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
       "RicePallet": 3,
+      "PotatoPallet": 3,
+      "PumpkinPallet": 3,
       "BreadPallet": 3,
       "CabbagePallet": 3,
-      "PumpkinPallet": 3,
-      "MeatBox": 5,
-      "OrangeBoxes": 3,
       "BottlePallete": 5,
-      "BeanPallet": 3,
-      "CornPallet": 3,
-      "CheesePallet": 3,
-      "ToyBoxes": 3,
-      "PotatoPallet": 3
+      "BeanPallet": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -7447,23 +12052,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
+      "PotatoPallet": 3,
+      "ToyBoxes": 3,
       "BreadPallet": 3,
       "CabbagePallet": 3,
-      "CornPallet": 3,
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "MeatBox": 5,
-      "CheesePallet": 3,
-      "PotatoPallet": 3,
       "OrangeBoxes": 3,
       "BeanPallet": 3,
-      "PumpkinPallet": 3,
-      "ToyBoxes": 3
+      "RicePallet": 3,
+      "CheesePallet": 3,
+      "MeatBox": 5,
+      "BottlePallete": 5,
+      "CornPallet": 3,
+      "Type::LargePackage": 3,
+      "PumpkinPallet": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -7569,23 +12187,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "BottlePallete": 5,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
       "CornPallet": 3,
-      "ToyBoxes": 3,
-      "MeatBox": 5,
+      "RicePallet": 3,
+      "CabbagePallet": 3,
       "PumpkinPallet": 3,
+      "BottlePallete": 5,
+      "CheesePallet": 3,
+      "MeatBox": 5,
+      "BeanPallet": 3,
+      "ToyBoxes": 3,
+      "Type::LargePackage": 3,
       "OrangeBoxes": 3,
       "BreadPallet": 3,
-      "RicePallet": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3
+      "PotatoPallet": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -7691,23 +12322,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "BreadPallet": 3,
-      "PotatoPallet": 3,
-      "OrangeBoxes": 3,
-      "ToyBoxes": 3,
-      "CabbagePallet": 3,
       "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "BottlePallete": 5,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
+      "ToyBoxes": 3,
+      "Type::LargePackage": 3,
+      "BreadPallet": 3,
       "MeatBox": 5,
-      "CornPallet": 3
+      "BeanPallet": 3,
+      "CornPallet": 3,
+      "CheesePallet": 3,
+      "PotatoPallet": 3,
+      "CabbagePallet": 3,
+      "OrangeBoxes": 3,
+      "PumpkinPallet": 3,
+      "BottlePallete": 5
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -7813,23 +12457,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "MeatBox": 5,
       "ToyBoxes": 3,
+      "Type::LargePackage": 3,
+      "PumpkinPallet": 3,
       "OrangeBoxes": 3,
+      "MeatBox": 5,
       "BottlePallete": 5,
       "PotatoPallet": 3,
-      "BeanPallet": 3,
-      "CornPallet": 3,
       "CheesePallet": 3,
-      "BreadPallet": 3
+      "BeanPallet": 3,
+      "RicePallet": 3,
+      "CabbagePallet": 3,
+      "BreadPallet": 3,
+      "CornPallet": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -7935,23 +12592,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
       "CornPallet": 3,
-      "CheesePallet": 3,
-      "BottlePallete": 5,
-      "RicePallet": 3,
+      "PotatoPallet": 3,
       "BreadPallet": 3,
-      "MeatBox": 5,
-      "CabbagePallet": 3,
+      "CheesePallet": 3,
       "ToyBoxes": 3,
-      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
       "OrangeBoxes": 3,
       "BeanPallet": 3,
-      "PotatoPallet": 3
+      "RicePallet": 3,
+      "MeatBox": 5,
+      "BottlePallete": 5,
+      "PumpkinPallet": 3,
+      "Type::LargePackage": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Supermarket_C",
@@ -8057,23 +12727,36 @@
         },
         "prodTime": 1200.0,
         "prodSpeedMul": 1.0
+      },
+      {
+        "input": {
+          "Type::LargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1.0,
+        "prodSpeedMul": 1.0
       }
     ],
     "demandStorage": {
-      "PumpkinPallet": 3,
-      "OrangeBoxes": 3,
-      "RicePallet": 3,
-      "MeatBox": 5,
       "ToyBoxes": 3,
-      "CabbagePallet": 3,
-      "BottlePallete": 5,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
+      "PumpkinPallet": 3,
       "PotatoPallet": 3,
+      "Type::LargePackage": 3,
+      "MeatBox": 5,
+      "CornPallet": 3,
+      "RicePallet": 3,
+      "BreadPallet": 3,
+      "BottlePallete": 5,
       "BeanPallet": 3,
-      "CornPallet": 3
+      "CabbagePallet": 3,
+      "CheesePallet": 3,
+      "OrangeBoxes": 3
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
   },
   {
     "type": "Warehouse_C",
@@ -8124,10 +12807,10 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "Type::LargePackage": 50,
-      "Type::FinalProduct": 50,
       "Type::Container": 10,
-      "MilitarySupplyBox_01_Empty": 10
+      "Type::LargePackage": 50,
+      "MilitarySupplyBox_01_Empty": 10,
+      "Type::FinalProduct": 50
     },
     "supplyStorage": {
       "Type::LargePackage": 50,
@@ -8183,14 +12866,14 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "MilitarySupplyBox_01_Empty": 10,
       "Type::Container": 10,
+      "Type::FinalProduct": 50,
       "Type::LargePackage": 50,
-      "Type::FinalProduct": 50
+      "MilitarySupplyBox_01_Empty": 10
     },
     "supplyStorage": {
-      "MilitarySupplyBox_01": 50,
-      "Type::LargePackage": 50
+      "Type::LargePackage": 50,
+      "MilitarySupplyBox_01": 50
     }
   },
   {
@@ -8242,10 +12925,10 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "Type::Container": 10,
-      "Type::LargePackage": 50,
       "MilitarySupplyBox_01_Empty": 10,
-      "Type::FinalProduct": 50
+      "Type::Container": 10,
+      "Type::FinalProduct": 50,
+      "Type::LargePackage": 50
     },
     "supplyStorage": {
       "Type::LargePackage": 50,
@@ -8301,10 +12984,10 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "Type::Container": 10,
       "Type::LargePackage": 50,
-      "MilitarySupplyBox_01_Empty": 10,
-      "Type::FinalProduct": 50
+      "Type::FinalProduct": 50,
+      "Type::Container": 10,
+      "MilitarySupplyBox_01_Empty": 10
     },
     "supplyStorage": {
       "Type::LargePackage": 50,
@@ -8361,13 +13044,13 @@
     },
     "demandStorage": {
       "Type::Container": 10,
-      "Type::LargePackage": 50,
+      "MilitarySupplyBox_01_Empty": 10,
       "Type::FinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
+      "Type::LargePackage": 50
     },
     "supplyStorage": {
-      "MilitarySupplyBox_01": 50,
-      "Type::LargePackage": 50
+      "Type::LargePackage": 50,
+      "MilitarySupplyBox_01": 50
     }
   },
   {
@@ -8419,14 +13102,14 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "Type::LargePackage": 50,
-      "MilitarySupplyBox_01_Empty": 10,
       "Type::Container": 10,
-      "Type::FinalProduct": 50
+      "MilitarySupplyBox_01_Empty": 10,
+      "Type::FinalProduct": 50,
+      "Type::LargePackage": 50
     },
     "supplyStorage": {
-      "Type::LargePackage": 50,
-      "MilitarySupplyBox_01": 50
+      "MilitarySupplyBox_01": 50,
+      "Type::LargePackage": 50
     }
   },
   {
@@ -8478,9 +13161,9 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
-      "MilitarySupplyBox_01_Empty": 10,
-      "Type::FinalProduct": 50,
       "Type::LargePackage": 50,
+      "Type::FinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10,
       "Type::Container": 10
     },
     "supplyStorage": {
@@ -8539,8 +13222,8 @@
     "demandStorage": {
       "Type::LargePackage": 50,
       "Type::Container": 10,
-      "Type::FinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
+      "MilitarySupplyBox_01_Empty": 10,
+      "Type::FinalProduct": 50
     },
     "supplyStorage": {
       "MilitarySupplyBox_01": 50,
@@ -8593,15 +13276,15 @@
       }
     ],
     "demand": {
-      "AirlineMealPallet": 1.0,
+      "Type::LargePackage": 1.0,
       "Type::FinalProduct": 1.0,
-      "Type::LargePackage": 1.0
+      "AirlineMealPallet": 1.0
     },
     "demandStorage": {
-      "Type::LargePackage": 50,
-      "MilitarySupplyBox_01_Empty": 50,
       "Type::Container": 10,
       "AirlineMealPallet": 50,
+      "MilitarySupplyBox_01_Empty": 50,
+      "Type::LargePackage": 50,
       "Type::FinalProduct": 50
     },
     "supplyStorage": {
@@ -8658,14 +13341,14 @@
       "MilitarySupplyBox_01_Empty": 1.0
     },
     "demandStorage": {
+      "MilitarySupplyBox_01_Empty": 10,
       "Type::LargePackage": 50,
       "Type::FinalProduct": 50,
-      "Type::Container": 10,
-      "MilitarySupplyBox_01_Empty": 10
+      "Type::Container": 10
     },
     "supplyStorage": {
-      "MilitarySupplyBox_01": 50,
-      "Type::LargePackage": 50
+      "Type::LargePackage": 50,
+      "MilitarySupplyBox_01": 50
     }
   },
   {
@@ -8718,9 +13401,9 @@
     },
     "demandStorage": {
       "Type::Container": 10,
-      "Type::FinalProduct": 50,
+      "Type::LargePackage": 50,
       "MilitarySupplyBox_01_Empty": 10,
-      "Type::LargePackage": 50
+      "Type::FinalProduct": 50
     },
     "supplyStorage": {
       "Type::LargePackage": 50,

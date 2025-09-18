@@ -17,6 +17,14 @@
   "BoxPallete_01": {
     "type": "Type::LargePackage"
   },
+  "GroceryBox": {
+    "type": "Type::SmallPackage",
+    "minDist": 1
+  },
+  "GroceryBag": {
+    "type": "Type::SmallPackage",
+    "minDist": 1
+  },
   "BoxPallete_02": {
     "type": "Type::LargePackage"
   },

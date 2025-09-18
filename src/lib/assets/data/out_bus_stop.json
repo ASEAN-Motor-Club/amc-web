@@ -389,9 +389,9 @@
     "type": "BusStop_01_C",
     "name": "Nobong Cement Factory",
     "coord": {
-      "x": -184398.95,
-      "y": 508348.6,
-      "z": -12600.35
+      "x": -183920.1,
+      "y": 508310.44,
+      "z": -12600.131
     },
     "guid": "673ac5b14023ce296601ceaa8c5caec1"
   },
@@ -439,9 +439,9 @@
     "type": "BusStop_01_C",
     "name": "Nobong Cement Factory",
     "coord": {
-      "x": -184985.3,
-      "y": 510080.97,
-      "z": -12601.438
+      "x": -184939.9,
+      "y": 510073.66,
+      "z": -12600.131
     },
     "guid": "6754c0884a4c7d73f3ba45bdc15b0f91"
   },
@@ -451,7 +451,7 @@
     "coord": {
       "x": -407297.88,
       "y": 595914.5,
-      "z": -9500.249
+      "z": -9856.744
     },
     "guid": "d94abc2646627abfb2bf6797443fa83d"
   },
@@ -459,9 +459,9 @@
     "type": "BusStop_01_C",
     "name": "Dongsan Quarry Dormitory",
     "coord": {
-      "x": -408105.12,
-      "y": 592068.06,
-      "z": -9276.021
+      "x": -403557.03,
+      "y": 595505.4,
+      "z": -9793.544
     },
     "guid": "d21247e54d10e7ecff4dc2b8ccd0b3a6"
   },
@@ -469,9 +469,9 @@
     "type": "BusStop_01_C",
     "name": "Baram Sunflower Farm",
     "coord": {
-      "x": -449009.56,
-      "y": 1057053.4,
-      "z": -20100.012
+      "x": -450722.75,
+      "y": 1053934.5,
+      "z": -20100.023
     },
     "guid": "ea356b60467e25c46f62b688518a8746"
   },
@@ -504,6 +504,26 @@
       "z": -20000.078
     },
     "guid": "9b8fe75f4855997a38ee71b75866cda0"
+  },
+  {
+    "type": "BusStop_01_C",
+    "name": "Hupo Factory",
+    "coord": {
+      "x": 278175.4,
+      "y": 366274.88,
+      "z": -13706.577
+    },
+    "guid": "181adff04caf4f3b204a2d97f4075775"
+  },
+  {
+    "type": "BusStop_01_C",
+    "name": "Hupo Factory",
+    "coord": {
+      "x": 279419.2,
+      "y": 371402.3,
+      "z": -13715.648
+    },
+    "guid": "18d738874e25ee6c5e4a00a05a195b08"
   },
   {
     "type": "BusStop_01_C",
@@ -1124,6 +1144,26 @@
       "z": -19391.646
     },
     "guid": "455da2cc440a30a47fa447afc873dd24"
+  },
+  {
+    "type": "BusStop_02_C",
+    "name": "Ara Town Hospital",
+    "coord": {
+      "x": 403479.38,
+      "y": 1317339.0,
+      "z": -18169.082
+    },
+    "guid": "4cd6bb1d46c3f066fa8efabd2439201c"
+  },
+  {
+    "type": "BusStop_02_C",
+    "name": "Ara Town Hospital",
+    "coord": {
+      "x": 402138.66,
+      "y": 1318300.8,
+      "z": -18157.508
+    },
+    "guid": "8c16f0234ab8398a7af8acab9b75f15b"
   },
   {
     "type": "BusStop_02_C",
