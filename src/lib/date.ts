@@ -18,6 +18,7 @@ export {
   isAfter,
   isSameYear,
   intervalToDuration,
+  differenceInMinutes,
 } from 'date-fns';
 
 import {

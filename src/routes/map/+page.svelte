@@ -38,7 +38,7 @@
   import { goto } from '$app/navigation';
   import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type DeliveryPointInfo, type HouseData } from '$lib/api/types';
+  import { DeliveryLineType, type HouseData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -51,8 +51,7 @@
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { SvelteMap, SvelteSet } from 'svelte/reactivity';
-  import { startDeliveryPointsPolling } from '$lib/api/delivery';
+  import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
 
   // LocalStorage utility functions for layer state persistence
@@ -755,23 +754,6 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
-
-  let deliveryPointInfosLoading = $state(true);
-  let deliveryPointInfos = new SvelteMap<string, DeliveryPointInfo>();
-
-  onMount(() => {
-    const stopPolling = startDeliveryPointsPolling((data) => {
-      deliveryPointInfos.clear();
-      for (const info of data) {
-        deliveryPointInfos.set(info.guid, info);
-      }
-      deliveryPointInfosLoading = false;
-    });
-
-    return () => {
-      stopPolling();
-    };
-  });
 </script>
 
 <svelte:document onvisibilitychange={startPolling} />
@@ -824,11 +806,5 @@
     </Card>
   </div>
 
-  <HoverInfoTooltip
-    {hoverInfo}
-    {houseData}
-    onClick={handleInfoClick}
-    {deliveryPointInfos}
-    {deliveryPointInfosLoading}
-  />
+  <HoverInfoTooltip {hoverInfo} {houseData} onClick={handleInfoClick} />
 </div>

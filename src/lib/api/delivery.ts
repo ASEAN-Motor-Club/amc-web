@@ -23,6 +23,31 @@ export const getDeliveryPointInfos = async (signal: AbortSignal): Promise<Delive
   }
 };
 
+export const getDeliveryPointInfo = async (
+  id: string,
+  signal: AbortSignal,
+): Promise<DeliveryPointInfo | undefined> => {
+  try {
+    const response = await fetch(`${PUBLIC_API_NEW_BASE}/api/deliverypoints/${id}`, {
+      signal: signal,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as DeliveryPointInfo;
+
+    return data;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      console.info('Fetch aborted');
+      return undefined;
+    }
+    console.error('Error fetching delivery point:', error);
+    throw error;
+  }
+};
+
 export const startDeliveryPointsPolling = (
   callback: (deliveryPoints: DeliveryPointInfo[]) => void,
   interval = 1200000, // 20 minutes

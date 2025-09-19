@@ -8,10 +8,9 @@
   import type { DeliveryPoint } from '$lib/data/deliveryPoint';
   import type { House } from '$lib/data/house';
   import Button from '$lib/ui/Button/Button.svelte';
-  import type { DeliveryPointInfo, HouseData } from '$lib/api/types';
+  import type { HouseData } from '$lib/api/types';
   import { m as msg } from '$lib/paraglide/messages';
   import PlayerInfo from './PlayerInfo.svelte';
-  import type { SvelteMap } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
   import { getLocationAtPoint } from '$lib/data/area';
   import { mtLocale } from '../MtLocale/mtLocale.svelte';
@@ -36,18 +35,10 @@
   export interface HoverInfoTooltipProps {
     houseData: HouseData | undefined;
     hoverInfo: HoverInfo | undefined;
-    deliveryPointInfosLoading: boolean;
-    deliveryPointInfos: SvelteMap<string, DeliveryPointInfo>;
     onClick?: () => void;
   }
 
-  const {
-    hoverInfo,
-    onClick,
-    houseData,
-    deliveryPointInfos,
-    deliveryPointInfosLoading,
-  }: HoverInfoTooltipProps = $props();
+  const { hoverInfo, onClick, houseData }: HoverInfoTooltipProps = $props();
 
   const typeText = $derived.by(() => {
     if (!hoverInfo) {
@@ -132,7 +123,7 @@
       {#if hoverInfo.info}
         <div class="border-t-1 my-0.5 w-full border-neutral-100/20"></div>
         {#if hoverInfo.pointType === PointType.Delivery}
-          <DeliveryInfo {hoverInfo} {deliveryPointInfos} {deliveryPointInfosLoading} />
+          <DeliveryInfo {hoverInfo} />
         {:else if hoverInfo.pointType === PointType.House}
           <HousingInfo {hoverInfo} {houseData} />
         {:else if hoverInfo.pointType === PointType.Player}
