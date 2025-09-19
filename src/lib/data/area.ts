@@ -1,12 +1,13 @@
 import type { Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
+import type { MtLocaleKey } from './types';
 
 const flagOrder = {
   '': 0,
-  'EMTAreaVolumeFlags::RaceTrack': 1,
-  'EMTAreaVolumeFlags::SmallArea': 2,
-  'EMTAreaVolumeFlags::LargeArea': 3,
-  'EMTAreaVolumeFlags::Zone': 4,
+  RaceTrack: 1,
+  SmallArea: 2,
+  LargeArea: 3,
+  Zone: 4,
 } as Record<string, number>;
 
 // Precompute bounding boxes for all areas
@@ -24,7 +25,7 @@ const areaVolumeWithBBox = areaVolume.map((area) => {
   return { ...area, order: flagOrder[area.flag], box: { minX, minY, maxX, maxY } };
 });
 
-export const getLocationAtPoint = (point: Vector2) => {
+export const getLocationAtPoint = (point: Vector2, locale: MtLocaleKey) => {
   const matchArea: typeof areaVolumeWithBBox = [];
 
   for (const area of areaVolumeWithBBox) {
@@ -56,6 +57,5 @@ export const getLocationAtPoint = (point: Vector2) => {
   }
 
   matchArea.sort((a, b) => a.order - b.order);
-
-  return matchArea.map((area) => area.name).join(', ');
+  return matchArea.map((area) => area.name[locale]).join(', ');
 };

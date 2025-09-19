@@ -8,6 +8,7 @@
   import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
   import { formatDistanceStrict } from '$lib/date';
+  import { mtLocale } from '$lib/components/MtLocale/mtLocale.svelte';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -47,7 +48,7 @@
       return 0;
     }
 
-    if (cargoKey.startsWith('Type::')) {
+    if (cargoKey.startsWith('T::')) {
       const cargoKeys = outCargoKey[cargoKey as DeliveryCargoType];
       return inventory.reduce(
         (sum, item) => sum + (cargoKeys.includes(item.cargoKey) ? item.amount : 0),
@@ -69,7 +70,7 @@
     </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
-        <div>{cargoName[item]}</div>
+        <div>{cargoName[item][mtLocale.l]}</div>
         <div class="relative">
           <span class="absolute right-full">
             {#if deliveryPointInfosLoading}
@@ -78,7 +79,7 @@
               {getInventoryAmount(item, false)}
             {/if}
           </span>
-          {#if !item.startsWith('Type::')}
+          {#if !item.startsWith('T::')}
             /{hoverInfo.info.supplyStorage[item]}
           {/if}
         </div>
@@ -95,7 +96,7 @@
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
         <div class="flex items-center gap-1.5">
-          {cargoName[item]}
+          {cargoName[item][mtLocale.l]}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
             <Icon class="i-material-symbols:link-rounded -mb-px text-yellow-500" size="xs" />
           {/if}
@@ -108,7 +109,7 @@
               {getInventoryAmount(item, true)}
             {/if}
           </span>
-          {#if !item.startsWith('Type::')}
+          {#if !item.startsWith('T::')}
             /{hoverInfo.info.demandStorage[item]}
           {/if}
         </div>

@@ -17,12 +17,13 @@
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { mtLocale } from '$lib/components/MtLocale/mtLocale.svelte';
+  import { getLocationAtPoint } from '$lib/data/area';
 
   export type SearchPoint = {
     guid?: string;
     name: string;
     coord: Vector2;
-    location?: string;
   } & (
     | {
         pointType: PointType.Delivery;
@@ -43,14 +44,16 @@
 
   const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
 
-  const deliveryPoints = unmappedDeliveryPoints
-    .filter((point) => point.type !== 'Resident_C')
-    .map((point) => ({
-      ...point,
-      pointType: PointType.Delivery,
-      supplyText: point.allSupply.map((i) => cargoName[i]).join(', '),
-      demandText: point.allDemand.map((i) => cargoName[i]).join(', '),
-    }));
+  const deliveryPoints = $derived(
+    unmappedDeliveryPoints
+      .filter((point) => point.type !== 'Resident_C')
+      .map((point) => ({
+        ...point,
+        pointType: PointType.Delivery,
+        supplyText: point.allSupply.map((i) => cargoName[i][mtLocale.l]).join(', '),
+        demandText: point.allDemand.map((i) => cargoName[i][mtLocale.l]).join(', '),
+      })),
+  );
 
   const house = $derived(
     unmappedHouse.map((point) => ({
@@ -88,24 +91,23 @@
 
     const pins = pinsData?.filter((pin) => pin.label?.toLowerCase().includes(search)) ?? [];
 
-    const player = playerData.filter(
-      (player) =>
-        player.name.toLowerCase().includes(search) ||
-        player.location.toLowerCase().includes(search),
-    );
+    const player = playerData.filter((player) => player.name.toLowerCase().includes(search));
 
-    const delivery = deliveryPoints.filter(
-      (point) =>
-        point.name.toLowerCase().includes(search) ||
-        point.location.toLowerCase().includes(search) ||
-        point.supplyText.toLowerCase().includes(search) ||
-        point.demandText.toLowerCase().includes(search),
-    );
+    const delivery = deliveryPoints
+      .filter(
+        (point) =>
+          point.name[mtLocale.l].toLowerCase().includes(search) ||
+          point.supplyText.toLowerCase().includes(search) ||
+          point.demandText.toLowerCase().includes(search),
+      )
+      .map((point) => ({
+        ...point,
+        name: point.name[mtLocale.l],
+      }));
 
     const housePoints = house.filter(
       (point) =>
         (point.name || msg['housing.vacant']()).toLowerCase().includes(search) ||
-        point.location.toLowerCase().includes(search) ||
         point.guid.toLowerCase().includes(search),
     );
 
@@ -247,17 +249,9 @@
                     <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
                   </div>
                 {/if}
-                {#if point.location}
-                  <div class="text-xs text-neutral-400">
-                    <HighlightText
-                      text={point.location}
-                      highlight={searchValue}
-                      caseInSensitive
-                      tag="span"
-                      highlightClass="inline-block bg-white/20"
-                    />
-                  </div>
-                {/if}
+                <div class="text-xs text-neutral-400">
+                  {getLocationAtPoint(point.coord, mtLocale.l)}
+                </div>
               </div>
             </a>
           {/each}

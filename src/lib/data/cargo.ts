@@ -1,8 +1,8 @@
 import cargoNameJson from '$lib/assets/data/cargo_name.json';
 import cargoMetadataJson from '$lib/assets/data/out_cargo_metadata.json';
-import type { DeliveryCargo, DeliveryCargoType, DeliveryCargoKey } from './types';
+import type { DeliveryCargo, DeliveryCargoType, DeliveryCargoKey, MtLocaleKey } from './types';
 
-export const cargoName = cargoNameJson as Record<DeliveryCargo, string>;
+export const cargoName = cargoNameJson as Record<DeliveryCargo, Record<MtLocaleKey, string>>;
 
 export interface CargoMetadata {
   type: DeliveryCargoType;

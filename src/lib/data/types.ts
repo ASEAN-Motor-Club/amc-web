@@ -126,13 +126,38 @@ export type DeliveryCargoKey =
   | 'MilitarySupplyBox_01';
 
 export type DeliveryCargoType =
-  | 'Type::Container'
-  | 'Type::LargePackage'
-  | 'Type::SmallPackage'
-  | 'Type::Sand'
-  | 'Type::Furniture'
-  | 'Type::MilitarySupply'
-  | 'Type::Food'
-  | 'Type::FinalProduct';
+  | 'T::Container'
+  | 'T::LargePackage'
+  | 'T::SmallPackage'
+  | 'T::Sand'
+  | 'T::Furniture'
+  | 'T::MilitarySupply'
+  | 'T::Food'
+  | 'T::FinalProduct';
 
 export type DeliveryCargo = DeliveryCargoKey | DeliveryCargoType;
+
+export type MtLocaleKey =
+  | 'cs'
+  | 'de'
+  | 'en'
+  | 'es-419'
+  | 'es-ES'
+  | 'fi'
+  | 'fr'
+  | 'hu'
+  | 'it'
+  | 'ja'
+  | 'ko'
+  | 'lt'
+  | 'nl'
+  | 'no'
+  | 'pl'
+  | 'pt-BR'
+  | 'ru'
+  | 'sv'
+  | 'tr'
+  | 'uk'
+  | 'vi'
+  | 'zh-Hans'
+  | 'zh-Hant';

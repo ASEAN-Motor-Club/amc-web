@@ -1,5 +1,4 @@
 import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
-import { getLocationAtPoint } from '$lib/data/area';
 import type { Vector3 } from '$lib/types';
 import { uniq } from 'lodash-es';
 import type {
@@ -7,12 +6,13 @@ import type {
   DeliveryCargoKey,
   DeliveryPointType,
   DeliveryCargoType,
+  MtLocaleKey,
 } from './types';
 import outCargoKey from '$lib/assets/data/out_cargo_key.json';
 
 export interface DeliveryPointJson {
   type: DeliveryPointType;
-  name: string;
+  name: Record<MtLocaleKey, string>;
   coord: Vector3;
   guid: string;
   prod?: ProductionConfig[];
@@ -35,7 +35,6 @@ export interface ProductionConfig {
 }
 
 export interface DeliveryPoint extends DeliveryPointJson {
-  location: string;
   allSupply: DeliveryCargo[];
   allDemand: DeliveryCargo[];
   allSupplyKey: DeliveryCargoKey[];
@@ -54,7 +53,6 @@ const demandKeyMapNoResident = new Map<DeliveryCargoKey, string[]>();
 const deliveryPointsMap = new Map<string, DeliveryPoint>();
 
 const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map((dp) => {
-  const location = getLocationAtPoint(dp.coord);
   const allSupply = uniq(
     dp.prod?.flatMap((p) => Object.keys(p.output || {})) || [],
   ).sort() as DeliveryCargo[];
@@ -85,11 +83,11 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
   }
 
   const allSupplyKey = allSupply.flatMap((s) =>
-    s.startsWith('Type::') ? outCargoKey[s as DeliveryCargoType] : s,
+    s.startsWith('T::') ? outCargoKey[s as DeliveryCargoType] : s,
   ) as DeliveryCargoKey[];
 
   const allDemandKey = allDemand.flatMap((s) =>
-    s.startsWith('Type::') ? outCargoKey[s as DeliveryCargoType] : s,
+    s.startsWith('T::') ? outCargoKey[s as DeliveryCargoType] : s,
   ) as DeliveryCargoKey[];
 
   for (const supply of allSupplyKey) {
@@ -114,7 +112,6 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
 
   const point = {
     ...dp,
-    location,
     allSupply,
     allDemand,
     allSupplyKey,

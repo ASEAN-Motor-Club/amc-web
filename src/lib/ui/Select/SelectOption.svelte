@@ -13,7 +13,7 @@
      */
     class?: ClassValue;
     /**
-     * The content of the option leave empty to use value
+     * The content of the option, leave empty to use value
      */
     children?: Snippet;
   }

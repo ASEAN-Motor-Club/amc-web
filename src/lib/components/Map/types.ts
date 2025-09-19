@@ -11,7 +11,6 @@ export interface PlayerData {
   geometry: [number, number];
   name: string;
   pointType: PointType.Player;
-  location: string;
   coord: Vector2;
   vehicleKey: string | 'None';
   guid: string;

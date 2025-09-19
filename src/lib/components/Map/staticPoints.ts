@@ -33,9 +33,7 @@ export const deliveryPointLayer = new WebGLVectorLayer({
       (point) =>
         new Feature({
           geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
-          name: point.name,
           pointType: PointType.Delivery,
-          location: point.location,
           info: point,
         }),
     ),
@@ -56,9 +54,7 @@ export const residentPointLayer = new WebGLVectorLayer({
       (point) =>
         new Feature({
           geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
-          name: point.name,
           pointType: PointType.Delivery,
-          location: point.location,
           info: point,
         }),
     ),
@@ -80,9 +76,7 @@ export const houseLayer = new WebGLVectorLayer({
       (point) =>
         new Feature({
           geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
-          name: point.name,
           pointType: PointType.House,
-          location: point.location,
           info: point,
         }),
     ),

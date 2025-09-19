@@ -12,6 +12,7 @@
   import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
+  import SettingsMenu from './SettingsMenu.svelte';
 
   const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
 
@@ -73,21 +74,6 @@
     external?: boolean;
     onMouseOver?: () => void;
   }[];
-
-  let darkMode = $state(false);
-
-  onMount(() => {
-    darkMode = document.documentElement.classList.contains('dark');
-  });
-
-  const swapTheme = () => {
-    document.documentElement.classList.toggle('dark');
-    darkMode = document.documentElement.classList.contains('dark');
-  };
-
-  $effect(() => {
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-  });
 
   let menu = $state(false);
 </script>
@@ -208,15 +194,6 @@
       {@render menuItems()}
     </div>
   </Modal>
-  <Button class="ml-auto" variant="text" round size="sm" onClick={swapTheme} icon>
-    <Icon
-      class={[
-        darkMode
-          ? `i-material-symbols:dark-mode-outline-rounded`
-          : `i-material-symbols:light-mode-outline-rounded`,
-      ]}
-      size="sm"
-    />
-  </Button>
+  <SettingsMenu />
 </nav>
 <NavbarPageLoading />

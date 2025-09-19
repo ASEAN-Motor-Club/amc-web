@@ -1,7 +1,31 @@
 [
   {
-    "name": "Aewol",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Ae-Wol",
+      "de": "Ae-Wol",
+      "en": "Aewol",
+      "es-419": "Ae-Wol",
+      "es-ES": "Ae-Wol",
+      "fi": "Ae-Wol",
+      "fr": "Ae-Wol",
+      "hu": "Ae-Wol",
+      "it": "Ae-Wol",
+      "ja": "エウォル",
+      "ko": "애월",
+      "lt": "Ae-Wol",
+      "nl": "Ae-Wol",
+      "no": "Aewol",
+      "pl": "Ae-Wol",
+      "pt-BR": "Ae-Wol",
+      "ru": "Ae-Wol",
+      "sv": "Ae-Wol",
+      "tr": "Ae-Wol",
+      "uk": "Ае-Вол",
+      "vi": "Aewol",
+      "zh-Hans": "爱月",
+      "zh-Hant": "涯月"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -262663.9,
@@ -54,8 +78,32 @@
     ]
   },
   {
-    "name": "Gapa",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Gapa",
+      "de": "Gapa",
+      "en": "Gapa",
+      "es-419": "Ga-Pa",
+      "es-ES": "Gapa",
+      "fi": "Gapa",
+      "fr": "Gapa",
+      "hu": "Gapa",
+      "it": "Gapa",
+      "ja": "カパ",
+      "ko": "가파",
+      "lt": "Gapa",
+      "nl": "Gapa",
+      "no": "Gapa",
+      "pl": "Gapa",
+      "pt-BR": "Gapa",
+      "ru": "Gapa",
+      "sv": "Gapa",
+      "tr": "Gapa",
+      "uk": "Гапа",
+      "vi": "Gapa",
+      "zh-Hans": "加帕",
+      "zh-Hant": "加帕"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 49878.043,
@@ -108,8 +156,32 @@
     ]
   },
   {
-    "name": "Gwangjin",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Gwangjin",
+      "de": "Gwangjin",
+      "en": "Gwangjin",
+      "es-419": "Gwangjin",
+      "es-ES": "Gwangjin",
+      "fi": "Gwangjin",
+      "fr": "Gwangjin",
+      "hu": "Gwangjin",
+      "it": "Gwangjin",
+      "ja": "クァンジン",
+      "ko": "광진",
+      "lt": "Gwangjin",
+      "nl": "Gwangjin",
+      "no": "Gwangjin",
+      "pl": "Gwangjin",
+      "pt-BR": "Gwangjin",
+      "ru": "Gwangjin",
+      "sv": "Gwangjin",
+      "tr": "Gwangjin",
+      "uk": "Гванджін",
+      "vi": "Gwangjin",
+      "zh-Hans": "广津",
+      "zh-Hant": "廣津"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 290624.47,
@@ -170,8 +242,32 @@
     ]
   },
   {
-    "name": "Gwangjin Coal",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Gwangjin uhelná",
+      "de": "Gwangjin Kohle",
+      "en": "Gwangjin Coal",
+      "es-419": "Carbonería de Gwangjin",
+      "es-ES": "Mina de carbón de Gwangjin",
+      "fi": "Gwangjin Coal",
+      "fr": "Charbon de Gwangjin",
+      "hu": "Gwangjin szén",
+      "it": "Carbone Gwangjin",
+      "ja": "クァンジン炭鉱",
+      "ko": "광진 석탄",
+      "lt": "Gwangjin anglis",
+      "nl": "Gwangjin Coal",
+      "no": "Gwangjin Coal",
+      "pl": "Węgiel Guangjin",
+      "pt-BR": "Carvão Guangjin",
+      "ru": "Угольные копи Gwangjin",
+      "sv": "Gwangjin-kol",
+      "tr": "Gwangjin Kömür",
+      "uk": "Вугілля Гванджін",
+      "vi": "Gwangjin Coal",
+      "zh-Hans": "广津煤炭",
+      "zh-Hant": "廣津煤炭"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 338407.62,
@@ -224,8 +320,32 @@
     ]
   },
   {
-    "name": "Aewol Furniture Store",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Prodejna nábytku Ae-Wol",
+      "de": "Ae-Wol-Möbelgeschäft",
+      "en": "Aewol Furniture Store",
+      "es-419": "Tienda de Muebles Ae-Wol",
+      "es-ES": "Tienda de muebles Ae-Wol",
+      "fi": "Ae-Wol-huonekaluliike",
+      "fr": "Magasin de meubles Ae-Wol",
+      "hu": "Ae-Wol Bútorbolt",
+      "it": "Negozio di mobili Ae-Wol",
+      "ja": "エウォル家具店",
+      "ko": "애월 가구점",
+      "lt": "Ae-Wol baldų parduotuvė",
+      "nl": "Meubelwinkel Ae-Wol",
+      "no": "Aewol Furniture Store",
+      "pl": "Sklep meblowy Ae-Wol",
+      "pt-BR": "Loja de móveis Ae-Wol",
+      "ru": "Мебельный магазин Aewol",
+      "sv": "Ae-Wol möbelaffär",
+      "tr": "Ae-Wol Mobilya Mağazası",
+      "uk": "Магазин меблів Ae-Wol",
+      "vi": "Cửa hàng nội thất Aewol",
+      "zh-Hans": "爱月家具店",
+      "zh-Hant": "涯月家具店"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -227095.94,
@@ -262,8 +382,32 @@
     ]
   },
   {
-    "name": "Yeongil",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Yeongil",
+      "de": "Yeongil",
+      "en": "Yeongil",
+      "es-419": "Yeon-gil",
+      "es-ES": "Yeongil",
+      "fi": "Yeongil",
+      "fr": "Yeongil",
+      "hu": "Yeongil",
+      "it": "Yeongil",
+      "ja": "ヨンイル",
+      "ko": "영일",
+      "lt": "Yeongil",
+      "nl": "Yeongil",
+      "no": "Yeongil",
+      "pl": "Yeongil",
+      "pt-BR": "Yeongil",
+      "ru": "Yeongil",
+      "sv": "Yeongil",
+      "tr": "Yeongil",
+      "uk": "Йонгіл",
+      "vi": "Yeongil",
+      "zh-Hans": "永吉",
+      "zh-Hant": "永日"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -241009.12,
@@ -300,8 +444,32 @@
     ]
   },
   {
-    "name": "Joil",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Joil",
+      "de": "Joil",
+      "en": "Joil",
+      "es-419": "Joil",
+      "es-ES": "Joil",
+      "fi": "Joil",
+      "fr": "Joil",
+      "hu": "Joil",
+      "it": "Joil",
+      "ja": "ジョイル",
+      "ko": "조일",
+      "lt": "Joil",
+      "nl": "Joil",
+      "no": "Joil",
+      "pl": "Joil",
+      "pt-BR": "Joil",
+      "ru": "Joil",
+      "sv": "Joil",
+      "tr": "Joil",
+      "uk": "Джойл",
+      "vi": "Joil",
+      "zh-Hans": "乔伊尔",
+      "zh-Hant": "照日"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -174335.61,
@@ -309,11 +477,11 @@
       },
       {
         "x": -179511.98,
-        "y": 1306382.0
+        "y": 1306382
       },
       {
         "x": -179511.98,
-        "y": 1306382.0
+        "y": 1306382
       },
       {
         "x": -160193.47,
@@ -338,8 +506,32 @@
     ]
   },
   {
-    "name": "Dasa Harbor",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Přístav Dasa",
+      "de": "Hafen von Dasa",
+      "en": "Dasa Harbor",
+      "es-419": "Puerto de Dasa",
+      "es-ES": "Puerto de Dasa",
+      "fi": "Dasa Harbor",
+      "fr": "Port de Dasa",
+      "hu": "Dasa Kikötő",
+      "it": "Porto di Dasa",
+      "ja": "ダサ港",
+      "ko": "다사항",
+      "lt": "Dasa uostas",
+      "nl": "De haven van Dasa",
+      "no": "Dasa Harbor",
+      "pl": "Port Dasa",
+      "pt-BR": "Porto de Dasa",
+      "ru": "Порт Dasa",
+      "sv": "Dasa Harbor",
+      "tr": "Dasa Limanı",
+      "uk": "Гавань Даса",
+      "vi": "Dasa Harbor",
+      "zh-Hans": "达萨港",
+      "zh-Hant": "達薩港"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -788335.2,
@@ -362,11 +554,11 @@
         "y": 1151729.8
       },
       {
-        "x": -776027.0,
+        "x": -776027,
         "y": 1182066.8
       },
       {
-        "x": -776027.0,
+        "x": -776027,
         "y": 1182066.8
       },
       {
@@ -392,78 +584,126 @@
     ]
   },
   {
-    "name": "Sanho Oil Refinery",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Ropná rafinérie Sanho",
+      "de": "Ölraffinerie Sanho",
+      "en": "Sanho Oil Refinery",
+      "es-419": "Refinería de Petróleo Sanho",
+      "es-ES": "Refinería de petróleo de Sanho",
+      "fi": "Sanho Oil Refinery",
+      "fr": "Raffinerie de pétrole de Sanho",
+      "hu": "Sanho Olajfinomító",
+      "it": "Raffineria di petrolio di Sanho",
+      "ja": "サンホ製油所",
+      "ko": "산호 정유 공장",
+      "lt": "Sanho naftos perdirbimo gamykla",
+      "nl": "Sanho-olieraffinaderij",
+      "no": "Sanho Oil Refinery",
+      "pl": "Rafineria ropy naftowej w Sanho",
+      "pt-BR": "Refinaria de Petróleo de Sanho",
+      "ru": "Sanho Oil Refinery",
+      "sv": "Sanho Oljeraffinaderi",
+      "tr": "Sanho Petrol Rafinerisi",
+      "uk": "НПЗ Санхо",
+      "vi": "Sanho Oil Refinery",
+      "zh-Hans": "三湖炼油厂",
+      "zh-Hant": "三和煉油廠"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
-        "x": -765990.0,
-        "y": 1518140.0
+        "x": -765990,
+        "y": 1518140
       },
       {
-        "x": -811990.0,
-        "y": 1518140.0
+        "x": -811990,
+        "y": 1518140
       },
       {
-        "x": -811990.0,
-        "y": 1518140.0
+        "x": -811990,
+        "y": 1518140
       },
       {
-        "x": -811990.0,
-        "y": 1472140.0
+        "x": -811990,
+        "y": 1472140
       },
       {
-        "x": -711990.0,
-        "y": 1472140.0
+        "x": -711990,
+        "y": 1472140
       },
       {
-        "x": -711990.0,
-        "y": 1518140.0
+        "x": -711990,
+        "y": 1518140
       },
       {
-        "x": -711990.0,
-        "y": 1518140.0
+        "x": -711990,
+        "y": 1518140
       },
       {
-        "x": -765990.0,
-        "y": 1518140.0
+        "x": -765990,
+        "y": 1518140
       },
       {
-        "x": -765990.0,
-        "y": 1438140.0
+        "x": -765990,
+        "y": 1438140
       },
       {
-        "x": -711990.0,
-        "y": 1438140.0
+        "x": -711990,
+        "y": 1438140
       },
       {
-        "x": -711990.0,
-        "y": 1438140.0
+        "x": -711990,
+        "y": 1438140
       },
       {
-        "x": -711990.0,
-        "y": 1472140.0
+        "x": -711990,
+        "y": 1472140
       },
       {
-        "x": -811990.0,
-        "y": 1472140.0
+        "x": -811990,
+        "y": 1472140
       },
       {
-        "x": -778990.0,
-        "y": 1457140.0
+        "x": -778990,
+        "y": 1457140
       },
       {
-        "x": -778990.0,
-        "y": 1457140.0
+        "x": -778990,
+        "y": 1457140
       },
       {
-        "x": -765990.0,
-        "y": 1438140.0
+        "x": -765990,
+        "y": 1438140
       }
     ]
   },
   {
-    "name": "Biyang",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Biyang",
+      "de": "Biyang",
+      "en": "Biyang",
+      "es-419": "Biyang",
+      "es-ES": "Biyang",
+      "fi": "Biyang",
+      "fr": "Biyang",
+      "hu": "Biyang",
+      "it": "Biyang",
+      "ja": "ピヤン",
+      "ko": "비양",
+      "lt": "Biyang",
+      "nl": "Biyang",
+      "no": "Biyang",
+      "pl": "Biyang",
+      "pt-BR": "Biyang",
+      "ru": "Biyang",
+      "sv": "Biyang",
+      "tr": "Biyang",
+      "uk": "Біянг",
+      "vi": "Biyang",
+      "zh-Hans": "碧阳",
+      "zh-Hant": "泌陽"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 128378.66,
@@ -500,8 +740,32 @@
     ]
   },
   {
-    "name": "Migeum",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Migeum",
+      "de": "Migeum",
+      "en": "Migeum",
+      "es-419": "Migeum",
+      "es-ES": "Migeum",
+      "fi": "Migeum",
+      "fr": "Migeum",
+      "hu": "Migeum",
+      "it": "Migeum",
+      "ja": "ミグム",
+      "ko": "미금",
+      "lt": "Migeum",
+      "nl": "Migeum",
+      "no": "Migeum",
+      "pl": "Migeum",
+      "pt-BR": "Migeum",
+      "ru": "Migeum",
+      "sv": "Migeum",
+      "tr": "Migeum",
+      "uk": "Мігеум",
+      "vi": "Migeum",
+      "zh-Hans": "米格姆",
+      "zh-Hant": "彌金"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 217992.12,
@@ -509,7 +773,7 @@
       },
       {
         "x": 245806.47,
-        "y": 420289.0
+        "y": 420289
       },
       {
         "x": 184972.23,
@@ -529,7 +793,7 @@
       },
       {
         "x": 245806.47,
-        "y": 420289.0
+        "y": 420289
       },
       {
         "x": 265258.7,
@@ -618,8 +882,32 @@
     ]
   },
   {
-    "name": "Namdang",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Namdang",
+      "de": "Namdang",
+      "en": "Namdang",
+      "es-419": "Namdang",
+      "es-ES": "Namdang",
+      "fi": "Namdang",
+      "fr": "Namdang",
+      "hu": "Namdang",
+      "it": "Namdang",
+      "ja": "ナムダン",
+      "ko": "남당",
+      "lt": "Namdang",
+      "nl": "Namdang",
+      "no": "Namdang",
+      "pl": "Namdang",
+      "pt-BR": "Namdang",
+      "ru": "Namdang",
+      "sv": "Namdang",
+      "tr": "Namdang",
+      "uk": "Намданг",
+      "vi": "Namdang",
+      "zh-Hans": "南塘",
+      "zh-Hant": "南堂"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 142017.02,
@@ -627,11 +915,11 @@
       },
       {
         "x": 125311.93,
-        "y": 886685.0
+        "y": 886685
       },
       {
         "x": 125311.93,
-        "y": 886685.0
+        "y": 886685
       },
       {
         "x": 158536.83,
@@ -656,8 +944,32 @@
     ]
   },
   {
-    "name": "Aewol Raceway",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "Závodní dráha Ae-Wol",
+      "de": "Ae-Wol-Rennstrecke",
+      "en": "Aewol Raceway",
+      "es-419": "Circuito Ae-Wol",
+      "es-ES": "Circuito de Ae-Wol",
+      "fi": "Ae-Wol Kilparata",
+      "fr": "Ae-Wol Raceway",
+      "hu": "Ae-Wol versenypálya",
+      "it": "Ae-Wol Raceway",
+      "ja": "エウォルレースウェイ",
+      "ko": "애월 경주로",
+      "lt": "Ae-Wol lenktynių trasa",
+      "nl": "Aewol Racebaan",
+      "no": "Aewol Raceway",
+      "pl": "Tor wyścigowy Ae-Wol",
+      "pt-BR": "Pista Ae-Wol",
+      "ru": "Трасса Ae-Wol",
+      "sv": "Ae-Wol Motorbana",
+      "tr": "Ae-Wol Yarış Pisti",
+      "uk": "Ае-Вол Гоночна траса",
+      "vi": "Aewol Raceway",
+      "zh-Hans": "爱月赛道",
+      "zh-Hant": "涯月賽道"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
         "x": -167153.97,
@@ -726,12 +1038,36 @@
     ]
   },
   {
-    "name": "Ansan Ring",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "Ansan Ring",
+      "de": "Ansan Ring",
+      "en": "Ansan Ring",
+      "es-419": "Ansan Ring",
+      "es-ES": "Circuito Ansan Ring",
+      "fi": "Ansan Ring",
+      "fr": "Anneau d'Ansan",
+      "hu": "Ansan körgyűrű",
+      "it": "Anello Asiatico",
+      "ja": "アンサンオーバル",
+      "ko": "안산 링",
+      "lt": "Ansan žiedas",
+      "nl": "Ansan Ring",
+      "no": "Ansan Ring",
+      "pl": "Ansan Ring",
+      "pt-BR": "Anel de Ansan",
+      "ru": "Кольцо Ansan",
+      "sv": "Ansan Ring",
+      "tr": "Ansan pisti",
+      "uk": "Ансан кільце",
+      "vi": "Ansan Ring",
+      "zh-Hans": "安斯环",
+      "zh-Hant": "安山橢圓賽道"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
-        "x": -147221.0,
-        "y": 325319.0
+        "x": -147221,
+        "y": 325319
       },
       {
         "x": -170152.14,
@@ -758,8 +1094,8 @@
         "y": 323336.34
       },
       {
-        "x": -147221.0,
-        "y": 325319.0
+        "x": -147221,
+        "y": 325319
       },
       {
         "x": -161712.27,
@@ -796,8 +1132,32 @@
     ]
   },
   {
-    "name": "Ansan Speedway",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "Závodní dráha Ansan",
+      "de": "Ansan Speedway",
+      "en": "Ansan Speedway",
+      "es-419": "Circuito de Ansan",
+      "es-ES": "Circuito de Ansan",
+      "fi": "Ansan Kilparata",
+      "fr": "Circuit automobile d'Ansan",
+      "hu": "Ansan Versenypálya",
+      "it": "Autodromo Ansan",
+      "ja": "アンサンスピードウェイ",
+      "ko": "안산 스피드웨이",
+      "lt": "Ansan Speedway",
+      "nl": "Ansan Speedway",
+      "no": "Ansan Speedway",
+      "pl": "Autostrada Ansan",
+      "pt-BR": "Ansan Speedway",
+      "ru": "Шоссе Ансан",
+      "sv": "Ansan Speedway",
+      "tr": "Ansan Yarış Pisti",
+      "uk": "Ансан Спідвей",
+      "vi": "Ansan Speedway",
+      "zh-Hans": "安山赛道",
+      "zh-Hant": "安山賽道"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
         "x": -269856.25,
@@ -874,8 +1234,32 @@
     ]
   },
   {
-    "name": "Gangjung",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Gang-Jung",
+      "de": "Gang-Jung",
+      "en": "Gangjung",
+      "es-419": "Gang-Jung",
+      "es-ES": "Gang-Jung",
+      "fi": "Gang-Jung",
+      "fr": "Gang-Jung",
+      "hu": "Gang-Jung",
+      "it": "Gang-Jung",
+      "ja": "カンジョン",
+      "ko": "강정",
+      "lt": "Gang-Jung",
+      "nl": "Gang-Jung",
+      "no": "Gangjung",
+      "pl": "Gang-Jung",
+      "pt-BR": "Gang-Jung",
+      "ru": "Гэнг-Джанг",
+      "sv": "Gang-Jung",
+      "tr": "Gang-Jung",
+      "uk": "Ган-Юнг",
+      "vi": "Gangjung",
+      "zh-Hans": "江正",
+      "zh-Hant": "江汀"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -94408.164,
@@ -928,8 +1312,32 @@
     ]
   },
   {
-    "name": "Gimnyeong Beach",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Pláž Gim-Nyeong",
+      "de": "Gim-Nyeong Strand",
+      "en": "Gimnyeong Beach",
+      "es-419": "Playa Gim-Nyeong",
+      "es-ES": "Playa Gim-Nyeong",
+      "fi": "Gim-Nyeong ranta",
+      "fr": "Plage de Gim-Nyeong",
+      "hu": "Gim-Nyeong Tengerpart",
+      "it": "Spiaggia di Gim Nyeong",
+      "ja": "ギムニョンビーチ",
+      "ko": "김녕 해수욕장",
+      "lt": "Gim-Nyeong paplūdimys",
+      "nl": "Gim-Nyeong strand",
+      "no": "Gimnyeong Beach",
+      "pl": "Plaża Gim-Nyeong",
+      "pt-BR": "Praia Gim-Nyeong",
+      "ru": "Пляж Гим-Нён",
+      "sv": "Gim-Nyeong Strand",
+      "tr": "Gim-Nyeong Plajı",
+      "uk": "Пляж Гім-Ньон",
+      "vi": "Bãi biển Gimnyeong",
+      "zh-Hans": "金宁海滩",
+      "zh-Hant": "金寧海灘"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 139509.66,
@@ -966,8 +1374,32 @@
     ]
   },
   {
-    "name": "Gu-Jwa",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Gu-Jwa",
+      "de": "Gu-Jwa",
+      "en": "Gu-Jwa",
+      "es-419": "Gu-Jwa",
+      "es-ES": "Gu-Jwa",
+      "fi": "Gu-Jwa",
+      "fr": "Gu-Jwa",
+      "hu": "Gu-Jwa",
+      "it": "Gu-Jwa",
+      "ja": "クジャ",
+      "ko": "구좌",
+      "lt": "Gu-Jwa",
+      "nl": "Gu-Jwa",
+      "no": "Gu-Jwa",
+      "pl": "Gu-Jwa",
+      "pt-BR": "Gu-Jwa",
+      "ru": "Гу-Джва",
+      "sv": "Gu-Jwa",
+      "tr": "Gu-Jwa",
+      "uk": "Гу-Джва",
+      "vi": "Gu-Jwa",
+      "zh-Hans": "库加",
+      "zh-Hant": "舊左"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 192450.05,
@@ -1004,8 +1436,32 @@
     ]
   },
   {
-    "name": "Harbor Raceway",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "Přístavní závodiště",
+      "de": "Hafen Rennstrecke",
+      "en": "Harbor Raceway",
+      "es-419": "Circuito de Carreras del Puerto",
+      "es-ES": "Circuito de Carreras del Puerto",
+      "fi": "Harbour Raceway",
+      "fr": "Circuit du port",
+      "hu": "Habor Raceway",
+      "it": "Pista Habor",
+      "ja": "ハーバーレースウェイ",
+      "ko": "하버 레이스웨이",
+      "lt": "Habor lenktynių trasa",
+      "nl": "Habor racebaan",
+      "no": "Habor kjørebane",
+      "pl": "Tor wyścigowy Habor",
+      "pt-BR": "Pista do Porto",
+      "ru": "Гоночная трасса в порту",
+      "sv": "Hamn Racingbana",
+      "tr": "Habor Yarış Pisti",
+      "uk": "Гоночна траса Гавань",
+      "vi": "Đường đua Harbor",
+      "zh-Hans": "港口赛道",
+      "zh-Hant": "港口賽道"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
         "x": -57798.87,
@@ -1042,8 +1498,32 @@
     ]
   },
   {
-    "name": "Hallim Fishing Village",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Rybářská vesnice Hallim",
+      "de": "Fischerdorf Hallim",
+      "en": "Hallim Fishing Village",
+      "es-419": "Pueblo Pesquero de Hallim",
+      "es-ES": "Pueblo pesquero de Hallim",
+      "fi": "Hallimin kalastajakylä",
+      "fr": "Village de pêcheurs de Hallim",
+      "hu": "Hallim halászfalu",
+      "it": "Villaggio di pescatori di Hallim",
+      "ja": "ハルリム漁村",
+      "ko": "한림 어촌",
+      "lt": "Hallim žvejų kaimelis",
+      "nl": "Vissersdorp Hallim",
+      "no": "Hallim Fishing Village",
+      "pl": "Wioska rybacka Hallim",
+      "pt-BR": "Vila de Pescadores Hallim",
+      "ru": "Рыбацкая деревня Hallim",
+      "sv": "Hallim fiskeby",
+      "tr": "Hallim Balıkçı Köyü",
+      "uk": "Рибальське селище Халлім",
+      "vi": "Hallim Fishing Village",
+      "zh-Hans": "翰林渔村",
+      "zh-Hant": "翰林漁村"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -348355.1,
@@ -1080,8 +1560,32 @@
     ]
   },
   {
-    "name": "Iseungag",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Iseung-Ag",
+      "de": "Iseung-Ag",
+      "en": "Iseungag",
+      "es-419": "Iseung-Ag",
+      "es-ES": "Iseung-Ag",
+      "fi": "Iseung-Ag",
+      "fr": "Iseung-Ag",
+      "hu": "Iseung-Ag",
+      "it": "Iseung-Ag",
+      "ja": "アイスンアグ",
+      "ko": "이승악",
+      "lt": "Iseung-Ag",
+      "nl": "Iseung-Ag",
+      "no": "Iseungag",
+      "pl": "Iseung-Ag",
+      "pt-BR": "Iseung-Ag",
+      "ru": "Исеунг-Аг",
+      "sv": "Iseung-Ag",
+      "tr": "Iseung-Ag",
+      "uk": "Ісин-Аг",
+      "vi": "Iseungag",
+      "zh-Hans": "伊胜银",
+      "zh-Hant": "梨升岳"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 7319.7275,
@@ -1118,8 +1622,32 @@
     ]
   },
   {
-    "name": "Jeju",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Jeju",
+      "de": "Jeju",
+      "en": "Jeju",
+      "es-419": "Jeju",
+      "es-ES": "Jeju",
+      "fi": "Jeju",
+      "fr": "Jeju",
+      "hu": "Jeju",
+      "it": "Jeju",
+      "ja": "チェジュ",
+      "ko": "제주",
+      "lt": "Jeju",
+      "nl": "Jeju",
+      "no": "Jeju",
+      "pl": "Jeju",
+      "pt-BR": "Jeju",
+      "ru": "Чеджу",
+      "sv": "Jeju",
+      "tr": "Jeju",
+      "uk": "Чеджу",
+      "vi": "Jeju",
+      "zh-Hans": "济州",
+      "zh-Hant": "濟州"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -67677.01,
@@ -1204,7 +1732,31 @@
     ]
   },
   {
-    "name": "Jeju Airport",
+    "name": {
+      "cs": "Letiště Jeju",
+      "de": "Flughafen Jeju",
+      "en": "Jeju Airport",
+      "es-419": "Aeropuerto de Jeju",
+      "es-ES": "Aeropuerto de Jeju",
+      "fi": "Jejun lentokenttä",
+      "fr": "Aéroport de Jeju",
+      "hu": "Jeju Repülőtér",
+      "it": "Aeroporto di Jeju",
+      "ja": "チェジュ空港",
+      "ko": "제주 공항",
+      "lt": "Jeju oro uostas",
+      "nl": "Jeju luchthaven",
+      "no": "Jeju flyplass",
+      "pl": "Lotnisko Jeju",
+      "pt-BR": "Aeroporto de Jeju",
+      "ru": "Аэропорт Чеджу",
+      "sv": "Jeju Flygplats",
+      "tr": "Jeju Havaalanı",
+      "uk": "Аеропорт Чеджу",
+      "vi": "Sân bay Jeju",
+      "zh-Hans": "济州机场",
+      "zh-Hant": "濟州機場"
+    },
     "flag": "",
     "vertex": [
       {
@@ -1306,8 +1858,32 @@
     ]
   },
   {
-    "name": "Jeju Harbor",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Přístav Jeju",
+      "de": "Hafen von Jeju",
+      "en": "Jeju Harbor",
+      "es-419": "Puerto de Jeju",
+      "es-ES": "Puerto de Jeju",
+      "fi": "Jejun satama",
+      "fr": "Port de Jeju",
+      "hu": "Jeju Kikötő",
+      "it": "Porto di Jeju",
+      "ja": "チェジュ港",
+      "ko": "제주항",
+      "lt": "Jeju uostas",
+      "nl": "haven van Jeju",
+      "no": "Jeju Harbor",
+      "pl": "Port w Jeju",
+      "pt-BR": "Porto de Jeju",
+      "ru": "Гавань Чеджу",
+      "sv": "Jeju Hamn",
+      "tr": "Jeju Limanı",
+      "uk": "Гавань Чеджу",
+      "vi": "Cảng Jeju",
+      "zh-Hans": "济州港",
+      "zh-Hant": "濟州港"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -58200.832,
@@ -1344,8 +1920,32 @@
     ]
   },
   {
-    "name": "Jocheon Old Mansion",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Staré sídlo Jocheon",
+      "de": "Altes Herrenhaus von Jocheon",
+      "en": "Jocheon Old Mansion",
+      "es-419": "Mansión Antigua de Jocheon",
+      "es-ES": "Mansión Antigua de Jocheon",
+      "fi": "Jocheonin vanha kartano",
+      "fr": "Vieux manoir de Jocheon",
+      "hu": "Jocheon Régi Kastély",
+      "it": "Vecchia Dimora di Jocheon",
+      "ja": "チョチョン古邸宅",
+      "ko": "조천고택",
+      "lt": "Jocheon senasis dvaras",
+      "nl": "Jocheon oud herenhuis",
+      "no": "Jocheon Old Mansion",
+      "pl": "Stara rezydencja Jocheon",
+      "pt-BR": "Mansão Velha Jocheon",
+      "ru": "Старый особняк Чочхон",
+      "sv": "Jocheon Gammel-Herrgård",
+      "tr": "Jocheon Eski Konağı",
+      "uk": "Старий маєток Чочхон",
+      "vi": "Jocheon Old Mansion",
+      "zh-Hans": "朝天旧宅",
+      "zh-Hant": "朝天古宅"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 91400.766,
@@ -1382,8 +1982,32 @@
     ]
   },
   {
-    "name": "Junkyard",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Vrakoviště",
+      "de": "Schrottplatz",
+      "en": "Junkyard",
+      "es-419": "Chatarrería",
+      "es-ES": "Desguace",
+      "fi": "Romuttamo",
+      "fr": "Casse",
+      "hu": "Szeméttelep",
+      "it": "Discarica",
+      "ja": "ジャンクヤード",
+      "ko": "폐차장",
+      "lt": "Laužynas",
+      "nl": "Autosloperij",
+      "no": "Junkyard",
+      "pl": "Złomowisko",
+      "pt-BR": "Ferro-Velho",
+      "ru": "Свалка",
+      "sv": "Bildemontering",
+      "tr": "Hurdalık",
+      "uk": "Сміттєзвалище",
+      "vi": "Junkyard",
+      "zh-Hans": "垃圾场",
+      "zh-Hant": "廢鐵場"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -196514.6,
@@ -1420,8 +2044,32 @@
     ]
   },
   {
-    "name": "Military Base",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Vojenská základna",
+      "de": "Militärbasis",
+      "en": "Military Base",
+      "es-419": "Base Militar",
+      "es-ES": "Base militar",
+      "fi": "Sotilastukikohta",
+      "fr": "Base militaire",
+      "hu": "Katonai bázis",
+      "it": "Base militare",
+      "ja": "軍事基地",
+      "ko": "군사 기지",
+      "lt": "Karinė bazė",
+      "nl": "Militaire basis",
+      "no": "Military Base",
+      "pl": "Baza wojskowa",
+      "pt-BR": "Base militar",
+      "ru": "Военная база",
+      "sv": "Militärbas",
+      "tr": "Askeri Üs",
+      "uk": "Військова база",
+      "vi": "Military Base",
+      "zh-Hans": "军事基地",
+      "zh-Hant": "軍事基地"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -75731.96,
@@ -1458,8 +2106,32 @@
     ]
   },
   {
-    "name": "Tosan Trailers",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Přívěsy Tosan",
+      "de": "Tosan-Anhänger",
+      "en": "Tosan Trailers",
+      "es-419": "Remolques Tosan",
+      "es-ES": "Remolques Tosan",
+      "fi": "Tosan Trailers",
+      "fr": "Remorques Tosan",
+      "hu": "Tosan Pótkocsik",
+      "it": "Rimorchi Tosani",
+      "ja": "トサン トレーラー",
+      "ko": "토산 트레일러",
+      "lt": "Tosan priekabos",
+      "nl": "Tosan-aanhangwagens",
+      "no": "Tosan Trailers",
+      "pl": "Przyczepy Tosan",
+      "pt-BR": "Trailers Tosan",
+      "ru": "Tosan Trailers",
+      "sv": "Tosan släpvagnar",
+      "tr": "Tosan Römork Galeri",
+      "uk": "Причепи Тосан",
+      "vi": "Tosan Trailers",
+      "zh-Hans": "土山拖车",
+      "zh-Hant": "兔山拖車"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 163915.25,
@@ -1496,7 +2168,31 @@
     ]
   },
   {
-    "name": "Gosan Truck",
+    "name": {
+      "cs": "Gosan Truck",
+      "de": "Gosan Truck",
+      "en": "Gosan Truck",
+      "es-419": "Camiones Gosan",
+      "es-ES": "Concesionario de camiones de Gosan",
+      "fi": "Gosan Truck",
+      "fr": "Camion Gosan",
+      "hu": "Gosan Teherautók",
+      "it": "Camion Gosan",
+      "ja": "ゴサントラック",
+      "ko": "고산 트럭",
+      "lt": "Gosan sunkvežimis",
+      "nl": "Gosan Truck",
+      "no": "Gosan Truck",
+      "pl": "Dealer ciężarówek Gosan",
+      "pt-BR": "Loja de Caminhões",
+      "ru": "Грузовики Gosan",
+      "sv": "Gosan lastbil",
+      "tr": "Gosan Kamyon Galeri",
+      "uk": "Вантажівки Госана",
+      "vi": "Gosan Truck",
+      "zh-Hans": "高山卡车",
+      "zh-Hant": "孤山卡車"
+    },
     "flag": "",
     "vertex": [
       {
@@ -1534,8 +2230,32 @@
     ]
   },
   {
-    "name": "Ara",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Ara",
+      "de": "Ara",
+      "en": "Ara",
+      "es-419": "Ara",
+      "es-ES": "Ara",
+      "fi": "Ara",
+      "fr": "Ara",
+      "hu": "Ara",
+      "it": "Ara",
+      "ja": "アラ",
+      "ko": "아라",
+      "lt": "Ara",
+      "nl": "Ara",
+      "no": "Ara",
+      "pl": "Ara",
+      "pt-BR": "Ara",
+      "ru": "Ara",
+      "sv": "Ara",
+      "tr": "Ara",
+      "uk": "Ара",
+      "vi": "Ara",
+      "zh-Hans": "阿拉伯",
+      "zh-Hant": "雅羅"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": 181704.6,
@@ -1572,8 +2292,32 @@
     ]
   },
   {
-    "name": "Gwangjin",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Gwangjin",
+      "de": "Gwangjin",
+      "en": "Gwangjin",
+      "es-419": "Gwangjin",
+      "es-ES": "Gwangjin",
+      "fi": "Gwangjin",
+      "fr": "Gwangjin",
+      "hu": "Gwangjin",
+      "it": "Gwangjin",
+      "ja": "クァンジン",
+      "ko": "광진",
+      "lt": "Gwangjin",
+      "nl": "Gwangjin",
+      "no": "Gwangjin",
+      "pl": "Gwangjin",
+      "pt-BR": "Gwangjin",
+      "ru": "Gwangjin",
+      "sv": "Gwangjin",
+      "tr": "Gwangjin",
+      "uk": "Гванджін",
+      "vi": "Gwangjin",
+      "zh-Hans": "广津",
+      "zh-Hant": "廣津"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": 78672.24,
@@ -1610,7 +2354,31 @@
     ]
   },
   {
-    "name": "Tow Truck Dealership",
+    "name": {
+      "cs": "Odtahovka Obchodní zastoupení",
+      "de": "Abschleppfahrzeug Händler",
+      "en": "Tow Truck Dealership",
+      "es-419": "Grúa Concesionario",
+      "es-ES": "Camión de remolque Concesionario",
+      "fi": "Tow Truck Dealership",
+      "fr": "Dépanneuse Concession",
+      "hu": "Vontatóautó Márkakereskedés",
+      "it": "Carro Attrezzi Concessionaria",
+      "ja": "レッカー車 ディーラー",
+      "ko": "Tow Truck Dealership",
+      "lt": "Tow Truck Dealership",
+      "nl": "Takelwagen Dealerschap",
+      "no": "Tow Truck Dealership",
+      "pl": "Holownik Salon Sprzedaży",
+      "pt-BR": "Caminhão de reboque Concessionária",
+      "ru": "Эвакуатор Дилерский центр",
+      "sv": "Tow Truck Dealership",
+      "tr": "Çekici Bayilik",
+      "uk": "Евакуатор Дилер",
+      "vi": "Tow Truck Dealership",
+      "zh-Hans": "拖车 经销店",
+      "zh-Hant": "拖救車 經銷商"
+    },
     "flag": "",
     "vertex": [
       {
@@ -1648,7 +2416,31 @@
     ]
   },
   {
-    "name": "Namwon Bus Dealership",
+    "name": {
+      "cs": "Prodejce autobusů Namwon",
+      "de": "Namwon Bushändler",
+      "en": "Namwon Bus Dealership",
+      "es-419": "Concesionario de buses Namwon",
+      "es-ES": "Concesionario de autobuses de Namwon",
+      "fi": "Namwon Bus Dealership",
+      "fr": "Concessionnaire de bus Namwon",
+      "hu": "Namwon Buszkereskedés",
+      "it": "Concessionaria di autobus Namwon",
+      "ja": "ナムウォンバスディーラー",
+      "ko": "남원 버스 대리점",
+      "lt": "Namwon autobusų atstovybė",
+      "nl": "Namwon Bus Dealership",
+      "no": "Namwon Bus Dealership",
+      "pl": "Salon sprzedaży autobusów Namwon",
+      "pt-BR": "Concessionária de ônibus Namwon",
+      "ru": "Дилер центр автобусов Namwon",
+      "sv": "Namwon busshandlare",
+      "tr": "Namwon Otobüs Galerisi",
+      "uk": "Автобусний дилер Намвон",
+      "vi": "Namwon Bus Dealership",
+      "zh-Hans": "南原巴士经销店",
+      "zh-Hant": "南元巴士經銷商"
+    },
     "flag": "",
     "vertex": [
       {
@@ -1686,8 +2478,32 @@
     ]
   },
   {
-    "name": "Gangjung",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Gang-Jung",
+      "de": "Gang-Jung",
+      "en": "Gangjung",
+      "es-419": "Gang-Jung",
+      "es-ES": "Gang-Jung",
+      "fi": "Gang-Jung",
+      "fr": "Gang-Jung",
+      "hu": "Gang-Jung",
+      "it": "Gang-Jung",
+      "ja": "カンジョン",
+      "ko": "강정",
+      "lt": "Gang-Jung",
+      "nl": "Gang-Jung",
+      "no": "Gangjung",
+      "pl": "Gang-Jung",
+      "pt-BR": "Gang-Jung",
+      "ru": "Гэнг-Джанг",
+      "sv": "Gang-Jung",
+      "tr": "Gang-Jung",
+      "uk": "Ган-Юнг",
+      "vi": "Gangjung",
+      "zh-Hans": "江正",
+      "zh-Hant": "江汀"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": -2520.4783,
@@ -1756,8 +2572,32 @@
     ]
   },
   {
-    "name": "Jeju",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Jeju",
+      "de": "Jeju",
+      "en": "Jeju",
+      "es-419": "Jeju",
+      "es-ES": "Jeju",
+      "fi": "Jeju",
+      "fr": "Jeju",
+      "hu": "Jeju",
+      "it": "Jeju",
+      "ja": "チェジュ",
+      "ko": "제주",
+      "lt": "Jeju",
+      "nl": "Jeju",
+      "no": "Jeju",
+      "pl": "Jeju",
+      "pt-BR": "Jeju",
+      "ru": "Чеджу",
+      "sv": "Jeju",
+      "tr": "Jeju",
+      "uk": "Чеджу",
+      "vi": "Jeju",
+      "zh-Hans": "济州",
+      "zh-Hant": "濟州"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": -127071.805,
@@ -1794,12 +2634,36 @@
     ]
   },
   {
-    "name": "Hallim",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Hallim",
+      "de": "Hallim",
+      "en": "Hallim",
+      "es-419": "Hallim",
+      "es-ES": "Hallim",
+      "fi": "Hallim",
+      "fr": "Hallim",
+      "hu": "Hallim",
+      "it": "Hallim",
+      "ja": "ハリム",
+      "ko": "한림",
+      "lt": "Hallim",
+      "nl": "Hallim",
+      "no": "Hallim",
+      "pl": "Hallim",
+      "pt-BR": "Hallim",
+      "ru": "Hallim",
+      "sv": "Hallim",
+      "tr": "Hallim",
+      "uk": "Халлім",
+      "vi": "Hallim",
+      "zh-Hans": "翰林",
+      "zh-Hant": "翰林"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": -458079.88,
-        "y": 178084.0
+        "y": 178084
       },
       {
         "x": -387405.47,
@@ -1827,13 +2691,37 @@
       },
       {
         "x": -458079.88,
-        "y": 178084.0
+        "y": 178084
       }
     ]
   },
   {
-    "name": "Seongsan",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Seong-San",
+      "de": "Seong-San",
+      "en": "Seongsan",
+      "es-419": "Seong-San",
+      "es-ES": "Seong-San",
+      "fi": "Seong-San",
+      "fr": "Seong-San",
+      "hu": "Seong-San",
+      "it": "Seong-San",
+      "ja": "ソンサン",
+      "ko": "성산",
+      "lt": "Seong-San",
+      "nl": "Seong-San",
+      "no": "Seongsan",
+      "pl": "Seong-San",
+      "pt-BR": "Seong-San",
+      "ru": "Сеонг-Сан",
+      "sv": "Seong-San",
+      "tr": "Seong-San",
+      "uk": "Сіон-Сан",
+      "vi": "Seongsan",
+      "zh-Hans": "成山",
+      "zh-Hant": "城山"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": 186223.62,
@@ -1870,19 +2758,43 @@
     ]
   },
   {
-    "name": "Gapa",
-    "flag": "EMTAreaVolumeFlags::Zone",
+    "name": {
+      "cs": "Gapa",
+      "de": "Gapa",
+      "en": "Gapa",
+      "es-419": "Ga-Pa",
+      "es-ES": "Gapa",
+      "fi": "Gapa",
+      "fr": "Gapa",
+      "hu": "Gapa",
+      "it": "Gapa",
+      "ja": "カパ",
+      "ko": "가파",
+      "lt": "Gapa",
+      "nl": "Gapa",
+      "no": "Gapa",
+      "pl": "Gapa",
+      "pt-BR": "Gapa",
+      "ru": "Gapa",
+      "sv": "Gapa",
+      "tr": "Gapa",
+      "uk": "Гапа",
+      "vi": "Gapa",
+      "zh-Hans": "加帕",
+      "zh-Hant": "加帕"
+    },
+    "flag": "Zone",
     "vertex": [
       {
         "x": -951689.5,
         "y": 791842.3
       },
       {
-        "x": -947523.0,
+        "x": -947523,
         "y": 643714.7
       },
       {
-        "x": -947523.0,
+        "x": -947523,
         "y": 643714.7
       },
       {
@@ -1898,7 +2810,7 @@
         "y": 991146.2
       },
       {
-        "x": 527633.0,
+        "x": 527633,
         "y": 626893.25
       },
       {
@@ -1926,7 +2838,7 @@
         "y": 132252.06
       },
       {
-        "x": 527633.0,
+        "x": 527633,
         "y": 626893.25
       },
       {
@@ -1972,7 +2884,31 @@
     ]
   },
   {
-    "name": "Nobong Landfill",
+    "name": {
+      "cs": "Skládka Nobong",
+      "de": "Nobong Mülldeponie",
+      "en": "Nobong Landfill",
+      "es-419": "Vertedero de Nobong",
+      "es-ES": "Vertedero de Nobong",
+      "fi": "Nobong Landfill",
+      "fr": "Décharge de Nobong",
+      "hu": "Nobong Hulladéklerakó",
+      "it": "Discarica di Nobong",
+      "ja": "ノボン埋立地",
+      "ko": "노봉 매립지",
+      "lt": "Nobong sąvartynas",
+      "nl": "Stortplaats Nobong",
+      "no": "Nobong Landfill",
+      "pl": "Wysypisko Nobong",
+      "pt-BR": "Aterro Sanitário de Nobong",
+      "ru": "Свалка Nobong",
+      "sv": "Nobong Landfill",
+      "tr": "Nobong Atık Depolama",
+      "uk": "Полігон Нобонг",
+      "vi": "Nobong Landfill",
+      "zh-Hans": "诺峰垃圾填埋场",
+      "zh-Hant": "諾峰垃圾掩埋場"
+    },
     "flag": "",
     "vertex": [
       {
@@ -2010,46 +2946,94 @@
     ]
   },
   {
-    "name": "Dongsan",
+    "name": {
+      "cs": "Dongsan",
+      "de": "Dongsan",
+      "en": "Dongsan",
+      "es-419": "Dongsan",
+      "es-ES": "Dongsan",
+      "fi": "Dongsan",
+      "fr": "Dongsan",
+      "hu": "Dongsan",
+      "it": "Dongsan",
+      "ja": "ドンサン",
+      "ko": "동산",
+      "lt": "Dongsan",
+      "nl": "Dongsan",
+      "no": "Dongsan",
+      "pl": "Dongsan",
+      "pt-BR": "Dongsan",
+      "ru": "Dongsan",
+      "sv": "Dongsan",
+      "tr": "Dongsan",
+      "uk": "Донгсан",
+      "vi": "Dongsan",
+      "zh-Hans": "东山",
+      "zh-Hant": "東山"
+    },
     "flag": "",
     "vertex": [
       {
-        "x": -504925.0,
+        "x": -504925,
         "y": 690022.44
       },
       {
-        "x": -504925.0,
+        "x": -504925,
         "y": 570022.44
       },
       {
-        "x": -504925.0,
+        "x": -504925,
         "y": 570022.44
       },
       {
-        "x": -374925.0,
+        "x": -374925,
         "y": 585496.3
       },
       {
-        "x": -374925.0,
+        "x": -374925,
         "y": 585496.3
       },
       {
-        "x": -374925.0,
+        "x": -374925,
         "y": 690022.44
       },
       {
-        "x": -374925.0,
+        "x": -374925,
         "y": 690022.44
       },
       {
-        "x": -504925.0,
+        "x": -504925,
         "y": 690022.44
       }
     ]
   },
   {
-    "name": "Oedo",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Oedo",
+      "de": "Oedo",
+      "en": "Oedo",
+      "es-419": "Oedo",
+      "es-ES": "Oedo",
+      "fi": "Oedo",
+      "fr": "Oedo",
+      "hu": "Oedo",
+      "it": "Oedo",
+      "ja": "ウェド",
+      "ko": "외도",
+      "lt": "Oedo",
+      "nl": "Oedo",
+      "no": "Oedo",
+      "pl": "Oedo",
+      "pt-BR": "Oedo",
+      "ru": "Эдо",
+      "sv": "Oedo",
+      "tr": "Oedo",
+      "uk": "Едо",
+      "vi": "Oedo",
+      "zh-Hans": "大江户",
+      "zh-Hant": "外都"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -144184.23,
@@ -2102,8 +3086,32 @@
     ]
   },
   {
-    "name": "Olle Speedway",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "OlleSpeedway",
+      "de": "Olle Rennstrecke",
+      "en": "Olle Speedway",
+      "es-419": "Circuito De Olle",
+      "es-ES": "Autopista de Olle",
+      "fi": "Olle Speedway",
+      "fr": "Circuit automobile d'Olle",
+      "hu": "Olle Autópálya",
+      "it": "Olle Speedway",
+      "ja": "オルレスピードウェイ",
+      "ko": "올레 스피드웨이",
+      "lt": "Olle Spidvėjus",
+      "nl": "Olle Speedway",
+      "no": "Olle Speedway",
+      "pl": "Olle Speedway",
+      "pt-BR": "Pista de Corrida de Olle",
+      "ru": "Олле Спидвей",
+      "sv": "Olle Speedway",
+      "tr": "Olle Yarış Pisti",
+      "uk": "Олле Спідвей",
+      "vi": "Đường đua Olle",
+      "zh-Hans": "奥尔快速路",
+      "zh-Hant": "偶來賽車場"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
         "x": -301034.62,
@@ -2118,7 +3126,7 @@
         "y": 176700.25
       },
       {
-        "x": -295688.0,
+        "x": -295688,
         "y": 169446.28
       },
       {
@@ -2138,7 +3146,7 @@
         "y": 214115.95
       },
       {
-        "x": -295688.0,
+        "x": -295688,
         "y": 169446.28
       },
       {
@@ -2188,8 +3196,32 @@
     ]
   },
   {
-    "name": "Pyosun Fishing Village",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Rybářská vesnice PyoSun",
+      "de": "PyoSun Fischerdorf",
+      "en": "Pyosun Fishing Village",
+      "es-419": "Pueblo de Pescadores PyoSun",
+      "es-ES": "Pueblo de pescadores de PyoSun",
+      "fi": "PyoSunin kalastajakylä",
+      "fr": "Village de pêcheurs de PyoSun",
+      "hu": "PyoSun halászfalu",
+      "it": "Villaggio di Pescatori di PyoSun",
+      "ja": "ピョソン漁村",
+      "ko": "표선 어촌",
+      "lt": "PyoSun žvejų kaimelis",
+      "nl": "Vissersdorp PyoSun",
+      "no": "Pyosun Fishing Village",
+      "pl": "Wioska rybacka PyoSun",
+      "pt-BR": "Villa de Pescadores PyoSun",
+      "ru": "Рыбацкая деревня ПёСун",
+      "sv": "PyoSun fiskeby",
+      "tr": "PyoSun Balıkçı Köyü",
+      "uk": "Рибальське село ПіоСун",
+      "vi": "Pyosun Fishing Village",
+      "zh-Hans": "朴山渔村",
+      "zh-Hant": "表順漁村"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": 268918.84,
@@ -2242,8 +3274,32 @@
     ]
   },
   {
-    "name": "Ranch Oval",
-    "flag": "EMTAreaVolumeFlags::RaceTrack",
+    "name": {
+      "cs": "Ranč ovál",
+      "de": "Ranch Oval",
+      "en": "Ranch Oval",
+      "es-419": "Rancho Oval",
+      "es-ES": "Ovalo del Rancho",
+      "fi": "Ranchin Ovaali",
+      "fr": "Ovale du Ranch",
+      "hu": "Ranch Ovál",
+      "it": "Ranch ovale",
+      "ja": "牧場オーバル",
+      "ko": "랜치 오벌",
+      "lt": "Rančos ovalas",
+      "nl": "Boerderij ovaal",
+      "no": "Gård Oval",
+      "pl": "Ranczo Owala",
+      "pt-BR": "Rancho Oval",
+      "ru": "Ранчо Овал",
+      "sv": "Ranch Oval",
+      "tr": "Oval Çiftliği",
+      "uk": "Ранчо Овал",
+      "vi": "Sân vận động Ranch Oval",
+      "zh-Hans": "牧场",
+      "zh-Hant": "牧場橢圓賽道"
+    },
+    "flag": "RaceTrack",
     "vertex": [
       {
         "x": -228960.64,
@@ -2280,8 +3336,32 @@
     ]
   },
   {
-    "name": "Santa's Cabin",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Santova chata",
+      "de": "Santas Hütte",
+      "en": "Santa's Cabin",
+      "es-419": "Cabaña de Papá Noel",
+      "es-ES": "Cabaña de Papá Noel",
+      "fi": "Joulupukin mökki",
+      "fr": "La Cabane du Père Noël",
+      "hu": "Mikulás Kunyhója",
+      "it": "La capanna di Babbo Natale",
+      "ja": "サンタの家",
+      "ko": "산타의 오두막",
+      "lt": "Kalėdų Senelio namelis",
+      "nl": "De hut van de kerstman",
+      "no": "Santa's Cabin",
+      "pl": "Chata Świętego Mikołaja",
+      "pt-BR": "Cabana do Papai Noel",
+      "ru": "Мастерская Санта Клауса",
+      "sv": "Tomtens stuga",
+      "tr": "Noel Baba'nın Kulübesi",
+      "uk": "Хатинка Санта Клауса",
+      "vi": "Santa's Cabin",
+      "zh-Hans": "圣诞老人的小屋",
+      "zh-Hant": "聖誕老人的小屋"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -93580.97,
@@ -2318,8 +3398,32 @@
     ]
   },
   {
-    "name": "Seoguipo DownTown",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Centrum Seo-Gui-Po",
+      "de": "Seo-Gui-Po Innenstadt",
+      "en": "Seoguipo DownTown",
+      "es-419": "Centro de Seo-Gui-Po",
+      "es-ES": "Centro de Seo-Gui-Po",
+      "fi": "Seoguipon Keskusta",
+      "fr": "Centre-ville de Seo-Gui-Po",
+      "hu": "Seo-Gui-Po belváros",
+      "it": "Seo-Gui-Po Centro",
+      "ja": "ソギポ市街",
+      "ko": "서귀포 시내",
+      "lt": "Seo-Gui-Po miesto centras",
+      "nl": "Seo-Gui-Po Centrum",
+      "no": "Seoguipo DownTown",
+      "pl": "Seo-Gui-Po Śródmieście",
+      "pt-BR": "Centro de Seo-Gui-Po",
+      "ru": "Seo-Gui-Po Центр",
+      "sv": "Seo-Gui-Po Stadskärna",
+      "tr": "Seo-Gui-Po Şehir Merkezi",
+      "uk": "Сео-Гуй-По центр міста",
+      "vi": "Seoguipo DownTown",
+      "zh-Hans": "西归浦市中心",
+      "zh-Hant": "西歸浦市區"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -16532.516,
@@ -2356,8 +3460,32 @@
     ]
   },
   {
-    "name": "Seongsan",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Seong-San",
+      "de": "Seong-San",
+      "en": "Seongsan",
+      "es-419": "Seong-San",
+      "es-ES": "Seong-San",
+      "fi": "Seong-San",
+      "fr": "Seong-San",
+      "hu": "Seong-San",
+      "it": "Seong-San",
+      "ja": "ソンサン",
+      "ko": "성산",
+      "lt": "Seong-San",
+      "nl": "Seong-San",
+      "no": "Seongsan",
+      "pl": "Seong-San",
+      "pt-BR": "Seong-San",
+      "ru": "Сеонг-Сан",
+      "sv": "Seong-San",
+      "tr": "Seong-San",
+      "uk": "Сіон-Сан",
+      "vi": "Seongsan",
+      "zh-Hans": "成山",
+      "zh-Hant": "城山"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": 303421.53,
@@ -2388,11 +3516,11 @@
         "y": -74041.92
       },
       {
-        "x": 285434.0,
+        "x": 285434,
         "y": -105877.734
       },
       {
-        "x": 285434.0,
+        "x": 285434,
         "y": -105877.734
       },
       {
@@ -2410,8 +3538,32 @@
     ]
   },
   {
-    "name": "Sinchang",
-    "flag": "EMTAreaVolumeFlags::LargeArea",
+    "name": {
+      "cs": "Sin-Chang",
+      "de": "Sin-Chang",
+      "en": "Sinchang",
+      "es-419": "Sin-Chang",
+      "es-ES": "Sin-Chang",
+      "fi": "Sin-Chang",
+      "fr": "Sin-Chang",
+      "hu": "Sin-Chang",
+      "it": "Sin-Chang",
+      "ja": "シンチャン",
+      "ko": "신창",
+      "lt": "Sin-Chang",
+      "nl": "Sin-Chang",
+      "no": "Sinchang",
+      "pl": "Sin-Chang",
+      "pt-BR": "Sin-Chang",
+      "ru": "Син-Чанг",
+      "sv": "Sin-Chang",
+      "tr": "Sin-Chang",
+      "uk": "Сін-Чанг",
+      "vi": "Sinchang",
+      "zh-Hans": "新昌",
+      "zh-Hant": "新昌"
+    },
+    "flag": "LargeArea",
     "vertex": [
       {
         "x": -403025.9,
@@ -2448,8 +3600,32 @@
     ]
   },
   {
-    "name": "SRF Power Plant",
-    "flag": "EMTAreaVolumeFlags::SmallArea",
+    "name": {
+      "cs": "Elektrárna SRF",
+      "de": "SRF-Kraftwerk",
+      "en": "SRF Power Plant",
+      "es-419": "Central Eléctrica SRF",
+      "es-ES": "Central Eléctrica SRF",
+      "fi": "SRF-voimalaitos",
+      "fr": "Centrale électrique SRF",
+      "hu": "SRF Erőmű",
+      "it": "Centrale elettrica SRF",
+      "ja": "SRF発電所",
+      "ko": "SRF 발전소",
+      "lt": "SRF elektrinė",
+      "nl": "SRF-energiecentrale",
+      "no": "SRF Power Plant",
+      "pl": "Elektrownia SRF",
+      "pt-BR": "Usina Elétrica SRF",
+      "ru": "Электростанция SRF",
+      "sv": "SRF kraftverk",
+      "tr": "SRF Santrali",
+      "uk": "Електростанція ТПВ",
+      "vi": "Nhà máy điện SRF",
+      "zh-Hans": "SRF发电厂",
+      "zh-Hant": "固體再生燃料電廠"
+    },
+    "flag": "SmallArea",
     "vertex": [
       {
         "x": -290843.25,

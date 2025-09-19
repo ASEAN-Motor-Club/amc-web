@@ -1,299 +1,299 @@
 {
   "SmallBox": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "CarrotBox": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "AppleBox": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "OrangeBox": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "GlassBottleBox": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "BoxPallete_01": {
-    "type": "Type::LargePackage"
+    "type": "T::LargePackage"
   },
   "GroceryBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 1
   },
   "GroceryBag": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 1
   },
   "BoxPallete_02": {
-    "type": "Type::LargePackage"
+    "type": "T::LargePackage"
   },
   "BoxPallete_03": {
-    "type": "Type::LargePackage"
+    "type": "T::LargePackage"
   },
   "PlasticPallete": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "PowerBox": {
-    "type": "Type::LargePackage"
+    "type": "T::LargePackage"
   },
   "ToyBoxes": {
-    "type": "Type::FinalProduct"
+    "type": "T::FinalProduct"
   },
   "BottlePallete": {
-    "type": "Type::FinalProduct"
+    "type": "T::FinalProduct"
   },
   "WoodPlank_14ft_5t": {
-    "type": "Type::Wood"
+    "type": "T::Wood"
   },
   "Container_30ft_5t": {
-    "type": "Type::Container"
+    "type": "T::Container"
   },
   "Container_30ft_10t": {
-    "type": "Type::Container"
+    "type": "T::Container"
   },
   "Container_30ft_20t": {
-    "type": "Type::Container"
+    "type": "T::Container"
   },
   "Container_20ft_01": {
-    "type": "Type::Container"
+    "type": "T::Container"
   },
   "Container_40ft_01": {
-    "type": "Type::Container"
+    "type": "T::Container"
   },
   "Log_30ft_30t": {
-    "type": "Type::Log",
+    "type": "T::Log",
     "minDist": 1
   },
   "Log_Oak_12ft": {
-    "type": "Type::Log",
+    "type": "T::Log",
     "minDist": 1
   },
   "Log_Oak_24ft": {
-    "type": "Type::Log",
+    "type": "T::Log",
     "minDist": 1
   },
   "Log_20ft": {
-    "type": "Type::Log",
+    "type": "T::Log",
     "minDist": 1
   },
   "Sand": {
-    "type": "Type::Sand"
+    "type": "T::Sand"
   },
   "FineSand": {
-    "type": "Type::Sand"
+    "type": "T::Sand"
   },
   "Coal": {
-    "type": "Type::Coal"
+    "type": "T::Coal"
   },
   "LimestoneRock": {
-    "type": "Type::Stone",
+    "type": "T::Stone",
     "minDist": 1
   },
   "Limestone": {
-    "type": "Type::Stone"
+    "type": "T::Stone"
   },
   "QuicklimePallet": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "IronOre": {
-    "type": "Type::Stone"
+    "type": "T::Stone"
   },
   "Concrete": {
-    "type": "Type::Concrete"
+    "type": "T::Concrete"
   },
   "Fuel": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 1
   },
   "Oil": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 1
   },
   "CrudeOil": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 1
   },
   "LiveFish_01": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "TrashBag": {
-    "type": "Type::Garbage"
+    "type": "T::Garbage"
   },
   "Trash_Big": {
-    "type": "Type::Garbage"
+    "type": "T::Garbage"
   },
   "Sofa_01": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Sofa_02": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Sofa_03": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Sofa_04": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Bed_01": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Bed_02": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Bed_03": {
-    "type": "Type::Furniture"
+    "type": "T::Furniture"
   },
   "Pizza_01": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Pizza_02": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Pizza_03": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Pizza_04": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Pizza_05": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Pizza_01_Premium": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 200000
   },
   "Burger_01": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 100000
   },
   "Burger_01_Signature": {
-    "type": "Type::Food",
+    "type": "T::Food",
     "minDist": 10000,
     "maxDist": 100000
   },
   "MilitarySupplyBox_01_Empty": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 1
   },
   "MilitarySupplyBox_01": {
-    "type": "Type::MilitarySupply",
+    "type": "T::MilitarySupply",
     "minDist": 1
   },
   "Rice": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "OrangeBoxes": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "RicePallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "PumpkinBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "PumpkinPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "CornBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "CornPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "BeanPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "HempPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "CabbagePallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "ChilliPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "PotatoPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "CheesePallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "CheeseBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "Milk": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 5000
   },
   "MeatBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "BreadBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "BreadPallet": {
-    "type": "Type::LargePackage",
+    "type": "T::LargePackage",
     "minDist": 5000
   },
   "AirlineMealPallet": {
-    "type": "Type::None",
+    "type": "T::None",
     "minDist": 5000
   },
   "SnackBox": {
-    "type": "Type::SmallPackage",
+    "type": "T::SmallPackage",
     "minDist": 5000
   },
   "GiftBox_01": {
-    "type": "Type::SmallPackage"
+    "type": "T::SmallPackage"
   },
   "FormulaSCM": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "PlasticPipes_6m": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "lHBeam_6m": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "SteelCoil_10t": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "Cement": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "Terra": {
-    "type": "Type::None"
+    "type": "T::None"
   },
   "SunflowerSeed": {
-    "type": "Type::None"
+    "type": "T::None"
   }
 }

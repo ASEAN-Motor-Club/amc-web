@@ -48,7 +48,6 @@
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
   import { matchMouse } from '$lib/utils/media';
-  import { getLocationAtPoint } from '$lib/data/area';
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
@@ -442,9 +441,7 @@
         f.set('hover', true);
         currentHoverInfo = {
           pointType: f.get('pointType'),
-          name: f.get('name'),
           pixelCoord: e.pixel as [number, number],
-          location: f.get('location'),
           info: f.get('info'),
         };
         currentHoverPoint = f;
@@ -490,9 +487,7 @@
         (playerData: PlayerData) =>
           new Feature({
             geometry: new Point(playerData.geometry),
-            name: playerData.name,
             pointType: PointType.Player,
-            location: playerData.location,
             info: playerData,
           }),
       ),
@@ -516,7 +511,6 @@
         geometry: reProjectPoint([coord.x, coord.y]),
         name,
         coord,
-        location: getLocationAtPoint(coord),
         pointType: PointType.Player as const,
         vehicleKey: coord.vehicle_key,
         guid: coord.unique_id,

@@ -164,7 +164,10 @@
         }}
       >
         <Card
-          class={twMerge('flex w-full cursor-pointer select-none flex-col p-0', clsx(menuClass))}
+          class={twMerge(
+            'flex w-full cursor-pointer select-none flex-col overflow-y-auto p-0',
+            clsx(menuClass),
+          )}
         >
           {@render children()}
         </Card>

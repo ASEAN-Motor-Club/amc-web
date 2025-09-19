@@ -13,11 +13,11 @@
   import PlayerInfo from './PlayerInfo.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { getLocationAtPoint } from '$lib/data/area';
+  import { mtLocale } from '../MtLocale/mtLocale.svelte';
 
   export type HoverInfo = {
-    name: string | undefined;
     pixelCoord: [number, number];
-    location: string;
   } & (
     | {
         pointType: PointType.Delivery;
@@ -123,8 +123,10 @@
                 owner: houseData?.[hoverInfo.info.name]?.ownerName,
               })
             : msg['housing.vacant_house']()}
+        {:else if hoverInfo.pointType === PointType.Delivery}
+          {hoverInfo.info.name[mtLocale.l]}
         {:else}
-          {hoverInfo.name}
+          {hoverInfo.info.name}
         {/if}
       </div>
       {#if hoverInfo.info}
@@ -139,7 +141,7 @@
       {/if}
       <div class="border-t-1 my-0.5 w-full border-neutral-100/20"></div>
       <div class="mb-0.5 text-xs font-semibold text-neutral-300">
-        {hoverInfo.location}
+        {getLocationAtPoint(hoverInfo.info.coord, mtLocale.l)}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">

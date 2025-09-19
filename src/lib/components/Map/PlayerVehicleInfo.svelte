@@ -1,6 +1,7 @@
 <script lang="ts">
   import vehiclesName from '$lib/assets/data/vehicles_name.json';
   import { m as msg } from '$lib/paraglide/messages';
+  import { mtLocale } from '../MtLocale/mtLocale.svelte';
 
   export interface playerVehicleInfoProps {
     vehicleKey: string | 'None';
@@ -12,7 +13,7 @@
 {vehicleKey !== 'None'
   ? msg['map.player_info.driving']({
       vehicle:
-        vehiclesName[vehicleKey as keyof typeof vehiclesName] ??
+        vehiclesName[vehicleKey as keyof typeof vehiclesName][mtLocale.l] ??
         msg['map.player_info.unknown_vehicle'](),
     })
   : msg['map.player_info.on_foot']()}

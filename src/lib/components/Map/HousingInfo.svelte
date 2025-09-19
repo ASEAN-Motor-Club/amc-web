@@ -9,7 +9,6 @@
   import { formatDistanceStrict } from '$lib/date';
 
   export interface HoverInfo {
-    name: string | undefined;
     pixelCoord: [number, number];
     pointType: PointType.House;
     info: House;
