@@ -147,10 +147,11 @@
     "description": "Where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
     "copyright": "© {year} ASEAN Motor Club. All rights reserved.",
     "join_discord": "Join Discord",
+    "join_patreon": "Donate on Patreon",
     "listen_radio": "Listen to AMC Radio",
     "regular_events": "Regular Events",
     "ig_live_radio": "In-game Live Radio",
-    "ig_bot": "In-game Help BOT",
+    "ig_bot": "In-game Help Bot",
     "friendly_community": "Friendly Community",
     "live_server_no_count": "Live Server",
     "live_server": [

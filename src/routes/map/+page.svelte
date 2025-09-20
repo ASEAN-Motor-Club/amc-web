@@ -336,7 +336,7 @@
     name: siteLocale.msg['map.delivery_point'](),
     layer: [deliveryPointLayer, residentPointLayer],
     enabled: true,
-    color: '!bg-yellow-500',
+    color: '!bg-yellow-500 hover:!bg-yellow-400',
   });
 
   const houseLayerData = $state({
@@ -344,7 +344,7 @@
     name: siteLocale.msg['map.house'](),
     layer: [houseLayer],
     enabled: true,
-    color: '!bg-cyan-500',
+    color: '!bg-cyan-500 hover:!bg-cyan-400',
   });
 
   const playerNameLayerData = $state({
@@ -352,7 +352,7 @@
     name: siteLocale.msg['map.player_name'](),
     layer: [playerNameLayer],
     enabled: true,
-    color: '!bg-emerald-300',
+    color: '!bg-emerald-300 hover:!bg-emerald-200',
   });
 
   const playerLayerData = $state({
@@ -360,7 +360,7 @@
     name: siteLocale.msg['map.player'](),
     layer: [playerPointLayer],
     enabled: true,
-    color: '!bg-emerald-400',
+    color: '!bg-emerald-400 hover:!bg-emerald-300',
   });
 
   const pinsLayerData = $state({
@@ -368,7 +368,7 @@
     name: siteLocale.msg['map.pins'](),
     layer: [pinsLayer],
     enabled: true,
-    color: '!bg-red-400',
+    color: '!bg-red-400 hover:!bg-red-300',
   });
 
   const pinLabelsLayerData = $state({
@@ -376,7 +376,7 @@
     name: siteLocale.msg['map.pin_labels'](),
     layer: [pinLabelsLayer],
     enabled: true,
-    color: '!bg-red-300',
+    color: '!bg-red-300 hover:!bg-red-200',
   });
 
   const layersData = $state([
@@ -782,7 +782,7 @@
   >
     <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
     <Card
-      class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 !p-1.5 !ring-white/5 backdrop-blur-lg"
+      class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !ring-white/5 backdrop-blur-lg"
     >
       <h2 class="text-text-dark mb-1 text-xs">
         {siteLocale.msg['map.point_of_interests']()}

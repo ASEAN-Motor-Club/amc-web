@@ -19,6 +19,7 @@ jobs:
       PUBLIC_DISCORD_EVENT_BASE: ${{ vars.PUBLIC_DISCORD_EVENT_BASE }}
       PUBLIC_SEASON_NO: ${{ vars.PUBLIC_SEASON_NO }}
       PUBLIC_SEASON_START_DATE: ${{ vars.PUBLIC_SEASON_START_DATE }}
+      PUBLIC_PATREON_LINK: ${{ vars.PUBLIC_PATREON_LINK }}
 
     steps:
       - name: 📥 Checkout code

@@ -4,7 +4,7 @@
   import { SvelteDate } from 'svelte/reactivity';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { PUBLIC_DISCORD_LINK } from '$env/static/public';
+  import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
   import { prefersReducedMotion } from 'svelte/motion';
 
   const date = new SvelteDate();
@@ -72,15 +72,25 @@
             >
           {/each}
         </div>
-        <div class="flex justify-center gap-2 sm:justify-start">
+        <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
           <div class="rounded-md bg-black">
             <Button
               variant="contained"
-              class=" !bg-[#5865f2] hover:!bg-[#5865f2]/80"
+              class=" bg-[#5865f2] hover:bg-[#5865f2]/80"
               tag="a"
               href={PUBLIC_DISCORD_LINK}
               target="_blank"
               rel="noreferrer">{siteLocale.msg['home.join_discord']()}</Button
+            >
+          </div>
+          <div class="rounded-md bg-black">
+            <Button
+              variant="contained"
+              class=" text-text bg-[#f96854] hover:bg-[#f96854]/80"
+              tag="a"
+              href={PUBLIC_PATREON_LINK}
+              target="_blank"
+              rel="noreferrer">{siteLocale.msg['home.join_patreon']()}</Button
             >
           </div>
           <Button

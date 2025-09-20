@@ -217,7 +217,7 @@
     <div class="flex w-full flex-col">
       {#each teams as team, i (team.id)}
         <div
-          class="h-lvh !bg-[var(--team-bg)] text-[var(--team-text)]"
+          class="h-lvh bg-[var(--team-bg)] text-[var(--team-text)]"
           style="--team-bg:{team.bg_color};--team-text:{team.text_color}"
           bind:this={teamTriggers[i]}
         >
