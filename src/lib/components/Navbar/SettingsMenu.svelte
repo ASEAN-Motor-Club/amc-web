@@ -77,12 +77,12 @@
 <Modal
   open={menu}
   onClose={() => (menu = false)}
-  class="mt-21 left-auto right-0 mx-5 h-fit w-fit items-start justify-end bg-transparent p-0"
+  class="mt-13 left-auto right-0 mx-5 h-fit w-fit items-start justify-end bg-transparent p-0"
   bgScrollable
   clickAway
 >
   <Card class="max-w-104 w-full">
-    <div class="flex items-center justify-center gap-6">
+    <div class="flex items-center justify-between gap-2">
       <div class="font-semibold">Theme</div>
       <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
         {#snippet prependIcon()}
@@ -98,12 +98,13 @@
       </Button>
     </div>
     <Divider spacing="sm" />
-    <div class="mb-2 flex items-center justify-center gap-6">
-      <div class="whitespace-nowrap font-semibold">Site Language</div>
+    <div class="mb-2 flex items-center justify-between gap-2">
+      <div class="truncate whitespace-nowrap font-semibold">Site Language</div>
       <Select
         name="siteLocale"
         value={siteLocale.l}
         onChange={changeSiteLocale}
+        class="w-3/5 flex-none"
         menuClass="max-h-[50svh]"
       >
         {#each siteLocales as localeKey (localeKey)}
@@ -111,12 +112,13 @@
         {/each}
       </Select>
     </div>
-    <div class="flex items-center justify-center gap-6">
-      <div class="whitespace-nowrap font-semibold">Game Language</div>
+    <div class="flex items-center justify-between gap-2">
+      <div class="truncate whitespace-nowrap font-semibold">Game Language</div>
       <Select
         name="mtLocale"
         value={mtLocale.l}
         onChange={changeMtLocale}
+        class="w-3/5 flex-none"
         menuClass="max-h-[50svh]"
       >
         {#each mtLocales as localeKey (localeKey)}

@@ -108,13 +108,13 @@
   "map": {
     "head": "{siteName} | แผนที่",
     "point_of_interests": "จุดสนใจ (คลิกเพื่อซ่อน)",
-    "delivery_point": "จุดส่งของ",
+    "delivery_point": "จุดรับส่งสินค้า",
     "house": "บ้าน",
     "player": "ผู้เล่น",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",
-    "supply": "อุปทาน",
-    "demand": "อุปสงค์",
+    "supply": "ผลิต",
+    "demand": "ต้องการ",
     "more_results": [
       {
         "declarations": ["input count", "local p = count: plural"],
@@ -125,7 +125,7 @@
         }
       }
     ],
-    "click_lock": "คลิกขวาเพื่อล็อคสายอุปทาน",
+    "click_lock": "คลิกขวาเพื่อล็อคเส้นโลจิสติกส์",
     "click_info": "คลิกซ้ายเพื่อดูข้อมูลเพิ่มเติม",
     "click_here_info": "คลิกที่นี่เพื่อดูข้อมูลเพิ่มเติม",
     "player_info": {
