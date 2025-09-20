@@ -2,8 +2,7 @@
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
   import { formatDuration, intervalToDuration, isBefore } from '$lib/date';
-  import { m as msg } from '$lib/paraglide/messages';
-  import { getLocale } from '$lib/paraglide/runtime';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
@@ -29,7 +28,7 @@
 
     // If rent has expired
     if (isBefore(currentHouseData.rentLeft, SvelteDate.now())) {
-      return msg['housing.expired']();
+      return siteLocale.msg['housing.expired']();
     }
 
     const duration = intervalToDuration({
@@ -48,10 +47,10 @@
     >
       <HighlightText
         text={currentHouseData?.ownerName
-          ? msg['housing.owned_house']({
+          ? siteLocale.msg['housing.owned_house']({
               owner: currentHouseData.ownerName,
             })
-          : msg['housing.vacant_house']()}
+          : siteLocale.msg['housing.vacant_house']()}
         {highlight}
         caseInSensitive
         tag="span"
@@ -66,12 +65,12 @@
       class="-mr-1.5"
       color="info"
     >
-      {msg.view_on_map()}
+      {siteLocale.msg.view_on_map()}
     </Button>
   </div>
 
   <div>
-    <span class="font-semibold">{msg['housing.id']()}:</span>
+    <span class="font-semibold">{siteLocale.msg['housing.id']()}:</span>
     <HighlightText
       text={house.name}
       {highlight}
@@ -81,25 +80,27 @@
     />
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.size']()}:</span>
+    <span class="font-semibold">{siteLocale.msg['housing.size']()}:</span>
     {house.size.x / 100} x {house.size.y / 100}
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.rent_price']()}:</span>
-    {(house.cost / 10).toLocaleString(getLocale())}
+    <span class="font-semibold">{siteLocale.msg['housing.rent_price']()}:</span>
+    {(house.cost / 10).toLocaleString(siteLocale.l)}
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.rent_left']()}:</span>
+    <span class="font-semibold">{siteLocale.msg['housing.rent_left']()}:</span>
     {#if currentHouseData?.ownerName}
       {rentLeftText}
     {:else}
-      <span class="text-text/70 dark:text-text-dark/70 italic">{msg['housing.vacant']()}</span>
+      <span class="text-text/70 dark:text-text-dark/70 italic"
+        >{siteLocale.msg['housing.vacant']()}</span
+      >
     {/if}
   </div>
   <!-- <div>
-    <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
+    <span class="font-semibold">{siteLocale.msg['housing.depot']()}:</span> TODO
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
+    <span class="font-semibold">{siteLocale.msg['housing.depot_storage']()}:</span> TODO
   </div> -->
 </Card>

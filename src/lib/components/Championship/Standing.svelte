@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { onMount } from 'svelte';
   import { getPersonalStandings, getTeamStandings } from '$lib/api/championship';
   import type { TeamStanding, PersonalStanding } from '$lib/api/types';
@@ -31,7 +31,7 @@
 <div
   class="-mx-8 flex flex-row items-center gap-4 overflow-x-auto px-8 py-4 sm:mx-0 sm:justify-center sm:overflow-x-visible sm:p-0"
 >
-  <StandingCard title={msg['championship.team_standing']()} {loading}>
+  <StandingCard title={siteLocale.msg['championship.team_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}
       {#each teamStandings as standing, index (standing.team_id)}
         <div class={getStandingRowClass(index)}>
@@ -46,7 +46,7 @@
     {/snippet}
   </StandingCard>
 
-  <StandingCard title={msg['championship.personal_standing']()} {loading}>
+  <StandingCard title={siteLocale.msg['championship.personal_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}
       {#each personalStandings as standing, index (standing.player_id + '-' + standing.character_name)}
         <div class={getStandingRowClass(index)}>

@@ -19,7 +19,8 @@ Every user-facing string must use Paraglide:
 
 ```svelte
 <script>
-  import { m as msg } from '$lib/paraglide/messages';
+  import { getMsg } from '$lib/components/Locale/locale.svelte';
+  const msg = $derived.by(getMsg);
 </script>
 
 <h1>{msg['site_name']()}</h1><p>{msg['radio.title']()}</p>

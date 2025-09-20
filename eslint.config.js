@@ -42,13 +42,20 @@ export default ts.config(
         {
           paths: [
             {
-              name: 'date-fns',
+              name: 'zod',
+              message: 'Use zod/mini instead for smaller bundle size',
+              allowTypeImports: true,
+            },
+          ],
+          patterns: [
+            {
+              group: ['date-fns*'],
               message: 'Use unified imports from $lib/date instead',
               allowTypeImports: true,
             },
             {
-              name: 'zod',
-              message: 'Use zod/mini instead for smaller bundle size',
+              group: ['$lib/paraglide*'],
+              message: 'Use reactive i18n from $lib/components/Locale/locale.svelte instead',
               allowTypeImports: true,
             },
           ],

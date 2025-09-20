@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import {
     // startNowPlayingPolling,
     getStreamUrl,
@@ -175,7 +175,7 @@
             <Icon class="i-material-symbols:play-arrow-rounded" />
           {/if}
         {/snippet}
-        {isPlaying ? msg['radio.pause']() : msg['radio.play']()}
+        {isPlaying ? siteLocale.msg['radio.pause']() : siteLocale.msg['radio.play']()}
       </Button>
       <Slider
         value={volume}

@@ -5,7 +5,7 @@
     "dateFormat": "d MMM yyyy",
     "timeFormat": "H:mm",
     "dateTimeFormat": "d MMM yyyy H:mm",
-    "dateFull": "EEEE, d MMMM yyyy",
+    "dateFull": "วันEEEEที่ d MMMM yyyy",
     "scheduleFormat": {
       "sameDay": "H:mm",
       "sameYear": "d MMM H:mm",
@@ -21,7 +21,7 @@
     "cancel": "ยกเลิก"
   },
   "or": "หรือ",
-  "unknown": "ไม่ทราบ",
+  "unknown": "ไม่มีข้อมูล",
   "track_editor": {
     "title": "เครื่องมือแก้ไขสนาม",
     "head": "{siteName} | เครื่องมือแก้ไขสนาม",
@@ -29,9 +29,9 @@
     "validate": {
       "name_empty": "ชื่อต้องไม่เป็นค่าว่าง",
       "name_must_be_string": "ชื่อเส้นทางต้องเป็นข้อความ",
-      "waypoint_invalid": "จุดที่ {index} คีย์ {key}: ประเภทไม่ถูกต้อง คาดหวัง {type}",
+      "waypoint_invalid": "จุดที่ {index} คีย์ {key}: ประเภทไม่ถูกต้อง ต้องการ {type}",
       "waypoints_min_length": "สนามต้องมีจุดอย่างน้อย {minLength} จุด",
-      "waypoints_max_length": "สนามต้องไม่เกิน {maxLength} จุด"
+      "waypoints_max_length": "สนามต้องมีจุดไม่เกิน {maxLength} จุด"
     },
     "select_track": {
       "drag_drop": "ลากและวางไฟล์",
@@ -58,11 +58,11 @@
       },
       "normalize_waypoints": {
         "title": "ปรับจุดให้เป็นมาตรฐาน",
-        "desc": "บางครั้งการหมุนของจุดอาจเอียงแปลกๆ การทำนี้จะปรับจุดทั้งหมดให้ตั้งตรง (ทำให้การหมุน x,y = 0)"
+        "desc": "บางครั้งการหมุนของจุดอาจเอียงแปลกๆ การปรับจุดนี้จะปรับจุดทั้งหมดให้ตั้งตรง (ทำให้การหมุน x,y = 0)"
       },
       "auto_rotate_waypoints": {
         "title": "หมุนจุดอัตโนมัติ",
-        "desc": "จะหมุนจุดทั้งหมดโดยอัตโนมัติตามตำแหน่งของจุดข้างเคียง"
+        "desc": "หมุนจุดทั้งหมดโดยอัตโนมัติตามตำแหน่งของจุดข้างเคียง"
       },
       "delete_waypoint": {
         "title": "ลบจุด",
@@ -92,7 +92,7 @@
       "select_point_to_edit": "เลือกจุดเพื่อเริ่มแก้ไข",
       "global_operations": "การดำเนินการทั่วไป",
       "normalize": "ปรับให้เป็นมาตรฐาน",
-      "auto_rotate_all_gates": "หมุนประตูทั้งหมดอัตโนมัติ"
+      "auto_rotate_all_gates": "หมุนจุดทั้งหมดอัตโนมัติ"
     }
   },
   "navbar": {
@@ -101,18 +101,18 @@
     "housing": "ที่อยู่อาศัย",
     "industries": "อุตสาหกรรม",
     "radio": "วิทยุ",
-    "join_discord": "เข้าร่วม DISCORD ของเรา"
+    "join_discord": "เข้าร่วม Discord ของเรา"
   },
   "map": {
     "head": "{siteName} | แผนที่",
-    "point_of_interests": "จุดที่น่าสนใจ (คลิกเพื่อซ่อน)",
+    "point_of_interests": "จุดสนใจ (คลิกเพื่อซ่อน)",
     "delivery_point": "จุดส่งของ",
     "house": "บ้าน",
     "player": "ผู้เล่น",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",
-    "supply": "จุดผลิต",
-    "demand": "จุดต้องการ",
+    "supply": "อุปทาน",
+    "demand": "อุปสงค์",
     "more_results": [
       {
         "declarations": ["input count", "local p = count: plural"],
@@ -123,13 +123,13 @@
         }
       }
     ],
-    "click_lock": "คลิกขวาเพื่อล็อคเส้นจ่าย",
+    "click_lock": "คลิกขวาเพื่อล็อคสายอุปทาน",
     "click_info": "คลิกซ้ายเพื่อดูข้อมูลเพิ่มเติม",
     "click_here_info": "คลิกที่นี่เพื่อดูข้อมูลเพิ่มเติม",
     "player_info": {
       "driving": "กำลังขับ {vehicle}",
       "on_foot": "เดินเท้า/ผู้โดยสาร",
-      "unknown_vehicle": "ยานพาหนะไม่ทราบ"
+      "unknown_vehicle": "ยานพาหนะที่ไม่รู้จัก"
     },
     "pins_invalid": {
       "title": "หมุดไม่ถูกต้อง",
@@ -142,7 +142,7 @@
   },
   "home": {
     "desc_title": "เซิร์ฟเวอร์ชุมชนชั้นนำของ MotorTown ในเอเชียตะวันออกเฉียงใต้",
-    "description": "ที่ซึ่งผู้เล่นที่เป็นมิตรและมีความหลงใหลจะพุ่งความสามารถของตนไปสู่ขีดจำกัด แข่งขันข้ามภูมิประเทศที่หลากหลาย ออกแบบลิเวอรี่ที่สะดุดตา และปรับแต่งรถของคุณเพื่อเอาชนะในกิจกรรมสุดสัปดาห์ของเรา เราจัดการแข่งขันเป็นประจำและการแข่งขันเชิงสร้างสรรค์ และยังมีสถานีวิทยุของเราเองด้วย เข้าร่วม Discord ของเรา เพื่อมีส่วนร่วมและติดตามข่าวสาร!",
+    "description": "แหล่งรวมพลของเหล่านักซิ่งที่เป็นมิตรและใจรักความเร็ว ที่จะมาวัดฝีมือกันให้ถึงขีดสุด! ลงสนามแข่งในเส้นทางที่หลากหลาย, ออกแบบลายรถสุดเฟี้ยว, และจูนรถคู่ใจของคุณเพื่อคว้าแชมป์ในอีเวนต์สุดสัปดาห์ เรามีการแข่งมันส์ๆ และกิจกรรมสร้างสรรค์เป็นประจำ แถมยังมีสถานีวิทยุเป็นของตัวเองอีกด้วย เข้ามาร่วมแจมใน Discord ของเราเลย จะได้ไม่พลาดทุกข่าวสารและความเคลื่อนไหว!",
     "copyright": "© {year} Asean Motor Club สงวนสิทธิ์ทั้งหมด",
     "join_discord": "เข้าร่วม Discord",
     "listen_radio": "ฟังวิทยุ AMC",
@@ -150,14 +150,14 @@
     "ig_live_radio": "วิทยุสดในเกม",
     "ig_bot": "บอทช่วยเหลือในเกม",
     "friendly_community": "ชุมชนที่เป็นมิตร",
-    "live_server_no_count": "เซิร์ฟเวอร์สด",
+    "live_server_no_count": "เซิร์ฟเวอร์ออนไลน์",
     "live_server": [
       {
         "declarations": ["input players", "local p = players: plural"],
         "selectors": ["p"],
         "match": {
-          "p=one": "เซิร์ฟเวอร์สด - ผู้เล่น {players} คนออนไลน์",
-          "p=other": "เซิร์ฟเวอร์สด - ผู้เล่น {players} คนออนไลน์"
+          "p=one": "เซิร์ฟเวอร์ออนไลน์ - ผู้เล่น {players} คนออนไลน์",
+          "p=other": "เซิร์ฟเวอร์ออนไลน์ - ผู้เล่น {players} คนออนไลน์"
         }
       }
     ],
@@ -171,18 +171,18 @@
     "rent_price": "ราคาค่าเช่า",
     "rent_left": "เวลาเช่าคงเหลือ",
     "depot": "คลังสินค้า",
-    "depot_storage": "พื้นที่เก็บของคลัง",
+    "depot_storage": "คลังคงเหลือ",
     "vacant_house": "บ้านว่าง",
     "vacant": "ว่าง",
     "owned_house": "บ้านของ {owner}",
     "id": "ID",
-    "expired": "หมดอายุแล้ว",
+    "expired": "หมดระยะเช่า",
     "search_placeholder": "ค้นหาบ้านหรือเจ้าของ",
     "sort": {
       "name": "ชื่อ",
       "id": "ID",
       "rent_left": "เวลาเช่าคงเหลือ",
-      "depot_storage": "พื้นที่เก็บของคลัง"
+      "depot_storage": "คลังคงเหลือ"
     },
     "cannot_load": {
       "title": "ไม่สามารถโหลดข้อมูลที่อยู่อาศัยได้",
@@ -197,28 +197,28 @@
   "radio": {
     "head": "{siteName} | วิทยุ",
     "title": "วิทยุ",
-    "station_name": "วิทยุ Asean Motor Club",
+    "station_name": "สถานี AMC",
     "play": "เล่น",
-    "pause": "หยุดชั่วคราว"
+    "pause": "หยุด"
   },
   "radio_guide": {
-    "content_markdown": "# คุณสมบัติวิทยุ\n\n- ขอเพลง (ใช้ `/song_request` ใน Discord)\n- ข่าวสาร\n- คู่มือเกม เช่น การปรับแต่ง การหาเงิน ฯลฯ\n\n## 2 วิธีที่คุณสามารถฟังได้!\n\n- ใช้ม็อดเพื่อเพิ่มวิทยุ Asean Motor Club ลงในเกมของคุณ! ดูคู่มือการติดตั้งด้านล่าง\n- เยี่ยมชมเว็บสตรีมของเรา: [https://www.aseanmotorclub.com/stream](https://www.aseanmotorclub.com/stream)\n\n---\n\n## การติดตั้งม็อด\n\nดาวน์โหลดม็อดที่นี่: [ดาวน์โหลด RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\nวางไฟล์ `RadioMod_P.pak` ใน:\n\n```\nsteamapps\\common\\Motor Town\\MotorTown\\Content\\Paks\\\n```\n\nข้างๆ `MotorTown-Windows.pak` **คุณต้องรีสตาร์ทเกม**\n\n## วิธีหาโฟลเดอร์เกมของคุณ:\n\n1. เปิด Steam > Library\n2. คลิกขวาที่เกมของคุณ > Manage > Browse Local Files\n3. ไปที่ `MotorTown > Content > Paks`\n4. วางไฟล์ `RadioMod_P.pak` ข้างๆ `MotorTown-Windows.pak`\n5. **รีสตาร์ทเกมเพื่อให้ม็อดทำงาน**"
+    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord\n- **News & updates** — Stay informed about server events\n- **Game guides** — Tips on tuning, earning money, and more\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio Mod** — Install our mod to listen directly in MotorTown\n2. **Web Stream** — Listen online here!\n\n---\n\n## Installing the Radio Mod\n\n### Step 1: Download\n[Download the RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### Step 2: Find Your Game Folder\n1. Open Steam and go to your Library\n2. Right-click on **MotorTown** > **Manage** > **Browse Local Files**\n3. Navigate to: `MotorTown\\Content\\Paks`\n\n### Step 3: Install the Mod\nPlace the downloaded `RadioMod_P.pak` file in the Paks folder. The file should be placed next to `MotorTown-Windows.pak`.\n\n### Step 4: Restart Game\n**Important:** Restart MotorTown completely for the mod to work."
   },
   "championship": {
     "head": "{siteName} | ถ้วย AMC ฤดูกาลที่ {seasonNo}",
-    "event_details": "รายละเอียดกิจกรรม",
-    "our_teams": "ทีมของเรา",
+    "event_details": "รายละเอียด",
+    "our_teams": "ทีมที่ร่วมแข่งขัน",
     "event": {
-      "title": "กิจกรรมเมื่อ {date}",
+      "title": "กิจกรรม {date}",
       "more_info": "ข้อมูลเพิ่มเติม",
       "results": "ผลลัพธ์",
       "event_results": "ผลลัพธ์ {event}",
-      "dnf": "DNF",
+      "dnf": "ไม่ถึงเส้นชัย",
       "no_results": "ยังไม่มีผลลัพธ์",
-      "view_event": "ดูกิจกรรม"
+      "view_event": "ดูข้อมูลกิจกรรม"
     },
-    "starting_from": "เริ่มตั้งแต่ {date}",
-    "title": "ถ้วยแชมเปี้ยนชิพ AMC",
+    "starting_from": "ตั้งแต่ {date}",
+    "title": "ถ้วยชิงแชมป์ AMC",
     "season": "ฤดูกาลที่ {seasonNo}",
     "standing": "อันดับ",
     "team_standing": "อันดับทีม",
@@ -233,7 +233,7 @@
         "title": "ไม่สามารถโหลดกิจกรรมได้",
         "desc": "ไม่สามารถโหลดข้อมูลกิจกรรม กรุณาลองใหม่ภายหลัง"
       },
-      "pts": "{points}คะแนน"
+      "pts": "{points} คะแนน"
     }
   }
 }

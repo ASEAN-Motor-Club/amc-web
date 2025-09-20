@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Player from '$lib/components/Radio/Player.svelte';
@@ -19,7 +19,11 @@
 </script>
 
 <svelte:head>
-  <title>{msg['radio.head']({ siteName: msg['site_name_short']() })}</title>
+  <title
+    >{siteLocale.msg['radio.head']({
+      siteName: siteLocale.msg['site_name_short'](),
+    })}</title
+  >
 </svelte:head>
 
 <div class="bg-cover bg-fixed bg-center">
@@ -38,21 +42,21 @@
   </picture>
 
   <CommonHead class="text-text-dark justify-center bg-black/70 dark:bg-black/90"
-    >{msg['radio.title']()}</CommonHead
+    >{siteLocale.msg['radio.title']()}</CommonHead
   >
 
   <div class="relative min-h-screen overflow-hidden pb-8">
     <div class="pointer-events-none absolute inset-0 bg-black/70 dark:bg-black/90"></div>
 
     <div class="relative z-10 mx-auto w-full px-3">
-      <Player stationName={msg['radio.station_name']()}></Player>
+      <Player stationName={siteLocale.msg['radio.station_name']()}></Player>
     </div>
     <div class="px-3">
       <Card
         class="bg-background-300 dark:bg-background-900/80 max-w-175 relative mx-auto mt-8 rounded-lg border border-gray-300 p-6 backdrop-blur-sm dark:border-gray-700"
       >
         <div class="-mb-[1.25em]">
-          <MarkdownText text={msg['radio_guide.content_markdown']()} noSanitize />
+          <MarkdownText text={siteLocale.msg['radio_guide.content_markdown']()} noSanitize />
         </div>
       </Card>
     </div>

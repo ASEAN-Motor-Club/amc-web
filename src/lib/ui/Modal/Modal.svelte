@@ -90,7 +90,7 @@
       }
     };
 
-    if (open && baseElement) {
+    if (open && baseElement && clickAway) {
       document.addEventListener('mouseup', handleClickOutside, true);
     }
 

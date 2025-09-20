@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -36,17 +36,20 @@
   });
 
   const formattedDate = $derived(
-    format(new Date(year ?? 0, month ? month - 1 : 0, day ?? 1), msg['format.dateFull']()),
+    format(
+      new Date(year ?? 0, month ? month - 1 : 0, day ?? 1),
+      siteLocale.msg['format.dateFull'](),
+    ),
   );
 
   const formatEventStyle = (event: ScheduledEvent) => {
     const sameDay = isSameDay(event.start_time, event.end_time);
     const sameYear = isSameYear(event.start_time, event.end_time);
     return sameDay
-      ? msg['format.scheduleFormat.sameDay']()
+      ? siteLocale.msg['format.scheduleFormat.sameDay']()
       : sameYear
-        ? msg['format.scheduleFormat.sameYear']()
-        : msg['format.scheduleFormat.crossYear']();
+        ? siteLocale.msg['format.scheduleFormat.sameYear']()
+        : siteLocale.msg['format.scheduleFormat.crossYear']();
   };
 
   const date = new SvelteDate();
@@ -70,7 +73,7 @@
 <Modal open={!!(day && month && year)} {onClose}>
   <Card class="w-150 flex max-h-full max-w-full flex-col p-5">
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
-      {msg['championship.event.title']({ date: formattedDate })}
+      {siteLocale.msg['championship.event.title']({ date: formattedDate })}
     </h1>
     <div
       class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
@@ -107,7 +110,7 @@
                 target="_blank"
                 rel="noreferrer"
               >
-                {msg['championship.event.more_info']()}
+                {siteLocale.msg['championship.event.more_info']()}
               </Button>
             {/if}
             {#if pastEventTime(event)}
@@ -119,7 +122,7 @@
                 href="?{getParams(event)}"
                 onClick={(e) => openEvent(e, event)}
               >
-                {msg['championship.event.results']()}
+                {siteLocale.msg['championship.event.results']()}
               </Button>
             {/if}
           </div>
@@ -128,7 +131,7 @@
     </div>
     <div class="-mx-3 -mb-3 flex justify-end pt-2">
       <Button onClick={onClose} color="secondary" variant="text">
-        {msg['action.close']()}
+        {siteLocale.msg['action.close']()}
       </Button>
     </div>
   </Card>

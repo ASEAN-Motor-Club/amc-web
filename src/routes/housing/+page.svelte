@@ -9,7 +9,7 @@
   import Select from '$lib/ui/Select/Select.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
 
   let houseData: HouseData | undefined = $state(undefined);
@@ -27,8 +27,8 @@
       .catch((error) => {
         console.error('Error fetching housing data:', error);
         showModal({
-          title: msg['housing.cannot_load.title'](),
-          message: msg['housing.cannot_load.desc'](),
+          title: siteLocale.msg['housing.cannot_load.title'](),
+          message: siteLocale.msg['housing.cannot_load.desc'](),
         });
       });
 
@@ -46,7 +46,7 @@
       const searchLower = searchValue.trim().toLowerCase();
       return (
         house.name.toLowerCase().includes(searchLower) ||
-        (houseData?.[house.name].ownerName || msg['housing.vacant']())
+        (houseData?.[house.name].ownerName || siteLocale.msg['housing.vacant']())
           .toLowerCase()
           .includes(searchLower)
       );
@@ -87,14 +87,18 @@
 </script>
 
 <svelte:head>
-  <title>{msg['housing.head']({ siteName: msg['site_name_short']() })}</title>
+  <title
+    >{siteLocale.msg['housing.head']({
+      siteName: siteLocale.msg['site_name_short'](),
+    })}</title
+  >
 </svelte:head>
 
-<CommonHead>{msg['housing.title']()}</CommonHead>
+<CommonHead>{siteLocale.msg['housing.title']()}</CommonHead>
 <div class="flex flex-col justify-between gap-2 px-8 sm:flex-row">
   <TextInput
     value={searchValue}
-    placeholder={msg['housing.search_placeholder']()}
+    placeholder={siteLocale.msg['housing.search_placeholder']()}
     name="search"
     type="search"
     class="w-full min-w-0 sm:max-w-80 sm:flex-1"
@@ -109,10 +113,10 @@
     onChange={handleSortChange}
     class="sm:max-w-45 w-full flex-shrink-0"
   >
-    <SelectOption id="name" value={msg['housing.sort.name']()} />
-    <SelectOption id="id" value={msg['housing.sort.id']()} />
-    <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()} />
-    <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
+    <SelectOption id="name" value={siteLocale.msg['housing.sort.name']()} />
+    <SelectOption id="id" value={siteLocale.msg['housing.sort.id']()} />
+    <SelectOption id="rentLeft" value={siteLocale.msg['housing.sort.rent_left']()} />
+    <!-- <SelectOption id="depotStorage" value={siteLocale.msg['housing.sort.depot_storage']()} /> -->
   </Select>
 </div>
 <div

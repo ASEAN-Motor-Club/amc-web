@@ -4,7 +4,7 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import EventCard from '$lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
   import { getEvent, getEventResult } from '$lib/api/championship';
@@ -22,8 +22,8 @@
     const abortController = new AbortController();
     if (!page.params.id) {
       showModal({
-        title: msg['championship.results.cannot_load.title'](),
-        message: msg['championship.results.cannot_load.desc'](),
+        title: siteLocale.msg['championship.results.cannot_load.title'](),
+        message: siteLocale.msg['championship.results.cannot_load.desc'](),
         cancelAction: () => {
           goto('/');
         },
@@ -50,8 +50,8 @@
       .catch((error) => {
         console.error('Error fetching event data:', error);
         showModal({
-          title: msg['championship.results.cannot_load.title'](),
-          message: msg['championship.results.cannot_load.desc'](),
+          title: siteLocale.msg['championship.results.cannot_load.title'](),
+          message: siteLocale.msg['championship.results.cannot_load.desc'](),
           cancelAction: () => {
             goto('/championship');
           },
@@ -69,11 +69,13 @@
 <svelte:head>
   <title
     >{eventData?.name
-      ? msg['championship.results.head_loaded']({
+      ? siteLocale.msg['championship.results.head_loaded']({
           name: eventData.name,
-          siteName: msg['site_name_short'](),
+          siteName: siteLocale.msg['site_name_short'](),
         })
-      : msg['championship.results.head']({ siteName: msg['site_name_short']() })}</title
+      : siteLocale.msg['championship.results.head']({
+          siteName: siteLocale.msg['site_name_short'](),
+        })}</title
   >
 </svelte:head>
 
@@ -96,7 +98,7 @@
       disabled={loadingOrNoData}
       class="-mx-3"
     >
-      {msg['championship.event.more_info']()}
+      {siteLocale.msg['championship.event.more_info']()}
     </Button>
   </div>
 

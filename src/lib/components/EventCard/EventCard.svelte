@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { EventResult } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';
@@ -66,7 +66,9 @@
           .
         {:else if time?.championship_point}
           <span class="font-semibold"
-            >{msg['championship.results.pts']({ points: time.championship_point.points })}</span
+            >{siteLocale.msg['championship.results.pts']({
+              points: time.championship_point.points,
+            })}</span
           >
           {#if time.championship_point.team?.name}
             | {time.championship_point.team.name}
@@ -82,7 +84,7 @@
         {:else if time?.finished}
           {formatTime(netTime)}
         {:else}
-          <span class="italic opacity-50">{msg['championship.event.dnf']()}</span>
+          <span class="italic opacity-50">{siteLocale.msg['championship.event.dnf']()}</span>
         {/if}
       </div>
 
@@ -93,7 +95,7 @@
           {#if index > 0}
             +{formatTime(netTime - (time0?.net_time ?? 0))}
           {:else}
-            {msg['championship.results.fastest']()}
+            {siteLocale.msg['championship.results.fastest']()}
           {/if}
         {/if}
       </div>

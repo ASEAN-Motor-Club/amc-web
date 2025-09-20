@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { onMount, type Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -24,42 +24,42 @@
     }
   });
 
-  const links = [
+  const links = $derived([
     {
       href: '/map',
-      label: msg['navbar.map'](),
+      label: siteLocale.msg['navbar.map'](),
       icon: mapIcon,
     },
     {
       href: '/housing',
-      label: msg['navbar.housing'](),
+      label: siteLocale.msg['navbar.housing'](),
       icon: housingIcon,
     },
     {
       href: '/industries',
-      label: msg['navbar.industries'](),
+      label: siteLocale.msg['navbar.industries'](),
       icon: industriesIcon,
     },
     {
       href: '/radio',
-      label: msg['navbar.radio'](),
+      label: siteLocale.msg['navbar.radio'](),
       icon: radioIcon,
     },
     {
       href: '/track',
-      label: msg['navbar.track_editor'](),
+      label: siteLocale.msg['navbar.track_editor'](),
       icon: trackIcon,
       exact: false,
     },
     {
       href: 'https://wiki.aseanmotorclub.com/',
-      label: 'Wiki',
+      label: siteLocale.msg['navbar.wiki'](),
       icon: wikiIcon,
       external: true,
     },
     {
       href: '/championship',
-      label: 'AMC Cup',
+      label: siteLocale.msg['navbar.amc_cup'](),
       icon: trophyIcon,
       onMouseOver: () => {
         loop = false;
@@ -73,7 +73,7 @@
     exact?: boolean;
     external?: boolean;
     onMouseOver?: () => void;
-  }[];
+  }[]);
 
   let menu = $state(false);
 </script>
@@ -159,7 +159,7 @@
     tag="a"
     href={PUBLIC_DISCORD_LINK}
     target="_blank"
-    rel="noreferrer">{msg['navbar.join_discord']()}</Button
+    rel="noreferrer">{siteLocale.msg['navbar.join_discord']()}</Button
   >
 {/snippet}
 
@@ -171,10 +171,10 @@
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
     <span class="contents max-[1075px]:hidden">
-      {msg['site_name_short']()}
+      {siteLocale.msg['site_name_short']()}
     </span>
     <span class="hidden max-[1075px]:contents">
-      {msg['site_name']()}
+      {siteLocale.msg['site_name']()}
     </span>
   </a>
   <div class="hidden gap-6 min-[1075px]:flex">
@@ -189,7 +189,7 @@
       }}
     >
       <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
-        {msg['site_name']()}
+        {siteLocale.msg['site_name']()}
       </a>
       {@render menuItems()}
     </div>

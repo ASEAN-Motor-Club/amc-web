@@ -2,13 +2,13 @@
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
   import type { DeliveryCargo, DeliveryCargoType } from '$lib/data/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
   import { formatDistanceStrict, differenceInMinutes } from '$lib/date';
-  import { mtLocale } from '$lib/components/MtLocale/mtLocale.svelte';
+  import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getDeliveryPointInfo } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
 
@@ -100,7 +100,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
-      {msg['map.supply']()}
+      {siteLocale.msg['map.supply']()}
     </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
@@ -125,7 +125,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
-      {msg['map.demand']()}
+      {siteLocale.msg['map.demand']()}
     </div>
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
@@ -152,7 +152,7 @@
   </div>
 {/if}
 <div class="text-xs">
-  <span class="font-semibold">{msg['map.last_updated']()}:</span>
+  <span class="font-semibold">{siteLocale.msg['map.last_updated']()}:</span>
   {#if deliveryPointInfoLoading}
     <span class="animate-pulse">...</span>
   {:else}

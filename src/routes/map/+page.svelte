@@ -44,7 +44,7 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
   import { matchMouse } from '$lib/utils/media';
@@ -333,7 +333,7 @@
 
   const deliveryLayerData = $state({
     id: layerId.Delivery,
-    name: msg['map.delivery_point'](),
+    name: siteLocale.msg['map.delivery_point'](),
     layer: [deliveryPointLayer, residentPointLayer],
     enabled: true,
     color: '!bg-yellow-500',
@@ -341,7 +341,7 @@
 
   const houseLayerData = $state({
     id: layerId.House,
-    name: msg['map.house'](),
+    name: siteLocale.msg['map.house'](),
     layer: [houseLayer],
     enabled: true,
     color: '!bg-cyan-500',
@@ -349,7 +349,7 @@
 
   const playerNameLayerData = $state({
     id: layerId.PlayerName,
-    name: msg['map.player_name'](),
+    name: siteLocale.msg['map.player_name'](),
     layer: [playerNameLayer],
     enabled: true,
     color: '!bg-emerald-300',
@@ -357,7 +357,7 @@
 
   const playerLayerData = $state({
     id: layerId.Player,
-    name: msg['map.player'](),
+    name: siteLocale.msg['map.player'](),
     layer: [playerPointLayer],
     enabled: true,
     color: '!bg-emerald-400',
@@ -365,7 +365,7 @@
 
   const pinsLayerData = $state({
     id: layerId.Pins,
-    name: msg['map.pins'](),
+    name: siteLocale.msg['map.pins'](),
     layer: [pinsLayer],
     enabled: true,
     color: '!bg-red-400',
@@ -373,7 +373,7 @@
 
   const pinLabelsLayerData = $state({
     id: layerId.PinLabels,
-    name: msg['map.pin_labels'](),
+    name: siteLocale.msg['map.pin_labels'](),
     layer: [pinLabelsLayer],
     enabled: true,
     color: '!bg-red-300',
@@ -711,7 +711,7 @@
         pinsData = pinsJson.map((p, i) => ({
           ...p,
           pointType: PointType.Pin,
-          label: p.label ?? msg['map.pin_no']({ index: i + 1 }),
+          label: p.label ?? siteLocale.msg['map.pin_no']({ index: i + 1 }),
         }));
         pinsSource.addFeatures(
           pinsData.map(
@@ -733,8 +733,8 @@
       } catch (e) {
         console.error('Invalid pins data:', e);
         showModal({
-          title: msg['map.pins_invalid.title'](),
-          message: msg['map.pins_invalid.desc'](),
+          title: siteLocale.msg['map.pins_invalid.title'](),
+          message: siteLocale.msg['map.pins_invalid.desc'](),
         });
       }
     }
@@ -759,7 +759,11 @@
 <svelte:document onvisibilitychange={startPolling} />
 
 <svelte:head>
-  <title>{msg['map.head']({ siteName: msg['site_name_short']() })}</title>
+  <title
+    >{siteLocale.msg['map.head']({
+      siteName: siteLocale.msg['site_name_short'](),
+    })}</title
+  >
 </svelte:head>
 
 <div class="relative h-full w-full bg-[#375d87]">
@@ -780,7 +784,9 @@
     <Card
       class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 !p-1.5 !ring-white/5 backdrop-blur-lg"
     >
-      <h2 class="text-text-dark mb-1 text-xs">{msg['map.point_of_interests']()}</h2>
+      <h2 class="text-text-dark mb-1 text-xs">
+        {siteLocale.msg['map.point_of_interests']()}
+      </h2>
       <div class="flex flex-wrap gap-2">
         {#each layersDataCheckPins as layer (layer.name)}
           <Button

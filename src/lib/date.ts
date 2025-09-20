@@ -21,10 +21,7 @@ export {
   differenceInMinutes,
 } from 'date-fns';
 
-import {
-  enUS,
-  // th
-} from 'date-fns/locale';
+import { enUS, th } from 'date-fns/locale';
 import { getLocale } from './paraglide/runtime';
 export { enUS };
 
@@ -33,8 +30,8 @@ const getDateFnsLocale = () => {
   switch (locale) {
     case 'en':
       return enUS;
-    // case 'th':
-    //   return th;
+    case 'th':
+      return th;
     default:
       return enUS;
   }

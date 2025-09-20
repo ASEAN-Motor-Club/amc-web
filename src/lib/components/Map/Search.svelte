@@ -12,12 +12,12 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import type { HouseData } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { mtLocale } from '$lib/components/MtLocale/mtLocale.svelte';
+  import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
 
   export type SearchPoint = {
@@ -107,7 +107,7 @@
 
     const housePoints = house.filter(
       (point) =>
-        (point.name || msg['housing.vacant']()).toLowerCase().includes(search) ||
+        (point.name || siteLocale.msg['housing.vacant']()).toLowerCase().includes(search) ||
         point.guid.toLowerCase().includes(search),
     );
 
@@ -149,7 +149,7 @@
       value={searchValue}
       name="search"
       type="search"
-      placeholder={msg['map.search_placeholder']()}
+      placeholder={siteLocale.msg['map.search_placeholder']()}
       class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-lg hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
@@ -198,10 +198,10 @@
                   <HighlightText
                     text={point.pointType === PointType.House
                       ? point.name
-                        ? msg['housing.owned_house']({
+                        ? siteLocale.msg['housing.owned_house']({
                             owner: point.name,
                           })
-                        : msg['housing.vacant_house']()
+                        : siteLocale.msg['housing.vacant_house']()
                       : point.name}
                     highlight={searchValue}
                     caseInSensitive
@@ -213,7 +213,7 @@
                   <div class="flex flex-col text-neutral-300">
                     {#if point.supplyText}
                       <div class="text-xs">
-                        {msg['map.supply']()}: <HighlightText
+                        {siteLocale.msg['map.supply']()}: <HighlightText
                           text={point.supplyText}
                           highlight={searchValue}
                           caseInSensitive
@@ -224,7 +224,7 @@
                     {/if}
                     {#if point.demandText}
                       <div class="text-xs">
-                        {msg['map.demand']()}: <HighlightText
+                        {siteLocale.msg['map.demand']()}: <HighlightText
                           text={point.demandText}
                           highlight={searchValue}
                           caseInSensitive
@@ -236,8 +236,8 @@
                   </div>
                 {:else if point.pointType === PointType.House}
                   <div class="text-xs text-neutral-300">
-                    {msg['housing.id']()}: <HighlightText
-                      text={point.guid || msg.unknown()}
+                    {siteLocale.msg['housing.id']()}: <HighlightText
+                      text={point.guid || siteLocale.msg.unknown()}
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
@@ -257,7 +257,9 @@
           {/each}
           {#if searchValue && foundValues.length > maxShow}
             <div class="px-3 py-2 italic text-neutral-300">
-              {msg['map.more_results']({ count: foundValues.length - maxShow })}
+              {siteLocale.msg['map.more_results']({
+                count: foundValues.length - maxShow,
+              })}
             </div>
           {/if}
         </Card>

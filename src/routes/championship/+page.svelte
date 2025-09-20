@@ -5,7 +5,7 @@
   import poster1818 from '$lib/assets/images/poster/asean_poster_w1818.avif';
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { onMount, onDestroy, tick } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -171,8 +171,8 @@
 
 <svelte:head>
   <title
-    >{msg['championship.head']({
-      siteName: msg['site_name_short'](),
+    >{siteLocale.msg['championship.head']({
+      siteName: siteLocale.msg['site_name_short'](),
       seasonNo: PUBLIC_SEASON_NO,
     })}</title
   >
@@ -193,22 +193,22 @@
     </div>
     <div class="contents" bind:this={textContainer}>
       <h3 class="pb-5 pt-8 font-semibold">
-        {msg['championship.starting_from']({
-          date: format(startDate, msg['format.dateFull']()),
+        {siteLocale.msg['championship.starting_from']({
+          date: format(startDate, siteLocale.msg['format.dateFull']()),
         })}
       </h3>
       <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
-        {msg['championship.title']()}
+        {siteLocale.msg['championship.title']()}
       </h1>
       <h2 class="font-sans-alt pb-8 text-2xl font-semibold sm:text-3xl">
-        {msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
+        {siteLocale.msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
       <div class="flex gap-3">
         <Button class="w-36" variant="contained" tag="a" href="/championship/details">
-          {msg['championship.event_details']()}
+          {siteLocale.msg['championship.event_details']()}
         </Button>
         <Button class="w-36" variant="contained" onClick={onTeamClick}>
-          {msg['championship.our_teams']()}
+          {siteLocale.msg['championship.our_teams']()}
         </Button>
       </div>
     </div>
@@ -228,7 +228,9 @@
               <div class="min-h-0 w-full max-w-40 md:max-w-80">
                 <img
                   src={team.logo}
-                  alt={msg['championship.team_logo_alt']({ team: team.name })}
+                  alt={siteLocale.msg['championship.team_logo_alt']({
+                    team: team.name,
+                  })}
                   class={[
                     'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-neutral-500/10 object-contain',
                     team.logo ? '' : 'invisible',

@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import SelectTrack from '$lib/components/TrackEditor/Editor/SelectTrack.svelte';
   import type { Track } from '$lib/schema/track';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
 
   const handleSelect = (track: Track | undefined) => {
@@ -15,8 +15,8 @@
 
 <svelte:head>
   <title
-    >{msg['track_editor.head']({
-      siteName: msg['site_name_short'](),
+    >{siteLocale.msg['track_editor.head']({
+      siteName: siteLocale.msg['site_name_short'](),
     })}</title
   >
 </svelte:head>

@@ -3,7 +3,7 @@
   import '../app.css';
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { onMount } from 'svelte';
   import { colorBackground100, colorBackground900, defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
@@ -42,8 +42,8 @@
 </script>
 
 <svelte:head>
-  <title>{msg['site_name']()}</title>
-  <meta name="description" content={msg['home.desc_title']()} />
+  <title>{siteLocale.msg['site_name']()}</title>
+  <meta name="description" content={siteLocale.msg['home.desc_title']()} />
   <meta
     name="theme-color"
     content={color ?? colorBackground100}

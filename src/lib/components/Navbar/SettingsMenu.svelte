@@ -6,9 +6,12 @@
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import Select from '$lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
-  import { mtLocale } from '../MtLocale/mtLocale.svelte';
+  import { mtLocale } from '../Locale/locale.svelte';
+  import type { MtLocaleKey } from '$lib/data/types';
+  import type { Locale } from '$lib/paraglide/runtime';
+  import { setLocale } from '$lib/components/Locale/locale.svelte';
 
   const mtLocales = [
     'cs',
@@ -36,9 +39,13 @@
     'zh-Hant',
   ] as const;
 
+  const siteLocales = ['en', 'th'] as const;
+
   let darkMode = $state(false);
 
   onMount(() => {
+    const storageLocale = localStorage.getItem('mtLocale') as MtLocaleKey | null;
+    mtLocale.l = storageLocale && mtLocales.includes(storageLocale) ? storageLocale : 'en';
     darkMode = document.documentElement.classList.contains('dark');
   });
 
@@ -47,11 +54,20 @@
     darkMode = document.documentElement.classList.contains('dark');
   };
 
+  const changeMtLocale = (locale: MtLocaleKey) => {
+    mtLocale.l = locale;
+    localStorage.setItem('mtLocale', locale);
+  };
+
   $effect(() => {
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   });
 
   let menu = $state(false);
+
+  const changeSiteLocale = (locale: Locale) => {
+    setLocale(locale);
+  };
 </script>
 
 <Button class="ml-auto" variant="text" round size="sm" onClick={() => (menu = true)} icon>
@@ -65,7 +81,7 @@
   bgScrollable
   clickAway
 >
-  <Card class="max-w-103 w-full">
+  <Card class="max-w-104 w-full">
     <div class="flex items-center justify-center gap-6">
       <div class="font-semibold">Theme</div>
       <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
@@ -82,16 +98,29 @@
       </Button>
     </div>
     <Divider spacing="sm" />
+    <div class="mb-2 flex items-center justify-center gap-6">
+      <div class="whitespace-nowrap font-semibold">Site Language</div>
+      <Select
+        name="siteLocale"
+        value={siteLocale.l}
+        onChange={changeSiteLocale}
+        menuClass="max-h-[50svh]"
+      >
+        {#each siteLocales as localeKey (localeKey)}
+          <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
+        {/each}
+      </Select>
+    </div>
     <div class="flex items-center justify-center gap-6">
       <div class="whitespace-nowrap font-semibold">Game Language</div>
       <Select
         name="mtLocale"
         value={mtLocale.l}
-        onChange={(e) => (mtLocale.l = e)}
+        onChange={changeMtLocale}
         menuClass="max-h-[50svh]"
       >
-        {#each mtLocales as locale (locale)}
-          <SelectOption id={locale} value={msg[`locales.${locale}`]()} />
+        {#each mtLocales as localeKey (localeKey)}
+          <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
         {/each}
       </Select>
     </div>

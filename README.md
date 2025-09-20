@@ -95,7 +95,8 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { getMsg } from '$lib/components/Locale/locale.svelte';
+  const msg = $derived.by(getMsg);
 </script>
 
 <h1>{msg.site_name()}</h1>

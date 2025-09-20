@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
 
   onMount(() => {
@@ -17,11 +17,13 @@
 <svelte:head>
   <title
     >{trackData.value?.routeName
-      ? msg['track_editor.head_editing']({
+      ? siteLocale.msg['track_editor.head_editing']({
           routeName: trackData.value.routeName,
-          siteName: msg['site_name_short'](),
+          siteName: siteLocale.msg['site_name_short'](),
         })
-      : msg['track_editor.head']({ siteName: msg['site_name_short']() })}</title
+      : siteLocale.msg['track_editor.head']({
+          siteName: siteLocale.msg['site_name_short'](),
+        })}</title
   >
 </svelte:head>
 

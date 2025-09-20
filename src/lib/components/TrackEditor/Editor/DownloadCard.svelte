@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import type { Track } from '$lib/schema/track';
@@ -29,15 +29,15 @@
       .writeText(downloadJson)
       .then(() => {
         showModal({
-          title: msg['track_editor.editor.copied.title'](),
-          message: msg['track_editor.editor.copied.desc'](),
+          title: siteLocale.msg['track_editor.editor.copied.title'](),
+          message: siteLocale.msg['track_editor.editor.copied.desc'](),
         });
       })
       .catch((err) => {
         console.error('Failed to copy:', err);
         showModal({
-          title: msg['track_editor.editor.copy_to_clipboard_failed.title'](),
-          message: msg['track_editor.editor.copy_to_clipboard_failed.desc'](),
+          title: siteLocale.msg['track_editor.editor.copy_to_clipboard_failed.title'](),
+          message: siteLocale.msg['track_editor.editor.copy_to_clipboard_failed.desc'](),
         });
       });
   };
@@ -63,11 +63,11 @@
 <Card class="flex flex-col">
   <div class="mb-2 flex items-center justify-between gap-1">
     <div class="font-medium">
-      {msg['track_editor.editor.download_title']({
+      {siteLocale.msg['track_editor.editor.download_title']({
         file:
           !edited || downloadOriginal
-            ? msg['track_editor.editor.original']()
-            : msg['track_editor.editor.edited'](),
+            ? siteLocale.msg['track_editor.editor.original']()
+            : siteLocale.msg['track_editor.editor.edited'](),
       })}
     </div>
     {#if edited}
@@ -78,10 +78,10 @@
         color="primary"
         class="-mr-1.5"
       >
-        {msg['track_editor.editor.change_btn']({
+        {siteLocale.msg['track_editor.editor.change_btn']({
           file: downloadOriginal
-            ? msg['track_editor.editor.edited']()
-            : msg['track_editor.editor.original'](),
+            ? siteLocale.msg['track_editor.editor.edited']()
+            : siteLocale.msg['track_editor.editor.original'](),
         })}
       </Button>
     {/if}
@@ -89,10 +89,10 @@
 
   <div class="flex gap-3">
     <Button class="flex-1" onClick={handleClipboardClick}
-      >{msg['track_editor.editor.clipboard']()}</Button
+      >{siteLocale.msg['track_editor.editor.clipboard']()}</Button
     >
     <Button class="flex-1" onClick={handleFileDownloadClick}
-      >{msg['track_editor.editor.file']()}</Button
+      >{siteLocale.msg['track_editor.editor.file']()}</Button
     >
   </div>
 </Card>

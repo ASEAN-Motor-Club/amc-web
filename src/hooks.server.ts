@@ -1,4 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { sequence } from '@sveltejs/kit/hooks';
 
