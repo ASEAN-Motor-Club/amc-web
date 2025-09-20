@@ -15,6 +15,7 @@ export const setLocale = (l: Locale) => {
   paraglideSetLocale(l, { reload: false });
 
   siteLocale.l = l as Locale;
+  document.documentElement.lang = l;
 
   // this probably kills tree-shaking
   (siteLocale as { l: Locale; msg: typeof paraglideMsg }).msg = { ...paraglideMsg };

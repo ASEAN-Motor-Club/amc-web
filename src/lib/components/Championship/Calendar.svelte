@@ -1,7 +1,7 @@
 <script lang="ts">
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { enUS, format } from '$lib/date';
+  import { getDateFnsLocale, format } from '$lib/date';
   import EventButton from './EventButton.svelte';
   import type { Day } from 'date-fns';
   import type { EventType } from './types';
@@ -57,7 +57,9 @@
   };
 
   const days = $derived.by(() => {
-    return Array.from({ length: 7 }, (_, day) => enUS.localize.day(day as Day, { width: 'short' }));
+    return Array.from({ length: 7 }, (_, day) =>
+      getDateFnsLocale().localize.day(day as Day, { width: 'short' }),
+    );
   });
 </script>
 

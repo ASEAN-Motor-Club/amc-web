@@ -22,16 +22,14 @@ export {
 } from 'date-fns';
 
 import { enUS, th } from 'date-fns/locale';
-import { getLocale } from './paraglide/runtime';
-export { enUS };
+import { siteLocale } from './components/Locale/locale.svelte';
 
-const getDateFnsLocale = () => {
-  const locale = getLocale();
+export const getDateFnsLocale = () => {
+  const locale = siteLocale.l;
   switch (locale) {
-    case 'en':
-      return enUS;
     case 'th':
       return th;
+    case 'en':
     default:
       return enUS;
   }

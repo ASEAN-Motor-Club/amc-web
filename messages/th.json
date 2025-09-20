@@ -13,7 +13,7 @@
     }
   },
   "site_name_short": "AMC",
-  "site_name": "Asean Motor Club",
+  "site_name": "ASEAN Motor Club",
   "action": {
     "confirm": "ยืนยัน",
     "close": "ปิด",
@@ -102,7 +102,7 @@
     "industries": "อุตสาหกรรม",
     "radio": "วิทยุ",
     "wiki": "วิกิ",
-    "amc_cup": "ถ้วย AMC",
+    "amc_cup": "AMC คัพ",
     "join_discord": "เข้าร่วม Discord ของเรา"
   },
   "map": {
@@ -145,7 +145,7 @@
   "home": {
     "desc_title": "เซิร์ฟเวอร์ชุมชนชั้นนำของ MotorTown ในเอเชียตะวันออกเฉียงใต้",
     "description": "แหล่งรวมพลของเหล่านักซิ่งที่เป็นมิตรและใจรักความเร็ว ที่จะมาวัดฝีมือกันให้ถึงขีดสุด! ลงสนามแข่งในเส้นทางที่หลากหลาย, ออกแบบลายรถสุดเฟี้ยว, และจูนรถคู่ใจของคุณเพื่อคว้าแชมป์ในอีเวนต์สุดสัปดาห์ เรามีการแข่งมันส์ๆ และกิจกรรมสร้างสรรค์เป็นประจำ แถมยังมีสถานีวิทยุเป็นของตัวเองอีกด้วย เข้ามาร่วมแจมใน Discord ของเราเลย จะได้ไม่พลาดทุกข่าวสารและความเคลื่อนไหว!",
-    "copyright": "© {year} Asean Motor Club สงวนสิทธิ์ทั้งหมด",
+    "copyright": "© {year} ASEAN Motor Club สงวนสิทธิ์ทั้งหมด",
     "join_discord": "เข้าร่วม Discord",
     "listen_radio": "ฟังวิทยุ AMC",
     "regular_events": "อีเวนต์สม่ำเสมอ",
@@ -163,7 +163,7 @@
         }
       }
     ],
-    "iframe_discord": "Discord Asean Motor Club"
+    "iframe_discord": "Discord ASEAN Motor Club"
   },
   "not_finished": "อยู่ระหว่างการก่อสร้าง กรุณากลับมาใหม่ภายหลัง!",
   "housing": {
@@ -207,7 +207,7 @@
     "content_markdown": "# วิทยุ AMC\n\n## ฟีเจอร์วิทยุ\n\n- **การขอเพลง** — ใช้คำสั่ง `/song_request` ใน Discord\n- **ข่าวสารและอัปเดต** — ติดตามข้อมูลเกี่ยวกับกิจกรรมเซิร์ฟเวอร์\n- **คู่มือเกม** — เทคนิคการจูนรถ การหาเงิน และอื่นๆ อีกมากมาย\n\n## วิธีการฟัง\n\nเลือกวิธีที่คุณต้องการ:\n\n1. **มอดวิทยุในเกม** — ติดตั้งมอดของเราเพื่อฟังโดยตรงใน MotorTown\n2. **สตรีมเว็บ** — ฟังออนไลน์ที่นี่!\n\n---\n\n## การติดตั้งมอดวิทยุ\n\n### ขั้นตอนที่ 1: ดาวน์โหลด\n[ดาวน์โหลด RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### ขั้นตอนที่ 2: หาโฟลเดอร์เกม\n1. เปิด Steam และไปที่ Library\n2. คลิกขวาที่ **MotorTown** > **Manage** > **Browse Local Files**\n3. ไปที่ `MotorTown\\Content\\Paks`\n\n### ขั้นตอนที่ 3: ติดตั้งมอด\nวางไฟล์ `RadioMod_P.pak` ที่ดาวน์โหลดมาในโฟลเดอร์ Paks ไฟล์ควรอยู่ข้างๆ `MotorTown-Windows.pak`\n\n### ขั้นตอนที่ 4: รีสตาร์ทเกม\n**สำคัญ:** รีสตาร์ท MotorTown ทั้งหมดเพื่อให้มอดทำงาน"
   },
   "championship": {
-    "head": "{siteName} | ถ้วย AMC ฤดูกาลที่ {seasonNo}",
+    "head": "{siteName} | AMC คัพ ฤดูกาลที่ {seasonNo}",
     "event_details": "รายละเอียด",
     "our_teams": "ทีมที่ร่วมแข่งขัน",
     "event": {
@@ -215,12 +215,12 @@
       "more_info": "ข้อมูลเพิ่มเติม",
       "results": "ผลลัพธ์",
       "event_results": "ผลลัพธ์ {event}",
-      "dnf": "ไม่ถึงเส้นชัย",
+      "dnf": "ไม่เข้าเส้นชัย",
       "no_results": "ยังไม่มีผลลัพธ์",
       "view_event": "ดูข้อมูลกิจกรรม"
     },
     "starting_from": "ตั้งแต่ {date}",
-    "title": "ถ้วยชิงแชมป์ AMC",
+    "title": "ถ้วยชิงแชมป์ AMC คัพ",
     "season": "ฤดูกาลที่ {seasonNo}",
     "standing": "อันดับ",
     "team_standing": "อันดับทีม",

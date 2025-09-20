@@ -15,6 +15,8 @@
   let color = $state<string | undefined>();
 
   onMount(() => {
+    document.documentElement.lang = siteLocale.l;
+
     const updateThemeColor = () => {
       const isDark = document.documentElement.classList.contains('dark');
       color = isDark ? colorBackground900 : colorBackground100;
