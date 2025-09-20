@@ -1,6 +1,7 @@
 <script lang="ts">
   import { marked } from 'marked';
   import DOMPurify from 'dompurify';
+  import HydrationSkip from './HydrationSkip.svelte';
 
   // @unocss-skip-start
   export interface MarkdownTextProps {
@@ -30,31 +31,11 @@
   });
 
   let textContainer: HTMLSpanElement | undefined;
-
-  $effect(() => {
-    if (!textContainer?.innerHTML) {
-      return;
-    }
-    const walkChildren = (element: Element) => {
-      if (element instanceof HTMLAnchorElement) {
-        element.target = '_blank';
-        element.rel = 'noreferrer';
-      }
-      for (const child of Array.from(element.children)) {
-        walkChildren(child);
-      }
-    };
-
-    for (const child of Array.from(textContainer.children)) {
-      walkChildren(child);
-    }
-  });
 </script>
 
 <section
   class={['prose dark:prose-invert prose-neutral !prose-cyan contents', size]}
   bind:this={textContainer}
 >
-  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-  {@html sanitizedHtml}
+  <HydrationSkip markup={sanitizedHtml} />
 </section>

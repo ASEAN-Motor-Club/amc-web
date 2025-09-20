@@ -101,6 +101,8 @@
     "housing": "Housing",
     "industries": "Industries",
     "radio": "Radio",
+    "wiki": "Wiki",
+    "amc_cup": "AMC Cup",
     "join_discord": "JOIN OUR DISCORD"
   },
   "map": {
@@ -202,7 +204,7 @@
     "pause": "Pause"
   },
   "radio_guide": {
-    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord\n- **News & updates** — Stay informed about server events\n- **Game guides** — Tips on tuning, earning money, and more\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio Mod** — Install our mod to listen directly in MotorTown\n2. **Web Stream** — Listen online here!\n\n---\n\n## Installing the Radio Mod\n\n### Step 1: Download\n[Download the RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### Step 2: Find Your Game Folder\n1. Open Steam and go to your Library\n2. Right-click on **MotorTown** > **Manage** > **Browse Local Files**\n3. Navigate to: `MotorTown\\Content\\Paks`\n\n### Step 3: Install the Mod\nPlace the downloaded `RadioMod_P.pak` file in the Paks folder. The file should be placed next to `MotorTown-Windows.pak`.\n\n### Step 4: Restart Game\n**Important:** Restart MotorTown completely for the mod to work."
+    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord\n- **News & updates** — Stay informed about server events\n- **Game guides** — Tips on tuning, earning money, and more\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio Mod** — Install our mod to listen directly in MotorTown\n2. **Web Stream** — Listen online here!\n\n---\n\n## Installing the Radio Mod\n\n### Step 1: Download\n[Download the RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### Step 2: Find Your Game Folder\n1. Open Steam and go to your Library\n2. Right-click on **MotorTown** > **Manage** > **Browse Local Files**\n3. Navigate to `MotorTown\\Content\\Paks`\n\n### Step 3: Install the Mod\nPlace the downloaded `RadioMod_P.pak` file in the Paks folder. The file should be placed next to `MotorTown-Windows.pak`.\n\n### Step 4: Restart Game\n**Important:** Restart MotorTown completely for the mod to work."
   },
   "championship": {
     "head": "{siteName} | AMC Cup Season {seasonNo}",

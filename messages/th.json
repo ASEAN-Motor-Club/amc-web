@@ -101,6 +101,8 @@
     "housing": "ที่อยู่อาศัย",
     "industries": "อุตสาหกรรม",
     "radio": "วิทยุ",
+    "wiki": "วิกิ",
+    "amc_cup": "ถ้วย AMC",
     "join_discord": "เข้าร่วม Discord ของเรา"
   },
   "map": {
@@ -202,7 +204,7 @@
     "pause": "หยุด"
   },
   "radio_guide": {
-    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord\n- **News & updates** — Stay informed about server events\n- **Game guides** — Tips on tuning, earning money, and more\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio Mod** — Install our mod to listen directly in MotorTown\n2. **Web Stream** — Listen online here!\n\n---\n\n## Installing the Radio Mod\n\n### Step 1: Download\n[Download the RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### Step 2: Find Your Game Folder\n1. Open Steam and go to your Library\n2. Right-click on **MotorTown** > **Manage** > **Browse Local Files**\n3. Navigate to: `MotorTown\\Content\\Paks`\n\n### Step 3: Install the Mod\nPlace the downloaded `RadioMod_P.pak` file in the Paks folder. The file should be placed next to `MotorTown-Windows.pak`.\n\n### Step 4: Restart Game\n**Important:** Restart MotorTown completely for the mod to work."
+    "content_markdown": "# วิทยุ AMC\n\n## ฟีเจอร์วิทยุ\n\n- **การขอเพลง** — ใช้คำสั่ง `/song_request` ใน Discord\n- **ข่าวสารและอัปเดต** — ติดตามข้อมูลเกี่ยวกับกิจกรรมเซิร์ฟเวอร์\n- **คู่มือเกม** — เทคนิคการจูนรถ การหาเงิน และอื่นๆ อีกมากมาย\n\n## วิธีการฟัง\n\nเลือกวิธีที่คุณต้องการ:\n\n1. **มอดวิทยุในเกม** — ติดตั้งมอดของเราเพื่อฟังโดยตรงใน MotorTown\n2. **สตรีมเว็บ** — ฟังออนไลน์ที่นี่!\n\n---\n\n## การติดตั้งมอดวิทยุ\n\n### ขั้นตอนที่ 1: ดาวน์โหลด\n[ดาวน์โหลด RadioMod_P.pak](https://www.aseanmotorclub.com/static/RadioMod_P.pak)\n\n### ขั้นตอนที่ 2: หาโฟลเดอร์เกม\n1. เปิด Steam และไปที่ Library\n2. คลิกขวาที่ **MotorTown** > **Manage** > **Browse Local Files**\n3. ไปที่ `MotorTown\\Content\\Paks`\n\n### ขั้นตอนที่ 3: ติดตั้งมอด\nวางไฟล์ `RadioMod_P.pak` ที่ดาวน์โหลดมาในโฟลเดอร์ Paks ไฟล์ควรอยู่ข้างๆ `MotorTown-Windows.pak`\n\n### ขั้นตอนที่ 4: รีสตาร์ทเกม\n**สำคัญ:** รีสตาร์ท MotorTown ทั้งหมดเพื่อให้มอดทำงาน"
   },
   "championship": {
     "head": "{siteName} | ถ้วย AMC ฤดูกาลที่ {seasonNo}",
