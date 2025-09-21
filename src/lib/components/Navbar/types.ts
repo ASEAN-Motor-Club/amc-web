@@ -7,7 +7,7 @@ export interface NavbarItem {
   icon: Snippet<[boolean]>;
   exact?: boolean;
   external?: boolean;
-  onMouseOver?: () => void;
+  onMouseEnter?: () => void;
   subItems?: Omit<NavbarItem, 'subItems'>[];
   textClass?: ClassValue;
 }

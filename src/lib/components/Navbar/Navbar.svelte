@@ -26,7 +26,7 @@
     }
   });
 
-  const links = $derived([
+  const links: NavbarItemType[] = $derived([
     {
       label: siteLocale.msg['navbar.server'](),
       icon: serverIcon,
@@ -75,7 +75,7 @@
       href: '/championship',
       label: siteLocale.msg['navbar.amc_cup'](),
       icon: trophyIcon,
-      onMouseOver: () => {
+      onMouseEnter: () => {
         loop = false;
         localStorage.setItem(NAVBAR_AMC_HOVERED_KEY, '1');
       },
@@ -88,7 +88,7 @@
         },
       ],
     },
-  ] as NavbarItemType[]);
+  ]);
 
   let menu = $state(false);
 </script>
@@ -166,31 +166,28 @@
   {#each links as link (link.label)}
     <NavbarItem {...link} onClick={() => (menu = false)} {mobile} />
   {/each}
-  <Button
-    variant="contained-light"
-    class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
-    tag="a"
-    href={PUBLIC_DISCORD_LINK}
-    target="_blank"
-    rel="noreferrer">{siteLocale.msg['navbar.join_discord']()}</Button
-  >
+  <div class="flex items-center">
+    <Button
+      variant="contained-light"
+      class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
+      tag="a"
+      href={PUBLIC_DISCORD_LINK}
+      target="_blank"
+      rel="noreferrer">{siteLocale.msg['navbar.join_discord']()}</Button
+    >
+  </div>
 {/snippet}
 
 <nav
   class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-16 w-full select-none items-center px-4 shadow-black/10 ring"
 >
-  <Button class="-ml-2 mr-2 min-[1075px]:hidden" variant="text" onClick={() => (menu = true)} icon>
+  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => (menu = true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
-    <span class="contents max-[1075px]:hidden">
-      {siteLocale.msg['site_name_short']()}
-    </span>
-    <span class="hidden max-[1075px]:contents">
-      {siteLocale.msg['site_name']()}
-    </span>
+    {siteLocale.msg['site_name']()}
   </a>
-  <div class="hidden gap-6 min-[1075px]:flex">
+  <div class="hidden h-full items-stretch gap-6 lg:flex">
     {@render menuItems()}
   </div>
   <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start p-0">

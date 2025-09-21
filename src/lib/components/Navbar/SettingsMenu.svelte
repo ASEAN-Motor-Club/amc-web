@@ -89,8 +89,9 @@
       transition:fade={{
         duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
       }}
+      class="max-w-104 z-10000 absolute right-0 top-14 w-full px-5"
     >
-      <Card class="max-w-104 z-10000 absolute right-0 top-14 mx-5 w-full">
+      <Card class="w-full">
         <div class="flex items-center justify-between gap-2">
           <div class="font-semibold">{siteLocale.msg['settings.theme.title']()}</div>
           <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>

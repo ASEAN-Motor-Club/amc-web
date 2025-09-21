@@ -16,7 +16,7 @@
     onClick,
     exact = true,
     external = false,
-    onMouseOver,
+    onMouseEnter,
     textClass,
     subItems,
     mobile,
@@ -41,23 +41,23 @@
 
   let closeSubMenu: DebouncedFunc<() => void> = debounce(() => {
     subMenu = false;
-  }, 150);
+  }, 100);
 
-  const handleMouseOver = () => {
-    onMouseOver?.();
+  const handleMouseEnter = () => {
+    onMouseEnter?.();
     closeSubMenu?.cancel();
     subMenu = true;
   };
 
-  const handleSubMenuMouseOver = (
-    onSubMenuMouseOver: NavbarItemType['onMouseOver'] | undefined,
+  const handleSubMenuMouseEnter = (
+    onSubMenuMouseEnter: NavbarItemType['onMouseEnter'] | undefined,
   ) => {
-    onSubMenuMouseOver?.();
+    onSubMenuMouseEnter?.();
     closeSubMenu?.cancel();
     subMenu = true;
   };
 
-  const handleMouseOut = () => {
+  const handleMouseLeave = () => {
     closeSubMenu();
   };
 
@@ -66,14 +66,16 @@
   });
 </script>
 
-<div class={mobile ? 'contents' : 'relative flex'}>
-  <!-- svelte-ignore a11y_mouse_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div
+  class={mobile ? 'contents' : 'relative flex h-full items-center'}
+  onmouseleave={handleMouseLeave}
+>
   <a
     {href}
     class={['group flex items-center gap-1', mobile && !href && 'pointer-events-none opacity-65']}
     onclick={onClick}
-    onmouseover={handleMouseOver}
-    onmouseout={handleMouseOut}
+    onmouseenter={handleMouseEnter}
     target={external ? '_blank' : undefined}
     rel={external ? 'noreferrer' : undefined}
   >
@@ -94,22 +96,20 @@
       <div
         class={mobile
           ? 'contents'
-          : 'bg-background-100 dark:bg-background-900 top-13 border-t-none border-black/1 absolute left-0 z-10 -mx-3 box-content w-max min-w-full border px-3 shadow-black/10'}
+          : 'bg-background-100 dark:bg-background-900 absolute left-0 top-full z-10 -mx-3 box-content w-max min-w-full px-3 shadow-black/10'}
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
       >
         {#each subItems as item (label + item.label)}
-          <!-- svelte-ignore a11y_mouse_events_have_key_events -->
           <a
             href={item.href}
             class={[
               'group flex items-center gap-1',
-              mobile ? 'pl-4' : '-mx-3 px-3 py-2 hover:bg-white/10',
+              mobile ? 'pl-4' : '-mx-3 px-3 py-2 hover:bg-neutral-500/10',
             ]}
             onclick={onClick}
-            onmouseover={() => handleSubMenuMouseOver(item.onMouseOver)}
-            onmouseout={handleMouseOut}
+            onmouseenter={() => handleSubMenuMouseEnter(item.onMouseEnter)}
             target={item.external ? '_blank' : undefined}
             rel={item.external ? 'noreferrer' : undefined}
           >
