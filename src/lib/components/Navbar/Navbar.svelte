@@ -1,11 +1,12 @@
 <script lang="ts">
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-  import { onMount, type Snippet } from 'svelte';
+  import { onMount } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import NavbarItem from './NavbarItem.svelte';
+  import NavbarIcon from './NavbarIcon.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { PUBLIC_DISCORD_LINK } from '$env/static/public';
   import NavbarPageLoading from './NavbarPageLoading.svelte';
@@ -13,6 +14,7 @@
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import SettingsMenu from './SettingsMenu.svelte';
+  import type { NavbarItem as NavbarItemType } from './types';
 
   const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
 
@@ -26,36 +28,48 @@
 
   const links = $derived([
     {
-      href: '/map',
-      label: siteLocale.msg['navbar.map'](),
-      icon: mapIcon,
+      label: siteLocale.msg['navbar.server'](),
+      icon: serverIcon,
+      subItems: [
+        {
+          href: '/map',
+          label: siteLocale.msg['navbar.map'](),
+          icon: mapIcon,
+        },
+        {
+          href: '/housing',
+          label: siteLocale.msg['navbar.housing'](),
+          icon: housingIcon,
+        },
+        {
+          href: '/industries',
+          label: siteLocale.msg['navbar.industries'](),
+          icon: industriesIcon,
+        },
+      ],
     },
     {
-      href: '/housing',
-      label: siteLocale.msg['navbar.housing'](),
-      icon: housingIcon,
-    },
-    {
-      href: '/industries',
-      label: siteLocale.msg['navbar.industries'](),
-      icon: industriesIcon,
+      label: siteLocale.msg['navbar.tools'](),
+      icon: toolsIcon,
+      subItems: [
+        {
+          href: 'https://wiki.aseanmotorclub.com/',
+          label: siteLocale.msg['navbar.wiki'](),
+          icon: wikiIcon,
+          external: true,
+        },
+        {
+          href: '/track',
+          label: siteLocale.msg['navbar.track_editor'](),
+          icon: trackIcon,
+          exact: false,
+        },
+      ],
     },
     {
       href: '/radio',
       label: siteLocale.msg['navbar.radio'](),
       icon: radioIcon,
-    },
-    {
-      href: '/track',
-      label: siteLocale.msg['navbar.track_editor'](),
-      icon: trackIcon,
-      exact: false,
-    },
-    {
-      href: 'https://wiki.aseanmotorclub.com/',
-      label: siteLocale.msg['navbar.wiki'](),
-      icon: wikiIcon,
-      external: true,
     },
     {
       href: '/championship',
@@ -65,70 +79,77 @@
         loop = false;
         localStorage.setItem(NAVBAR_AMC_HOVERED_KEY, '1');
       },
+      textClass: 'text-amber-600 dark:text-amber-400',
+      subItems: [
+        {
+          href: '/championship/details',
+          label: siteLocale.msg['navbar.details'](),
+          icon: champDetailsIcon,
+        },
+      ],
     },
-  ] satisfies {
-    href: string;
-    label: string;
-    icon: Snippet<[boolean]>;
-    exact?: boolean;
-    external?: boolean;
-    onMouseOver?: () => void;
-  }[]);
+  ] as NavbarItemType[]);
 
   let menu = $state(false);
 </script>
 
+{#snippet serverIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:directions-car-outline-rounded group-hover:text-cyan-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet toolsIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:build-outline-rounded group-hover:text-rose-500"
+    {pathMatch}
+  />
+{/snippet}
+
 {#snippet mapIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:map-outline-rounded group-hover:text-green-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
+  <NavbarIcon
+    class="i-material-symbols:map-outline-rounded group-hover:text-green-500"
+    {pathMatch}
   />
 {/snippet}
 
 {#snippet housingIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:home-outline-rounded group-hover:text-blue-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
+  <NavbarIcon
+    class="i-material-symbols:home-outline-rounded group-hover:text-blue-500"
+    {pathMatch}
   />
 {/snippet}
 
 {#snippet industriesIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:factory-outline-rounded group-hover:text-yellow-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
+  <NavbarIcon
+    class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500"
+    {pathMatch}
   />
 {/snippet}
 
 {#snippet radioIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:radio-outline-rounded group-hover:text-orange-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
+  <NavbarIcon
+    class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500"
+    {pathMatch}
   />
 {/snippet}
 
 {#snippet trackIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:route-outline group-hover:text-red-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
-  />
+  <NavbarIcon class="i-material-symbols:route-outline group-hover:text-red-500" {pathMatch} />
 {/snippet}
 
 {#snippet wikiIcon(pathMatch: boolean)}
-  <Icon
-    class={[
-      'i-material-symbols:book-outline-rounded group-hover:text-teal-500 motion-safe:transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
-    ]}
+  <NavbarIcon
+    class="i-material-symbols:book-outline-rounded group-hover:text-teal-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet champDetailsIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:calendar-month-outline-rounded group-hover:text-yellow-500"
+    {pathMatch}
   />
 {/snippet}
 
@@ -141,17 +162,9 @@
   </div>
 {/snippet}
 
-{#snippet menuItems()}
-  {#each links as { href, label, icon, exact, external, onMouseOver } (href)}
-    <NavbarItem
-      {href}
-      {label}
-      {icon}
-      onClick={() => (menu = false)}
-      {exact}
-      {external}
-      {onMouseOver}
-    />
+{#snippet menuItems(mobile = false)}
+  {#each links as link (link.label)}
+    <NavbarItem {...link} onClick={() => (menu = false)} {mobile} />
   {/each}
   <Button
     variant="contained-light"
@@ -191,7 +204,7 @@
       <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
         {siteLocale.msg['site_name']()}
       </a>
-      {@render menuItems()}
+      {@render menuItems(true)}
     </div>
   </Modal>
   <SettingsMenu />

@@ -95,14 +95,13 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import { getMsg } from '$lib/components/Locale/locale.svelte';
-  const msg = $derived.by(getMsg);
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
 </script>
 
-<h1>{msg.site_name()}</h1>
+<h1>{siteLocale.msg['site_name']()}</h1>
 ```
 
-**Important**: The import must be renamed from `m` to `msg` to prevent UnoCSS from interpreting it as a margin utility class during static analysis.
+**Important**: Use `siteLocale.msg['key']()` syntax for internationalized strings.
 
 ## 🎨 Styling
 

@@ -19,14 +19,13 @@ Every user-facing string must use Paraglide:
 
 ```svelte
 <script>
-  import { getMsg } from '$lib/components/Locale/locale.svelte';
-  const msg = $derived.by(getMsg);
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
 </script>
 
-<h1>{msg['site_name']()}</h1><p>{msg['radio.title']()}</p>
+<h1>{siteLocale.msg['site_name']()}</h1><p>{siteLocale.msg['radio.title']()}</p>
 ```
 
-**Important**: The import must be renamed from `m` to `msg` to prevent UnoCSS from interpreting it as a margin utility class during static analysis.
+**Important**: Use `siteLocale.msg['key']()` syntax for internationalized strings.
 
 ### Component Architecture
 
@@ -129,7 +128,7 @@ src/
 
 1. **UnoCSS Classes**: Must be statically analyzable - no variables in `<script>` blocks
 2. **UnoCSS Compatibility**: Some Tailwind classes might not work in UnoCSS - use `npm run check:uno-classes` to verify
-3. **i18n**: Never hardcode user-facing strings - always use `m['key']()`
+3. **i18n**: Never hardcode user-facing strings - always use `siteLocale.msg['key']()`
 4. **Svelte 5**: Use new runes syntax, not legacy `$:` reactive statements
 5. **Context**: UI components often depend on parent context (InputGroup, Select, etc.)
 6. **Static Generation**: All data must be available at build time or loaded client-side

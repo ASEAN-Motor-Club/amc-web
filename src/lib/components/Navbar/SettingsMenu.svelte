@@ -3,7 +3,6 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
-  import Modal from '$lib/ui/Modal/Modal.svelte';
   import Select from '$lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
@@ -12,6 +11,10 @@
   import type { MtLocaleKey } from '$lib/data/types';
   import type { Locale } from '$lib/paraglide/runtime';
   import { setLocale } from '$lib/components/Locale/locale.svelte';
+  import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
+  import { fade } from 'svelte/transition';
+  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   const mtLocales = [
     'cs',
@@ -68,63 +71,77 @@
   const changeSiteLocale = (locale: Locale) => {
     setLocale(locale);
   };
+
+  const handleMenuClick = (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    menu = !menu;
+  };
 </script>
 
-<Button class="ml-auto" variant="text" round size="sm" onClick={() => (menu = true)} icon>
+<Button class="ml-auto" variant="text" round size="sm" onClick={handleMenuClick} icon>
   <Icon class="i-material-symbols:settings-rounded" size="sm" />
 </Button>
 
-<Modal
-  open={menu}
-  onClose={() => (menu = false)}
-  class="mt-13 left-auto right-0 mx-5 h-fit w-fit items-start justify-end bg-transparent p-0"
-  bgScrollable
-  clickAway
->
-  <Card class="max-w-104 w-full">
-    <div class="flex items-center justify-between gap-2">
-      <div class="font-semibold">Theme</div>
-      <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
-        {#snippet prependIcon()}
-          <Icon
-            class={[
-              darkMode
-                ? `i-material-symbols:dark-mode-outline-rounded`
-                : `i-material-symbols:light-mode-outline-rounded`,
-            ]}
-          />
-        {/snippet}
-        {darkMode ? 'Dark Theme' : 'Light Theme'}
-      </Button>
+<ClickAwayBlock onClickAway={() => (menu = false)} active={menu}>
+  {#if menu}
+    <div
+      transition:fade={{
+        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+      }}
+    >
+      <Card class="max-w-104 z-10000 absolute right-0 top-14 mx-5 w-full">
+        <div class="flex items-center justify-between gap-2">
+          <div class="font-semibold">{siteLocale.msg['settings.theme.title']()}</div>
+          <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
+            {#snippet prependIcon()}
+              <Icon
+                class={[
+                  darkMode
+                    ? `i-material-symbols:dark-mode-outline-rounded`
+                    : `i-material-symbols:light-mode-outline-rounded`,
+                ]}
+              />
+            {/snippet}
+            {darkMode
+              ? siteLocale.msg['settings.theme.dark']()
+              : siteLocale.msg['settings.theme.light']()}
+          </Button>
+        </div>
+        <Divider spacing="sm" />
+        <div class="mb-2 flex items-center justify-between gap-2">
+          <div class="truncate whitespace-nowrap font-semibold">
+            {siteLocale.msg['settings.site_language']()}
+          </div>
+          <Select
+            name="siteLocale"
+            value={siteLocale.l}
+            onChange={changeSiteLocale}
+            class="w-3/5 flex-none"
+            menuClass="max-h-[50svh]"
+          >
+            {#each siteLocales as localeKey (localeKey)}
+              <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
+            {/each}
+          </Select>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="truncate whitespace-nowrap font-semibold">
+            {siteLocale.msg['settings.game_language']()}
+          </div>
+          <Select
+            name="mtLocale"
+            value={mtLocale.l}
+            onChange={changeMtLocale}
+            class="w-3/5 flex-none"
+            menuClass="max-h-[50svh]"
+          >
+            {#each mtLocales as localeKey (localeKey)}
+              <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
+            {/each}
+          </Select>
+        </div>
+      </Card>
     </div>
-    <Divider spacing="sm" />
-    <div class="mb-2 flex items-center justify-between gap-2">
-      <div class="truncate whitespace-nowrap font-semibold">Site Language</div>
-      <Select
-        name="siteLocale"
-        value={siteLocale.l}
-        onChange={changeSiteLocale}
-        class="w-3/5 flex-none"
-        menuClass="max-h-[50svh]"
-      >
-        {#each siteLocales as localeKey (localeKey)}
-          <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
-        {/each}
-      </Select>
-    </div>
-    <div class="flex items-center justify-between gap-2">
-      <div class="truncate whitespace-nowrap font-semibold">Game Language</div>
-      <Select
-        name="mtLocale"
-        value={mtLocale.l}
-        onChange={changeMtLocale}
-        class="w-3/5 flex-none"
-        menuClass="max-h-[50svh]"
-      >
-        {#each mtLocales as localeKey (localeKey)}
-          <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
-        {/each}
-      </Select>
-    </div>
-  </Card>
-</Modal>
+  {/if}
+</ClickAwayBlock>

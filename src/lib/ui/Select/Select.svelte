@@ -79,6 +79,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { activeSelect } from './activeSelect.svelte';
 
   const {
     value,
@@ -96,6 +97,8 @@
     menuClass,
     onChange,
   }: SelectProps<T> = $props();
+
+  const uid = Math.random().toString(36).substring(2, 15);
 
   const inputGroupContext = getInputGroupContext();
 
@@ -127,6 +130,16 @@
   });
 
   const displayedValue = $derived(optionMap.get(value) ?? '');
+
+  $effect(() => {
+    if (open) {
+      activeSelect.a = uid;
+    } else if (activeSelect.a === uid) {
+      activeSelect.a = undefined;
+    }
+  });
+
+  const uniqueOpen = $derived(open && activeSelect.a === uid);
 </script>
 
 <div class={twMerge('relative flex w-full items-center', clsx(propsClassname))}>
@@ -150,13 +163,13 @@
   <Icon
     class={[
       'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 motion-safe:transition-transform',
-      open && 'rotate-180',
+      uniqueOpen && 'rotate-180',
     ]}
     size="!text-[1.75rem]"
   />
 
   <ClickAwayBlock onClickAway={() => (open = false)} active={open}>
-    {#if open}
+    {#if uniqueOpen}
       <div
         class="z-6000 absolute top-full mt-1 w-full"
         transition:slide={{
@@ -172,9 +185,10 @@
           {@render children()}
         </Card>
       </div>
+    {:else}
+      <div class="hidden">
+        {@render children()}
+      </div>
     {/if}
-    <div class="hidden">
-      {@render children()}
-    </div>
   </ClickAwayBlock>
 </div>

@@ -1,0 +1,30 @@
+<script lang="ts">
+  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import type { ClassValue } from 'svelte/elements';
+  import clsx from 'clsx';
+  import { twMerge } from 'tailwind-merge';
+
+  export interface NavbarIconProps {
+    /**
+     * Whether the current path matches this icon's route
+     * @default false
+     */
+    pathMatch?: boolean;
+    /**
+     * CSS classes including the icon class and hover colors
+     */
+    class?: ClassValue;
+  }
+
+  const { pathMatch = false, class: propsClassName }: NavbarIconProps = $props();
+
+  const baseClasses = $derived(
+    twMerge(
+      'motion-safe:transition-colors',
+      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+      clsx(propsClassName),
+    ),
+  );
+</script>
+
+<Icon class={baseClasses} />

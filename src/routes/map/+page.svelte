@@ -135,7 +135,7 @@
     renderOrder: null as any,
     source: playerPointSource,
     style: (feature) => {
-      playerNameStyle.getText()?.setText(feature.get('name') as string);
+      playerNameStyle.getText()?.setText(feature.get('info').name as string);
       return playerNameStyle;
     },
   });
@@ -523,7 +523,7 @@
 
   const startPolling = () => {
     stopPolling?.();
-    if (document.hidden) {
+    if (document.hidden || !playerLayerData.enabled) {
       stopPolling = undefined;
       playerData = [];
       setPlayerPoints([]);
@@ -532,13 +532,19 @@
     stopPolling = getPlayerRealtimePositionCall();
   };
 
-  onMount(() => {
-    if (!document.hidden) {
+  $effect(() => {
+    stopPolling?.();
+    if (document.hidden || !playerLayerData.enabled) {
+      stopPolling = undefined;
+      playerData = [];
+      setPlayerPoints([]);
+    } else {
       stopPolling = getPlayerRealtimePositionCall();
     }
 
     return () => {
       stopPolling?.();
+      stopPolling = undefined;
     };
   });
 
