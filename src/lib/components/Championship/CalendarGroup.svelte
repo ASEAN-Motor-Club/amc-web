@@ -60,16 +60,10 @@
     year={currentYear}
     onEventClick={championshipContext.openEvent}
     {dateWithEvents}
+    {prevMonth}
+    {nextMonth}
   />
   <Button icon round class="hidden sm:flex" onClick={nextMonth}>
-    <Icon class="i-material-symbols:arrow-right-rounded" />
-  </Button>
-</div>
-<div class="flex items-center justify-center gap-8 pt-8 sm:hidden">
-  <Button icon round onClick={prevMonth}>
-    <Icon class="i-material-symbols:arrow-left-rounded" />
-  </Button>
-  <Button icon round onClick={nextMonth}>
     <Icon class="i-material-symbols:arrow-right-rounded" />
   </Button>
 </div>

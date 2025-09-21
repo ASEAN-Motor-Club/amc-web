@@ -6,15 +6,20 @@
   import type { Day } from 'date-fns';
   import type { EventType } from './types';
   import type { SvelteMap } from 'svelte/reactivity';
+  import Button from '$lib/ui/Button/Button.svelte';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
 
   interface CalendarProps {
     month: number;
     year: number;
     onEventClick: (day: number, month: number, year: number) => void;
     dateWithEvents: SvelteMap<string, EventType>;
+    prevMonth: () => void;
+    nextMonth: () => void;
   }
 
-  const { month, year, onEventClick, dateWithEvents }: CalendarProps = $props();
+  const { month, year, onEventClick, dateWithEvents, prevMonth, nextMonth }: CalendarProps =
+    $props();
 
   const startOffset = $derived(new Date(year, month - 1, 1).getDay());
   const daysInLastMonth = $derived(new Date(year, month - 1, 0).getDate());
@@ -64,9 +69,36 @@
 </script>
 
 <Card class="overflow-hidden">
-  <h4 class="-m-4 mb-4 bg-neutral-500/10 p-4 text-xl font-medium">
-    {format(new Date(year, month - 1, 1), siteLocale.msg['format.calendarFormat']())}
-  </h4>
+  <div class="h-15 -m-4 mb-4 flex items-center justify-between bg-neutral-500/10 pl-4 pr-2">
+    <h4 class="text-xl font-medium">
+      {format(new Date(year, month - 1, 1), siteLocale.msg['format.calendarFormat']())}
+    </h4>
+    <div class="flex gap-3">
+      <Button
+        icon
+        round
+        class="sm:hidden"
+        onClick={prevMonth}
+        size="sm"
+        variant="contained-light"
+        color="info"
+      >
+        <Icon class="i-material-symbols:arrow-left-rounded" />
+      </Button>
+      <Button
+        icon
+        round
+        class="sm:hidden"
+        onClick={nextMonth}
+        size="sm"
+        variant="contained-light"
+        color="info"
+      >
+        <Icon class="i-material-symbols:arrow-right-rounded" />
+      </Button>
+    </div>
+  </div>
+
   <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}
       <span class="text-xs font-semibold">
