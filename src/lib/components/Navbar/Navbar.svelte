@@ -1,6 +1,5 @@
 <script lang="ts">
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-  import { onMount } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
@@ -10,23 +9,11 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { PUBLIC_DISCORD_LINK } from '$env/static/public';
   import NavbarPageLoading from './NavbarPageLoading.svelte';
-  import lottieSpark from '$lib/assets/lottie/sparkle-long.json';
-  import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import SettingsMenu from './SettingsMenu.svelte';
   import type { NavbarItem as NavbarItemType } from './types';
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
-
-  const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
-
-  let loop = $state<boolean | number>(10);
-
-  onMount(() => {
-    if (localStorage.getItem(NAVBAR_AMC_HOVERED_KEY) === '1') {
-      loop = false;
-    }
-  });
 
   const links: NavbarItemType[] = $derived([
     {
@@ -77,10 +64,6 @@
       href: '/championship',
       label: siteLocale.msg['navbar.amc_cup'](),
       icon: trophyIcon,
-      onMouseEnter: () => {
-        loop = false;
-        localStorage.setItem(NAVBAR_AMC_HOVERED_KEY, '1');
-      },
       textClass: 'text-amber-600 dark:text-amber-400',
       subItems: [
         {
@@ -164,12 +147,7 @@
 {/snippet}
 
 {#snippet trophyIcon()}
-  <div class="relative flex select-none items-center justify-center">
-    <Icon class="i-material-symbols:trophy-rounded text-amber-500 motion-safe:transition-colors" />
-    <div class="absolute h-full w-full">
-      <Lottie animationData={lottieSpark} {loop} autoplay={!prefersReducedMotion.current} />
-    </div>
-  </div>
+  <NavbarIcon class="i-material-symbols:trophy-rounded text-amber-500" pathMatch />
 {/snippet}
 
 {#snippet menuItems(mobile = false)}
