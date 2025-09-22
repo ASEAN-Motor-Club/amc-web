@@ -56,7 +56,12 @@
         class="bg-background-300 dark:bg-background-900/80 max-w-175 relative mx-auto mt-8 rounded-lg border border-gray-300 p-6 backdrop-blur-sm dark:border-gray-700"
       >
         <div class="-mb-[1.25em]">
-          <MarkdownText text={siteLocale.msg['radio_guide.content_markdown']()} noSanitize />
+          <MarkdownText
+            text={siteLocale.msg['radio_guide.content_markdown']({
+              pakLink: '/downloads/RadioMod_P.pak',
+            })}
+            noSanitize
+          />
         </div>
       </Card>
     </div>

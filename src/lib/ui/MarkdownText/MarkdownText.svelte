@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { marked } from 'marked';
+  import { marked, type Tokens } from 'marked';
   import DOMPurify from 'dompurify';
   import HydrationSkip from './HydrationSkip.svelte';
 
@@ -25,8 +25,17 @@
 
   const { size = 'prose-base', text, noSanitize }: MarkdownTextProps = $props();
 
+  let renderer = new marked.Renderer();
+  renderer.link = function (token: Tokens.Link) {
+    var link = marked.Renderer.prototype.link.call(this, token);
+    if (token.href.startsWith('/downloads/')) {
+      return link.replace('<a', '<a download');
+    }
+    return link.replace('<a', "<a target='_blank' rel='noreferrer'");
+  };
+
   const sanitizedHtml = $derived.by(() => {
-    const rawHtml = marked(text.trim(), { async: false });
+    const rawHtml = marked(text.trim(), { async: false, renderer });
     return noSanitize ? rawHtml : DOMPurify.sanitize(rawHtml);
   });
 
