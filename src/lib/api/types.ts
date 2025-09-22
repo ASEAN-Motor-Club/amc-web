@@ -1,6 +1,6 @@
 import type { DeliveryCargoKey } from '$lib/data/types';
 import type { Track } from '$lib/schema/track';
-import type { EmptyObject, Vector3 } from '../types';
+import type { Vector3 } from '../types';
 
 export type HouseData = Record<string, House>;
 
@@ -115,9 +115,9 @@ export interface DeliveryPointInfo {
 }
 
 export interface DeliveryPointInfoData {
-  deliveries: Delivery[] | EmptyObject;
-  inputInventory: InputInventoryElement[] | EmptyObject;
-  outputInventory: InputInventoryElement[] | EmptyObject;
+  deliveries: Delivery[];
+  inputInventory: InputInventoryElement[];
+  outputInventory: InputInventoryElement[];
 }
 
 export interface Delivery {

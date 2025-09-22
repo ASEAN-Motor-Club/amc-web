@@ -27,7 +27,7 @@
   let teamText: HTMLDivElement[] = $state([]);
 
   // GSAP Timeline variables
-  let scrollContext: gsap.MatchMedia;
+  let scrollContext: gsap.MatchMedia | undefined;
   let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
@@ -164,7 +164,7 @@
   };
 
   onDestroy(() => {
-    scrollContext.revert();
+    scrollContext?.revert();
     abortController.abort();
   });
 </script>
