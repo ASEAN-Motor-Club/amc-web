@@ -69,7 +69,7 @@
     getDeliveryPointInfo(guid, abortController.signal)
       .then((info) => {
         if (info) {
-          deliveryInfoCaches.set(guid, [new Date(), info]);
+          deliveryInfoCaches.set(guid, info);
         }
         deliveryPointInfo = info;
       })
@@ -85,8 +85,10 @@
 
     const cache = deliveryInfoCaches.get(guid);
     if (cache) {
-      const [age, deliveryPointInfoCache] = cache;
-      if (differenceInSeconds(new Date(), age) <= 5) {
+      const deliveryPointInfoCache = cache;
+      if (
+        differenceInSeconds(new Date(), deliveryPointInfoCache.last_updated) <= 5
+      ) {
         deliveryPointInfo = deliveryPointInfoCache;
         deliveryPointInfoLoading = false;
         return;
