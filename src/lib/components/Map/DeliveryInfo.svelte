@@ -86,9 +86,7 @@
     const cache = deliveryInfoCaches.get(guid);
     if (cache) {
       const deliveryPointInfoCache = cache;
-      if (
-        differenceInSeconds(new Date(), deliveryPointInfoCache.last_updated) <= 5
-      ) {
+      if (differenceInSeconds(new Date(), deliveryPointInfoCache.last_updated) <= 5) {
         deliveryPointInfo = deliveryPointInfoCache;
         deliveryPointInfoLoading = false;
         return;
