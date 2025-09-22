@@ -18,7 +18,8 @@ export {
   isAfter,
   isSameYear,
   intervalToDuration,
-  differenceInMinutes,
+  differenceInSeconds,
+  isValid,
 } from 'date-fns';
 
 import { enUS, th } from 'date-fns/locale';

@@ -7,10 +7,12 @@
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-  import { formatDistanceStrict, differenceInMinutes } from '$lib/date';
+  import { formatDistanceStrict, differenceInSeconds } from '$lib/date';
   import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getDeliveryPointInfo } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
+  import { onDestroy } from 'svelte';
+  import { debounce } from 'lodash-es';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -59,26 +61,11 @@
 
   let guid = $derived(hoverInfo.info.guid);
 
-  $effect(() => {
-    if (!guid) {
-      return;
-    }
+  let abortController: AbortController | undefined;
 
-    const cache = deliveryInfoCaches.get(guid);
-    if (cache) {
-      const [age, deliveryPointInfoCache] = cache;
-      if (differenceInMinutes(new Date(), age) < 1) {
-        deliveryPointInfo = deliveryPointInfoCache;
-        deliveryPointInfoLoading = false;
-        return;
-      }
-    }
-
-    deliveryPointInfoLoading = true;
-    deliveryPointInfo = undefined;
-
-    const abortController = new AbortController();
-
+  const debouncedGetInfo = debounce(() => {
+    abortController?.abort();
+    abortController = new AbortController();
     getDeliveryPointInfo(guid, abortController.signal)
       .then((info) => {
         if (info) {
@@ -89,10 +76,32 @@
       .finally(() => {
         deliveryPointInfoLoading = false;
       });
+  }, 200);
 
-    return () => {
-      abortController.abort();
-    };
+  $effect(() => {
+    if (!guid) {
+      return;
+    }
+
+    const cache = deliveryInfoCaches.get(guid);
+    if (cache) {
+      const [age, deliveryPointInfoCache] = cache;
+      if (differenceInSeconds(new Date(), age) <= 5) {
+        deliveryPointInfo = deliveryPointInfoCache;
+        deliveryPointInfoLoading = false;
+        return;
+      }
+    }
+
+    deliveryPointInfoLoading = true;
+    deliveryPointInfo = undefined;
+
+    debouncedGetInfo();
+  });
+
+  onDestroy(() => {
+    debouncedGetInfo.cancel();
+    abortController?.abort();
   });
 </script>
 

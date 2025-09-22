@@ -9,13 +9,12 @@
   import { formatTime } from '$lib/utils/formatTime';
 
   interface ResultsModalProps {
-    open: boolean;
     event: ScheduledEvent | undefined;
     onClose: () => void;
     openEvent: (day: number, month: number, year: number) => void;
   }
 
-  const { open, event, onClose, openEvent }: ResultsModalProps = $props();
+  const { event, onClose, openEvent }: ResultsModalProps = $props();
 
   let loading = $state(true);
   let results: EventResult[] = $state([]);
@@ -60,7 +59,7 @@
   };
 </script>
 
-<Modal {open} {onClose}>
+<Modal open={!!event} {onClose}>
   <Card class="w-150 flex max-h-full max-w-full flex-col p-0">
     <h1 class="p-5 text-2xl font-bold tracking-tight">
       {event

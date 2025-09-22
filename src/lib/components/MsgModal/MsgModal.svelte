@@ -5,6 +5,8 @@
   import type { Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { pushState, replaceState } from '$app/navigation';
+  import { page } from '$app/state';
 
   interface Props {
     children: Snippet;
@@ -12,23 +14,23 @@
 
   const { children }: Props = $props();
 
-  let modalOpen = $state(false);
+  const modalOpen = $derived(page.state.msgModal ?? false);
   let modalParams = $state<Partial<ModalParams>>({});
 
   const showModal = (nextModalParams: ModalParams) => {
     modalParams = nextModalParams;
-    modalOpen = true;
+    pushState('', { ...page.state, msgModal: true });
   };
 
   const hideModal = () => {
-    modalOpen = false;
+    replaceState('', { ...page.state, msgModal: false });
     modalParams.cancelAction?.();
     modalParams = {};
   };
 
   const handleConfirm = () => {
     modalParams.confirmAction?.();
-    modalOpen = false;
+    replaceState('', { ...page.state, msgModal: false });
     modalParams = {};
   };
 

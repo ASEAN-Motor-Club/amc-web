@@ -15,6 +15,8 @@
   import { fade } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { page } from '$app/state';
+  import { pushState, replaceState } from '$app/navigation';
 
   const mtLocales = [
     'cs',
@@ -66,7 +68,15 @@
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   });
 
-  let menu = $state(false);
+  const menu = $derived(page.state.settingMenuOpen ?? false);
+
+  const setMenu = (value: boolean) => {
+    if (value) {
+      pushState('', { ...page.state, settingMenuOpen: true });
+    } else {
+      replaceState('', { ...page.state, settingMenuOpen: false });
+    }
+  };
 
   const changeSiteLocale = (locale: Locale) => {
     setLocale(locale);
@@ -75,7 +85,7 @@
   const handleMenuClick = (event: MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    menu = !menu;
+    setMenu(!menu);
   };
 </script>
 
@@ -83,7 +93,7 @@
   <Icon class="i-material-symbols:settings-rounded" size="sm" />
 </Button>
 
-<ClickAwayBlock onClickAway={() => (menu = false)} active={menu}>
+<ClickAwayBlock onClickAway={() => setMenu(false)} active={menu}>
   {#if menu}
     <div
       transition:fade={{

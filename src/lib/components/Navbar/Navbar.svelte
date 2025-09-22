@@ -15,6 +15,8 @@
   import { prefersReducedMotion } from 'svelte/motion';
   import SettingsMenu from './SettingsMenu.svelte';
   import type { NavbarItem as NavbarItemType } from './types';
+  import { page } from '$app/state';
+  import { pushState, replaceState } from '$app/navigation';
 
   const NAVBAR_AMC_HOVERED_KEY = 'navbarAmcHovered';
 
@@ -90,7 +92,15 @@
     },
   ]);
 
-  let menu = $state(false);
+  const menu = $derived(page.state.navbarMenuOpen ?? false);
+
+  const setMenu = (value: boolean) => {
+    if (value) {
+      pushState('', { ...page.state, navbarMenuOpen: true });
+    } else {
+      replaceState('', { ...page.state, navbarMenuOpen: false });
+    }
+  };
 </script>
 
 {#snippet serverIcon(pathMatch: boolean)}
@@ -164,7 +174,7 @@
 
 {#snippet menuItems(mobile = false)}
   {#each links as link (link.label)}
-    <NavbarItem {...link} onClick={() => (menu = false)} {mobile} />
+    <NavbarItem {...link} onClick={() => setMenu(false)} {mobile} />
   {/each}
   <div class="flex items-center">
     <Button
@@ -181,7 +191,7 @@
 <nav
   class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-16 w-full select-none items-center px-4 shadow-black/10 ring"
 >
-  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => (menu = true)} icon>
+  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
@@ -190,7 +200,7 @@
   <div class="hidden h-full items-stretch gap-6 lg:flex">
     {@render menuItems()}
   </div>
-  <Modal open={menu} onClose={() => (menu = false)} class="align-start justify-start p-0">
+  <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
     <div
       class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
       transition:fly={{
@@ -198,7 +208,7 @@
         duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
       }}
     >
-      <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
+      <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => setMenu(false)}>
         {siteLocale.msg.site_name()}
       </a>
       {@render menuItems(true)}

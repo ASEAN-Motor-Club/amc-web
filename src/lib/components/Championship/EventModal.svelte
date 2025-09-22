@@ -11,20 +11,16 @@
   import { page } from '$app/state';
 
   interface EventModalProps {
-    day: number | undefined;
-    month: number | undefined;
-    year: number | undefined;
+    date?: Date;
     events: ScheduledEvent[];
     onClose: () => void;
     openResultsModal: (event: ScheduledEvent) => void;
   }
 
-  const { day, month, year, onClose, events, openResultsModal }: EventModalProps = $props();
+  const { date, onClose, events, openResultsModal }: EventModalProps = $props();
 
   const eventsToday = $derived.by(() => {
-    if (!day || !month || !year) return [];
-
-    const date = new Date(year, month - 1, day);
+    if (!date) return [];
 
     return events.filter((event) => {
       return (
@@ -35,12 +31,7 @@
     });
   });
 
-  const formattedDate = $derived(
-    format(
-      new Date(year ?? 0, month ? month - 1 : 0, day ?? 1),
-      siteLocale.msg['format.dateFull'](),
-    ),
-  );
+  const formattedDate = $derived(date ? format(date, siteLocale.msg['format.dateFull']()) : '');
 
   const formatEventStyle = (event: ScheduledEvent) => {
     const sameDay = isSameDay(event.start_time, event.end_time);
@@ -52,10 +43,10 @@
         : siteLocale.msg['format.scheduleFormat.crossYear']();
   };
 
-  const date = new SvelteDate();
+  const today = new SvelteDate();
 
   const pastEventTime = (event: ScheduledEvent) => {
-    return isBefore(event.start_time, date);
+    return isBefore(event.start_time, today);
   };
 
   const openEvent = (e: Event, event: ScheduledEvent) => {
@@ -70,7 +61,7 @@
   };
 </script>
 
-<Modal open={!!(day && month && year)} {onClose}>
+<Modal open={!!date} {onClose}>
   <Card class="w-150 flex max-h-full max-w-full flex-col p-5">
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
       {siteLocale.msg['championship.event.title']({ date: formattedDate })}

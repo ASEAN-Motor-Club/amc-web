@@ -8,65 +8,36 @@
   import { setChampionshipContext } from '$lib/components/Championship/context';
   import { onMount } from 'svelte';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { isValid } from '$lib/date';
 
   let events = $state<ScheduledEvent[]>([]);
   let abortController: AbortController = new AbortController();
 
-  let resultsModalOpen = $state(false);
-  let openedEventDay: number | undefined = $state(undefined);
-  let openedEventMonth: number | undefined = $state(undefined);
-  let openedEventYear: number | undefined = $state(undefined);
-
   const openEvent = (day: number, month: number, year: number) => {
     const newUrl = `?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
-    openedEventDay = day;
-    openedEventMonth = month;
-    openedEventYear = year;
+    goto(newUrl, { noScroll: true });
   };
 
   const closeEvent = () => {
-    openedEventDay = undefined;
-    openedEventMonth = undefined;
-    openedEventYear = undefined;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('date');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true, keepFocus: true });
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
-
-  let resultsModalEvent = $state<ScheduledEvent | undefined>(undefined);
 
   const openResultsModal = (event: ScheduledEvent) => {
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.append('event', event.id.toString());
-    goto(`?${newParams.toString()}`);
-    resultsModalEvent = event;
-    resultsModalOpen = true;
+    goto(`?${newParams.toString()}`, { noScroll: true });
   };
 
   const closeResultsModal = () => {
-    resultsModalOpen = false;
     const newParams = new SvelteURLSearchParams(page.url.searchParams);
     newParams.delete('event');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true, keepFocus: true });
+    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
 
   onMount(async () => {
     events = await getEvents(abortController.signal);
-    const date = page.url.searchParams.get('date');
-    if (date) {
-      const [year, month, day] = date.split('-');
-      openedEventYear = +year;
-      openedEventMonth = +month;
-      openedEventDay = +day;
-    }
-    const eventId = page.url.searchParams.get('event');
-    if (eventId) {
-      const event = events.find((e) => e.id === +eventId);
-      if (event) {
-        resultsModalEvent = event;
-      }
-    }
   });
 
   const { children } = $props();
@@ -77,21 +48,27 @@
     },
     openEvent,
   });
+
+  const openedEventDate = $derived.by(() => {
+    const dateParam = typeof window !== 'undefined' ? page.url.searchParams.get('date') : null;
+    if (dateParam) {
+      const d = new Date(dateParam);
+      if (isValid(d)) {
+        return d;
+      }
+    }
+    return undefined;
+  });
+
+  const resultsModalEvent = $derived.by(() => {
+    const eventId = typeof window !== 'undefined' ? page.url.searchParams.get('event') : null;
+    if (eventId) {
+      return events.find((e) => e.id === +eventId);
+    }
+  });
 </script>
 
 {@render children()}
 
-<EventModal
-  month={openedEventMonth}
-  year={openedEventYear}
-  day={openedEventDay}
-  {events}
-  onClose={closeEvent}
-  {openResultsModal}
-/>
-<ResultsModal
-  open={resultsModalOpen}
-  event={resultsModalEvent}
-  onClose={closeResultsModal}
-  {openEvent}
-/>
+<EventModal date={openedEventDate} {events} onClose={closeEvent} {openResultsModal} />
+<ResultsModal event={resultsModalEvent} onClose={closeResultsModal} {openEvent} />
