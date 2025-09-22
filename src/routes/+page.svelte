@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-  <title>{siteLocale.msg['site_name']()}</title>
+  <title>{siteLocale.msg.site_name()}</title>
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
@@ -59,7 +59,7 @@
         <h1
           class="z-100 text-text-dark font-sans-alt pointer-events-none mb-4 select-none text-center text-7xl sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
-          {siteLocale.msg['site_name']()}
+          {siteLocale.msg.site_name()}
         </h1>
         <div class="sm:mb-15 mb-6 flex flex-wrap justify-center gap-1.5 sm:justify-start">
           {#each features as feature (feature)}

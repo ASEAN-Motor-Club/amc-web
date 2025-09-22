@@ -102,7 +102,7 @@
                     const expectedHash = `#team-${teamTag}`;
                     if (self.isActive) {
                       replaceState(expectedHash, page.state);
-                    } else if (!self.isActive) {
+                    } else {
                       replaceState('', page.state);
                     }
                   }
@@ -139,7 +139,7 @@
     const initialHash = page.url.hash;
 
     setTimeout(() => {
-      if (initialHash.startsWith('#team-') && teamTriggers) {
+      if (initialHash.startsWith('#team-')) {
         const teamTag = decodeURIComponent(initialHash.replace('#team-', ''));
         const teamIndex = teams.findIndex((team) => team.tag === teamTag);
         if (teamIndex !== -1 && teamTriggers[teamIndex]) {
@@ -154,7 +154,7 @@
   });
 
   const onTeamClick = () => {
-    if (teamTriggers && teamTriggers[0]) {
+    if (teamTriggers[0]) {
       const rect = teamTriggers[0].getBoundingClientRect();
       window.scrollTo({
         top: window.scrollY + rect.top + 1500 / 3,
@@ -164,15 +164,15 @@
   };
 
   onDestroy(() => {
-    scrollContext?.revert();
-    abortController?.abort();
+    scrollContext.revert();
+    abortController.abort();
   });
 </script>
 
 <svelte:head>
   <title
     >{siteLocale.msg['championship.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
       seasonNo: PUBLIC_SEASON_NO,
     })}</title
   >

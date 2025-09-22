@@ -22,7 +22,7 @@ export const getNowPlaying = async (signal: AbortSignal): Promise<string> => {
 };
 
 export const getStreamUrl = (): string => {
-  return '/stream_high?t=' + Date.now();
+  return `/stream_high?t=${Date.now()}`;
 };
 
 export const startNowPlayingPolling = (
@@ -45,7 +45,9 @@ export const startNowPlayingPolling = (
   fetchAndUpdate();
 
   // Set up polling
-  const timer = setInterval(fetchAndUpdate, interval);
+  const timer = setInterval(() => {
+    fetchAndUpdate();
+  }, interval);
 
   // Cleanup function
   controller.signal.addEventListener('abort', () => {

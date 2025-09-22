@@ -33,7 +33,7 @@
           message: siteLocale.msg['track_editor.editor.copied.desc'](),
         });
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error('Failed to copy:', err);
         showModal({
           title: siteLocale.msg['track_editor.editor.copy_to_clipboard_failed.title'](),
@@ -49,7 +49,7 @@
     try {
       const a = document.createElement('a');
       a.href = url;
-      a.download = (downloadData.routeName?.trim() || 'track_updated') + '.json';
+      a.download = (downloadData.routeName.trim() || 'track_updated') + '.json';
       a.style.display = 'none';
       document.body.appendChild(a);
       a.click();

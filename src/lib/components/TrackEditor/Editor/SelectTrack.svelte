@@ -41,18 +41,15 @@
     }
   };
 
-  const loadFromDataList = async (dataList: DataTransferItemList | undefined) => {
-    if (!dataList || !dataList.length) return;
+  const loadFromDataList = (dataList: DataTransferItemList | undefined) => {
+    if (!dataList || dataList.length < 1) return;
     const item = dataList[0];
-    if (!item) return;
     if (item.kind === 'file') {
       const file = item.getAsFile();
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          parseTrackData(e.target?.result as string);
-        };
-        reader.readAsText(file);
+        file.text().then((text) => {
+          parseTrackData(text);
+        });
       }
     } else if (item.kind === 'string') {
       item.getAsString((text) => {
@@ -112,11 +109,9 @@
   const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        parseTrackData(e.target?.result as string);
-      };
-      reader.readAsText(file);
+      file.text().then((text) => {
+        parseTrackData(text);
+      });
     }
     fileInput.value = '';
   };

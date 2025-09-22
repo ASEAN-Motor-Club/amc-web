@@ -43,11 +43,11 @@
     /**
      * Callback for pointer move events
      */
-    onPointerMove?: (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => void;
+    onPointerMove?: (e: MapBrowserEvent) => void;
     /**
      * Callback for pointer click events
      */
-    onClick?: (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => void;
+    onClick?: (e: MapBrowserEvent) => void;
     /**
      * Callback for pointer right click events
      */
@@ -55,7 +55,7 @@
     /**
      * Callback for pointer drag events
      */
-    onPointerDrag?: (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => void;
+    onPointerDrag?: (e: MapBrowserEvent) => void;
   }
 
   let target: HTMLDivElement;
@@ -123,13 +123,13 @@
       }),
     });
 
-    const handlePointerMove = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+    const handlePointerMove = (e: MapBrowserEvent) => {
       onPointerMove?.(e);
     };
 
     map.on('pointermove', handlePointerMove);
 
-    const handleClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+    const handleClick = (e: MapBrowserEvent) => {
       onClick?.(e);
     };
 
@@ -144,7 +144,7 @@
 
     map.getViewport().addEventListener('contextmenu', handleContextMenu);
 
-    const handlePointerDrag = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+    const handlePointerDrag = (e: MapBrowserEvent) => {
       onPointerDrag?.(e);
     };
 

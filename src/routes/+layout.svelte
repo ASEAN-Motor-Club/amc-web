@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-  <title>{siteLocale.msg['site_name']()}</title>
+  <title>{siteLocale.msg.site_name()}</title>
   <meta name="description" content={siteLocale.msg['home.desc_title']()} />
   <meta
     name="theme-color"

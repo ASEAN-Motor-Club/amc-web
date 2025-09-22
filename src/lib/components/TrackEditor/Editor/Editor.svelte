@@ -222,16 +222,20 @@
               </Button>
             {/snippet}
             <Slider
-              value={editingPoint?.rotation.z}
-              onChange={(value) => (editingPoint.rotation.z = value)}
+              value={editingPoint.rotation.z}
+              onChange={(value) => {
+                editingPoint.rotation.z = value;
+              }}
               name="rotationZ_slider"
               min={-180}
               max={180}
               size="sm"
             />
             <TextInput
-              value={editingPoint?.rotation.z}
-              onInput={(e) => (editingPoint.rotation.z = +e.currentTarget.value)}
+              value={editingPoint.rotation.z}
+              onInput={(e) => {
+                editingPoint.rotation.z = +e.currentTarget.value;
+              }}
               name="rotationZ"
               type="number"
               size="sm"
@@ -243,16 +247,20 @@
           {#if showHidden}
             <InputGroup label={siteLocale.msg['track_editor.editor.rotation_x']()}>
               <Slider
-                value={editingPoint?.rotation.x}
-                onChange={(value) => (editingPoint.rotation.x = value)}
+                value={editingPoint.rotation.x}
+                onChange={(value) => {
+                  editingPoint.rotation.x = value;
+                }}
                 name="rotationX_slider"
                 min={-180}
                 max={180}
                 size="sm"
               />
               <TextInput
-                value={editingPoint?.rotation.x}
-                onInput={(e) => (editingPoint.rotation.x = +e.currentTarget.value)}
+                value={editingPoint.rotation.x}
+                onInput={(e) => {
+                  editingPoint.rotation.x = +e.currentTarget.value;
+                }}
                 name="rotationX"
                 type="number"
                 size="sm"
@@ -263,16 +271,20 @@
             </InputGroup>
             <InputGroup label={siteLocale.msg['track_editor.editor.rotation_y']()}>
               <Slider
-                value={editingPoint?.rotation.y}
-                onChange={(value) => (editingPoint.rotation.y = value)}
+                value={editingPoint.rotation.y}
+                onChange={(value) => {
+                  editingPoint.rotation.y = value;
+                }}
                 name="rotationY_slider"
                 min={-180}
                 max={180}
                 size="sm"
               />
               <TextInput
-                value={editingPoint?.rotation.y}
-                onInput={(e) => (editingPoint.rotation.y = +e.currentTarget.value)}
+                value={editingPoint.rotation.y}
+                onInput={(e) => {
+                  editingPoint.rotation.y = +e.currentTarget.value;
+                }}
                 name="rotationY"
                 type="number"
                 size="sm"
@@ -288,8 +300,10 @@
         <div class="flex flex-col gap-2">
           <InputGroup label={siteLocale.msg['track_editor.editor.translation_x']()}>
             <TextInput
-              value={editingPoint?.translation.x}
-              onInput={(e) => (editingPoint.translation.x = +e.currentTarget.value)}
+              value={editingPoint.translation.x}
+              onInput={(e) => {
+                editingPoint.translation.x = +e.currentTarget.value;
+              }}
               name="translationX"
               type="number"
               additionalAttributes={{
@@ -299,8 +313,10 @@
           </InputGroup>
           <InputGroup label={siteLocale.msg['track_editor.editor.translation_y']()}>
             <TextInput
-              value={editingPoint?.translation.y}
-              onInput={(e) => (editingPoint.translation.y = +e.currentTarget.value)}
+              value={editingPoint.translation.y}
+              onInput={(e) => {
+                editingPoint.translation.y = +e.currentTarget.value;
+              }}
               name="translationY"
               type="number"
               additionalAttributes={{
@@ -311,8 +327,10 @@
           {#if showHidden}
             <InputGroup label={siteLocale.msg['track_editor.editor.translation_z']()}>
               <TextInput
-                value={editingPoint?.translation.z}
-                onInput={(e) => (editingPoint.translation.z = +e.currentTarget.value)}
+                value={editingPoint.translation.z}
+                onInput={(e) => {
+                  editingPoint.translation.z = +e.currentTarget.value;
+                }}
                 name="translationZ"
                 type="number"
                 additionalAttributes={{
@@ -327,8 +345,10 @@
         <div class="flex flex-col gap-2">
           <InputGroup label={siteLocale.msg['track_editor.editor.scale_y']()}>
             <TextInput
-              value={editingPoint?.scale3D.y}
-              onInput={(e) => (editingPoint.scale3D.y = +e.currentTarget.value)}
+              value={editingPoint.scale3D.y}
+              onInput={(e) => {
+                editingPoint.scale3D.y = +e.currentTarget.value;
+              }}
               name="scaleY"
               type="number"
               additionalAttributes={{
@@ -339,8 +359,10 @@
           {#if showHidden}
             <InputGroup label={siteLocale.msg['track_editor.editor.scale_z']()}>
               <TextInput
-                value={editingPoint?.scale3D.z}
-                onInput={(e) => (editingPoint.scale3D.z = +e.currentTarget.value)}
+                value={editingPoint.scale3D.z}
+                onInput={(e) => {
+                  editingPoint.scale3D.z = +e.currentTarget.value;
+                }}
                 name="scaleZ"
                 type="number"
                 additionalAttributes={{
@@ -350,8 +372,10 @@
             </InputGroup>
             <InputGroup label={siteLocale.msg['track_editor.editor.scale_x']()}>
               <TextInput
-                value={editingPoint?.scale3D.x}
-                onInput={(e) => (editingPoint.scale3D.x = +e.currentTarget.value)}
+                value={editingPoint.scale3D.x}
+                onInput={(e) => {
+                  editingPoint.scale3D.x = +e.currentTarget.value;
+                }}
                 name="scaleX"
                 type="number"
                 additionalAttributes={{

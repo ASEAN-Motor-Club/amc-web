@@ -9,20 +9,29 @@ import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
+import { defineConfig } from 'eslint/config';
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
-export default ts.config(
+const extraFileExtensions = ['.svelte'];
+
+export default defineConfig(
   includeIgnoreFile(gitignorePath),
   js.configs.recommended,
-  ...ts.configs.strict,
-  ...ts.configs.stylistic,
+  ...ts.configs.strictTypeChecked,
+  ...ts.configs.stylisticTypeChecked,
   ...svelte.configs.recommended,
   prettier,
   ...svelte.configs.prettier,
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
+      parserOptions: {
+        projectService: true,
+        extraFileExtensions,
+        parser: ts.parser,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
       'no-undef': 'off',
@@ -36,6 +45,7 @@ export default ts.config(
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-import-type-side-effects': 'error',
+      '@typescript-eslint/method-signature-style': 'error',
       'svelte/no-navigation-without-resolve': 'off',
       '@typescript-eslint/no-restricted-imports': [
         'error',
@@ -61,6 +71,18 @@ export default ts.config(
           ],
         },
       ],
+      // too strict
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      // not play nice with svelte, tend to report svelte type as any or error
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-confusing-void-expression': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
     },
   },
   {
@@ -68,7 +90,7 @@ export default ts.config(
     languageOptions: {
       parserOptions: {
         projectService: true,
-        extraFileExtensions: ['.svelte'],
+        extraFileExtensions,
         parser: ts.parser,
         svelteConfig: {
           ...svelteConfig,
@@ -84,4 +106,13 @@ export default ts.config(
     },
   },
   storybook.configs['flat/recommended'],
+  {
+    files: [
+      '*.config.{js,ts}',
+      '**/*.{test,spec}.{js,ts}',
+      '.storybook/*.ts',
+      'vitest-setup-client.ts',
+    ],
+    extends: [ts.configs.disableTypeChecked],
+  },
 );

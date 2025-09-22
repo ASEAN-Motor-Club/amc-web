@@ -16,7 +16,7 @@
 <svelte:head>
   <title
     >{siteLocale.msg['track_editor.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
     })}</title
   >
 </svelte:head>

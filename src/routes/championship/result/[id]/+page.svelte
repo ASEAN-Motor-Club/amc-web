@@ -13,7 +13,7 @@
 
   const { showModal } = getMsgModalContext();
 
-  let eventData: ScheduledEvent | undefined = $state(undefined);
+  let eventData: ScheduledEvent | undefined = $state();
   let eventResults: EventResult[] = $state([]);
   // records/b8724385ffc98c9a5ea86fb12771d8666db39c2469bdc9602336fae6b97c8cd4/laps/0
   let loading = $state<boolean>(true);
@@ -47,7 +47,7 @@
       .then(() => {
         loading = false;
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Error fetching event data:', error);
         showModal({
           title: siteLocale.msg['championship.results.cannot_load.title'](),
@@ -71,10 +71,10 @@
     >{eventData?.name
       ? siteLocale.msg['championship.results.head_loaded']({
           name: eventData.name,
-          siteName: siteLocale.msg['site_name_short'](),
+          siteName: siteLocale.msg.site_name_short(),
         })
       : siteLocale.msg['championship.results.head']({
-          siteName: siteLocale.msg['site_name_short'](),
+          siteName: siteLocale.msg.site_name_short(),
         })}</title
   >
 </svelte:head>
@@ -109,7 +109,7 @@
       {/each}
     {:else if eventResults}
       {#each eventResults as time, index (time.character.id)}
-        <EventCard {time} time0={eventResults?.[0]} {index} loading={false} />
+        <EventCard {time} time0={eventResults[0]} {index} loading={false} />
       {/each}
     {/if}
   </div>

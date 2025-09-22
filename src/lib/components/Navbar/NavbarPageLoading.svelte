@@ -13,7 +13,7 @@
 
   $effect(() => {
     if (navigating.to) {
-      if (prevTo !== navigating.to?.url.pathname) {
+      if (prevTo !== navigating.to.url.pathname) {
         speedUp = true;
         widthFull = false;
         clearTimeout(showDelayId);

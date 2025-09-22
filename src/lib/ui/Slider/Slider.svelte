@@ -83,7 +83,7 @@
   const getClientX = (event: MouseEvent | TouchEvent): number => {
     if (event instanceof MouseEvent) {
       return event.clientX;
-    } else if (event.touches && event.touches.length > 0) {
+    } else if (event.touches.length > 0) {
       return event.touches[0].clientX;
     }
     return 0;

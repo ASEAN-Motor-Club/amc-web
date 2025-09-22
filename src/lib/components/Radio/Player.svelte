@@ -91,7 +91,7 @@
 
     return () => {
       // stopPolling();
-      audioCtx?.close();
+      audioCtx.close();
       if (restartTimeout) {
         clearTimeout(restartTimeout);
       }
@@ -116,7 +116,7 @@
   }
 
   function onVolume(value: number) {
-    audio.volume = +value;
+    audio.volume = value;
     localStorage.setItem(VOLUME_STORAGE_KEY, value.toString());
     volume = value;
   }

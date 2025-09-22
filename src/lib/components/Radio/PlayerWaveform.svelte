@@ -5,7 +5,7 @@
 
   interface Props {
     analyser: AnalyserNode;
-    grillVolume(vol: number): void;
+    grillVolume: (vol: number) => void;
   }
 
   // Width and height are no longer needed as props

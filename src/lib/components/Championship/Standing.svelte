@@ -48,7 +48,7 @@
 
   <StandingCard title={siteLocale.msg['championship.personal_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}
-      {#each personalStandings as standing, index (standing.player_id + '-' + standing.character_name)}
+      {#each personalStandings as standing, index (`${standing.player_id}-${standing.character_name}`)}
         <div class={getStandingRowClass(index)}>
           <div>{index + 1}</div>
           <div class="truncate">{standing.character_name}</div>

@@ -185,7 +185,7 @@
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
-    {siteLocale.msg['site_name']()}
+    {siteLocale.msg.site_name()}
   </a>
   <div class="hidden h-full items-stretch gap-6 lg:flex">
     {@render menuItems()}
@@ -199,7 +199,7 @@
       }}
     >
       <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => (menu = false)}>
-        {siteLocale.msg['site_name']()}
+        {siteLocale.msg.site_name()}
       </a>
       {@render menuItems(true)}
     </div>

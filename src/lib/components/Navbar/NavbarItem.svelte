@@ -45,7 +45,7 @@
 
   const handleMouseEnter = () => {
     onMouseEnter?.();
-    closeSubMenu?.cancel();
+    closeSubMenu.cancel();
     subMenu = true;
   };
 
@@ -53,7 +53,7 @@
     onSubMenuMouseEnter: NavbarItemType['onMouseEnter'] | undefined,
   ) => {
     onSubMenuMouseEnter?.();
-    closeSubMenu?.cancel();
+    closeSubMenu.cancel();
     subMenu = true;
   };
 
@@ -62,7 +62,7 @@
   };
 
   onDestroy(() => {
-    closeSubMenu?.flush();
+    closeSubMenu.flush();
   });
 </script>
 

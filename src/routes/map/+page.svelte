@@ -165,23 +165,28 @@
     },
   });
 
+  const getDeliveryPoint = (guid: string) => {
+    const point = deliveryPointsMap.get(guid);
+    if (!point) {
+      throw new Error(`Delivery point not found: ${guid}`);
+    }
+    return point;
+  };
+
   const updateDeliveryLine = (deliveryPoint: DeliveryPoint) => {
     const allDropPointLink: [DeliveryPoint, DeliveryPoint][] = [];
 
     if (deliveryPoint.parent) {
-      allDropPointLink.push([
-        deliveryPoint,
-        deliveryPointsMap.get(deliveryPoint.parent) as DeliveryPoint,
-      ]);
+      allDropPointLink.push([deliveryPoint, getDeliveryPoint(deliveryPoint.parent)]);
     }
 
     const connectedDrop = new SvelteSet<DeliveryCargo>();
 
     if (deliveryPoint.dropPoint) {
       for (const dropPointGuid of deliveryPoint.dropPoint) {
-        const dropPoint = deliveryPointsMap.get(dropPointGuid) as DeliveryPoint;
+        const dropPoint = getDeliveryPoint(dropPointGuid);
         for (const cargoType of dropPoint.allDemand) {
-          connectedDrop.add(cargoType as DeliveryCargo);
+          connectedDrop.add(cargoType);
         }
         allDropPointLink.push([deliveryPoint, dropPoint]);
       }
@@ -192,7 +197,7 @@
         .map((d) => [d, cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
         .flatMap(([d, cd, dps]) =>
           dps.map((dp) => {
-            const point = deliveryPointsMap.get(dp) as DeliveryPoint;
+            const point = getDeliveryPoint(dp);
             if (point.dropPoint) {
               const hasConnectedDrop = point.dropPoint.some((dropPointGuid) =>
                 deliveryPointsMap.get(dropPointGuid)?.allDemandKey.includes(d),
@@ -228,7 +233,7 @@
               }
             }
             if (point.parent) {
-              allDropPointLink.push([point, deliveryPointsMap.get(point.parent) as DeliveryPoint]);
+              allDropPointLink.push([point, getDeliveryPoint(point.parent)]);
             }
             return point;
           }),
@@ -242,7 +247,7 @@
         .map((d) => [cargoMetadata[d], supplyKeyMap.get(d) ?? []] as const)
         .flatMap(([cd, dps]) =>
           dps.map((dp) => {
-            const point = deliveryPointsMap.get(dp) as DeliveryPoint;
+            const point = getDeliveryPoint(dp);
             if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
               const dist = Math.hypot(
                 point.coord.x - deliveryPoint.coord.x,
@@ -271,7 +276,7 @@
             }
             if (point.dropPoint) {
               for (const dropPointGuid of point.dropPoint) {
-                const dropPoint = deliveryPointsMap.get(dropPointGuid) as DeliveryPoint;
+                const dropPoint = getDeliveryPoint(dropPointGuid);
                 allDropPointLink.push([point, dropPoint]);
               }
             }
@@ -425,11 +430,9 @@
 
   let lockPoint: Feature | undefined = undefined;
   let hoverPoint: Feature | undefined = undefined;
-  let hoverInfo: HoverInfo | undefined = $state(undefined);
+  let hoverInfo: HoverInfo | undefined = $state();
 
-  const handlePointerMoveOrClick = (
-    e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>,
-  ) => {
+  const handlePointerMoveOrClick = (e: MapBrowserEvent) => {
     let currentHoverInfo: HoverInfo | undefined = undefined;
     let currentHoverPoint = undefined as Feature | undefined;
 
@@ -577,7 +580,7 @@
     }
   };
 
-  const handlePointerMove = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+  const handlePointerMove = (e: MapBrowserEvent) => {
     const isMouse = matchMouse();
     if (isMouse) {
       handlePointerMoveOrClick(e);
@@ -586,7 +589,7 @@
     }
   };
 
-  const handleClick = (e: MapBrowserEvent<KeyboardEvent | WheelEvent | PointerEvent>) => {
+  const handleClick = (e: MapBrowserEvent) => {
     const isMouse = matchMouse();
     if (isMouse) {
       deliveryLineSource.clear(true);
@@ -623,13 +626,13 @@
   };
 
   const onHideShowClick = (layer: (typeof layersData)[number], forceTo?: boolean) => {
-    layer.enabled = forceTo !== undefined ? forceTo : !layer.enabled;
+    layer.enabled = forceTo ?? !layer.enabled;
     if (layer.id === layerId.Player) {
       if (!layer.enabled) {
         playerNameLayer.setVisible(false);
       } else {
         setPlayerPoints(playerData);
-        playerNameLayer.setVisible(!!playerNameLayerData?.enabled);
+        playerNameLayer.setVisible(playerNameLayerData.enabled);
       }
     }
     if (layer.id === layerId.Pins) {
@@ -637,7 +640,7 @@
         pinLabelsLayer.setVisible(false);
       } else {
         setPlayerPoints(playerData);
-        pinLabelsLayer.setVisible(!!pinLabelsLayerData?.enabled);
+        pinLabelsLayer.setVisible(pinLabelsLayerData.enabled);
       }
     } else if (layer.id === layerId.Delivery) {
       deliveryLineSource.clear(true);
@@ -675,7 +678,7 @@
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
 
-  let houseData: HouseData | undefined = $state(undefined);
+  let houseData: HouseData | undefined = $state();
 
   onMount(() => {
     const abortController = new AbortController();
@@ -731,8 +734,9 @@
         );
         const focusIndex = page.url.searchParams.get('focus_index');
         if (focusIndex) {
-          const focusPin = pinsData[+focusIndex];
-          if (focusPin) {
+          const i = +focusIndex;
+          if (i < pinsData.length && i >= 0) {
+            const focusPin = pinsData[i];
             map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), 0);
           }
         }
@@ -767,7 +771,7 @@
 <svelte:head>
   <title
     >{siteLocale.msg['map.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
     })}</title
   >
 </svelte:head>
@@ -802,14 +806,16 @@
               {
                 'opacity-50':
                   !layer.enabled ||
-                  (layer.id === layerId.PlayerName && !playerLayerData?.enabled) ||
-                  (layer.id === layerId.PinLabels && !pinsLayerData?.enabled),
+                  (layer.id === layerId.PlayerName && !playerLayerData.enabled) ||
+                  (layer.id === layerId.PinLabels && !pinsLayerData.enabled),
               },
             ]}
             size="xs"
-            disabled={(layer.id === layerId.PlayerName && !playerLayerData?.enabled) ||
-              (layer.id === layerId.PinLabels && !pinsLayerData?.enabled)}
-            onClick={() => onHideShowClick(layer)}
+            disabled={(layer.id === layerId.PlayerName && !playerLayerData.enabled) ||
+              (layer.id === layerId.PinLabels && !pinsLayerData.enabled)}
+            onClick={() => {
+              onHideShowClick(layer);
+            }}
           >
             {layer.name}
           </Button>

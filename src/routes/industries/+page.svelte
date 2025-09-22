@@ -7,7 +7,7 @@
 <svelte:head>
   <title
     >{siteLocale.msg['industries.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
     })}</title
   >
 </svelte:head>

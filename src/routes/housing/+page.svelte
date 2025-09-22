@@ -24,7 +24,7 @@
         houseData = data;
         loading = false;
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Error fetching housing data:', error);
         showModal({
           title: siteLocale.msg['housing.cannot_load.title'](),
@@ -73,8 +73,8 @@
         return filteredHouses.toSorted((a, b) => {
           const houseA = houseData?.[a.name];
           const houseB = houseData?.[b.name];
-          const aRentLeft = houseA?.ownerName ? houseA?.rentLeft.getTime() || 0 : -Infinity;
-          const bRentLeft = houseB?.ownerName ? houseB?.rentLeft.getTime() || 0 : -Infinity;
+          const aRentLeft = houseA?.ownerName ? houseA.rentLeft.getTime() || 0 : -Infinity;
+          const bRentLeft = houseB?.ownerName ? houseB.rentLeft.getTime() || 0 : -Infinity;
           return aRentLeft - bRentLeft;
         });
       // case 'depotStorage':
@@ -89,7 +89,7 @@
 <svelte:head>
   <title
     >{siteLocale.msg['housing.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
     })}</title
   >
 </svelte:head>

@@ -1,15 +1,12 @@
 <script lang="ts">
   import type { House } from '$lib/data/house';
   import type { HouseData } from '$lib/api/types';
-  import type { PointType } from './types';
   import { SvelteDate } from 'svelte/reactivity';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
   import { siteLocale } from '../Locale/locale.svelte';
 
   export interface HoverInfo {
-    pixelCoord: [number, number];
-    pointType: PointType.House;
     info: House;
   }
 
@@ -21,14 +18,11 @@
   const { hoverInfo, houseData }: HoverInfoTooltipProps = $props();
 
   const currentHouseData = $derived.by(() => {
-    if (!hoverInfo) {
-      return undefined;
-    }
     return houseData?.[hoverInfo.info.name];
   });
 
   const rentLeftText = $derived.by(() => {
-    if (!hoverInfo || !currentHouseData) {
+    if (!currentHouseData) {
       return '...';
     }
 

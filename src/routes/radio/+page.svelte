@@ -21,7 +21,7 @@
 <svelte:head>
   <title
     >{siteLocale.msg['radio.head']({
-      siteName: siteLocale.msg['site_name_short'](),
+      siteName: siteLocale.msg.site_name_short(),
     })}</title
   >
 </svelte:head>

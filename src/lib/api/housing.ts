@@ -23,14 +23,14 @@ export const getHousingData = async (signal: AbortSignal): Promise<HouseData> =>
     }
 
     const data = (await response.json()) as GetHousingDataResponse;
-    const houseData: HouseData = Object.values(data).reduce((acc, value) => {
+    const houseData: HouseData = Object.values(data).reduce<HouseData>((acc, value) => {
       acc[value.housingKey] = {
         housingKey: value.housingKey,
         ownerName: value.ownerName,
         rentLeft: new Date(Date.now() + value.rentLeftTimeSeconds * 1000),
       };
       return acc;
-    }, {} as HouseData);
+    }, {});
 
     return houseData;
   } catch (error) {

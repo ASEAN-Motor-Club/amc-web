@@ -68,7 +68,9 @@ export const startDeliveryPointsPolling = (
   fetchAndUpdate();
 
   // Set up polling
-  const timer = setInterval(fetchAndUpdate, interval);
+  const timer = setInterval(() => {
+    fetchAndUpdate();
+  }, interval);
 
   // Cleanup function
   controller.signal.addEventListener('abort', () => {

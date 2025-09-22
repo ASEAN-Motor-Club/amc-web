@@ -70,5 +70,14 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        ecma: 2020,
+        compress: {
+          passes: 4,
+        },
+      },
+    },
   };
 });

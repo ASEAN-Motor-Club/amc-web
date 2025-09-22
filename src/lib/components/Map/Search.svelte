@@ -89,7 +89,7 @@
     if (!searchValue) return [...pinsData, ...playerData];
     const search = searchValue.trim().toLowerCase();
 
-    const pins = pinsData?.filter((pin) => pin.label?.toLowerCase().includes(search)) ?? [];
+    const pins = pinsData.filter((pin) => pin.label.toLowerCase().includes(search));
 
     const player = playerData.filter((player) => player.name.toLowerCase().includes(search));
 
@@ -173,7 +173,7 @@
         <Card
           class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
         >
-          {#each foundValuesSliced as point, i (point.name + point.guid)}
+          {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
               <div class="w-full border-t border-neutral-100/20"></div>
             {/if}

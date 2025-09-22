@@ -62,7 +62,7 @@
     return hoverInfo.pointType === PointType.Delivery || hoverInfo.pointType === PointType.House;
   });
 
-  let tooltip: HTMLDivElement | undefined = $state(undefined);
+  let tooltip: HTMLDivElement | undefined = $state();
 
   const tooltipPosition = $derived.by(() => {
     if (!hoverInfo) {
@@ -111,7 +111,7 @@
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
             ? siteLocale.msg['housing.owned_house']({
-                owner: houseData?.[hoverInfo.info.name]?.ownerName,
+                owner: houseData[hoverInfo.info.name].ownerName,
               })
             : siteLocale.msg['housing.vacant_house']()}
         {:else if hoverInfo.pointType === PointType.Delivery}

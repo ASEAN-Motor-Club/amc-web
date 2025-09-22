@@ -6,7 +6,7 @@ const createWaypointError = (iss: { path?: PropertyKey[]; expected: string }) =>
   return siteLocale.msg['track_editor.validate.waypoint_invalid']({
     index:
       typeof iss.path?.[1] === 'number'
-        ? iss.path?.[1] + 1
+        ? iss.path[1] + 1
         : (iss.path?.[1] ?? siteLocale.msg.unknown()),
     key:
       (iss.path?.[2].toString() ?? siteLocale.msg.unknown()) +

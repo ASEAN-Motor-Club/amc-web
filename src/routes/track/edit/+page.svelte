@@ -19,10 +19,10 @@
     >{trackData.value?.routeName
       ? siteLocale.msg['track_editor.head_editing']({
           routeName: trackData.value.routeName,
-          siteName: siteLocale.msg['site_name_short'](),
+          siteName: siteLocale.msg.site_name_short(),
         })
       : siteLocale.msg['track_editor.head']({
-          siteName: siteLocale.msg['site_name_short'](),
+          siteName: siteLocale.msg.site_name_short(),
         })}</title
   >
 </svelte:head>
