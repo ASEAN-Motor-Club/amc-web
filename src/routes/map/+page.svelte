@@ -4,17 +4,13 @@
   import VectorSource from 'ol/source/Vector';
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
   import { PointType, type PlayerData } from '$lib/components/Map/types';
-  import {
-    deliveryPointLayer,
-    residentPointLayer,
-    houseLayer,
-  } from '$lib/components/Map/staticPoints';
+  import { getStaticPoints } from '$lib/components/Map/staticPoints';
   import HoverInfoTooltip, { type HoverInfo } from '$lib/components/Map/HoverInfoTooltip.svelte';
   import {
     textXs,
@@ -53,6 +49,8 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
+
+  const { deliveryPointLayer, residentPointLayer, houseLayer } = getStaticPoints();
 
   // LocalStorage utility functions for layer state persistence
   const DISABLED_DATA_STORAGE_KEY = 'mapDisabledLayer';
@@ -748,11 +746,6 @@
         });
       }
     }
-  });
-
-  onDestroy(() => {
-    hoverPoint?.set('hover', false);
-    lockPoint?.set('hover', false);
   });
 
   const handlePointerDrag = () => {
