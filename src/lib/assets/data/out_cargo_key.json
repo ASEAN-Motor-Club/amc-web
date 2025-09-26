@@ -1,5 +1,5 @@
 {
-  "T::SmallPackage": [
+  "_TSmallPackage": [
     "SmallBox",
     "CarrotBox",
     "AppleBox",
@@ -16,7 +16,7 @@
     "SnackBox",
     "GiftBox_01"
   ],
-  "T::LargePackage": [
+  "_TLargePackage": [
     "BoxPallete_01",
     "BoxPallete_02",
     "BoxPallete_03",
@@ -33,7 +33,7 @@
     "CheesePallet",
     "BreadPallet"
   ],
-  "T::None": [
+  "_TNone": [
     "PlasticPallete",
     "QuicklimePallet",
     "Fuel",
@@ -51,23 +51,23 @@
     "Terra",
     "SunflowerSeed"
   ],
-  "T::FinalProduct": ["ToyBoxes", "BottlePallete"],
-  "T::Wood": ["WoodPlank_14ft_5t"],
-  "T::Container": [
+  "_TFinalProduct": ["ToyBoxes", "BottlePallete"],
+  "_TWood": ["WoodPlank_14ft_5t"],
+  "_TContainer": [
     "Container_30ft_5t",
     "Container_30ft_10t",
     "Container_30ft_20t",
     "Container_20ft_01",
     "Container_40ft_01"
   ],
-  "T::Log": ["Log_30ft_30t", "Log_Oak_12ft", "Log_Oak_24ft", "Log_20ft"],
-  "T::Sand": ["Sand", "FineSand"],
-  "T::Coal": ["Coal"],
-  "T::Stone": ["LimestoneRock", "Limestone", "IronOre"],
-  "T::Concrete": ["Concrete"],
-  "T::Garbage": ["TrashBag", "Trash_Big"],
-  "T::Furniture": ["Sofa_01", "Sofa_02", "Sofa_03", "Sofa_04", "Bed_01", "Bed_02", "Bed_03"],
-  "T::Food": [
+  "_TLog": ["Log_30ft_30t", "Log_Oak_12ft", "Log_Oak_24ft", "Log_20ft"],
+  "_TSand": ["Sand", "FineSand"],
+  "_TCoal": ["Coal"],
+  "_TStone": ["LimestoneRock", "Limestone", "IronOre"],
+  "_TConcrete": ["Concrete"],
+  "_TGarbage": ["TrashBag", "Trash_Big"],
+  "_TFurniture": ["Sofa_01", "Sofa_02", "Sofa_03", "Sofa_04", "Bed_01", "Bed_02", "Bed_03"],
+  "_TFood": [
     "Pizza_01",
     "Pizza_02",
     "Pizza_03",
@@ -77,5 +77,5 @@
     "Burger_01",
     "Burger_01_Signature"
   ],
-  "T::MilitarySupply": ["MilitarySupplyBox_01"]
+  "_TMilitarySupply": ["MilitarySupplyBox_01"]
 }

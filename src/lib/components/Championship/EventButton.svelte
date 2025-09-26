@@ -27,6 +27,21 @@
 
   const date = new SvelteDate();
 
+   $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      date.setTime(Date.now());
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
+
   const today = $derived.by(() => {
     return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year;
   });

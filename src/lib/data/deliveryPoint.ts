@@ -83,11 +83,11 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
   }
 
   const allSupplyKey = allSupply.flatMap((s) =>
-    s.startsWith('T::') ? outCargoKey[s as DeliveryCargoType] : s,
+    s.startsWith('_T') ? outCargoKey[s as DeliveryCargoType] : s,
   ) as DeliveryCargoKey[];
 
   const allDemandKey = allDemand.flatMap((s) =>
-    s.startsWith('T::') ? outCargoKey[s as DeliveryCargoType] : s,
+    s.startsWith('_T') ? outCargoKey[s as DeliveryCargoType] : s,
   ) as DeliveryCargoKey[];
 
   for (const supply of allSupplyKey) {

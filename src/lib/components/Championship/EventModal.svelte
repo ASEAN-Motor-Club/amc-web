@@ -45,8 +45,23 @@
 
   const today = new SvelteDate();
 
+  $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      today.setTime(Date.now());
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
+
   const pastEventTime = (event: ScheduledEvent) => {
-    return isBefore(event.start_time, today);
+    return isBefore(event.start_time, today.getTime());
   };
 
   const openEvent = (e: Event, event: ScheduledEvent) => {

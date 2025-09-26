@@ -44,7 +44,7 @@
       return 0;
     }
 
-    if (cargoKey.startsWith('T::')) {
+    if (cargoKey.startsWith('_T')) {
       const cargoKeys = outCargoKey[cargoKey as DeliveryCargoType];
       return inventory.reduce(
         (sum, item) => sum + (cargoKeys.includes(item.cargoKey) ? item.amount : 0),
@@ -56,6 +56,21 @@
   };
 
   const date = new SvelteDate();
+
+  $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      date.setTime(Date.now());
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
 
   let deliveryPointInfoLoading: boolean = $state(true);
 
@@ -122,7 +137,7 @@
               {getInventoryAmount(item, false)}
             {/if}
           </span>
-          {#if !item.startsWith('T::')}
+          {#if !item.startsWith('_T')}
             /{hoverInfo.info.supplyStorage[item]}
           {/if}
         </div>
@@ -152,7 +167,7 @@
               {getInventoryAmount(item, true)}
             {/if}
           </span>
-          {#if !item.startsWith('T::')}
+          {#if !item.startsWith('_T')}
             /{hoverInfo.info.demandStorage[item]}
           {/if}
         </div>
@@ -165,7 +180,7 @@
   {#if deliveryPointInfoLoading}
     <span class="animate-pulse">...</span>
   {:else}
-    {formatDistanceStrict(deliveryPointInfo?.last_updated ?? new Date(), date, {
+    {formatDistanceStrict(deliveryPointInfo?.last_updated ?? new Date(), date.getTime(), {
       addSuffix: true,
     })}
   {/if}

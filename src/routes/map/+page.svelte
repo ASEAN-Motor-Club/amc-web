@@ -599,8 +599,9 @@
           const f = feature as Feature;
           const type = f.get('pointType') as PointType | undefined;
           if (type === PointType.Delivery) {
-            const info = f.get('info') as DeliveryPoint;
-            goto(`/industries/${info.guid}`);
+            // const info = f.get('info') as DeliveryPoint;
+            // goto(`/industries/${info.guid}`);
+            return true;
           }
           if (type === PointType.House) {
             goto(`/housing`);

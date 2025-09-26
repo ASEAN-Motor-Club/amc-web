@@ -1757,14 +1757,14 @@
     "prod": [
       {
         "output": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "prodTime": 5,
         "prodSpeedMul": 1
       }
     ],
     "supplyStorage": {
-      "T::Container": 40
+      "_TContainer": 40
     }
   },
   {
@@ -1803,14 +1803,14 @@
     "prod": [
       {
         "output": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "prodTime": 5,
         "prodSpeedMul": 1
       }
     ],
     "supplyStorage": {
-      "T::Container": 40
+      "_TContainer": 40
     }
   },
   {
@@ -1849,14 +1849,14 @@
     "prod": [
       {
         "output": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "prodTime": 5,
         "prodSpeedMul": 1
       }
     ],
     "supplyStorage": {
-      "T::Container": 15
+      "_TContainer": 15
     }
   },
   {
@@ -1895,14 +1895,14 @@
     "prod": [
       {
         "output": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "prodTime": 5,
         "prodSpeedMul": 1
       }
     ],
     "supplyStorage": {
-      "T::Container": 20
+      "_TContainer": 20
     }
   },
   {
@@ -1941,32 +1941,32 @@
     "prod": [
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "output": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 1,
         "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 6,
-      "T::SmallPackage": 50
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
     },
     "supplyStorage": {
-      "T::SmallPackage": 10,
-      "T::LargePackage": 10
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
     },
     "maxDist": 150000
   },
@@ -2006,32 +2006,32 @@
     "prod": [
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "output": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 1,
         "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 6,
-      "T::SmallPackage": 50
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
     },
     "supplyStorage": {
-      "T::SmallPackage": 10,
-      "T::LargePackage": 10
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
     },
     "maxDist": 150000
   },
@@ -2071,32 +2071,32 @@
     "prod": [
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::SmallPackage": 4
+          "_TSmallPackage": 4
         },
         "output": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 1,
         "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 6,
-      "T::SmallPackage": 50
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
     },
     "supplyStorage": {
-      "T::SmallPackage": 10,
-      "T::LargePackage": 10
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
     },
     "maxDist": 150000
   },
@@ -2176,12 +2176,12 @@
     "guid": "fa89df514b876032f2161690911f3504",
     "demand": {
       "Container_20ft_01": 1,
-      "T::Container": 1,
+      "_TContainer": 1,
       "Container_40ft_01": 1
     },
     "demandStorage": {
       "Container_40ft_01": 30,
-      "T::Container": 60,
+      "_TContainer": 60,
       "Container_20ft_01": 60
     },
     "supplyStorage": {}
@@ -2232,7 +2232,7 @@
       },
       {
         "input": {
-          "T::Container": 1,
+          "_TContainer": 1,
           "CrudeOil": 10
         },
         "output": {
@@ -2253,7 +2253,7 @@
       },
       {
         "input": {
-          "T::Container": 1,
+          "_TContainer": 1,
           "CrudeOil": 10
         },
         "output": {
@@ -2265,7 +2265,7 @@
     ],
     "demandStorage": {
       "CrudeOil": 300,
-      "T::Container": 60,
+      "_TContainer": 60,
       "Container_40ft_01": 30,
       "Container_20ft_01": 60
     },
@@ -2376,7 +2376,7 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
           "BreadPallet": 4
@@ -2386,7 +2386,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "BreadPallet": 1
@@ -2396,7 +2396,7 @@
       },
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
           "BreadBox": 20
@@ -2406,7 +2406,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "BreadBox": 4
@@ -2416,8 +2416,8 @@
       }
     ],
     "demandStorage": {
-      "T::Container": 50,
-      "T::LargePackage": 50
+      "_TContainer": 50,
+      "_TLargePackage": 50
     },
     "supplyStorage": {
       "BreadPallet": 50,
@@ -2460,7 +2460,7 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
           "BottlePallete": 8
@@ -2470,7 +2470,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "BottlePallete": 2
@@ -2490,8 +2490,8 @@
       "Fuel": 1
     },
     "demandStorage": {
-      "T::Container": 50,
-      "T::LargePackage": 50,
+      "_TContainer": 50,
+      "_TLargePackage": 50,
       "Fuel": 50
     },
     "supplyStorage": {
@@ -2786,7 +2786,7 @@
     "prod": [
       {
         "input": {
-          "T::Sand": 10,
+          "_TSand": 10,
           "Cement": 10,
           "Fuel": 1
         },
@@ -2798,7 +2798,7 @@
       }
     ],
     "demandStorage": {
-      "T::Sand": 100,
+      "_TSand": 100,
       "Cement": 100,
       "Fuel": 100
     },
@@ -2845,10 +2845,10 @@
     },
     "guid": "40d0f8e9487a886b65ec228b03c149f0",
     "demand": {
-      "T::Sand": 1
+      "_TSand": 1
     },
     "demandStorage": {
-      "T::Sand": 100
+      "_TSand": 100
     },
     "supplyStorage": {}
   },
@@ -2888,7 +2888,7 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
           "AirlineMealPallet": 5
@@ -2898,7 +2898,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "AirlineMealPallet": 1
@@ -2908,8 +2908,8 @@
       }
     ],
     "demandStorage": {
-      "T::Container": 10,
-      "T::LargePackage": 10
+      "_TContainer": 10,
+      "_TLargePackage": 10
     },
     "supplyStorage": {
       "AirlineMealPallet": 100
@@ -3032,7 +3032,7 @@
           "WoodPlank_14ft_5t": 2
         },
         "output": {
-          "T::Furniture": 10
+          "_TFurniture": 10
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -3055,7 +3055,7 @@
       "WoodPlank_14ft_5t": 100
     },
     "supplyStorage": {
-      "T::Furniture": 30
+      "_TFurniture": 30
     }
   },
   {
@@ -3372,7 +3372,7 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
           "MeatBox": 20
@@ -3382,7 +3382,7 @@
       }
     ],
     "demandStorage": {
-      "T::Container": 100
+      "_TContainer": 100
     },
     "supplyStorage": {
       "MeatBox": 100
@@ -3434,7 +3434,7 @@
       },
       {
         "input": {
-          "T::Container": 1,
+          "_TContainer": 1,
           "Oil": 20
         },
         "output": {
@@ -3445,16 +3445,16 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 1.5
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 200,
+      "_TLargePackage": 200,
       "Oil": 200,
-      "T::Container": 20
+      "_TContainer": 20
     },
     "supplyStorage": {
       "PlasticPallete": 200,
@@ -3620,7 +3620,7 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1,
+          "_TContainer": 1,
           "PlasticPallete": 10
         },
         "output": {
@@ -3632,7 +3632,7 @@
       {
         "input": {
           "PlasticPallete": 3,
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "ToyBoxes": 6
@@ -3643,8 +3643,8 @@
     ],
     "demandStorage": {
       "PlasticPallete": 100,
-      "T::Container": 100,
-      "T::LargePackage": 100
+      "_TContainer": 100,
+      "_TLargePackage": 100
     },
     "supplyStorage": {
       "ToyBoxes": 100
@@ -3707,7 +3707,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 2
@@ -3716,7 +3716,7 @@
     "demandStorage": {
       "QuicklimePallet": 6,
       "Fuel": 5,
-      "T::LargePackage": 10
+      "_TLargePackage": 10
     },
     "supplyStorage": {
       "BeanPallet": 10
@@ -3772,7 +3772,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -3786,7 +3786,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "Fuel": 5,
       "QuicklimePallet": 6
     },
@@ -3851,7 +3851,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -3865,7 +3865,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "Fuel": 5,
       "QuicklimePallet": 6
     },
@@ -3931,7 +3931,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -3945,7 +3945,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "Fuel": 5,
       "QuicklimePallet": 6
     },
@@ -4011,7 +4011,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4025,7 +4025,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "Fuel": 5,
       "QuicklimePallet": 6
     },
@@ -4084,7 +4084,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4098,7 +4098,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "QuicklimePallet": 6,
       "Fuel": 5
     },
@@ -4156,7 +4156,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4172,7 +4172,7 @@
     "demandStorage": {
       "QuicklimePallet": 6,
       "Fuel": 5,
-      "T::LargePackage": 10
+      "_TLargePackage": 10
     },
     "supplyStorage": {
       "OrangeBoxes": 10
@@ -4228,7 +4228,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4242,7 +4242,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "QuicklimePallet": 6
     },
     "supplyStorage": {
@@ -4300,7 +4300,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4314,7 +4314,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "QuicklimePallet": 6
     },
     "supplyStorage": {
@@ -4372,14 +4372,14 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "Fuel": 10
     },
     "supplyStorage": {
@@ -4436,7 +4436,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4444,7 +4444,7 @@
     ],
     "demandStorage": {
       "Fuel": 20,
-      "T::LargePackage": 10
+      "_TLargePackage": 10
     },
     "supplyStorage": {
       "Milk": 200
@@ -4500,7 +4500,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -4523,7 +4523,7 @@
     "demandStorage": {
       "QuicklimePallet": 6,
       "Fuel": 5,
-      "T::LargePackage": 10
+      "_TLargePackage": 10
     },
     "supplyStorage": {
       "RicePallet": 10,
@@ -4580,7 +4580,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 2
@@ -4594,7 +4594,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 10,
+      "_TLargePackage": 10,
       "QuicklimePallet": 30,
       "Fuel": 50
     },
@@ -6543,10 +6543,10 @@
     },
     "guid": "b36b8be741869e7db96479a1182a22b4",
     "demand": {
-      "T::MilitarySupply": 1
+      "_TMilitarySupply": 1
     },
     "demandStorage": {
-      "T::MilitarySupply": 100
+      "_TMilitarySupply": 100
     },
     "supplyStorage": {}
   },
@@ -7197,15 +7197,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7254,15 +7254,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7311,15 +7311,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7368,15 +7368,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7425,15 +7425,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7482,15 +7482,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7539,15 +7539,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7596,15 +7596,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7653,15 +7653,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7710,15 +7710,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7767,14 +7767,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -7824,15 +7824,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -7881,14 +7881,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -7938,14 +7938,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -7995,14 +7995,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -8052,14 +8052,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -8109,15 +8109,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8166,15 +8166,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8223,15 +8223,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8280,14 +8280,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -8337,15 +8337,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8394,15 +8394,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8451,15 +8451,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8508,15 +8508,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8565,14 +8565,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -8622,15 +8622,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8679,15 +8679,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8736,15 +8736,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8793,15 +8793,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8850,15 +8850,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -8907,14 +8907,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -8964,15 +8964,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9021,15 +9021,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9078,15 +9078,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9135,15 +9135,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9192,15 +9192,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9249,15 +9249,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9306,14 +9306,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -9363,15 +9363,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9420,15 +9420,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9477,15 +9477,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9534,14 +9534,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -9591,15 +9591,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9648,14 +9648,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -9705,15 +9705,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9762,14 +9762,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -9819,15 +9819,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9876,15 +9876,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9933,15 +9933,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -9990,15 +9990,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10047,15 +10047,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10104,15 +10104,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10161,15 +10161,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10218,15 +10218,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10275,15 +10275,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10332,14 +10332,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -10389,14 +10389,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -10446,15 +10446,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10503,15 +10503,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10560,14 +10560,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -10617,15 +10617,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10674,14 +10674,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -10731,15 +10731,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10788,15 +10788,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10845,14 +10845,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -10902,15 +10902,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -10959,14 +10959,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -11016,15 +11016,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11073,14 +11073,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -11130,14 +11130,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -11187,15 +11187,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11244,15 +11244,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11301,15 +11301,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11358,15 +11358,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11415,15 +11415,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11472,14 +11472,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -11529,15 +11529,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11586,15 +11586,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11643,15 +11643,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11700,15 +11700,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11757,15 +11757,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11814,15 +11814,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11871,14 +11871,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -11928,15 +11928,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -11985,15 +11985,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12042,15 +12042,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12099,15 +12099,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12156,15 +12156,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12213,15 +12213,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12270,14 +12270,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -12327,15 +12327,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12384,15 +12384,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12441,15 +12441,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12498,15 +12498,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12555,15 +12555,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12612,15 +12612,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12669,15 +12669,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12726,15 +12726,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12783,11 +12783,11 @@
       }
     ],
     "demand": {
-      "T::Food": 1
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12836,11 +12836,11 @@
       }
     ],
     "demand": {
-      "T::Food": 1
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12889,11 +12889,11 @@
       }
     ],
     "demand": {
-      "T::Food": 1
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12942,15 +12942,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -12999,15 +12999,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13056,14 +13056,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13113,14 +13113,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13170,14 +13170,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13227,14 +13227,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13284,15 +13284,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13341,15 +13341,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13398,14 +13398,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13455,14 +13455,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13512,15 +13512,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13569,15 +13569,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13626,15 +13626,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13683,15 +13683,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13740,14 +13740,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -13797,15 +13797,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13854,15 +13854,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13911,15 +13911,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -13968,14 +13968,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -14025,14 +14025,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -14082,15 +14082,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14139,14 +14139,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -14196,15 +14196,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14253,15 +14253,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14310,15 +14310,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14367,15 +14367,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14424,14 +14424,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -14481,15 +14481,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14538,15 +14538,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14595,15 +14595,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14652,15 +14652,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14709,15 +14709,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14766,15 +14766,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14823,15 +14823,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14880,15 +14880,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -14937,14 +14937,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -14994,15 +14994,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15051,15 +15051,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15108,15 +15108,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15165,15 +15165,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15222,15 +15222,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15279,15 +15279,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15336,14 +15336,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -15393,15 +15393,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15450,15 +15450,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15507,15 +15507,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15564,15 +15564,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15621,15 +15621,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15678,15 +15678,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15735,15 +15735,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15792,15 +15792,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15849,15 +15849,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -15906,10 +15906,10 @@
       }
     ],
     "demand": {
-      "T::Food": 1
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -15959,14 +15959,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -16016,15 +16016,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16073,15 +16073,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16130,15 +16130,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16187,15 +16187,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16244,15 +16244,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16301,15 +16301,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16358,14 +16358,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -16415,15 +16415,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16472,15 +16472,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16529,14 +16529,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -16586,15 +16586,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16643,15 +16643,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16700,15 +16700,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16757,15 +16757,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16814,15 +16814,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16871,14 +16871,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -16928,15 +16928,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -16985,14 +16985,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -17042,15 +17042,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17099,15 +17099,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17156,15 +17156,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17213,15 +17213,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17270,15 +17270,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17327,15 +17327,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17384,15 +17384,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17441,15 +17441,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17498,15 +17498,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17555,15 +17555,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17612,15 +17612,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17669,15 +17669,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17726,15 +17726,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17783,15 +17783,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17840,15 +17840,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -17897,14 +17897,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -17954,14 +17954,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -18011,15 +18011,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18068,15 +18068,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18125,14 +18125,14 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Food": 1,
-      "T::Furniture": 1
+      "_TSmallPackage": 1,
+      "_TFood": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -18182,15 +18182,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18239,15 +18239,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18296,15 +18296,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18353,15 +18353,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18410,15 +18410,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18467,15 +18467,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18524,14 +18524,14 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -18581,15 +18581,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18638,15 +18638,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18695,15 +18695,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::SmallPackage": 3,
+      "_TFood": 5,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18752,15 +18752,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
-      "T::Furniture": 4,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18809,15 +18809,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5
+      "_TFurniture": 4,
+      "_TFood": 5
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18866,15 +18866,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18923,15 +18923,15 @@
       }
     ],
     "demand": {
-      "T::SmallPackage": 1,
-      "T::Furniture": 1,
-      "T::Food": 1
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Food": 5,
+      "_TFood": 5,
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -18980,15 +18980,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -19037,15 +19037,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::SmallPackage": 3,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -19094,14 +19094,14 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::Furniture": 1,
-      "T::SmallPackage": 1
+      "_TFood": 1,
+      "_TFurniture": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
-      "T::Furniture": 4,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
+      "_TFurniture": 4,
+      "_TSmallPackage": 3,
+      "_TFood": 5,
       "GroceryBag": 3
     },
     "supplyStorage": {},
@@ -19151,15 +19151,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::Food": 1,
-      "T::SmallPackage": 1
+      "_TFurniture": 1,
+      "_TFood": 1,
+      "_TSmallPackage": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::SmallPackage": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TSmallPackage": 3,
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -19208,15 +19208,15 @@
       }
     ],
     "demand": {
-      "T::Food": 1,
-      "T::SmallPackage": 1,
-      "T::Furniture": 1
+      "_TFood": 1,
+      "_TSmallPackage": 1,
+      "_TFurniture": 1
     },
     "demandStorage": {
-      "T::Food": 5,
-      "T::Furniture": 4,
+      "_TFood": 5,
+      "_TFurniture": 4,
       "GroceryBag": 3,
-      "T::SmallPackage": 3
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -19265,15 +19265,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
       "GroceryBag": 3,
-      "T::Furniture": 4,
-      "T::Food": 5,
-      "T::SmallPackage": 3
+      "_TFurniture": 4,
+      "_TFood": 5,
+      "_TSmallPackage": 3
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -19322,15 +19322,15 @@
       }
     ],
     "demand": {
-      "T::Furniture": 1,
-      "T::SmallPackage": 1,
-      "T::Food": 1
+      "_TFurniture": 1,
+      "_TSmallPackage": 1,
+      "_TFood": 1
     },
     "demandStorage": {
-      "T::SmallPackage": 3,
+      "_TSmallPackage": 3,
       "GroceryBag": 3,
-      "T::Food": 5,
-      "T::Furniture": 4
+      "_TFood": 5,
+      "_TFurniture": 4
     },
     "supplyStorage": {},
     "maxReceiveDist": 500000
@@ -20019,20 +20019,20 @@
     "prod": [
       {
         "input": {
-          "T::Furniture": 1
+          "_TFurniture": 1
         },
         "output": {
-          "T::Furniture": 1
+          "_TFurniture": 1
         },
         "prodTime": 1,
         "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
-      "T::Furniture": 10
+      "_TFurniture": 10
     },
     "supplyStorage": {
-      "T::Furniture": 10
+      "_TFurniture": 10
     }
   },
   {
@@ -20071,20 +20071,20 @@
     "prod": [
       {
         "input": {
-          "T::Furniture": 1
+          "_TFurniture": 1
         },
         "output": {
-          "T::Furniture": 1
+          "_TFurniture": 1
         },
         "prodTime": 1,
         "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
-      "T::Furniture": 10
+      "_TFurniture": 10
     },
     "supplyStorage": {
-      "T::Furniture": 10
+      "_TFurniture": 10
     }
   },
   {
@@ -20368,7 +20368,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -20379,7 +20379,7 @@
     ],
     "demandStorage": {
       "RicePallet": 3,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "PumpkinPallet": 3,
       "CornPallet": 3,
       "BeanPallet": 3,
@@ -20527,7 +20527,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -20547,7 +20547,7 @@
       "BottlePallete": 5,
       "PotatoPallet": 3,
       "BeanPallet": 3,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "CheesePallet": 3,
       "OrangeBoxes": 3
     },
@@ -20686,7 +20686,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -20698,7 +20698,7 @@
     "demandStorage": {
       "BreadPallet": 3,
       "MeatBox": 5,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "PotatoPallet": 3,
       "CornPallet": 3,
       "RicePallet": 3,
@@ -20845,7 +20845,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -20864,7 +20864,7 @@
       "ToyBoxes": 3,
       "CheesePallet": 3,
       "BreadPallet": 3,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "CabbagePallet": 3,
       "MeatBox": 5,
       "OrangeBoxes": 3
@@ -21004,7 +21004,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -21020,7 +21020,7 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "PumpkinPallet": 3,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "BottlePallete": 5,
       "BeanPallet": 3,
       "CornPallet": 3,
@@ -21163,7 +21163,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -21178,7 +21178,7 @@
       "CornPallet": 3,
       "OrangeBoxes": 3,
       "BeanPallet": 3,
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "CabbagePallet": 3,
       "RicePallet": 3,
       "BreadPallet": 3,
@@ -21322,7 +21322,7 @@
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "output": {
           "GroceryBag": 20
@@ -21332,7 +21332,7 @@
       }
     ],
     "demandStorage": {
-      "T::LargePackage": 3,
+      "_TLargePackage": 3,
       "RicePallet": 3,
       "BottlePallete": 5,
       "CabbagePallet": 3,
@@ -21386,24 +21386,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21424,12 +21424,12 @@
     },
     "demandStorage": {
       "MilitarySupplyBox_01_Empty": 10,
-      "T::FinalProduct": 50,
-      "T::Container": 10,
-      "T::LargePackage": 50
+      "_TFinalProduct": 50,
+      "_TContainer": 10,
+      "_TLargePackage": 50
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -21469,24 +21469,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21506,14 +21506,14 @@
       "MilitarySupplyBox_01_Empty": 1
     },
     "demandStorage": {
-      "T::Container": 10,
+      "_TContainer": 10,
       "MilitarySupplyBox_01_Empty": 10,
-      "T::FinalProduct": 50,
-      "T::LargePackage": 50
+      "_TFinalProduct": 50,
+      "_TLargePackage": 50
     },
     "supplyStorage": {
       "MilitarySupplyBox_01": 50,
-      "T::LargePackage": 50
+      "_TLargePackage": 50
     }
   },
   {
@@ -21552,24 +21552,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21590,13 +21590,13 @@
     },
     "demandStorage": {
       "MilitarySupplyBox_01_Empty": 10,
-      "T::Container": 10,
-      "T::LargePackage": 50,
-      "T::FinalProduct": 50
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50
     },
     "supplyStorage": {
       "MilitarySupplyBox_01": 50,
-      "T::LargePackage": 50
+      "_TLargePackage": 50
     }
   },
   {
@@ -21635,24 +21635,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21672,14 +21672,14 @@
       "MilitarySupplyBox_01_Empty": 1
     },
     "demandStorage": {
-      "T::LargePackage": 50,
-      "T::Container": 10,
-      "T::FinalProduct": 50,
+      "_TLargePackage": 50,
+      "_TContainer": 10,
+      "_TFinalProduct": 50,
       "MilitarySupplyBox_01_Empty": 10
     },
     "supplyStorage": {
       "MilitarySupplyBox_01": 50,
-      "T::LargePackage": 50
+      "_TLargePackage": 50
     }
   },
   {
@@ -21718,24 +21718,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21755,13 +21755,13 @@
       "MilitarySupplyBox_01_Empty": 1
     },
     "demandStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01_Empty": 10,
-      "T::FinalProduct": 50,
-      "T::Container": 10
+      "_TFinalProduct": 50,
+      "_TContainer": 10
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -21801,24 +21801,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21838,14 +21838,14 @@
       "MilitarySupplyBox_01_Empty": 1
     },
     "demandStorage": {
-      "T::Container": 10,
-      "T::LargePackage": 50,
-      "T::FinalProduct": 50,
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
       "MilitarySupplyBox_01_Empty": 10
     },
     "supplyStorage": {
       "MilitarySupplyBox_01": 50,
-      "T::LargePackage": 50
+      "_TLargePackage": 50
     }
   },
   {
@@ -21884,24 +21884,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -21921,13 +21921,13 @@
       "MilitarySupplyBox_01_Empty": 1
     },
     "demandStorage": {
-      "T::Container": 10,
-      "T::LargePackage": 50,
-      "T::FinalProduct": 50,
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
       "MilitarySupplyBox_01_Empty": 10
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -21967,24 +21967,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -22005,12 +22005,12 @@
     },
     "demandStorage": {
       "MilitarySupplyBox_01_Empty": 10,
-      "T::LargePackage": 50,
-      "T::Container": 10,
-      "T::FinalProduct": 50
+      "_TLargePackage": 50,
+      "_TContainer": 10,
+      "_TFinalProduct": 50
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -22050,24 +22050,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -22085,18 +22085,18 @@
     ],
     "demand": {
       "AirlineMealPallet": 1,
-      "T::FinalProduct": 1,
-      "T::LargePackage": 1
+      "_TFinalProduct": 1,
+      "_TLargePackage": 1
     },
     "demandStorage": {
-      "T::Container": 10,
-      "T::FinalProduct": 50,
+      "_TContainer": 10,
+      "_TFinalProduct": 50,
       "AirlineMealPallet": 50,
       "MilitarySupplyBox_01_Empty": 50,
-      "T::LargePackage": 50
+      "_TLargePackage": 50
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -22136,24 +22136,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -22174,12 +22174,12 @@
     },
     "demandStorage": {
       "MilitarySupplyBox_01_Empty": 10,
-      "T::Container": 10,
-      "T::LargePackage": 50,
-      "T::FinalProduct": 50
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   },
@@ -22219,24 +22219,24 @@
     "prod": [
       {
         "input": {
-          "T::Container": 1
+          "_TContainer": 1
         },
         "output": {
-          "T::LargePackage": 4
+          "_TLargePackage": 4
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::LargePackage": 1
+          "_TLargePackage": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "T::FinalProduct": 1
+          "_TFinalProduct": 1
         },
         "prodTime": 10,
         "prodSpeedMul": 1
@@ -22257,12 +22257,12 @@
     },
     "demandStorage": {
       "MilitarySupplyBox_01_Empty": 10,
-      "T::FinalProduct": 50,
-      "T::LargePackage": 50,
-      "T::Container": 10
+      "_TFinalProduct": 50,
+      "_TLargePackage": 50,
+      "_TContainer": 10
     },
     "supplyStorage": {
-      "T::LargePackage": 50,
+      "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
   }

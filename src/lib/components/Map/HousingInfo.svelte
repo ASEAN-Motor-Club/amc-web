@@ -21,17 +21,36 @@
     return houseData?.[hoverInfo.info.name];
   });
 
+  const date = new SvelteDate();
+
+  $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      date.setTime(Date.now());
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
+
   const rentLeftText = $derived.by(() => {
     if (!currentHouseData) {
       return '...';
     }
 
+    const time = date.getTime();
+
     // If rent has expired
-    if (isBefore(currentHouseData.rentLeft, SvelteDate.now())) {
+    if (isBefore(currentHouseData.rentLeft, time)) {
       return siteLocale.msg['housing.expired']();
     }
 
-    return formatDistanceStrict(currentHouseData.rentLeft, new Date(), {
+    return formatDistanceStrict(currentHouseData.rentLeft, time, {
       roundingMethod: 'floor',
     });
   });

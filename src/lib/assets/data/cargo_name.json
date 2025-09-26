@@ -2074,7 +2074,7 @@
     "zh-Hans": "向日葵 种子",
     "zh-Hant": "向日葵 種子"
   },
-  "T::Concrete": {
+  "_TConcrete": {
     "cs": "Beton",
     "de": "Beton",
     "en": "Concrete",
@@ -2099,7 +2099,7 @@
     "zh-Hans": "混凝土",
     "zh-Hant": "混凝土"
   },
-  "T::Container": {
+  "_TContainer": {
     "cs": "Kontejner",
     "de": "Container",
     "en": "Container",
@@ -2124,7 +2124,7 @@
     "zh-Hans": "集装箱",
     "zh-Hant": "貨櫃"
   },
-  "T::FinalProduct": {
+  "_TFinalProduct": {
     "cs": "Finální produkt",
     "de": "Endprodukt",
     "en": "Final Product",
@@ -2149,7 +2149,7 @@
     "zh-Hans": "成品",
     "zh-Hant": "成品"
   },
-  "T::Food": {
+  "_TFood": {
     "cs": "Jídlo",
     "de": "Essen",
     "en": "Food",
@@ -2174,7 +2174,7 @@
     "zh-Hans": "餐饮",
     "zh-Hant": "食物"
   },
-  "T::Furniture": {
+  "_TFurniture": {
     "cs": "Nábytek",
     "de": "Möbel",
     "en": "Furniture",
@@ -2199,7 +2199,7 @@
     "zh-Hans": "家具类",
     "zh-Hant": "家具"
   },
-  "T::LargePackage": {
+  "_TLargePackage": {
     "cs": "Paleta",
     "de": "Palette",
     "en": "Pallet",
@@ -2224,7 +2224,7 @@
     "zh-Hans": "货盘",
     "zh-Hant": "棧板"
   },
-  "T::Log": {
+  "_TLog": {
     "cs": "Klády",
     "de": "Baumstamm",
     "en": "Log",
@@ -2249,7 +2249,7 @@
     "zh-Hans": "原木",
     "zh-Hant": "原木"
   },
-  "T::MilitarySupply": {
+  "_TMilitarySupply": {
     "cs": "Vojenské zásoby",
     "de": "Militärische Versorgung",
     "en": "Military Supply",
@@ -2274,7 +2274,7 @@
     "zh-Hans": "军用补给",
     "zh-Hant": "軍用物資"
   },
-  "T::Sand": {
+  "_TSand": {
     "cs": "Písek",
     "de": "Sand",
     "en": "Sand",
@@ -2299,7 +2299,7 @@
     "zh-Hans": "沙",
     "zh-Hant": "沙"
   },
-  "T::SmallPackage": {
+  "_TSmallPackage": {
     "cs": "Box",
     "de": "Box",
     "en": "Box",
@@ -2324,7 +2324,7 @@
     "zh-Hans": "纸箱盒子",
     "zh-Hant": "箱子"
   },
-  "T::Wood": {
+  "_TWood": {
     "cs": "Dřevo",
     "de": "Holz",
     "en": "Wood",

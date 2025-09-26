@@ -126,14 +126,14 @@ export type DeliveryCargoKey =
   | 'MilitarySupplyBox_01';
 
 export type DeliveryCargoType =
-  | 'T::Container'
-  | 'T::LargePackage'
-  | 'T::SmallPackage'
-  | 'T::Sand'
-  | 'T::Furniture'
-  | 'T::MilitarySupply'
-  | 'T::Food'
-  | 'T::FinalProduct';
+  | '_TContainer'
+  | '_TLargePackage'
+  | '_TSmallPackage'
+  | '_TSand'
+  | '_TFurniture'
+  | '_TMilitarySupply'
+  | '_TFood'
+  | '_TFinalProduct';
 
 export type DeliveryCargo = DeliveryCargoKey | DeliveryCargoType;
 

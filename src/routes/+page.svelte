@@ -9,6 +9,21 @@
 
   const date = new SvelteDate();
 
+  $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      date.setTime(Date.now());
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
+
   const year = $derived(date.getFullYear());
 
   const features = $derived([

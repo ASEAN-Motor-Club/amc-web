@@ -59,7 +59,7 @@
     if (!hoverInfo) {
       return false;
     }
-    return hoverInfo.pointType === PointType.Delivery || hoverInfo.pointType === PointType.House;
+    return hoverInfo.pointType === PointType.House;
   });
 
   let tooltip: HTMLDivElement | undefined = $state();
