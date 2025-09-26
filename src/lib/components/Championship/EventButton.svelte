@@ -27,7 +27,7 @@
 
   const date = new SvelteDate();
 
-   $effect(() => {
+  $effect(() => {
     let animationId: number;
 
     const updateTime = () => {
