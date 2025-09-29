@@ -20,6 +20,8 @@ export {
   intervalToDuration,
   differenceInSeconds,
   isValid,
+  max,
+  min,
 } from 'date-fns';
 
 import { enUS, th } from 'date-fns/locale';

@@ -167,7 +167,7 @@
     map.getView().animate({
       zoom: zoom ? 5 : undefined,
       center: [x, y],
-      duration: duration,
+      duration: prefersReducedMotion.current ? 0 : duration,
     });
   };
 

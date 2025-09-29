@@ -11,7 +11,6 @@
   import type { HouseData } from '$lib/api/types';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import PlayerInfo from './PlayerInfo.svelte';
-  import { prefersReducedMotion } from 'svelte/motion';
   import { getLocationAtPoint } from '$lib/data/area';
   import { mtLocale } from '../Locale/locale.svelte';
 
@@ -95,7 +94,7 @@
 
 {#if hoverInfo}
   <div
-    transition:fade={{ duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs }}
+    transition:fade={{ duration: defaultTransitionDurationMs }}
     class="pointer-events-none absolute"
     style:left="{tooltipPosition[0]}px"
     style:top="{tooltipPosition[1]}px"

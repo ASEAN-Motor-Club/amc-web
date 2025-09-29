@@ -2,7 +2,6 @@
   import { navigating } from '$app/state';
   import { fade } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
-  import { prefersReducedMotion } from 'svelte/motion';
 
   let show = $state(false);
   let speedUp = $state(false);
@@ -42,14 +41,14 @@
 
 {#if show}
   <div
-    class="z-100000 pointer-events-none fixed top-16 flex w-full select-none"
+    class="z-100000 pointer-events-none fixed top-0 flex w-full select-none"
     transition:fade={{
-      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+      duration: defaultTransitionDurationMs,
     }}
   >
     <div
       class={[
-        'bg-primary-500 fixed top-16 flex h-2 transition-all ease-[cubic-bezier(0.16,1,0.3,1)]',
+        'fixed top-0 flex h-16 bg-neutral-500/10 transition-all ease-[cubic-bezier(0.16,1,0.3,1)]',
         { 'transition-duration-30s w-90%': widthFull && !speedUp },
         { 'transition-duration-300 w-full': widthFull && speedUp },
         { 'transition-duration-300 w-0': !widthFull },

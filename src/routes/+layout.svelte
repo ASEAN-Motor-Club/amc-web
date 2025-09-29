@@ -8,7 +8,6 @@
   import { colorBackground100, colorBackground900, defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
-  import { prefersReducedMotion } from 'svelte/motion';
 
   const { children } = $props();
 
@@ -61,10 +60,7 @@
 <MsgModal>
   <Navbar />
   {#key page.route.id}
-    <main
-      class="h-full min-h-dvh pt-16"
-      in:fade={{ duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 3 }}
-    >
+    <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
       {@render children()}
     </main>
   {/key}

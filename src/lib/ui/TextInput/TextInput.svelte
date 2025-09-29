@@ -168,7 +168,7 @@
 
 <input
   class={twMerge(
-    'flex flex-none items-center outline-none motion-safe:transition-colors',
+    'flex flex-none items-center outline-none transition-colors',
     variantClasses,
     sizeClasses,
     disabled && 'pointer-events-none opacity-50',

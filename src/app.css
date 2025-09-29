@@ -4,7 +4,7 @@ body {
 }
 
 body {
-  --at-apply: font-sans bg-background-300 text-text 'motion-safe:transition-colors';
+  --at-apply: font-sans bg-background-300 text-text transition-colors;
 }
 
 .dark body {

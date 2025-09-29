@@ -16,7 +16,6 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
-  import { prefersReducedMotion } from 'svelte/motion';
   import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
 
@@ -167,7 +166,7 @@
       <div
         class="flex min-h-0 w-full shrink"
         transition:fade={{
-          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+          duration: defaultTransitionDurationMs,
         }}
       >
         <Card

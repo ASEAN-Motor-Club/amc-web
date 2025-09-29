@@ -84,7 +84,7 @@
       <span class="invisible font-bold leading-none">{label}</span>
       <span
         class={twMerge(
-          'absolute left-0 whitespace-nowrap leading-none group-hover:font-bold motion-safe:transition-all',
+          'absolute left-0 whitespace-nowrap leading-none motion-safe:transition-all motion-reduce:transition-colors',
           pathMatch(href, external, exact) ? 'font-bold' : 'text-text/80 dark:text-text-dark/80',
           clsx(textClass),
         )}>{label}</span
@@ -106,7 +106,7 @@
             href={item.href}
             class={[
               'group flex items-center gap-1',
-              mobile ? 'pl-4' : '-mx-3 px-3 py-2 hover:bg-neutral-500/10',
+              mobile ? 'pl-4' : '-mx-3 px-3 py-2 transition-colors hover:bg-neutral-500/10',
             ]}
             onclick={onClick}
             onmouseenter={() => handleSubMenuMouseEnter(item.onMouseEnter)}
@@ -118,7 +118,7 @@
               <span class="invisible font-bold leading-none">{item.label}</span>
               <span
                 class={twMerge(
-                  'absolute left-0 whitespace-nowrap leading-none group-hover:font-bold motion-safe:transition-all',
+                  'absolute left-0 whitespace-nowrap leading-none motion-safe:transition-all motion-reduce:transition-colors',
                   pathMatch(item.href, item.external, item.exact)
                     ? 'font-bold'
                     : 'text-text/80 dark:text-text-dark/80',

@@ -7,7 +7,6 @@
   import { modalCounter } from './modalCounter.svelte';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
-  import { prefersReducedMotion } from 'svelte/motion';
 
   export interface ModalProps {
     /**
@@ -87,7 +86,7 @@
         clsx(propsClassName),
       )}
       transition:fade={{
-        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+        duration: defaultTransitionDurationMs,
       }}
     >
       <button

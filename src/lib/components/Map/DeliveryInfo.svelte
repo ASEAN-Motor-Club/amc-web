@@ -7,7 +7,7 @@
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-  import { formatDistanceStrict, differenceInSeconds } from '$lib/date';
+  import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
   import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getDeliveryPointInfo } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
@@ -114,6 +114,11 @@
     debouncedGetInfo();
   });
 
+  const lastUpdated = $derived.by(() => {
+    const curr = new Date();
+    return min([deliveryPointInfo?.last_updated ?? curr, curr]);
+  });
+
   onDestroy(() => {
     debouncedGetInfo.cancel();
     abortController?.abort();
@@ -180,7 +185,7 @@
   {#if deliveryPointInfoLoading}
     <span class="animate-pulse">...</span>
   {:else}
-    {formatDistanceStrict(deliveryPointInfo?.last_updated ?? new Date(), date.getTime(), {
+    {formatDistanceStrict(lastUpdated, date.getTime(), {
       addSuffix: true,
     })}
   {/if}

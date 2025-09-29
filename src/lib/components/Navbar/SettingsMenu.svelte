@@ -14,7 +14,6 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import { fade } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
-  import { prefersReducedMotion } from 'svelte/motion';
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
 
@@ -97,7 +96,7 @@
   {#if menu}
     <div
       transition:fade={{
-        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+        duration: defaultTransitionDurationMs,
       }}
       class="max-w-104 z-10000 absolute right-0 top-14 w-full px-5"
     >

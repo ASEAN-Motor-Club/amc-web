@@ -167,7 +167,7 @@
   </Modal>
   <div
     class={[
-      'rounded-4xl before:z-1000 relative flex h-full w-full flex-col items-center justify-center overflow-hidden border-8 border-dotted border-black/10 p-8 before:absolute before:inset-0 before:bg-black/20 motion-safe:transition-all dark:border-white/10 before:dark:bg-white/20',
+      'rounded-4xl before:z-1000 relative flex h-full w-full flex-col items-center justify-center overflow-hidden border-8 border-dotted border-black/10 p-8 transition-all before:absolute before:inset-0 before:bg-black/20 dark:border-white/10 before:dark:bg-white/20',
       {
         'border-solid ': dragOver,
         'before:hidden': !dragOver,

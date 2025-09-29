@@ -50,7 +50,7 @@
 >
   {#if loading}
     <div
-      class="absolute left-0 top-0 h-full w-full rounded-md bg-neutral-500/20 motion-safe:animate-pulse"
+      class="absolute left-0 top-0 h-full w-full animate-pulse rounded-md bg-neutral-500/20"
     ></div>
   {/if}
   <div class={['contents', loading && 'invisible']}>

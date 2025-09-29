@@ -27,7 +27,7 @@
 </svelte:head>
 
 <div class="bg-cover bg-fixed bg-center">
-  <picture class="-z-1 pointer-events-none fixed inset-0 h-full w-full">
+  <picture class="-z-2 pointer-events-none fixed inset-0 h-full w-full">
     <source
       media="(orientation: portrait)"
       srcset={`${tireTrackP180} 180w, ${tireTrackP360} 360w, ${tireTrackP720} 720w, ${tireTrackP1080} 1080w, ${tireTrackP1440} 1440w`}
@@ -40,14 +40,11 @@
     />
     <img src={tireTrack1920} alt="" class="h-full w-full object-cover" />
   </picture>
+  <div class="-z-1 pointer-events-none fixed inset-0 bg-black/70 dark:bg-black/90"></div>
 
-  <CommonHead class="text-text-dark justify-center bg-black/70 dark:bg-black/90"
-    >{siteLocale.msg['radio.title']()}</CommonHead
-  >
+  <CommonHead class="text-text-dark justify-center">{siteLocale.msg['radio.title']()}</CommonHead>
 
   <div class="relative min-h-screen overflow-hidden pb-8">
-    <div class="pointer-events-none absolute inset-0 bg-black/70 dark:bg-black/90"></div>
-
     <div class="relative z-10 mx-auto w-full px-3">
       <Player stationName={siteLocale.msg['radio.station_name']()}></Player>
     </div>
@@ -56,12 +53,7 @@
         class="bg-background-300 dark:bg-background-900/80 max-w-175 relative mx-auto mt-8 rounded-lg border border-gray-300 p-6 backdrop-blur-sm dark:border-gray-700"
       >
         <div class="-mb-[1.25em]">
-          <MarkdownText
-            text={siteLocale.msg['radio_guide.content_markdown']({
-              pakLink: '/downloads/RadioMod_P.pak',
-            })}
-            noSanitize
-          />
+          <MarkdownText text={siteLocale.msg['radio_guide.content_markdown']()} noSanitize />
         </div>
       </Card>
     </div>
