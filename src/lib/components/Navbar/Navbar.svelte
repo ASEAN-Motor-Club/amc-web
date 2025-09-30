@@ -110,7 +110,12 @@
   }
 
   $effect(() => {
-    if (!prefersReducedMotion.current && playerContext.analyser && playerContext.isPlaying && page.route.id !== '/radio') {
+    if (
+      !prefersReducedMotion.current &&
+      playerContext.analyser &&
+      playerContext.isPlaying &&
+      page.route.id !== '/radio'
+    ) {
       animationId = requestAnimationFrame(draw);
     }
 
