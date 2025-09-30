@@ -8,6 +8,7 @@
   import { colorBackground100, colorBackground900, defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
+  import GlobalPlayer from '$lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
 
   const { children } = $props();
 
@@ -57,11 +58,13 @@
   />
 </svelte:head>
 
-<MsgModal>
-  <Navbar />
-  {#key page.route.id}
-    <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
-      {@render children()}
-    </main>
-  {/key}
-</MsgModal>
+<GlobalPlayer>
+  <MsgModal>
+    <Navbar />
+    {#key page.route.id}
+      <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
+        {@render children()}
+      </main>
+    {/key}
+  </MsgModal>
+</GlobalPlayer>

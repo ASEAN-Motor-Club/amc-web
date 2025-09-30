@@ -5,11 +5,10 @@
 
   interface Props {
     analyser: AnalyserNode;
-    grillVolume: (vol: number) => void;
   }
 
   // Width and height are no longer needed as props
-  let { analyser, grillVolume }: Props = $props();
+  let { analyser }: Props = $props();
 
   let canvasCover: HTMLDivElement;
   let canvas: HTMLCanvasElement;
@@ -30,7 +29,6 @@
     }
 
     const ctx = maybeCtx;
-    const freqData = new Uint8Array(analyser.frequencyBinCount);
     const waveData = new Uint8Array(analyser.fftSize);
     const prevWaveData = new Float32Array(analyser.fftSize);
 
@@ -62,11 +60,6 @@
       // On each frame, get the canvas's current CSS-driven size
       const { clientWidth: width, clientHeight: height } = canvas;
       if (width === 0 || height === 0) return; // Skip drawing if canvas is not visible
-
-      // --- Grill Volume ---
-      analyser.getByteFrequencyData(freqData);
-      const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
-      grillVolume(avg);
 
       // --- Waveform Drawing ---
       analyser.getByteTimeDomainData(waveData);

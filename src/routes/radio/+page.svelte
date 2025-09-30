@@ -46,7 +46,7 @@
 
   <div class="relative min-h-screen overflow-hidden pb-8">
     <div class="relative z-10 mx-auto w-full px-3">
-      <Player stationName={siteLocale.msg['radio.station_name']()}></Player>
+      <Player />
     </div>
     <div class="px-3">
       <Card

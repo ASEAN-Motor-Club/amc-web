@@ -14,6 +14,9 @@
   import type { NavbarItem as NavbarItemType } from './types';
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
+  import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
+
+  const playerContext = getGlobalPlayerContext();
 
   const links: NavbarItemType[] = $derived([
     {
@@ -58,6 +61,7 @@
     {
       href: '/radio',
       label: siteLocale.msg['navbar.radio'](),
+      textClass: playerContext.isPlaying ? '!text-orange-500' : undefined,
       icon: radioIcon,
     },
     {
@@ -84,6 +88,40 @@
       replaceState('', { ...page.state, navbarMenuOpen: false });
     }
   };
+
+  let grillRotate = $state(0);
+  let grillScale = $state(1);
+
+  let animationId: number;
+
+  function draw() {
+    animationId = requestAnimationFrame(draw);
+
+    if (playerContext.analyser) {
+      const freqData = new Uint8Array(playerContext.analyser.frequencyBinCount);
+      playerContext.analyser.getByteFrequencyData(freqData);
+      const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
+      grillScale = 1 + avg / 600;
+      grillRotate = ((Math.random() - 0.5) * avg) / 15;
+    } else {
+      grillScale = 1;
+      grillRotate = 0;
+    }
+  }
+
+  $effect(() => {
+    if (!prefersReducedMotion.current && playerContext.analyser && playerContext.isPlaying && page.route.id !== '/radio') {
+      animationId = requestAnimationFrame(draw);
+    }
+
+    return () => {
+      grillScale = 1;
+      grillRotate = 0;
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  });
 </script>
 
 {#snippet serverIcon(pathMatch: boolean)}
@@ -122,10 +160,16 @@
 {/snippet}
 
 {#snippet radioIcon(pathMatch: boolean)}
-  <NavbarIcon
-    class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500"
-    {pathMatch}
-  />
+  {#if playerContext.isPlaying}
+    <div class="flex" style:transform={`rotate(${grillRotate}deg) scale(${grillScale})`}>
+      <NavbarIcon class="i-material-symbols:play-circle-rounded !text-orange-500" {pathMatch} />
+    </div>
+  {:else}
+    <NavbarIcon
+      class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500"
+      {pathMatch}
+    />
+  {/if}
 {/snippet}
 
 {#snippet trackIcon(pathMatch: boolean)}
