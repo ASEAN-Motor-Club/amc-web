@@ -29,7 +29,7 @@
     }
 
     const ctx = maybeCtx;
-    const waveData = new Uint8Array(analyser.fftSize);
+    const waveData = new Float32Array(analyser.fftSize);
     const prevWaveData = new Float32Array(analyser.fftSize);
 
     // Use a ResizeObserver to automatically handle canvas sizing.
@@ -62,11 +62,10 @@
       if (width === 0 || height === 0) return; // Skip drawing if canvas is not visible
 
       // --- Waveform Drawing ---
-      analyser.getByteTimeDomainData(waveData);
+      analyser.getFloatTimeDomainData(waveData);
 
       for (let i = 0; i < waveData.length; i++) {
-        const current = waveData[i] / 128.0 - 1.0;
-        prevWaveData[i] = prevWaveData[i] * decayWeight + current * (1 - decayWeight);
+        prevWaveData[i] = prevWaveData[i] * decayWeight + waveData[i] * (1 - decayWeight);
       }
 
       ctx.clearRect(0, 0, width, height);
