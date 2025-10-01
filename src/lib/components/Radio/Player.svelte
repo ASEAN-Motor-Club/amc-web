@@ -13,11 +13,12 @@
 
   let animationId: number;
 
+  const freqData = new Uint8Array(playerContext.analyser?.frequencyBinCount ?? 0);
+
   function draw() {
     animationId = requestAnimationFrame(draw);
 
     if (playerContext.analyser) {
-      const freqData = new Uint8Array(playerContext.analyser.frequencyBinCount);
       playerContext.analyser.getByteFrequencyData(freqData);
       const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
       grillScale = 1 + avg / 600;
@@ -61,7 +62,7 @@
 
     <div class="flex flex-1 flex-col p-4">
       <div
-        class="flex-grow-1 mb-4 flex min-h-25 overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-black/50"
+        class="flex-grow-1 min-h-25 mb-4 flex overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-black/50"
       >
         {#if playerContext.analyser}
           <PlayerWaveform analyser={playerContext.analyser} />

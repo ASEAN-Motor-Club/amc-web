@@ -7,6 +7,7 @@ export interface GlobalPlayerContext {
   isPlaying: boolean;
   readonly volume: number;
   readonly analyser: AnalyserNode | null;
+  readonly audioContext: AudioContext | null;
 }
 
 export function setGlobalPlayerContext(player: GlobalPlayerContext) {

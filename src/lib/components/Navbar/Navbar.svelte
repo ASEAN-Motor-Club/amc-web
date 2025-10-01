@@ -15,6 +15,8 @@
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
   import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
+  import SoundBarIcon from './SoundBarIcon.svelte';
+  import { isLg } from '$lib/utils/media.svelte';
 
   const playerContext = getGlobalPlayerContext();
 
@@ -88,45 +90,6 @@
       replaceState('', { ...page.state, navbarMenuOpen: false });
     }
   };
-
-  let grillRotate = $state(0);
-  let grillScale = $state(1);
-
-  let animationId: number;
-
-  function draw() {
-    animationId = requestAnimationFrame(draw);
-
-    if (playerContext.analyser) {
-      const freqData = new Uint8Array(playerContext.analyser.frequencyBinCount);
-      playerContext.analyser.getByteFrequencyData(freqData);
-      const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
-      grillScale = 1 + avg / 600;
-      grillRotate = ((Math.random() - 0.5) * avg) / 15;
-    } else {
-      grillScale = 1;
-      grillRotate = 0;
-    }
-  }
-
-  $effect(() => {
-    if (
-      !prefersReducedMotion.current &&
-      playerContext.analyser &&
-      playerContext.isPlaying &&
-      page.route.id !== '/radio'
-    ) {
-      animationId = requestAnimationFrame(draw);
-    }
-
-    return () => {
-      grillScale = 1;
-      grillRotate = 0;
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  });
 </script>
 
 {#snippet serverIcon(pathMatch: boolean)}
@@ -165,13 +128,16 @@
 {/snippet}
 
 {#snippet radioIcon(pathMatch: boolean)}
-  {#if playerContext.isPlaying}
-    <div class="flex" style:transform={`rotate(${grillRotate}deg) scale(${grillScale})`}>
-      <NavbarIcon class="i-material-symbols:play-circle-rounded !text-orange-500" {pathMatch} />
-    </div>
+  {#if playerContext.isPlaying && !pathMatch && !prefersReducedMotion.current}
+    <SoundBarIcon />
+  {:else if prefersReducedMotion.current}
+    <NavbarIcon class="i-material-symbols:play-circle-rounded !text-orange-500" {pathMatch} />
   {:else}
     <NavbarIcon
-      class="i-material-symbols:radio-outline-rounded group-hover:text-orange-500"
+      class={[
+        'i-material-symbols:radio-outline-rounded group-hover:text-orange-500',
+        playerContext.isPlaying && '!text-orange-500',
+      ]}
       {pathMatch}
     />
   {/if}
@@ -224,23 +190,26 @@
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
     {siteLocale.msg.site_name()}
   </a>
-  <div class="hidden h-full items-stretch gap-6 lg:flex">
-    {@render menuItems()}
-  </div>
-  <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
-    <div
-      class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
-      transition:fly={{
-        x: '-100%',
-        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
-      }}
-    >
-      <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => setMenu(false)}>
-        {siteLocale.msg.site_name()}
-      </a>
-      {@render menuItems(true)}
+  {#if isLg.current}
+    <div class="flex h-full items-stretch gap-6">
+      {@render menuItems()}
     </div>
-  </Modal>
+  {:else}
+    <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
+      <div
+        class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col gap-6 p-4"
+        transition:fly={{
+          x: '-100%',
+          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+        }}
+      >
+        <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => setMenu(false)}>
+          {siteLocale.msg.site_name()}
+        </a>
+        {@render menuItems(true)}
+      </div>
+    </Modal>
+  {/if}
   <SettingsMenu />
 </nav>
 <NavbarPageLoading />

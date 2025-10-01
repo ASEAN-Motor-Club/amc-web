@@ -134,6 +134,9 @@
     get analyser() {
       return analyser;
     },
+    get audioContext() {
+      return audioCtx;
+    },
   });
 </script>
 
