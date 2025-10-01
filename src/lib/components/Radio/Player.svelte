@@ -20,7 +20,13 @@
 
     if (playerContext.analyser) {
       playerContext.analyser.getByteFrequencyData(freqData);
-      const avg = freqData.reduce((a, b) => a + b, 0) / freqData.length;
+      
+      let sum = 0;
+      for (const value of freqData) {
+        sum += value;
+      }
+      const avg = sum / freqData.length;
+
       grillScale = 1 + avg / 600;
       grillRotate = ((Math.random() - 0.5) * avg) / 15;
     }

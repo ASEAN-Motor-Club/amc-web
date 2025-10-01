@@ -29,7 +29,7 @@
             for (let j = startBin; j < endBin; j++) {
               sum += freqData[j];
             }
-            const average = binCount > 0 ? sum / binCount : 0;
+            const average = sum / binCount;
 
             const heightPercent = (average / 255) * 100;
             barHeights[i] = heightPercent;

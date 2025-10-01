@@ -60,7 +60,7 @@
 
       // On each frame, get the canvas's current CSS-driven size
       const { clientWidth: width, clientHeight: height } = canvas;
-      if (width === 0 || height === 0) return; // Skip drawing if canvas is not visible
+      if (width === 0 || height === 0) return;
 
       if (timestamp - lastSampleTime >= sampleInterval) {
         analyser.getFloatTimeDomainData(waveData);
@@ -75,8 +75,6 @@
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.save();
-      ctx.globalCompositeOperation = 'source-in';
       ctx.lineWidth = 3;
       ctx.lineJoin = 'round';
       ctx.strokeStyle = colorNeutral400;
@@ -98,7 +96,6 @@
         x += sliceWidth;
       }
       ctx.stroke();
-      ctx.restore();
     }
 
     if (!prefersReducedMotion.current) {
