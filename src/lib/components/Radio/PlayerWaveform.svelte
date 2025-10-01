@@ -7,18 +7,19 @@
     analyser: AnalyserNode;
   }
 
-  // Width and height are no longer needed as props
   let { analyser }: Props = $props();
 
   let canvasCover: HTMLDivElement;
   let canvas: HTMLCanvasElement;
   let animationId: number;
 
-  let antiDecayRate = -8;
+  const sampleInterval = 1000 / 30;
+  const antiDecayRate = -2;
   let lastTime = 0;
+  let lastSampleTime = 0;
 
   function scaleWave(x: number): number {
-    return 1 - (1 - x) * (1 - x);
+    return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
   }
 
   onMount(() => {
@@ -61,8 +62,10 @@
       const { clientWidth: width, clientHeight: height } = canvas;
       if (width === 0 || height === 0) return; // Skip drawing if canvas is not visible
 
-      // --- Waveform Drawing ---
-      analyser.getFloatTimeDomainData(waveData);
+      if (timestamp - lastSampleTime >= sampleInterval) {
+        analyser.getFloatTimeDomainData(waveData);
+        lastSampleTime = timestamp;
+      }
 
       for (let i = 0; i < waveData.length; i++) {
         prevWaveData[i] = prevWaveData[i] * decayWeight + waveData[i] * (1 - decayWeight);
@@ -79,10 +82,10 @@
       ctx.strokeStyle = colorNeutral400;
       ctx.beginPath();
 
-      const sliceWidth = width / (waveData.length - 1);
+      const sliceWidth = width / (prevWaveData.length - 1);
       let x = 0;
 
-      for (let i = 0; i < waveData.length; i++) {
+      for (let i = 0; i < prevWaveData.length; i++) {
         const v = scaleWave(Math.abs(prevWaveData[i])) * Math.sign(prevWaveData[i]);
         // Position the y-coordinate vertically centered in the canvas
         const y = height / 2 + (v * height) / 2;
@@ -102,7 +105,6 @@
       requestAnimationFrame(draw);
     }
 
-    // The onMount function can return a cleanup function
     return () => {
       observer.disconnect();
       cancelAnimationFrame(animationId);
