@@ -20,7 +20,7 @@
 
     if (playerContext.analyser) {
       playerContext.analyser.getByteFrequencyData(freqData);
-      
+
       let sum = 0;
       for (const value of freqData) {
         sum += value;
