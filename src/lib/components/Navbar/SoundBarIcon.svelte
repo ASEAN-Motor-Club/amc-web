@@ -10,35 +10,23 @@
     if (playerContext.audioContext && playerContext.analyser) {
       const freqData = new Uint8Array(playerContext.analyser.frequencyBinCount);
 
-      const sampleRate = playerContext.audioContext.sampleRate;
-      const binSize = sampleRate / (2 * freqData.length);
-
-      const frequencyRanges = [
-        { min: 20, max: 200 }, // Bass: 20Hz-200Hz (sub-bass to bass fundamentals)
-        { min: 200, max: 800 }, // Lower Mid: 200Hz-800Hz (body, warmth, male vocals)
-        { min: 800, max: 3200 }, // High Mid: 800Hz-3.2kHz (clarity, female vocals, presence)
-        { min: 3200, max: 8000 }, // Treble: 3.2kHz-8kHz (brightness, cymbals, air)
-      ];
-
-      const binRanges = frequencyRanges.map((range) => ({
-        startBin: Math.floor(range.min / binSize),
-        endBin: Math.min(Math.floor(range.max / binSize), freqData.length - 1),
-      }));
+      // outside of bar 44 (at 64 frequencyBinCount and 48khz equal 33khz) usually contains nothing
+      const binsCount = 44;
+      const binsPerBar = Math.floor(binsCount / 4);
 
       function draw() {
-        console.log('draw');
         animationId = requestAnimationFrame(draw);
 
         if (playerContext.analyser) {
           playerContext.analyser.getByteFrequencyData(freqData);
-
           for (let i = 0; i < 4; i++) {
-            const { startBin, endBin } = binRanges[i];
+            const startBin = i * binsPerBar;
+            const endBin = i === 3 ? binsCount : (i + 1) * binsPerBar;
 
             let sum = 0;
-            const binCount = endBin - startBin + 1;
+            const binCount = endBin - startBin;
 
-            for (let j = startBin; j <= endBin; j++) {
+            for (let j = startBin; j < endBin; j++) {
               sum += freqData[j];
             }
             const average = binCount > 0 ? sum / binCount : 0;
