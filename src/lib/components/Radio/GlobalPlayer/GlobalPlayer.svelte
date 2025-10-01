@@ -60,6 +60,7 @@
 
   function handleAbort() {
     isPlaying = false;
+    streamUrl = getStreamUrl();
   }
 
   function handleBeforeUnload(event: BeforeUnloadEvent) {
@@ -112,7 +113,6 @@
       audio.play();
     } else {
       audio.pause();
-      streamUrl = getStreamUrl();
     }
   }
 
