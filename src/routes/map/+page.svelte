@@ -43,7 +43,7 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { page } from '$app/state';
   import { houses } from '$lib/data/house';
-  import { matchMouse } from '$lib/utils/media';
+  import { isMouse } from '$lib/utils/media.svelte';
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
@@ -579,8 +579,7 @@
   };
 
   const handlePointerMove = (e: MapBrowserEvent) => {
-    const isMouse = matchMouse();
-    if (isMouse) {
+    if (isMouse.current) {
       handlePointerMoveOrClick(e);
     } else {
       hoverInfo = undefined;
@@ -588,8 +587,7 @@
   };
 
   const handleClick = (e: MapBrowserEvent) => {
-    const isMouse = matchMouse();
-    if (isMouse) {
+    if (isMouse.current) {
       deliveryLineSource.clear(true);
       lockPoint?.set('hover', false);
       lockPoint = undefined;

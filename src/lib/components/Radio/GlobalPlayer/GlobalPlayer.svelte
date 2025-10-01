@@ -54,11 +54,27 @@
     }
   }
 
+  function handlePlay() {
+    isPlaying = true;
+  }
+
+  function handleAbort() {
+    isPlaying = false;
+  }
+
+  function handleBeforeUnload(event: BeforeUnloadEvent) {
+    if (isPlaying) {
+      event.preventDefault();
+      return siteLocale.msg['radio.leave_warning']();
+    }
+  }
+
   function restartAudio() {
     clearTimeout(restartTimeout);
     restartTimeout = setTimeout(() => {
       if (isPlaying) {
-        audio.load();
+        audio.pause();
+        streamUrl = getStreamUrl();
         audio.play();
       }
     }, 1000);
@@ -79,29 +95,12 @@
     //   currentTrack = track;
     // });
 
-    // Add audio event listeners for restart mechanism
-    audio.addEventListener('stalled', handleAudioStall);
-    audio.addEventListener('error', handleAudioError);
-
-    // Add beforeunload event listener to warn when leaving while playing
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isPlaying) {
-        event.preventDefault();
-        return siteLocale.msg['radio.leave_warning']();
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
     return () => {
       // stopPolling();
       audioCtx.close();
       if (restartTimeout) {
         clearTimeout(restartTimeout);
       }
-      audio.removeEventListener('stalled', handleAudioStall);
-      audio.removeEventListener('error', handleAudioError);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   });
 
@@ -110,14 +109,11 @@
       audioCtx.resume();
     }
     if (!isPlaying) {
-      audio.play().catch(() => {
-        handleAudioError(new Event('error'));
-      });
+      audio.play();
     } else {
       audio.pause();
       streamUrl = getStreamUrl();
     }
-    isPlaying = !isPlaying;
   }
 
   function changeVolume(value: number) {
@@ -141,5 +137,17 @@
   });
 </script>
 
+<svelte:window onbeforeunload={handleBeforeUnload} />
+
 {@render children()}
-<audio bind:this={audio} src={streamUrl} preload="none" crossorigin="anonymous"></audio>
+<audio
+  bind:this={audio}
+  src={streamUrl}
+  preload="none"
+  crossorigin="anonymous"
+  onstalled={handleAudioStall}
+  onerror={handleAudioError}
+  onplay={handlePlay}
+  onabort={handleAbort}
+  onpause={handleAbort}
+></audio>
