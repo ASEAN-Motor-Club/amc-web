@@ -768,7 +768,7 @@
   >
 </svelte:head>
 
-<div class="relative h-full w-full bg-[#375d87]">
+<div class="relative h-full w-full">
   <OlMap
     {layers}
     class="h-full w-full"

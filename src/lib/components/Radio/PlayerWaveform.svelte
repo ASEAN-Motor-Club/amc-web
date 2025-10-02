@@ -33,18 +33,14 @@
     const waveData = new Float32Array(analyser.fftSize);
     const prevWaveData = new Float32Array(analyser.fftSize);
 
-    // Use a ResizeObserver to automatically handle canvas sizing.
-    // This is more robust than passing width/height props.
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
       const { width, height } = entry.contentRect;
       const dpr = window.devicePixelRatio || 1;
 
-      // Update the canvas's internal bitmap size for high-res screens
       canvas.width = width * dpr;
       canvas.height = height * dpr;
 
-      // Scale the drawing context so we can use CSS pixels
       ctx.resetTransform();
       ctx.scale(dpr, dpr);
     });
@@ -58,7 +54,6 @@
       lastTime = timestamp;
       const decayWeight = Math.exp(antiDecayRate * deltaTime);
 
-      // On each frame, get the canvas's current CSS-driven size
       const { clientWidth: width, clientHeight: height } = canvas;
       if (width === 0 || height === 0) return;
 
@@ -85,7 +80,7 @@
 
       for (let i = 0; i < prevWaveData.length; i++) {
         const v = scaleWave(Math.abs(prevWaveData[i])) * Math.sign(prevWaveData[i]);
-        // Position the y-coordinate vertically centered in the canvas
+
         const y = height / 2 + (v * height) / 2;
 
         if (i === 0) {

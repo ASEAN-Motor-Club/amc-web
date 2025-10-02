@@ -7,7 +7,7 @@
   import 'ol/ol.css';
   import { Projection } from 'ol/proj';
   import { ImageTile } from 'ol/source';
-  import { getCenter } from 'ol/extent';
+  import { getCenter, type Extent } from 'ol/extent';
   import { Zoom } from 'ol/control';
   import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
@@ -16,6 +16,7 @@
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
+  import type { SimpleGeometry } from 'ol/geom';
 
   let map: Map;
 
@@ -171,9 +172,22 @@
     });
   };
 
+  export const fit = (
+    geometryOrExtent: Extent | SimpleGeometry,
+    padding?: number[],
+    duration = defaultTransitionDurationMs * 4,
+  ) => {
+    map.getView().fit(geometryOrExtent, {
+      duration: prefersReducedMotion.current ? 0 : duration,
+      padding,
+    });
+  };
+
+  export const getMap = () => map;
+
   $effect(() => {
     map.setLayers(allLayers);
   });
 </script>
 
-<div class={propsClassName} bind:this={target}></div>
+<div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClassName]} bind:this={target}></div>

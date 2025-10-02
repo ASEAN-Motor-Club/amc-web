@@ -26,7 +26,6 @@
   let teamTriggers: HTMLDivElement[] = $state([]);
   let teamText: HTMLDivElement[] = $state([]);
 
-  // GSAP Timeline variables
   let scrollContext: gsap.MatchMedia | undefined;
   let abortController: AbortController = new AbortController();
 

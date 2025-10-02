@@ -68,7 +68,6 @@
     "lodash-es": "4.17.21",
     "lottie-web": "5.13.0",
     "marked": "16.2.1",
-    "mt-map": "github:beam41/mt-map",
     "ol": "10.6.1",
     "quaternion": "2.1.1",
     "svelte-portal": "2.2.1",

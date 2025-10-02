@@ -92,7 +92,9 @@
       "select_point_to_edit": "Select point to start editing.",
       "global_operations": "Global operations",
       "normalize": "Normalize",
-      "auto_rotate_all_gates": "Auto Rotate All Gates"
+      "auto_rotate_all_gates": "Auto Rotate All Gates",
+      "show_width": "Show Width",
+      "recenter": "Recenter"
     }
   },
   "navbar": {

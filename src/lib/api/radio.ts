@@ -2,7 +2,6 @@
 
 export const getNowPlaying = async (signal: AbortSignal): Promise<string> => {
   try {
-    // Fetch directly from our own /icecast-status endpoint
     const response = await fetch('/icecast-status', { signal });
 
     if (!response.ok) {
@@ -41,15 +40,12 @@ export const startNowPlayingPolling = (
     }
   };
 
-  // Initial fetch
   fetchAndUpdate();
 
-  // Set up polling
   const timer = setInterval(() => {
     fetchAndUpdate();
   }, interval);
 
-  // Cleanup function
   controller.signal.addEventListener('abort', () => {
     clearInterval(timer);
   });

@@ -92,7 +92,9 @@
       "select_point_to_edit": "เลือกจุดเพื่อเริ่มแก้ไข",
       "global_operations": "การดำเนินการทั่วไป",
       "normalize": "ปรับให้เป็นมาตรฐาน",
-      "auto_rotate_all_gates": "หมุนจุดทั้งหมดอัตโนมัติ"
+      "auto_rotate_all_gates": "หมุนจุดทั้งหมดอัตโนมัติ",
+      "show_width": "แสดงความกว้าง",
+      "recenter": "ปรับให้อยู่ตรงกลาง"
     }
   },
   "navbar": {

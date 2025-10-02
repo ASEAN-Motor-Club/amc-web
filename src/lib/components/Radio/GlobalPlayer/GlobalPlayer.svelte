@@ -27,17 +27,13 @@
     volume = vol;
   });
 
-  // Web Audio API variables
   let audioCtx: AudioContext;
   let analyser: AnalyserNode | null = $state(null);
 
-  // Track state
   // let currentTrack = $state<string>('Loading...');
 
-  // Restart mechanism
   let restartTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  // Stream
   let streamUrl = $state(getStreamUrl());
 
   function handleAudioStall() {

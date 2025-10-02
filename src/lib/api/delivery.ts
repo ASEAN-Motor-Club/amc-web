@@ -64,15 +64,12 @@ export const startDeliveryPointsPolling = (
     }
   };
 
-  // Initial fetch
   fetchAndUpdate();
 
-  // Set up polling
   const timer = setInterval(() => {
     fetchAndUpdate();
   }, interval);
 
-  // Cleanup function
   controller.signal.addEventListener('abort', () => {
     clearInterval(timer);
   });

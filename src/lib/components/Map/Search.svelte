@@ -8,7 +8,7 @@
   import { cargoName } from '$lib/data/cargo';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { goto } from '$app/navigation';
-  import type { Vector2 } from 'mt-map';
+  import type { Vector2 } from '$lib/types';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import type { HouseData } from '$lib/api/types';

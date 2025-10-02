@@ -1,11 +1,5 @@
 <script lang="ts">
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-  import MtMap, {
-    type PointClickEventDetail,
-    type PointMoveEventDetail,
-    type PointsGroups,
-  } from '$lib/ui/MtMap/MtMap.svelte';
-  import mapImage from '$lib/assets/images/map.avif';
   import Card from '$lib/ui/Card/Card.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
@@ -20,16 +14,10 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
-  import {
-    colorCyan600,
-    colorNeutral800,
-    colorPrimary400,
-    colorPrimary600,
-    colorRed700,
-    colorYellow400,
-    colorYellow600,
-  } from '$lib/tw-var';
   import type { Track, WaypointEuler } from '$lib/schema/track';
+  import EditorOlMap from '$lib/ui/EditorOlMap/EditorOlMap.svelte';
+  import { onMount } from 'svelte';
+  import type { Vector2 } from '$lib/types';
 
   export interface EditorProps {
     /** The track data to be edited */
@@ -37,39 +25,24 @@
   }
   const { initialTrackData }: EditorProps = $props();
 
+  let map: EditorOlMap;
+
   const { showModal } = getMsgModalContext();
 
-  let zoomFit = $state<boolean>(true);
   let trackData = $state(cloneDeep(initialTrackData));
   let selectedPointIndex = $state<number | undefined>(undefined);
   let showHidden = $state<boolean>(false);
 
-  const trackGroup = $derived.by(() => {
-    return {
-      t: {
-        points: trackData.waypoints.map((wp) => {
-          const q = new Quaternion(wp.rotation);
-          return {
-            position: wp.translation,
-            yaw: q.toEuler(WP_EULER_ORDER)[2],
-            scaleY: wp.scale3D.y,
-          };
-        }),
-        trackMode: true,
-        draggable: true,
-        color: {
-          point: colorPrimary600,
-          hover: colorPrimary400,
-          selected: colorCyan600,
-          arrowColor: colorRed700,
-          gate: colorYellow600,
-          gateHover: colorYellow400,
-          gateSelected: colorCyan600,
-          outline: colorNeutral800,
-        },
-      },
-    } satisfies PointsGroups;
-  });
+  const points = $derived(
+    trackData.waypoints.map((wp) => {
+      const q = new Quaternion(wp.rotation);
+      return {
+        coord: wp.translation,
+        yaw: q.toEuler(WP_EULER_ORDER)[2],
+        scaleY: wp.scale3D.y,
+      };
+    }),
+  );
 
   const dirty = $derived(!isEqual(initialTrackData, trackData));
 
@@ -80,8 +53,8 @@
     scale3D: { x: 0, y: 0, z: 0 },
   });
 
-  const handlePointClick = (e: PointClickEventDetail) => {
-    selectedPointIndex = e.index;
+  const handlePointClick = (index: number | undefined) => {
+    selectedPointIndex = index;
 
     if (selectedPointIndex === undefined) {
       return;
@@ -93,22 +66,26 @@
   let localDirty = $derived(!isEqual(initialEditingPoint, editingPoint));
 
   const handleSaveChanges = () => {
-    zoomFit = false;
     if (selectedPointIndex !== undefined) {
       trackData.waypoints[selectedPointIndex] = fromEulerWp(editingPoint);
       initialEditingPoint = cloneDeep(editingPoint);
     }
   };
 
-  const selectedPointYaw = $derived(toRad(editingPoint.rotation.z));
+  const selectedPoint = $derived(
+    selectedPointIndex !== undefined
+      ? {
+          index: selectedPointIndex,
+          yaw: toRad(editingPoint.rotation.z),
+          scaleY: editingPoint.scale3D.y,
+          coord: editingPoint.translation,
+        }
+      : undefined,
+  );
 
-  const selectedPointsScaleY = $derived(editingPoint.scale3D.y);
-
-  const selectedPointsPosition = $derived(editingPoint.translation);
-
-  const handlePointMove = (e: PointMoveEventDetail) => {
-    editingPoint.translation.x = e.position.x;
-    editingPoint.translation.y = e.position.y;
+  const handlePointMove = (e: Vector2) => {
+    editingPoint.translation.x = e.x;
+    editingPoint.translation.y = e.y;
   };
 
   const handleNormalize = () => {
@@ -118,8 +95,8 @@
       confirmText: siteLocale.msg['action.confirm'](),
       cancelText: siteLocale.msg['action.cancel'](),
       confirmAction: () => {
-        zoomFit = true;
         trackData.waypoints = normalizedWaypoints(trackData.waypoints);
+        map.zoomFit();
       },
     });
   };
@@ -131,8 +108,8 @@
       confirmText: siteLocale.msg['action.confirm'](),
       cancelText: siteLocale.msg['action.cancel'](),
       confirmAction: () => {
-        zoomFit = true;
         trackData.waypoints = autoRotateAllWaypoints(trackData.waypoints);
+        map.zoomFit();
       },
     });
   };
@@ -159,23 +136,34 @@
       );
     }
   };
+
+  onMount(() => {
+    map.zoomFit();
+  });
+
+  let gateMode = $state<boolean>(false);
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
-  <Card class="flex-1 overflow-hidden p-0">
-    <MtMap
-      class="contrast-80 h-full brightness-200"
-      groups={trackGroup}
-      {zoomFit}
-      {mapImage}
+  <Card class="relative flex-1 overflow-hidden p-0">
+    <EditorOlMap
+      class="h-full"
+      {points}
       onPointClick={handlePointClick}
-      onPointMove={handlePointMove}
-      selectedPointId="t"
-      {selectedPointIndex}
-      {selectedPointYaw}
-      {selectedPointsScaleY}
-      {selectedPointsPosition}
+      {selectedPoint}
+      bind:this={map}
+      onSelectedPointMove={handlePointMove}
+      zoomClass="!left-[unset] !top-[unset] bottom-4 right-4"
+      {gateMode}
     />
+    <div class="absolute bottom-4 left-4 flex gap-2">
+      <Button size="sm" onClick={() => map.zoomFit()}>
+        {siteLocale.msg['track_editor.editor.recenter']()}
+      </Button>
+      <Button size="sm" onClick={() => (gateMode = !gateMode)}>
+        {siteLocale.msg['track_editor.editor.show_width']()}
+      </Button>
+    </div>
   </Card>
   <div class="md:w-70 flex flex-row justify-between gap-4 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">

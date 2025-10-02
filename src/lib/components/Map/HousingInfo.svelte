@@ -45,7 +45,6 @@
 
     const time = date.getTime();
 
-    // If rent has expired
     if (isBefore(currentHouseData.rentLeft, time)) {
       return siteLocale.msg['housing.expired']();
     }
