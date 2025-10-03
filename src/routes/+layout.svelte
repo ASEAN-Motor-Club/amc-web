@@ -9,7 +9,7 @@
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
   import GlobalPlayer from '$lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
-  import poster909 from '$lib/assets/images/poster/png/asean_poster_w909.png';
+  import splashBig from '$lib/assets/images/splash_big.jpg';
 
   const { children } = $props();
 
@@ -59,7 +59,7 @@
 
   <meta property="og:site_name" content={siteLocale.msg.site_name()} />
   <meta property="og:description" content={siteLocale.msg['home.desc_title']()} />
-  <meta property="og:image" content={poster909} />
+  <meta property="og:image" content={splashBig} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:type" content="website" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
