@@ -9,6 +9,7 @@
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
   import GlobalPlayer from '$lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
+  import poster909 from '$lib/assets/images/poster/png/asean_poster_w909.png';
 
   const { children } = $props();
 
@@ -44,7 +45,6 @@
 </script>
 
 <svelte:head>
-  <title>{siteLocale.msg.site_name()}</title>
   <meta name="description" content={siteLocale.msg['home.desc_title']()} />
   <meta
     name="theme-color"
@@ -56,6 +56,18 @@
     content={color ?? colorBackground900}
     media="(prefers-color-scheme: dark)"
   />
+
+  <meta property="og:site_name" content={siteLocale.msg.site_name()} />
+  <meta property="og:description" content={siteLocale.msg['home.desc_title']()} />
+  <meta property="og:image" content={poster909} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:type" content="website" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content={siteLocale.msg.site_name_short()} />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-title" content={siteLocale.msg.site_name_short()} />
 </svelte:head>
 
 <GlobalPlayer>

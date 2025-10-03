@@ -78,7 +78,7 @@
 
   let abortController: AbortController | undefined;
 
-  const debouncedGetInfo = debounce(() => {
+  const debouncedGetInfo = debounce((guid: string) => {
     abortController?.abort();
     abortController = new AbortController();
     getDeliveryPointInfo(guid, abortController.signal)
@@ -111,7 +111,7 @@
     deliveryPointInfoLoading = true;
     deliveryPointInfo = undefined;
 
-    debouncedGetInfo();
+    debouncedGetInfo(guid);
   });
 
   const lastUpdated = $derived.by(() => {
