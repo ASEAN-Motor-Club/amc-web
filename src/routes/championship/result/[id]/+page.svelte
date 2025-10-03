@@ -64,19 +64,22 @@
   });
 
   const loadingOrNoData = $derived(loading || !eventData);
-</script>
 
-<svelte:head>
-  <title
-    >{eventData?.name
+  const title = $derived(
+    eventData?.name
       ? siteLocale.msg['championship.results.head_loaded']({
           name: eventData.name,
           siteName: siteLocale.msg.site_name_short(),
         })
       : siteLocale.msg['championship.results.head']({
           siteName: siteLocale.msg.site_name_short(),
-        })}</title
-  >
+        }),
+  );
+</script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <div class="flex flex-col items-center p-8">

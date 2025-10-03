@@ -6,6 +6,12 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
 
+  const title = $derived(
+    siteLocale.msg['track_editor.head']({
+      siteName: siteLocale.msg.site_name_short(),
+    }),
+  );
+
   const handleSelect = (track: Track | undefined) => {
     trackData.value = track;
     const params = page.url.searchParams.toString();
@@ -14,11 +20,8 @@
 </script>
 
 <svelte:head>
-  <title
-    >{siteLocale.msg['track_editor.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    })}</title
-  >
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <SelectTrack onSelect={handleSelect} />

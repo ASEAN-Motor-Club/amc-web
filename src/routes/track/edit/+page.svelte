@@ -12,19 +12,22 @@
       goto('/track' + (params && `?${params}`), { replaceState: true });
     }
   });
-</script>
 
-<svelte:head>
-  <title
-    >{trackData.value?.routeName
+  const title = $derived(
+    trackData.value?.routeName
       ? siteLocale.msg['track_editor.head_editing']({
           routeName: trackData.value.routeName,
           siteName: siteLocale.msg.site_name_short(),
         })
       : siteLocale.msg['track_editor.head']({
           siteName: siteLocale.msg.site_name_short(),
-        })}</title
-  >
+        }),
+  );
+</script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 {#if trackData.value}

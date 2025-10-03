@@ -166,15 +166,18 @@
     scrollContext?.revert();
     abortController.abort();
   });
+
+  const title = $derived(
+    siteLocale.msg['championship.head']({
+      siteName: siteLocale.msg.site_name_short(),
+      seasonNo: PUBLIC_SEASON_NO,
+    }),
+  );
 </script>
 
 <svelte:head>
-  <title
-    >{siteLocale.msg['championship.head']({
-      siteName: siteLocale.msg.site_name_short(),
-      seasonNo: PUBLIC_SEASON_NO,
-    })}</title
-  >
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 <div class="-mt-16 flex flex-col items-center overflow-x-hidden">
   <div

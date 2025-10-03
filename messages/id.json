@@ -89,7 +89,7 @@
       "scale_x": "Skala (X)",
       "scale_y": "Skala (Y)",
       "scale_z": "Skala (Z)",
-      "select_point_to_edit": "Pilih titik untuk mulai edit.",
+      "select_point_to_edit": "Pilih titik untuk mulai edit",
       "global_operations": "Operasi global",
       "normalize": "Normalisasi",
       "auto_rotate_all_gates": "Putar Otomatis Semua Gerbang",
@@ -211,7 +211,7 @@
     "leave_warning": "Radio sedang diputar. Apakah Anda yakin ingin keluar?"
   },
   "radio_guide": {
-    "content_markdown": "# AMC Radio\n\n## Fitur Radio\n\n- **Request lagu** — Gunakan `/song_request` di Discord atau di server\n- **Berita & pembaruan** — Tetap mendapat info tentang event server\n- **Panduan game** — Tips tentang tuning, cara menghasilkan uang, dan lainnya\n\n## Cara Mendengarkan\n\nPilih metode yang Anda suka:\n\n1. **Radio Dalam Game** — AMC Radio kini tersedia di Motor Town! Cari **ASEAN Motor Club** di menu radio dalam game\n2. **Streaming Web** — Dengarkan secara online di sini!"
+    "content_markdown": "# AMC Radio\n\n## Fitur Radio\n\n- **Request lagu** — Gunakan `/song_request` di Discord atau di server.\n- **Berita & pembaruan** — Tetap mendapat info tentang event server.\n- **Panduan game** — Tips tentang tuning, cara menghasilkan uang, dan lainnya.\n\n## Cara Mendengarkan\n\nPilih metode yang Anda suka:\n\n1. **Radio Dalam Game** — AMC Radio kini tersedia di Motor Town! Cari **ASEAN Motor Club** di menu radio dalam game.\n2. **Streaming Web** — Dengarkan secara online di sini!"
   },
   "championship": {
     "head": "{siteName} | AMC Cup Musim {seasonNo}",

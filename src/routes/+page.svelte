@@ -32,10 +32,13 @@
     siteLocale.msg['home.ig_live_radio'](),
     siteLocale.msg['home.ig_bot'](),
   ]);
+
+  const title = $derived(siteLocale.msg.site_name());
 </script>
 
 <svelte:head>
-  <title>{siteLocale.msg.site_name()}</title>
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">

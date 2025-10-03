@@ -89,7 +89,7 @@
       "scale_x": "Scale (X)",
       "scale_y": "Scale (Y)",
       "scale_z": "Scale (Z)",
-      "select_point_to_edit": "Select point to start editing.",
+      "select_point_to_edit": "Select point to start editing",
       "global_operations": "Global operations",
       "normalize": "Normalize",
       "auto_rotate_all_gates": "Auto Rotate All Gates",
@@ -211,7 +211,7 @@
     "leave_warning": "Radio is currently playing. Are you sure you want to leave?"
   },
   "radio_guide": {
-    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord or in the server\n- **News & updates** — Stay informed about server events\n- **Game guides** — Tips on tuning, earning money, and more\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio** — AMC Radio is now built into Motor Town! Search for **ASEAN Motor Club** from in-game radio menu\n2. **Web Stream** — Listen online here!"
+    "content_markdown": "# AMC Radio\n\n## Radio Features\n\n- **Song requests** — Use `/song_request` in Discord or in the server.\n- **News & updates** — Stay informed about server events.\n- **Game guides** — Tips on tuning, earning money, and more.\n\n## How to Listen\n\nChoose your preferred method:\n\n1. **In-Game Radio** — AMC Radio is now built into Motor Town! Search for **ASEAN Motor Club** from in-game radio menu.\n2. **Web Stream** — Listen online here!"
   },
   "championship": {
     "head": "{siteName} | AMC Cup Season {seasonNo}",

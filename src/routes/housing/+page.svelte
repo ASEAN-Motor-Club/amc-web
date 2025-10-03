@@ -12,6 +12,12 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
 
+  const title = $derived(
+    siteLocale.msg['housing.head']({
+      siteName: siteLocale.msg.site_name_short(),
+    }),
+  );
+
   let houseData: HouseData | undefined = $state(undefined);
   let searchValue = $state('');
   let loading = $state(true);
@@ -87,11 +93,8 @@
 </script>
 
 <svelte:head>
-  <title
-    >{siteLocale.msg['housing.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    })}</title
-  >
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <CommonHead>{siteLocale.msg['housing.title']()}</CommonHead>

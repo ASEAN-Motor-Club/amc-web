@@ -756,16 +756,19 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
+
+  const title = $derived(
+    siteLocale.msg['map.head']({
+      siteName: siteLocale.msg.site_name_short(),
+    }),
+  );
 </script>
 
 <svelte:document onvisibilitychange={startPolling} />
 
 <svelte:head>
-  <title
-    >{siteLocale.msg['map.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    })}</title
-  >
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <div class="relative h-full w-full">

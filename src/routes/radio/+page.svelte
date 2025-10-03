@@ -16,14 +16,17 @@
   import tireTrackP720 from '$lib/assets/images/tire_track/tire_tracks_p_w720.avif';
   import tireTrackP1080 from '$lib/assets/images/tire_track/tire_tracks_p_w1080.avif';
   import tireTrackP1440 from '$lib/assets/images/tire_track/tire_tracks_p_w1440.avif';
+
+  const title = $derived(
+    siteLocale.msg['radio.head']({
+      siteName: siteLocale.msg.site_name_short(),
+    }),
+  );
 </script>
 
 <svelte:head>
-  <title
-    >{siteLocale.msg['radio.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    })}</title
-  >
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
 </svelte:head>
 
 <div class="bg-cover bg-fixed bg-center">
