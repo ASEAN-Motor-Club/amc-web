@@ -43,7 +43,7 @@
     'zh-Hant',
   ] as const;
 
-  const siteLocales = ['en', 'th'] as const;
+  const siteLocales = ['en', 'th', 'id'] as const;
 
   let darkMode = $state(false);
 

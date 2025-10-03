@@ -16,8 +16,8 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
-  import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
+  import { getMtLocale } from '$lib/utils/getMtLocale';
 
   export type SearchPoint = {
     guid?: string;
@@ -49,8 +49,8 @@
       .map((point) => ({
         ...point,
         pointType: PointType.Delivery,
-        supplyText: point.allSupply.map((i) => cargoName[i][mtLocale.l]).join(', '),
-        demandText: point.allDemand.map((i) => cargoName[i][mtLocale.l]).join(', '),
+        supplyText: point.allSupply.map((i) => getMtLocale(cargoName[i])).join(', '),
+        demandText: point.allDemand.map((i) => getMtLocale(cargoName[i])).join(', '),
       })),
   );
 
@@ -95,13 +95,13 @@
     const delivery = deliveryPoints
       .filter(
         (point) =>
-          point.name[mtLocale.l].toLowerCase().includes(search) ||
+          getMtLocale(point.name).toLowerCase().includes(search) ||
           point.supplyText.toLowerCase().includes(search) ||
           point.demandText.toLowerCase().includes(search),
       )
       .map((point) => ({
         ...point,
-        name: point.name[mtLocale.l],
+        name: getMtLocale(point.name),
       }));
 
     const housePoints = house.filter(
@@ -249,7 +249,7 @@
                   </div>
                 {/if}
                 <div class="text-xs text-neutral-400">
-                  {getLocationAtPoint(point.coord, mtLocale.l)}
+                  {getLocationAtPoint(point.coord)}
                 </div>
               </div>
             </a>

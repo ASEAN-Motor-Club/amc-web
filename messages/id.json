@@ -1,3 +1,257 @@
 {
-  "$schema": "https://inlang.com/schema/inlang-message-format"
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "format": {
+    "calendarFormat": "MMMM yyyy",
+    "dateFormat": "d MMM yyyy",
+    "timeFormat": "H:mm",
+    "dateTimeFormat": "d MMM yyyy H:mm",
+    "dateFull": "EEEE, d MMMM yyyy",
+    "scheduleFormat": {
+      "sameDay": "H:mm",
+      "sameYear": "d MMM H:mm",
+      "crossYear": "d MMM yyyy H:mm"
+    }
+  },
+  "site_name_short": "AMC",
+  "site_name": "ASEAN Motor Club",
+  "action": {
+    "confirm": "Konfirmasi",
+    "close": "Tutup",
+    "delete": "Hapus",
+    "cancel": "Batal"
+  },
+  "or": "atau",
+  "unknown": "Tidak Dikenal",
+  "track_editor": {
+    "title": "Editor Lintasan",
+    "head": "{siteName} | Editor Lintasan",
+    "head_editing": "{siteName} | Editor Lintasan | Mengedit {routeName}",
+    "validate": {
+      "name_empty": "Nama tidak boleh kosong.",
+      "name_must_be_string": "Nama rute harus string.",
+      "waypoint_invalid": "Titik arah {index} key {key}: Jenis tidak vaild, diharapkan {type}.",
+      "waypoints_min_length": "Jalur harus memiliki setidaknya {minLength} titik jalan.",
+      "waypoints_max_length": "Jalur tidak boleh melebihi {maxLength} titik jalan."
+    },
+    "select_track": {
+      "drag_drop": "Drag and Drop File",
+      "select_file": "Pilih File",
+      "load_from_clipboard": "Muat dari Papan Klip",
+      "loading_track": "Memuatkan trek...",
+      "error": {
+        "title": "Sesuatu ada yang salah",
+        "load_error": "Tidak dapat memuat file.",
+        "invalid_track": "Data trek invalid:",
+        "clipboard_empty": "Papan klip kosong atau tidak berisi data trek yang valid",
+        "cannot_load_track": "Tidak dapat memuat track",
+        "cannot_load_track_desc": "Gagal memuat data trek. Silakan periksa URL-nya."
+      }
+    },
+    "editor": {
+      "copy_to_clipboard_failed": {
+        "title": "Eror",
+        "desc": "Gagal menyalin data trek ke papan klip."
+      },
+      "copied": {
+        "title": "Tersalin",
+        "desc": "Trek disalin ke papan klip."
+      },
+      "normalize_waypoints": {
+        "title": "Normalisasi Titik Arah",
+        "desc": "Terkadang rotasi titik arah dimiringkan secara aneh. Ini akan menormalkan semua titik arah menjadi lurus ke atas (melakukan rotasi x,y = 0)."
+      },
+      "auto_rotate_waypoints": {
+        "title": "Putar Otomatis Titik Arah",
+        "desc": "Ini secara otomatis akan merotasi semua titik arah berdasarkan posisi tetangganya."
+      },
+      "delete_waypoint": {
+        "title": "Hapus Titik Arah",
+        "desc": "Apakah Anda yakin ingin menghapus titik arahg ini?"
+      },
+      "download_title": "Unduh {file}",
+      "original": "Asli",
+      "edited": "Diedit",
+      "change_btn": "Ubah ke {file}",
+      "clipboard": "Papan Klip",
+      "file": "File",
+      "selected_point": "Titik terpilih: {pointNumber}",
+      "hide_more": "sembunyikan lainnya",
+      "show_more": "tampilkan lainnya",
+      "save_changes": "Simpan Perubahan",
+      "delete": "Hapus",
+      "auto_rotate": "putar otomatis",
+      "rotation_z": "Rotasi (Z)",
+      "rotation_x": "Rotasi (X)",
+      "rotation_y": "Rotasi (Y)",
+      "translation_x": "Translasi (X)",
+      "translation_y": "Translasi (Y)",
+      "translation_z": "Translasi (Z)",
+      "scale_x": "Skala (X)",
+      "scale_y": "Skala (Y)",
+      "scale_z": "Skala (Z)",
+      "select_point_to_edit": "Pilih titik untuk mulai edit.",
+      "global_operations": "Operasi global",
+      "normalize": "Normalisasi",
+      "auto_rotate_all_gates": "Putar Otomatis Semua Gerbang",
+      "show_width": "Tampilkan Lebar",
+      "recenter": "Pusatkan Ulang"
+    }
+  },
+  "navbar": {
+    "server": "Server",
+    "tools": "Alat",
+    "track_editor": "Editor Lintasan",
+    "map": "Peta",
+    "housing": "Perumahan",
+    "industries": "Industri",
+    "radio": "Radio",
+    "wiki": "Wiki",
+    "amc_cup": "AMC Cup",
+    "details": "Detail",
+    "join_discord": "GABUNG DISCORD KAMI"
+  },
+  "map": {
+    "head": "{siteName} | Peta",
+    "point_of_interests": "Titik penting (klik untuk sembunyikan)",
+    "delivery_point": "Titik Pengantaran",
+    "house": "Rumah",
+    "player": "Pemain",
+    "player_name": "Nama Pemain",
+    "search_placeholder": "Cari lokasi",
+    "supply": "Pasokan",
+    "demand": "Permintaan",
+    "more_results": [
+      {
+        "declarations": ["input count", "local p = count: plural"],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "{count} hasil lagi, coba persempit pencarian",
+          "p=other": "{count} hasil lagi, coba persempit pencarian"
+        }
+      }
+    ],
+    "click_lock": "Klik kanan untuk mengunci jalur pasokan",
+    "click_info": "Klik kiri untuk info lebih lanjut",
+    "click_here_info": "Klik di sini untuk info lebih lanjut",
+    "player_info": {
+      "driving": "Mengemudi {vehicle}",
+      "on_foot": "Berjalan kaki/Penumpang",
+      "unknown_vehicle": "kendaraan tidak diketahui"
+    },
+    "pins_invalid": {
+      "title": "Pin Tidak Valid",
+      "desc": "Pin yang Anda berikan tidak valid."
+    },
+    "pins": "Pin",
+    "pin_labels": "Label Pin",
+    "pin_no": "Pin {index}",
+    "last_updated": "Terakhir diperbarui"
+  },
+  "home": {
+    "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",
+    "description": "Tempat para pemain yang ramah dan penuh semangat mengasah kemampuan mereka hingga batas. Balapan melintasi berbagai medan, desain livery menarik, dan atur mobil Anda untuk meraih kemenangan di event akhir pekan kami. Kami mengadakan balapan rutin, kompetisi kreatif, bahkan menyiarkan radio kami sendiri. Gabung Discord kami untuk terlibat dan tetap mengikuti perkembangan!",
+    "copyright": "© {year} ASEAN Motor Club. Semua hak dilindungi.",
+    "join_discord": "Gabung Discord",
+    "join_patreon": "Donasi di Patreon",
+    "listen_radio": "Dengarkan AMC Radio",
+    "regular_events": "Event Rutin",
+    "ig_live_radio": "Radio Langsung Dalam Game",
+    "ig_bot": "Bot Bantuan Dalam Game",
+    "friendly_community": "Komunitas Ramah",
+    "live_server_no_count": "Server Langsung",
+    "live_server": [
+      {
+        "declarations": ["input players", "local p = players: plural"],
+        "selectors": ["p"],
+        "match": {
+          "p=one": "Server Langsung - {players} Pemain Online",
+          "p=other": "Server Langsung - {players} Pemain Online"
+        }
+      }
+    ],
+    "iframe_discord": "Discord ASEAN Motor Club"
+  },
+  "not_finished": "Sedang dalam pembangunan, silakan kembali nanti!",
+  "housing": {
+    "head": "{siteName} | Perumahan",
+    "title": "Perumahan",
+    "size": "Ukuran",
+    "rent_price": "Harga Sewa",
+    "rent_left": "Sisa Sewa",
+    "depot": "Depo",
+    "depot_storage": "Penyimpanan Depo",
+    "vacant_house": "Rumah Kosong",
+    "vacant": "Kosong",
+    "owned_house": "Rumah milik {owner}",
+    "id": "ID",
+    "expired": "Kedaluwarsa",
+    "search_placeholder": "Cari rumah atau pemilik",
+    "sort": {
+      "name": "Nama",
+      "id": "ID",
+      "rent_left": "Sisa Sewa",
+      "depot_storage": "Penyimpanan Depo"
+    },
+    "cannot_load": {
+      "title": "Tidak dapat memuat data perumahan",
+      "desc": "Gagal memuat data perumahan. Silakan coba lagi nanti."
+    }
+  },
+  "view_on_map": "Lihat di Peta",
+  "industries": {
+    "head": "{siteName} | Industri",
+    "title": "Industri"
+  },
+  "radio": {
+    "head": "{siteName} | Radio",
+    "title": "Radio",
+    "station_name": "Radio ASEAN Motor Club",
+    "play": "Putar",
+    "pause": "Jeda",
+    "leave_warning": "Radio sedang diputar. Apakah Anda yakin ingin keluar?"
+  },
+  "radio_guide": {
+    "content_markdown": "# AMC Radio\n\n## Fitur Radio\n\n- **Request lagu** — Gunakan `/song_request` di Discord atau di server\n- **Berita & pembaruan** — Tetap mendapat info tentang event server\n- **Panduan game** — Tips tentang tuning, cara menghasilkan uang, dan lainnya\n\n## Cara Mendengarkan\n\nPilih metode yang Anda suka:\n\n1. **Radio Dalam Game** — AMC Radio kini tersedia di Motor Town! Cari **ASEAN Motor Club** di menu radio dalam game\n2. **Streaming Web** — Dengarkan secara online di sini!"
+  },
+  "championship": {
+    "head": "{siteName} | AMC Cup Musim {seasonNo}",
+    "event_details": "Detail Event",
+    "our_teams": "Tim Kami",
+    "event": {
+      "title": "Event pada {date}",
+      "more_info": "Info lebih lanjut",
+      "results": "Hasil",
+      "event_results": "Hasil {event}",
+      "dnf": "DNF",
+      "no_results": "Belum ada hasil",
+      "view_event": "Lihat Event"
+    },
+    "starting_from": "Mulai {date}",
+    "title": "Piala Kejuaraan AMC",
+    "season": "Musim {seasonNo}",
+    "standing": "Klasemen",
+    "team_standing": "Klasemen Tim",
+    "personal_standing": "Klasemen Individu",
+    "schedule": "Jadwal",
+    "team_logo_alt": "Logo {team}",
+    "results": {
+      "head": "{siteName} | Hasil",
+      "head_loaded": "{siteName} | Hasil {name}",
+      "fastest": "Terkencang!",
+      "cannot_load": {
+        "title": "Tidak dapat memuat event",
+        "desc": "Gagal memuat data event. Silakan coba lagi nanti."
+      },
+      "pts": "{points} poin"
+    }
+  },
+  "settings": {
+    "site_language": "Bahasa Situs",
+    "game_language": "Bahasa Game",
+    "theme": {
+      "title": "Tema",
+      "dark": "Tema Gelap",
+      "light": "Tema Terang"
+    }
+  }
 }

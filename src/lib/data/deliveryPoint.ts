@@ -9,10 +9,11 @@ import type {
   MtLocaleKey,
 } from './types';
 import outCargoKey from '$lib/assets/data/out_cargo_key.json';
+import residentName from '$lib/assets/data/resident_name.json';
 
 export interface DeliveryPointJson {
   type: DeliveryPointType;
-  name: Record<MtLocaleKey, string>;
+  name: Partial<Record<MtLocaleKey, string>>;
   coord: Vector3;
   guid: string;
   prod?: ProductionConfig[];
@@ -112,6 +113,7 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
 
   const point = {
     ...dp,
+    name: dp.type === 'Resident_C' ? residentName : dp.name,
     allSupply,
     allDemand,
     allSupplyKey,

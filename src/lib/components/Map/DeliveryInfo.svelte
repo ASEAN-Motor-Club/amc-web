@@ -8,11 +8,11 @@
   import { SvelteDate } from 'svelte/reactivity';
   import outCargoKey from '$lib/assets/data/out_cargo_key.json';
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
-  import { mtLocale } from '$lib/components/Locale/locale.svelte';
   import { getDeliveryPointInfo } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
   import { onDestroy } from 'svelte';
   import { debounce } from 'lodash-es';
+  import { getMtLocale } from '$lib/utils/getMtLocale';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -133,7 +133,7 @@
     </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
-        <div>{cargoName[item][mtLocale.l]}</div>
+        <div>{getMtLocale(cargoName[item])}</div>
         <div class="relative">
           <span class="absolute right-full">
             {#if deliveryPointInfoLoading}
@@ -159,7 +159,7 @@
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
         <div class="flex items-center gap-1.5">
-          {cargoName[item][mtLocale.l]}
+          {getMtLocale(cargoName[item])}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
             <Icon class="i-material-symbols:link-rounded -mb-0.5 text-yellow-500" size="xs" />
           {/if}

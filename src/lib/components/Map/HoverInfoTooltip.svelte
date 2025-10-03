@@ -13,6 +13,7 @@
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { mtLocale } from '../Locale/locale.svelte';
+  import { getMtLocale } from '$lib/utils/getMtLocale';
 
   export type HoverInfo = {
     pixelCoord: [number, number];
@@ -114,7 +115,7 @@
               })
             : siteLocale.msg['housing.vacant_house']()}
         {:else if hoverInfo.pointType === PointType.Delivery}
-          {hoverInfo.info.name[mtLocale.l]}
+          {getMtLocale(hoverInfo.info.name)}
         {:else}
           {hoverInfo.info.name}
         {/if}
@@ -131,7 +132,7 @@
       {/if}
       <div class="border-t-1 my-0.5 w-full border-neutral-100/20"></div>
       <div class="mb-0.5 text-xs font-semibold text-neutral-300">
-        {getLocationAtPoint(hoverInfo.info.coord, mtLocale.l)}
+        {getLocationAtPoint(hoverInfo.info.coord)}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">

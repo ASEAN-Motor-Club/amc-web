@@ -1,6 +1,6 @@
 import type { Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
-import type { MtLocaleKey } from './types';
+import { getMtLocale } from '$lib/utils/getMtLocale';
 
 const flagOrder = {
   '': 0,
@@ -25,7 +25,7 @@ const areaVolumeWithBBox = areaVolume.map((area) => {
   return { ...area, order: flagOrder[area.flag], box: { minX, minY, maxX, maxY } };
 });
 
-export const getLocationAtPoint = (point: Vector2, locale: MtLocaleKey) => {
+export const getLocationAtPoint = (point: Vector2) => {
   const matchArea: typeof areaVolumeWithBBox = [];
 
   for (const area of areaVolumeWithBBox) {
@@ -57,5 +57,5 @@ export const getLocationAtPoint = (point: Vector2, locale: MtLocaleKey) => {
   }
 
   matchArea.sort((a, b) => a.order - b.order);
-  return matchArea.map((area) => area.name[locale]).join(', ');
+  return matchArea.map((area) => getMtLocale(area.name)).join(', ');
 };
