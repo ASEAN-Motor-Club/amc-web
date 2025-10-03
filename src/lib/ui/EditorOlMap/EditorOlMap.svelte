@@ -256,7 +256,6 @@
 
           selectedGateSource.addFeatures([selectedGateFeature]);
         } else {
-          console.log(selectedPoint.yaw);
           const selectedFeature = new Feature({
             geometry: new Point(reprojectedPoint),
             yaw: selectedPoint.yaw ?? 0,

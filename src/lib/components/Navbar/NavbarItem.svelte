@@ -57,7 +57,6 @@
   };
 
   const handleMouseLeave = () => {
-    console.log('leave');
     closeSubMenu();
   };
 

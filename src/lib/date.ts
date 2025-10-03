@@ -24,7 +24,7 @@ export {
   min,
 } from 'date-fns';
 
-import { enUS, th } from 'date-fns/locale';
+import { enUS, th, id } from 'date-fns/locale';
 import { siteLocale } from './components/Locale/locale.svelte';
 
 export const getDateFnsLocale = () => {
@@ -32,8 +32,9 @@ export const getDateFnsLocale = () => {
   switch (locale) {
     case 'th':
       return th;
+    case 'id':
+      return id;
     case 'en':
-    default:
       return enUS;
   }
 };

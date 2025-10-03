@@ -43,9 +43,7 @@
     "supplyStorage": {
       "Burger_01_Signature": 30
     },
-    "dropPoint": [
-      "1de94ef442b4b0b3d9cc548396d67287"
-    ]
+    "dropPoint": ["1de94ef442b4b0b3d9cc548396d67287"]
   },
   {
     "type": "BurgerCounter_C",
@@ -90,9 +88,7 @@
     "supplyStorage": {
       "Burger_01_Signature": 30
     },
-    "dropPoint": [
-      "e77cab32401e868b93379d9b16774f9f"
-    ]
+    "dropPoint": ["e77cab32401e868b93379d9b16774f9f"]
   },
   {
     "type": "CoalDrop_Harbor_C",
@@ -2150,10 +2146,7 @@
       "Fuel": 500,
       "Oil": 500
     },
-    "dropPoint": [
-      "b7181c824de20853ed5aeca4664543df",
-      "fa89df514b876032f2161690911f3504"
-    ]
+    "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
   },
   {
     "type": "CrudeOil_Supplier_C",
@@ -2418,9 +2411,7 @@
     "supplyStorage": {
       "Cement": 300
     },
-    "dropPoint": [
-      "1c897c1a4e056d21e854f9ba55192758"
-    ]
+    "dropPoint": ["1c897c1a4e056d21e854f9ba55192758"]
   },
   {
     "type": "Factory_Cement_C",
@@ -2470,9 +2461,7 @@
     "supplyStorage": {
       "Cement": 300
     },
-    "dropPoint": [
-      "1c897c1a4e056d21e854f9ba55192758"
-    ]
+    "dropPoint": ["1c897c1a4e056d21e854f9ba55192758"]
   },
   {
     "type": "Factory_Cement_Drop_C",
@@ -2562,9 +2551,7 @@
       "CheeseBox": 100,
       "CheesePallet": 100
     },
-    "dropPoint": [
-      "2e9c137343574cefc1799d9b3cef645f"
-    ]
+    "dropPoint": ["2e9c137343574cefc1799d9b3cef645f"]
   },
   {
     "type": "Factory_Cheese_MilkDrop_C",
@@ -2954,9 +2941,7 @@
     "supplyStorage": {
       "Limestone": 300
     },
-    "dropPoint": [
-      "c03e3600420084f54b4bb2930a50fd26"
-    ]
+    "dropPoint": ["c03e3600420084f54b4bb2930a50fd26"]
   },
   {
     "type": "Factory_Limestone_Drop_C",
@@ -3102,9 +3087,7 @@
     "supplyStorage": {
       "WoodPlank_14ft_5t": 100
     },
-    "dropPoint": [
-      "f6ba0c254c1d2258122fc984769f43f9"
-    ]
+    "dropPoint": ["f6ba0c254c1d2258122fc984769f43f9"]
   },
   {
     "type": "Factory_Lumbermil_C",
@@ -3277,9 +3260,7 @@
       "PlasticPallete": 200,
       "PlasticPipes_6m": 200
     },
-    "dropPoint": [
-      "66548d0e48da78a9dfa5e392abb2cb8c"
-    ]
+    "dropPoint": ["66548d0e48da78a9dfa5e392abb2cb8c"]
   },
   {
     "type": "Factory_Quicklime_C",
@@ -3328,9 +3309,7 @@
     "supplyStorage": {
       "QuicklimePallet": 300
     },
-    "dropPoint": [
-      "317f5597493a20d14363b7b84c6af267"
-    ]
+    "dropPoint": ["317f5597493a20d14363b7b84c6af267"]
   },
   {
     "type": "Factory_Terra_C",
@@ -6586,9 +6565,7 @@
     "supplyStorage": {
       "Pizza_01_Premium": 30
     },
-    "dropPoint": [
-      "453bb67e4807743be1bceda3354d5a81"
-    ]
+    "dropPoint": ["453bb67e4807743be1bceda3354d5a81"]
   },
   {
     "type": "PizzaCounter_C",
@@ -6632,9 +6609,7 @@
     "supplyStorage": {
       "Pizza_01_Premium": 30
     },
-    "dropPoint": [
-      "b30d9a6a480fe326011b069b78ecf229"
-    ]
+    "dropPoint": ["b30d9a6a480fe326011b069b78ecf229"]
   },
   {
     "type": "Resident_C",

@@ -12,7 +12,6 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
-  import { mtLocale } from '../Locale/locale.svelte';
   import { getMtLocale } from '$lib/utils/getMtLocale';
 
   export type HoverInfo = {

@@ -139,6 +139,8 @@
 <svelte:window onbeforeunload={handleBeforeUnload} />
 
 {@render children()}
+<!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+<!-- svelte-ignore hydration_attribute_changed -->
 <audio
   bind:this={audio}
   src={streamUrl}
