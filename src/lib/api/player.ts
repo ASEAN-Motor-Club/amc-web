@@ -11,6 +11,10 @@ export const getPlayerRealtimePosition = (
     callback(data);
   };
 
+  window.addEventListener('beforeunload', () => {
+    evt.close();
+  });
+
   return () => {
     evt.close();
   };
