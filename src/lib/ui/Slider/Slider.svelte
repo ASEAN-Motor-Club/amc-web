@@ -199,13 +199,13 @@
       class={[
         'h-full w-full rounded-full shadow-md shadow-black/30 transition-colors',
         {
-          'bg-primary-700 hover:bg-primary-800': color === 'primary',
-          'bg-secondary-700 hover:bg-secondary-800': color === 'secondary',
-          'bg-info-700 hover:bg-info-800': color === 'info',
-          'bg-success-700 hover:bg-success-800': color === 'success',
-          'bg-warning-700 hover:bg-warning-800': color === 'warning',
-          'bg-error-700 hover:bg-error-800': color === 'error',
-          'bg-neutral-700 hover:bg-neutral-800': color === 'neutral',
+          'bg-primary-700 hover:bg-primary-500': color === 'primary',
+          'bg-secondary-700 hover:bg-secondary-500': color === 'secondary',
+          'bg-info-700 hover:bg-info-500': color === 'info',
+          'bg-success-700 hover:bg-success-500': color === 'success',
+          'bg-warning-700 hover:bg-warning-500': color === 'warning',
+          'bg-error-700 hover:bg-error-500': color === 'error',
+          'bg-neutral-700 hover:bg-neutral-500': color === 'neutral',
         },
       ]}
     >

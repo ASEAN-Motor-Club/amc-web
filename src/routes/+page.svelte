@@ -91,20 +91,18 @@
           {/each}
         </div>
         <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
-          <div class="rounded-md bg-black">
+          <Button
+            variant="contained"
+            class=" bg-[#5865f2] hover:bg-[color-mix(in_oklab,#5865f2_90%,white)] active:bg-[color-mix(in_oklab,#5865f2_95%,black)]"
+            tag="a"
+            href={PUBLIC_DISCORD_LINK}
+            target="_blank"
+            rel="noreferrer">{siteLocale.msg['home.join_discord']()}</Button
+          >
+          <div class="rounded-md bg-white">
             <Button
               variant="contained"
-              class=" bg-[#5865f2] hover:bg-[#5865f2]/80"
-              tag="a"
-              href={PUBLIC_DISCORD_LINK}
-              target="_blank"
-              rel="noreferrer">{siteLocale.msg['home.join_discord']()}</Button
-            >
-          </div>
-          <div class="rounded-md bg-black">
-            <Button
-              variant="contained"
-              class=" text-text bg-[#f96854] hover:bg-[#f96854]/80"
+              class=" text-text bg-[#f96854] hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)]"
               tag="a"
               href={PUBLIC_PATREON_LINK}
               target="_blank"

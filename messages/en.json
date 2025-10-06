@@ -94,7 +94,10 @@
       "normalize": "Normalize",
       "auto_rotate_all_gates": "Auto Rotate All Gates",
       "show_width": "Show Width",
-      "recenter": "Recenter"
+      "hide_width": "Hide Width",
+      "recenter": "Recenter",
+      "show_number": "Show Number",
+      "hide_number": "Hide Number"
     }
   },
   "navbar": {

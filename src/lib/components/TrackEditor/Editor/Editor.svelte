@@ -142,6 +142,10 @@
   });
 
   let gateMode = $state<boolean>(false);
+  let showNum = $state<boolean>(true);
+
+  const mapBtnClass =
+    ' text-text bg-white/80 hover:bg-white active:bg-neutral-100 backdrop-blur-lg';
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
@@ -155,13 +159,21 @@
       onSelectedPointMove={handlePointMove}
       zoomClass="!left-[unset] !top-[unset] bottom-4 right-4"
       {gateMode}
+      {showNum}
     />
     <div class="absolute bottom-4 left-4 flex gap-2">
-      <Button size="sm" onClick={() => map.zoomFit()}>
+      <Button size="sm" onClick={() => map.zoomFit()} class={mapBtnClass}>
         {siteLocale.msg['track_editor.editor.recenter']()}
       </Button>
-      <Button size="sm" onClick={() => (gateMode = !gateMode)}>
-        {siteLocale.msg['track_editor.editor.show_width']()}
+      <Button size="sm" onClick={() => (gateMode = !gateMode)} class={mapBtnClass}>
+        {gateMode
+          ? siteLocale.msg['track_editor.editor.hide_width']()
+          : siteLocale.msg['track_editor.editor.show_width']()}
+      </Button>
+      <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
+        {showNum
+          ? siteLocale.msg['track_editor.editor.hide_number']()
+          : siteLocale.msg['track_editor.editor.show_number']()}
       </Button>
     </div>
   </Card>

@@ -15,10 +15,14 @@
     colorYellow300,
     colorOrange500,
     colorYellow100,
+    textXs,
+    fontSans,
   } from '$lib/tw-var';
   import type { MapBrowserEvent } from 'ol';
   import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
   import Translate from 'ol/interaction/Translate';
+  import VectorLayer from 'ol/layer/Vector';
+  import { Fill, Stroke, Style, Text } from 'ol/style';
 
   export interface TrackPoint {
     coord: Vector2;
@@ -52,6 +56,10 @@
      */
     gateMode?: boolean;
     /*
+     * show point numbers
+     */
+    showNum?: boolean;
+    /*
      * Callback fired when a point is clicked
      */
     onPointClick?: (index: number | undefined) => void;
@@ -69,6 +77,7 @@
     selectedPoint,
     zoomClass,
     gateMode = false,
+    showNum = false,
   }: EditorOlMapProps = $props();
 
   const trackPointSource = new VectorSource();
@@ -106,6 +115,28 @@
       'icon-rotate-with-view': false,
       'icon-anchor': [0.5, 0.8],
       'icon-opacity': ['match', ['get', 'selected'], 1, 0.5, 1],
+    },
+  });
+
+  const numberLayerStyle = new Style({
+    text: new Text({
+      font: `${textXs} ${fontSans}`,
+      offsetY: -22,
+      fill: new Fill({
+        color: 'black',
+      }),
+      stroke: new Stroke({
+        color: 'white',
+        width: 3,
+      }),
+    }),
+  });
+
+  const trackPointNumberLayer = new VectorLayer({
+    source: trackPointSource,
+    style: (feature) => {
+      numberLayerStyle.getText()?.setText(((feature.get('index') as number) + 1).toString());
+      return numberLayerStyle;
     },
   });
 
@@ -402,6 +433,14 @@
     }
   });
 
+  $effect(() => {
+    if (showNum) {
+      trackPointNumberLayer.setVisible(true);
+    } else {
+      trackPointNumberLayer.setVisible(false);
+    }
+  });
+
   const layers = [
     lineLayer,
     arrowLayer,
@@ -410,6 +449,7 @@
     selectedPointLayer,
     gateLayer,
     selectedGateLayer,
+    trackPointNumberLayer,
   ];
 </script>
 
