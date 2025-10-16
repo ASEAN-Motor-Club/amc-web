@@ -49,8 +49,8 @@
       .map((point) => ({
         ...point,
         pointType: PointType.Delivery,
-        supplyText: point.allSupply.map((i) => getMtLocale(cargoName[i], i)).join(', '),
-        demandText: point.allDemand.map((i) => getMtLocale(cargoName[i], i)).join(', '),
+        supplyText: point.allSupply.map((i) => getMtLocale(cargoName[i])).join(', '),
+        demandText: point.allDemand.map((i) => getMtLocale(cargoName[i])).join(', '),
       })),
   );
 
