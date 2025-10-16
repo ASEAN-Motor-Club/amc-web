@@ -1,0 +1,1432 @@
+{
+  "1": {
+    "en": "Hana",
+    "ja": "ハナ",
+    "ko": "하나",
+    "zh-Hans": "工作"
+  },
+  "2": {
+    "en": "Stinger",
+    "ja": "スティンガー",
+    "ko": "스팅어",
+    "lt": "Stingeris",
+    "ru": "Стингер",
+    "zh-Hans": "毒刺"
+  },
+  "3": {
+    "en": "Maity",
+    "it": "Potente",
+    "ja": "マイティー",
+    "ko": "메이티",
+    "zh-Hans": "梅蒂"
+  },
+  "4": {
+    "en": "Spider",
+    "fi": "Hämähäkki",
+    "ja": "スパイダー",
+    "ko": "스파이더",
+    "lt": "Voras",
+    "pt-BR": "Aranha",
+    "ru": "Паук",
+    "tr": "Örümcek",
+    "zh-Hans": "蜘蛛"
+  },
+  "Tuscan": {
+    "en": "Tuscan",
+    "ja": "トスカーナ",
+    "ko": "투스칸",
+    "lt": "Toskana",
+    "zh-Hans": "托斯卡纳"
+  },
+  "Kart_01": {
+    "en": "Kart",
+    "cs": "Motokára",
+    "fi": "Mikroauto",
+    "hu": "Gokart",
+    "it": "Go-Kart",
+    "ja": "カート",
+    "ko": "카트",
+    "lt": "Kartas",
+    "pl": "Gokart",
+    "ru": "Карт",
+    "uk": "Карт",
+    "zh-Hans": "卡丁车",
+    "zh-Hant": "卡丁車"
+  },
+  "SCM_Kart_One": {
+    "en": "SCM Kart One",
+    "hu": "SCM Gokart Egy",
+    "ja": "SCMカート壱式",
+    "ko": "SCM 카트 원",
+    "nl": "SCM-kart één",
+    "ru": "SCM Карт Один",
+    "zh-Hans": "SCM卡丁车一号",
+    "zh-Hant": "SCM 卡丁車 One"
+  },
+  "Daffy": {
+    "en": "Daffy",
+    "ja": "ダフィー",
+    "ko": "다피",
+    "pt-BR": "Patolino",
+    "zh-Hans": "达菲"
+  },
+  "Micky": {
+    "en": "Micky",
+    "ja": "ミッキー",
+    "ko": "미키",
+    "lt": "Mikis",
+    "pt-BR": "Mickey",
+    "zh-Hans": "米奇"
+  },
+  "Stella": {
+    "en": "Stella",
+    "de": "Stern",
+    "fi": "Tähti",
+    "ja": "ステラ",
+    "ko": "스텔라",
+    "ru": "Стелла",
+    "zh-Hans": "星星"
+  },
+  "Koma": {
+    "en": "Koma",
+    "ja": "コマ",
+    "ko": "코마",
+    "zh-Hans": "科马"
+  },
+  "Trophy_Taxi": {
+    "en": "Trophy Taxi",
+    "es-ES": "Taxi Trophy",
+    "fi": "Trophy Taksi",
+    "it": "Taxi Trofeo",
+    "ja": "トロフィータクシー",
+    "ko": "트로피 택시",
+    "lt": "Trofėjinis taksi",
+    "nl": "Trofee Taxi",
+    "no": "Trofétaxi",
+    "pt-BR": "Táxi Trophy",
+    "ru": "Трофи Такси",
+    "sv": "Trofétaxi",
+    "tr": "Kupa Taksi",
+    "zh-Hans": "奖杯出租车",
+    "zh-Hant": "Trophy 計程車"
+  },
+  "Elisa": {
+    "en": "Elisa",
+    "ja": "エリサ",
+    "ko": "엘리사",
+    "lt": "Eliza",
+    "pl": "Eliza",
+    "ru": "Элиза",
+    "zh-Hans": "伊丽莎"
+  },
+  "Taxi_01": {
+    "en": "Elisa Taxi",
+    "es-ES": "Taxi Elisa",
+    "fi": "Elisa Taksi",
+    "ja": "エリサ タクシー",
+    "ko": "택시",
+    "lt": "Eliza taksi",
+    "pt-BR": "Táxi da Elisa",
+    "ru": "Такси",
+    "tr": "Elisa Taksi",
+    "uk": "Таксі Elisa",
+    "zh-Hans": "Elisa出租车",
+    "zh-Hant": "Elisa 計程車"
+  },
+  "Duke": {
+    "en": "Duke",
+    "hu": "Herceg",
+    "it": "di",
+    "ja": "デューク",
+    "ko": "듀크",
+    "lt": "Kunigaikštis",
+    "ru": "Дюк",
+    "zh-Hans": "杜克"
+  },
+  "Cervos": {
+    "en": "Cervos",
+    "fi": "Peura",
+    "ja": "セルボス",
+    "ru": "олень",
+    "uk": "Олень",
+    "zh-Hans": "切尔沃斯"
+  },
+  "Nimo": {
+    "en": "Nimo",
+    "ja": "ニモ",
+    "ko": "니모",
+    "zh-Hans": "尼莫"
+  },
+  "Nimo_Taxi": {
+    "en": "Nimo Taxi",
+    "ja": "ニモ Taxi",
+    "ko": "니모 Taxi",
+    "zh-Hans": "尼莫 Taxi"
+  },
+  "Stagon": {
+    "en": "Stagon",
+    "ja": "スタゴン",
+    "ko": "스태곤",
+    "ru": "Стагон",
+    "zh-Hans": "斯塔贡"
+  },
+  "Panther": {
+    "en": "Panther",
+    "cs": "Panter",
+    "es-419": "Pantera",
+    "it": "Pantera",
+    "ja": "パンサー",
+    "ko": "판터",
+    "lt": "Pantera",
+    "nl": "Panter",
+    "pl": "Pantera",
+    "zh-Hans": "豹"
+  },
+  "Vista": {
+    "en": "Vista",
+    "ja": "ビスタ",
+    "ko": "비스타",
+    "zh-Hans": "维斯塔"
+  },
+  "Zino": {
+    "en": "Zino",
+    "ja": "ジノ",
+    "ko": "지노",
+    "zh-Hans": "基诺"
+  },
+  "Magis": {
+    "en": "Magis",
+    "cs": "více",
+    "ja": "マジス",
+    "ko": "마지스",
+    "ru": "Магис",
+    "zh-Hans": "玛吉斯"
+  },
+  "Essam": {
+    "en": "Essam",
+    "ja": "エッサム",
+    "ko": "에삼",
+    "ru": "Эссам",
+    "zh-Hans": "埃萨姆"
+  },
+  "Cora": {
+    "en": "Cora",
+    "de": "Kora",
+    "ja": "コーラ",
+    "ko": "코라",
+    "ru": "Кора",
+    "zh-Hans": "科拉"
+  },
+  "EnfoGT": {
+    "en": "Enfo GT",
+    "ja": "エンフォGT",
+    "ru": "Енфо ГТ",
+    "zh-Hans": "恩福GT"
+  },
+  "Neo": {
+    "en": "Neo",
+    "ja": "NEO",
+    "ko": "네오",
+    "pt-BR": "NEO",
+    "uk": "Нео",
+    "zh-Hans": "新奥迪"
+  },
+  "Fortem": {
+    "en": "Fortem",
+    "es-ES": "Fuerte",
+    "fi": "Vahva",
+    "ja": "フォーテム",
+    "ko": "포르템",
+    "lt": "Kiaulė",
+    "ru": "Фортем",
+    "zh-Hans": "富腾"
+  },
+  "Zydro": {
+    "en": "Zydro",
+    "ja": "ザイドロ",
+    "ko": "지드로",
+    "zh-Hans": "齐德罗"
+  },
+  "Sports_01": {
+    "en": "Raton",
+    "es-419": "Ratón",
+    "es-ES": "Ratón",
+    "ja": "ラトン",
+    "lt": "Ratonas",
+    "ru": "Ратон",
+    "zh-Hans": "拉顿"
+  },
+  "Fox": {
+    "en": "Fox",
+    "hu": "Róka",
+    "ja": "フォックス",
+    "ko": "폭스",
+    "ru": "Лиса",
+    "zh-Hans": "狐狸"
+  },
+  "Mitage": {
+    "en": "Mitage",
+    "ja": "ミタージュ",
+    "ko": "미타지",
+    "zh-Hans": "米塔奇"
+  },
+  "Muhan": {
+    "en": "Muhan",
+    "ja": "ムハン",
+    "ko": "무한",
+    "zh-Hans": "慕寒"
+  },
+  "PoliceInterceptor_01": {
+    "en": "Police Interceptor 1",
+    "cs": "Policejní interceptor 1",
+    "de": "Polizei-Abfangjäger 1",
+    "es-ES": "Policía Interceptor 1",
+    "fi": "Poliisin Sieppaaja 1",
+    "hu": "Rendőrségi elfogó 1",
+    "it": "Intercettore di polizia 1",
+    "ja": "ポリスインターセプター1",
+    "ko": "경찰 인터셉터 1",
+    "lt": "Persekiotojas 1",
+    "nl": "politieauto Interceptor 1",
+    "pl": "Radiowóz pościgowy 1",
+    "pt-BR": "Interceptador de Polícia 1",
+    "ru": "Полицейский перехватчик 1",
+    "sv": "Polisbil 1",
+    "tr": "Polis Müdahalesi 1",
+    "uk": "Поліцейський перехоплювач 1",
+    "zh-Hans": "警察拦截器 1",
+    "zh-Hant": "警用攔截車 1"
+  },
+  "Elisa_Police": {
+    "en": "Elisa Police",
+    "de": "Elisa Polizei",
+    "es-ES": "Elisa Policía",
+    "fi": "Elisa poliisi",
+    "hu": "Rendőrségi Elisa",
+    "it": "Elisa Polizia",
+    "ja": "エリサ ポリス",
+    "ko": "엘리사 경찰차",
+    "lt": "Eliza policija",
+    "nl": "Elisa politie",
+    "pl": "Radiowóz Elisa",
+    "ru": "Полицейская Элиза",
+    "sv": "Elisa polisbil",
+    "tr": "Elisa Polis",
+    "vi": "Elisa bản cảnh sát",
+    "zh-Hans": "警用伊莉莎",
+    "zh-Hant": "Elisa 警車"
+  },
+  "Police_01": {
+    "en": "Police",
+    "cs": "Policie",
+    "de": "Polizei",
+    "es-419": "Policía",
+    "es-ES": "Coche de Policía",
+    "fi": "Poliisi",
+    "hu": "Rendőrség",
+    "it": "Polizia",
+    "ja": "警察",
+    "ko": "경찰",
+    "lt": "Policija",
+    "nl": "Politie",
+    "no": "Politi",
+    "pl": "Radiowóz",
+    "pt-BR": "Polícia",
+    "ru": "Полиция",
+    "sv": "Polis",
+    "tr": "Polis",
+    "uk": "Поліція",
+    "vi": "Cảnh sát",
+    "zh-Hans": "警车",
+    "zh-Hant": "警車"
+  },
+  "Muhan_Police": {
+    "en": "Muhan Police",
+    "cs": "Policejní Muhan",
+    "de": "Muhan Polizei",
+    "es-ES": "Muhan de Policía",
+    "hu": "Muhan Rendőrautó",
+    "it": "Polizia di Muhan",
+    "ja": "ムハン ポリス",
+    "ko": "무한 경찰",
+    "lt": "Policijos Muhan",
+    "nl": "muhan politie",
+    "pl": "Muhan policyjny",
+    "pt-BR": "Muhan Policial",
+    "ru": "Полицейский Muhan",
+    "sv": "Muhan polis",
+    "uk": "Muhan поліція",
+    "zh-Hans": "警用慕寒",
+    "zh-Hant": "Muhan 警車"
+  },
+  "Zydro_Police": {
+    "en": "Zydro Police",
+    "cs": "Policejní Zydro",
+    "de": "Zydro Polizei",
+    "es-419": "Policía de Zydro",
+    "es-ES": "Zydro de Policía",
+    "hu": "Zydro Rendőrautó",
+    "it": "Polizia di Zydro",
+    "ja": "ザイドロ ポリス",
+    "ko": "지드로 경찰",
+    "lt": "Policijos Zydro",
+    "nl": "Zydro politie",
+    "pl": "Zydro policyjny",
+    "pt-BR": "Zydro Policial",
+    "ru": "Полицейский Zydro",
+    "sv": "Zydro-polisen",
+    "uk": "Zydro поліція",
+    "zh-Hans": "警用齐德罗",
+    "zh-Hant": "Zydro 警車"
+  },
+  "Townie": {
+    "en": "Townie",
+    "ja": "タウニー",
+    "ko": "타우니",
+    "lt": "Miestietis",
+    "nl": "stadsgenoot",
+    "tr": "kasabalı",
+    "zh-Hans": "汤尼"
+  },
+  "Townie_Bus": {
+    "en": "Townie Bus",
+    "de": "Townie-Bus",
+    "es-419": "Autobús urbano",
+    "es-ES": "Autobús urbano",
+    "fi": "Townie Bussi",
+    "fr": "Bus urbain",
+    "hu": "Kisbusz",
+    "it": "Autobus di città",
+    "ja": "タウニー バス",
+    "ko": "타우니 버스",
+    "lt": "Autobusas Miestietis",
+    "nl": "Townie bus",
+    "pl": "Autobus miejski",
+    "pt-BR": "Ônibus Urbano",
+    "ru": "Городской автобус",
+    "sv": "Townie buss",
+    "tr": "kasaba otobüsü",
+    "uk": "Міський автобус",
+    "zh-Hans": "市区巴士",
+    "zh-Hant": "Townie 巴士"
+  },
+  "Liliput": {
+    "en": "Liliput",
+    "fr": "Lilliput",
+    "ja": "リリパット",
+    "ko": "릴리풋",
+    "lt": "Liliputas",
+    "nl": "Lilliput",
+    "zh-Hans": "利利普特"
+  },
+  "SchoolBus_01": {
+    "en": "SV200"
+  },
+  "Bus": {
+    "en": "Air City",
+    "fr": "AirCity",
+    "ja": "エアシティ",
+    "ko": "에어 시티",
+    "lt": "Oro miestas",
+    "nl": "Stadsbus",
+    "ru": "Эйр Сити",
+    "zh-Hans": "航空城"
+  },
+  "Dumbi": {
+    "en": "Dumbi",
+    "ja": "ダンビ",
+    "ko": "덤비",
+    "zh-Hans": "敦比"
+  },
+  "CheetahMk1": {
+    "en": "Cheetah Mk1",
+    "fi": "Gepardi Mk1",
+    "ja": "チーター Mk1",
+    "ko": "치타 Mk1",
+    "lt": "Gepardas Mk1",
+    "ru": "Гепард Mk1",
+    "tr": "Çita Mk1",
+    "uk": "Гепард Mk1",
+    "zh-Hans": "猎豹 Mk1"
+  },
+  "Pickup_02": {
+    "en": "Ranchy",
+    "ja": "ランチー",
+    "ko": "랜치",
+    "lt": "Fermeris",
+    "ru": "Ранчи",
+    "zh-Hans": "兰奇"
+  },
+  "Voltex": {
+    "en": "Voltex",
+    "ja": "ボルテックス",
+    "ko": "볼텍스",
+    "zh-Hans": "沃尔泰克斯"
+  },
+  "Mammoth": {
+    "en": "Mammoth",
+    "de": "Mammut",
+    "fr": "Mammouth",
+    "ja": "マンモス",
+    "ko": "맘모스",
+    "lt": "Mamutas",
+    "nl": "Mammoet",
+    "pl": "Mamut",
+    "zh-Hans": "长毛象"
+  },
+  "Kira_Flatbed": {
+    "en": "Kira Flatbed",
+    "de": "Kira Flachbett",
+    "es-ES": "Plataforma del Kira",
+    "fi": "Kira Lavetti",
+    "fr": "Kira Plateau",
+    "hu": "Kira lapos rakfelületű teherautó",
+    "it": "Pianale Kira",
+    "ja": "キラ 平ボディ",
+    "ko": "키라 평판",
+    "lt": "Kira plokščias",
+    "nl": "Kira Oplegger",
+    "pl": "Kira Platformowa",
+    "pt-BR": "Kira Reboque",
+    "ru": "Kira Платформа",
+    "sv": "Kira Flatbädd",
+    "tr": "Kira Düz Dorse",
+    "uk": "Kira Бортовий",
+    "zh-Hans": "喀拉平板",
+    "zh-Hant": "Kira 平板車"
+  },
+  "Kira_Box": {
+    "en": "Kira Box",
+    "es-419": "Caja Kira",
+    "es-ES": "Caja de Kira",
+    "fi": "Kira Umpikori",
+    "hu": "Kira dobozos teherautó",
+    "ja": "キラ ボックスカー",
+    "ko": "키라 박스",
+    "lt": "Kira būda",
+    "pl": "Kira Skrzyniowa",
+    "pt-BR": "Kira Baú",
+    "uk": "Kira Тентований",
+    "zh-Hans": "喀拉箱货",
+    "zh-Hant": "Kira 箱式貨車"
+  },
+  "Kira_Tanker": {
+    "en": "Kira Tanker",
+    "es-419": "Cisterna Kira",
+    "es-ES": "Kira Cisterna",
+    "fi": "Kira Säiliöauto",
+    "it": "Kira cisterna",
+    "ja": "キラ タンカー",
+    "ko": "키라 탱커",
+    "lt": "Kira cisterna",
+    "pl": "Kira Cysterna",
+    "pt-BR": "Kira Tanque",
+    "ru": "Кира Танкер",
+    "sv": "Kira tankbil",
+    "uk": "Kira цистерна",
+    "zh-Hans": "喀拉罐车",
+    "zh-Hant": "Kira 罐車"
+  },
+  "Tronko": {
+    "en": "Tronko",
+    "ja": "トロンコ",
+    "ko": "트롱코",
+    "zh-Hans": "特隆科"
+  },
+  "GarbageTruck_01": {
+    "en": "Compacty",
+    "ja": "コンパクティー",
+    "ko": "컴팩티",
+    "ru": "Компактность",
+    "zh-Hans": "垃圾车"
+  },
+  "MixerTruck_01": {
+    "en": "Mixi",
+    "ja": "ミキシー",
+    "ko": "믹시",
+    "zh-Hans": "搅拌车"
+  },
+  "SRT": {
+    "en": "SRT"
+  },
+  "SemiTruck_01": {
+    "en": "FL1",
+    "es-ES": "Camión FL1",
+    "ko": "세미 트럭"
+  },
+  "Titan": {
+    "en": "Titan",
+    "hu": "Titán",
+    "ja": "タイタン",
+    "ko": "타이탄",
+    "lt": "Titanas",
+    "pl": "tytan",
+    "ru": "титан",
+    "zh-Hans": "泰坦"
+  },
+  "Kuda": {
+    "en": "Kuda",
+    "ja": "クーダ",
+    "ko": "쿠다",
+    "zh-Hans": "库达"
+  },
+  "Campy": {
+    "en": "Campy",
+    "ja": "キャンピー",
+    "ko": "캠피",
+    "lt": "Kempis",
+    "ru": "Кампи",
+    "zh-Hans": "坎皮"
+  },
+  "FormulaSCM": {
+    "en": "Formula SCM",
+    "cs": "Formule SCM",
+    "de": "Formel SCM",
+    "es-419": "Fórmula SCM",
+    "es-ES": "Fórmula SCM",
+    "ja": "フォーミュラSCM",
+    "ko": "포뮬러 SCM",
+    "lt": "Formulė SCM",
+    "nl": "Formule SCM",
+    "pl": "Formuła SCM",
+    "pt-BR": "Fórmula SCM",
+    "sv": "Formel SCM",
+    "zh-Hans": "方程式SCM"
+  },
+  "Trophy_Air": {
+    "en": "Trophy Air"
+  },
+  "Savannah": {
+    "en": "Savannah",
+    "it": "Savana",
+    "ja": "サバンナ",
+    "ko": "사바나",
+    "lt": "Savana",
+    "pl": "Sawanna",
+    "uk": "Саванна",
+    "zh-Hans": "萨凡纳"
+  },
+  "Dory": {
+    "en": "Dory",
+    "ja": "ドリー",
+    "ko": "도리",
+    "lt": "Dorė",
+    "zh-Hans": "多莉"
+  },
+  "Jemusi": {
+    "en": "Jemusi",
+    "es-ES": "jemusi",
+    "ja": "ジェムシ",
+    "ko": "제무시",
+    "uk": "Джемусі",
+    "zh-Hans": "杰穆西"
+  },
+  "Jemusi_Tanker": {
+    "en": "Jemusi Tanker",
+    "de": "Jemusi Tanklastwagen",
+    "es-ES": "Jemusi cisterna",
+    "fr": "Citerne Jemusi",
+    "hu": "Jemusi Tartálykocsi",
+    "it": "Jemusi Cisterna",
+    "ja": "ジェムシ タンカー",
+    "ko": "제무시 탱커",
+    "lt": "Jemusi cisterna",
+    "pl": "Cysterna Jemusi",
+    "ru": "Jemusi Цистерна",
+    "uk": "Автоцистерна Джемусі",
+    "zh-Hans": "杰姆西油轮",
+    "zh-Hant": "Jemusi 罐車"
+  },
+  "Jemusi_Dump": {
+    "en": "Jemusi Dump",
+    "de": "Jemusi Müllwagen",
+    "es-ES": "Jemusi volquete",
+    "fr": "Jemusi Benne",
+    "hu": "Jemusi Dömper",
+    "it": "Ribaltabile Jemusi",
+    "ja": "ジェムシ ダンプ",
+    "ko": "제무시 덤프",
+    "lt": "Jemusi savivartis",
+    "pl": "Wywrotka Jemusi",
+    "ru": "Jemusi Самосвальный кузов",
+    "tr": "Jemusi Hafriyat",
+    "uk": "Самоскид Джемусі",
+    "zh-Hans": "杰穆西翻斗车",
+    "zh-Hant": "Jemusi 斗車"
+  },
+  "Jemusi_Semi": {
+    "en": "Jemusi Semi",
+    "es-ES": "jemusi Tractora",
+    "hu": "Jemusi Pótkocsi",
+    "ja": "ジェムシ セミ",
+    "ko": "제무시 Semi",
+    "lt": "Jemusi Vilkikas",
+    "pl": "Jemusi Ciągnik siodłowy",
+    "tr": "Jemusi Tır",
+    "uk": "Джемусі Семі",
+    "zh-Hans": "杰穆西 半挂车",
+    "zh-Hant": "Jemusi 曳引車"
+  },
+  "Lobo": {
+    "en": "Lobo",
+    "ja": "ロボ",
+    "ko": "로보",
+    "uk": "Лобо",
+    "zh-Hans": "鹿虎"
+  },
+  "Bora": {
+    "en": "Bora",
+    "ja": "ボラ",
+    "ko": "보라",
+    "ru": "Бора",
+    "zh-Hans": "博拉"
+  },
+  "Dabo": {
+    "en": "Dabo"
+  },
+  "DumpTruck_01": {
+    "en": "Dumpy",
+    "hu": "Zömök",
+    "ja": "ダンピー",
+    "ko": "덤피",
+    "lt": "Šiukšlius",
+    "nl": "Dumper",
+    "zh-Hans": "矮胖"
+  },
+  "Atlas_8x4_Dump": {
+    "en": "Atlas 8x4 Dump",
+    "es-ES": "Atlas 8x4 Volquete",
+    "fr": "Atlas 8x4 Décharger",
+    "hu": "Atlas 8x4 Dömper",
+    "it": "Atlas 8x4 Ribaltabile",
+    "ja": "アトラス 8x4 ダンプ",
+    "ko": "아틀라스 8x4 Dump",
+    "lt": "Atlas 8x4 Savivartis",
+    "pl": "Atlas 8x4 Wywrotka",
+    "sv": "Atlas 8x4 Dumpa",
+    "uk": "Атлас 8x4 Самоскид",
+    "zh-Hans": "阿特拉斯 8x4 翻斗车",
+    "zh-Hant": "Atlas 8x4 活動斗槽車"
+  },
+  "Atlas_6x2_Tanker": {
+    "en": "Atlas 6x2 Tanker",
+    "de": "Atlas 6x2 Tanklastwagen",
+    "es-ES": "Atlas 6x2 Cisterna",
+    "fr": "Atlas 6x2 Camion-citerne",
+    "hu": "Atlas 6x2 Tartálykocsi",
+    "it": "Atlas 6x2 Cisterna",
+    "ja": "アトラス 6x2 タンカー",
+    "ko": "아틀라스 6x2 Tanker",
+    "lt": "Atlas 6x2 Cisterna",
+    "pl": "Atlas 6x2 Cysterna",
+    "sv": "Atlas 6x2 Tankfartyg",
+    "uk": "Атлас 6x2 Танкер",
+    "zh-Hans": "阿特拉斯 6x2 油罐车",
+    "zh-Hant": "Atlas 6x2 罐車"
+  },
+  "Atlas_6x2_Dryvan": {
+    "en": "Atlas 6x2 Dry Van",
+    "es-ES": "Atlas 6x2 Caja cerrada",
+    "fr": "Atlas 6x2 Remorque fermée",
+    "it": "Atlas 6x2 Furgone Chiuso",
+    "ja": "アトラス 6x2 ドライバン",
+    "ko": "아틀라스 6x2 Dry Van",
+    "nl": "Atlas 6x2 Droge Trailer",
+    "pl": "Atlas 6x2 Naczepa zamknięta",
+    "pt-BR": "Atlas 6x2 Van",
+    "tr": "Atlas 6x2 Kapalı Kasa Dorse",
+    "uk": "Атлас 6x2 Тентований фургон",
+    "zh-Hans": "阿特拉斯 6x2 干货车",
+    "zh-Hant": "Atlas 6x2 箱式貨車"
+  },
+  "Atlas_4x2_Semi": {
+    "en": "Atlas 4x2 Semi",
+    "es-ES": "Atlas 4x2 Tractora",
+    "hu": "Atlas 4x2 Pótkocsi",
+    "ja": "アトラス 4x2 セミ",
+    "ko": "아틀라스 4x2 Semi",
+    "lt": "Atlas 4x2 Vilkikas",
+    "pl": "Atlas 4x2 Ciągnik siodłowy",
+    "tr": "Atlas 4x2 Tır",
+    "uk": "Атлас 4x2 Семі",
+    "zh-Hans": "阿特拉斯 4x2 半挂车",
+    "zh-Hant": "Atlas 4x2 曳引車"
+  },
+  "Atlas_6x4_Semi": {
+    "en": "Atlas 6x4 Semi",
+    "es-ES": "Atlas 6x4 Tractora",
+    "hu": "Atlas 6x4 Pótkocsi",
+    "ja": "アトラス 6x4 セミ",
+    "ko": "아틀라스 6x4 Semi",
+    "lt": "Atlas 6x4 Vilkikas",
+    "pl": "Atlas 6x4 Ciągnik siodłowy",
+    "tr": "Atlas 6x4 Tır",
+    "uk": "Атлас 6x4 Семі",
+    "zh-Hans": "阿特拉斯 6x4 半挂车",
+    "zh-Hant": "Atlas 6x4 曳引車"
+  },
+  "Atlas_6x2_Semi": {
+    "en": "Atlas 6x2 Semi",
+    "es-ES": "Atlas 6x2 Tractora",
+    "hu": "Atlas 6x2 Pótkocsi",
+    "ja": "アトラス 6x2 セミ",
+    "ko": "아틀라스 6x2 Semi",
+    "lt": "Atlas 6x2 Vilkikas",
+    "pl": "Atlas 6x2 Ciągnik siodłowy",
+    "tr": "Atlas 6x2 Tır",
+    "uk": "Атлас 6x2 Семі",
+    "zh-Hans": "阿特拉斯 6x2 半挂车",
+    "zh-Hant": "Atlas 6x2 曳引車"
+  },
+  "Kuda_LiveFishTank_4x2": {
+    "en": "Kuda LFT",
+    "hu": "Kuda Élőhal szállító",
+    "ja": "クーダ LFT",
+    "ko": "쿠다 활어차",
+    "tr": "Kuda LFT'si",
+    "zh-Hans": "库达LFT",
+    "zh-Hant": "Kuda 活魚車"
+  },
+  "Kuda_Container_6x2": {
+    "en": "Kuda Container 6x2",
+    "cs": "Kuda kontejner 6x2",
+    "es-ES": "Contenedor Kuda 6x2",
+    "hu": "Kuda Konténer 6x2",
+    "ja": "クーダ コンテナ 6x2",
+    "ko": "쿠다 컨테이너 6x2",
+    "lt": "Kuda konteineris 6x2",
+    "pl": "Kuda kontener 6x2",
+    "pt-BR": "Container Kuda 6x2",
+    "sv": "Kuda container 6x2",
+    "tr": "Kuda Konteyner 6x2",
+    "uk": "Kuda Контейнеровоз 6x2",
+    "zh-Hans": "库达货柜车 6x2",
+    "zh-Hant": "Kuda 貨櫃板車 6x2"
+  },
+  "Kuda_Dryvan_4x2": {
+    "en": "Kuda Dry Van",
+    "es-ES": "Kuda Caja cerrada",
+    "fr": "Kuda Remorque fermée",
+    "it": "Kuda Furgone Chiuso",
+    "ja": "クーダ ドライバン",
+    "ko": "쿠다 Dry Van",
+    "nl": "Kuda Droge Trailer",
+    "pl": "Kuda Naczepa zamknięta",
+    "pt-BR": "Kuda Van",
+    "tr": "Kuda Kapalı Kasa Dorse",
+    "uk": "Kuda Тентований фургон",
+    "zh-Hans": "库达 干货车",
+    "zh-Hant": "Kuda 箱式貨車"
+  },
+  "Kuda_Flatbed_4x2": {
+    "en": "Kuda Flatbed",
+    "ja": "クーダ Flatbed",
+    "ko": "쿠다 Flatbed",
+    "zh-Hans": "库达 Flatbed"
+  },
+  "Golima_Semi": {
+    "en": "Golima Semi",
+    "cs": "Galima Semi",
+    "es-ES": "Golima Tractora",
+    "hu": "Golima Pótkocsi",
+    "ja": "ゴリマ セミ",
+    "ko": "골리마 Semi",
+    "lt": "Golima Vilkikas",
+    "nl": "Naakt Semi",
+    "pl": "Golima Ciągnik siodłowy",
+    "tr": "Golima Tır",
+    "uk": "Голіма Семі",
+    "zh-Hans": "哥利马 半挂车",
+    "zh-Hant": "Golima 曳引車"
+  },
+  "Longhorn_Semi": {
+    "en": "Longhorn Semi",
+    "es-ES": "Longhorn Tractora",
+    "hu": "Longhorn Pótkocsi",
+    "ja": "Longhorn セミ",
+    "lt": "Longhorn Vilkikas",
+    "pl": "Longhorn Ciągnik siodłowy",
+    "tr": "Longhorn Tır",
+    "uk": "Longhorn Семі",
+    "zh-Hans": "Longhorn 半挂车",
+    "zh-Hant": "Longhorn 曳引車"
+  },
+  "Brutus_Tanker": {
+    "en": "Brutus Tanker",
+    "de": "Brutus-Tanklaster",
+    "es-ES": "Brutus Cisterna",
+    "fr": "Citerne Brutus",
+    "hu": "Brutus Tartálykocsi",
+    "ja": "ブルータス タンカー",
+    "ko": "브루투스 탱커",
+    "lt": "Brutus cisterna",
+    "pt-BR": "Caminhão-Tanque Brutus",
+    "sv": "Brutus tankbil",
+    "uk": "Brutus Цистерна",
+    "zh-Hans": "布鲁图斯油罐车",
+    "zh-Hant": "Brutus 罐車"
+  },
+  "Bongo": {
+    "en": "Bongo",
+    "ja": "ボンゴ",
+    "ko": "봉고",
+    "uk": "Бонго",
+    "zh-Hans": "邦戈"
+  },
+  "Bongo_Bus": {
+    "en": "Bongo",
+    "ja": "ボンゴ",
+    "ko": "봉고",
+    "uk": "Бонго",
+    "zh-Hans": "邦戈"
+  },
+  "Roadmaster": {
+    "en": "Roadmaster",
+    "ja": "ロードマスター",
+    "ko": "로드마스터",
+    "tr": "RoadMaster",
+    "uk": "Роадмастер",
+    "zh-Hans": "陆虎"
+  },
+  "Trailer_Flanker3": {
+    "en": "Flanker3",
+    "ja": "フランカー3",
+    "uk": "Фланкер3",
+    "zh-Hans": "旗舰3"
+  },
+  "Trailer_Flanker3S": {
+    "en": "Flanker3S",
+    "ja": "フランカー3S",
+    "uk": "Фланкер3S",
+    "zh-Hans": "旗舰3S"
+  },
+  "Trailer_Cotra_20_3": {
+    "en": "Cotra 20-3",
+    "ja": "コトラ 20-3",
+    "uk": "Котра 20-3",
+    "zh-Hans": "科特拉20-3"
+  },
+  "Trailer_Cotra_20_3L": {
+    "en": "Cotra 20-3L",
+    "ja": "コトラ 20ft-3軸",
+    "tr": "Kotra 20-3L",
+    "uk": "Котра 20-3л",
+    "zh-Hans": "科特拉20-3L"
+  },
+  "Trailer_Cotra_40_3": {
+    "en": "Cotra 40-3",
+    "ja": "コトラ 40-3",
+    "uk": "Котра 40-3",
+    "zh-Hans": "科特拉40-3"
+  },
+  "Trailer_Vamos3": {
+    "en": "Vamos3",
+    "es-ES": "vamos3",
+    "ja": "バモス3",
+    "uk": "Вамос3",
+    "zh-Hans": "瓦莫斯3"
+  },
+  "Trailer_Lomax": {
+    "en": "Lomax",
+    "ja": "ロマックス",
+    "ko": "로맥스",
+    "zh-Hans": "洛马克斯"
+  },
+  "Trailer_Carry": {
+    "en": "Carry"
+  },
+  "Trailer_Tanko40": {
+    "en": "Tanko 40",
+    "ja": "タンコ40",
+    "uk": "Цистерна 40т",
+    "zh-Hans": "坦克 40"
+  },
+  "Trailer_Eastwood": {
+    "en": "Eastwood",
+    "ja": "イーストウッド",
+    "uk": "Іствуд",
+    "zh-Hans": "伊斯特伍德"
+  },
+  "Trailer_01": {
+    "en": "30 Foot Dry Van Trailer",
+    "cs": "30 stop plochý přívěs",
+    "de": "Trockenfrachtkoffer 9m",
+    "es-419": "Remolque seco de 30 ft",
+    "es-ES": "Remolque caja de 30 pies",
+    "fr": "Remorque de vrac sec de 9m",
+    "hu": "30 Láb Hosszú Száraz Pótkocsi",
+    "it": "Rimorchio per il Dry Van da 30 piedi",
+    "ja": "30ft ボックストレーラー",
+    "lt": "30 pėdų sauso furgono priekaba",
+    "nl": "30 voet droge bestelwagen",
+    "pl": "30-stopowy furgon",
+    "pt-BR": "Reboque de Van Seca de 30 Pés",
+    "ru": "30 Футовый трейлер фургон",
+    "sv": "30 fots torr skåpbil",
+    "tr": "30ft Tenteli Römork",
+    "uk": "30-футовий критий напівпричіп",
+    "zh-Hans": "30 英尺干货拖车",
+    "zh-Hant": "30 英尺箱式拖車"
+  },
+  "Trailer_9m_Flat_01": {
+    "en": "30 Foot Container Trailer",
+    "cs": "30 stop kontejnerový přívěs",
+    "de": "Containerauflieger 9m",
+    "es-419": "Remolque cisterna de 30 ft",
+    "es-ES": "Remolque para contenedor de 30 pies",
+    "fr": "Remorque porte-conteneurs de 9m",
+    "hu": "30 Láb Hosszú Konténeres Pótkocsi",
+    "it": "30ft. Semirimorchio Portacontainer",
+    "ja": "コトラ 30ft",
+    "lt": "30 pėdų konteinerio priekaba",
+    "pl": "30-stopowa naczepa kontenerowa",
+    "pt-BR": "Reboque de contêiner",
+    "ru": "30-футовый контейнерный прицеп",
+    "sv": "30 fots containersläp",
+    "tr": "30ft Konteyner Römork",
+    "uk": "Контейнеровоз напівпричіп 30фт.",
+    "zh-Hans": "30英尺集装箱拖车",
+    "zh-Hant": "30 英尺貨櫃平板拖車"
+  },
+  "Trailer_30ft_Log_01": {
+    "en": "30 Foot Log Trailer",
+    "cs": "30 stop přívěs na klády",
+    "de": "Baumstammanhänger 9m",
+    "es-419": "Remolque para troncos de 30 ft",
+    "es-ES": "Remolque para troncos de 30 pies",
+    "fr": "Remorque à grumes de 9m",
+    "hu": "30 Láb Hosszú Rönkszállító Pótkocsi",
+    "it": "Rimorchio per legname da 10 metri",
+    "ja": "30ft 丸太トレーラー",
+    "lt": "30 pėdų rąsto priekaba",
+    "nl": "30 Foot Bomen Trailer",
+    "pl": "30-stopowa przyczepa do kłód",
+    "pt-BR": "Reboque de toras",
+    "ru": "30 Футовый трейлер лесовоз",
+    "sv": "30 fots timmervagn",
+    "tr": "30ft Odun Römork",
+    "uk": "30-фт Лісовоз",
+    "zh-Hans": "30 英尺原木拖车",
+    "zh-Hant": "30 英尺原木拖車"
+  },
+  "Trailer_30ft_Tanker_01": {
+    "en": "30Feet Tanker Trailer",
+    "cs": "30 stop cisternový přívěs",
+    "de": "Tankauflieger 9m",
+    "es-419": "Remolque cisterna de 30 ft",
+    "es-ES": "Remolque cisterna de 30 pies",
+    "fr": "Remorque-citerne de 9m",
+    "hu": "30 ft Tartályos pótkocsi",
+    "it": "30ft. Semicisterna",
+    "ja": "30ft タンカートレーラー",
+    "lt": "30 pėdų cisternos priekaba",
+    "pl": "30-stopowa cysterna",
+    "pt-BR": "Reboque de petróleo",
+    "ru": "30-футовый прицеп-цистерна",
+    "sv": "30 Feet Tanker Trailer",
+    "tr": "30ft Tanker Römork",
+    "uk": "Автоцистерна напівпричіп 30фт.",
+    "zh-Hans": "30英尺油罐车拖车",
+    "zh-Hant": "30 英尺罐拖車"
+  },
+  "Trailer_Oldum": {
+    "en": "Oldum",
+    "ja": "オルダム",
+    "uk": "Олдум",
+    "zh-Hans": "奥杜姆"
+  },
+  "Trailer_Ollok": {
+    "en": "Ollok",
+    "ja": "オロック",
+    "uk": "Оллок",
+    "zh-Hans": "奥洛克"
+  },
+  "Trailer_Olbe": {
+    "en": "Olbe",
+    "ja": "オルベ",
+    "uk": "Ольбе"
+  },
+  "Trailer_SPT1": {
+    "en": "SPT1"
+  },
+  "Trailer_LoboVan": {
+    "en": "LoboVan",
+    "es-ES": "LovoVan",
+    "ja": "ロボバン",
+    "ko": "로보밴",
+    "lt": "Lobo Furgonas",
+    "pl": "Van Lobo",
+    "uk": "ЛобоВан",
+    "zh-Hans": "鹿虎面包车"
+  },
+  "Trailer_Bulko": {
+    "en": "Bulko",
+    "ja": "バルコ",
+    "ko": "벌코",
+    "nl": "Broodje",
+    "uk": "Булко"
+  },
+  "Trailer_Dooly_S1": {
+    "en": "Linky S1",
+    "ja": "リンキー S1",
+    "nl": "Koppelschotel S1",
+    "zh-Hans": "链接 S1"
+  },
+  "Trailer_Dooly_D1": {
+    "en": "Linky D1",
+    "ja": "リンキー D1",
+    "nl": "Koppelschotel D1",
+    "zh-Hans": "链接 D1"
+  },
+  "Trailer_Dooly_S2": {
+    "en": "Linky S2",
+    "ja": "リンキー S2",
+    "nl": "Koppelschotel S2",
+    "zh-Hans": "链接 S2"
+  },
+  "Trailer_Dooly_D2": {
+    "en": "Linky D2",
+    "ja": "リンキー D2",
+    "nl": "Koppelschotel D2",
+    "zh-Hans": "链接 D2"
+  },
+  "Trailer_Shovan_7": {
+    "en": "Shovan 7",
+    "ja": "ショーバン 7",
+    "uk": "Шован 7"
+  },
+  "Trailer_Shovan_10": {
+    "en": "Shovan 10",
+    "ja": "ショーバン 10",
+    "uk": "Шован 10"
+  },
+  "Trailer_Shobed_7": {
+    "en": "Shobed 7"
+  },
+  "Trailer_Shobed_10": {
+    "en": "Shobed 10"
+  },
+  "Trailer_Shotan_7": {
+    "en": "Shotan 7"
+  },
+  "Trailer_Shotan_10": {
+    "en": "Shotan 10"
+  },
+  "Trailer_Hobber_Lead": {
+    "en": "Hobber Lead",
+    "ja": "ホバー Lead",
+    "pt-BR": "Fresador Lead",
+    "uk": "Хоббер Lead",
+    "zh-Hans": "料斗拖车 Lead"
+  },
+  "Trailer_Hobber_Rear": {
+    "en": "Hobber Rear",
+    "ja": "ホバー Rear",
+    "pt-BR": "Fresador Rear",
+    "uk": "Хоббер Rear",
+    "zh-Hans": "料斗拖车 Rear"
+  },
+  "Trailer_Flaber_Lead": {
+    "en": "Flaber Lead"
+  },
+  "Trailer_Flaber_Rear": {
+    "en": "Flaber Rear"
+  },
+  "Trailer_Taber_Lead": {
+    "en": "Taber Lead"
+  },
+  "Trailer_Taber_Rear": {
+    "en": "Taber Rear"
+  },
+  "Trailer_Conter_Lead_20ft": {
+    "en": "Conter Lead 20ft"
+  },
+  "Trailer_Conter_Rear_20ft": {
+    "en": "Conter Rear 20ft"
+  },
+  "Trailer_Conter_Lead_40ft": {
+    "en": "Conter Lead 40ft"
+  },
+  "Trailer_Conter_Rear_40ft": {
+    "en": "Conter Rear 40ft"
+  },
+  "Trailer_Small_Cage_01": {
+    "en": "Small Cage Trailer",
+    "cs": "Malý klecový přívěs",
+    "de": "Kleiner Käfiganhänger",
+    "es-419": "Remolque de jaula pequeña",
+    "es-ES": "Remolque de jaula pequeña",
+    "fr": "Petite remorque grillagée",
+    "hu": "Kis Ketreces Utánfutó",
+    "it": "Rimorchio con Gabbia Piccolo",
+    "ja": "小型ケージトレーラー",
+    "lt": "Maža narvelinė priekaba",
+    "nl": "Aanhangwagen met kleine kooi",
+    "pl": "Mała przyczepa klatkowa",
+    "pt-BR": "Reboque Gaiola pequeno",
+    "ru": "Малый трейлер с сетчатым бортом",
+    "sv": "Liten Grindsläpvagn",
+    "tr": "Küçük Kafes Römorku",
+    "uk": "Маленький причіп з сіткою",
+    "zh-Hans": "小型笼式拖车",
+    "zh-Hant": "小型籠式拖車"
+  },
+  "Trailer_Middle_Tanker_01": {
+    "en": "5t Tanker Trailer",
+    "cs": "5t cisternový přívěs",
+    "de": "5t Tankauflieger",
+    "es-419": "Remolque cisterna de 5t",
+    "es-ES": "Remolque cisterna 5t",
+    "fr": "Remorque citerne 5t",
+    "hu": "5t tartályos pótkocsi",
+    "it": "Rimorchio cisterna 5t",
+    "ja": "5tタンカートレーラー",
+    "lt": "5t cisternos priekaba",
+    "nl": "5 ton tankwagen",
+    "pl": "Cysterna 5t",
+    "pt-BR": "Reboque Petroleiro 5t",
+    "ru": "5-тонный прицеп-цистерна",
+    "tr": "5t Tanker Römorku",
+    "uk": "Автоцистерна причіп 5т.",
+    "zh-Hans": "5吨罐车半挂车",
+    "zh-Hant": "5t 罐拖車"
+  },
+  "Trailer_Dinky_Flatbed": {
+    "en": "Dinky Flatbed"
+  },
+  "Trailer_Dinky_Dryvan": {
+    "en": "Dinky Dry Van",
+    "es-ES": "Dinky Caja cerrada",
+    "fr": "Dinky Remorque fermée",
+    "it": "Dinky Furgone Chiuso",
+    "ja": "Dinky ドライバン",
+    "nl": "Dinky Droge Trailer",
+    "pl": "Dinky Naczepa zamknięta",
+    "pt-BR": "Dinky Van",
+    "tr": "Dinky Kapalı Kasa Dorse",
+    "uk": "Dinky Тентований фургон",
+    "zh-Hans": "Dinky 干货车",
+    "zh-Hant": "Dinky 箱式貨車"
+  },
+  "Trailer_Dinky_Tanker": {
+    "en": "Dinky Tanker",
+    "de": "Dinky Tanklastwagen",
+    "es-ES": "Dinky Cisterna",
+    "fr": "Dinky Camion-citerne",
+    "hu": "Dinky Tartálykocsi",
+    "it": "Dinky Cisterna",
+    "ja": "Dinky タンカー",
+    "lt": "Dinky Cisterna",
+    "pl": "Dinky Cysterna",
+    "sv": "Dinky Tankfartyg",
+    "uk": "Dinky Танкер",
+    "zh-Hans": "Dinky 油罐车",
+    "zh-Hant": "Dinky 罐車"
+  },
+  "Nuke": {
+    "en": "Nuke",
+    "ja": "ニューク",
+    "ko": "뉴크",
+    "uk": "Нюк",
+    "zh-Hans": "中国重汽"
+  },
+  "Nuke_Police": {
+    "en": "Nuke Police"
+  },
+  "Nuke_Taxi": {
+    "en": "Nuke Taxi"
+  },
+  "Pulse": {
+    "en": "Pulse",
+    "ja": "パルス",
+    "nl": "Klopping",
+    "uk": "Пульс",
+    "zh-Hans": "脉冲"
+  },
+  "Monarch": {
+    "en": "Monarch"
+  },
+  "Monarch_Limo": {
+    "en": "Monarch Limo"
+  },
+  "Van_01": {
+    "en": "Vani",
+    "ja": "バニー",
+    "ko": "바니",
+    "lt": "Vanis",
+    "zh-Hans": "外部"
+  },
+  "Boxy": {
+    "en": "Boxy",
+    "ja": "ボックシー",
+    "ko": "박시",
+    "lt": "Dėžutė",
+    "ru": "Бокси",
+    "zh-Hans": "驷方"
+  },
+  "Tavan": {
+    "en": "Tavan"
+  },
+  "Kira_Van": {
+    "en": "Kira Van",
+    "es-419": "kira Van",
+    "es-ES": "Furgoneta Kira",
+    "fi": "Kira Pakettiauto",
+    "fr": "Kira Van",
+    "hu": "Kira furgon",
+    "it": "Van Kira",
+    "ja": "キラ バン",
+    "ko": "키라 밴",
+    "lt": "Kira furgonas",
+    "nl": "Kira Busje",
+    "ru": "Kira Фургон",
+    "uk": "Kira Фургон",
+    "zh-Hans": "喀拉面包",
+    "zh-Hant": "Kira 廂型車"
+  },
+  "Scooty": {
+    "en": "Scooty",
+    "fr": "Scoot",
+    "ja": "スクーティー",
+    "ko": "스쿠티",
+    "lt": "Skuteris",
+    "zh-Hans": "斯库蒂"
+  },
+  "Gunthoo": {
+    "en": "Gunthoo",
+    "ja": "ガントー",
+    "ko": "군투",
+    "zh-Hans": "冈图"
+  },
+  "Zero": {
+    "en": "Zero",
+    "ja": "ゼロ",
+    "ko": "제로",
+    "nl": "Nul",
+    "tr": "Sıfır",
+    "uk": "Зеро",
+    "zh-Hans": "零式"
+  },
+  "Gunthoo_Police": {
+    "en": "Gunthoo Police",
+    "cs": "Policejní Gunthoo",
+    "de": "Gunthoo Polizei",
+    "es-ES": "Gunthoo de Policía",
+    "fr": "Police de Gunthoo",
+    "hu": "Gunthoo rendőrség",
+    "it": "Polizia di Gunthoo",
+    "ja": "ガントー ポリス",
+    "ko": "군투 경찰",
+    "lt": "Gunthoo policija",
+    "nl": "Gunthoo politie",
+    "pl": "Policja Gunthoo",
+    "pt-BR": "Polícia de Gunthoo",
+    "sv": "Gunthoo-polisen",
+    "uk": "Gunthoo Поліція",
+    "zh-Hans": "冈图警摩托车",
+    "zh-Hant": "Gunthoo 警車"
+  },
+  "Dory_Wrecker": {
+    "en": "Dory Wrecker"
+  },
+  "TowTruck_01": {
+    "en": "Pulio",
+    "it": "Puleggia",
+    "ja": "プリオ",
+    "ko": "풀리오",
+    "zh-Hans": "普利欧"
+  },
+  "Kira_RollbackTow": {
+    "en": "Kira Rollback Tow",
+    "es-ES": "Kira Grúa plataforma",
+    "fr": "Dépanneuse Kira Rollback",
+    "it": "Kira Rollback",
+    "ja": "キラ 積載レッカー車",
+    "pl": "Kira Laweta z wciągarką",
+    "pt-BR": "Reboque de Plataforma Kira",
+    "ru": "Kira со сдвижной платформой",
+    "tr": "Kira Kayar Kasa Çekici",
+    "uk": "Евакуатор Кіра",
+    "zh-Hans": "Kira 救援拖车",
+    "zh-Hant": "Kira 傾斜式拖救車"
+  },
+  "Brutus_Wrecker": {
+    "en": "Brutus Wrecker",
+    "es-ES": "Camión Grúa Brutus",
+    "fr": "Dépanneuse Brutus",
+    "it": "Demolitore Bruto",
+    "ja": "ブルータス レッカー",
+    "ko": "브루투스 구난차",
+    "lt": "Brutas Griovėjas",
+    "pl": "Holownik Brutus",
+    "pt-BR": "Caminhão de Reboque Brutus",
+    "sv": "Brutus bärgningsbil",
+    "tr": "Brutus çekici",
+    "uk": "Brutus Евакуатор",
+    "zh-Hans": "布鲁图斯清障车",
+    "zh-Hant": "Brutus 拖救車"
+  },
+  "GolimaRotator": {
+    "en": "Golima Rotator",
+    "cs": "Galima Rotator",
+    "ja": "ゴリマ ローテーター",
+    "ko": "골리마 특수 구난차",
+    "nl": "Naakt Rotator",
+    "uk": "Голіма Ротатор",
+    "zh-Hans": "哥利马 Rotator"
+  },
+  "Vulcan": {
+    "en": "Vulcan"
+  },
+  "Terra": {
+    "en": "Terra",
+    "ja": "テラ",
+    "uk": "Терра",
+    "zh-Hans": "泰拉"
+  },
+  "Ambi": {
+    "en": "Ambi",
+    "ja": "アンビ",
+    "ko": "앰비",
+    "ru": "Амби",
+    "zh-Hans": "安比"
+  },
+  "Tavan_Ambulance": {
+    "en": "Tavan Ambulance",
+    "de": "Tavan Krankenwagen",
+    "es-419": "Tavan Ambulancia",
+    "es-ES": "Tavan Ambulancia",
+    "fi": "Tavan Ambulanssi",
+    "hu": "Tavan Mentőautó",
+    "it": "Tavan Ambulanza",
+    "ja": "Tavan 救急車",
+    "lt": "Tavan Greitoji pagalba",
+    "nl": "Tavan ambulance",
+    "pl": "Tavan Karetka",
+    "pt-BR": "Tavan Ambulância",
+    "ru": "Tavan Скорая помощь",
+    "tr": "Tavan Ambulans",
+    "uk": "Tavan Швидка допомога",
+    "zh-Hans": "Tavan 救护车",
+    "zh-Hant": "Tavan 救護車"
+  },
+  "Brutus_Ambulance": {
+    "en": "Brutus Ambulance",
+    "de": "Brutus Krankenwagen",
+    "es-419": "Brutus Ambulancia",
+    "es-ES": "Brutus Ambulancia",
+    "fi": "Brutus Ambulanssi",
+    "hu": "Brutus Mentőautó",
+    "it": "Brutus Ambulanza",
+    "ja": "Brutus 救急車",
+    "lt": "Brutus Greitoji pagalba",
+    "nl": "Brutus ambulance",
+    "pl": "Brutus Karetka",
+    "pt-BR": "Brutus Ambulância",
+    "ru": "Brutus Скорая помощь",
+    "tr": "Brutus Ambulans",
+    "uk": "Brutus Швидка допомога",
+    "zh-Hans": "Brutus 救护车",
+    "zh-Hant": "Brutus 救護車"
+  }
+}

@@ -1,4 +1,4 @@
-import cargoNameJson from '$lib/assets/data/cargo_name.json';
+import cargoNameJson from '$lib/assets/data/out_cargo_name.json';
 import cargoMetadataJson from '$lib/assets/data/out_cargo_metadata.json';
 import type { DeliveryCargo, DeliveryCargoType, DeliveryCargoKey, MtLocaleKey } from './types';
 

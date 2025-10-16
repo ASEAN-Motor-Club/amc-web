@@ -1,5 +1,5 @@
 <script lang="ts">
-  import vehiclesName from '$lib/assets/data/vehicles_name.json';
+  import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';
