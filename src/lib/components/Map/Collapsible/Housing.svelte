@@ -11,12 +11,15 @@
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { goto } from '$app/navigation';
+  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
-  const title = $derived(
-    siteLocale.msg['housing.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    }),
-  );
+  interface Props {
+    fullScreen: boolean;
+  }
+
+  const { fullScreen }: Props = $props();
 
   let houseData: HouseData | undefined = $state(undefined);
   let searchValue = $state('');
@@ -45,6 +48,11 @@
 
   const onSearch: FormEventHandler<HTMLInputElement> = (event) => {
     searchValue = event.currentTarget.value;
+    if (clientSearchParamsGet('hf')) {
+      const newParams = new SvelteURLSearchParams(clientSearchParams());
+      newParams.delete('hf');
+      goto(`?${newParams.toString()}`);
+    }
   };
 
   const filteredHouses = $derived(
@@ -90,42 +98,50 @@
         return filteredHouses;
     }
   });
+
+  $effect(() => {
+    if (clientSearchParamsGet('hf')) {
+      searchValue = clientSearchParamsGet('hf') || '';
+    }
+  });
 </script>
 
-<svelte:head>
-  <title>{title}</title>
-  <meta name="og:title" content={title} />
-</svelte:head>
-
-<CommonHead>{siteLocale.msg['housing.title']()}</CommonHead>
-<div class="flex flex-col justify-between gap-2 px-8 sm:flex-row">
-  <TextInput
-    value={searchValue}
-    placeholder={siteLocale.msg['housing.search_placeholder']()}
-    name="search"
-    type="search"
-    class="w-full min-w-0 sm:max-w-80 sm:flex-1"
-    additionalAttributes={{
-      oninput: onSearch,
-    }}
-    disabled={!houseData}
-  />
-  <Select
-    value={sortValue}
-    name="sort"
-    onChange={handleSortChange}
-    class="sm:max-w-45 w-full flex-shrink-0"
-  >
-    <SelectOption id="name" value={siteLocale.msg['housing.sort.name']()} />
-    <SelectOption id="id" value={siteLocale.msg['housing.sort.id']()} />
-    <SelectOption id="rentLeft" value={siteLocale.msg['housing.sort.rent_left']()} />
-    <!-- <SelectOption id="depotStorage" value={siteLocale.msg['housing.sort.depot_storage']()} /> -->
-  </Select>
-</div>
-<div
-  class="grid justify-items-stretch gap-8 p-8 sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]"
->
-  {#each sortedHouses as house (house.name)}
-    <HouseCard {house} {houseData} highlight={searchValue} {loading} />
-  {/each}
+<div class="flex h-full flex-col">
+  <CommonHead>{siteLocale.msg['housing.title']()}</CommonHead>
+  <div class={['flex flex-col justify-between gap-2 px-8 pb-8', fullScreen && 'sm:flex-row']}>
+    <TextInput
+      value={searchValue}
+      placeholder={siteLocale.msg['housing.search_placeholder']()}
+      name="search"
+      type="search"
+      class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
+      additionalAttributes={{
+        oninput: onSearch,
+      }}
+      disabled={!houseData}
+    />
+    <Select
+      value={sortValue}
+      name="sort"
+      onChange={handleSortChange}
+      class={['w-full flex-shrink-0', fullScreen && 'sm:max-w-45']}
+    >
+      <SelectOption id="name" value={siteLocale.msg['housing.sort.name']()} />
+      <SelectOption id="id" value={siteLocale.msg['housing.sort.id']()} />
+      <SelectOption id="rentLeft" value={siteLocale.msg['housing.sort.rent_left']()} />
+      <!-- <SelectOption id="depotStorage" value={siteLocale.msg['housing.sort.depot_storage']()} /> -->
+    </Select>
+  </div>
+  <div class="overflow-y-scroll">
+    <div
+      class={[
+        'grid justify-items-stretch gap-8 px-8 pb-8',
+        fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]',
+      ]}
+    >
+      {#each sortedHouses as house (house.name)}
+        <HouseCard {house} {houseData} highlight={searchValue} {loading} />
+      {/each}
+    </div>
+  </div>
 </div>

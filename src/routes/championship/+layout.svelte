@@ -1,6 +1,5 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { page } from '$app/state';
   import { getEvents } from '$lib/api/championship';
   import type { ScheduledEvent } from '$lib/api/types';
   import EventModal from '$lib/components/Championship/EventModal.svelte';
@@ -9,6 +8,7 @@
   import { onMount } from 'svelte';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { isValid } from '$lib/date';
+  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   let events = $state<ScheduledEvent[]>([]);
   let abortController: AbortController = new AbortController();
@@ -19,19 +19,19 @@
   };
 
   const closeEvent = () => {
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.delete('date');
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
 
   const openResultsModal = (event: ScheduledEvent) => {
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.append('event', event.id.toString());
     goto(`?${newParams.toString()}`, { noScroll: true });
   };
 
   const closeResultsModal = () => {
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.delete('event');
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
@@ -50,7 +50,7 @@
   });
 
   const openedEventDate = $derived.by(() => {
-    const dateParam = typeof window !== 'undefined' ? page.url.searchParams.get('date') : null;
+    const dateParam = clientSearchParamsGet('date');
     if (dateParam) {
       const d = new Date(dateParam);
       if (isValid(d)) {
@@ -61,7 +61,7 @@
   });
 
   const resultsModalEvent = $derived.by(() => {
-    const eventId = typeof window !== 'undefined' ? page.url.searchParams.get('event') : null;
+    const eventId = clientSearchParamsGet('event');
     if (eventId) {
       return events.find((e) => e.id === +eventId);
     }

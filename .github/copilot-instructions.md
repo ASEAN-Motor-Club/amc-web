@@ -8,7 +8,7 @@ This is a **SvelteKit static site** using modern Svelte 5 with TypeScript, built
 
 - **Svelte 5**: Uses new runes syntax (`$state`, `$derived`, `$effect`, `$props`) and snippets
 - **UnoCSS with Wind4 preset**: Tailwind CSS v4.0 syntax with Svelte Scoped integration
-- **Paraglide i18n**: All user-facing text must use `msg['message.key']()` from `$lib/paraglide/messages`
+- **Paraglide i18n**: All user-facing text must use `siteLocale.msg['message.key']()` from `$lib/components/Locale/locale.svelte`
 - **Static generation**: Build outputs to `build/` directory with prerendered pages
 
 ## Critical Development Patterns
@@ -81,26 +81,26 @@ Prefer `-rounded` suffix variants when available.
 ```bash
 # Development
 npm run dev                 # Start dev server
+npm run dev:host           # Start dev server with host access
 npm run storybook          # Component development
 
 # Build & Deploy
-npm run build              # Builds site + runs CSS optimization script
-npm run paraglide:compile  # Regenerate i18n messages (auto-runs in build)
+npm run build              # Build the static site
+npm run preview            # Preview built site locally
+npm run preview:host       # Preview built site with host access
+npm run paraglide:compile  # Regenerate i18n messages
 
 # Quality Checks
-npm run checklist          # Runs format, lint, check, test
+npm run checklist          # Runs format, lint, paraglide:compile, check, test
 npm run format             # Prettier formatting
 npm run lint               # ESLint + Prettier check
+npm run lint:fix           # Auto-fix ESLint issues
 npm run check              # TypeScript + Svelte check
+npm run check:watch        # TypeScript + Svelte check in watch mode
 npm run test               # Run all tests
-npm run check:uno-classes  # Check for non-UnoCSS classes in build output
+npm run test:unit          # Run unit tests in watch mode
+npm run build:storybook    # Build Storybook for deployment
 ```
-
-## Build Process Specifics
-
-1. **CSS Optimization**: `scripts/remove-unused-css-vars.js` runs post-build to remove unused CSS variables and update file hashes
-2. **Static Assets**: Development uses `static_dev/`, production uses `static/`
-3. **Hooks**: `src/hooks.server.ts` handles UnoCSS placeholders and Paraglide middleware
 
 ## Project Structure Essentials
 
@@ -112,8 +112,12 @@ src/
 │   ├── data/           # Static data and type definitions
 │   ├── api/            # API interaction logic
 │   ├── paraglide/      # Generated i18n files (don't edit manually)
+│   ├── assets/         # Static assets and resources
+│   ├── schema/         # Zod schemas and validation
+│   ├── types/          # TypeScript type definitions
+│   ├── utils/          # Utility functions
 │   ├── tw-var.ts       # Exported color variables for programmatic use
-│   └── utils/          # Utility functions
+│   └── date.ts         # Date utility functions
 ├── routes/             # SvelteKit file-based routing
 └── stories/            # Storybook stories
 ```
@@ -126,16 +130,17 @@ src/
 
 ## Common Gotchas
 
-1. **UnoCSS Classes**: Must be statically analyzable - no variables in `<script>` blocks
-2. **UnoCSS Compatibility**: Some Tailwind classes might not work in UnoCSS - use `npm run check:uno-classes` to verify
+2. **UnoCSS Compatibility**: Some Tailwind classes might not work in UnoCSS - refer to Wind4 preset documentation
 3. **i18n**: Never hardcode user-facing strings - always use `siteLocale.msg['key']()`
 4. **Svelte 5**: Use new runes syntax, not legacy `$:` reactive statements
 5. **Context**: UI components often depend on parent context (InputGroup, Select, etc.)
-6. **Static Generation**: All data must be available at build time or loaded client-side
+6. **Static Generation**: Site must be statically generable
 
 ## External Dependencies
 
-- **mt-map**: Custom mapping library from GitHub (`github:beam41/mt-map`)
-- **OpenLayers**: For advanced map functionality
-- **Lottie**: For animations
+- **OpenLayers (ol)**: For advanced map functionality
+- **Lottie Web**: For animations
 - **Zod**: For schema validation
+- **date-fns**: For date manipulation and formatting
+- **GSAP**: For advanced animations and transitions
+- **Lodash ES**: For utility functions

@@ -2,13 +2,13 @@
   import Editor from '$lib/components/TrackEditor/Editor/Editor.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { page } from '$app/state';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
+  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 
   onMount(() => {
     if (!trackData.value) {
-      const params = page.url.searchParams.toString();
+      const params = clientSearchParams().toString();
       goto('/track' + (params && `?${params}`), { replaceState: true });
     }
   });

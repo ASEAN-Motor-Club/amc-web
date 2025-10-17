@@ -1,18 +1,18 @@
 <script lang="ts">
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
-  import type { DeliveryCargo, DeliveryCargoType } from '$lib/data/types';
+  import type { DeliveryCargo } from '$lib/data/types';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate } from 'svelte/reactivity';
-  import outCargoKey from '$lib/assets/data/out_cargo_key.json';
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
-  import { getDeliveryPointInfo } from '$lib/api/delivery';
+  import { startDeliveryPointPolling } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
   import { onDestroy } from 'svelte';
   import { debounce } from 'lodash-es';
   import { getMtLocale } from '$lib/utils/getMtLocale';
+  import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/getInventoryAmount';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -32,28 +32,8 @@
 
   let deliveryPointInfo = $state<DeliveryPointInfo | undefined>(undefined);
 
-  const getInventoryAmount = (cargoKey: DeliveryCargo, isInput: boolean) => {
-    if (!deliveryPointInfo) {
-      return 0;
-    }
-
-    const inventory = isInput
-      ? deliveryPointInfo.data.inputInventory
-      : deliveryPointInfo.data.outputInventory;
-    if (!Array.isArray(inventory)) {
-      return 0;
-    }
-
-    if (cargoKey.startsWith('_T')) {
-      const cargoKeys = outCargoKey[cargoKey as DeliveryCargoType];
-      return inventory.reduce(
-        (sum, item) => sum + (cargoKeys.includes(item.cargoKey) ? item.amount : 0),
-        0,
-      );
-    }
-
-    return inventory.find((i) => i.cargoKey === cargoKey)?.amount ?? 0;
-  };
+  const getInventoryAmount = (cargoKey: DeliveryCargo, isInput: boolean) =>
+    utilGetInventoryAmount(deliveryPointInfo, cargoKey, isInput);
 
   const date = new SvelteDate();
 
@@ -76,21 +56,18 @@
 
   let guid = $derived(hoverInfo.info.guid);
 
-  let abortController: AbortController | undefined;
+  let stopPolling: (() => void) | undefined;
 
   const debouncedGetInfo = debounce((guid: string) => {
-    abortController?.abort();
-    abortController = new AbortController();
-    getDeliveryPointInfo(guid, abortController.signal)
-      .then((info) => {
-        if (info) {
-          deliveryInfoCaches.set(guid, info);
-        }
-        deliveryPointInfo = info;
-      })
-      .finally(() => {
-        deliveryPointInfoLoading = false;
-      });
+    stopPolling?.();
+
+    stopPolling = startDeliveryPointPolling(guid, (info) => {
+      if (info) {
+        deliveryInfoCaches.set(guid, info);
+      }
+      deliveryPointInfo = info;
+      deliveryPointInfoLoading = false;
+    });
   }, 200);
 
   $effect(() => {
@@ -121,7 +98,7 @@
 
   onDestroy(() => {
     debouncedGetInfo.cancel();
-    abortController?.abort();
+    stopPolling?.();
   });
 </script>
 
@@ -129,7 +106,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
-      {siteLocale.msg['map.supply']()}
+      {siteLocale.msg['delivery.supply']()}
     </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
@@ -154,7 +131,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
-      {siteLocale.msg['map.demand']()}
+      {siteLocale.msg['delivery.demand']()}
     </div>
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
@@ -180,13 +157,18 @@
     {/each}
   </div>
 {/if}
-<div class="text-xs">
-  <span class="font-semibold">{siteLocale.msg['map.last_updated']()}:</span>
-  {#if deliveryPointInfoLoading}
-    <span class="animate-pulse">...</span>
-  {:else}
-    {formatDistanceStrict(lastUpdated, date.getTime(), {
-      addSuffix: true,
-    })}
-  {/if}
-</div>
+{#if differenceInSeconds(date.getTime(), lastUpdated) > 30}
+  <div class="text-xs">
+    <span class="font-semibold">
+      <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
+      {siteLocale.msg['map.last_updated']()}:
+      {#if deliveryPointInfoLoading}
+        <span class="animate-pulse">...</span>
+      {:else}
+        {formatDistanceStrict(lastUpdated, date.getTime(), {
+          addSuffix: true,
+        })}
+      {/if}
+    </span>
+  </div>
+{/if}

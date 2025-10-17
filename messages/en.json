@@ -106,7 +106,7 @@
     "track_editor": "Track Editor",
     "map": "Map",
     "housing": "Housing",
-    "industries": "Industries",
+    "delivery": "Delivery",
     "radio": "Radio",
     "wiki": "Wiki",
     "amc_cup": "AMC Cup",
@@ -121,8 +121,6 @@
     "player": "Player",
     "player_name": "Player Name",
     "search_placeholder": "Search for a location",
-    "supply": "Supply",
-    "demand": "Demand",
     "more_results": [
       {
         "declarations": ["input count", "local p = count: plural"],
@@ -148,7 +146,12 @@
     "pins": "Pins",
     "pin_labels": "Pin Labels",
     "pin_no": "Pin {index}",
-    "last_updated": "Last updated"
+    "last_updated": "Last updated",
+    "side_menu": {
+      "housing": "HOUSE",
+      "map": "MAP",
+      "jobs": "JOBS"
+    }
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
@@ -201,9 +204,12 @@
     }
   },
   "view_on_map": "View on Map",
-  "industries": {
-    "head": "{siteName} | Industries",
-    "title": "Industries"
+  "delivery": {
+    "head": "{siteName} | Delivery",
+    "title": "Delivery",
+    "supply": "Supply",
+    "demand": "Demand",
+    "delivery": "Delivery"
   },
   "radio": {
     "head": "{siteName} | Radio",
@@ -256,6 +262,9 @@
       "dark": "Dark Theme",
       "light": "Light Theme"
     }
+  },
+  "jobs": {
+    "head": "{siteName} | Jobs"
   },
   "locales": {
     "cs": "Čeština",

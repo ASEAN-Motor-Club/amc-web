@@ -103,7 +103,6 @@
     "track_editor": "Editor Lintasan",
     "map": "Peta",
     "housing": "Perumahan",
-    "industries": "Industri",
     "radio": "Radio",
     "wiki": "Wiki",
     "amc_cup": "AMC Cup",
@@ -118,8 +117,6 @@
     "player": "Pemain",
     "player_name": "Nama Pemain",
     "search_placeholder": "Cari lokasi",
-    "supply": "Pasokan",
-    "demand": "Permintaan",
     "more_results": [
       {
         "declarations": ["input count", "local p = count: plural"],
@@ -198,9 +195,9 @@
     }
   },
   "view_on_map": "Lihat di Peta",
-  "industries": {
-    "head": "{siteName} | Industri",
-    "title": "Industri"
+  "delivery": {
+    "supply": "Pasokan",
+    "demand": "Permintaan"
   },
   "radio": {
     "head": "{siteName} | Radio",

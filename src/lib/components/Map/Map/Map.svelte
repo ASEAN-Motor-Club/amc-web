@@ -4,14 +4,14 @@
   import VectorSource from 'ol/source/Vector';
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PointType, type PlayerData } from '$lib/components/Map/types';
-  import { getStaticPoints } from '$lib/components/Map/staticPoints';
-  import HoverInfoTooltip, { type HoverInfo } from '$lib/components/Map/HoverInfoTooltip.svelte';
+  import { PointType, type PlayerData } from './types';
+  import { getStaticPoints } from './staticPoints';
+  import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
     textXs,
     fontSans,
@@ -23,6 +23,8 @@
     colorYellow500,
     colorRed200,
     colorRed400,
+    colorRed500,
+    colorEmerald500,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -32,7 +34,7 @@
     type DeliveryPoint,
   } from '$lib/data/deliveryPoint';
   import { goto } from '$app/navigation';
-  import Search, { type SearchPoint } from '$lib/components/Map/Search.svelte';
+  import Search, { type SearchPoint } from './Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { DeliveryLineType, type HouseData } from '$lib/api/types';
   import { getHousingData } from '$lib/api/housing';
@@ -41,18 +43,23 @@
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-  import { page } from '$app/state';
-  import { houses } from '$lib/data/house';
   import { isMouse } from '$lib/utils/media.svelte';
   import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { SvelteSet } from 'svelte/reactivity';
+  import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
   import * as z from 'zod/mini';
+  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
-  const { deliveryPointLayer, residentPointLayer, houseLayer } = getStaticPoints();
+  const {
+    deliveryPointFeatures,
+    residentPointFeatures,
+    houseFeatures,
+    deliveryPointLayer,
+    residentPointLayer,
+    houseLayer,
+  } = getStaticPoints();
 
-  // LocalStorage utility functions for layer state persistence
   const DISABLED_DATA_STORAGE_KEY = 'mapDisabledLayer';
 
   let pinsData = $state<Pins>([]);
@@ -66,8 +73,14 @@
     source: pinsSource,
     style: {
       'circle-radius': 5,
-      'circle-fill-color': ['match', ['get', 'hover'], 1, colorRed200, colorRed400],
-      'circle-stroke-color': 'black',
+      'circle-fill-color': [
+        'match',
+        ['get', 'hover'],
+        1,
+        colorRed200,
+        ['match', ['get', 'selected'], 1, colorRed500, colorRed400],
+      ],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -106,8 +119,14 @@
     source: playerPointSource,
     style: {
       'circle-radius': 4,
-      'circle-fill-color': ['match', ['get', 'hover'], 1, colorEmerald200, colorEmerald400],
-      'circle-stroke-color': 'black',
+      'circle-fill-color': [
+        'match',
+        ['get', 'hover'],
+        1,
+        colorEmerald200,
+        ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
+      ],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -337,7 +356,7 @@
   const deliveryLayerData = $state({
     id: layerId.Delivery,
     name: siteLocale.msg['map.delivery_point'](),
-    layer: [deliveryPointLayer, residentPointLayer],
+    layer: [deliveryPointLayer, residentPointLayer, deliveryLineLayer],
     enabled: true,
     color: '!bg-yellow-500 hover:!bg-yellow-400',
   });
@@ -468,9 +487,7 @@
           updateDeliveryLine(deliveryPoint);
         }
       }
-      if (hoverPoint !== lockPoint) {
-        hoverPoint?.set('hover', false);
-      }
+      hoverPoint?.set('hover', false);
       hoverPoint = currentHoverPoint;
     }
     hoverInfo = currentHoverInfo;
@@ -478,6 +495,7 @@
 
   let playerData: PlayerData[] = $state([]);
   let playerStickyFocusGuid: string | undefined = undefined;
+  let playerSelectingGuid: string | undefined = undefined;
   let initialFocus = true;
 
   const setPlayerPoints = (data: PlayerData[]) => {
@@ -489,6 +507,7 @@
             geometry: new Point(playerData.geometry),
             pointType: PointType.Player,
             info: playerData,
+            selected: playerData.guid === playerSelectingGuid ? 1 : 0,
           }),
       ),
     );
@@ -522,17 +541,6 @@
 
   let stopPolling: (() => void) | undefined = undefined;
 
-  const startPolling = () => {
-    stopPolling?.();
-    if (document.hidden || !playerLayerData.enabled) {
-      stopPolling = undefined;
-      playerData = [];
-      setPlayerPoints([]);
-      return;
-    }
-    stopPolling = getPlayerRealtimePositionCall();
-  };
-
   $effect(() => {
     stopPolling?.();
     if (document.hidden || !playerLayerData.enabled) {
@@ -549,20 +557,43 @@
     };
   });
 
+  const clearSelection = () => {
+    houseFeatures.forEach((house) => {
+      house.set('selected', 0);
+    });
+    deliveryPointFeatures.forEach((d) => {
+      d.set('selected', 0);
+    });
+    residentPointFeatures.forEach((d) => {
+      d.set('selected', 0);
+    });
+    playerSelectingGuid = undefined;
+    playerStickyFocusGuid = undefined;
+    deliveryLineSource.clear(true);
+    lockPoint?.set('selected', false);
+    lockPoint = undefined;
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('house');
+    newParams.delete('delivery');
+    newParams.delete('player');
+    goto(`?${newParams.toString()}`);
+  };
+
+  let dontFocus = false;
+
   const handleMapRightClick = () => {
-    if (hoverPoint === undefined || hoverPoint.get('pointType') !== PointType.Delivery) {
-      deliveryLineSource.clear(true);
-      lockPoint?.set('hover', false);
-      lockPoint = undefined;
-      return;
-    } else {
-      lockPoint?.set('hover', false);
-      if (hoverPoint.get('pointType') === PointType.Delivery) {
-        lockPoint = hoverPoint;
-        deliveryLineSource.clear(true);
-        const deliveryPoint = lockPoint.get('info') as DeliveryPoint;
-        updateDeliveryLine(deliveryPoint);
-      }
+    clearSelection();
+
+    if (hoverPoint && hoverPoint.get('pointType') === PointType.Delivery) {
+      const newParams = new SvelteURLSearchParams(clientSearchParams());
+      newParams.delete('house');
+      newParams.delete('player');
+      newParams.set('delivery', hoverPoint.get('info').guid ?? '');
+      dontFocus = true;
+      goto(`?${newParams.toString()}`, {
+        noScroll: true,
+        keepFocus: true,
+      });
     }
   };
 
@@ -570,11 +601,21 @@
     if (!hoverInfo) {
       return;
     }
-
-    if (hoverInfo.pointType === PointType.House) {
-      goto(`/housing`);
-    } else if (hoverInfo.pointType === PointType.Delivery) {
-      goto(`/industries/${hoverInfo.info.guid}`);
+    if (hoverInfo.pointType === PointType.Delivery) {
+      const newParams = new SvelteURLSearchParams(clientSearchParams());
+      newParams.delete('house');
+      newParams.delete('player');
+      newParams.set('menu', `delivery/${hoverInfo.info.guid}`);
+      newParams.set('delivery', hoverInfo.info.guid);
+      goto(`/map?${newParams.toString()}`);
+    } else if (hoverInfo.pointType === PointType.House) {
+      const newParams = new SvelteURLSearchParams(clientSearchParams());
+      newParams.delete('delivery');
+      newParams.delete('player');
+      newParams.set('menu', 'housing');
+      newParams.set('house', hoverInfo.info.name);
+      newParams.set('hf', hoverInfo.info.name);
+      goto(`/map?${newParams.toString()}`);
     }
   };
 
@@ -587,22 +628,32 @@
   };
 
   const handleClick = (e: MapBrowserEvent) => {
+    clearSelection();
+
     if (isMouse.current) {
-      deliveryLineSource.clear(true);
-      lockPoint?.set('hover', false);
-      lockPoint = undefined;
       e.map.forEachFeatureAtPixel(
         e.pixel,
         (feature) => {
           const f = feature as Feature;
           const type = f.get('pointType') as PointType | undefined;
           if (type === PointType.Delivery) {
-            // const info = f.get('info') as DeliveryPoint;
-            // goto(`/industries/${info.guid}`);
+            const info = f.get('info') as DeliveryPoint;
+            const newParams = new SvelteURLSearchParams(clientSearchParams());
+            newParams.delete('house');
+            newParams.delete('player');
+            newParams.set('menu', `delivery/${info.guid}`);
+            newParams.set('delivery', info.guid);
+            goto(`/map?${newParams.toString()}`);
             return true;
           }
           if (type === PointType.House) {
-            goto(`/housing`);
+            const newParams = new SvelteURLSearchParams(clientSearchParams());
+            newParams.delete('delivery');
+            newParams.delete('player');
+            newParams.set('menu', 'housing');
+            newParams.set('house', f.get('info').name);
+            newParams.set('hf', f.get('info').name);
+            goto(`/map?${newParams.toString()}`);
             return true;
           }
 
@@ -639,10 +690,6 @@
         setPlayerPoints(playerData);
         pinLabelsLayer.setVisible(pinLabelsLayerData.enabled);
       }
-    } else if (layer.id === layerId.Delivery) {
-      deliveryLineSource.clear(true);
-      lockPoint?.set('hover', false);
-      lockPoint = undefined;
     }
     for (const l of layer.layer) {
       l.setVisible(layer.enabled);
@@ -652,25 +699,15 @@
   let map: OlMap;
 
   const handleSearchClick = (point: SearchPoint) => {
-    switch (point.pointType) {
-      case PointType.Delivery:
-        onHideShowClick(deliveryLayerData, true);
-        break;
-      case PointType.House:
-        onHideShowClick(houseLayerData, true);
-        break;
-      case PointType.Player:
-        onHideShowClick(playerLayerData, true);
-        break;
-      case PointType.Pin:
-        onHideShowClick(pinsLayerData, true);
-        break;
-    }
-    if (point.pointType === PointType.Player) {
+    if (point.pointType === PointType.Pin) {
+      onHideShowClick(pinsLayerData, true);
+    } else if (point.pointType === PointType.Player) {
       playerStickyFocusGuid = point.guid;
+      playerSelectingGuid = point.guid;
       initialFocus = true;
     } else {
       playerStickyFocusGuid = undefined;
+      playerSelectingGuid = undefined;
     }
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
@@ -690,53 +727,105 @@
 
   const { showModal } = getMsgModalContext();
 
-  onMount(() => {
-    const housing = page.url.searchParams.get('housing');
+  let init = true;
+
+  $effect(() => {
+    houseFeatures.forEach((house) => {
+      house.set('selected', 0);
+    });
+    deliveryPointFeatures.forEach((d) => {
+      d.set('selected', 0);
+    });
+    residentPointFeatures.forEach((d) => {
+      d.set('selected', 0);
+    });
+    playerSelectingGuid = undefined;
+    playerStickyFocusGuid = undefined;
+    const cacheInit = init;
+    init = false;
+    const cacheDontFocus = dontFocus;
+    dontFocus = false;
+
+    const housing = clientSearchParamsGet('house');
     if (housing) {
-      const house = houses.find((h) => h.name === housing);
+      untrack(() => {
+        onHideShowClick(houseLayerData, true);
+      });
+      const house = houseFeatures.find((h) => h.get('info').name === housing);
       if (house) {
-        map.centerOn(reProjectPoint([house.coord.x, house.coord.y]), 0);
+        house.set('selected', 1);
+        if (!cacheDontFocus) {
+          map.centerOn(
+            house.getGeometry()?.getCoordinates() as [number, number],
+            cacheInit ? 0 : undefined,
+          );
+        }
       }
       return;
     }
-    const deliveryGuid = page.url.searchParams.get('delivery');
+
+    const deliveryGuid = clientSearchParamsGet('delivery');
     if (deliveryGuid) {
-      const deliveryPoint = deliveryPointsMap.get(deliveryGuid);
+      const deliveryPoint =
+        deliveryPointFeatures.find((d) => d.get('info').guid === deliveryGuid) ??
+        residentPointFeatures.find((d) => d.get('info').guid === deliveryGuid);
       if (deliveryPoint) {
-        map.centerOn(reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]), 0);
+        untrack(() => {
+          onHideShowClick(deliveryLayerData, true);
+        });
+        lockPoint = deliveryPoint;
+        deliveryPoint.set('selected', true);
+        deliveryLineSource.clear(true);
+        const deliveryPointInfo = lockPoint.get('info') as DeliveryPoint;
+        updateDeliveryLine(deliveryPointInfo);
+        if (!cacheDontFocus) {
+          map.centerOn(
+            deliveryPoint.getGeometry()?.getCoordinates() as [number, number],
+            cacheInit ? 0 : undefined,
+          );
+        }
       }
+      return;
     }
-    const playerGuid = page.url.searchParams.get('player');
+
+    const playerGuid = clientSearchParamsGet('player');
     if (playerGuid) {
+      untrack(() => {
+        onHideShowClick(playerLayerData, true);
+      });
       playerStickyFocusGuid = playerGuid;
+      playerSelectingGuid = playerGuid;
+      return;
     }
-    const pins = page.url.searchParams.get('pins');
+
+    const pins = clientSearchParamsGet('pins');
     if (pins) {
       try {
+        const focusIndexParams = clientSearchParamsGet('focus_index');
+        const focusIndex = focusIndexParams ? +focusIndexParams : -1;
         const pinsJson = pinsSchema.parse(JSON.parse(pins));
-        pinsData = pinsJson.map((p, i) => ({
+        const data = pinsJson.map((p, i) => ({
           ...p,
           pointType: PointType.Pin,
           label: p.label ?? siteLocale.msg['map.pin_no']({ index: i + 1 }),
         }));
         pinsSource.addFeatures(
-          pinsData.map(
-            (p: Pin) =>
+          data.map(
+            (p: Pin, i) =>
               new Feature({
                 geometry: new Point(reProjectPoint([p.x, p.y])),
                 label: p.label,
                 pointType: PointType.Pin,
+                selected: focusIndex === i ? 1 : 0,
               }),
           ),
         );
-        const focusIndex = page.url.searchParams.get('focus_index');
-        if (focusIndex) {
-          const i = +focusIndex;
-          if (i < pinsData.length && i >= 0) {
-            const focusPin = pinsData[i];
-            map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), 0);
-          }
+
+        if (focusIndex < data.length && focusIndex >= 0) {
+          const focusPin = data[focusIndex];
+          map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), cacheInit ? 0 : undefined);
         }
+        pinsData = data;
       } catch (e) {
         console.error('Invalid pins data:', e);
         showModal({
@@ -756,20 +845,7 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
-
-  const title = $derived(
-    siteLocale.msg['map.head']({
-      siteName: siteLocale.msg.site_name_short(),
-    }),
-  );
 </script>
-
-<svelte:document onvisibilitychange={startPolling} />
-
-<svelte:head>
-  <title>{title}</title>
-  <meta name="og:title" content={title} />
-</svelte:head>
 
 <div class="relative h-full w-full">
   <OlMap

@@ -42,6 +42,8 @@
       observer.disconnect();
     };
   });
+
+  const id = $derived(page.route.id?.startsWith('/(map)') ? '/(map)' : page.route.id);
 </script>
 
 <svelte:head>
@@ -73,7 +75,7 @@
 <GlobalPlayer>
   <MsgModal>
     <Navbar />
-    {#key page.route.id}
+    {#key id}
       <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
         {@render children()}
       </main>

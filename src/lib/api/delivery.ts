@@ -1,5 +1,6 @@
 import { PUBLIC_API_NEW_BASE } from '$env/static/public';
 import type { DeliveryPointInfo } from './types';
+import { startVisibilityAwarePolling } from './_api';
 
 export const getDeliveryPointInfos = async (signal: AbortSignal): Promise<DeliveryPointInfo[]> => {
   try {
@@ -48,33 +49,15 @@ export const getDeliveryPointInfo = async (
   }
 };
 
-export const startDeliveryPointsPolling = (
-  callback: (deliveryPoints: DeliveryPointInfo[]) => void,
-  interval = 1200000, // 20 minutes
+export const startDeliveryPointPolling = (
+  id: string,
+  callback: (deliveryPoint: DeliveryPointInfo | undefined) => void,
+  interval = 10000, // 10 seconds
 ): (() => void) => {
-  const controller = new AbortController();
-
-  const fetchAndUpdate = async () => {
-    try {
-      const deliveryPoints = await getDeliveryPointInfos(controller.signal);
-      callback(deliveryPoints);
-    } catch (error) {
-      console.error('Delivery points polling error:', error);
-      callback([]);
-    }
-  };
-
-  fetchAndUpdate();
-
-  const timer = setInterval(() => {
-    fetchAndUpdate();
-  }, interval);
-
-  controller.signal.addEventListener('abort', () => {
-    clearInterval(timer);
-  });
-
-  return () => {
-    controller.abort();
-  };
+  return startVisibilityAwarePolling(
+    'Delivery point',
+    (signal) => getDeliveryPointInfo(id, signal),
+    callback,
+    interval,
+  );
 };

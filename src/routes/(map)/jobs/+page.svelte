@@ -1,9 +1,7 @@
-<script>
-  import NotFinished from '$lib/components/NotFinished/NotFinished.svelte';
+<script lang="ts">
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-
   const title = $derived(
-    siteLocale.msg['industries.head']({
+    siteLocale.msg['jobs.head']({
       siteName: siteLocale.msg.site_name_short(),
     }),
   );
@@ -13,4 +11,5 @@
   <title>{title}</title>
   <meta name="og:title" content={title} />
 </svelte:head>
-<NotFinished />
+
+<!-- will be handled by layout -->
