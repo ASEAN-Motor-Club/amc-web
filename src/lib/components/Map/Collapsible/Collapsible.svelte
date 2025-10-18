@@ -179,7 +179,7 @@
         tag="a"
         href={getCollapsibleHref('delivery/' + openCollapsibleId)}
       >
-        <Icon class="i-material-symbols:map-outline-rounded" />
+        <Icon class="i-material-symbols:box-outline-rounded" />
         <span class="truncate">{siteLocale.msg['map.side_menu.delivery']()}</span>
       </Button>
     {/if}
