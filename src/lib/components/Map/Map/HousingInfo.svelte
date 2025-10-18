@@ -4,7 +4,7 @@
   import { SvelteDate } from 'svelte/reactivity';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
-  import { siteLocale } from '../Locale/locale.svelte';
+  import { siteLocale } from '$lib/components/Locale/locale.svelte';
 
   export interface HoverInfo {
     info: House;

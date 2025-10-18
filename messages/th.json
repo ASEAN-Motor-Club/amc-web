@@ -106,7 +106,6 @@
     "track_editor": "เครื่องมือแก้ไขสนาม",
     "map": "แผนที่",
     "housing": "ที่อยู่อาศัย",
-    "industries": "อุตสาหกรรม",
     "radio": "วิทยุ",
     "wiki": "วิกิ",
     "amc_cup": "ถ้วย AMC",
@@ -121,8 +120,6 @@
     "player": "ผู้เล่น",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",
-    "supply": "ผลิต",
-    "demand": "ต้องการ",
     "more_results": [
       {
         "declarations": ["input count", "local p = count: plural"],
@@ -201,9 +198,9 @@
     }
   },
   "view_on_map": "ดูบนแผนที่",
-  "industries": {
-    "head": "{siteName} | อุตสาหกรรม",
-    "title": "อุตสาหกรรม"
+  "delivery": {
+    "supply": "ผลิต",
+    "demand": "ต้องการ"
   },
   "radio": {
     "head": "{siteName} | วิทยุ",

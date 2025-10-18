@@ -22,24 +22,20 @@
 
   const links: NavbarItemType[] = $derived([
     {
-      label: siteLocale.msg['navbar.server'](),
-      icon: serverIcon,
+      href: '/map',
+      label: siteLocale.msg['navbar.map'](),
+      icon: mapIcon,
       subItems: [
-        {
-          href: '/map',
-          label: siteLocale.msg['navbar.map'](),
-          icon: mapIcon,
-        },
         {
           href: '/housing',
           label: siteLocale.msg['navbar.housing'](),
           icon: housingIcon,
         },
-        {
-          href: '/industries',
-          label: siteLocale.msg['navbar.industries'](),
-          icon: industriesIcon,
-        },
+        // {
+        //   href: '/jobs',
+        //   label: 'Jobs',
+        //   icon: jobIcon,
+        // },
       ],
     },
     {
@@ -92,13 +88,6 @@
   };
 </script>
 
-{#snippet serverIcon(pathMatch: boolean)}
-  <NavbarIcon
-    class="i-material-symbols:directions-car-outline-rounded group-hover:text-cyan-500"
-    {pathMatch}
-  />
-{/snippet}
-
 {#snippet toolsIcon(pathMatch: boolean)}
   <NavbarIcon
     class="i-material-symbols:build-outline-rounded group-hover:text-rose-500"
@@ -120,12 +109,12 @@
   />
 {/snippet}
 
-{#snippet industriesIcon(pathMatch: boolean)}
+<!-- {#snippet industriesIcon(pathMatch: boolean)}
   <NavbarIcon
     class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500"
     {pathMatch}
   />
-{/snippet}
+{/snippet} -->
 
 {#snippet radioIcon(pathMatch: boolean)}
   {#if playerContext.isPlaying && !pathMatch && !prefersReducedMotion.current}
@@ -164,6 +153,13 @@
 {#snippet trophyIcon()}
   <NavbarIcon class="i-material-symbols:trophy-rounded text-amber-500" pathMatch />
 {/snippet}
+
+<!-- {#snippet jobIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:delivery-truck-speed-outline-rounded group-hover:text-orange-500"
+    {pathMatch}
+  />
+{/snippet} -->
 
 {#snippet menuItems(mobile = false)}
   {#each links as link (link.label)}

@@ -1,21 +1,16 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
 import type { PlayerEventData } from './types';
+import { startVisibilityAwareEventSource } from './_api';
 
 export const getPlayerRealtimePosition = (
   callback: (data: PlayerEventData) => void,
 ): (() => void) => {
-  const evt = new EventSource(`${PUBLIC_API_BASE}/api/player_positions/`);
-
-  evt.onmessage = (e) => {
-    const data: PlayerEventData = JSON.parse(e.data);
-    callback(data);
-  };
-
-  window.addEventListener('beforeunload', () => {
-    evt.close();
-  });
-
-  return () => {
-    evt.close();
-  };
+  return startVisibilityAwareEventSource(
+    'Player position',
+    `${PUBLIC_API_BASE}/api/player_positions/`,
+    (data: unknown) => {
+      const typedData = data as PlayerEventData;
+      callback(typedData);
+    },
+  );
 };

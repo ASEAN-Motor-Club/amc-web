@@ -8,7 +8,7 @@
   import { format, isAfter, isBefore, isSameDay, isSameYear } from '$lib/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
-  import { page } from '$app/state';
+  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 
   interface EventModalProps {
     date?: Date;
@@ -70,7 +70,7 @@
   };
 
   const getParams = (event: ScheduledEvent) => {
-    const newParams = new SvelteURLSearchParams(page.url.searchParams);
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.append('event', event.id.toString());
     return newParams.toString();
   };

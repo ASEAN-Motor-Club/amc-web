@@ -5,10 +5,10 @@
   import { trackSchema, type Track } from '$lib/schema/track';
   import type { ChangeEventHandler } from 'svelte/elements';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { page } from '$app/state';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { noop } from 'lodash-es';
   import { PUBLIC_PROXY_URL } from '$env/static/public';
+  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   export interface SelectTrackProps {
     onSelect: (trackData: Track) => void;
@@ -138,7 +138,7 @@
   onMount(() => {
     const abortController = new AbortController();
 
-    const uri = page.url.searchParams.get('uri');
+    const uri = clientSearchParamsGet('uri');
     if (!uri) return;
     fetchFromUri = true;
     const proxiedUri = `${PUBLIC_PROXY_URL}?url=${encodeURIComponent(uri)}`;

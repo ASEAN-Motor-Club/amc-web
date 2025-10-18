@@ -18,6 +18,8 @@
   import type { Pins } from '$lib/schema/pin';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 
   export type SearchPoint = {
     guid?: string;
@@ -114,23 +116,29 @@
   });
 
   const getHref = (point: SearchPoint) => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('delivery');
+    newParams.delete('house');
+    newParams.delete('player');
     switch (point.pointType) {
       case PointType.Delivery:
-        return `?delivery=${point.guid}`;
+        newParams.set('delivery', point.guid ?? '');
+        break;
       case PointType.House:
-        return `?house=${point.guid}`;
+        newParams.set('house', point.guid ?? '');
+        break;
       case PointType.Player:
-        return `?player=${point.guid}`;
-      default:
-        return '';
+        newParams.set('player', point.guid ?? '');
+        break;
     }
+    return `?${newParams.toString()}`;
   };
 
   const handleLinkClick = (event: Event, point: SearchPoint) => {
     focus = false;
     event.preventDefault();
     if (point.pointType !== PointType.Pin) {
-      goto(getHref(point), { replaceState: true, noScroll: true, keepFocus: true });
+      goto(getHref(point), { noScroll: true, keepFocus: true });
     }
     onPointClick?.(point);
   };
@@ -212,7 +220,7 @@
                   <div class="flex flex-col text-neutral-300">
                     {#if point.supplyText}
                       <div class="text-xs">
-                        {siteLocale.msg['map.supply']()}: <HighlightText
+                        {siteLocale.msg['delivery.supply']()}: <HighlightText
                           text={point.supplyText}
                           highlight={searchValue}
                           caseInSensitive
@@ -223,7 +231,7 @@
                     {/if}
                     {#if point.demandText}
                       <div class="text-xs">
-                        {siteLocale.msg['map.demand']()}: <HighlightText
+                        {siteLocale.msg['delivery.demand']()}: <HighlightText
                           text={point.demandText}
                           highlight={searchValue}
                           caseInSensitive

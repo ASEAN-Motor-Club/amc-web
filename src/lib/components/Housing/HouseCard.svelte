@@ -80,7 +80,7 @@
       tag="a"
       size="xs"
       variant="text"
-      href="/map?housing={house.name}"
+      href="/map?menu=housing&house={house.name}"
       class="-mr-1.5"
       color="info"
     >

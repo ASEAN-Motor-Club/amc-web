@@ -1,4 +1,5 @@
 // src/lib/api/radio.ts
+import { startVisibilityAwarePolling } from './_api';
 
 export const getNowPlaying = async (signal: AbortSignal): Promise<string> => {
   try {
@@ -28,29 +29,10 @@ export const startNowPlayingPolling = (
   callback: (track: string) => void,
   interval = 120000, // 2 minutes
 ): (() => void) => {
-  const controller = new AbortController();
-
-  const fetchAndUpdate = async () => {
-    try {
-      const track = await getNowPlaying(controller.signal);
-      callback(track);
-    } catch (error) {
-      console.error('Polling error:', error);
-      callback('Error loading track');
-    }
-  };
-
-  fetchAndUpdate();
-
-  const timer = setInterval(() => {
-    fetchAndUpdate();
-  }, interval);
-
-  controller.signal.addEventListener('abort', () => {
-    clearInterval(timer);
-  });
-
-  return () => {
-    controller.abort();
-  };
+  return startVisibilityAwarePolling(
+    'Now playing',
+    (signal) => getNowPlaying(signal),
+    (track) => callback(track || 'Error loading track'),
+    interval,
+  );
 };

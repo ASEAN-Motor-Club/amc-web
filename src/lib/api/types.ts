@@ -121,23 +121,16 @@ export interface DeliveryPointInfoData {
 }
 
 export interface Delivery {
-  iD: number;
-  weight: number;
-  cargoKey: DeliveryCargoKey;
-  cargoType: number;
-  numCargos: number;
-  colorIndex: number;
-  senderPoint: string;
-  pathDistance: number;
-  pathSpeedKPH: number;
-  timerSeconds: number;
-  deliveryFlags: number;
-  receiverPoint: string;
-  pathClimbHeight: number;
-  registeredTimeSeconds: number;
-  paymentMultiplierByDemand: number;
-  paymentMultiplierBySupply: number;
-  paymentMultiplierByBalanceConfig: number;
+  id: number;
+  cargoKey: string;
+  cargo_type: string;
+  num_cargos: string;
+  expire_time: number;
+  base_payment: number;
+  sender_point: string;
+  register_time: number;
+  timer_seconds: number;
+  receiver_point: string;
 }
 
 export interface InputInventoryElement {
