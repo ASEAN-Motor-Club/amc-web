@@ -172,6 +172,17 @@
       <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
       <span class="truncate">{siteLocale.msg['map.side_menu.jobs']()}</span>
     </Button> -->
+    {#if openCollapsible === 'delivery' && openCollapsibleId}
+      <Button
+        class="sm:h-unset aspect-1 sm:aspect-5/6 h-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[9px] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 dark:text-yellow-500 hover:dark:text-yellow-500"
+        variant="contained-light"
+        tag="a"
+        href={getCollapsibleHref('delivery/' + openCollapsibleId)}
+      >
+        <Icon class="i-material-symbols:map-outline-rounded" />
+        <span class="truncate">{siteLocale.msg['map.side_menu.delivery']()}</span>
+      </Button>
+    {/if}
   </div>
   <div
     class={[

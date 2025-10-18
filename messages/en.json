@@ -150,7 +150,8 @@
     "side_menu": {
       "housing": "HOUSE",
       "map": "MAP",
-      "jobs": "JOBS"
+      "jobs": "JOBS",
+      "delivery": "DELI"
     }
   },
   "home": {
