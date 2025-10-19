@@ -115,10 +115,9 @@
       name="search"
       type="search"
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
-      additionalAttributes={{
-        oninput: onSearch,
-      }}
+      onInput={onSearch}
       disabled={!houseData}
+      onClear={() => (searchValue = '')}
     />
     <Select
       value={sortValue}

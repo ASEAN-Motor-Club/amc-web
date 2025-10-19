@@ -44,12 +44,18 @@
   import { cargoMetadata } from '$lib/data/cargo';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { isMouse } from '$lib/utils/media.svelte';
-  import { getPlayerRealtimePosition } from '$lib/api/player';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
   import * as z from 'zod/mini';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+
+  interface Props {
+    playerData: PlayerData[];
+    onPlayerLayerDataEnabledChange?: (enabled: boolean) => void;
+  }
+
+  const { playerData, onPlayerLayerDataEnabledChange }: Props = $props();
 
   const {
     deliveryPointFeatures,
@@ -493,7 +499,6 @@
     hoverInfo = currentHoverInfo;
   };
 
-  let playerData: PlayerData[] = $state([]);
   let playerStickyFocusGuid: string | undefined = undefined;
   let playerSelectingGuid: string | undefined = undefined;
   let initialFocus = true;
@@ -524,37 +529,8 @@
     }
   };
 
-  const getPlayerRealtimePositionCall = () => {
-    return getPlayerRealtimePosition((data) => {
-      const result = Object.entries(data).map(([name, coord]) => ({
-        geometry: reProjectPoint([coord.x, coord.y]),
-        name,
-        coord,
-        pointType: PointType.Player as const,
-        vehicleKey: coord.vehicle_key,
-        guid: coord.unique_id,
-      }));
-      playerData = result;
-      setPlayerPoints(result);
-    });
-  };
-
-  let stopPolling: (() => void) | undefined = undefined;
-
   $effect(() => {
-    stopPolling?.();
-    if (document.hidden || !playerLayerData.enabled) {
-      stopPolling = undefined;
-      playerData = [];
-      setPlayerPoints([]);
-    } else {
-      stopPolling = getPlayerRealtimePositionCall();
-    }
-
-    return () => {
-      stopPolling?.();
-      stopPolling = undefined;
-    };
+    setPlayerPoints(playerData);
   });
 
   const clearSelection = () => {
@@ -673,6 +649,10 @@
     handlePointerMoveOrClick(e);
   };
 
+  $effect(() => {
+    onPlayerLayerDataEnabledChange?.(playerLayerData.enabled);
+  });
+
   const onHideShowClick = (layer: (typeof layersData)[number], forceTo?: boolean) => {
     layer.enabled = forceTo ?? !layer.enabled;
     if (layer.id === layerId.Player) {
@@ -696,18 +676,15 @@
     }
   };
 
+  export const centerOnPoint = (point: [number, number]) => {
+    map.centerOn(reProjectPoint(point));
+  };
+
   let map: OlMap;
 
   const handleSearchClick = (point: SearchPoint) => {
     if (point.pointType === PointType.Pin) {
       onHideShowClick(pinsLayerData, true);
-    } else if (point.pointType === PointType.Player) {
-      playerStickyFocusGuid = point.guid;
-      playerSelectingGuid = point.guid;
-      initialFocus = true;
-    } else {
-      playerStickyFocusGuid = undefined;
-      playerSelectingGuid = undefined;
     }
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
@@ -795,6 +772,7 @@
       });
       playerStickyFocusGuid = playerGuid;
       playerSelectingGuid = playerGuid;
+      initialFocus = true;
       return;
     }
 

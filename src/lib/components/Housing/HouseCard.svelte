@@ -7,6 +7,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { SvelteDate } from 'svelte/reactivity';
+  import { isSm } from '$lib/utils/media.svelte';
 
   export interface HoverInfoTooltipProps {
     house: House;
@@ -80,7 +81,7 @@
       tag="a"
       size="xs"
       variant="text"
-      href="/map?menu=housing&house={house.name}"
+      href={isSm.current ? `/map?menu=housing&house=${house.name}` : `/map?house=${house.name}`}
       class="-mr-1.5"
       color="info"
     >

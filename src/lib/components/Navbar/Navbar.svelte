@@ -27,13 +27,18 @@
       icon: mapIcon,
       subItems: [
         {
+          href: '/players',
+          label: siteLocale.msg['navbar.players'](),
+          icon: playerIcon,
+        },
+        {
           href: '/housing',
           label: siteLocale.msg['navbar.housing'](),
           icon: housingIcon,
         },
         // {
         //   href: '/jobs',
-        //   label: 'Jobs',
+        //   label: siteLocale.msg['navbar.jobs'](),
         //   icon: jobIcon,
         // },
       ],
@@ -109,13 +114,6 @@
   />
 {/snippet}
 
-<!-- {#snippet industriesIcon(pathMatch: boolean)}
-  <NavbarIcon
-    class="i-material-symbols:factory-outline-rounded group-hover:text-yellow-500"
-    {pathMatch}
-  />
-{/snippet} -->
-
 {#snippet radioIcon(pathMatch: boolean)}
   {#if playerContext.isPlaying && !pathMatch && !prefersReducedMotion.current}
     <SoundBarIcon />
@@ -160,6 +158,13 @@
     {pathMatch}
   />
 {/snippet} -->
+
+{#snippet playerIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:person-outline-rounded group-hover:text-emerald-500"
+    {pathMatch}
+  />
+{/snippet}
 
 {#snippet menuItems(mobile = false)}
   {#each links as link (link.label)}

@@ -11,6 +11,16 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import Delivery from './Delivery.svelte';
+  import { ALL_MENU } from './constants';
+  import type { PlayerData } from '../Map/types';
+  import Players from './Players.svelte';
+
+  interface Props {
+    playerData: PlayerData[];
+    onCenter: (point: [number, number]) => void;
+  }
+
+  const { playerData, onCenter }: Props = $props();
 
   const [openCollapsible, openCollapsibleId] = $derived.by(() => {
     switch (page.url.pathname.split('/')[1]) {
@@ -18,6 +28,8 @@
         return ['housing', ''];
       case 'jobs':
         return ['jobs', ''];
+      case 'players':
+        return ['players', ''];
       case 'delivery':
         return ['delivery', page.params.id ?? ''];
       default: {
@@ -29,10 +41,10 @@
 
   const showFull = $derived.by(() => {
     const path = page.url.pathname.split('/')[1];
-    return ['housing', 'jobs', 'delivery'].includes(path);
+    return ALL_MENU.includes(path);
   });
 
-  const validOpenCollapsible = $derived(['housing', 'jobs', 'delivery'].includes(openCollapsible));
+  const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
   const getCollapsibleHref = (collapsible: string) => {
     if (showFull) {
       return `/${collapsible}`;
@@ -49,7 +61,8 @@
       return `/map?${newParams.toString()}`;
     }
     newParams.delete('menu');
-    return `/${clientSearchParamsGet('menu') ?? 'map'}?${newParams.toString()}`;
+    const str = newParams.toString();
+    return `/${clientSearchParamsGet('menu') ?? 'map'}${str ? `?${str}` : ''}`;
   });
 
   const closeHref = $derived.by(() => {
@@ -82,6 +95,8 @@
   });
 
   const openCollapsibleClasses = 'sm:w-100 lg:w-120 xl:w-140';
+
+  const showMapBtn = $derived(validOpenCollapsible && (!isSm.current || showFull));
 </script>
 
 {#if showFullAnimate}
@@ -137,29 +152,49 @@
         </Button>
       </div>
     {/if}
-    {#if validOpenCollapsible && (!isSm.current || showFull)}
+    <div class="flex flex-1 flex-row sm:w-11 sm:flex-col">
+      <div
+        class={[
+          'overflow-hidden transition-[width,height] duration-1000',
+          showMapBtn ? 'h-12 w-1/3 sm:h-1/3 sm:w-full ' : 'h-full w-0 sm:h-0 sm:w-full',
+        ]}
+      >
+        <Button
+          class="h-full min-h-0 w-full min-w-12 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
+          variant="contained-light"
+          tag="a"
+          href="/map"
+        >
+          <Icon class="i-material-symbols:map-outline-rounded" />
+          <span class="truncate">{siteLocale.msg['map.side_menu.map']()}</span>
+        </Button>
+      </div>
       <Button
-        class="sm:h-unset h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 hover:dark:text-green-500"
+        class={[
+          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
+          openCollapsible === 'players' &&
+            'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
+        ]}
         variant="contained-light"
         tag="a"
-        href="/map"
+        href={getCollapsibleHref('players')}
       >
-        <Icon class="i-material-symbols:map-outline-rounded" />
-        <span class="truncate">{siteLocale.msg['map.side_menu.map']()}</span>
+        <Icon class="i-material-symbols:person-outline-rounded" />
+        <span class="truncate">{siteLocale.msg['map.side_menu.players']()}</span>
       </Button>
-    {/if}
-    <Button
-      class={[
-        'sm:h-unset h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 hover:dark:text-blue-500',
-        openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
-      ]}
-      variant="contained-light"
-      tag="a"
-      href={getCollapsibleHref('housing')}
-    >
-      <Icon class="i-material-symbols:home-outline-rounded" />
-      <span class="truncate">{siteLocale.msg['map.side_menu.housing']()}</span>
-    </Button>
+      <Button
+        class={[
+          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
+          openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
+        ]}
+        variant="contained-light"
+        tag="a"
+        href={getCollapsibleHref('housing')}
+      >
+        <Icon class="i-material-symbols:home-outline-rounded" />
+        <span class="truncate">{siteLocale.msg['map.side_menu.housing']()}</span>
+      </Button>
+    </div>
     <!-- <Button
       class={[
         'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
@@ -173,15 +208,22 @@
       <span class="truncate">{siteLocale.msg['map.side_menu.jobs']()}</span>
     </Button> -->
     {#if openCollapsible === 'delivery' && openCollapsibleId}
-      <Button
-        class="sm:h-unset aspect-1 sm:aspect-5/6 h-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[9px] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 dark:text-yellow-500 hover:dark:text-yellow-500"
-        variant="contained-light"
-        tag="a"
-        href={getCollapsibleHref('delivery/' + openCollapsibleId)}
+      <div
+        transition:slide={{
+          duration: prefersReducedMotion.current ? 0 : 1000,
+          axis: isSm.current ? 'y' : 'x',
+        }}
       >
-        <Icon class="i-material-symbols:box-outline-rounded" />
-        <span class="truncate">{siteLocale.msg['map.side_menu.delivery']()}</span>
-      </Button>
+        <Button
+          class="sm:h-13 h-12 w-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[9px] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          variant="contained-light"
+          tag="a"
+          href={getCollapsibleHref('delivery/' + openCollapsibleId)}
+        >
+          <Icon class="i-material-symbols:box-outline-rounded" />
+          <span class="truncate">{siteLocale.msg['map.side_menu.delivery']()}</span>
+        </Button>
+      </div>
     {/if}
   </div>
   <div
@@ -194,16 +236,23 @@
   >
     {#if openCollapsible === 'housing'}
       <div
-        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full"
+        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
         transition:fade={{ duration: defaultTransitionDurationMs }}
       >
         <Housing fullScreen={showFull} />
+      </div>
+    {:else if openCollapsible === 'players'}
+      <div
+        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
+        transition:fade={{ duration: defaultTransitionDurationMs }}
+      >
+        <Players {playerData} fullScreen={showFull} {onCenter} />
       </div>
     {:else if openCollapsible === 'delivery'}
       {#if openCollapsibleId}
         {#key openCollapsibleId}
           <div
-            class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full"
+            class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
             transition:fade={{ duration: defaultTransitionDurationMs }}
           >
             <Delivery id={openCollapsibleId} fullScreen={showFull} />

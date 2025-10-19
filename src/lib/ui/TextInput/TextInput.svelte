@@ -10,6 +10,8 @@
   import { getInputGroupContext } from '../InputGroup/context';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
+  import Button from '../Button/Button.svelte';
+  import Icon from '../Icon/Icon.svelte';
 
   export interface TextInputProps {
     /**
@@ -98,6 +100,8 @@
       | 'size'
       | 'disabled'
     >;
+    onClear?: () => void;
+    clearBtnClass?: ClassValue;
   }
 
   const {
@@ -118,6 +122,8 @@
     onBlur,
     disabled,
     additionalAttributes,
+    onClear,
+    clearBtnClass,
   }: TextInputProps = $props();
 
   const inputGroupContext = getInputGroupContext();
@@ -166,24 +172,38 @@
   });
 </script>
 
-<input
-  class={twMerge(
-    'flex flex-none items-center outline-none transition-colors',
-    variantClasses,
-    sizeClasses,
-    disabled && 'pointer-events-none opacity-50',
-    clsx(propsClassname),
-  )}
-  onchange={onChange}
-  oninput={onInput}
-  {type}
-  {autocomplete}
-  {value}
-  {placeholder}
-  {name}
-  {id}
-  {disabled}
-  {...additionalAttributes}
-  onfocus={onFocus}
-  onblur={onBlur}
-/>
+<div class="relative flex flex-none items-center">
+  <input
+    class={twMerge(
+      'flex w-full items-center outline-none transition-colors',
+      variantClasses,
+      sizeClasses,
+      disabled && 'pointer-events-none opacity-50',
+      onClear && 'pr-10',
+      clsx(propsClassname),
+    )}
+    onchange={onChange}
+    oninput={onInput}
+    {type}
+    {autocomplete}
+    {value}
+    {placeholder}
+    {name}
+    {id}
+    {disabled}
+    {...additionalAttributes}
+    onfocus={onFocus}
+    onblur={onBlur}
+  />
+  {#if onClear && value}
+    <Button
+      class={twMerge('text-text dark:text-text-dark absolute right-0 mx-1', clsx(clearBtnClass))}
+      variant="text"
+      size="sm"
+      onClick={() => onClear()}
+      icon
+    >
+      <Icon class="i-material-symbols:close-rounded" size="!text-lg" />
+    </Button>
+  {/if}
+</div>

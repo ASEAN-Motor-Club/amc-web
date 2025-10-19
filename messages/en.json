@@ -105,6 +105,8 @@
     "tools": "Tools",
     "track_editor": "Track Editor",
     "map": "Map",
+    "jobs": "Jobs",
+    "players": "Players",
     "housing": "Housing",
     "delivery": "Delivery",
     "radio": "Radio",
@@ -126,8 +128,8 @@
         "declarations": ["input count", "local p = count: plural"],
         "selectors": ["p"],
         "match": {
-          "p=one": "{count} more result, try narrow your search",
-          "p=other": "{count} more results, try narrow your search"
+          "p=one": "{count} more result, try narrow your search.",
+          "p=other": "{count} more results, try narrow your search."
         }
       }
     ],
@@ -151,8 +153,11 @@
       "housing": "HOUSE",
       "map": "MAP",
       "jobs": "JOBS",
-      "delivery": "DELI"
-    }
+      "delivery": "DELI",
+      "players": "PLAYER"
+    },
+    "start_search": "Start typing to search...",
+    "no_results": "No results found."
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
@@ -267,6 +272,14 @@
   "jobs": {
     "head": "{siteName} | Jobs"
   },
+  "players": {
+    "head": "{siteName} | Players",
+    "title": "Players",
+    "search_placeholder": "Search player name",
+    "details_driving": "Driving {vehicle} at {location}",
+    "details": "At {location}"
+  },
+  "unknown_location": "unknown location",
   "locales": {
     "cs": "Čeština",
     "de": "Deutsch",

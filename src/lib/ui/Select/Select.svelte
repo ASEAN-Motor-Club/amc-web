@@ -162,7 +162,7 @@
 
   <Icon
     class={[
-      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-px mx-1.5 motion-safe:transition-transform',
+      'i-material-symbols:arrow-drop-down-rounded pointer-events-none absolute right-0 motion-safe:transition-transform mx-1.5',
       uniqueOpen && 'rotate-180',
     ]}
     size="!text-[1.75rem]"

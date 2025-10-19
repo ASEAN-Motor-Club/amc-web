@@ -122,8 +122,8 @@
         "declarations": ["input count", "local p = count: plural"],
         "selectors": ["p"],
         "match": {
-          "p=one": "{count} hasil lagi, coba persempit pencarian",
-          "p=other": "{count} hasil lagi, coba persempit pencarian"
+          "p=one": "{count} hasil lagi, coba persempit pencarian.",
+          "p=other": "{count} hasil lagi, coba persempit pencarian."
         }
       }
     ],

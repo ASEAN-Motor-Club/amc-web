@@ -87,7 +87,7 @@
 
   const foundValues: SearchPoint[] = $derived.by(() => {
     if (!focus) return [];
-    if (!searchValue) return [...pinsData, ...playerData];
+    if (!searchValue) return [...pinsData];
     const search = searchValue.trim().toLowerCase();
 
     const pins = pinsData.filter((pin) => pin.label.toLowerCase().includes(search));
@@ -162,6 +162,8 @@
       additionalAttributes={{
         onclick: () => (focus = true),
       }}
+      onClear={() => (searchValue = '')}
+      clearBtnClass="pointer-events-auto"
     />
   </div>
 
@@ -269,6 +271,29 @@
               })}
             </div>
           {/if}
+        </Card>
+      </div>
+    </ClickAwayBlock>
+  {:else if focus}
+    <ClickAwayBlock
+      onClickAway={() => (focus = false)}
+      active={focus}
+      additionalElements={[inputElement]}
+    >
+      <div
+        class="flex min-h-0 w-full shrink"
+        transition:fade={{
+          duration: defaultTransitionDurationMs,
+        }}
+      >
+        <Card
+          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
+        >
+          <div class="px-3 py-2 italic text-neutral-300">
+            {searchValue
+              ? siteLocale.msg['map.no_results']()
+              : siteLocale.msg['map.start_search']()}
+          </div>
         </Card>
       </div>
     </ClickAwayBlock>
