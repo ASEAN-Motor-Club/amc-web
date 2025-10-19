@@ -7,14 +7,14 @@
   import { formatTime } from '$lib/utils/formatTime';
   import { prefersReducedMotion } from 'svelte/motion';
 
-  export interface HoverInfoTooltipProps {
+  export interface Props {
     time: EventResult | undefined;
     time0: EventResult | undefined;
     index: number;
     loading: boolean;
   }
 
-  const { time, time0, index, loading }: HoverInfoTooltipProps = $props();
+  const { time, time0, index, loading }: Props = $props();
 
   const netTime = $derived(time?.net_time ?? 0);
 </script>

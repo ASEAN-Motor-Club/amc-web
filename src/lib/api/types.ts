@@ -137,3 +137,35 @@ export interface InputInventoryElement {
   amount: number;
   cargoKey: DeliveryCargoKey;
 }
+
+export interface DeliveryJob {
+  cargos: DeliveryJobCargo[];
+  source_points: DeliveryPointInfo[];
+  destination_points: DeliveryPointInfo[];
+  deliveries: DeliveryJobDelivery[];
+  id: number;
+  name: string;
+  quantity_requested: number;
+  quantity_fulfilled: number;
+  requested_at: string;
+  fulfilled_at: string;
+  expired_at: string;
+  bonus_multiplier: number;
+  completion_bonus: number;
+  description: string;
+  fulfilled: boolean;
+}
+
+export interface DeliveryJobCargo {
+  key: string;
+  label: string;
+}
+
+export interface DeliveryJobDelivery {
+  character: Character;
+  timestamp: string;
+  cargo_key: string;
+  quantity: number;
+  payment: number;
+  subsidy: number;
+}

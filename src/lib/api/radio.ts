@@ -33,6 +33,7 @@ export const startNowPlayingPolling = (
     'Now playing',
     (signal) => getNowPlaying(signal),
     (track) => callback(track || 'Error loading track'),
+    () => undefined,
     interval,
   );
 };

@@ -54,6 +54,8 @@
       roundingMethod: 'floor',
     });
   });
+
+  const locale = $derived.by(getLocale);
 </script>
 
 <div class="flex flex-col text-xs">
@@ -67,7 +69,7 @@
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_price']()}:</span>
-    {(hoverInfo.info.cost / 10).toLocaleString(getLocale())}
+    {(hoverInfo.info.cost / 10).toLocaleString(locale)}
   </div>
   {#if currentHouseData?.ownerName}
     <div>

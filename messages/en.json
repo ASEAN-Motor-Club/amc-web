@@ -207,7 +207,8 @@
     "cannot_load": {
       "title": "Cannot load housing data",
       "desc": "Failed to load housing data. Please try again later."
-    }
+    },
+    "no_results": "No houses found."
   },
   "view_on_map": "View on Map",
   "delivery": {
@@ -270,14 +271,25 @@
     }
   },
   "jobs": {
-    "head": "{siteName} | Jobs"
+    "head": "{siteName} | Jobs",
+    "title": "Jobs",
+    "no_jobs": "No jobs posted.",
+    "expired": "Expired",
+    "completion_bonus": "Completion Bonus",
+    "bonus_multiplier": "Bonus Multiplier",
+    "constrains": "Constrains",
+    "constrains_cargo": "Cargo",
+    "constrains_source_points": "From",
+    "constrains_destination_points": "To"
   },
   "players": {
     "head": "{siteName} | Players",
     "title": "Players",
     "search_placeholder": "Search player name",
-    "details_driving": "Driving {vehicle} at {location}",
-    "details": "At {location}"
+    "details_driving": "Driving {vehicle} in {location}",
+    "details": "In {location}",
+    "no_players": "No players online.",
+    "no_results": "No players found."
   },
   "unknown_location": "unknown location",
   "locales": {

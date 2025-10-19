@@ -5,11 +5,9 @@
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
   import Map from '$lib/components/Map/Map/Map.svelte';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
-  import { fade } from 'svelte/transition';
 
   const { children } = $props();
 
@@ -27,6 +25,7 @@
   let stopPolling: (() => void) | undefined = undefined;
 
   let playerData: PlayerData[] = $state([]);
+  let playerDataLoading = $state(true);
   let playerLayerDataEnabled = $state(true);
 
   const getPlayerRealtimePositionCall = () => {
@@ -40,6 +39,7 @@
         guid: coord.unique_id,
       }));
       playerData = result;
+      playerDataLoading = false;
     });
   };
 
@@ -73,21 +73,21 @@
 
 <div class="relative flex h-full w-full">
   <div class="flex h-full w-full flex-1 overflow-hidden pb-12 sm:pb-0">
-    {#if showMap}
-      <div
-        class="flex h-full w-full sm:min-w-60"
-        transition:fade={{ duration: defaultTransitionDurationMs }}
-      >
-        <Map
-          {playerData}
-          onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-          bind:this={map}
-        />
-      </div>
-    {/if}
+    <div
+      class={[
+        'flex h-full w-full transition-opacity duration-1000 sm:min-w-60',
+        showMap ? 'opacity-100' : 'opacity-0',
+      ]}
+    >
+      <Map
+        {playerData}
+        onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
+        bind:this={map}
+      />
+    </div>
   </div>
 
-  <Collapsible {playerData} onCenter={handleCenter} />
+  <Collapsible {playerData} {playerDataLoading} onCenter={handleCenter} />
 </div>
 
 {@render children()}

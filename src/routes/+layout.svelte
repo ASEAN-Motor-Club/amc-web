@@ -21,7 +21,6 @@
 
   defineCustomClientStrategy('custom-svelteReactiveLocale', {
     getLocale: () => {
-      console.log('Getting locale from siteLocale state:', siteLocale.l);
       return siteLocale.l;
     },
     setLocale: noop, // use setLocale from locale.svelte to update the state instead

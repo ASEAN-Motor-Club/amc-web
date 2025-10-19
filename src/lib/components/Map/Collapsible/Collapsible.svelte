@@ -14,13 +14,15 @@
   import { ALL_MENU } from './constants';
   import type { PlayerData } from '../Map/types';
   import Players from './Players.svelte';
+  import Jobs from './Jobs.svelte';
 
   interface Props {
     playerData: PlayerData[];
+    playerDataLoading: boolean;
     onCenter: (point: [number, number]) => void;
   }
 
-  const { playerData, onCenter }: Props = $props();
+  const { playerData, playerDataLoading, onCenter }: Props = $props();
 
   const [openCollapsible, openCollapsibleId] = $derived.by(() => {
     switch (page.url.pathname.split('/')[1]) {
@@ -145,8 +147,10 @@
         >
           <Icon
             class={[
-              'i-material-symbols:chevron-left-rounded transition-transform duration-1000',
-              showFull ? 'rotate-180' : 'rotate-0',
+              'transition-transform duration-1000',
+              showFull
+                ? 'i-material-symbols:collapse-content-rounded'
+                : 'i-material-symbols:expand-content-rounded',
             ]}
           />
         </Button>
@@ -156,7 +160,7 @@
       <div
         class={[
           'overflow-hidden transition-[width,height] duration-1000',
-          showMapBtn ? 'h-12 w-1/3 sm:h-1/3 sm:w-full ' : 'h-full w-0 sm:h-0 sm:w-full',
+          showMapBtn ? 'h-12 w-1/4 sm:h-1/4 sm:w-full ' : 'h-full w-0 sm:h-0 sm:w-full',
         ]}
       >
         <Button
@@ -194,19 +198,20 @@
         <Icon class="i-material-symbols:home-outline-rounded" />
         <span class="truncate">{msg['map.side_menu.housing']()}</span>
       </Button>
+
+      <Button
+        class={[
+          'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
+          openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
+        ]}
+        variant="contained-light"
+        tag="a"
+        href={getCollapsibleHref('jobs')}
+      >
+        <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
+        <span class="truncate">{msg['map.side_menu.jobs']()}</span>
+      </Button>
     </div>
-    <!-- <Button
-      class={[
-        'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
-        openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
-      ]}
-      variant="contained-light"
-      tag="a"
-      href={getCollapsibleHref('jobs')}
-    >
-      <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
-      <span class="truncate">{msg['map.side_menu.jobs']()}</span>
-    </Button> -->
     {#if openCollapsible === 'delivery' && openCollapsibleId}
       <div
         transition:slide={{
@@ -246,7 +251,14 @@
         class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
         transition:fade={{ duration: defaultTransitionDurationMs }}
       >
-        <Players {playerData} fullScreen={showFull} {onCenter} />
+        <Players {playerData} {playerDataLoading} fullScreen={showFull} {onCenter} />
+      </div>
+    {:else if openCollapsible === 'jobs'}
+      <div
+        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
+        transition:fade={{ duration: defaultTransitionDurationMs }}
+      >
+        <Jobs fullScreen={showFull} />
       </div>
     {:else if openCollapsible === 'delivery'}
       {#if openCollapsibleId}

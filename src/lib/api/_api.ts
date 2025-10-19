@@ -8,10 +8,11 @@
  * @param interval - Polling interval in milliseconds
  * @returns Cleanup function to stop polling
  */
-export const startVisibilityAwarePolling = <TData>(
+export const startVisibilityAwarePolling = <TData, TErrorData>(
   name: string,
-  fetchFn: (signal: AbortSignal) => Promise<TData | undefined>,
-  callback: (data: TData | undefined) => void,
+  fetchFn: (signal: AbortSignal) => Promise<TData>,
+  callback: (data: TData | TErrorData) => void,
+  errorDataGetter: () => TErrorData,
   interval: number,
 ): (() => void) => {
   const controller = new AbortController();
@@ -23,7 +24,7 @@ export const startVisibilityAwarePolling = <TData>(
       callback(data);
     } catch (error) {
       console.error(`${name} polling error:`, error);
-      callback(undefined);
+      callback(errorDataGetter());
     }
   };
 

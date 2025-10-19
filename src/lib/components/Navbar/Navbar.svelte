@@ -36,11 +36,11 @@
           label: msg['navbar.housing'](),
           icon: housingIcon,
         },
-        // {
-        //   href: '/jobs',
-        //   label: msg['navbar.jobs'](),
-        //   icon: jobIcon,
-        // },
+        {
+          href: '/jobs',
+          label: msg['navbar.jobs'](),
+          icon: jobIcon,
+        },
       ],
     },
     {
@@ -152,12 +152,12 @@
   <NavbarIcon class="i-material-symbols:trophy-rounded text-amber-500" pathMatch />
 {/snippet}
 
-<!-- {#snippet jobIcon(pathMatch: boolean)}
+{#snippet jobIcon(pathMatch: boolean)}
   <NavbarIcon
     class="i-material-symbols:delivery-truck-speed-outline-rounded group-hover:text-orange-500"
     {pathMatch}
   />
-{/snippet} -->
+{/snippet}
 
 {#snippet playerIcon(pathMatch: boolean)}
   <NavbarIcon

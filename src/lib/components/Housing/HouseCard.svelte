@@ -10,14 +10,14 @@
   import { isSm } from '$lib/utils/media.svelte';
   import { getLocale } from '$lib/paraglide/runtime';
 
-  export interface HoverInfoTooltipProps {
+  export interface Props {
     house: House;
     houseData: HouseData | undefined;
     highlight: string;
     loading: boolean;
   }
 
-  const { house, houseData, highlight, loading }: HoverInfoTooltipProps = $props();
+  const { house, houseData, highlight, loading }: Props = $props();
 
   const currentHouseData = $derived.by(() => {
     return houseData?.[house.name];
@@ -59,6 +59,8 @@
 
     return formatDuration(duration, { format: ['days', 'hours', 'minutes'] });
   });
+
+  const locale = $derived.by(getLocale);
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
@@ -106,7 +108,7 @@
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_price']()}:</span>
-    {(house.cost / 10).toLocaleString(getLocale())}
+    {(house.cost / 10).toLocaleString(locale)}
   </div>
   <div>
     <span class="font-semibold">{msg['housing.rent_left']()}:</span>

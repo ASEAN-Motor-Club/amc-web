@@ -11,11 +11,12 @@
 
   interface Props {
     playerData: PlayerData[];
+    playerDataLoading: boolean;
     fullScreen: boolean;
     onCenter: (point: [number, number]) => void;
   }
 
-  const { playerData, fullScreen, onCenter }: Props = $props();
+  const { playerData, playerDataLoading, fullScreen, onCenter }: Props = $props();
 
   let searchValue = $state('');
 
@@ -28,12 +29,12 @@
     }
   };
 
-  const filteredPlayers = $derived(
-    playerData.filter((player) => {
-      const searchLower = searchValue.trim().toLowerCase();
+  const filteredPlayers = $derived.by(() => {
+    const searchLower = searchValue.trim().toLowerCase();
+    return playerData.filter((player) => {
       return player.name.toLowerCase().includes(searchLower);
-    }),
-  );
+    });
+  });
 </script>
 
 <div class="flex h-full flex-col">
@@ -49,13 +50,29 @@
       onClear={() => (searchValue = '')}
     />
   </div>
-  <div class="overflow-y-scroll">
-    <div
-      class="grid grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))] justify-items-stretch gap-8 px-8 pb-8"
-    >
-      {#each filteredPlayers as player (player.name)}
-        <PlayerCard {player} highlight={searchValue} {onCenter} />
-      {/each}
-    </div>
+  <div class={playerDataLoading ? 'overflow-y-hidden' : 'overflow-y-scroll'}>
+    {#if playerDataLoading || filteredPlayers.length > 0}
+      <div
+        class="grid grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))] justify-items-stretch gap-8 px-8 pb-8"
+      >
+        {#if playerDataLoading}
+          {#each Array(50) as _, i (i)}
+            <PlayerCard highlight={searchValue} {onCenter} loading />
+          {/each}
+        {:else}
+          {#each filteredPlayers as player (player.name)}
+            <PlayerCard {player} highlight={searchValue} {onCenter} />
+          {/each}
+        {/if}
+      </div>
+    {:else}
+      <div class="p-8 text-center text-sm text-gray-500">
+        {#if playerData.length === 0}
+          {msg['players.no_players']()}
+        {:else}
+          {msg['players.no_results']()}
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>

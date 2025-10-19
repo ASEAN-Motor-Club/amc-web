@@ -131,16 +131,22 @@
       <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
     </Select>
   </div>
-  <div class="overflow-y-scroll">
-    <div
-      class={[
-        'grid justify-items-stretch gap-8 px-8 pb-8',
-        fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]',
-      ]}
-    >
-      {#each sortedHouses as house (house.name)}
-        <HouseCard {house} {houseData} highlight={searchValue} {loading} />
-      {/each}
-    </div>
+  <div class={loading ? 'overflow-y-hidden' : 'overflow-y-scroll'}>
+    {#if sortedHouses.length > 0}
+      <div
+        class={[
+          'grid justify-items-stretch gap-8 px-8 pb-8',
+          fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]',
+        ]}
+      >
+        {#each sortedHouses as house (house.name)}
+          <HouseCard {house} {houseData} highlight={searchValue} {loading} />
+        {/each}
+      </div>
+    {:else}
+      <div class="p-8 text-center text-sm text-gray-500">
+        {msg['housing.no_results']()}
+      </div>
+    {/if}
   </div>
 </div>

@@ -706,6 +706,9 @@
 
   let init = true;
 
+  let selectedHouse: string | undefined = undefined;
+  let selectedDelivery: string | undefined = undefined;
+
   $effect(() => {
     houseFeatures.forEach((house) => {
       house.set('selected', 0);
@@ -716,12 +719,17 @@
     residentPointFeatures.forEach((d) => {
       d.set('selected', 0);
     });
+    const oldPlayerSelectingGuid = playerSelectingGuid;
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
     const cacheInit = init;
     init = false;
     const cacheDontFocus = dontFocus;
     dontFocus = false;
+    const cachedSelectedHouse = selectedHouse;
+    const cachedSelectedDelivery = selectedDelivery;
+    selectedHouse = undefined;
+    selectedDelivery = undefined;
 
     const housing = clientSearchParamsGet('house');
     if (housing) {
@@ -731,13 +739,14 @@
       const house = houseFeatures.find((h) => h.get('info').name === housing);
       if (house) {
         house.set('selected', 1);
-        if (!cacheDontFocus) {
+        if (cachedSelectedHouse !== housing && !cacheDontFocus) {
           map.centerOn(
             house.getGeometry()?.getCoordinates() as [number, number],
             cacheInit ? 0 : undefined,
           );
         }
       }
+      selectedHouse = housing;
       return;
     }
 
@@ -755,13 +764,14 @@
         deliveryLineSource.clear(true);
         const deliveryPointInfo = lockPoint.get('info') as DeliveryPoint;
         updateDeliveryLine(deliveryPointInfo);
-        if (!cacheDontFocus) {
+        if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
           map.centerOn(
             deliveryPoint.getGeometry()?.getCoordinates() as [number, number],
             cacheInit ? 0 : undefined,
           );
         }
       }
+      selectedDelivery = deliveryGuid;
       return;
     }
 
@@ -770,9 +780,11 @@
       untrack(() => {
         onHideShowClick(playerLayerData, true);
       });
-      playerStickyFocusGuid = playerGuid;
       playerSelectingGuid = playerGuid;
-      initialFocus = true;
+      if (oldPlayerSelectingGuid !== playerGuid) {
+        playerStickyFocusGuid = playerGuid;
+        initialFocus = true;
+      }
       return;
     }
 
