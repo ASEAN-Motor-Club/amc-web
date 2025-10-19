@@ -63,11 +63,6 @@ export default defineConfig(
               message: 'Use unified imports from $lib/date instead',
               allowTypeImports: true,
             },
-            {
-              group: ['$lib/paraglide*'],
-              message: 'Use reactive i18n from $lib/components/Locale/locale.svelte instead',
-              allowTypeImports: true,
-            },
           ],
         },
       ],

@@ -2,7 +2,7 @@
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
@@ -37,11 +37,11 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{siteLocale.msg['players.title']()}</CommonHead>
+  <CommonHead>{msg['players.title']()}</CommonHead>
   <div class={['flex flex-col justify-between gap-2 px-8 pb-8', fullScreen && 'sm:flex-row']}>
     <TextInput
       value={searchValue}
-      placeholder={siteLocale.msg['players.search_placeholder']()}
+      placeholder={msg['players.search_placeholder']()}
       name="search"
       type="search"
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}

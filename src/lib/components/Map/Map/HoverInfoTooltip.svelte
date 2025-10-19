@@ -9,7 +9,7 @@
   import type { House } from '$lib/data/house';
   import Button from '$lib/ui/Button/Button.svelte';
   import type { HouseData } from '$lib/api/types';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
@@ -46,11 +46,11 @@
 
     switch (hoverInfo.pointType) {
       case PointType.Delivery:
-        return siteLocale.msg['map.delivery_point']();
+        return msg['map.delivery_point']();
       case PointType.Player:
-        return siteLocale.msg['map.player']();
+        return msg['map.player']();
       case PointType.House:
-        return siteLocale.msg['map.house']();
+        return msg['map.house']();
     }
   });
 
@@ -109,10 +109,10 @@
       <div class="text-sm">
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
-            ? siteLocale.msg['housing.owned_house']({
+            ? msg['housing.owned_house']({
                 owner: houseData[hoverInfo.info.name].ownerName,
               })
-            : siteLocale.msg['housing.vacant_house']()}
+            : msg['housing.vacant_house']()}
         {:else if hoverInfo.pointType === PointType.Delivery}
           {getMtLocale(hoverInfo.info.name)}
         {:else}
@@ -135,7 +135,7 @@
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">
-          {siteLocale.msg['map.click_lock']()}
+          {msg['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
@@ -144,10 +144,8 @@
           class="media-not-mouse:pointer-events-auto mb-0.5 bg-white/10 px-2"
           {onClick}
         >
-          <span class="media-mouse:inline hidden">{siteLocale.msg['map.click_info']()}</span>
-          <span class="media-not-mouse:inline hidden"
-            >{siteLocale.msg['map.click_here_info']()}</span
-          >
+          <span class="media-mouse:inline hidden">{msg['map.click_info']()}</span>
+          <span class="media-not-mouse:inline hidden">{msg['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>

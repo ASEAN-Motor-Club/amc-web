@@ -9,7 +9,7 @@
   import Select from '$lib/ui/Select/Select.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
@@ -36,8 +36,8 @@
       .catch((error: unknown) => {
         console.error('Error fetching housing data:', error);
         showModal({
-          title: siteLocale.msg['housing.cannot_load.title'](),
-          message: siteLocale.msg['housing.cannot_load.desc'](),
+          title: msg['housing.cannot_load.title'](),
+          message: msg['housing.cannot_load.desc'](),
         });
       });
 
@@ -60,7 +60,7 @@
       const searchLower = searchValue.trim().toLowerCase();
       return (
         house.name.toLowerCase().includes(searchLower) ||
-        (houseData?.[house.name].ownerName || siteLocale.msg['housing.vacant']())
+        (houseData?.[house.name].ownerName || msg['housing.vacant']())
           .toLowerCase()
           .includes(searchLower)
       );
@@ -107,11 +107,11 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{siteLocale.msg['housing.title']()}</CommonHead>
+  <CommonHead>{msg['housing.title']()}</CommonHead>
   <div class={['flex flex-col justify-between gap-2 px-8 pb-8', fullScreen && 'sm:flex-row']}>
     <TextInput
       value={searchValue}
-      placeholder={siteLocale.msg['housing.search_placeholder']()}
+      placeholder={msg['housing.search_placeholder']()}
       name="search"
       type="search"
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
@@ -125,10 +125,10 @@
       onChange={handleSortChange}
       class={['w-full flex-shrink-0', fullScreen && 'sm:max-w-45']}
     >
-      <SelectOption id="name" value={siteLocale.msg['housing.sort.name']()} />
-      <SelectOption id="id" value={siteLocale.msg['housing.sort.id']()} />
-      <SelectOption id="rentLeft" value={siteLocale.msg['housing.sort.rent_left']()} />
-      <!-- <SelectOption id="depotStorage" value={siteLocale.msg['housing.sort.depot_storage']()} /> -->
+      <SelectOption id="name" value={msg['housing.sort.name']()} />
+      <SelectOption id="id" value={msg['housing.sort.id']()} />
+      <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()} />
+      <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
     </Select>
   </div>
   <div class="overflow-y-scroll">

@@ -12,7 +12,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import type { HouseData } from '$lib/api/types';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
@@ -108,7 +108,7 @@
 
     const housePoints = house.filter(
       (point) =>
-        (point.name || siteLocale.msg['housing.vacant']()).toLowerCase().includes(search) ||
+        (point.name || msg['housing.vacant']()).toLowerCase().includes(search) ||
         point.guid.toLowerCase().includes(search),
     );
 
@@ -156,7 +156,7 @@
       value={searchValue}
       name="search"
       type="search"
-      placeholder={siteLocale.msg['map.search_placeholder']()}
+      placeholder={msg['map.search_placeholder']()}
       class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-lg hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
@@ -207,10 +207,10 @@
                   <HighlightText
                     text={point.pointType === PointType.House
                       ? point.name
-                        ? siteLocale.msg['housing.owned_house']({
+                        ? msg['housing.owned_house']({
                             owner: point.name,
                           })
-                        : siteLocale.msg['housing.vacant_house']()
+                        : msg['housing.vacant_house']()
                       : point.name}
                     highlight={searchValue}
                     caseInSensitive
@@ -222,7 +222,7 @@
                   <div class="flex flex-col text-neutral-300">
                     {#if point.supplyText}
                       <div class="text-xs">
-                        {siteLocale.msg['delivery.supply']()}: <HighlightText
+                        {msg['delivery.supply']()}: <HighlightText
                           text={point.supplyText}
                           highlight={searchValue}
                           caseInSensitive
@@ -233,7 +233,7 @@
                     {/if}
                     {#if point.demandText}
                       <div class="text-xs">
-                        {siteLocale.msg['delivery.demand']()}: <HighlightText
+                        {msg['delivery.demand']()}: <HighlightText
                           text={point.demandText}
                           highlight={searchValue}
                           caseInSensitive
@@ -245,8 +245,8 @@
                   </div>
                 {:else if point.pointType === PointType.House}
                   <div class="text-xs text-neutral-300">
-                    {siteLocale.msg['housing.id']()}: <HighlightText
-                      text={point.guid || siteLocale.msg.unknown()}
+                    {msg['housing.id']()}: <HighlightText
+                      text={point.guid || msg.unknown()}
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
@@ -266,7 +266,7 @@
           {/each}
           {#if searchValue && foundValues.length > maxShow}
             <div class="px-3 py-2 italic text-neutral-300">
-              {siteLocale.msg['map.more_results']({
+              {msg['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
             </div>
@@ -290,9 +290,7 @@
           class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
         >
           <div class="px-3 py-2 italic text-neutral-300">
-            {searchValue
-              ? siteLocale.msg['map.no_results']()
-              : siteLocale.msg['map.start_search']()}
+            {searchValue ? msg['map.no_results']() : msg['map.start_search']()}
           </div>
         </Card>
       </div>

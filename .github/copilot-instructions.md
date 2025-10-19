@@ -8,7 +8,7 @@ This is a **SvelteKit static site** using modern Svelte 5 with TypeScript, built
 
 - **Svelte 5**: Uses new runes syntax (`$state`, `$derived`, `$effect`, `$props`) and snippets
 - **UnoCSS with Wind4 preset**: Tailwind CSS v4.0 syntax with Svelte Scoped integration
-- **Paraglide i18n**: All user-facing text must use `siteLocale.msg['message.key']()` from `$lib/components/Locale/locale.svelte`
+- **Paraglide i18n**: All user-facing text must use `msg['message.key']()` from `$lib/paraglide/messages`
 - **Static generation**: Build outputs to `build/` directory with prerendered pages
 
 ## Critical Development Patterns
@@ -19,13 +19,13 @@ Every user-facing string must use Paraglide:
 
 ```svelte
 <script>
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
-<h1>{siteLocale.msg['site_name']()}</h1><p>{siteLocale.msg['radio.title']()}</p>
+<h1>{msg['site_name']()}</h1><p>{msg['radio.title']()}</p>
 ```
 
-**Important**: Use `siteLocale.msg['key']()` syntax for internationalized strings.
+**Important**: Use `msg['key']()` syntax for internationalized strings.
 
 ### Component Architecture
 
@@ -131,7 +131,7 @@ src/
 ## Common Gotchas
 
 2. **UnoCSS Compatibility**: Some Tailwind classes might not work in UnoCSS - refer to Wind4 preset documentation
-3. **i18n**: Never hardcode user-facing strings - always use `siteLocale.msg['key']()`
+3. **i18n**: Never hardcode user-facing strings - always use `msg['key']()`
 4. **Svelte 5**: Use new runes syntax, not legacy `$:` reactive statements
 5. **Context**: UI components often depend on parent context (InputGroup, Select, etc.)
 6. **Static Generation**: Site must be statically generable

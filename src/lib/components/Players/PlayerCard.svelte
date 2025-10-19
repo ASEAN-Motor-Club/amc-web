@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
@@ -45,19 +45,19 @@
       color="info"
       onClick={() => onCenter([player.coord.x, player.coord.y])}
     >
-      {siteLocale.msg.view_on_map()}
+      {msg.view_on_map()}
     </Button>
   </div>
 
   <div class="text-sm opacity-85">
     {player.vehicleKey !== 'None'
-      ? siteLocale.msg['players.details_driving']({
+      ? msg['players.details_driving']({
           vehicle: vehicleName
             ? getMtLocale(vehicleName)
-            : siteLocale.msg['map.player_info.unknown_vehicle'](),
+            : msg['map.player_info.unknown_vehicle'](),
           location: getLocationAtPoint(player.coord),
         })
-      : siteLocale.msg['players.details']({
+      : msg['players.details']({
           location: getLocationAtPoint(player.coord),
         })}
   </div>

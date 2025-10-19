@@ -5,12 +5,11 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import Select from '$lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
-  import { mtLocale } from '../Locale/locale.svelte';
+  import { mtLocale, setLocale } from '../Locale/locale.svelte';
   import type { MtLocaleKey } from '$lib/data/types';
-  import type { Locale } from '$lib/paraglide/runtime';
-  import { setLocale } from '$lib/components/Locale/locale.svelte';
+  import { getLocale, type Locale } from '$lib/paraglide/runtime';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import { fade } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
@@ -102,7 +101,7 @@
     >
       <Card class="w-full">
         <div class="flex items-center justify-between gap-2">
-          <div class="font-semibold">{siteLocale.msg['settings.theme.title']()}</div>
+          <div class="font-semibold">{msg['settings.theme.title']()}</div>
           <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
             {#snippet prependIcon()}
               <Icon
@@ -113,31 +112,29 @@
                 ]}
               />
             {/snippet}
-            {darkMode
-              ? siteLocale.msg['settings.theme.dark']()
-              : siteLocale.msg['settings.theme.light']()}
+            {darkMode ? msg['settings.theme.dark']() : msg['settings.theme.light']()}
           </Button>
         </div>
         <Divider spacing="sm" />
         <div class="mb-2 flex items-center justify-between gap-2">
           <div class="truncate whitespace-nowrap font-semibold">
-            {siteLocale.msg['settings.site_language']()}
+            {msg['settings.site_language']()}
           </div>
           <Select
             name="siteLocale"
-            value={siteLocale.l}
+            value={getLocale()}
             onChange={changeSiteLocale}
             class="w-3/5 flex-none"
             menuClass="max-h-[50svh]"
           >
             {#each siteLocales as localeKey (localeKey)}
-              <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
+              <SelectOption id={localeKey} value={msg[`locales.${localeKey}`]()} />
             {/each}
           </Select>
         </div>
         <div class="flex items-center justify-between gap-2">
           <div class="truncate whitespace-nowrap font-semibold">
-            {siteLocale.msg['settings.game_language']()}
+            {msg['settings.game_language']()}
           </div>
           <Select
             name="mtLocale"
@@ -147,7 +144,7 @@
             menuClass="max-h-[50svh]"
           >
             {#each mtLocales as localeKey (localeKey)}
-              <SelectOption id={localeKey} value={siteLocale.msg[`locales.${localeKey}`]()} />
+              <SelectOption id={localeKey} value={msg[`locales.${localeKey}`]()} />
             {/each}
           </Select>
         </div>

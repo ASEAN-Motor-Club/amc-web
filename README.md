@@ -95,13 +95,13 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
 </script>
 
-<h1>{siteLocale.msg['site_name']()}</h1>
+<h1>{msg['site_name']()}</h1>
 ```
 
-**Important**: Use `siteLocale.msg['key']()` syntax for internationalized strings.
+**Important**: Use `msg['key']()` syntax for internationalized strings.
 
 ## 🎨 Styling
 

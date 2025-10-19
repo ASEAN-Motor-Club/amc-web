@@ -2,7 +2,7 @@
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
   import type { DeliveryCargo } from '$lib/data/types';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { SvelteDate } from 'svelte/reactivity';
@@ -106,7 +106,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
-      {siteLocale.msg['delivery.supply']()}
+      {msg['delivery.supply']()}
     </div>
     {#each hoverInfo.info.allSupply as item (item)}
       <div class="flex justify-between gap-10">
@@ -131,7 +131,7 @@
   <div class="flex flex-col text-xs">
     <div class="font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
-      {siteLocale.msg['delivery.demand']()}
+      {msg['delivery.demand']()}
     </div>
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
@@ -161,7 +161,7 @@
   <div class="text-xs">
     <span class="font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
-      {siteLocale.msg['map.last_updated']()}:
+      {msg['map.last_updated']()}:
       {#if deliveryPointInfoLoading}
         <span class="animate-pulse">...</span>
       {:else}

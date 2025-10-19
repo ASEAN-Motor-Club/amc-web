@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type Snippet, onMount } from 'svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import { getStreamUrl } from '$lib/api/radio';
   import { setGlobalPlayerContext } from './context';
 
@@ -62,7 +62,7 @@
   function handleBeforeUnload(event: BeforeUnloadEvent) {
     if (isPlaying) {
       event.preventDefault();
-      return siteLocale.msg['radio.leave_warning']();
+      return msg['radio.leave_warning']();
     }
   }
 

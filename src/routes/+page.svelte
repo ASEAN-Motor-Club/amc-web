@@ -1,6 +1,6 @@
 <script lang="ts">
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import { SvelteDate } from 'svelte/reactivity';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -27,13 +27,13 @@
   const year = $derived(date.getFullYear());
 
   const features = $derived([
-    siteLocale.msg['home.friendly_community'](),
-    siteLocale.msg['home.regular_events'](),
-    siteLocale.msg['home.ig_live_radio'](),
-    siteLocale.msg['home.ig_bot'](),
+    msg['home.friendly_community'](),
+    msg['home.regular_events'](),
+    msg['home.ig_live_radio'](),
+    msg['home.ig_bot'](),
   ]);
 
-  const title = $derived(siteLocale.msg.site_name());
+  const title = $derived(msg.site_name());
 </script>
 
 <svelte:head>
@@ -71,13 +71,13 @@
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
-            {siteLocale.msg['home.live_server_no_count']()}
+            {msg['home.live_server_no_count']()}
           </Button>
         </div>
         <h1
           class="z-100 text-text-dark font-sans-alt pointer-events-none mb-4 select-none text-center text-7xl sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
-          {siteLocale.msg.site_name()}
+          {msg.site_name()}
         </h1>
         <div class="sm:mb-15 mb-6 flex flex-wrap justify-center gap-1.5 sm:justify-start">
           {#each features as feature (feature)}
@@ -97,7 +97,7 @@
             tag="a"
             href={PUBLIC_DISCORD_LINK}
             target="_blank"
-            rel="noreferrer">{siteLocale.msg['home.join_discord']()}</Button
+            rel="noreferrer">{msg['home.join_discord']()}</Button
           >
           <div class="rounded-md bg-white">
             <Button
@@ -106,7 +106,7 @@
               tag="a"
               href={PUBLIC_PATREON_LINK}
               target="_blank"
-              rel="noreferrer">{siteLocale.msg['home.join_patreon']()}</Button
+              rel="noreferrer">{msg['home.join_patreon']()}</Button
             >
           </div>
           <Button
@@ -114,7 +114,7 @@
             tag="a"
             href="/radio"
             class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/12.5 backdrop-blur-xs"
-            >{siteLocale.msg['home.listen_radio']()}</Button
+            >{msg['home.listen_radio']()}</Button
           >
         </div>
       </div>
@@ -128,16 +128,16 @@
   >
     <div>
       <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">
-        {siteLocale.msg['home.desc_title']()}
+        {msg['home.desc_title']()}
       </h2>
-      <p class="text-lg">{siteLocale.msg['home.description']()}</p>
+      <p class="text-lg">{msg['home.description']()}</p>
       <div class="text-text/75 dark:text-text-dark/75 mt-2 text-sm">
-        {siteLocale.msg['home.copyright']({ year })}
+        {msg['home.copyright']({ year })}
       </div>
     </div>
     <div class="justify-self-end">
       <iframe
-        title={siteLocale.msg['home.iframe_discord']()}
+        title={msg['home.iframe_discord']()}
         src="https://discordapp.com/widget?id=1341775494026231859&theme=dark"
         allowtransparency
         frameborder="0"

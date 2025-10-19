@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
@@ -53,7 +53,7 @@
   <div
     class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
   >
-    {siteLocale.msg['radio.station_name']()}
+    {msg['radio.station_name']()}
   </div>
 
   <div class="flex flex-1 flex-col bg-[#d2b48c] md:flex-row">
@@ -87,7 +87,7 @@
             <Icon class="i-material-symbols:play-arrow-rounded" />
           {/if}
         {/snippet}
-        {playerContext.isPlaying ? siteLocale.msg['radio.pause']() : siteLocale.msg['radio.play']()}
+        {playerContext.isPlaying ? msg['radio.pause']() : msg['radio.play']()}
       </Button>
       <Slider
         value={playerContext.volume}

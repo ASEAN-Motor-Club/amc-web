@@ -8,7 +8,7 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import Delivery from './Delivery.svelte';
   import { ALL_MENU } from './constants';
@@ -166,7 +166,7 @@
           href="/map"
         >
           <Icon class="i-material-symbols:map-outline-rounded" />
-          <span class="truncate">{siteLocale.msg['map.side_menu.map']()}</span>
+          <span class="truncate">{msg['map.side_menu.map']()}</span>
         </Button>
       </div>
       <Button
@@ -180,7 +180,7 @@
         href={getCollapsibleHref('players')}
       >
         <Icon class="i-material-symbols:person-outline-rounded" />
-        <span class="truncate">{siteLocale.msg['map.side_menu.players']()}</span>
+        <span class="truncate">{msg['map.side_menu.players']()}</span>
       </Button>
       <Button
         class={[
@@ -192,7 +192,7 @@
         href={getCollapsibleHref('housing')}
       >
         <Icon class="i-material-symbols:home-outline-rounded" />
-        <span class="truncate">{siteLocale.msg['map.side_menu.housing']()}</span>
+        <span class="truncate">{msg['map.side_menu.housing']()}</span>
       </Button>
     </div>
     <!-- <Button
@@ -205,7 +205,7 @@
       href={getCollapsibleHref('jobs')}
     >
       <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
-      <span class="truncate">{siteLocale.msg['map.side_menu.jobs']()}</span>
+      <span class="truncate">{msg['map.side_menu.jobs']()}</span>
     </Button> -->
     {#if openCollapsible === 'delivery' && openCollapsibleId}
       <div
@@ -221,7 +221,7 @@
           href={getCollapsibleHref('delivery/' + openCollapsibleId)}
         >
           <Icon class="i-material-symbols:box-outline-rounded" />
-          <span class="truncate">{siteLocale.msg['map.side_menu.delivery']()}</span>
+          <span class="truncate">{msg['map.side_menu.delivery']()}</span>
         </Button>
       </div>
     {/if}

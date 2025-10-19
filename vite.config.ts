@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       paraglideVitePlugin({
         project: './project.inlang',
         outdir: './src/lib/paraglide',
-        strategy: ['localStorage', 'baseLocale'],
+        strategy: ['custom-svelteReactiveLocale', 'baseLocale'],
         localStorageKey: 'siteLocale',
       }),
       analyzer({

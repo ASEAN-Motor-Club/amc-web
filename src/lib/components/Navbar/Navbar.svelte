@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
@@ -23,39 +23,39 @@
   const links: NavbarItemType[] = $derived([
     {
       href: '/map',
-      label: siteLocale.msg['navbar.map'](),
+      label: msg['navbar.map'](),
       icon: mapIcon,
       subItems: [
         {
           href: '/players',
-          label: siteLocale.msg['navbar.players'](),
+          label: msg['navbar.players'](),
           icon: playerIcon,
         },
         {
           href: '/housing',
-          label: siteLocale.msg['navbar.housing'](),
+          label: msg['navbar.housing'](),
           icon: housingIcon,
         },
         // {
         //   href: '/jobs',
-        //   label: siteLocale.msg['navbar.jobs'](),
+        //   label: msg['navbar.jobs'](),
         //   icon: jobIcon,
         // },
       ],
     },
     {
-      label: siteLocale.msg['navbar.tools'](),
+      label: msg['navbar.tools'](),
       icon: toolsIcon,
       subItems: [
         {
           href: 'https://wiki.aseanmotorclub.com/',
-          label: siteLocale.msg['navbar.wiki'](),
+          label: msg['navbar.wiki'](),
           icon: wikiIcon,
           external: true,
         },
         {
           href: '/track',
-          label: siteLocale.msg['navbar.track_editor'](),
+          label: msg['navbar.track_editor'](),
           icon: trackIcon,
           exact: false,
         },
@@ -63,19 +63,19 @@
     },
     {
       href: '/radio',
-      label: siteLocale.msg['navbar.radio'](),
+      label: msg['navbar.radio'](),
       textClass: playerContext.isPlaying ? '!text-orange-500' : undefined,
       icon: radioIcon,
     },
     {
       href: '/championship',
-      label: siteLocale.msg['navbar.amc_cup'](),
+      label: msg['navbar.amc_cup'](),
       icon: trophyIcon,
       textClass: 'text-amber-600 dark:text-amber-400',
       subItems: [
         {
           href: '/championship/details',
-          label: siteLocale.msg['navbar.details'](),
+          label: msg['navbar.details'](),
           icon: champDetailsIcon,
         },
       ],
@@ -177,7 +177,7 @@
       tag="a"
       href={PUBLIC_DISCORD_LINK}
       target="_blank"
-      rel="noreferrer">{siteLocale.msg['navbar.join_discord']()}</Button
+      rel="noreferrer">{msg['navbar.join_discord']()}</Button
     >
   </div>
 {/snippet}
@@ -189,7 +189,7 @@
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
-    {siteLocale.msg.site_name()}
+    {msg.site_name()}
   </a>
   {#if isLg.current}
     <div class="flex h-full items-stretch gap-6">
@@ -205,7 +205,7 @@
         }}
       >
         <a href="/" class="font-sans-alt my-4 text-2xl" onclick={() => setMenu(false)}>
-          {siteLocale.msg.site_name()}
+          {msg.site_name()}
         </a>
         {@render menuItems(true)}
       </div>

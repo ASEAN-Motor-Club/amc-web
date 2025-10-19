@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import { getDateFnsLocale, format } from '$lib/date';
   import EventButton from './EventButton.svelte';
@@ -71,7 +71,7 @@
 <Card class="overflow-hidden">
   <div class="h-15 -m-4 mb-4 flex items-center justify-between bg-neutral-500/10 pl-4 pr-2">
     <h4 class="text-xl font-medium">
-      {format(new Date(year, month - 1, 1), siteLocale.msg['format.calendarFormat']())}
+      {format(new Date(year, month - 1, 1), msg['format.calendarFormat']())}
     </h4>
     <div class="flex gap-3">
       <Button

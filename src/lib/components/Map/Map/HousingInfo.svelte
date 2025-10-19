@@ -4,7 +4,8 @@
   import { SvelteDate } from 'svelte/reactivity';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
+  import { getLocale } from '$lib/paraglide/runtime';
 
   export interface HoverInfo {
     info: House;
@@ -46,7 +47,7 @@
     const time = date.getTime();
 
     if (isBefore(currentHouseData.rentLeft, time)) {
-      return siteLocale.msg['housing.expired']();
+      return msg['housing.expired']();
     }
 
     return formatDistanceStrict(currentHouseData.rentLeft, time, {
@@ -57,27 +58,27 @@
 
 <div class="flex flex-col text-xs">
   <div>
-    <span class="font-semibold">{siteLocale.msg['housing.id']()}:</span>
+    <span class="font-semibold">{msg['housing.id']()}:</span>
     {hoverInfo.info.name}
   </div>
   <div>
-    <span class="font-semibold">{siteLocale.msg['housing.size']()}:</span>
+    <span class="font-semibold">{msg['housing.size']()}:</span>
     {hoverInfo.info.size.x / 100} x {hoverInfo.info.size.y / 100}
   </div>
   <div>
-    <span class="font-semibold">{siteLocale.msg['housing.rent_price']()}:</span>
-    {(hoverInfo.info.cost / 10).toLocaleString(siteLocale.l)}
+    <span class="font-semibold">{msg['housing.rent_price']()}:</span>
+    {(hoverInfo.info.cost / 10).toLocaleString(getLocale())}
   </div>
   {#if currentHouseData?.ownerName}
     <div>
-      <span class="font-semibold">{siteLocale.msg['housing.rent_left']()}:</span>
+      <span class="font-semibold">{msg['housing.rent_left']()}:</span>
       {rentLeftText}
     </div>
   {/if}
   <!-- <div>
-    <span class="font-semibold">{siteLocale.msg['housing.depot']()}:</span> TODO
+    <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
   </div>
   <div>
-    <span class="font-semibold">{siteLocale.msg['housing.depot_storage']()}:</span> TODO
+    <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
   </div> -->
 </div>

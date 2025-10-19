@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
   const title = $derived(
-    siteLocale.msg['map.head']({
-      siteName: siteLocale.msg.site_name_short(),
+    msg['map.head']({
+      siteName: msg.site_name_short(),
     }),
   );
 </script>

@@ -10,7 +10,7 @@
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
 
   interface Props {
     id: string;
@@ -81,7 +81,7 @@
       {#if deliveryPoint.allSupply.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {siteLocale.msg['delivery.supply']()}
+            {msg['delivery.supply']()}
           </div>
           {#each deliveryPoint.allSupply as item (item)}
             <div
@@ -102,7 +102,7 @@
       {#if deliveryPoint.allDemand.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {siteLocale.msg['delivery.demand']()}
+            {msg['delivery.demand']()}
           </div>
           {#each deliveryPoint.allDemand as item (item)}
             <div
@@ -144,7 +144,7 @@
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {siteLocale.msg['delivery.delivery']()}
+            {msg['delivery.delivery']()}
           </div>
         </Card>
       </div>

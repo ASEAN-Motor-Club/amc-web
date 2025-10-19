@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { siteLocale } from '$lib/components/Locale/locale.svelte';
+  import { m as msg } from '$lib/paraglide/messages';
 
   const { children } = $props();
   const title = $derived(
-    siteLocale.msg['delivery.head']({
-      siteName: siteLocale.msg.site_name_short(),
+    msg['delivery.head']({
+      siteName: msg.site_name_short(),
     }),
   );
 </script>
