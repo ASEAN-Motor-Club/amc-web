@@ -18,7 +18,6 @@
   import { m as msg } from '$lib/paraglide/messages';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   defineCustomClientStrategy('custom-svelteReactiveLocale', {
     getLocale: () => {

@@ -38,7 +38,7 @@
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import { LineString } from 'ol/geom';
-  import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '$lib/data/types';
+  import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
   import { m as msg } from '$lib/paraglide/messages';
@@ -48,7 +48,7 @@
   import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
   import * as z from 'zod/mini';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import outCargoKey from '$lib/assets/data/out_cargo_key.json';
+  import { getMatchJobFn } from '$lib/utils/matchJob';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -856,24 +856,10 @@
     hoverInfo = undefined;
   };
 
-  const flattenCargoType = (cargo: DeliveryCargo): DeliveryCargoKey[] => {
-    return cargo.startsWith('_T')
-      ? (outCargoKey[cargo as DeliveryCargoType] as DeliveryCargoKey[])
-      : [cargo as DeliveryCargoKey];
-  };
-
   $effect(() => {
     for (const d of deliveryPointFeatures) {
       const info = d.get('info') as DeliveryPoint;
-      const matchJob = jobsData.some(
-        (job) =>
-          job.cargos.some((cargo) =>
-            flattenCargoType(cargo.key).some((cargoKey) => info.allSupplyKey.includes(cargoKey)),
-          ) &&
-          (job.source_points.length > 0
-            ? job.source_points.some((point) => point.guid === info.guid)
-            : true),
-      );
+      const matchJob = jobsData.some(getMatchJobFn(info));
       if (matchJob) {
         d.set('jobs', 1);
       } else {

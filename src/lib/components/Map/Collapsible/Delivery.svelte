@@ -1,6 +1,6 @@
 <script lang="ts">
   import { startDeliveryPointPolling } from '$lib/api/delivery';
-  import type { DeliveryPointInfo } from '$lib/api/types';
+  import type { DeliveryJob, DeliveryPointInfo } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { cargoName } from '$lib/data/cargo';
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
@@ -14,13 +14,15 @@
   import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
+  import { getMatchJobFn } from '$lib/utils/matchJob';
 
   interface Props {
     id: string;
     fullScreen: boolean;
+    jobsData: DeliveryJob[];
   }
 
-  const { id, fullScreen }: Props = $props();
+  const { id, fullScreen, jobsData }: Props = $props();
 
   let deliveryPointInfoLoading: boolean = $state(true);
   let deliveryPointInfo = $state<DeliveryPointInfo | undefined>(undefined);
@@ -53,6 +55,15 @@
     return `?${newParams.toString()}`;
   };
 
+  const getJobHref = (_: number) => {
+    if (fullScreen) {
+      return `/jobs`;
+    }
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.set('menu', `jobs`);
+    return `?${newParams.toString()}`;
+  };
+
   const findDropPoint = (cargoKey: DeliveryCargo) => {
     if (!deliveryPoint) return undefined;
     for (const dropGuid of deliveryPoint.dropPoint ?? []) {
@@ -70,6 +81,12 @@
   });
 
   const svelteDate = createSvelteDate();
+
+  const matchJobs = $derived.by(() => {
+    const info = deliveryPointsMap.get(id);
+    if (!info) return [];
+    return jobsData.filter(getMatchJobFn(info));
+  });
 </script>
 
 <div class="flex h-full flex-col overflow-y-auto">
@@ -100,8 +117,32 @@
     </div>
   {/if}
 
+  {#if matchJobs.length > 0}
+    <div class="px-8 pb-8">
+      <Card class="flex-1 p-0">
+        <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          {msg['jobs.title']()}
+        </div>
+        {#each matchJobs as job (job.id)}
+          <div
+            class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+          >
+            <a
+              href={getJobHref(job.id)}
+              class="text-orange-600 underline hover:text-yellow-500 dark:text-orange-500 dark:hover:text-yellow-400"
+              >{job.name}</a
+            >
+            <div class="whitespace-nowrap">
+              {job.quantity_fulfilled}/{job.quantity_requested}
+            </div>
+          </div>
+        {/each}
+      </Card>
+    </div>
+  {/if}
+
   {#if deliveryPoint}
-    <div class={['flex flex-col gap-4 px-8 pb-8', fullScreen && 'sm:flex-row']}>
+    <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-4']}>
       {#if deliveryPoint.allSupply.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">

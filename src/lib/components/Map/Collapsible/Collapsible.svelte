@@ -262,7 +262,7 @@
             class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
             transition:fade={{ duration: defaultTransitionDurationMs }}
           >
-            <Delivery id={openCollapsibleId} fullScreen={showFull} />
+            <Delivery id={openCollapsibleId} fullScreen={showFull} {jobsData} />
           </div>
         {/key}
       {/if}
