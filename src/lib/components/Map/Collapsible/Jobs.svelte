@@ -34,7 +34,7 @@
         {/if}
       </div>
     {:else}
-      <div class="p-8 text-center text-sm text-gray-500">
+      <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
         {msg['jobs.no_jobs']()}
       </div>
     {/if}

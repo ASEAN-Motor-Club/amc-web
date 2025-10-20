@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { startDeliveryJobsPolling } from '$lib/api/delivery';
   import { getHousingData } from '$lib/api/housing';
@@ -10,9 +11,10 @@
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
   import type { DeliveryCargo } from '$lib/data/types';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
-  import { onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+  import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
 
   const { children } = $props();
 
@@ -21,7 +23,7 @@
       case 'housing':
         return ['housing', ''];
       case 'jobs':
-        return ['jobs', ''];
+        return ['jobs', page.params.id ?? ''];
       case 'players':
         return ['players', ''];
       case 'delivery':
@@ -30,6 +32,15 @@
         const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
         return [menu, id];
       }
+    }
+  });
+
+  onMount(() => {
+    if (!isSm.current && page.url.pathname === '/map' && openCollapsible) {
+      const newParams = new SvelteURLSearchParams(clientSearchParams());
+      newParams.delete('menu');
+      const str = newParams.toString();
+      goto(`/${openCollapsible}${str ? `?${str}` : ''}`);
     }
   });
 
@@ -106,6 +117,7 @@
   let stopJobsDataPolling: (() => void) | undefined = undefined;
 
   let jobsData: DeliveryJob[] = $state([]);
+  let jobsCache: SvelteMap<number, DeliveryJob> = new SvelteMap<number, DeliveryJob>();
   let jobsDataLoading = $state(true);
 
   $effect(() => {
@@ -119,6 +131,9 @@
               key: cargo.key.replace('T::', '_T') as DeliveryCargo,
             })),
           }));
+          for (const job of jobsData) {
+            jobsCache.set(job.id, job);
+          }
           jobsDataLoading = false;
         });
       }
@@ -165,6 +180,7 @@
     {houseDataLoading}
     {jobsData}
     {jobsDataLoading}
+    {jobsCache}
     onCenter={handleCenter}
   />
 </div>

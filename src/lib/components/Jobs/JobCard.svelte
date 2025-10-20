@@ -9,6 +9,7 @@
   import { deliveryPointsMap } from '$lib/data/deliveryPoint';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import Button from '$lib/ui/Button/Button.svelte';
 
   export interface Props {
     job?: DeliveryJob;
@@ -51,18 +52,31 @@
   });
 
   const getDeliveryPointHref = (guid: string) => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('player');
+    newParams.delete('house');
+    newParams.set('delivery', guid);
     if (fullScreen) {
+      newParams.delete('menu');
       return `/delivery/${guid}`;
     }
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.set('menu', `delivery/${guid}`);
-    newParams.set('delivery', guid);
+    return `?${newParams.toString()}`;
+  };
+
+  const getJobDetailsHref = (id: number) => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    if (fullScreen) {
+      newParams.delete('menu');
+      return `/jobs/${id}`;
+    }
+    newParams.set('menu', `jobs/${id}`);
     return `?${newParams.toString()}`;
   };
 </script>
 
-<Card class={['relative overflow-hidden', expired && 'opacity-50']} {loading}>
-  <h2 class="mb-2 flex-1 truncate text-lg font-semibold">
+<Card class={['relative flex flex-col overflow-hidden', expired && 'opacity-50']} {loading}>
+  <h2 class="mb-2 truncate text-lg font-semibold">
     {#if loading}
       .
     {:else}
@@ -70,7 +84,7 @@
     {/if}
   </h2>
   <div class="mb-2 text-3xl font-bold tabular-nums">
-    {job?.quantity_fulfilled} <span class="opacity-85">/</span>
+    {job?.quantity_fulfilled} <span class="opacity-50">/</span>
     {job?.quantity_requested}
   </div>
   <div class="mb-2 text-sm font-semibold">
@@ -83,7 +97,7 @@
     <span class="font-semibold">{msg['jobs.completion_bonus']()}:</span>
     {job?.completion_bonus}
   </div>
-  <div class="text-sm">
+  <div class="mb-2 text-sm">
     <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>
     <br />
     <span class="font-semibold">{msg['jobs.constrains_cargo']()}:</span>
@@ -109,12 +123,23 @@
           >{getMtLocale(deliveryPointsMap.get(point.guid)?.name ?? {})}</a
         >{i < job.destination_points.length - 1 ? ', ' : ''}
       {/each}
-      <br />
     {/if}
   </div>
   {#if job?.description}
-    <div class="mt-2 text-sm opacity-85">
+    <div class="mb-2 mt-2 text-sm opacity-85">
       {job.description}
     </div>
   {/if}
+  <div class="flex-1"></div>
+  <div class="-m-2 mt-0.5">
+    <Button
+      variant="text"
+      tag="a"
+      href={getJobDetailsHref(job?.id ?? -1)}
+      color="primary"
+      size="sm"
+    >
+      {msg['championship.event.more_info']()}
+    </Button>
+  </div>
 </Card>

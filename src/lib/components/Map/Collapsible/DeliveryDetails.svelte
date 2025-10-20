@@ -46,21 +46,25 @@
     utilGetInventoryAmount(deliveryPointInfo, cargoKey, isInput);
 
   const getDeliveryPointHref = (guid: string) => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('player');
+    newParams.delete('house');
+    newParams.set('delivery', guid);
     if (fullScreen) {
+      newParams.delete('menu');
       return `/delivery/${guid}`;
     }
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.set('menu', `delivery/${guid}`);
-    newParams.set('delivery', guid);
     return `?${newParams.toString()}`;
   };
 
-  const getJobHref = (_: number) => {
-    if (fullScreen) {
-      return `/jobs`;
-    }
+  const getJobHref = (id: number) => {
     const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.set('menu', `jobs`);
+    if (fullScreen) {
+      newParams.delete('menu');
+      return `/jobs/${id}`;
+    }
+    newParams.set('menu', `jobs/${id}`);
     return `?${newParams.toString()}`;
   };
 
@@ -87,6 +91,16 @@
     if (!info) return [];
     return jobsData.filter(getMatchJobFn(info));
   });
+
+  const viewOnMapHref = $derived.by(() => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('house');
+    newParams.delete('player');
+    newParams.delete('menu');
+    newParams.set('delivery', id);
+
+    return `/map?${newParams.toString()}`;
+  });
 </script>
 
 <div class="flex h-full flex-col overflow-y-auto">
@@ -94,7 +108,7 @@
     {getMtLocale(deliveryPoint?.name ?? {})}
   </CommonHead>
   <div class="px-8 pb-8 sm:hidden">
-    <Button color="info" variant="contained-light" tag="a" href="/map?delivery={id}"
+    <Button color="info" variant="contained-light" tag="a" href={viewOnMapHref}
       >{msg.view_on_map()}</Button
     >
   </div>
@@ -144,7 +158,7 @@
   {#if deliveryPoint}
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-4']}>
       {#if deliveryPoint.allSupply.length > 0}
-        <Card class="flex-1 p-0">
+        <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
             {msg['delivery.supply']()}
           </div>
@@ -165,7 +179,7 @@
         </Card>
       {/if}
       {#if deliveryPoint.allDemand.length > 0}
-        <Card class="flex-1 p-0">
+        <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
             {msg['delivery.demand']()}
           </div>
@@ -173,9 +187,7 @@
             <div
               class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
             >
-              <div
-                class="flex flex-1 items-center items-baseline overflow-hidden whitespace-nowrap"
-              >
+              <div class="flex flex-1 items-baseline overflow-hidden whitespace-nowrap">
                 {getMtLocale(cargoName[item])}
                 {#snippet dropPointName(dropPoint: DeliveryPoint | undefined)}
                   {#if dropPoint}

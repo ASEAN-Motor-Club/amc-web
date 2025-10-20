@@ -157,7 +157,8 @@
       "players": "PLAYER"
     },
     "start_search": "Start typing to search...",
-    "no_results": "No results found."
+    "no_results": "No results found.",
+    "jobs_only": "Jobs Only"
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
@@ -282,7 +283,10 @@
     "constrains": "Constrains",
     "constrains_cargo": "Cargo",
     "constrains_source_points": "From",
-    "constrains_destination_points": "To"
+    "constrains_destination_points": "To",
+    "contributors": "Contributors",
+    "no_contributors": "No contributors yet. Be the first to take this job!",
+    "job_not_found": "The job you are looking for does not exist or has been expired."
   },
   "players": {
     "head": "{siteName} | Players",
@@ -294,6 +298,7 @@
     "no_results": "No players found."
   },
   "unknown_location": "unknown location",
+  "go_back": "Go Back",
   "locales": {
     "cs": "Čeština",
     "de": "Deutsch",

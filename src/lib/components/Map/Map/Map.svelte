@@ -656,7 +656,6 @@
   onMount(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(JOB_ONLY_STORAGE_KEY);
-      console.log('Loaded deliveryShowJobOnly:', saved);
       if (saved === '1') {
         deliveryShowJobOnly = true;
       }
@@ -665,7 +664,6 @@
 
   $effect(() => {
     if (typeof window !== 'undefined') {
-      console.log('Saving deliveryShowJobOnly:', deliveryShowJobOnly);
       localStorage.setItem(JOB_ONLY_STORAGE_KEY, deliveryShowJobOnly ? '1' : '0');
     }
   });
@@ -931,7 +929,7 @@
             }}
           >
             {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
-              Jobs Only
+              {msg['map.jobs_only']()}
             {:else}
               {layer.name}
             {/if}

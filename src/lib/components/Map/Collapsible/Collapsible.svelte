@@ -4,17 +4,18 @@
   import Housing from './Housing.svelte';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade, slide } from 'svelte/transition';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
   import { m as msg } from '$lib/paraglide/messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import Delivery from './Delivery.svelte';
+  import DeliveryDetails from './DeliveryDetails.svelte';
   import type { PlayerData } from '../Map/types';
   import Players from './Players.svelte';
   import Jobs from './Jobs.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
+  import JobDetails from './JobDetails.svelte';
 
   interface Props {
     showFull: boolean;
@@ -27,6 +28,7 @@
     houseDataLoading: boolean;
     jobsData: DeliveryJob[];
     jobsDataLoading: boolean;
+    jobsCache: SvelteMap<number, DeliveryJob>;
     onCenter: (point: [number, number]) => void;
   }
 
@@ -41,14 +43,16 @@
     houseDataLoading,
     jobsData,
     jobsDataLoading,
+    jobsCache,
     onCenter,
   }: Props = $props();
 
   const getCollapsibleHref = (collapsible: string) => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
     if (showFull || !isSm.current) {
+      newParams.delete('menu');
       return `/${collapsible}`;
     }
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.set('menu', collapsible);
     return `?${newParams.toString()}`;
   };
@@ -95,6 +99,13 @@
   const openCollapsibleClasses = 'sm:w-100 lg:w-120 xl:w-140';
 
   const showMapBtn = $derived(validOpenCollapsible && (!isSm.current || showFull));
+
+  const mapBtnHref = $derived.by(() => {
+    const newParams = new SvelteURLSearchParams(clientSearchParams());
+    newParams.delete('menu');
+    const str = newParams.toString();
+    return `/map${str ? `?${str}` : ''}`;
+  });
 </script>
 
 {#if isSm.current && showFullAnimate}
@@ -159,10 +170,10 @@
         ]}
       >
         <Button
-          class="h-full min-h-0 w-full min-w-12 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
+          class="h-full min-h-0 w-full min-w-12 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
           variant="contained-light"
           tag="a"
-          href="/map"
+          href={mapBtnHref}
         >
           <Icon class="i-material-symbols:map-outline-rounded" />
           <span class="truncate">{msg['map.side_menu.map']()}</span>
@@ -170,7 +181,7 @@
       </div>
       <Button
         class={[
-          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
+          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
           openCollapsible === 'players' &&
             'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
         ]}
@@ -183,7 +194,7 @@
       </Button>
       <Button
         class={[
-          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal transition hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
+          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
           openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
         ]}
         variant="contained-light"
@@ -196,7 +207,7 @@
 
       <Button
         class={[
-          'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[9px] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
+          'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
         variant="contained-light"
@@ -215,7 +226,7 @@
         }}
       >
         <Button
-          class="sm:h-13 h-12 w-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[9px] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          class="sm:h-13 h-12 w-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[0.625rem] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           variant="contained-light"
           tag="a"
           href={getCollapsibleHref('delivery/' + openCollapsibleId)}
@@ -230,7 +241,7 @@
     class={[
       'overflow-hidden duration-1000 motion-safe:transition-[width,height] sm:-ml-11 sm:h-full sm:pl-11',
       validOpenCollapsible
-        ? ['h-[calc(100dvh-112px)] w-screen', !showFull && openCollapsibleClasses]
+        ? ['h-[calc(100dvh-7rem)] w-screen', !showFull && openCollapsibleClasses]
         : 'h-0 sm:w-0',
     ]}
   >
@@ -249,12 +260,28 @@
         <Players {playerData} {playerDataLoading} fullScreen={showFull} {onCenter} />
       </div>
     {:else if openCollapsible === 'jobs'}
-      <div
-        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-        transition:fade={{ duration: defaultTransitionDurationMs }}
-      >
-        <Jobs {jobsData} loading={jobsDataLoading} fullScreen={showFull} />
-      </div>
+      {#if openCollapsibleId}
+        {#key openCollapsibleId}
+          <div
+            class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
+            transition:fade={{ duration: defaultTransitionDurationMs }}
+          >
+            <JobDetails
+              id={openCollapsibleId}
+              {jobsCache}
+              loading={jobsDataLoading}
+              fullScreen={showFull}
+            />
+          </div>
+        {/key}
+      {:else}
+        <div
+          class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
+          transition:fade={{ duration: defaultTransitionDurationMs }}
+        >
+          <Jobs {jobsData} loading={jobsDataLoading} fullScreen={showFull} />
+        </div>
+      {/if}
     {:else if openCollapsible === 'delivery'}
       {#if openCollapsibleId}
         {#key openCollapsibleId}
@@ -262,7 +289,7 @@
             class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
             transition:fade={{ duration: defaultTransitionDurationMs }}
           >
-            <Delivery id={openCollapsibleId} fullScreen={showFull} {jobsData} />
+            <DeliveryDetails id={openCollapsibleId} fullScreen={showFull} {jobsData} />
           </div>
         {/key}
       {/if}

@@ -8,14 +8,19 @@
      * CSS class to apply to the text skeleton component
      */
     class?: ClassValue;
+    lines?: number;
+    lineBreakClass?: ClassValue;
   }
 
-  const { class: propsClassName }: TextSkeletonProps = $props();
+  const { class: propsClassName, lines = 1, lineBreakClass }: TextSkeletonProps = $props();
 </script>
 
 <span
   class={twMerge(
     `inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent`,
     clsx(propsClassName),
-  )}>.</span
+  )}
+  >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br
+        class={lineBreakClass}
+      />{/if}{/each}.</span
 >
