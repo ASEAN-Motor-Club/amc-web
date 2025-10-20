@@ -7,8 +7,9 @@
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { format, isAfter, isBefore, isSameDay, isSameYear } from '$lib/date';
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
-  import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   interface EventModalProps {
     date?: Date;
@@ -43,25 +44,10 @@
         : msg['format.scheduleFormat.crossYear']();
   };
 
-  const today = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      today.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  });
+  const svelteDate = createSvelteDate();
 
   const pastEventTime = (event: ScheduledEvent) => {
-    return isBefore(event.start_time, today.getTime());
+    return isBefore(event.start_time, svelteDate.getTime());
   };
 
   const openEvent = (e: Event, event: ScheduledEvent) => {

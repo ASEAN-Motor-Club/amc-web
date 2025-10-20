@@ -1,14 +1,14 @@
 <script lang="ts">
   import Card from '$lib/ui/Card/Card.svelte';
   import type { DeliveryJob } from '$lib/api/types';
-  import { formatDuration, intervalToDuration, isBefore } from '$lib/date';
+  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
   import { m as msg } from '$lib/paraglide/messages';
-  import { SvelteDate, SvelteURLSearchParams } from 'svelte/reactivity';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
-  import type { DeliveryCargo } from '$lib/data/types';
   import { deliveryPointsMap } from '$lib/data/deliveryPoint';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   export interface Props {
     job?: DeliveryJob;
@@ -18,21 +18,13 @@
 
   const { job, fullScreen, loading }: Props = $props();
 
-  const date = new SvelteDate();
+  const svelteDate = createSvelteDate();
 
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
+  const expired = $derived.by(() => {
+    if (!job) {
+      return true;
+    }
+    return isBefore(job.expired_at, svelteDate.getTime());
   });
 
   const timeLeftText = $derived.by(() => {
@@ -40,19 +32,22 @@
       return '';
     }
 
-    const time = date.getTime();
-
     // If rent has expired
-    if (isBefore(job.expired_at, time)) {
+    if (expired) {
       return msg['jobs.expired']();
     }
+
+    const time = svelteDate.getTime();
 
     const duration = intervalToDuration({
       start: time,
       end: job.expired_at,
     });
 
-    return formatDuration(duration, { format: ['days', 'hours', 'minutes', 'seconds'] });
+    return (
+      formatDuration(duration, { format: ['days', 'hours', 'minutes', 'seconds'] }) ||
+      getDateFnsLocale().formatDistance('lessThanXSeconds', 1)
+    );
   });
 
   const getDeliveryPointHref = (guid: string) => {
@@ -66,7 +61,7 @@
   };
 </script>
 
-<Card class="relative overflow-hidden" {loading}>
+<Card class={['relative overflow-hidden', expired && 'opacity-50']} {loading}>
   <h2 class="mb-2 flex-1 truncate text-lg font-semibold">
     {#if loading}
       .
@@ -92,9 +87,7 @@
     <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>
     <br />
     <span class="font-semibold">{msg['jobs.constrains_cargo']()}:</span>
-    {job?.cargos
-      .map((point) => getMtLocale(cargoName[point.key.replace('T::', '_T') as DeliveryCargo]))
-      .join(', ')}
+    {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
     <br />
     {#if job?.source_points && job.source_points.length > 0}
       <span class="font-semibold">{msg['jobs.constrains_source_points']()}:</span>

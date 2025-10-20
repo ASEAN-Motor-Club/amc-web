@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { getHousingData } from '$lib/api/housing';
   import type { HouseData } from '$lib/api/types';
   import HouseCard from '$lib/components/Housing/HouseCard.svelte';
-  import { onMount } from 'svelte';
   import { houses } from '$lib/data/house';
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
@@ -10,41 +8,19 @@
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m as msg } from '$lib/paraglide/messages';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   interface Props {
+    houseData: HouseData | undefined;
+    loading: boolean;
     fullScreen: boolean;
   }
 
-  const { fullScreen }: Props = $props();
+  const { houseData, loading, fullScreen }: Props = $props();
 
-  let houseData: HouseData | undefined = $state(undefined);
   let searchValue = $state('');
-  let loading = $state(true);
-  const { showModal } = getMsgModalContext();
-
-  onMount(() => {
-    const abortController = new AbortController();
-    getHousingData(abortController.signal)
-      .then((data) => {
-        houseData = data;
-        loading = false;
-      })
-      .catch((error: unknown) => {
-        console.error('Error fetching housing data:', error);
-        showModal({
-          title: msg['housing.cannot_load.title'](),
-          message: msg['housing.cannot_load.desc'](),
-        });
-      });
-
-    return () => {
-      abortController.abort();
-    };
-  });
 
   const onSearch: FormEventHandler<HTMLInputElement> = (event) => {
     searchValue = event.currentTarget.value;
@@ -131,7 +107,7 @@
       <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
     </Select>
   </div>
-  <div class={loading ? 'overflow-y-hidden' : 'overflow-y-scroll'}>
+  <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if sortedHouses.length > 0}
       <div
         class={[

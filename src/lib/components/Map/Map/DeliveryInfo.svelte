@@ -5,14 +5,14 @@
   import { m as msg } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryPointInfo } from '$lib/api/types';
-  import { SvelteDate } from 'svelte/reactivity';
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
   import { startDeliveryPointPolling } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
-  import { onDestroy } from 'svelte';
+  import { onDestroy, untrack } from 'svelte';
   import { debounce } from 'lodash-es';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/getInventoryAmount';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -34,23 +34,6 @@
 
   const getInventoryAmount = (cargoKey: DeliveryCargo, isInput: boolean) =>
     utilGetInventoryAmount(deliveryPointInfo, cargoKey, isInput);
-
-  const date = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  });
 
   let deliveryPointInfoLoading: boolean = $state(true);
 
@@ -75,7 +58,7 @@
       return;
     }
 
-    const cache = deliveryInfoCaches.get(guid);
+    const cache = untrack(() => deliveryInfoCaches.get(guid));
     if (cache) {
       const deliveryPointInfoCache = cache;
       if (differenceInSeconds(new Date(), deliveryPointInfoCache.last_updated) <= 5) {
@@ -100,6 +83,8 @@
     debouncedGetInfo.cancel();
     stopPolling?.();
   });
+
+  const svelteDate = createSvelteDate();
 </script>
 
 {#if hoverInfo.info.allSupply.length}
@@ -157,7 +142,7 @@
     {/each}
   </div>
 {/if}
-{#if differenceInSeconds(date.getTime(), lastUpdated) > 30}
+{#if differenceInSeconds(svelteDate.getTime(), lastUpdated) > 30}
   <div class="text-xs">
     <span class="font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
@@ -165,7 +150,7 @@
       {#if deliveryPointInfoLoading}
         <span class="animate-pulse">...</span>
       {:else}
-        {formatDistanceStrict(lastUpdated, date.getTime(), {
+        {formatDistanceStrict(lastUpdated, svelteDate.getTime(), {
           addSuffix: true,
         })}
       {/if}

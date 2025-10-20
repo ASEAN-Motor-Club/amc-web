@@ -11,6 +11,9 @@ import {
   colorCyan300,
   colorCyan500,
   colorCyan600,
+  colorOrange300,
+  colorOrange500,
+  colorOrange600,
   colorYellow300,
   colorYellow500,
   colorYellow600,
@@ -45,13 +48,20 @@ export function getStaticPoints() {
       features: deliveryPointFeatures,
     }),
     style: {
-      'circle-radius': 6,
+      'circle-opacity': ['match', ['get', 'jobOnly'], 1, ['match', ['get', 'jobs'], 1, 1, 0.5], 1],
+      'circle-radius': ['match', ['get', 'jobOnly'], 1, ['match', ['get', 'jobs'], 1, 6, 4], 6],
       'circle-fill-color': [
         'match',
         ['get', 'hover'],
         1,
-        colorYellow300,
-        ['match', ['get', 'selected'], 1, colorYellow600, colorYellow500],
+        ['match', ['get', 'jobs'], 1, colorOrange300, colorYellow300],
+        [
+          'match',
+          ['get', 'selected'],
+          1,
+          ['match', ['get', 'jobs'], 1, colorOrange600, colorYellow600],
+          ['match', ['get', 'jobs'], 1, colorOrange500, colorYellow500],
+        ],
       ],
       'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
       'circle-stroke-width': 1,
@@ -75,7 +85,8 @@ export function getStaticPoints() {
     }),
     minZoom: 4,
     style: {
-      'circle-radius': 5,
+      'circle-opacity': ['match', ['get', 'jobOnly'], 1, 0.5, 1],
+      'circle-radius': ['match', ['get', 'jobOnly'], 1, 3, 5],
       'circle-fill-color': [
         'match',
         ['get', 'hover'],

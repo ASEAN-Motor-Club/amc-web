@@ -1,4 +1,4 @@
-import type { DeliveryCargoKey } from '$lib/data/types';
+import type { DeliveryCargo, DeliveryCargoKey } from '$lib/data/types';
 import type { Track } from '$lib/schema/track';
 import type { Vector3 } from '../types';
 
@@ -157,7 +157,7 @@ export interface DeliveryJob {
 }
 
 export interface DeliveryJobCargo {
-  key: string;
+  key: DeliveryCargo;
   label: string;
 }
 

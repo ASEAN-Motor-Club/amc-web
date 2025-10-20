@@ -50,7 +50,7 @@
       onClear={() => (searchValue = '')}
     />
   </div>
-  <div class={playerDataLoading ? 'overflow-y-hidden' : 'overflow-y-scroll'}>
+  <div class={playerDataLoading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if playerDataLoading || filteredPlayers.length > 0}
       <div
         class="grid grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))] justify-items-stretch gap-8 px-8 pb-8"

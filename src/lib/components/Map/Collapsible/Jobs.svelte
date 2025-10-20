@@ -1,40 +1,26 @@
 <script lang="ts">
   import type { DeliveryJob } from '$lib/api/types';
-  import { onMount } from 'svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m as msg } from '$lib/paraglide/messages';
-  import { startDeliveryJobsPolling } from '$lib/api/delivery';
   import JobCard from '$lib/components/Jobs/JobCard.svelte';
 
   interface Props {
+    jobsData: DeliveryJob[];
+    loading: boolean;
     fullScreen: boolean;
   }
 
-  const { fullScreen }: Props = $props();
-
-  let jobsData: DeliveryJob[] = $state([]);
-  let loading = $state(true);
-
-  onMount(() => {
-    const stopPolling = startDeliveryJobsPolling((jobs) => {
-      jobsData = jobs;
-      loading = false;
-    });
-
-    return () => {
-      stopPolling();
-    };
-  });
+  const { jobsData, loading, fullScreen }: Props = $props();
 </script>
 
 <div class="flex h-full flex-col">
   <CommonHead>{msg['jobs.title']()}</CommonHead>
-  <div class={loading ? 'overflow-y-hidden' : 'overflow-y-scroll'}>
+  <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if loading || jobsData.length > 0}
       <div
         class={[
           'grid justify-items-stretch gap-8 px-8 pb-8',
-          fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]',
+          fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_100),_1fr))]',
         ]}
       >
         {#if loading}

@@ -1,28 +1,46 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { startDeliveryJobsPolling } from '$lib/api/delivery';
+  import { getHousingData } from '$lib/api/housing';
   import { getPlayerRealtimePosition } from '$lib/api/player';
+  import type { DeliveryJob, HouseData } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
   import Map from '$lib/components/Map/Map/Map.svelte';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
+  import type { DeliveryCargo } from '$lib/data/types';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
+  import { onDestroy } from 'svelte';
 
   const { children } = $props();
+
+  const [openCollapsible, openCollapsibleId] = $derived.by(() => {
+    switch (page.url.pathname.split('/')[1]) {
+      case 'housing':
+        return ['housing', ''];
+      case 'jobs':
+        return ['jobs', ''];
+      case 'players':
+        return ['players', ''];
+      case 'delivery':
+        return ['delivery', page.params.id ?? ''];
+      default: {
+        const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
+        return [menu, id];
+      }
+    }
+  });
 
   const showFull = $derived.by(() => {
     const path = page.url.pathname.split('/')[1];
     return ALL_MENU.includes(path);
   });
 
-  const menu = $derived((clientSearchParamsGet('menu') ?? '').split('/')[0]);
+  const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
 
-  const validOpenCollapsible = $derived.by(() => {
-    return ALL_MENU.includes(menu);
-  });
-
-  let stopPolling: (() => void) | undefined = undefined;
+  let stopPlayerDataPolling: (() => void) | undefined = undefined;
 
   let playerData: PlayerData[] = $state([]);
   let playerDataLoading = $state(true);
@@ -46,22 +64,15 @@
   const showMap = $derived(!(showFull || (!isSm.current && validOpenCollapsible)));
 
   $effect(() => {
-    stopPolling?.();
-    if (
-      (showMap && !document.hidden && playerLayerDataEnabled) ||
-      page.url.pathname === '/players' ||
-      menu === 'players'
-    ) {
-      stopPolling = getPlayerRealtimePositionCall();
+    if ((showMap && playerLayerDataEnabled) || openCollapsible === 'players') {
+      if (!stopPlayerDataPolling) {
+        stopPlayerDataPolling = getPlayerRealtimePositionCall();
+      }
     } else {
-      stopPolling = undefined;
+      stopPlayerDataPolling?.();
+      stopPlayerDataPolling = undefined;
       playerData = [];
     }
-
-    return () => {
-      stopPolling?.();
-      stopPolling = undefined;
-    };
   });
 
   let map: Map | undefined = $state(undefined);
@@ -69,6 +80,58 @@
   const handleCenter = (point: [number, number]) => {
     map?.centerOnPoint(point);
   };
+
+  let houseData: HouseData | undefined = $state(undefined);
+  let houseDataLoading = $state(true);
+
+  $effect(() => {
+    const abortController = new AbortController();
+
+    if (!houseData && (showMap || openCollapsible === 'housing')) {
+      getHousingData(abortController.signal)
+        .then((data) => {
+          houseData = data;
+          houseDataLoading = false;
+        })
+        .catch((error: unknown) => {
+          console.error('Error fetching housing data:', error);
+        });
+    }
+
+    return () => {
+      abortController.abort();
+    };
+  });
+
+  let stopJobsDataPolling: (() => void) | undefined = undefined;
+
+  let jobsData: DeliveryJob[] = $state([]);
+  let jobsDataLoading = $state(true);
+
+  $effect(() => {
+    if (showMap || openCollapsible === 'jobs') {
+      if (!stopJobsDataPolling) {
+        stopJobsDataPolling = startDeliveryJobsPolling((jobs) => {
+          jobsData = jobs.map((job) => ({
+            ...job,
+            cargos: job.cargos.map((cargo) => ({
+              ...cargo,
+              key: cargo.key.replace('T::', '_T') as DeliveryCargo,
+            })),
+          }));
+          jobsDataLoading = false;
+        });
+      }
+    } else {
+      stopJobsDataPolling?.();
+      stopJobsDataPolling = undefined;
+    }
+  });
+
+  onDestroy(() => {
+    stopPlayerDataPolling?.();
+    stopJobsDataPolling?.();
+  });
 </script>
 
 <div class="relative flex h-full w-full">
@@ -79,15 +142,31 @@
         showMap ? 'opacity-100' : 'opacity-0',
       ]}
     >
-      <Map
-        {playerData}
-        onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-        bind:this={map}
-      />
+      <div class="contents duration-150">
+        <Map
+          {jobsData}
+          {houseData}
+          {playerData}
+          onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
+          bind:this={map}
+        />
+      </div>
     </div>
   </div>
 
-  <Collapsible {playerData} {playerDataLoading} onCenter={handleCenter} />
+  <Collapsible
+    {validOpenCollapsible}
+    {showFull}
+    {openCollapsible}
+    {openCollapsibleId}
+    {playerData}
+    {playerDataLoading}
+    {houseData}
+    {houseDataLoading}
+    {jobsData}
+    {jobsDataLoading}
+    onCenter={handleCenter}
+  />
 </div>
 
 {@render children()}

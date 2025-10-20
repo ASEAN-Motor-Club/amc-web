@@ -12,7 +12,7 @@
   import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
   import { MAP_REAL_SIZE } from './utils';
-  import type { MapBrowserEvent } from 'ol';
+  import type { MapBrowserEvent, MapEvent } from 'ol';
   import { defaults } from 'ol/interaction';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
@@ -57,6 +57,10 @@
      * Callback for pointer drag events
      */
     onPointerDrag?: (e: MapBrowserEvent) => void;
+    /**
+     * Callback for move start events
+     */
+    onMoveStart?: (e: MapEvent) => void;
   }
 
   let target: HTMLDivElement;
@@ -70,6 +74,7 @@
     onClick,
     onRightClick,
     onPointerDrag,
+    onMoveStart,
   }: OlMapProps = $props();
 
   const projection = new Projection({
@@ -151,10 +156,17 @@
 
     map.on('pointerdrag', handlePointerDrag);
 
+    const handleMoveStart = (e: MapEvent) => {
+      onMoveStart?.(e);
+    };
+
+    map.on('movestart', handleMoveStart);
+
     return () => {
       map.un('pointermove', handlePointerMove);
       map.un('click', handleClick);
       map.un('pointerdrag', handlePointerDrag);
+      map.un('movestart', handleMoveStart);
       map.getViewport().removeEventListener('contextmenu', handleContextMenu);
       map.setTarget();
     };

@@ -1,30 +1,15 @@
 <script lang="ts">
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
   import { m as msg } from '$lib/paraglide/messages';
-  import { SvelteDate } from 'svelte/reactivity';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
   import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  
+  const svelteDate = createSvelteDate();
 
-  const date = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  });
-
-  const year = $derived(date.getFullYear());
+  const year = $derived(svelteDate.getFullYear());
 
   const features = $derived([
     msg['home.friendly_community'](),

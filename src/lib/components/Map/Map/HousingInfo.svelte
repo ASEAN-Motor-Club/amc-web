@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { House } from '$lib/data/house';
   import type { HouseData } from '$lib/api/types';
-  import { SvelteDate } from 'svelte/reactivity';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
   import { m as msg } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   export interface HoverInfo {
     info: House;
@@ -18,25 +18,10 @@
 
   const { hoverInfo, houseData }: HoverInfoTooltipProps = $props();
 
+  const svelteDate = createSvelteDate();
+
   const currentHouseData = $derived.by(() => {
     return houseData?.[hoverInfo.info.name];
-  });
-
-  const date = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
   });
 
   const rentLeftText = $derived.by(() => {
@@ -44,7 +29,7 @@
       return '...';
     }
 
-    const time = date.getTime();
+    const time = svelteDate.getTime();
 
     if (isBefore(currentHouseData.rentLeft, time)) {
       return msg['housing.expired']();

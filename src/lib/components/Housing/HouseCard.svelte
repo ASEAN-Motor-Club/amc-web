@@ -1,14 +1,14 @@
 <script lang="ts">
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
-  import { formatDuration, intervalToDuration, isBefore } from '$lib/date';
+  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
   import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
-  import { SvelteDate } from 'svelte/reactivity';
   import { isSm } from '$lib/utils/media.svelte';
   import { getLocale } from '$lib/paraglide/runtime';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   export interface Props {
     house: House;
@@ -23,29 +23,14 @@
     return houseData?.[house.name];
   });
 
-  const date = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  });
+  const svelteDate = createSvelteDate();
 
   const rentLeftText = $derived.by(() => {
     if (!currentHouseData) {
       return '';
     }
 
-    const time = date.getTime();
+    const time = svelteDate.getTime();
 
     // If rent has expired
     if (isBefore(currentHouseData.rentLeft, time)) {
@@ -57,7 +42,10 @@
       end: currentHouseData.rentLeft,
     });
 
-    return formatDuration(duration, { format: ['days', 'hours', 'minutes'] });
+    return (
+      formatDuration(duration, { format: ['days', 'hours', 'minutes'] }) ||
+      getDateFnsLocale().formatDistance('lessThanXMinutes', 1)
+    );
   });
 
   const locale = $derived.by(getLocale);

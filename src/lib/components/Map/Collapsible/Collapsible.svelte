@@ -11,44 +11,41 @@
   import { m as msg } from '$lib/paraglide/messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import Delivery from './Delivery.svelte';
-  import { ALL_MENU } from './constants';
   import type { PlayerData } from '../Map/types';
   import Players from './Players.svelte';
   import Jobs from './Jobs.svelte';
+  import type { DeliveryJob, HouseData } from '$lib/api/types';
 
   interface Props {
+    showFull: boolean;
+    validOpenCollapsible: boolean;
+    openCollapsible: string;
+    openCollapsibleId: string;
     playerData: PlayerData[];
     playerDataLoading: boolean;
+    houseData: HouseData | undefined;
+    houseDataLoading: boolean;
+    jobsData: DeliveryJob[];
+    jobsDataLoading: boolean;
     onCenter: (point: [number, number]) => void;
   }
 
-  const { playerData, playerDataLoading, onCenter }: Props = $props();
+  const {
+    showFull,
+    validOpenCollapsible,
+    openCollapsible,
+    openCollapsibleId,
+    playerData,
+    playerDataLoading,
+    houseData,
+    houseDataLoading,
+    jobsData,
+    jobsDataLoading,
+    onCenter,
+  }: Props = $props();
 
-  const [openCollapsible, openCollapsibleId] = $derived.by(() => {
-    switch (page.url.pathname.split('/')[1]) {
-      case 'housing':
-        return ['housing', ''];
-      case 'jobs':
-        return ['jobs', ''];
-      case 'players':
-        return ['players', ''];
-      case 'delivery':
-        return ['delivery', page.params.id ?? ''];
-      default: {
-        const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
-        return [menu, id];
-      }
-    }
-  });
-
-  const showFull = $derived.by(() => {
-    const path = page.url.pathname.split('/')[1];
-    return ALL_MENU.includes(path);
-  });
-
-  const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
   const getCollapsibleHref = (collapsible: string) => {
-    if (showFull) {
+    if (showFull || !isSm.current) {
       return `/${collapsible}`;
     }
     const newParams = new SvelteURLSearchParams(clientSearchParams());
@@ -75,7 +72,6 @@
     return `/map${str ? `?${str}` : ''}`;
   });
 
-  // svelte-ignore state_referenced_locally
   let showFullAnimate = $state(showFull);
   $effect(() => {
     let timeout: ReturnType<typeof setTimeout> | undefined;
@@ -101,13 +97,13 @@
   const showMapBtn = $derived(validOpenCollapsible && (!isSm.current || showFull));
 </script>
 
-{#if showFullAnimate}
+{#if isSm.current && showFullAnimate}
   <div class={['h-full', validOpenCollapsible ? openCollapsibleClasses : 'sm:w-11']}></div>
 {/if}
 <div
   class={[
     'bg-background-300 dark:bg-background-950 z-1 absolute bottom-0  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
-    showFullAnimate && '!sm:absolute right-0 top-0',
+    isSm.current && showFullAnimate && '!sm:absolute right-0 top-0',
   ]}
 >
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
@@ -147,7 +143,6 @@
         >
           <Icon
             class={[
-              'transition-transform duration-1000',
               showFull
                 ? 'i-material-symbols:collapse-content-rounded'
                 : 'i-material-symbols:expand-content-rounded',
@@ -215,7 +210,7 @@
     {#if openCollapsible === 'delivery' && openCollapsibleId}
       <div
         transition:slide={{
-          duration: prefersReducedMotion.current ? 0 : 1000,
+          duration: prefersReducedMotion.current ? 0 : 600,
           axis: isSm.current ? 'y' : 'x',
         }}
       >
@@ -244,7 +239,7 @@
         class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
         transition:fade={{ duration: defaultTransitionDurationMs }}
       >
-        <Housing fullScreen={showFull} />
+        <Housing {houseData} loading={houseDataLoading} fullScreen={showFull} />
       </div>
     {:else if openCollapsible === 'players'}
       <div
@@ -258,7 +253,7 @@
         class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
         transition:fade={{ duration: defaultTransitionDurationMs }}
       >
-        <Jobs fullScreen={showFull} />
+        <Jobs {jobsData} loading={jobsDataLoading} fullScreen={showFull} />
       </div>
     {:else if openCollapsible === 'delivery'}
       {#if openCollapsibleId}

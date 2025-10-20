@@ -36,10 +36,9 @@
   import { goto } from '$app/navigation';
   import Search, { type SearchPoint } from './Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type HouseData } from '$lib/api/types';
-  import { getHousingData } from '$lib/api/housing';
+  import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import { LineString } from 'ol/geom';
-  import type { DeliveryCargo } from '$lib/data/types';
+  import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
   import { m as msg } from '$lib/paraglide/messages';
@@ -49,13 +48,16 @@
   import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
   import * as z from 'zod/mini';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import outCargoKey from '$lib/assets/data/out_cargo_key.json';
 
   interface Props {
+    jobsData: DeliveryJob[];
     playerData: PlayerData[];
+    houseData: HouseData | undefined;
     onPlayerLayerDataEnabledChange?: (enabled: boolean) => void;
   }
 
-  const { playerData, onPlayerLayerDataEnabledChange }: Props = $props();
+  const { jobsData, playerData, houseData, onPlayerLayerDataEnabledChange }: Props = $props();
 
   const {
     deliveryPointFeatures,
@@ -534,15 +536,15 @@
   });
 
   const clearSelection = () => {
-    houseFeatures.forEach((house) => {
+    for (const house of houseFeatures) {
       house.set('selected', 0);
-    });
-    deliveryPointFeatures.forEach((d) => {
+    }
+    for (const d of deliveryPointFeatures) {
       d.set('selected', 0);
-    });
-    residentPointFeatures.forEach((d) => {
+    }
+    for (const d of residentPointFeatures) {
       d.set('selected', 0);
-    });
+    }
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
     deliveryLineSource.clear(true);
@@ -578,21 +580,16 @@
       return;
     }
     if (hoverInfo.pointType === PointType.Delivery) {
-      const newParams = new SvelteURLSearchParams(clientSearchParams());
-      newParams.delete('house');
-      newParams.delete('player');
-      newParams.set('menu', `delivery/${hoverInfo.info.guid}`);
-      newParams.set('delivery', hoverInfo.info.guid);
-      goto(`/map?${newParams.toString()}`);
+      goto(`/delivery/${hoverInfo.info.guid}`);
     } else if (hoverInfo.pointType === PointType.House) {
       const newParams = new SvelteURLSearchParams(clientSearchParams());
       newParams.delete('delivery');
       newParams.delete('player');
-      newParams.set('menu', 'housing');
-      newParams.set('house', hoverInfo.info.name);
       newParams.set('hf', hoverInfo.info.name);
-      goto(`/map?${newParams.toString()}`);
+      goto(`/housing?${newParams.toString()}`);
     }
+    hoverPoint?.set('hover', false);
+    hoverInfo = undefined;
   };
 
   const handlePointerMove = (e: MapBrowserEvent) => {
@@ -653,26 +650,57 @@
     onPlayerLayerDataEnabledChange?.(playerLayerData.enabled);
   });
 
+  const JOB_ONLY_STORAGE_KEY = 'mapShowJobOnlyDelivery';
+  let deliveryShowJobOnly = $state(false);
+
+  onMount(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(JOB_ONLY_STORAGE_KEY);
+      console.log('Loaded deliveryShowJobOnly:', saved);
+      if (saved === '1') {
+        deliveryShowJobOnly = true;
+      }
+    }
+  });
+
+  $effect(() => {
+    if (typeof window !== 'undefined') {
+      console.log('Saving deliveryShowJobOnly:', deliveryShowJobOnly);
+      localStorage.setItem(JOB_ONLY_STORAGE_KEY, deliveryShowJobOnly ? '1' : '0');
+    }
+  });
+
   const onHideShowClick = (layer: (typeof layersData)[number], forceTo?: boolean) => {
-    layer.enabled = forceTo ?? !layer.enabled;
+    let enabled = forceTo ?? !layer.enabled;
     if (layer.id === layerId.Player) {
-      if (!layer.enabled) {
+      if (!enabled) {
         playerNameLayer.setVisible(false);
       } else {
         setPlayerPoints(playerData);
         playerNameLayer.setVisible(playerNameLayerData.enabled);
       }
-    }
-    if (layer.id === layerId.Pins) {
-      if (!layer.enabled) {
+    } else if (layer.id === layerId.Pins) {
+      if (!enabled) {
         pinLabelsLayer.setVisible(false);
       } else {
         setPlayerPoints(playerData);
         pinLabelsLayer.setVisible(pinLabelsLayerData.enabled);
       }
+    } else if (layer.id === layerId.Delivery) {
+      if (forceTo === undefined) {
+        if (!enabled && !deliveryShowJobOnly) {
+          deliveryShowJobOnly = true;
+          enabled = true;
+        } else {
+          deliveryShowJobOnly = false;
+        }
+      } else if (!forceTo) {
+        deliveryShowJobOnly = false;
+      }
     }
+    layer.enabled = enabled;
     for (const l of layer.layer) {
-      l.setVisible(layer.enabled);
+      l.setVisible(enabled);
     }
   };
 
@@ -688,19 +716,6 @@
     }
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
-
-  let houseData: HouseData | undefined = $state();
-
-  onMount(() => {
-    const abortController = new AbortController();
-    getHousingData(abortController.signal).then((data) => {
-      houseData = data;
-    });
-
-    return () => {
-      abortController.abort();
-    };
-  });
 
   const { showModal } = getMsgModalContext();
 
@@ -835,6 +850,54 @@
       ? layersData
       : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
   );
+
+  const handleOnMoveStart = () => {
+    hoverPoint?.set('hover', false);
+    hoverInfo = undefined;
+  };
+
+  const flattenCargoType = (cargo: DeliveryCargo): DeliveryCargoKey[] => {
+    return cargo.startsWith('_T')
+      ? (outCargoKey[cargo as DeliveryCargoType] as DeliveryCargoKey[])
+      : [cargo as DeliveryCargoKey];
+  };
+
+  $effect(() => {
+    for (const d of deliveryPointFeatures) {
+      const info = d.get('info') as DeliveryPoint;
+      const matchJob = jobsData.some(
+        (job) =>
+          job.cargos.some((cargo) =>
+            flattenCargoType(cargo.key).some((cargoKey) => info.allSupplyKey.includes(cargoKey)),
+          ) &&
+          (job.source_points.length > 0
+            ? job.source_points.some((point) => point.guid === info.guid)
+            : true),
+      );
+      if (matchJob) {
+        d.set('jobs', 1);
+      } else {
+        d.set('jobs', 0);
+      }
+    }
+  });
+
+  $effect(() => {
+    for (const d of deliveryPointFeatures) {
+      if (deliveryShowJobOnly) {
+        d.set('jobOnly', 1);
+      } else {
+        d.set('jobOnly', 0);
+      }
+    }
+    for (const d of residentPointFeatures) {
+      if (deliveryShowJobOnly) {
+        d.set('jobOnly', 1);
+      } else {
+        d.set('jobOnly', 0);
+      }
+    }
+  });
 </script>
 
 <div class="relative h-full w-full">
@@ -847,6 +910,7 @@
     onRightClick={handleMapRightClick}
     bind:this={map}
     onPointerDrag={handlePointerDrag}
+    onMoveStart={handleOnMoveStart}
   />
   <div
     class="pointer-events-none absolute left-0 top-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
@@ -863,7 +927,9 @@
           <Button
             class={[
               '!text-text !px-2',
-              layer.color,
+              layerId.Delivery === layer.id && deliveryShowJobOnly
+                ? '!bg-orange-400 hover:!bg-orange-300'
+                : layer.color,
               {
                 'opacity-50':
                   !layer.enabled ||
@@ -878,7 +944,11 @@
               onHideShowClick(layer);
             }}
           >
-            {layer.name}
+            {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
+              Jobs Only
+            {:else}
+              {layer.name}
+            {/if}
           </Button>
         {/each}
       </div>

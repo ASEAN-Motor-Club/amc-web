@@ -11,6 +11,9 @@
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import Card from '$lib/ui/Card/Card.svelte';
   import { m as msg } from '$lib/paraglide/messages';
+  import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import Button from '$lib/ui/Button/Button.svelte';
 
   interface Props {
     id: string;
@@ -60,12 +63,24 @@
     }
     return undefined;
   };
+
+  const lastUpdated = $derived.by(() => {
+    const curr = new Date();
+    return min([deliveryPointInfo?.last_updated ?? curr, curr]);
+  });
+
+  const svelteDate = createSvelteDate();
 </script>
 
 <div class="flex h-full flex-col overflow-y-auto">
-  <CommonHead>
+  <CommonHead class="pb-6 sm:pb-8">
     {getMtLocale(deliveryPoint?.name ?? {})}
   </CommonHead>
+  <div class="px-8 pb-8 sm:hidden">
+    <Button color="info" variant="contained-light" tag="a" href="/map?delivery={id}"
+      >{msg.view_on_map()}</Button
+    >
+  </div>
   {#if deliveryPoint?.parent}
     <div class="px-8 pb-8">
       Drop point of <a
@@ -73,6 +88,15 @@
         class="text-yellow-700 underline hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400"
         >{getMtLocale(deliveryPointsMap.get(deliveryPoint.parent)?.name ?? {})}</a
       >
+    </div>
+  {/if}
+  {#if differenceInSeconds(svelteDate.getTime(), lastUpdated) > 30}
+    <div class="px-8 pb-8 text-xs font-semibold text-red-500">
+      {msg['delivery.last_updated']({
+        time: formatDistanceStrict(lastUpdated, svelteDate.getTime(), {
+          addSuffix: true,
+        }),
+      })}
     </div>
   {/if}
 

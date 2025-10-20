@@ -1,7 +1,8 @@
 <script lang="ts">
   import Button from '$lib/ui/Button/Button.svelte';
-  import { SvelteDate, type SvelteMap } from 'svelte/reactivity';
+  import type { SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
+  import { createSvelteDate } from '$lib/svelteDate.svelte';
 
   interface EventButtonProps {
     currentMonth: number;
@@ -25,25 +26,14 @@
 
   const haveEvent = $derived(eventToday !== undefined);
 
-  const date = new SvelteDate();
-
-  $effect(() => {
-    let animationId: number;
-
-    const updateTime = () => {
-      date.setTime(Date.now());
-      animationId = requestAnimationFrame(updateTime);
-    };
-
-    animationId = requestAnimationFrame(updateTime);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  });
+  const svelteDate = createSvelteDate();
 
   const today = $derived.by(() => {
-    return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year;
+    return (
+      svelteDate.getDate() === day &&
+      svelteDate.getMonth() + 1 === month &&
+      svelteDate.getFullYear() === year
+    );
   });
 </script>
 

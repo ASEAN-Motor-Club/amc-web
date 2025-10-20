@@ -216,7 +216,9 @@
     "title": "Delivery",
     "supply": "Supply",
     "demand": "Demand",
-    "delivery": "Delivery"
+    "delivery": "Delivery",
+    "last_updated": "Data was last updated {time}",
+    "has_job": "This location offers delivery jobs."
   },
   "radio": {
     "head": "{siteName} | Radio",
