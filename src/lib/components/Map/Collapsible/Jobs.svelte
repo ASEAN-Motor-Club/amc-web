@@ -2,7 +2,7 @@
   import type { DeliveryJob } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m as msg } from '$lib/paraglide/messages';
-  import JobCard from '$lib/components/Jobs/JobCard.svelte';
+  import JobCard from '$lib/components/Map/Jobs/JobCard.svelte';
   import { censored } from '$lib/censored.svelte';
 
   interface Props {

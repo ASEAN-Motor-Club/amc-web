@@ -293,7 +293,12 @@
     "no_contributors": "No contributors yet. Be the first to take this job!",
     "no_contributors_c": "No contributors yet. Be the first to take this j*b!",
     "job_not_found": "The job you are looking for does not exist or has been expired.",
-    "job_not_found_c": "The j*b you are looking for does not exist or has been expired."
+    "job_not_found_c": "The j*b you are looking for does not exist or has been expired.",
+    "table": {
+      "name": "Name",
+      "amount": "Amount",
+      "reward_cut": "Reward Cut"
+    }
   },
   "players": {
     "head": "{siteName} | Players",

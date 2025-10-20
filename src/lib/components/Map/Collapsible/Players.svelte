@@ -7,7 +7,7 @@
   import { goto } from '$app/navigation';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import type { PlayerData } from '../Map/types';
-  import PlayerCard from '$lib/components/Players/PlayerCard.svelte';
+  import PlayerCard from '$lib/components/Map/Players/PlayerCard.svelte';
 
   interface Props {
     playerData: PlayerData[];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HouseData } from '$lib/api/types';
-  import HouseCard from '$lib/components/Housing/HouseCard.svelte';
+  import HouseCard from '$lib/components/Map/Housing/HouseCard.svelte';
   import { houses } from '$lib/data/house';
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';

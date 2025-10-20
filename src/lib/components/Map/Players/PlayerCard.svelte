@@ -4,7 +4,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { isSm } from '$lib/utils/media.svelte';
-  import type { PlayerData } from '../Map/Map/types';
+  import type { PlayerData } from '../Map/types';
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
   import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';

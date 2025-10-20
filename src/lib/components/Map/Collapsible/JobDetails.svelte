@@ -95,6 +95,13 @@
       quantity,
     }));
   });
+
+  const rewardPerQuantity = $derived.by(() => {
+    if (!job) {
+      return 0;
+    }
+    return job.completion_bonus / job.quantity_requested;
+  });
 </script>
 
 {#if job || loading}
@@ -180,14 +187,26 @@
         </div>
         <div class={['flex flex-1 flex-col', loading ? 'overflow-y-hidden' : 'overflow-y-auto']}>
           {#if loading}
+            <div
+              class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
+            >
+              <div>
+                {msg['jobs.table.name']()}
+              </div>
+              <div class="whitespace-nowrap text-right">
+                {msg['jobs.table.amount']()}
+              </div>
+              <div class="whitespace-nowrap text-right">
+                {msg['jobs.table.reward_cut']()}
+              </div>
+            </div>
             {#each Array(100) as _, i (i)}
               <div
-                class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+                class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
-                <div class="w-8/10">
-                  <div class="w-full"><TextSkeleton class="w-full" /></div>
-                </div>
-                <div class="flex-1"><TextSkeleton class="w-full" /></div>
+                <TextSkeleton />
+                <TextSkeleton />
+                <TextSkeleton />
               </div>
             {/each}
           {:else if contributors.length === 0}
@@ -197,15 +216,33 @@
               {censored.c ? msg['jobs.no_contributors_c']() : msg['jobs.no_contributors']()}
             </div>
           {:else}
+            <div
+              class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
+            >
+              <div>
+                {msg['jobs.table.name']()}
+              </div>
+              <div class="whitespace-nowrap text-right">
+                {msg['jobs.table.amount']()}
+              </div>
+              <div class="whitespace-nowrap text-right">
+                {msg['jobs.table.reward_cut']()}
+              </div>
+            </div>
             {#each contributors as contrib (contrib.id)}
               <div
-                class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+                class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
-                <div class="flex flex-1 overflow-hidden whitespace-nowrap">
+                <div class="truncate">
                   {contrib.name}
                 </div>
-                <div class="whitespace-nowrap">
-                  {contrib.quantity}
+                <div class="whitespace-nowrap text-right">
+                  {contrib.quantity} ({Math.round(
+                    (contrib.quantity / (job?.quantity_requested ?? 1)) * 100,
+                  )}%)
+                </div>
+                <div class="whitespace-nowrap text-right">
+                  {Math.floor(rewardPerQuantity * contrib.quantity)}$
                 </div>
               </div>
             {/each}
