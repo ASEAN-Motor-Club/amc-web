@@ -106,6 +106,7 @@
     "track_editor": "Track Editor",
     "map": "Map",
     "jobs": "Jobs",
+    "jobs_c": "J*bs",
     "players": "Players",
     "housing": "Housing",
     "delivery": "Delivery",
@@ -153,12 +154,14 @@
       "housing": "HOUSE",
       "map": "MAP",
       "jobs": "JOBS",
+      "jobs_c": "J*BS",
       "delivery": "DELI",
       "players": "PLAYER"
     },
     "start_search": "Start typing to search...",
     "no_results": "No results found.",
-    "jobs_only": "Jobs Only"
+    "jobs_only": "Jobs Only",
+    "jobs_only_c": "J*bs Only"
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
@@ -218,8 +221,7 @@
     "supply": "Supply",
     "demand": "Demand",
     "delivery": "Delivery",
-    "last_updated": "Data was last updated {time}",
-    "has_job": "This location offers delivery jobs."
+    "last_updated": "Data was last updated {time}"
   },
   "radio": {
     "head": "{siteName} | Radio",
@@ -275,8 +277,11 @@
   },
   "jobs": {
     "head": "{siteName} | Jobs",
+    "head_c": "{siteName} | J*bs",
     "title": "Jobs",
+    "title_c": "J*bs",
     "no_jobs": "No jobs posted.",
+    "no_jobs_c": "No j*bs posted.",
     "expired": "Expired",
     "completion_bonus": "Completion Bonus",
     "bonus_multiplier": "Bonus Multiplier",
@@ -286,7 +291,9 @@
     "constrains_destination_points": "To",
     "contributors": "Contributors",
     "no_contributors": "No contributors yet. Be the first to take this job!",
-    "job_not_found": "The job you are looking for does not exist or has been expired."
+    "no_contributors_c": "No contributors yet. Be the first to take this j*b!",
+    "job_not_found": "The job you are looking for does not exist or has been expired.",
+    "job_not_found_c": "The j*b you are looking for does not exist or has been expired."
   },
   "players": {
     "head": "{siteName} | Players",

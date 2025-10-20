@@ -3,6 +3,7 @@
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m as msg } from '$lib/paraglide/messages';
   import JobCard from '$lib/components/Jobs/JobCard.svelte';
+  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -35,7 +36,7 @@
       </div>
     {:else}
       <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
-        {msg['jobs.no_jobs']()}
+        {censored.c ? msg['jobs.no_jobs_c']() : msg['jobs.no_jobs']()}
       </div>
     {/if}
   </div>

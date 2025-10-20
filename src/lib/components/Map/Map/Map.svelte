@@ -49,6 +49,7 @@
   import * as z from 'zod/mini';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMatchJobFn } from '$lib/utils/matchJob';
+  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -929,7 +930,7 @@
             }}
           >
             {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
-              {msg['map.jobs_only']()}
+              {censored.c ? msg['map.jobs_only_c']() : msg['map.jobs_only']()}
             {:else}
               {layer.name}
             {/if}

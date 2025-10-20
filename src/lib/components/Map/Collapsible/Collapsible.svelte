@@ -16,6 +16,7 @@
   import Jobs from './Jobs.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import JobDetails from './JobDetails.svelte';
+  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     showFull: boolean;
@@ -215,7 +216,9 @@
         href={getCollapsibleHref('jobs')}
       >
         <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
-        <span class="truncate">{msg['map.side_menu.jobs']()}</span>
+        <span class="truncate"
+          >{censored.c ? msg['map.side_menu.jobs_c']() : msg['map.side_menu.jobs']()}</span
+        >
       </Button>
     </div>
     {#if openCollapsible === 'delivery' && openCollapsibleId}

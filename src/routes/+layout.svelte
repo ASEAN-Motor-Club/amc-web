@@ -18,6 +18,7 @@
   import { m as msg } from '$lib/paraglide/messages';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
+  import { censored } from '$lib/censored.svelte';
 
   defineCustomClientStrategy('custom-svelteReactiveLocale', {
     getLocale: () => {
@@ -34,7 +35,10 @@
     document.documentElement.lang = siteLocale.l;
   });
 
+  const hasJobCensoredKey = 'hasJobCensored';
+
   onMount(() => {
+    censored.c = localStorage.getItem(hasJobCensoredKey) === '1';
     siteLocale.l = (localStorage.getItem(localStorageKey) as Locale | null) || baseLocale;
 
     const updateThemeColor = () => {
@@ -60,6 +64,10 @@
     return () => {
       observer.disconnect();
     };
+  });
+
+  $effect(() => {
+    localStorage.setItem(hasJobCensoredKey, censored.c ? '1' : '0');
   });
 
   const id = $derived(page.route.id?.startsWith('/(map)') ? '/(map)' : page.route.id);

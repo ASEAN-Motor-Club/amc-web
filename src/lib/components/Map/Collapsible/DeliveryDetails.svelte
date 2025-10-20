@@ -15,6 +15,7 @@
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { getMatchJobFn } from '$lib/utils/matchJob';
+  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     id: string;
@@ -135,7 +136,7 @@
     <div class="px-8 pb-8">
       <Card class="flex-1 p-0">
         <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-          {msg['jobs.title']()}
+          {censored.c ? msg['jobs.title_c']() : msg['jobs.title']()}
         </div>
         {#each matchJobs as job (job.id)}
           <div

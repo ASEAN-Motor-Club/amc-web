@@ -11,6 +11,7 @@
   import { cargoName } from '$lib/data/cargo';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
   import Card from '$lib/ui/Card/Card.svelte';
+  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     id: string;
@@ -193,7 +194,7 @@
             <div
               class="text-text/60 dark:text-text-dark/60 flex flex-1 items-center justify-center px-4 py-12 text-center text-sm italic"
             >
-              {msg['jobs.no_contributors']()}
+              {censored.c ? msg['jobs.no_contributors_c']() : msg['jobs.no_contributors']()}
             </div>
           {:else}
             {#each contributors as contrib (contrib.id)}
@@ -217,6 +218,6 @@
   <div
     class="text-text/60 dark:text-text-dark/60 flex h-full items-center justify-center p-8 text-sm"
   >
-    {msg['jobs.job_not_found']()}
+    {censored.c ? msg['jobs.job_not_found_c']() : msg['jobs.job_not_found']()}
   </div>
 {/if}

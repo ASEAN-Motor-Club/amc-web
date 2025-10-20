@@ -15,6 +15,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
+  import { censored } from '$lib/censored.svelte';
 
   const mtLocales = [
     'cs',
@@ -148,6 +149,17 @@
             {/each}
           </Select>
         </div>
+        <button
+          class="text-text/60 dark:text-text-dark/60 hover:text-text/80 hover:dark:text-text-dark/80 mt-4 flex cursor-pointer items-center justify-between gap-2 text-xs underline"
+          type="button"
+          onclick={() => (censored.c = !censored.c)}
+        >
+          {#if censored.c}
+            Click here if you like being employed 👍
+          {:else}
+            Click here if you are Yuuka or hate employment.
+          {/if}
+        </button>
       </Card>
     </div>
   {/if}
