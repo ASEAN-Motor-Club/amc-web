@@ -40,7 +40,9 @@
       const newParams = new SvelteURLSearchParams(clientSearchParams());
       newParams.delete('menu');
       const str = newParams.toString();
-      goto(`/${openCollapsible}${str ? `?${str}` : ''}`);
+      goto(
+        `/${openCollapsible}${openCollapsibleId ? `/${openCollapsibleId}` : ''}${str ? `?${str}` : ''}`,
+      );
     }
   });
 
