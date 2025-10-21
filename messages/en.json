@@ -221,7 +221,11 @@
     "supply": "Supply",
     "demand": "Demand",
     "delivery": "Delivery",
-    "last_updated": "Data was last updated {time}"
+    "last_updated": "Data was last updated {time}",
+    "job_supply": "Supply Job",
+    "job_supply_c": "Supply J*b",
+    "job_demand": "Demand Job",
+    "job_demand_c": "Demand J*b"
   },
   "radio": {
     "head": "{siteName} | Radio",

@@ -48,7 +48,7 @@
   import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import { getMatchJobFn } from '$lib/utils/delivery';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
   import { getSelectionClearedParams } from '../utils';
 
@@ -848,7 +848,9 @@
   $effect(() => {
     for (const d of deliveryPointFeatures) {
       const info = d.get('info') as DeliveryPoint;
-      const matchJob = jobsData.some(getMatchJobFn(info));
+      const matchJob = jobsData.some(
+        (job) => getMatchJobSourceFn(info)(job) || getMatchJobDestFn(info)(job),
+      );
       if (matchJob) {
         d.set('jobs', 1);
       } else {

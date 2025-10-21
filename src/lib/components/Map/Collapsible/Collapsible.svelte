@@ -18,6 +18,7 @@
   import CollapsibleButton from './CollapsibleButton.svelte';
   import CollapsibleActionButton from './CollapsibleActionButton.svelte';
   import type { CollapsibleType, CollapsibleTypeWithId } from '../types';
+  import CargoDetails from '../Cargo/CargoDetails.svelte';
 
   interface Props {
     showFull: boolean;
@@ -228,6 +229,14 @@
         {#key openCollapsibleId}
           <CollapsibleContentWrapper>
             <DeliveryDetails id={openCollapsibleId} fullScreen={showFull} {jobsData} />
+          </CollapsibleContentWrapper>
+        {/key}
+      {/if}
+    {:else if openCollapsible === 'cargos'}
+      {#if openCollapsibleId}
+        {#key openCollapsibleId}
+          <CollapsibleContentWrapper>
+            <CargoDetails id={openCollapsibleId} fullScreen={showFull} {jobsData} />
           </CollapsibleContentWrapper>
         {/key}
       {/if}

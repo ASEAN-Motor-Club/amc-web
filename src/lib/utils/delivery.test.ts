@@ -9,7 +9,7 @@ vi.mock('$lib/assets/data/out_cargo_key.json', () => ({
   },
 }));
 
-import { isCargoType, flattenCargoType, getMatchJobFn, getInventoryAmount } from './delivery';
+import { isCargoType, flattenCargoType, getMatchJobSourceFn, getInventoryAmount } from './delivery';
 import type { DeliveryJob, DeliveryPointInfo, InputInventoryElement } from '$lib/api/types';
 import type { DeliveryPoint } from '$lib/data/deliveryPoint';
 import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '$lib/data/types';
@@ -57,7 +57,7 @@ describe('delivery utilities', () => {
     });
   });
 
-  describe('getMatchJobFn', () => {
+  describe('getMatchJobSourceFn', () => {
     let mockDeliveryPoint: DeliveryPoint;
     let mockJob: DeliveryJob;
 
@@ -95,25 +95,25 @@ describe('delivery utilities', () => {
     });
 
     it('should match jobs with cargo that delivery point supplies', () => {
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
     it('should not match jobs with cargo that delivery point does not supply', () => {
       mockJob.cargos = [{ key: 'Coal' as DeliveryCargo, label: 'Coal' }];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });
 
     it('should match jobs with cargo types that expand to supported keys', () => {
       mockJob.cargos = [{ key: '_TSmallPackage' as DeliveryCargo, label: 'Small Package' }];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
     it('should match when source points is empty (global job)', () => {
       mockJob.source_points = [];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
@@ -132,7 +132,7 @@ describe('delivery utilities', () => {
           last_updated: '2024-01-01T00:00:00Z',
         },
       ];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
@@ -151,7 +151,7 @@ describe('delivery utilities', () => {
           last_updated: '2024-01-01T00:00:00Z',
         },
       ];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });
 
@@ -160,7 +160,7 @@ describe('delivery utilities', () => {
         { key: 'Coal' as DeliveryCargo, label: 'Coal' }, // Not supported
         { key: 'SmallBox' as DeliveryCargo, label: 'Small Box' }, // Supported
       ];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
@@ -169,7 +169,7 @@ describe('delivery utilities', () => {
         { key: 'Coal' as DeliveryCargo, label: 'Coal' },
         { key: 'Oil' as DeliveryCargo, label: 'Oil' },
       ];
-      const matchFn = getMatchJobFn(mockDeliveryPoint);
+      const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });
   });

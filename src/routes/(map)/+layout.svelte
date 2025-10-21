@@ -29,8 +29,8 @@
         return ['jobs' as const, page.params.id ?? ''];
       case 'players':
         return ['players' as const, ''];
-      case 'delivery':
-        return ['delivery' as const, page.params.id ?? ''];
+      case 'deliveries':
+        return ['deliveries' as const, page.params.id ?? ''];
       default: {
         const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
         return [menu as CollapsibleType, id];
