@@ -65,7 +65,7 @@ export const getViewHref = (feature: Features, id: string): string => {
     }
     case Features.delivery: {
       if (isSm.current) {
-        newParams.set('menu', 'delivery');
+        newParams.set('menu', `delivery/${id}`);
       }
       newParams.set('delivery', id);
       break;

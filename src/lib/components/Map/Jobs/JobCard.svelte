@@ -71,7 +71,7 @@
     {(job?.bonus_multiplier ?? 0) * 100}%
     <br />
     <span class="font-semibold">{msg['jobs.completion_bonus']()}:</span>
-    {job?.completion_bonus}
+    ${job?.completion_bonus}
   </div>
   <div class="mb-2 text-sm">
     <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>

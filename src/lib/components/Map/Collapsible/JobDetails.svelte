@@ -128,7 +128,7 @@
         {#if loading}
           <TextSkeleton class="w-12" />
         {:else}
-          {job?.completion_bonus}
+          ${job?.completion_bonus}
         {/if}
       </div>
       <div>
@@ -229,7 +229,7 @@
                   )}%)
                 </div>
                 <div class="whitespace-nowrap text-right">
-                  {Math.floor(rewardPerQuantity * contrib.quantity)}$
+                  ${Math.floor(rewardPerQuantity * contrib.quantity)}
                 </div>
               </div>
             {/each}

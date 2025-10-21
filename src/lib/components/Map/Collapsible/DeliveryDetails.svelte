@@ -77,10 +77,10 @@
   <CommonHead class="pb-6 sm:pb-8">
     {getMtLocale(deliveryPoint?.name ?? {})}
   </CommonHead>
-  <div class="px-8 pb-8 sm:hidden">
-    <Button color="info" variant="contained-light" tag="a" href={getViewHref(Features.delivery, id)}
-      >{msg.view_on_map()}</Button
-    >
+  <div class="px-5 pb-5">
+    <Button color="info" variant="text" tag="a" href={getViewHref(Features.delivery, id)}>
+      {msg.view_on_map()}
+    </Button>
   </div>
   {#if deliveryPoint?.parent}
     <div class="px-8 pb-8">

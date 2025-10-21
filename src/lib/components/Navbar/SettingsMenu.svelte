@@ -41,9 +41,9 @@
     'vi',
     'zh-Hans',
     'zh-Hant',
-  ] as const;
+  ] as const satisfies MtLocaleKey[];
 
-  const siteLocales = ['en', 'th', 'id'] as const;
+  const siteLocales = ['en', 'th', 'id'] as const satisfies Locale[];
 
   let darkMode = $state(false);
 
@@ -85,6 +85,61 @@
     event.preventDefault();
     event.stopPropagation();
     setMenu(!menu);
+  };
+
+  const getLocaleText = (localeKey: MtLocaleKey | Locale) => {
+    switch (localeKey) {
+      case 'cs':
+        return msg['locales.cs']();
+      case 'de':
+        return msg['locales.de']();
+      case 'en':
+        return msg['locales.en']();
+      case 'es-419':
+        return msg['locales.es-419']();
+      case 'es-ES':
+        return msg['locales.es-ES']();
+      case 'fi':
+        return msg['locales.fi']();
+      case 'fr':
+        return msg['locales.fr']();
+      case 'hu':
+        return msg['locales.hu']();
+      case 'it':
+        return msg['locales.it']();
+      case 'ja':
+        return msg['locales.ja']();
+      case 'ko':
+        return msg['locales.ko']();
+      case 'lt':
+        return msg['locales.lt']();
+      case 'nl':
+        return msg['locales.nl']();
+      case 'no':
+        return msg['locales.no']();
+      case 'pl':
+        return msg['locales.pl']();
+      case 'pt-BR':
+        return msg['locales.pt-BR']();
+      case 'ru':
+        return msg['locales.ru']();
+      case 'sv':
+        return msg['locales.sv']();
+      case 'tr':
+        return msg['locales.tr']();
+      case 'uk':
+        return msg['locales.uk']();
+      case 'vi':
+        return msg['locales.vi']();
+      case 'zh-Hans':
+        return msg['locales.zh-Hans']();
+      case 'zh-Hant':
+        return msg['locales.zh-Hant']();
+      case 'th':
+        return msg['locales.th']();
+      case 'id':
+        return msg['locales.id']();
+    }
   };
 </script>
 
@@ -129,7 +184,7 @@
             menuClass="max-h-[50svh]"
           >
             {#each siteLocales as localeKey (localeKey)}
-              <SelectOption id={localeKey} value={msg[`locales.${localeKey}`]()} />
+              <SelectOption id={localeKey} value={getLocaleText(localeKey)} />
             {/each}
           </Select>
         </div>
@@ -145,7 +200,7 @@
             menuClass="max-h-[50svh]"
           >
             {#each mtLocales as localeKey (localeKey)}
-              <SelectOption id={localeKey} value={msg[`locales.${localeKey}`]()} />
+              <SelectOption id={localeKey} value={getLocaleText(localeKey)} />
             {/each}
           </Select>
         </div>
