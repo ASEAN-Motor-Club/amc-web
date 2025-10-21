@@ -18,19 +18,22 @@
 
   const { children } = $props();
 
-  const [openCollapsible, openCollapsibleId] = $derived.by(() => {
+  type OpenCollapsibleType = 'housing' | 'players' | 'jobs' | 'delivery' | '';
+  type OpenCollapsible = [OpenCollapsibleType, string];
+
+  const [openCollapsible, openCollapsibleId]: OpenCollapsible = $derived.by(() => {
     switch (page.url.pathname.split('/')[1]) {
       case 'housing':
-        return ['housing', ''];
+        return ['housing' as const, ''];
       case 'jobs':
-        return ['jobs', page.params.id ?? ''];
+        return ['jobs' as const, page.params.id ?? ''];
       case 'players':
-        return ['players', ''];
+        return ['players' as const, ''];
       case 'delivery':
-        return ['delivery', page.params.id ?? ''];
+        return ['delivery' as const, page.params.id ?? ''];
       default: {
         const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
-        return [menu, id];
+        return [menu as OpenCollapsibleType, id];
       }
     }
   });
@@ -40,9 +43,7 @@
       const newParams = new SvelteURLSearchParams(clientSearchParams());
       newParams.delete('menu');
       const str = newParams.toString();
-      goto(
-        `/${openCollapsible}${openCollapsibleId ? `/${openCollapsibleId}` : ''}${str ? `?${str}` : ''}`,
-      );
+      goto(`/${openCollapsible}${openCollapsibleId && `/${openCollapsibleId}`}${str && `?${str}`}`);
     }
   });
 

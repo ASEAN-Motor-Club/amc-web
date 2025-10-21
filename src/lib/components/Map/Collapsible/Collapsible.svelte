@@ -1,11 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Button from '$lib/ui/Button/Button.svelte';
   import Housing from './Housing.svelte';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
-  import { fade, slide } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
   import { m as msg } from '$lib/paraglide/messages';
@@ -17,11 +14,14 @@
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import JobDetails from './JobDetails.svelte';
   import { censored } from '$lib/censored.svelte';
+  import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';
+  import CollapsibleButton from './CollapsibleButton.svelte';
+  import CollapsibleActionButton from './CollapsibleActionButton.svelte';
 
   interface Props {
     showFull: boolean;
     validOpenCollapsible: boolean;
-    openCollapsible: string;
+    openCollapsible: 'housing' | 'players' | 'jobs' | 'delivery' | '';
     openCollapsibleId: string;
     playerData: PlayerData[];
     playerDataLoading: boolean;
@@ -52,7 +52,8 @@
     const newParams = new SvelteURLSearchParams(clientSearchParams());
     if (showFull || !isSm.current) {
       newParams.delete('menu');
-      return `/${collapsible}`;
+      const str = newParams.toString();
+      return `/${collapsible}${str && `?${str}`}`;
     }
     newParams.set('menu', collapsible);
     return `?${newParams.toString()}`;
@@ -66,7 +67,7 @@
     }
     newParams.delete('menu');
     const str = newParams.toString();
-    return `/${clientSearchParamsGet('menu') ?? 'map'}${str ? `?${str}` : ''}`;
+    return `/${clientSearchParamsGet('menu') ?? 'map'}${str && `?${str}`}`;
   });
 
   const closeHref = $derived.by(() => {
@@ -74,7 +75,7 @@
     newParams.delete('menu');
     newParams.delete('hf');
     const str = newParams.toString();
-    return `/map${str ? `?${str}` : ''}`;
+    return `/map${str && `?${str}`}`;
   });
 
   let showFullAnimate = $state(showFull);
@@ -100,13 +101,6 @@
   const openCollapsibleClasses = 'sm:w-100 lg:w-120 xl:w-140';
 
   const showMapBtn = $derived(validOpenCollapsible && (!isSm.current || showFull));
-
-  const mapBtnHref = $derived.by(() => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.delete('menu');
-    const str = newParams.toString();
-    return `/map${str ? `?${str}` : ''}`;
-  });
 </script>
 
 {#if isSm.current && showFullAnimate}
@@ -120,48 +114,21 @@
 >
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
     {#if validOpenCollapsible && isSm.current && !showFull}
-      <div
-        transition:slide={{
-          duration: prefersReducedMotion.current ? 0 : 1000,
-          axis: 'y',
-        }}
-      >
-        <Button
-          class="size-11 flex-none truncate rounded-none"
-          icon
-          variant="contained-light"
-          color="error"
-          tag="a"
-          href={closeHref}
-        >
-          <Icon class="i-material-symbols:close-rounded" />
-        </Button>
-      </div>
+      <CollapsibleActionButton
+        color="error"
+        icon="i-material-symbols:close-rounded"
+        href={closeHref}
+      />
     {/if}
     {#if validOpenCollapsible}
-      <div
-        transition:slide={{
-          duration: prefersReducedMotion.current ? 0 : 1000,
-          axis: isSm.current ? 'y' : 'x',
-        }}
-      >
-        <Button
-          class="hidden size-11 flex-none truncate rounded-none sm:flex"
-          icon
-          variant="contained-light"
-          color="info"
-          tag="a"
-          href={toggleFullHref}
-        >
-          <Icon
-            class={[
-              showFull
-                ? 'i-material-symbols:collapse-content-rounded'
-                : 'i-material-symbols:expand-content-rounded',
-            ]}
-          />
-        </Button>
-      </div>
+      <CollapsibleActionButton
+        color="info"
+        class="hidden sm:flex"
+        icon={showFull
+          ? 'i-material-symbols:collapse-content-rounded'
+          : 'i-material-symbols:expand-content-rounded'}
+        href={toggleFullHref}
+      />
     {/if}
     <div class="flex flex-1 flex-row sm:w-11 sm:flex-col">
       <div
@@ -170,56 +137,41 @@
           showMapBtn ? 'h-12 w-1/4 sm:h-1/4 sm:w-full ' : 'h-full w-0 sm:h-0 sm:w-full',
         ]}
       >
-        <Button
-          class="h-full min-h-0 w-full min-w-12 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
-          variant="contained-light"
-          tag="a"
-          href={mapBtnHref}
-        >
-          <Icon class="i-material-symbols:map-outline-rounded" />
-          <span class="truncate">{msg['map.side_menu.map']()}</span>
-        </Button>
+        <CollapsibleButton
+          class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
+          icon="i-material-symbols:map-outline-rounded"
+          text={msg['map.side_menu.map']()}
+          href={closeHref}
+        />
       </div>
-      <Button
+      <CollapsibleButton
         class={[
-          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
+          'h-12 flex-1 hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
           openCollapsible === 'players' &&
             'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
         ]}
-        variant="contained-light"
-        tag="a"
+        icon="i-material-symbols:person-outline-rounded"
+        text={msg['map.side_menu.players']()}
         href={getCollapsibleHref('players')}
-      >
-        <Icon class="i-material-symbols:person-outline-rounded" />
-        <span class="truncate">{msg['map.side_menu.players']()}</span>
-      </Button>
-      <Button
+      />
+      <CollapsibleButton
         class={[
-          'h-12 flex-1 flex-col rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal transition hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
+          'h-12 flex-1 hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
           openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
         ]}
-        variant="contained-light"
-        tag="a"
+        icon="i-material-symbols:home-outline-rounded"
+        text={msg['map.side_menu.housing']()}
         href={getCollapsibleHref('housing')}
-      >
-        <Icon class="i-material-symbols:home-outline-rounded" />
-        <span class="truncate">{msg['map.side_menu.housing']()}</span>
-      </Button>
-
-      <Button
+      />
+      <CollapsibleButton
         class={[
-          'sm:h-unset h-12 flex-1 flex-col truncate rounded-none bg-neutral-500/10 px-1 text-[0.625rem] font-normal hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 hover:dark:text-orange-500',
+          'h-12 flex-1 hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
-        variant="contained-light"
-        tag="a"
+        icon="i-material-symbols:delivery-truck-speed-outline-rounded"
+        text={censored.c ? msg['map.side_menu.jobs_c']() : msg['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
-      >
-        <Icon class="i-material-symbols:delivery-truck-speed-outline-rounded" />
-        <span class="truncate"
-          >{censored.c ? msg['map.side_menu.jobs_c']() : msg['map.side_menu.jobs']()}</span
-        >
-      </Button>
+      />
     </div>
     {#if openCollapsible === 'delivery' && openCollapsibleId}
       <div
@@ -228,15 +180,12 @@
           axis: isSm.current ? 'y' : 'x',
         }}
       >
-        <Button
-          class="sm:h-13 h-12 w-12 flex-col rounded-none bg-yellow-800/20 px-1 text-[0.625rem] font-normal text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
-          variant="contained-light"
-          tag="a"
+        <CollapsibleButton
+          class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          icon="i-material-symbols:box-outline-rounded"
+          text={msg['map.side_menu.delivery']()}
           href={getCollapsibleHref('delivery/' + openCollapsibleId)}
-        >
-          <Icon class="i-material-symbols:box-outline-rounded" />
-          <span class="truncate">{msg['map.side_menu.delivery']()}</span>
-        </Button>
+        />
       </div>
     {/if}
   </div>
@@ -249,51 +198,36 @@
     ]}
   >
     {#if openCollapsible === 'housing'}
-      <div
-        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-        transition:fade={{ duration: defaultTransitionDurationMs }}
-      >
+      <CollapsibleContentWrapper>
         <Housing {houseData} loading={houseDataLoading} fullScreen={showFull} />
-      </div>
+      </CollapsibleContentWrapper>
     {:else if openCollapsible === 'players'}
-      <div
-        class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-        transition:fade={{ duration: defaultTransitionDurationMs }}
-      >
+      <CollapsibleContentWrapper>
         <Players {playerData} {playerDataLoading} fullScreen={showFull} {onCenter} />
-      </div>
+      </CollapsibleContentWrapper>
     {:else if openCollapsible === 'jobs'}
       {#if openCollapsibleId}
         {#key openCollapsibleId}
-          <div
-            class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-            transition:fade={{ duration: defaultTransitionDurationMs }}
-          >
+          <CollapsibleContentWrapper>
             <JobDetails
               id={openCollapsibleId}
               {jobsCache}
               loading={jobsDataLoading}
               fullScreen={showFull}
             />
-          </div>
+          </CollapsibleContentWrapper>
         {/key}
       {:else}
-        <div
-          class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-          transition:fade={{ duration: defaultTransitionDurationMs }}
-        >
+        <CollapsibleContentWrapper>
           <Jobs {jobsData} loading={jobsDataLoading} fullScreen={showFull} />
-        </div>
+        </CollapsibleContentWrapper>
       {/if}
     {:else if openCollapsible === 'delivery'}
       {#if openCollapsibleId}
         {#key openCollapsibleId}
-          <div
-            class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
-            transition:fade={{ duration: defaultTransitionDurationMs }}
-          >
+          <CollapsibleContentWrapper>
             <DeliveryDetails id={openCollapsibleId} fullScreen={showFull} {jobsData} />
-          </div>
+          </CollapsibleContentWrapper>
         {/key}
       {/if}
     {/if}

@@ -3,9 +3,6 @@
   import type { FormEventHandler } from 'svelte/elements';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m as msg } from '$lib/paraglide/messages';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { goto } from '$app/navigation';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import type { PlayerData } from '../Map/types';
   import PlayerCard from '$lib/components/Map/Players/PlayerCard.svelte';
 
@@ -22,11 +19,6 @@
 
   const onSearch: FormEventHandler<HTMLInputElement> = (event) => {
     searchValue = event.currentTarget.value;
-    if (clientSearchParamsGet('hf')) {
-      const newParams = new SvelteURLSearchParams(clientSearchParams());
-      newParams.delete('hf');
-      goto(`?${newParams.toString()}`);
-    }
   };
 
   const filteredPlayers = $derived.by(() => {

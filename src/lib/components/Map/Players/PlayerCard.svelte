@@ -3,14 +3,12 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
-  import { isSm } from '$lib/utils/media.svelte';
   import type { PlayerData } from '../Map/types';
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
   import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getLocationAtPoint } from '$lib/data/area';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
+  import { Features, getViewHref } from '../utils';
 
   export interface Props {
     player?: PlayerData;
@@ -26,18 +24,6 @@
       player?.vehicleKey ?? 'None'
     ],
   );
-
-  const playerHref = $derived.by(() => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    if (isSm.current) {
-      newParams.set('menu', 'players');
-    }
-    newParams.delete('delivery');
-    newParams.delete('house');
-    newParams.set('player', player?.guid ?? '');
-
-    return `/map?${newParams.toString()}`;
-  });
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
@@ -59,7 +45,7 @@
       tag="a"
       size="xs"
       variant="text"
-      href={playerHref}
+      href={getViewHref(Features.player, player?.guid ?? '')}
       class="-mr-1.5"
       color="info"
       onClick={() => onCenter([player?.coord.x ?? 0, player?.coord.y ?? 0])}

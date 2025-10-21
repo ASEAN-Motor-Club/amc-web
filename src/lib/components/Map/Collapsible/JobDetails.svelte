@@ -4,14 +4,13 @@
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
-  import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
+  import type { SvelteMap } from 'svelte/reactivity';
   import { m as msg } from '$lib/paraglide/messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { deliveryPointsMap } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
   import Card from '$lib/ui/Card/Card.svelte';
   import { censored } from '$lib/censored.svelte';
+  import DeliveryLink from '../Delivery/DeliveryLink.svelte';
 
   interface Props {
     id: string;
@@ -61,19 +60,6 @@
     );
   });
 
-  const getDeliveryPointHref = (guid: string) => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.delete('player');
-    newParams.delete('house');
-    newParams.set('delivery', guid);
-    if (fullScreen) {
-      newParams.delete('menu');
-      return `/delivery/${guid}`;
-    }
-    newParams.set('menu', `delivery/${guid}`);
-    return `?${newParams.toString()}`;
-  };
-
   const contributors = $derived.by(() => {
     if (!job) {
       return [];
@@ -116,14 +102,19 @@
       </CommonHead>
       <div class="mb-8 text-6xl font-bold tabular-nums">
         {#if loading}
-          <TextSkeleton class="w-48" />
+          <TextSkeleton class="w-15" /> <span class="opacity-50">/</span>
+          <TextSkeleton class="w-15" />
         {:else}
           {job?.quantity_fulfilled} <span class="opacity-50">/</span>
           {job?.quantity_requested}
         {/if}
       </div>
       <div class="mb-8 font-semibold">
-        {timeLeftText}
+        {#if loading}
+          <TextSkeleton class="max-w-50 w-full" />
+        {:else}
+          {timeLeftText}
+        {/if}
       </div>
       <div class="mb-8">
         <span class="font-semibold">{msg['jobs.bonus_multiplier']()}:</span>
@@ -132,7 +123,7 @@
         {:else}
           {(job?.bonus_multiplier ?? 0) * 100}%
         {/if}
-        <br class="mb-1" />
+        <br />
         <span class="font-semibold">{msg['jobs.completion_bonus']()}:</span>
         {#if loading}
           <TextSkeleton class="w-12" />
@@ -142,32 +133,28 @@
       </div>
       <div>
         <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>
-        <br class="mb-1" />
+        <br />
         {#if loading}
-          <TextSkeleton class="w-full" lines={3} lineBreakClass="mb-1" />
+          <TextSkeleton class="w-full" lines={3} />
         {:else}
           <span class="font-semibold">{msg['jobs.constrains_cargo']()}:</span>
           {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
-          <br class="mb-1" />
+          <br />
           {#if job?.source_points && job.source_points.length > 0}
             <span class="font-semibold">{msg['jobs.constrains_source_points']()}:</span>
             {#each job.source_points as point, i (point.guid)}
-              <a
-                class="text-yellow-700 underline hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400"
-                href={getDeliveryPointHref(point.guid)}
-                >{getMtLocale(deliveryPointsMap.get(point.guid)?.name ?? {})}</a
-              >{i < job.source_points.length - 1 ? ', ' : ''}
+              <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
+                ? ', '
+                : ''}
             {/each}
-            <br class="mb-1" />
+            <br />
           {/if}
           {#if job?.destination_points && job.destination_points.length > 0}
             <span class="font-semibold">{msg['jobs.constrains_destination_points']()}:</span>
             {#each job.destination_points as point, i (point.guid)}
-              <a
-                class="text-yellow-700 underline hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400"
-                href={getDeliveryPointHref(point.guid)}
-                >{getMtLocale(deliveryPointsMap.get(point.guid)?.name ?? {})}</a
-              >{i < job.destination_points.length - 1 ? ', ' : ''}
+              <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
+                ? ', '
+                : ''}
             {/each}
           {/if}
         {/if}
@@ -188,7 +175,7 @@
         <div class={['flex flex-1 flex-col', loading ? 'overflow-y-hidden' : 'overflow-y-auto']}>
           {#if loading}
             <div
-              class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
+              class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
             >
               <div>
                 {msg['jobs.table.name']()}
@@ -202,7 +189,7 @@
             </div>
             {#each Array(100) as _, i (i)}
               <div
-                class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+                class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
                 <TextSkeleton />
                 <TextSkeleton />
@@ -217,7 +204,7 @@
             </div>
           {:else}
             <div
-              class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
+              class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
             >
               <div>
                 {msg['jobs.table.name']()}
@@ -231,7 +218,7 @@
             </div>
             {#each contributors as contrib (contrib.id)}
               <div
-                class="grid grid-cols-[6fr_1fr_2fr] gap-1 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+                class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
                 <div class="truncate">
                   {contrib.name}

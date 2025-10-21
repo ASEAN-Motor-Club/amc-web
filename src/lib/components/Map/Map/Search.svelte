@@ -18,8 +18,7 @@
   import type { Pins } from '$lib/schema/pin';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
+  import { getSelectionClearedParams } from '../utils';
 
   export type SearchPoint = {
     guid?: string;
@@ -116,10 +115,7 @@
   });
 
   const getHref = (point: SearchPoint) => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.delete('delivery');
-    newParams.delete('house');
-    newParams.delete('player');
+    const newParams = getSelectionClearedParams();
     switch (point.pointType) {
       case PointType.Delivery:
         newParams.set('delivery', point.guid ?? '');
@@ -131,7 +127,7 @@
         newParams.set('player', point.guid ?? '');
         break;
     }
-    return `?${newParams.toString()}`;
+    return `/map?${newParams.toString()}`;
   };
 
   const handleLinkClick = (event: Event, point: SearchPoint) => {

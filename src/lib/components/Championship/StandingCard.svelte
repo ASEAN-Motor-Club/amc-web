@@ -15,7 +15,7 @@
 
   const getStandingRowClass = (index: number) => {
     return [
-      'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0',
+      'grid grid-cols-[1fr_6fr_1fr] border-b border-neutral-500/10 px-4 py-3 last:border-0 gap-2',
       {
         'text-amber-600 dark:text-amber-500': index === 0,
         'text-gray-700 dark:text-gray-400': index === 1,
@@ -33,7 +33,7 @@
     {#if loading}
       {#each Array(8) as _, index (index)}
         <div
-          class="grid grid-cols-[1fr_6fr_1fr] gap-3 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+          class="grid grid-cols-[1fr_6fr_1fr] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
         >
           <TextSkeleton />
           <TextSkeleton />

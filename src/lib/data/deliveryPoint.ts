@@ -1,15 +1,9 @@
 import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
 import type { Vector3 } from '$lib/types';
 import { uniq } from 'lodash-es';
-import type {
-  DeliveryCargo,
-  DeliveryCargoKey,
-  DeliveryPointType,
-  DeliveryCargoType,
-  MtLocaleKey,
-} from './types';
-import outCargoKey from '$lib/assets/data/out_cargo_key.json';
+import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType, MtLocaleKey } from './types';
 import residentName from '$lib/assets/data/resident_name.json';
+import { flattenCargoType } from '$lib/utils/delivery';
 
 export interface DeliveryPointJson {
   type: DeliveryPointType;
@@ -83,13 +77,9 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
     }
   }
 
-  const allSupplyKey = allSupply.flatMap((s) =>
-    s.startsWith('_T') ? outCargoKey[s as DeliveryCargoType] : s,
-  ) as DeliveryCargoKey[];
+  const allSupplyKey = allSupply.flatMap((s) => flattenCargoType(s));
 
-  const allDemandKey = allDemand.flatMap((s) =>
-    s.startsWith('_T') ? outCargoKey[s as DeliveryCargoType] : s,
-  ) as DeliveryCargoKey[];
+  const allDemandKey = allDemand.flatMap((s) => flattenCargoType(s));
 
   for (const supply of allSupplyKey) {
     if (!supplyKeyMap.has(supply)) {

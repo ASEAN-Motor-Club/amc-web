@@ -11,8 +11,9 @@
   import { onDestroy, untrack } from 'svelte';
   import { debounce } from 'lodash-es';
   import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/getInventoryAmount';
+  import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { isCargoType } from '$lib/utils/delivery';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -104,7 +105,7 @@
               {getInventoryAmount(item, false)}
             {/if}
           </span>
-          {#if !item.startsWith('_T')}
+          {#if !isCargoType(item)}
             /{hoverInfo.info.supplyStorage[item]}
           {/if}
         </div>
@@ -134,7 +135,7 @@
               {getInventoryAmount(item, true)}
             {/if}
           </span>
-          {#if !item.startsWith('_T')}
+          {#if !isCargoType(item)}
             /{hoverInfo.info.demandStorage[item]}
           {/if}
         </div>

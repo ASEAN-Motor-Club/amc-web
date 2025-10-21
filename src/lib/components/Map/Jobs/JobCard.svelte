@@ -3,13 +3,12 @@
   import type { DeliveryJob } from '$lib/api/types';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
   import { m as msg } from '$lib/paraglide/messages';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
-  import { deliveryPointsMap } from '$lib/data/deliveryPoint';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
+  import { DetailsFeatures, getLinkHref } from '../utils';
+  import DeliveryLink from '../Delivery/DeliveryLink.svelte';
 
   export interface Props {
     job?: DeliveryJob;
@@ -50,29 +49,6 @@
       getDateFnsLocale().formatDistance('lessThanXSeconds', 1)
     );
   });
-
-  const getDeliveryPointHref = (guid: string) => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.delete('player');
-    newParams.delete('house');
-    newParams.set('delivery', guid);
-    if (fullScreen) {
-      newParams.delete('menu');
-      return `/delivery/${guid}`;
-    }
-    newParams.set('menu', `delivery/${guid}`);
-    return `?${newParams.toString()}`;
-  };
-
-  const getJobDetailsHref = (id: number) => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    if (fullScreen) {
-      newParams.delete('menu');
-      return `/jobs/${id}`;
-    }
-    newParams.set('menu', `jobs/${id}`);
-    return `?${newParams.toString()}`;
-  };
 </script>
 
 <Card class={['relative flex flex-col overflow-hidden', expired && 'opacity-50']} {loading}>
@@ -106,22 +82,18 @@
     {#if job?.source_points && job.source_points.length > 0}
       <span class="font-semibold">{msg['jobs.constrains_source_points']()}:</span>
       {#each job.source_points as point, i (point.guid)}
-        <a
-          class="text-yellow-700 underline hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400"
-          href={getDeliveryPointHref(point.guid)}
-          >{getMtLocale(deliveryPointsMap.get(point.guid)?.name ?? {})}</a
-        >{i < job.source_points.length - 1 ? ', ' : ''}
+        <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
+          ? ', '
+          : ''}
       {/each}
       <br />
     {/if}
     {#if job?.destination_points && job.destination_points.length > 0}
       <span class="font-semibold">{msg['jobs.constrains_destination_points']()}:</span>
       {#each job.destination_points as point, i (point.guid)}
-        <a
-          class="text-yellow-700 underline hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400"
-          href={getDeliveryPointHref(point.guid)}
-          >{getMtLocale(deliveryPointsMap.get(point.guid)?.name ?? {})}</a
-        >{i < job.destination_points.length - 1 ? ', ' : ''}
+        <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
+          ? ', '
+          : ''}
       {/each}
     {/if}
   </div>
@@ -132,13 +104,7 @@
   {/if}
   <div class="flex-1"></div>
   <div class="-m-2 mt-0.5">
-    <Button
-      variant="text"
-      tag="a"
-      href={getJobDetailsHref(job?.id ?? -1)}
-      color="primary"
-      size="sm"
-    >
+    <Button variant="text" tag="a" href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job?.id ?? -1)} color="primary" size="sm">
       {msg['championship.event.more_info']()}
     </Button>
   </div>

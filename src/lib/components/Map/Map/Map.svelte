@@ -45,11 +45,12 @@
   import { isMouse } from '$lib/utils/media.svelte';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
+  import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import { getMatchJobFn } from '$lib/utils/matchJob';
+  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { getMatchJobFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
+  import { getSelectionClearedParams } from '../utils';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -551,10 +552,7 @@
     deliveryLineSource.clear(true);
     lockPoint?.set('selected', false);
     lockPoint = undefined;
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.delete('house');
-    newParams.delete('delivery');
-    newParams.delete('player');
+    const newParams = getSelectionClearedParams();
     goto(`?${newParams.toString()}`);
   };
 
@@ -564,9 +562,7 @@
     clearSelection();
 
     if (hoverPoint && hoverPoint.get('pointType') === PointType.Delivery) {
-      const newParams = new SvelteURLSearchParams(clientSearchParams());
-      newParams.delete('house');
-      newParams.delete('player');
+      const newParams = getSelectionClearedParams();
       newParams.set('delivery', hoverPoint.get('info').guid ?? '');
       dontFocus = true;
       goto(`?${newParams.toString()}`, {
@@ -583,9 +579,7 @@
     if (hoverInfo.pointType === PointType.Delivery) {
       goto(`/delivery/${hoverInfo.info.guid}`);
     } else if (hoverInfo.pointType === PointType.House) {
-      const newParams = new SvelteURLSearchParams(clientSearchParams());
-      newParams.delete('delivery');
-      newParams.delete('player');
+      const newParams = getSelectionClearedParams();
       newParams.set('hf', hoverInfo.info.name);
       goto(`/housing?${newParams.toString()}`);
     }
@@ -612,18 +606,14 @@
           const type = f.get('pointType') as PointType | undefined;
           if (type === PointType.Delivery) {
             const info = f.get('info') as DeliveryPoint;
-            const newParams = new SvelteURLSearchParams(clientSearchParams());
-            newParams.delete('house');
-            newParams.delete('player');
+            const newParams = getSelectionClearedParams();
             newParams.set('menu', `delivery/${info.guid}`);
             newParams.set('delivery', info.guid);
             goto(`/map?${newParams.toString()}`);
             return true;
           }
           if (type === PointType.House) {
-            const newParams = new SvelteURLSearchParams(clientSearchParams());
-            newParams.delete('delivery');
-            newParams.delete('player');
+            const newParams = getSelectionClearedParams();
             newParams.set('menu', 'housing');
             newParams.set('house', f.get('info').name);
             newParams.set('hf', f.get('info').name);

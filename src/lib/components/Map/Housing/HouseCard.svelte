@@ -6,11 +6,9 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
-  import { isSm } from '$lib/utils/media.svelte';
   import { getLocale } from '$lib/paraglide/runtime';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { Features, getViewHref } from '../utils';
 
   export interface Props {
     house: House;
@@ -51,18 +49,6 @@
   });
 
   const locale = $derived.by(getLocale);
-
-  const housingHref = $derived.by(() => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    if (isSm.current) {
-      newParams.set('menu', 'housing');
-    }
-    newParams.delete('delivery');
-    newParams.delete('player');
-    newParams.set('house', house.name);
-
-    return `/map?${newParams.toString()}`;
-  });
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
@@ -82,7 +68,14 @@
         highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
       />
     </h2>
-    <Button tag="a" size="xs" variant="text" href={housingHref} class="-mr-1.5" color="info">
+    <Button
+      tag="a"
+      size="xs"
+      variant="text"
+      href={getViewHref(Features.house, house.name)}
+      class="-mr-1.5"
+      color="info"
+    >
       {msg.view_on_map()}
     </Button>
   </div>

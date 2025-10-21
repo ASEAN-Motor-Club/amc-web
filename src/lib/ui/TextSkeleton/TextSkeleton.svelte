@@ -9,10 +9,9 @@
      */
     class?: ClassValue;
     lines?: number;
-    lineBreakClass?: ClassValue;
   }
 
-  const { class: propsClassName, lines = 1, lineBreakClass }: TextSkeletonProps = $props();
+  const { class: propsClassName, lines = 1 }: TextSkeletonProps = $props();
 </script>
 
 <span
@@ -20,7 +19,5 @@
     `inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent`,
     clsx(propsClassName),
   )}
-  >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br
-        class={lineBreakClass}
-      />{/if}{/each}.</span
+  >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br />{/if}{/each}.</span
 >

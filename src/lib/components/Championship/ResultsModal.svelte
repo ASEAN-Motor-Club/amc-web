@@ -81,7 +81,7 @@
             {#each Array(32) as _, index (index)}
               <div
                 class={[
-                  'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-3 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
+                  'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-2 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
                 ]}
               >
                 <TextSkeleton />
@@ -100,7 +100,7 @@
           {#each results as result, index (result.character.id)}
             <div
               class={[
-                'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-1 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
+                'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-2 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
                 {
                   'text-amber-600 dark:text-amber-500': index === 0,
                   'text-gray-700 dark:text-gray-400': index === 1,
