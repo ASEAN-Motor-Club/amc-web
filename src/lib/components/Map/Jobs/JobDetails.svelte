@@ -11,6 +11,9 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import { censored } from '$lib/censored.svelte';
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
+  import Divider from '$lib/ui/Divider/Divider.svelte';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
+  import { deliveryPoints } from '$lib/data/deliveryPoint';
 
   interface Props {
     id: string;
@@ -88,11 +91,25 @@
     }
     return job.completion_bonus / job.quantity_requested;
   });
+
+  const validSupply = $derived.by(() => {
+    if (!job) {
+      return [];
+    }
+    return deliveryPoints.filter((point) => getMatchJobSourceFn(point)(job));
+  });
+
+  const validDemand = $derived.by(() => {
+    if (!job) {
+      return [];
+    }
+    return deliveryPoints.filter((point) => getMatchJobDestFn(point)(job));
+  });
 </script>
 
 {#if job || loading}
   <div class={['flex h-full flex-col gap-8 overflow-y-auto p-8', fullScreen && 'sm:flex-row']}>
-    <div class="flex flex-1 flex-col">
+    <div class={['flex flex-1 flex-col', fullScreen && 'sm:overflow-y-auto']}>
       <CommonHead class="w-full !p-0 !pb-8">
         {#if loading}
           <TextSkeleton class="max-w-150 w-full" />
@@ -164,6 +181,29 @@
           {job.description}
         </div>
       {/if}
+      <Divider />
+      <div class={['flex flex-col gap-4', fullScreen && 'lg:flex-row']}>
+        {#if validSupply.length > 0}
+          <div class="grow">
+            <div class="font-semibold">{msg['jobs.job_supply']()}</div>
+            <ul class="list-disc pl-8">
+              {#each validSupply as point (point.guid)}
+                <li><DeliveryLink {fullScreen} guid={point.guid} class="truncate" /></li>
+              {/each}
+            </ul>
+          </div>
+        {/if}
+        {#if validDemand.length > 0}
+          <div class="grow">
+            <div class="font-semibold">{msg['jobs.job_demand']()}</div>
+            <ul class="list-disc pl-8">
+              {#each validDemand as point (point.guid)}
+                <li><DeliveryLink {fullScreen} guid={point.guid} class="truncate" /></li>
+              {/each}
+            </ul>
+          </div>
+        {/if}
+      </div>
     </div>
     <div class="flex flex-1">
       <Card
