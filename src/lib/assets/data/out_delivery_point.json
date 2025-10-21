@@ -16116,5 +16116,106 @@
       "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
     }
+  },
+  {
+    "type": "ConstructionSite_C",
+    "name": {
+      "en": "Ara Construction Site D1",
+      "cs": "Ara Staveniště D1",
+      "de": "Ara Baustelle D1",
+      "es-419": "Ara Sitio de construcción D1",
+      "es-ES": "Ara Zona en construcción D1",
+      "fr": "Ara Chantier de construction D1",
+      "hu": "Ara Építési terület D1",
+      "it": "Ara Sito di costruzione D1",
+      "ja": "アラ 建設現場 D1",
+      "ko": "아라 건설 현장 D1",
+      "lt": "Ara Statybvietė D1",
+      "nl": "Ara Bouwplaats D1",
+      "pl": "Ara Budowa D1",
+      "pt-BR": "Ara Local de construção D1",
+      "ru": "Ara Строительная площадка D1",
+      "tr": "Ara İnşaat sahası D1",
+      "uk": "Ара Будівельна площадка D1",
+      "zh-Hans": "阿拉伯 建筑工地 D1",
+      "zh-Hant": "雅羅 工地 D1"
+    },
+    "coord": {
+      "x": 412807.3129,
+      "y": 1103579.5234,
+      "z": -19099.912608176
+    },
+    "guid": "0F0CE056-43DABCBC-05AF5589-32011BD6",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1,
+      "lHBeam_6m": 1,
+      "Fuel": 1,
+      "PlasticPipes_6m": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 10,
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20,
+      "Fuel": 10,
+      "PlasticPipes_6m": 10
+    },
+    "supplyStorage": {
+      "FineSand": 100,
+      "Sand": 100
+    }
   }
 ]
