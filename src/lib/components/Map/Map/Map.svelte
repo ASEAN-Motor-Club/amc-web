@@ -607,7 +607,7 @@
           if (type === PointType.Delivery) {
             const info = f.get('info') as DeliveryPoint;
             const newParams = getSelectionClearedParams();
-            newParams.set('menu', `delivery/${info.guid}`);
+            newParams.set('menu', `deliveries/${info.guid}`);
             newParams.set('delivery', info.guid);
             goto(`/map?${newParams.toString()}`);
             return true;

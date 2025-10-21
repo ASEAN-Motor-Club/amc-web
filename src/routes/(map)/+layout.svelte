@@ -9,6 +9,7 @@
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
   import Map from '$lib/components/Map/Map/Map.svelte';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
+  import type { CollapsibleType } from '$lib/components/Map/types';
   import type { DeliveryCargo } from '$lib/data/types';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
@@ -18,8 +19,7 @@
 
   const { children } = $props();
 
-  type OpenCollapsibleType = 'housing' | 'players' | 'jobs' | 'delivery' | '';
-  type OpenCollapsible = [OpenCollapsibleType, string];
+  type OpenCollapsible = [CollapsibleType, string];
 
   const [openCollapsible, openCollapsibleId]: OpenCollapsible = $derived.by(() => {
     switch (page.url.pathname.split('/')[1]) {
@@ -33,7 +33,7 @@
         return ['delivery' as const, page.params.id ?? ''];
       default: {
         const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
-        return [menu as OpenCollapsibleType, id];
+        return [menu as CollapsibleType, id];
       }
     }
   });

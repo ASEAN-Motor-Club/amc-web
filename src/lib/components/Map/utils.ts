@@ -9,7 +9,7 @@ export const enum Features {
 }
 
 export const enum DetailsFeatures {
-  Delivery = 'delivery',
+  Delivery = 'deliveries',
   Jobs = 'jobs',
 }
 
@@ -65,7 +65,7 @@ export const getViewHref = (feature: Features, id: string): string => {
     }
     case Features.delivery: {
       if (isSm.current) {
-        newParams.set('menu', `delivery/${id}`);
+        newParams.set('menu', `deliveries/${id}`);
       }
       newParams.set('delivery', id);
       break;

@@ -16,7 +16,7 @@
   import { censored } from '$lib/censored.svelte';
   import { isCargoType } from '$lib/utils/delivery';
   import { Features, getViewHref } from '../utils';
-  import DeliveryLink from '../Delivery/DeliveryLink.svelte';
+  import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
 
   interface Props {

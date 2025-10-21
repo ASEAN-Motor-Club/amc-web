@@ -1,1 +1,1 @@
-export const ALL_MENU = ['housing', 'jobs', 'delivery', 'players'] as readonly string[];
+export const ALL_MENU = ['housing', 'jobs', 'deliveries', 'players'] as readonly string[];

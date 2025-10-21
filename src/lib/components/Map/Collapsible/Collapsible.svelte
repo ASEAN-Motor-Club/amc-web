@@ -1,27 +1,28 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import Housing from './Housing.svelte';
+  import Housing from '../Housing/Housing.svelte';
   import { slide } from 'svelte/transition';
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
   import { m as msg } from '$lib/paraglide/messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import DeliveryDetails from './DeliveryDetails.svelte';
+  import DeliveryDetails from '../Delivery/DeliveryDetails.svelte';
   import type { PlayerData } from '../Map/types';
-  import Players from './Players.svelte';
-  import Jobs from './Jobs.svelte';
+  import Players from '../Players/Players.svelte';
+  import Jobs from '../Jobs/Jobs.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
-  import JobDetails from './JobDetails.svelte';
+  import JobDetails from '../Jobs/JobDetails.svelte';
   import { censored } from '$lib/censored.svelte';
   import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';
   import CollapsibleButton from './CollapsibleButton.svelte';
   import CollapsibleActionButton from './CollapsibleActionButton.svelte';
+  import type { CollapsibleType, CollapsibleTypeWithId } from '../types';
 
   interface Props {
     showFull: boolean;
     validOpenCollapsible: boolean;
-    openCollapsible: 'housing' | 'players' | 'jobs' | 'delivery' | '';
+    openCollapsible: CollapsibleType;
     openCollapsibleId: string;
     playerData: PlayerData[];
     playerDataLoading: boolean;
@@ -48,7 +49,7 @@
     onCenter,
   }: Props = $props();
 
-  const getCollapsibleHref = (collapsible: string) => {
+  const getCollapsibleHref = (collapsible: CollapsibleType | CollapsibleTypeWithId) => {
     const newParams = new SvelteURLSearchParams(clientSearchParams());
     if (showFull || !isSm.current) {
       newParams.delete('menu');
@@ -173,7 +174,7 @@
         href={getCollapsibleHref('jobs')}
       />
     </div>
-    {#if openCollapsible === 'delivery' && openCollapsibleId}
+    {#if openCollapsible === 'deliveries' && openCollapsibleId}
       <div
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : 600,
@@ -184,7 +185,7 @@
           class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
           text={msg['map.side_menu.delivery']()}
-          href={getCollapsibleHref('delivery/' + openCollapsibleId)}
+          href={getCollapsibleHref('deliveries/' + openCollapsibleId)}
         />
       </div>
     {/if}
@@ -222,7 +223,7 @@
           <Jobs {jobsData} loading={jobsDataLoading} fullScreen={showFull} />
         </CollapsibleContentWrapper>
       {/if}
-    {:else if openCollapsible === 'delivery'}
+    {:else if openCollapsible === 'deliveries'}
       {#if openCollapsibleId}
         {#key openCollapsibleId}
           <CollapsibleContentWrapper>
