@@ -185,7 +185,7 @@
           class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
           text={msg['map.side_menu.delivery']()}
-          href={getCollapsibleHref('deliveries/' + openCollapsibleId)}
+          href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}
         />
       </div>
     {/if}

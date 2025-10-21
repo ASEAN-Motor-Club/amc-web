@@ -216,7 +216,7 @@
   },
   "view_on_map": "View on Map",
   "delivery": {
-    "head": "{siteName} | Delivery",
+    "head": "{siteName} | Deliveries",
     "title": "Delivery",
     "supply": "Supply",
     "demand": "Demand",
