@@ -104,7 +104,13 @@
   {/if}
   <div class="flex-1"></div>
   <div class="-m-2 mt-0.5">
-    <Button variant="text" tag="a" href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job?.id ?? -1)} color="primary" size="sm">
+    <Button
+      variant="text"
+      tag="a"
+      href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job?.id ?? -1)}
+      color="primary"
+      size="sm"
+    >
       {msg['championship.event.more_info']()}
     </Button>
   </div>
