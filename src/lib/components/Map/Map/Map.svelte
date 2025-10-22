@@ -201,6 +201,13 @@
   };
 
   const updateDeliveryLine = (deliveryPoint: DeliveryPoint) => {
+    const matchSourceJob = jobsData.filter(getMatchJobSourceFn(deliveryPoint));
+    const matchDestJob = jobsData.filter(getMatchJobDestFn(deliveryPoint));
+
+    if (deliveryShowJobOnly && matchSourceJob.length === 0 && matchDestJob.length === 0) {
+      return;
+    }
+
     const allDropPointLink: [DeliveryPoint, DeliveryPoint][] = [];
 
     if (deliveryPoint.parent) {
@@ -225,6 +232,12 @@
         .flatMap(([d, cd, dps]) =>
           dps.map((dp) => {
             const point = getDeliveryPoint(dp);
+            if (deliveryShowJobOnly) {
+              const hasDestJob = matchSourceJob.some(getMatchJobDestFn(point));
+              if (!hasDestJob) {
+                return undefined;
+              }
+            }
             if (point.dropPoint) {
               const hasConnectedDrop = point.dropPoint.some((dropPointGuid) =>
                 deliveryPointsMap.get(dropPointGuid)?.allDemandKey.includes(d),
@@ -275,6 +288,12 @@
         .flatMap(([cd, dps]) =>
           dps.map((dp) => {
             const point = getDeliveryPoint(dp);
+            if (deliveryShowJobOnly) {
+              const hasSourceJob = matchDestJob.some(getMatchJobSourceFn(point));
+              if (!hasSourceJob) {
+                return undefined;
+              }
+            }
             if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
               const dist = Math.hypot(
                 point.coord.x - deliveryPoint.coord.x,
@@ -455,6 +474,7 @@
     }
   });
 
+  let selectedPoint: Feature | undefined = undefined;
   let lockPoint: Feature | undefined = undefined;
   let hoverPoint: Feature | undefined = undefined;
   let hoverInfo: HoverInfo | undefined = $state();
@@ -472,6 +492,7 @@
           pointType: f.get('pointType'),
           pixelCoord: e.pixel as [number, number],
           info: f.get('info'),
+          jobOnly: (f.get('jobOnly') ?? 0) as number,
         };
         currentHoverPoint = f;
         return true;
@@ -493,8 +514,13 @@
       if (!lockPoint) {
         deliveryLineSource.clear(true);
         if ((currentHoverInfo as unknown as HoverInfo)?.pointType === PointType.Delivery) {
-          const deliveryPoint = (currentHoverInfo as unknown as HoverInfo).info as DeliveryPoint;
-          updateDeliveryLine(deliveryPoint);
+          const deliveryPoint = currentHoverInfo as unknown as Extract<
+            HoverInfo,
+            {
+              pointType: PointType.Delivery;
+            }
+          >;
+          updateDeliveryLine(deliveryPoint.info);
         }
       }
       hoverPoint?.set('hover', false);
@@ -516,7 +542,7 @@
             geometry: new Point(playerData.geometry),
             pointType: PointType.Player,
             info: playerData,
-            selected: playerData.guid === playerSelectingGuid ? 1 : 0,
+            selected: playerData.guid === playerSelectingGuid,
           }),
       ),
     );
@@ -538,15 +564,8 @@
   });
 
   const clearSelection = () => {
-    for (const house of houseFeatures) {
-      house.set('selected', 0);
-    }
-    for (const d of deliveryPointFeatures) {
-      d.set('selected', 0);
-    }
-    for (const d of residentPointFeatures) {
-      d.set('selected', 0);
-    }
+    selectedPoint?.set('selected', false);
+    selectedPoint = undefined;
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
     deliveryLineSource.clear(true);
@@ -714,15 +733,10 @@
   let selectedDelivery: string | undefined = undefined;
 
   $effect(() => {
-    houseFeatures.forEach((house) => {
-      house.set('selected', 0);
-    });
-    deliveryPointFeatures.forEach((d) => {
-      d.set('selected', 0);
-    });
-    residentPointFeatures.forEach((d) => {
-      d.set('selected', 0);
-    });
+    if (lockPoint !== selectedPoint) {
+      selectedPoint?.set('selected', false);
+      selectedPoint = undefined;
+    }
     const oldPlayerSelectingGuid = playerSelectingGuid;
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
@@ -742,11 +756,13 @@
       });
       const house = houseFeatures.find((h) => h.get('info').name === housing);
       if (house) {
-        house.set('selected', 1);
+        selectedPoint = house;
+        house.set('selected', true);
         if (cachedSelectedHouse !== housing && !cacheDontFocus) {
           map.centerOn(
             house.getGeometry()?.getCoordinates() as [number, number],
             cacheInit ? 0 : undefined,
+            cacheInit,
           );
         }
       }
@@ -763,15 +779,17 @@
         untrack(() => {
           onHideShowClick(deliveryLayerData, true);
         });
+        selectedPoint = deliveryPoint;
         lockPoint = deliveryPoint;
         deliveryPoint.set('selected', true);
         deliveryLineSource.clear(true);
-        const deliveryPointInfo = lockPoint.get('info') as DeliveryPoint;
+        const deliveryPointInfo = deliveryPoint.get('info') as DeliveryPoint;
         updateDeliveryLine(deliveryPointInfo);
         if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
           map.centerOn(
             deliveryPoint.getGeometry()?.getCoordinates() as [number, number],
             cacheInit ? 0 : undefined,
+            cacheInit,
           );
         }
       }
@@ -810,7 +828,7 @@
                 geometry: new Point(reProjectPoint([p.x, p.y])),
                 label: p.label,
                 pointType: PointType.Pin,
-                selected: focusIndex === i ? 1 : 0,
+                selected: focusIndex === i,
               }),
           ),
         );
@@ -848,31 +866,18 @@
   $effect(() => {
     for (const d of deliveryPointFeatures) {
       const info = d.get('info') as DeliveryPoint;
-      const matchJob = jobsData.some(
-        (job) => getMatchJobSourceFn(info)(job) || getMatchJobDestFn(info)(job),
-      );
-      if (matchJob) {
-        d.set('jobs', 1);
-      } else {
-        d.set('jobs', 0);
-      }
+      const matchSourceJob = jobsData.some(getMatchJobSourceFn(info));
+      const matchDestJob = jobsData.some(getMatchJobDestFn(info));
+      d.set('jobs', matchSourceJob ? 1 : matchDestJob ? 2 : 0);
     }
   });
 
   $effect(() => {
     for (const d of deliveryPointFeatures) {
-      if (deliveryShowJobOnly) {
-        d.set('jobOnly', 1);
-      } else {
-        d.set('jobOnly', 0);
-      }
+      d.set('jobOnly', deliveryShowJobOnly);
     }
     for (const d of residentPointFeatures) {
-      if (deliveryShowJobOnly) {
-        d.set('jobOnly', 1);
-      } else {
-        d.set('jobOnly', 0);
-      }
+      d.set('jobOnly', deliveryShowJobOnly);
     }
   });
 </script>
@@ -894,7 +899,7 @@
   >
     <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
     <Card
-      class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !ring-white/5 backdrop-blur-lg"
+      class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !ring-white/5 backdrop-blur-sm"
     >
       <h2 class="text-text-dark mb-1 text-xs">
         {msg['map.point_of_interests']()}

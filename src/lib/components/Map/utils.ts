@@ -3,9 +3,9 @@ import { isSm } from '$lib/utils/media.svelte';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 export const enum Features {
-  house,
-  player,
-  delivery,
+  House,
+  Player,
+  Delivery,
 }
 
 export const enum DetailsFeatures {
@@ -45,26 +45,26 @@ export const getSelectionClearedParams = (): SvelteURLSearchParams => {
   return newParams;
 };
 
-export const getViewHref = (feature: Features, id: string): string => {
+export const getViewHref = (feature: Features, id: string, keepMenu = false): string => {
   const newParams = getSelectionClearedParams();
 
   switch (feature) {
-    case Features.house: {
-      if (isSm.current) {
+    case Features.House: {
+      if (isSm.current && !keepMenu) {
         newParams.set('menu', 'housing');
       }
       newParams.set('house', id);
       break;
     }
-    case Features.player: {
-      if (isSm.current) {
+    case Features.Player: {
+      if (isSm.current && !keepMenu) {
         newParams.set('menu', 'players');
       }
       newParams.set('player', id);
       break;
     }
-    case Features.delivery: {
-      if (isSm.current) {
+    case Features.Delivery: {
+      if (isSm.current && !keepMenu) {
         newParams.set('menu', `deliveries/${id}`);
       }
       newParams.set('delivery', id);

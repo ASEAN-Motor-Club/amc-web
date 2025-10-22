@@ -95,7 +95,13 @@
 
 {#snippet dropPointName(dropPoint: DeliveryPoint | undefined)}
   {#if dropPoint}
-    <DeliveryLink {fullScreen} guid={dropPoint.guid} class="truncate text-xs font-semibold" />
+    <DeliveryLink
+      {fullScreen}
+      guid={dropPoint.guid}
+      wrapperClass="overflow-hidden"
+      class="shrink text-xs font-semibold"
+      truncate
+    />
   {/if}
 {/snippet}
 
@@ -104,7 +110,7 @@
     {getMtLocale(deliveryPoint?.name ?? {})}
   </CommonHead>
   <div class="-mt-3 px-5 pb-5">
-    <Button color="info" variant="text" tag="a" href={getViewHref(Features.delivery, id)}>
+    <Button color="info" variant="text" tag="a" href={getViewHref(Features.Delivery, id)}>
       {msg.view_on_map()}
     </Button>
   </div>
@@ -178,7 +184,7 @@
                   <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
                 {/each}
               </div>
-              <div class="whitespace-nowrap">
+              <div class="w-21 whitespace-nowrap text-right">
                 {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
                   >{:else}{getInventoryAmount(
                     item,
@@ -205,7 +211,7 @@
                   <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
                 {/each}
               </div>
-              <div class="whitespace-nowrap">
+              <div class="w-21 whitespace-nowrap text-right">
                 {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
                   >{:else}{getInventoryAmount(
                     item,

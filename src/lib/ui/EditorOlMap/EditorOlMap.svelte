@@ -239,7 +239,7 @@
             [x2, y2],
           ]),
           index: i,
-          selected: isSelected ? 1 : 0,
+          selected: isSelected,
         });
 
         gateFeatures.push(gateFeature);
@@ -248,7 +248,7 @@
           geometry: new Point(reprojectedPoint),
           yaw: point.yaw ?? 0,
           index: i,
-          selected: isSelected ? 1 : 0,
+          selected: isSelected,
         });
 
         pointFeatures.push(pointFeature);

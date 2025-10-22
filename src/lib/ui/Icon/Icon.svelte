@@ -25,7 +25,7 @@
   const sizeClasses = $derived.by(() => {
     switch (iconSize) {
       case 'xs':
-        return '!text-[0.75rem]';
+        return '!text-[0.9rem]';
       case 'sm':
         return '!text-[1.25rem]';
       case 'md':

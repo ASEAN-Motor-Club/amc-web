@@ -139,7 +139,7 @@
         ]}
       >
         <CollapsibleButton
-          class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/10 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
+          class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/20 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
           icon="i-material-symbols:map-outline-rounded"
           text={msg['map.side_menu.map']()}
           href={closeHref}
@@ -147,7 +147,7 @@
       </div>
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-emerald-700/10 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
+          'h-12 flex-1 hover:bg-emerald-700/20 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
           openCollapsible === 'players' &&
             'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
         ]}
@@ -157,7 +157,7 @@
       />
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-blue-700/10 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
+          'h-12 flex-1 hover:bg-blue-700/20 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
           openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
         ]}
         icon="i-material-symbols:home-outline-rounded"
@@ -166,7 +166,7 @@
       />
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-orange-700/10 hover:text-orange-700 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
+          'h-12 flex-1 hover:bg-orange-700/20 hover:text-orange-700 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
         icon="i-material-symbols:delivery-truck-speed-outline-rounded"
@@ -182,7 +182,7 @@
         }}
       >
         <CollapsibleButton
-          class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/10 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/20 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
           text={msg['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}

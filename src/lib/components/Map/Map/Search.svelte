@@ -153,7 +153,7 @@
       name="search"
       type="search"
       placeholder={msg['map.search_placeholder']()}
-      class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-lg hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
+      class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-sm hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),
@@ -176,7 +176,7 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
+          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-sm"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
@@ -283,7 +283,7 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-lg"
+          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-sm"
         >
           <div class="px-3 py-2 italic text-neutral-300">
             {searchValue ? msg['map.no_results']() : msg['map.start_search']()}

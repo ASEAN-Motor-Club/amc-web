@@ -14,6 +14,7 @@
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { deliveryPoints } from '$lib/data/deliveryPoint';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   interface Props {
     id: string;
@@ -108,8 +109,8 @@
 </script>
 
 {#if job || loading}
-  <div class={['flex h-full flex-col gap-8 overflow-y-auto p-8', fullScreen && 'sm:flex-row']}>
-    <div class={['flex flex-1 flex-col', fullScreen && 'sm:overflow-y-auto']}>
+  <div class={['flex h-full flex-col gap-8 overflow-y-auto p-8', fullScreen && 'lg:flex-row']}>
+    <div class={['flex flex-1 flex-col', fullScreen && 'lg:overflow-y-auto lg:overflow-x-hidden']}>
       <CommonHead class="w-full !p-0 !pb-8">
         {#if loading}
           <TextSkeleton class="max-w-150 w-full" />
@@ -181,33 +182,37 @@
           {job.description}
         </div>
       {/if}
-      <Divider />
-      <div class={['flex flex-col gap-4', fullScreen && 'lg:flex-row']}>
+      <Divider spacing="lg" />
+      <div>
         {#if validSupply.length > 0}
-          <div class="grow">
+          <div class="mb-4">
             <div class="font-semibold">{msg['jobs.job_supply']()}</div>
-            <ul class="list-disc pl-8">
+            <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
               {#each validSupply as point (point.guid)}
-                <li><DeliveryLink {fullScreen} guid={point.guid} class="truncate" /></li>
+                <li class="ml-8">
+                  <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                </li>
               {/each}
             </ul>
           </div>
         {/if}
         {#if validDemand.length > 0}
-          <div class="grow">
+          <div>
             <div class="font-semibold">{msg['jobs.job_demand']()}</div>
-            <ul class="list-disc pl-8">
+            <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
               {#each validDemand as point (point.guid)}
-                <li><DeliveryLink {fullScreen} guid={point.guid} class="truncate" /></li>
+                <li class="ml-8">
+                  <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                </li>
               {/each}
             </ul>
           </div>
         {/if}
       </div>
     </div>
-    <div class="flex flex-1">
+    <div class={['flex flex-1', fullScreen && 'lg:max-w-100']}>
       <Card
-        class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 sm:max-h-[calc(100dvh-8rem)]"
+        class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
       >
         <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
           {msg['jobs.contributors']()}
@@ -260,9 +265,7 @@
               <div
                 class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
-                <div class="truncate">
-                  {contrib.name}
-                </div>
+                <TruncateText text={contrib.name} />
                 <div class="whitespace-nowrap text-right">
                   {contrib.quantity} ({Math.round(
                     (contrib.quantity / (job?.quantity_requested ?? 1)) * 100,

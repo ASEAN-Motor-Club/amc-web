@@ -16,6 +16,7 @@
   import { page } from '$app/state';
   import { pushState, replaceState } from '$app/navigation';
   import { censored } from '$lib/censored.svelte';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   const mtLocales = [
     'cs',
@@ -173,9 +174,10 @@
         </div>
         <Divider spacing="sm" />
         <div class="mb-2 flex items-center justify-between gap-2">
-          <div class="truncate whitespace-nowrap font-semibold">
-            {msg['settings.site_language']()}
-          </div>
+          <TruncateText
+            text={msg['settings.site_language']()}
+            class="whitespace-nowrap font-semibold"
+          />
           <Select
             name="siteLocale"
             value={getLocale()}
@@ -189,9 +191,10 @@
           </Select>
         </div>
         <div class="flex items-center justify-between gap-2">
-          <div class="truncate whitespace-nowrap font-semibold">
-            {msg['settings.game_language']()}
-          </div>
+          <TruncateText
+            text={msg['settings.game_language']()}
+            class="whitespace-nowrap font-semibold"
+          />
           <Select
             name="mtLocale"
             value={mtLocale.l}

@@ -17,7 +17,7 @@
 <a
   href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job.id)}
   class={[
-    'text-orange-600 underline hover:text-orange-500 dark:text-orange-500 dark:hover:text-orange-400',
+    'text-orange-600 hover:text-orange-500 dark:text-orange-500 dark:hover:text-orange-400',
     className,
   ]}
   >{#if idOnly}{job.id}{:else}{showId ? `${job.id}. ` : ''}{job.name}{/if}</a

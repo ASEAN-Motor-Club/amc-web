@@ -9,6 +9,7 @@
   import { getLocale } from '$lib/paraglide/runtime';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import { Features, getViewHref } from '../utils';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {
     house: House;
@@ -49,30 +50,36 @@
   });
 
   const locale = $derived.by(getLocale);
+
+  const houseTitle = $derived(
+    currentHouseData?.ownerName
+      ? msg['housing.owned_house']({
+          owner: currentHouseData.ownerName,
+        })
+      : msg['housing.vacant_house'](),
+  );
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="mb-2 flex w-full items-center justify-between">
-    <h2
-      class={['flex-1 truncate text-lg font-semibold', currentHouseData?.ownerName ? '' : 'italic']}
+    <TruncateText
+      tag="h2"
+      text={houseTitle}
+      class={['flex-1 text-lg font-semibold', currentHouseData?.ownerName ? '' : 'italic']}
     >
       <HighlightText
-        text={currentHouseData?.ownerName
-          ? msg['housing.owned_house']({
-              owner: currentHouseData.ownerName,
-            })
-          : msg['housing.vacant_house']()}
+        text={houseTitle}
         {highlight}
         caseInSensitive
         tag="span"
         highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
       />
-    </h2>
+    </TruncateText>
     <Button
       tag="a"
       size="xs"
       variant="text"
-      href={getViewHref(Features.house, house.name)}
+      href={getViewHref(Features.House, house.name)}
       class="-mr-1.5"
       color="info"
     >

@@ -7,6 +7,7 @@
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   interface ResultsModalProps {
     event: ScheduledEvent | undefined;
@@ -110,9 +111,7 @@
             >
               <div>{index + 1}</div>
               <div class="min-w-0">
-                <div class="truncate">
-                  {result.character.name}
-                </div>
+                <TruncateText text={result.character.name} />
               </div>
               <div>
                 <span class="font-bold">{getTeamTag(result)}</span>

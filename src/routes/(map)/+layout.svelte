@@ -33,7 +33,8 @@
         return ['deliveries' as const, page.params.id ?? ''];
       default: {
         const [menu, id] = (clientSearchParamsGet('menu') ?? '').split('/');
-        return [menu as CollapsibleType, id];
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        return [menu as CollapsibleType, id ?? ''];
       }
     }
   });

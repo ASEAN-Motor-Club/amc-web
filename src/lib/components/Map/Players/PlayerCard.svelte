@@ -9,6 +9,7 @@
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getLocationAtPoint } from '$lib/data/area';
   import { Features, getViewHref } from '../utils';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {
     player?: PlayerData;
@@ -24,28 +25,26 @@
       player?.vehicleKey ?? 'None'
     ],
   );
+
+  const playerName = $derived(player?.name ?? '.');
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="mb-2 flex w-full items-center justify-between">
-    <h2 class="flex-1 truncate text-lg font-semibold">
-      {#if loading}
-        .
-      {:else}
-        <HighlightText
-          text={player?.name ?? ''}
-          {highlight}
-          caseInSensitive
-          tag="span"
-          highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
-        />
-      {/if}
-    </h2>
+    <TruncateText tag="h2" text={playerName} class="flex-1 text-lg font-semibold">
+      <HighlightText
+        text={playerName}
+        {highlight}
+        caseInSensitive
+        tag="span"
+        highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
+      />
+    </TruncateText>
     <Button
       tag="a"
       size="xs"
       variant="text"
-      href={getViewHref(Features.player, player?.guid ?? '')}
+      href={getViewHref(Features.Player, player?.guid ?? '')}
       class="-mr-1.5"
       color="info"
       onClick={() => onCenter([player?.coord.x ?? 0, player?.coord.y ?? 0])}

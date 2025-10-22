@@ -5,6 +5,7 @@
   import type { TeamStanding, PersonalStanding } from '$lib/api/types';
   import { PUBLIC_SEASON_NO } from '$env/static/public';
   import StandingCard from './StandingCard.svelte';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   let loading = $state(true);
   let teamStandings: TeamStanding[] = $state([]);
@@ -36,10 +37,10 @@
       {#each teamStandings as standing, index (standing.team_id)}
         <div class={getStandingRowClass(index)}>
           <div>{index + 1}</div>
-          <div class="truncate">
+          <TruncateText text={`[${standing.team_tag}] ${standing.team_name}`}>
             <span class="font-bold">[{standing.team_tag}]</span>
             {standing.team_name}
-          </div>
+          </TruncateText>
           <div class="text-right font-bold">{standing.total_points}</div>
         </div>
       {/each}
@@ -51,7 +52,7 @@
       {#each personalStandings as standing, index (`${standing.player_id}-${standing.character_name}`)}
         <div class={getStandingRowClass(index)}>
           <div>{index + 1}</div>
-          <div class="truncate">{standing.character_name}</div>
+          <TruncateText text={standing.character_name} />
           <div class="text-right font-bold">
             {standing.total_points}
           </div>

@@ -145,7 +145,7 @@
   let showNum = $state<boolean>(true);
 
   const mapBtnClass =
-    ' text-text bg-white/80 hover:bg-white active:bg-neutral-100 backdrop-blur-lg';
+    ' text-text bg-white/80 hover:bg-white active:bg-neutral-100 backdrop-blur-xs';
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">

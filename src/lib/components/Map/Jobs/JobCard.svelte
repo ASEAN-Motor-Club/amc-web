@@ -9,6 +9,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import { DetailsFeatures, getLinkHref } from '../utils';
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
+  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {
     job?: DeliveryJob;
@@ -52,13 +53,7 @@
 </script>
 
 <Card class={['relative flex flex-col overflow-hidden', expired && 'opacity-50']} {loading}>
-  <h2 class="mb-2 truncate text-lg font-semibold">
-    {#if loading}
-      .
-    {:else}
-      {job?.name}
-    {/if}
-  </h2>
+  <TruncateText text={job?.name ?? '.'} class="mb-2 text-lg font-semibold" />
   <div class="mb-2 text-3xl font-bold tabular-nums">
     {job?.quantity_fulfilled} <span class="opacity-50">/</span>
     {job?.quantity_requested}
