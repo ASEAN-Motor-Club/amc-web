@@ -268,7 +268,8 @@
         "desc": "Failed to load event data. Please try again later."
       },
       "pts": "{points}pts"
-    }
+    },
+    "no_standing": "No standings available yet."
   },
   "settings": {
     "site_language": "Site Language",

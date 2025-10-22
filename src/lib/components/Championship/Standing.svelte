@@ -34,30 +34,46 @@
 >
   <StandingCard title={msg['championship.team_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}
-      {#each teamStandings as standing, index (standing.team_id)}
-        <div class={getStandingRowClass(index)}>
-          <div>{index + 1}</div>
-          <TruncateText text={`[${standing.team_tag}] ${standing.team_name}`}>
-            <span class="font-bold">[{standing.team_tag}]</span>
-            {standing.team_name}
-          </TruncateText>
-          <div class="text-right font-bold">{standing.total_points}</div>
+      {#if teamStandings.length > 0}
+        {#each teamStandings as standing, index (standing.team_id)}
+          <div class={getStandingRowClass(index)}>
+            <div>{index + 1}</div>
+            <TruncateText text={`[${standing.team_tag}] ${standing.team_name}`}>
+              <span class="font-bold">[{standing.team_tag}]</span>
+              {standing.team_name}
+            </TruncateText>
+            <div class="text-right font-bold">{standing.total_points}</div>
+          </div>
+        {/each}
+      {:else}
+        <div
+          class="text-text/60 dark:text-text-dark/60 flex h-full items-center justify-center p-4 text-sm"
+        >
+          {msg['championship.no_standing']()}
         </div>
-      {/each}
+      {/if}
     {/snippet}
   </StandingCard>
 
   <StandingCard title={msg['championship.personal_standing']()} {loading}>
     {#snippet children({ getStandingRowClass })}
-      {#each personalStandings as standing, index (`${standing.player_id}-${standing.character_name}`)}
-        <div class={getStandingRowClass(index)}>
-          <div>{index + 1}</div>
-          <TruncateText text={standing.character_name} />
-          <div class="text-right font-bold">
-            {standing.total_points}
+      {#if personalStandings.length > 0}
+        {#each personalStandings as standing, index (`${standing.player_id}-${standing.character_name}`)}
+          <div class={getStandingRowClass(index)}>
+            <div>{index + 1}</div>
+            <TruncateText text={standing.character_name} />
+            <div class="text-right font-bold">
+              {standing.total_points}
+            </div>
           </div>
+        {/each}
+      {:else}
+        <div
+          class="text-text/60 dark:text-text-dark/60 flex h-full items-center justify-center p-4 text-sm"
+        >
+          {msg['championship.no_standing']()}
         </div>
-      {/each}
+      {/if}
     {/snippet}
   </StandingCard>
 </div>

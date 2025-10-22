@@ -25,7 +25,7 @@
   const daysInLastMonth = $derived(new Date(year, month - 1, 0).getDate());
   const daysMonth = $derived(new Date(year, month, 0).getDate());
 
-  const firstDayOfWeek = 0;
+  const firstDayOfWeek = getDateFnsLocale().options?.weekStartsOn ?? 0;
 
   const offsetWeek = $derived(firstDayOfWeek > startOffset);
 
