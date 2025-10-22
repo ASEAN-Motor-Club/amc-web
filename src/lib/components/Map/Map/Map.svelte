@@ -779,6 +779,7 @@
         untrack(() => {
           onHideShowClick(deliveryLayerData, true);
         });
+        lockPoint?.set('selected', false);
         selectedPoint = deliveryPoint;
         lockPoint = deliveryPoint;
         deliveryPoint.set('selected', true);
