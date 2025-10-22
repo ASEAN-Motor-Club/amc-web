@@ -15,7 +15,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{msg['jobs.title']()}</CommonHead>
+  <CommonHead>{censored.c ? msg['jobs.title_c']() : msg['jobs.title']()}</CommonHead>
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if loading || jobsData.length > 0}
       <div

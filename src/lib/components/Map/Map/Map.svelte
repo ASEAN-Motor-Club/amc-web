@@ -10,7 +10,7 @@
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
   import { PointType, type PlayerData } from './types';
-  import { getStaticPoints } from './staticPoints';
+  import { getDeliveryPointStyle, getResidentPointStyle, getStaticPoints } from './staticPoints';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
     textXs,
@@ -874,12 +874,8 @@
   });
 
   $effect(() => {
-    for (const d of deliveryPointFeatures) {
-      d.set('jobOnly', deliveryShowJobOnly);
-    }
-    for (const d of residentPointFeatures) {
-      d.set('jobOnly', deliveryShowJobOnly);
-    }
+    deliveryPointLayer.setStyle(getDeliveryPointStyle(deliveryShowJobOnly));
+    residentPointLayer.setStyle(getResidentPointStyle(deliveryShowJobOnly));
   });
 </script>
 

@@ -5,7 +5,7 @@ import WebGLVectorLayer from 'ol/layer/WebGLVector';
 import VectorSource from 'ol/source/Vector';
 import { PointType } from './types';
 import {
-  colorAmber100,
+  colorAmber200,
   colorAmber300,
   colorAmber400,
   colorBlue500,
@@ -24,6 +24,74 @@ import {
 } from '$lib/tw-var';
 import { deliveryPoints, type DeliveryPoint } from '$lib/data/deliveryPoint';
 import { houses } from '$lib/data/house';
+
+export const getDeliveryPointStyle = (jobOnly?: boolean) => ({
+  'circle-opacity': jobOnly ? ['match', ['>', ['get', 'jobs'], 0], true, 1, 0] : 1,
+  'circle-radius': 6,
+  'circle-fill-color': [
+    'match',
+    ['get', 'hover'],
+    1,
+    ['match', ['get', 'jobs'], 1, colorOrange300, colorYellow300],
+    [
+      'match',
+      ['get', 'selected'],
+      1,
+      ['match', ['>', ['get', 'jobs'], 0], true, colorOrange600, colorYellow600],
+      ['match', ['>', ['get', 'jobs'], 0], true, colorOrange500, colorYellow500],
+    ],
+  ],
+  'circle-stroke-color': [
+    'match',
+    ['>', ['get', 'jobs'], 0],
+    true,
+    [
+      'match',
+      ['get', 'jobs'],
+      1,
+      ['match', ['get', 'selected'], 1, colorGreen500, colorGreen600],
+      ['match', ['get', 'selected'], 1, colorBlue500, colorBlue600],
+    ],
+    ['match', ['get', 'selected'], 1, 'white', 'black'],
+  ],
+  'circle-stroke-width': ['match', ['>', ['get', 'jobs'], 0], true, 2, 1],
+  'circle-rotate-with-view': false,
+  'circle-displacement': [0, 0],
+});
+
+export const getResidentPointStyle = (jobOnly?: boolean) => ({
+  'circle-opacity': jobOnly ? ['match', ['>', ['get', 'jobs'], 0], true, 1, 0] : 1,
+  'circle-radius': 5,
+  'circle-fill-color': [
+    'match',
+    ['get', 'hover'],
+    1,
+    ['match', ['get', 'jobs'], 1, colorOrange300, colorAmber200],
+    [
+      'match',
+      ['get', 'selected'],
+      1,
+      ['match', ['>', ['get', 'jobs'], 0], true, colorOrange600, colorAmber400],
+      ['match', ['>', ['get', 'jobs'], 0], true, colorOrange500, colorAmber300],
+    ],
+  ],
+  'circle-stroke-color': [
+    'match',
+    ['>', ['get', 'jobs'], 0],
+    true,
+    [
+      'match',
+      ['get', 'jobs'],
+      1,
+      ['match', ['get', 'selected'], 1, colorGreen500, colorGreen600],
+      ['match', ['get', 'selected'], 1, colorBlue500, colorBlue600],
+    ],
+    ['match', ['get', 'selected'], 1, 'white', 'black'],
+  ],
+  'circle-stroke-width': ['match', ['>', ['get', 'jobs'], 0], true, 2, 1],
+  'circle-rotate-with-view': false,
+  'circle-displacement': [0, 0],
+});
 
 export function getStaticPoints() {
   const [deliPoint, residentPoint] = deliveryPoints.reduce(
@@ -51,45 +119,7 @@ export function getStaticPoints() {
     source: new VectorSource({
       features: deliveryPointFeatures,
     }),
-    style: {
-      'circle-opacity': [
-        'match',
-        ['get', 'jobOnly'],
-        1,
-        ['match', ['>', ['get', 'jobs'], 0], true, 1, 0],
-        1,
-      ],
-      'circle-radius': 6,
-      'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
-        ['match', ['get', 'jobs'], 1, colorOrange300, colorYellow300],
-        [
-          'match',
-          ['get', 'selected'],
-          1,
-          ['match', ['>', ['get', 'jobs'], 0], true, colorOrange600, colorYellow600],
-          ['match', ['>', ['get', 'jobs'], 0], true, colorOrange500, colorYellow500],
-        ],
-      ],
-      'circle-stroke-color': [
-        'match',
-        ['>', ['get', 'jobs'], 0],
-        true,
-        [
-          'match',
-          ['get', 'jobs'],
-          1,
-          ['match', ['get', 'selected'], 1, colorGreen500, colorGreen600],
-          ['match', ['get', 'selected'], 1, colorBlue500, colorBlue600],
-        ],
-        ['match', ['get', 'selected'], 1, 'white', 'black'],
-      ],
-      'circle-stroke-width': ['match', ['>', ['get', 'jobs'], 0], true, 2, 1],
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
+    style: getDeliveryPointStyle(),
   });
 
   const residentPointFeatures = residentPoint.map(
@@ -106,21 +136,7 @@ export function getStaticPoints() {
       features: residentPointFeatures,
     }),
     minZoom: 4,
-    style: {
-      'circle-opacity': ['match', ['get', 'jobOnly'], 1, 0, 1],
-      'circle-radius': 5,
-      'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
-        colorAmber100,
-        ['match', ['get', 'selected'], 1, colorAmber400, colorAmber300],
-      ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
+    style: getResidentPointStyle(),
   });
 
   const houseFeatures = houses.map(
