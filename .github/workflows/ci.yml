@@ -38,7 +38,7 @@ jobs:
         run: pnpm install
 
       - name: 🎭 Install Playwright Browsers
-        run: pnpm exec playwright --with-deps
+        run: pnpm exec playwright install --with-deps
 
       - name: 🌐 Generate i18n
         run: pnpm run paraglide:compile
