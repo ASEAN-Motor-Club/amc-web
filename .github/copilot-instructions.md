@@ -125,7 +125,7 @@ src/
 ## Testing & Development
 
 - **Component Stories**: Every UI component should have a `.stories.svelte` file
-- **Testing**: Uses Vitest with Testing Library for Svelte
+- **Testing**: Uses Vitest with Playwright browser provider for component testing in real browsers
 - **Type Safety**: Leverage TypeScript extensively, especially for component props
 
 ## Common Gotchas

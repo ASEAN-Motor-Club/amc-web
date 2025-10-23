@@ -7,7 +7,7 @@ Website for ASEAN Motor Club
 - **Framework**: [Svelte](https://svelte.dev/) with [SvelteKit](https://kit.svelte.dev/) using [Static Adapter](https://kit.svelte.dev/docs/adapter-static)
 - **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
 - **Icons**: [UnoCSS Icons preset](https://unocss.dev/presets/icons) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
-- **Testing**: [Vitest](https://vitest.dev/) with [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/)
+- **Testing**: [Vitest](https://vitest.dev/) with [Playwright](https://playwright.dev/) browser provider for component testing
 - **Internationalization**: [Paraglide](https://inlang.com/paraglide)
 - **Component Development**: [Storybook](https://storybook.js.org/)
 - **Code Quality**: [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
@@ -141,7 +141,15 @@ Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and 
 
 ## 🧪 Testing
 
-This project uses Vitest for unit testing with Testing Library for Svelte components. Tests are located alongside components or in dedicated test files.
+This project uses **Vitest** for unit testing with **Playwright** as the browser provider for testing Svelte components in a real browser environment. Tests are configured to run in two modes:
+
+- **Client tests**: Svelte component tests that run in a Chromium browser using Playwright
+- **Server tests**: Node.js environment tests for server-side logic
+
+Test files should follow these naming conventions:
+
+- `*.svelte.test.ts` or `*.svelte.spec.ts` for component tests (run in browser)
+- `*.test.ts` or `*.spec.ts` for server-side tests (run in Node.js)
 
 ```bash
 # Run tests once
