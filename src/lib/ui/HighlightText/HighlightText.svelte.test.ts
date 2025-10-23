@@ -1,4 +1,4 @@
-import { render } from '@testing-library/svelte';
+import { render } from 'vitest-browser-svelte';
 import { describe, expect, it } from 'vitest';
 import HighlightText from './HighlightText.svelte';
 
