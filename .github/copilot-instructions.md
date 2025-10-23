@@ -80,26 +80,26 @@ Prefer `-rounded` suffix variants when available.
 
 ```bash
 # Development
-npm run dev                 # Start dev server
-npm run dev:host           # Start dev server with host access
-npm run storybook          # Component development
+pnpm run dev                 # Start dev server
+pnpm run dev:host           # Start dev server with host access
+pnpm run storybook          # Component development
 
 # Build & Deploy
-npm run build              # Build the static site
-npm run preview            # Preview built site locally
-npm run preview:host       # Preview built site with host access
-npm run paraglide:compile  # Regenerate i18n messages
+pnpm run build              # Build the static site
+pnpm run preview            # Preview built site locally
+pnpm run preview:host       # Preview built site with host access
+pnpm run paraglide:compile  # Regenerate i18n messages
 
 # Quality Checks
-npm run checklist          # Runs format, lint, paraglide:compile, check, test
-npm run format             # Prettier formatting
-npm run lint               # ESLint + Prettier check
-npm run lint:fix           # Auto-fix ESLint issues
-npm run check              # TypeScript + Svelte check
-npm run check:watch        # TypeScript + Svelte check in watch mode
-npm run test               # Run all tests
-npm run test:unit          # Run unit tests in watch mode
-npm run build:storybook    # Build Storybook for deployment
+pnpm run checklist          # Runs format, lint, paraglide:compile, check, test
+pnpm run format             # Prettier formatting
+pnpm run lint               # ESLint + Prettier check
+pnpm run lint:fix           # Auto-fix ESLint issues
+pnpm run check              # TypeScript + Svelte check
+pnpm run check:watch        # TypeScript + Svelte check in watch mode
+pnpm run test               # Run all tests
+pnpm run test:unit          # Run unit tests in watch mode
+pnpm run build:storybook    # Build Storybook for deployment
 ```
 
 ## Project Structure Essentials

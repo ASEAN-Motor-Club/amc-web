@@ -5,6 +5,7 @@ Website for ASEAN Motor Club
 ## 🛠️ Tech Stack
 
 - **Framework**: [Svelte](https://svelte.dev/) with [SvelteKit](https://kit.svelte.dev/) using [Static Adapter](https://kit.svelte.dev/docs/adapter-static)
+- **Package Manager**: [pnpm](https://pnpm.io/) for fast, disk space efficient dependency management
 - **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
 - **Icons**: [UnoCSS Icons preset](https://unocss.dev/presets/icons) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
 - **Testing**: [Vitest](https://vitest.dev/) with [Playwright](https://playwright.dev/) browser provider for component testing
@@ -16,6 +17,11 @@ Website for ASEAN Motor Club
 ## 🚀 Prerequisites
 
 - **Node.js**: LTS version recommended
+- **pnpm**: This project uses [pnpm](https://pnpm.io/) as the package manager. Install it using [Corepack](https://pnpm.io/installation#using-corepack) (recommended):
+  ```bash
+  npm install --global corepack@latest
+  corepack enable
+  ```
 - **VS Code Extensions** (highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
   - [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) ([Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) should work too)
@@ -43,37 +49,44 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
    cd amc-web
    ```
 
-2. **Install dependencies**
+2. **Enable pnpm** (if not already done)
 
    ```bash
-   npm install
+   npm install --global corepack@latest
+   corepack enable
    ```
 
-3. **Start development server**
+3. **Install dependencies**
 
    ```bash
-   npm run dev
+   pnpm install
+   ```
+
+4. **Start development server**
+
+   ```bash
+   pnpm run dev
    ```
 
    Your app will be available at `http://localhost:5173`
 
-4. **Start Storybook** (for UI component development)
+5. **Start Storybook** (for UI component development)
    ```bash
-   npm run storybook
+   pnpm run storybook
    ```
    Storybook will be available at `http://localhost:6006`
 
 ## 📜 Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run storybook` - Start Storybook for component development
-- `npm run test` - Run unit tests
-- `npm run test:unit` - Run unit tests in watch mode
-- `npm run check` - Run type checking
-- `npm run lint` - Check code formatting and linting
-- `npm run format` - Format code with Prettier
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm run preview` - Preview production build locally
+- `pnpm run storybook` - Start Storybook for component development
+- `pnpm run test` - Run unit tests
+- `pnpm run test:unit` - Run unit tests in watch mode
+- `pnpm run check` - Run type checking
+- `pnpm run lint` - Check code formatting and linting
+- `pnpm run format` - Format code with Prettier
 
 ## 🔧 Development Tools
 
@@ -153,10 +166,10 @@ Test files should follow these naming conventions:
 
 ```bash
 # Run tests once
-npm run test
+pnpm run test
 
 # Run tests in watch mode
-npm run test:unit
+pnpm run test:unit
 ```
 
 ## 🧩 Component Development
@@ -165,7 +178,7 @@ Components are developed using Storybook for isolated development and documentat
 
 - Components are located in `src/lib/ui/`
 - Each component includes a `.stories.svelte` file for Storybook
-- Run `npm run storybook` to develop and test components in isolation
+- Run `pnpm run storybook` to develop and test components in isolation
 
 ## 🤝 Collaboration Guidelines
 
@@ -191,12 +204,12 @@ Before merging any pull request, ensure that:
 Run these commands before committing:
 
 ```bash
-npm run format  # Format code
-npm run lint    # Check linting
-npm run check   # Type checking
-npm run test    # Run tests
+pnpm run format  # Format code
+pnpm run lint    # Check linting
+pnpm run check   # Type checking
+pnpm run test    # Run tests
 # or
-npm run checklist
+pnpm run checklist
 ```
 
 ---

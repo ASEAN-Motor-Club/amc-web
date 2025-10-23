@@ -16,11 +16,11 @@
     "lint": "prettier --check --cache \"**/*.{js,ts,svelte,json,md,css,html}\" && eslint \"**/*.{js,ts,svelte}\"",
     "lint:fix": "eslint --fix \"**/*.{js,ts,svelte}\"",
     "test:unit": "vitest",
-    "test": "npm run test:unit -- --run",
+    "test": "vitest run",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
     "paraglide:compile": "npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-    "checklist": "npm run format && npm run lint && npm run paraglide:compile && npm run check && npm run test"
+    "checklist": "pnpm run format && pnpm run lint && pnpm run paraglide:compile && pnpm run check && pnpm run test"
   },
   "devDependencies": {
     "@eslint/compat": "1.4.0",
@@ -37,6 +37,7 @@
     "@types/node": "22.17.0",
     "@unocss/extractor-svelte": "66.5.4",
     "@vitest/browser": "4.0.1",
+    "@vitest/browser-playwright": "4.0.1",
     "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-storybook": "9.1.13",
@@ -74,5 +75,6 @@
     "svelte-portal": "2.2.1",
     "tailwind-merge": "3.3.1",
     "zod": "4.1.12"
-  }
+  },
+  "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
 }
