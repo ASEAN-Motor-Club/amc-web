@@ -82,7 +82,7 @@
   {#if open}
     <div
       class={twMerge(
-        'z-1000000 fixed inset-0 flex items-center justify-center overscroll-none bg-black/50 p-5',
+        'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
         clsx(propsClassName),
       )}
       transition:fade={{
@@ -90,7 +90,7 @@
       }}
     >
       <button
-        class="-z-1 fixed inset-0 h-full w-full overscroll-none opacity-0"
+        class="fixed inset-0 -z-1 h-full w-full overscroll-none opacity-0"
         onclick={onClose}
         aria-label="Close modal"
       ></button>

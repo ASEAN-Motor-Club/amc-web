@@ -51,7 +51,7 @@
 <div class="flex h-6 w-6 items-center justify-center">
   <div class="flex h-5 w-5 items-center justify-between">
     {#each barHeights as height, i (i)}
-      <div class="w-0.75 min-h-0.75 rounded-sm bg-orange-500" style:height="{height}%"></div>
+      <div class="min-h-0.75 w-0.75 rounded-sm bg-orange-500" style:height="{height}%"></div>
     {/each}
   </div>
 </div>

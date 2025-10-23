@@ -30,7 +30,7 @@
 </svelte:head>
 
 <div class="bg-cover bg-fixed bg-center">
-  <picture class="-z-2 pointer-events-none fixed inset-0 h-full w-full">
+  <picture class="pointer-events-none fixed inset-0 -z-2 h-full w-full">
     <source
       media="(orientation: portrait)"
       srcset={`${tireTrackP180} 180w, ${tireTrackP360} 360w, ${tireTrackP720} 720w, ${tireTrackP1080} 1080w, ${tireTrackP1440} 1440w`}
@@ -43,7 +43,7 @@
     />
     <img src={tireTrack1920} alt="" class="h-full w-full object-cover" />
   </picture>
-  <div class="-z-1 pointer-events-none fixed inset-0 bg-black/70 dark:bg-black/90"></div>
+  <div class="pointer-events-none fixed inset-0 -z-1 bg-black/70 dark:bg-black/90"></div>
 
   <CommonHead class="text-text-dark justify-center">{msg['radio.title']()}</CommonHead>
 
@@ -52,7 +52,7 @@
       <Player />
     </div>
     <div class="px-3">
-      <Card class="max-w-175 mx-auto mt-8 p-6 !ring-white/20">
+      <Card class="mx-auto mt-8 max-w-175 p-6 !ring-white/20">
         <div class="-mb-[1.25em]">
           <MarkdownText text={msg['radio_guide.content_markdown']()} noSanitize />
         </div>

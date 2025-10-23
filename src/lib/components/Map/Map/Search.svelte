@@ -153,7 +153,7 @@
       name="search"
       type="search"
       placeholder={msg['map.search_placeholder']()}
-      class="text-text-dark !shadow-white/3 pointer-events-auto w-full !border-none !bg-neutral-900/50 !ring-white/5 backdrop-blur-sm hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
+      class="text-text-dark pointer-events-auto w-full !border-none !bg-neutral-900/50 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),
@@ -176,7 +176,7 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-sm"
+          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
@@ -189,7 +189,7 @@
             >
               <div
                 class={[
-                  'border-1 mx-3 my-1.5 size-3 shrink-0 rounded-full border-black',
+                  'mx-3 my-1.5 size-3 shrink-0 rounded-full border-1 border-black',
                   {
                     'bg-yellow-500': point.pointType === PointType.Delivery,
                     'bg-cyan-500': point.pointType === PointType.House,
@@ -261,7 +261,7 @@
             </a>
           {/each}
           {#if searchValue && foundValues.length > maxShow}
-            <div class="px-3 py-2 italic text-neutral-300">
+            <div class="px-3 py-2 text-neutral-300 italic">
               {msg['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
@@ -283,9 +283,9 @@
         }}
       >
         <Card
-          class="!shadow-white/3 media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !ring-white/5 backdrop-blur-sm"
+          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
-          <div class="px-3 py-2 italic text-neutral-300">
+          <div class="px-3 py-2 text-neutral-300 italic">
             {searchValue ? msg['map.no_results']() : msg['map.start_search']()}
           </div>
         </Card>

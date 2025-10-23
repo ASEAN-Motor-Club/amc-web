@@ -63,12 +63,12 @@
 </script>
 
 <Modal open={!!date} {onClose}>
-  <Card class="w-150 flex max-h-full max-w-full flex-col p-5">
+  <Card class="flex max-h-full w-150 max-w-full flex-col p-5">
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
       {msg['championship.event.title']({ date: formattedDate })}
     </h1>
     <div
-      class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
+      class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
     >
       {#each eventsToday as event (event.id)}
         <Card>
@@ -88,7 +88,7 @@
           <h1 class="text-2xl font-semibold tracking-tight">
             {event.name}
           </h1>
-          <div class="wrap-anywhere my-4 text-sm opacity-80">
+          <div class="my-4 text-sm wrap-anywhere opacity-80">
             <MarkdownText size="prose-sm" text={event.description} />
           </div>
           <div class="-m-2 flex gap-1">

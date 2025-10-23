@@ -171,14 +171,14 @@
   <ClickAwayBlock onClickAway={() => (open = false)} active={open}>
     {#if uniqueOpen}
       <div
-        class="z-6000 absolute top-full mt-1 w-full"
+        class="absolute top-full z-6000 mt-1 w-full"
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
       >
         <Card
           class={twMerge(
-            'flex w-full cursor-pointer select-none flex-col overflow-y-auto p-0',
+            'flex w-full cursor-pointer flex-col overflow-y-auto p-0 select-none',
             clsx(menuClass),
           )}
         >

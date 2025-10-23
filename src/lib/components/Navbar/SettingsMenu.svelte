@@ -154,7 +154,7 @@
       transition:fade={{
         duration: defaultTransitionDurationMs,
       }}
-      class="max-w-104 z-10000 absolute right-0 top-14 w-full px-5"
+      class="absolute top-14 right-0 z-10000 w-full max-w-104 px-5"
     >
       <Card class="w-full">
         <div class="flex items-center justify-between gap-2">
@@ -176,7 +176,7 @@
         <div class="mb-2 flex items-center justify-between gap-2">
           <TruncateText
             text={msg['settings.site_language']()}
-            class="whitespace-nowrap font-semibold"
+            class="font-semibold whitespace-nowrap"
           />
           <Select
             name="siteLocale"
@@ -193,7 +193,7 @@
         <div class="flex items-center justify-between gap-2">
           <TruncateText
             text={msg['settings.game_language']()}
-            class="whitespace-nowrap font-semibold"
+            class="font-semibold whitespace-nowrap"
           />
           <Select
             name="mtLocale"

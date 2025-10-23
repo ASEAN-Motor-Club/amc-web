@@ -178,7 +178,7 @@
   {#if showTooltip && !disabled}
     <div
       bind:this={tooltipElement}
-      class={twMerge('z-1000001 absolute left-0 top-0', clsx(propsClassName))}
+      class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClassName))}
       role="tooltip"
       transition:fade={{ duration: defaultTransitionDurationMs }}
     >

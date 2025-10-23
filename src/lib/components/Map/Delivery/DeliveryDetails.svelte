@@ -184,7 +184,7 @@
                   <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
                 {/each}
               </div>
-              <div class="w-21 whitespace-nowrap text-right">
+              <div class="w-21 text-right whitespace-nowrap">
                 {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
                   >{:else}{getInventoryAmount(
                     item,
@@ -211,7 +211,7 @@
                   <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
                 {/each}
               </div>
-              <div class="w-21 whitespace-nowrap text-right">
+              <div class="w-21 text-right whitespace-nowrap">
                 {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
                   >{:else}{getInventoryAmount(
                     item,

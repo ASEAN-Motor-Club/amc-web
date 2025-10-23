@@ -41,7 +41,7 @@
 
 {#if show}
   <div
-    class="z-100000 pointer-events-none fixed top-0 flex w-full select-none"
+    class="pointer-events-none fixed top-0 z-100000 flex w-full select-none"
     transition:fade={{
       duration: defaultTransitionDurationMs,
     }}

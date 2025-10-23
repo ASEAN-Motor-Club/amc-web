@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex w-full flex-col items-center justify-center p-8 lg:p-16 xl:h-full">
-  <h3 class="pb-5 pt-8 font-semibold">
+  <h3 class="pt-8 pb-5 font-semibold">
     {msg['championship.starting_from']({
       date: format(startDate, msg['format.dateFull']()),
     })}

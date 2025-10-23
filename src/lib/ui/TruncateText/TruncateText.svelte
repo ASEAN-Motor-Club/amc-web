@@ -68,6 +68,6 @@
   position="top"
   disabled={!isOverflowing}
   offset={3}
-  class="dark:shadow-white/3 px-1.75 backdrop-blur-xs rounded-sm bg-white/90 py-0.5 text-sm shadow-sm dark:bg-black/90"
+  class="rounded-sm bg-white/90 px-1.75 py-0.5 text-sm shadow-sm backdrop-blur-xs dark:bg-black/90 dark:shadow-white/3"
   >{text}</Tooltip
 >

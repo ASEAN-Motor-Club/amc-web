@@ -61,18 +61,18 @@
 </script>
 
 <Modal open={!!event} {onClose}>
-  <Card class="w-150 flex max-h-full max-w-full flex-col p-0">
+  <Card class="flex max-h-full w-150 max-w-full flex-col p-0">
     <h1 class="p-5 text-2xl font-bold tracking-tight">
       {event
         ? msg['championship.event.event_results']({ event: event.name })
         : msg['championship.event.results']()}
     </h1>
     <div
-      class="min-h-0 flex-1 overflow-y-auto border-b border-t border-neutral-500/10 bg-neutral-500/5"
+      class="min-h-0 flex-1 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5"
     >
       <div
         class={[
-          'aspect-9/16 md:aspect-1 flex w-full flex-col overflow-y-hidden',
+          'md:aspect-1 flex aspect-9/16 w-full flex-col overflow-y-hidden',
           !loading && results.length === 0 && 'items-center justify-center',
           !loading && results.length > 0 && '!overflow-y-auto',
         ]}

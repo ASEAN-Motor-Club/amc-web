@@ -38,21 +38,21 @@
         playsinline
       >
       </video>
-      <div class="z-1 absolute h-full w-full bg-black/50"></div>
-      <div class="max-w-340 z-10 flex h-full w-full flex-col justify-center px-8 py-16">
+      <div class="absolute z-1 h-full w-full bg-black/50"></div>
+      <div class="z-10 flex h-full w-full max-w-340 flex-col justify-center px-8 py-16">
         <div class="dark mb-4 flex justify-center sm:justify-start">
           <Button
             variant="outlined"
             href="/map"
             size="xs"
             round
-            class="backdrop-blur-xs h-6 px-2.5 font-medium"
+            class="h-6 px-2.5 font-medium backdrop-blur-xs"
             color="success"
             tag="a"
           >
             <div class="relative mr-2 flex size-2">
               <div
-                class="opacity-1 absolute size-full rounded-full bg-[currentColor] motion-safe:animate-ping"
+                class="absolute size-full rounded-full bg-[currentColor] opacity-1 motion-safe:animate-ping"
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
@@ -60,11 +60,11 @@
           </Button>
         </div>
         <h1
-          class="z-100 text-text-dark font-sans-alt pointer-events-none mb-4 select-none text-center text-7xl sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
+          class="text-text-dark font-sans-alt pointer-events-none z-100 mb-4 text-center text-7xl select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
           {msg.site_name()}
         </h1>
-        <div class="sm:mb-15 mb-6 flex flex-wrap justify-center gap-1.5 sm:justify-start">
+        <div class="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-15 sm:justify-start">
           {#each features as feature (feature)}
             <Button
               variant="contained"
@@ -109,7 +109,7 @@
     </div>
   </div>
   <div
-    class="max-w-340 -mt-16 grid min-h-svh w-full items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
+    class="-mt-16 grid min-h-svh w-full max-w-340 items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
       <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">
@@ -127,7 +127,7 @@
         allowtransparency
         frameborder="0"
         sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-        class="w-75 h-[50dvh] max-w-full"
+        class="h-[50dvh] w-75 max-w-full"
         loading="lazy"
       ></iframe>
     </div>

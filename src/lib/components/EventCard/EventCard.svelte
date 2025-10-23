@@ -19,8 +19,8 @@
   const netTime = $derived(time?.net_time ?? 0);
 </script>
 
-<Card class="max-w-120 flex w-full flex-row items-center gap-2" {loading}>
-  <div class="relative flex size-12 flex-none select-none items-center justify-center">
+<Card class="flex w-full max-w-120 flex-row items-center gap-2" {loading}>
+  <div class="relative flex size-12 flex-none items-center justify-center select-none">
     {#if index < 3}
       <div
         class={[
@@ -33,7 +33,7 @@
         ]}
       ></div>
     {/if}
-    <div class={['font-bold', index < 3 && 'top-2.25 text-text-dark absolute text-sm']}>
+    <div class={['font-bold', index < 3 && 'text-text-dark absolute top-2.25 text-sm']}>
       {index + 1}
     </div>
     {#if index < 3}

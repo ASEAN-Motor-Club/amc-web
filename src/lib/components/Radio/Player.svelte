@@ -48,7 +48,7 @@
 </script>
 
 <div
-  class="border-3 border-3 max-w-175 mx-auto flex h-auto w-full flex-col overflow-hidden rounded-lg border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30"
+  class="mx-auto flex h-auto w-full max-w-175 flex-col overflow-hidden rounded-lg border-3 border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30"
 >
   <div
     class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
@@ -58,17 +58,17 @@
 
   <div class="flex flex-1 flex-col bg-[#d2b48c] md:flex-row">
     <div
-      class="aspect-2 md:aspect-1 flex h-full flex-[1_0_auto] items-center justify-center bg-[#6b3410] p-4 [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)]"
+      class="aspect-2 md:aspect-1 flex h-full flex-[1_0_auto] items-center justify-center bg-[#6b3410] [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)] p-4"
     >
       <div
-        class="border-3 bg-background-950 bg-linear-to-b relative aspect-square h-[85%] origin-center overflow-hidden rounded-full border-solid border-[#555] from-[#333] to-[#111] ease-out [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)] before:absolute before:inset-0 before:content-[''] before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)] motion-safe:transition-transform"
+        class="bg-background-950 relative aspect-square h-[85%] origin-center overflow-hidden rounded-full border-3 border-solid border-[#555] bg-linear-to-b from-[#333] to-[#111] [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)] ease-out before:absolute before:inset-0 before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)] before:content-[''] motion-safe:transition-transform"
         style:transform={`rotate(${grillRotate}deg) scale(${grillScale})`}
       ></div>
     </div>
 
     <div class="flex flex-1 flex-col p-4">
       <div
-        class="flex-grow-1 min-h-25 mb-4 flex overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-black/50"
+        class="mb-4 flex min-h-25 flex-grow-1 overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-black/50"
       >
         {#if playerContext.analyser}
           <PlayerWaveform analyser={playerContext.analyser} />

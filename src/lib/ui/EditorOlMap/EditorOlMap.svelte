@@ -219,7 +219,7 @@
       const point = points[i];
       const reprojectedPoint = reProjectPoint([point.coord.x, point.coord.y]);
 
-      const isSelected = selectedPoint && selectedPoint.index === i;
+      const isSelected = selectedPoint?.index === i;
 
       if (gateMode) {
         const yaw = point.yaw ?? 0;

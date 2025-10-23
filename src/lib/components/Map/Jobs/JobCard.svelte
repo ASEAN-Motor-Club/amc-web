@@ -93,7 +93,7 @@
     {/if}
   </div>
   {#if job?.description}
-    <div class="mb-2 mt-2 text-sm opacity-85">
+    <div class="mt-2 mb-2 text-sm opacity-85">
       {job.description}
     </div>
   {/if}

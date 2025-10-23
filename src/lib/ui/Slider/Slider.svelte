@@ -157,7 +157,7 @@
 >
   <div
     class={[
-      'flex w-full select-none overflow-hidden rounded-full',
+      'flex w-full overflow-hidden rounded-full select-none',
       {
         'bg-primary-300': color === 'primary',
         'bg-secondary-300': color === 'secondary',

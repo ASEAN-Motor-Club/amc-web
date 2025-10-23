@@ -184,7 +184,7 @@
     class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24 md:p-20 md:pt-36"
     bind:this={headerTrigger}
   >
-    <div class="max-w-250 flex-shrink-1 aspect-ratio-1818/1162 min-h-0 w-full">
+    <div class="aspect-ratio-1818/1162 min-h-0 w-full max-w-250 flex-shrink-1">
       <img
         srcset={`${poster455} 455w, ${poster909} 909w, ${poster1364} 1364w, ${poster1818} 1818w, ${poster2727} 2727w, ${poster3636} 3636w`}
         alt="ASEAN Poster"
@@ -194,7 +194,7 @@
       />
     </div>
     <div class="contents" bind:this={textContainer}>
-      <h3 class="pb-5 pt-8 font-semibold">
+      <h3 class="pt-8 pb-5 font-semibold">
         {msg['championship.starting_from']({
           date: format(startDate, msg['format.dateFull']()),
         })}

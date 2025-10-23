@@ -184,9 +184,9 @@
 {/snippet}
 
 <nav
-  class="bg-background-100 dark:bg-background-900 ring-black/1 z-100000 fixed flex h-16 w-full select-none items-center px-4 shadow-black/10 ring"
+  class="bg-background-100 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-black/10 ring-black/1 select-none"
 >
-  <Button class="-ml-2 mr-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
+  <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">

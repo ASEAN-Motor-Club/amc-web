@@ -14,7 +14,7 @@
 </script>
 
 <div
-  class="sm:min-w-89 lg:min-w-109 xl:min-w-129 h-full duration-150"
+  class="h-full duration-150 sm:min-w-89 lg:min-w-109 xl:min-w-129"
   transition:fade={{ duration: defaultTransitionDurationMs }}
 >
   {@render children()}

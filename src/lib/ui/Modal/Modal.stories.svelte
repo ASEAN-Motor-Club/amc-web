@@ -43,9 +43,9 @@
 <Story name="MsgModal" asChild>
   <Button onClick={() => (modalOpen = true)}>Open Modal</Button>
   <Modal open={modalOpen} onClose={() => (modalOpen = false)}>
-    <Card class="max-w-120 flex flex-col p-5">
+    <Card class="flex max-w-120 flex-col p-5">
       <h2 class="pb-4.5 text-2xl font-bold tracking-tight">Title</h2>
-      <p class="text-text/80 dark:text-text-dark/80 whitespace-pre-line pb-6 text-sm">
+      <p class="text-text/80 dark:text-text-dark/80 pb-6 text-sm whitespace-pre-line">
         {msg}
       </p>
       <div class="-mx-3 -my-3 flex justify-end gap-2">

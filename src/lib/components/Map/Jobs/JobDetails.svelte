@@ -110,10 +110,10 @@
 
 {#if job || loading}
   <div class={['flex h-full flex-col gap-8 overflow-y-auto p-8', fullScreen && 'lg:flex-row']}>
-    <div class={['flex flex-1 flex-col', fullScreen && 'lg:overflow-y-auto lg:overflow-x-hidden']}>
+    <div class={['flex flex-1 flex-col', fullScreen && 'lg:overflow-x-hidden lg:overflow-y-auto']}>
       <CommonHead class="w-full !p-0 !pb-8">
         {#if loading}
-          <TextSkeleton class="max-w-150 w-full" />
+          <TextSkeleton class="w-full max-w-150" />
         {:else}
           {job?.name ?? ''}
         {/if}
@@ -129,7 +129,7 @@
       </div>
       <div class="mb-8 font-semibold">
         {#if loading}
-          <TextSkeleton class="max-w-50 w-full" />
+          <TextSkeleton class="w-full max-w-50" />
         {:else}
           {timeLeftText}
         {/if}
@@ -225,10 +225,10 @@
               <div>
                 {msg['jobs.table.name']()}
               </div>
-              <div class="whitespace-nowrap text-right">
+              <div class="text-right whitespace-nowrap">
                 {msg['jobs.table.amount']()}
               </div>
-              <div class="whitespace-nowrap text-right">
+              <div class="text-right whitespace-nowrap">
                 {msg['jobs.table.reward_cut']()}
               </div>
             </div>
@@ -254,10 +254,10 @@
               <div>
                 {msg['jobs.table.name']()}
               </div>
-              <div class="whitespace-nowrap text-right">
+              <div class="text-right whitespace-nowrap">
                 {msg['jobs.table.amount']()}
               </div>
-              <div class="whitespace-nowrap text-right">
+              <div class="text-right whitespace-nowrap">
                 {msg['jobs.table.reward_cut']()}
               </div>
             </div>
@@ -266,12 +266,12 @@
                 class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
               >
                 <TruncateText text={contrib.name} />
-                <div class="whitespace-nowrap text-right">
+                <div class="text-right whitespace-nowrap">
                   {contrib.quantity} ({Math.round(
                     (contrib.quantity / (job?.quantity_requested ?? 1)) * 100,
                   )}%)
                 </div>
-                <div class="whitespace-nowrap text-right">
+                <div class="text-right whitespace-nowrap">
                   ${Math.floor(rewardPerQuantity * contrib.quantity)}
                 </div>
               </div>

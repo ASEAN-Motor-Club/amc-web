@@ -232,7 +232,7 @@
 <svelte:element
   this={props.tag ?? 'button'}
   class={twMerge(
-    'inline-flex flex-none cursor-pointer select-none items-center justify-center whitespace-nowrap font-semibold leading-none transition-colors',
+    'inline-flex flex-none cursor-pointer items-center justify-center leading-none font-semibold whitespace-nowrap transition-colors select-none',
     variantClassName,
     sizeClasses,
     icon && 'aspect-square p-0',
@@ -252,10 +252,10 @@
       class={[
         'inline-flex',
         {
-          '-ml-0.25 mr-0.5': size === 'xs',
-          '-ml-0.5 mr-1': size === 'sm',
-          '-ml-1 mr-2': size === 'md',
-          '-ml-2 mr-2.5': size === 'lg',
+          'mr-0.5 -ml-0.25': size === 'xs',
+          'mr-1 -ml-0.5': size === 'sm',
+          'mr-2 -ml-1': size === 'md',
+          'mr-2.5 -ml-2': size === 'lg',
         },
       ]}
     >

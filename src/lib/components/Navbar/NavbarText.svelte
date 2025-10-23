@@ -28,10 +28,10 @@
 </script>
 
 <div class="relative flex items-center">
-  <span class="invisible font-bold leading-none">{label}</span>
+  <span class="invisible leading-none font-bold">{label}</span>
   <span
     class={twMerge(
-      'absolute left-0 whitespace-nowrap leading-none motion-safe:transition-all motion-reduce:transition-colors',
+      'absolute left-0 leading-none whitespace-nowrap motion-safe:transition-all motion-reduce:transition-colors',
       pathMatch(href, external, exact) ? 'font-bold' : 'text-text/80 dark:text-text-dark/80',
       clsx(textClass),
     )}>{label}</span

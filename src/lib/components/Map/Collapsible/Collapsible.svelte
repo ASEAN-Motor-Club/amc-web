@@ -109,8 +109,8 @@
 {/if}
 <div
   class={[
-    'bg-background-300 dark:bg-background-950 z-1 absolute bottom-0  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
-    isSm.current && showFullAnimate && '!sm:absolute right-0 top-0',
+    'bg-background-300 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
+    isSm.current && showFullAnimate && '!sm:absolute top-0 right-0',
   ]}
 >
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
@@ -182,7 +182,7 @@
         }}
       >
         <CollapsibleButton
-          class="sm:h-13 h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/20 hover:text-yellow-700 active:bg-yellow-800/20 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          class="h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/20 hover:text-yellow-700 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
           text={msg['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}

@@ -892,11 +892,11 @@
     onMoveStart={handleOnMoveStart}
   />
   <div
-    class="pointer-events-none absolute left-0 top-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
+    class="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
   >
     <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
     <Card
-      class="!shadow-white/3 media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !ring-white/5 backdrop-blur-sm"
+      class="media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
     >
       <h2 class="text-text-dark mb-1 text-xs">
         {msg['map.point_of_interests']()}

@@ -16,7 +16,7 @@
 
 <span
   class={twMerge(
-    `inline-block animate-pulse select-none rounded-md bg-neutral-500/20 text-transparent`,
+    `inline-block animate-pulse rounded-md bg-neutral-500/20 text-transparent select-none`,
     clsx(propsClassName),
   )}
   >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br />{/if}{/each}.</span

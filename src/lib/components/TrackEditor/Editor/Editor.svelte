@@ -177,11 +177,11 @@
       </Button>
     </div>
   </Card>
-  <div class="md:w-70 flex flex-row justify-between gap-4 md:flex-col">
+  <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">
       {#if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
-          <div class="whitespace-nowrap font-medium">
+          <div class="font-medium whitespace-nowrap">
             {msg['track_editor.editor.selected_point']({
               pointNumber: selectedPointIndex + 1,
             })}

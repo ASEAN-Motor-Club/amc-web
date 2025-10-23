@@ -43,14 +43,14 @@
     'rounded-md p-4',
     loading
       ? 'relative bg-transparent'
-      : 'bg-background-200 dark:bg-background-900 dark:shadow-white/3 shadow-md ring ring-black/5 dark:ring-white/5',
+      : 'bg-background-200 dark:bg-background-900 shadow-md ring ring-black/5 dark:shadow-white/3 dark:ring-white/5',
     clsx(className),
   )}
   {...othersCardProps}
 >
   {#if loading}
     <div
-      class="absolute left-0 top-0 h-full w-full animate-pulse rounded-md bg-neutral-500/20"
+      class="absolute top-0 left-0 h-full w-full animate-pulse rounded-md bg-neutral-500/20"
     ></div>
   {/if}
   <div class={['contents', loading && 'invisible']}>

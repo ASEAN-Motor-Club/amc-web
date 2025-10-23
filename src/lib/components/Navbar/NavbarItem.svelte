@@ -88,7 +88,7 @@
       <div
         class={mobile
           ? 'contents'
-          : 'bg-background-100 dark:bg-background-900 absolute left-0 top-full z-10 -mx-3 box-content w-max min-w-full px-3 shadow-black/10'}
+          : 'bg-background-100 dark:bg-background-900 absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full px-3 shadow-black/10'}
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}

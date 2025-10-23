@@ -175,7 +175,7 @@
 <div class="relative flex flex-none items-center">
   <input
     class={twMerge(
-      'flex w-full items-center outline-none transition-colors',
+      'flex w-full items-center transition-colors outline-none',
       variantClasses,
       sizeClasses,
       disabled && 'pointer-events-none opacity-50',
