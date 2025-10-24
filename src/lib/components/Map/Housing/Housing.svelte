@@ -84,7 +84,12 @@
 
 <div class="flex h-full flex-col">
   <CommonHead>{msg['housing.title']()}</CommonHead>
-  <div class={['flex flex-col justify-between gap-2 px-8 pb-8', fullScreen && 'sm:flex-row']}>
+  <div
+    class={[
+      'flex flex-col justify-between gap-2 border-b border-neutral-500/20 px-8 pb-8',
+      fullScreen && 'sm:flex-row',
+    ]}
+  >
     <TextInput
       value={searchValue}
       placeholder={msg['housing.search_placeholder']()}
@@ -111,7 +116,7 @@
     {#if sortedHouses.length > 0}
       <div
         class={[
-          'grid justify-items-stretch gap-8 px-8 pb-8',
+          'grid justify-items-stretch gap-8 p-8',
           fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))]',
         ]}
       >

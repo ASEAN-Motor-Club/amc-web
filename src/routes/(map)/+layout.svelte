@@ -14,7 +14,7 @@
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
-  import { onDestroy, onMount } from 'svelte';
+  import { getAbortSignal, onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
 
   const { children } = $props();
@@ -55,37 +55,27 @@
 
   const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
 
-  let stopPlayerDataPolling: (() => void) | undefined = undefined;
-
   let playerData: PlayerData[] = $state([]);
   let playerDataLoading = $state(true);
   let playerLayerDataEnabled = $state(true);
-
-  const getPlayerRealtimePositionCall = () => {
-    return getPlayerRealtimePosition((data) => {
-      const result = Object.entries(data).map(([name, coord]) => ({
-        geometry: reProjectPoint([coord.x, coord.y]),
-        name,
-        coord,
-        pointType: PointType.Player as const,
-        vehicleKey: coord.vehicle_key,
-        guid: coord.unique_id,
-      }));
-      playerData = result;
-      playerDataLoading = false;
-    });
-  };
 
   const showMap = $derived(!(showFull || (!isSm.current && validOpenCollapsible)));
 
   $effect(() => {
     if ((showMap && playerLayerDataEnabled) || openCollapsible === 'players') {
-      if (!stopPlayerDataPolling) {
-        stopPlayerDataPolling = getPlayerRealtimePositionCall();
-      }
+      getPlayerRealtimePosition((data) => {
+        const result = Object.entries(data).map(([name, coord]) => ({
+          geometry: reProjectPoint([coord.x, coord.y]),
+          name,
+          coord,
+          pointType: PointType.Player as const,
+          vehicleKey: coord.vehicle_key,
+          guid: coord.unique_id,
+        }));
+        playerData = result;
+        playerDataLoading = false;
+      }, getAbortSignal());
     } else {
-      stopPlayerDataPolling?.();
-      stopPlayerDataPolling = undefined;
       playerData = [];
     }
   });
@@ -100,10 +90,8 @@
   let houseDataLoading = $state(true);
 
   $effect(() => {
-    const abortController = new AbortController();
-
     if (!houseData && (showMap || openCollapsible === 'housing')) {
-      getHousingData(abortController.signal)
+      getHousingData(getAbortSignal())
         .then((data) => {
           houseData = data;
           houseDataLoading = false;
@@ -112,13 +100,7 @@
           console.error('Error fetching housing data:', error);
         });
     }
-
-    return () => {
-      abortController.abort();
-    };
   });
-
-  let stopJobsDataPolling: (() => void) | undefined = undefined;
 
   let jobsData: DeliveryJob[] = $state([]);
   let jobsCache: SvelteMap<number, DeliveryJob> = new SvelteMap<number, DeliveryJob>();
@@ -126,30 +108,20 @@
 
   $effect(() => {
     if (showMap || openCollapsible === 'jobs') {
-      if (!stopJobsDataPolling) {
-        stopJobsDataPolling = startDeliveryJobsPolling((jobs) => {
-          jobsData = jobs.map((job) => ({
-            ...job,
-            cargos: job.cargos.map((cargo) => ({
-              ...cargo,
-              key: cargo.key.replace('T::', '_T') as DeliveryCargo,
-            })),
-          }));
-          for (const job of jobsData) {
-            jobsCache.set(job.id, job);
-          }
-          jobsDataLoading = false;
-        });
-      }
-    } else {
-      stopJobsDataPolling?.();
-      stopJobsDataPolling = undefined;
+      startDeliveryJobsPolling((jobs) => {
+        jobsData = jobs.map((job) => ({
+          ...job,
+          cargos: job.cargos.map((cargo) => ({
+            ...cargo,
+            key: cargo.key.replace('T::', '_T') as DeliveryCargo,
+          })),
+        }));
+        for (const job of jobsData) {
+          jobsCache.set(job.id, job);
+        }
+        jobsDataLoading = false;
+      }, getAbortSignal());
     }
-  });
-
-  onDestroy(() => {
-    stopPlayerDataPolling?.();
-    stopJobsDataPolling?.();
   });
 </script>
 

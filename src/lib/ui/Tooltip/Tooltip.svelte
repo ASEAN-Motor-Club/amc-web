@@ -47,7 +47,7 @@
     children,
     position = 'top',
     portal = true,
-    class: propsClassName,
+    class: propsClass,
     offset = 8,
     disabled = false,
   }: TooltipProps = $props();
@@ -122,15 +122,15 @@
     // Horizontal boundary checks
     if (left < VIEWPORT_PADDING) {
       left = VIEWPORT_PADDING;
-    } else if (left + Number(tooltipRect.width) > window.innerWidth - VIEWPORT_PADDING) {
-      left = window.innerWidth - Number(tooltipRect.width) - VIEWPORT_PADDING;
+    } else if (left + tooltipRect.width > window.innerWidth - VIEWPORT_PADDING) {
+      left = window.innerWidth - tooltipRect.width - VIEWPORT_PADDING;
     }
 
     // Vertical boundary checks
     if (top < VIEWPORT_PADDING) {
       top = VIEWPORT_PADDING;
-    } else if (top + Number(tooltipRect.height) > window.innerHeight - VIEWPORT_PADDING) {
-      top = window.innerHeight - Number(tooltipRect.height) - VIEWPORT_PADDING;
+    } else if (top + tooltipRect.height > window.innerHeight - VIEWPORT_PADDING) {
+      top = window.innerHeight - tooltipRect.height - VIEWPORT_PADDING;
     }
 
     tooltipElement.style.top = `${top}px`;
@@ -178,7 +178,7 @@
   {#if showTooltip && !disabled}
     <div
       bind:this={tooltipElement}
-      class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClassName))}
+      class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClass))}
       role="tooltip"
       transition:fade={{ duration: defaultTransitionDurationMs }}
     >

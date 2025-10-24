@@ -16,15 +16,15 @@
     class?: ClassValue;
   }
 
-  const { pathMatch = false, class: propsClassName }: NavbarIconProps = $props();
+  const { pathMatch = false, class: propsClass }: NavbarIconProps = $props();
 
-  const baseClasses = $derived(
+  const baseClass = $derived(
     twMerge(
       'transition-colors',
       !pathMatch && 'text-text/80 dark:text-text-dark/80',
-      clsx(propsClassName),
+      clsx(propsClass),
     ),
   );
 </script>
 
-<Icon class={baseClasses} />
+<Icon class={baseClass} />

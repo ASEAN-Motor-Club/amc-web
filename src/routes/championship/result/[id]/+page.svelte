@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { getAbortSignal, onMount } from 'svelte';
   import { page } from '$app/state';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
@@ -18,8 +18,7 @@
   // records/b8724385ffc98c9a5ea86fb12771d8666db39c2469bdc9602336fae6b97c8cd4/laps/0
   let loading = $state<boolean>(true);
 
-  onMount(() => {
-    const abortController = new AbortController();
+  onMount(async () => {
     if (!page.params.id) {
       showModal({
         title: msg['championship.results.cannot_load.title'](),
@@ -31,36 +30,25 @@
       return;
     }
 
-    const eventDataPromise = getEvent(page.params.id, abortController.signal).then(
-      (eventDataRes) => {
-        eventData = eventDataRes;
-      },
-    );
+    try {
+      const [eventDataRes, eventResultsRes] = await Promise.all([
+        getEvent(page.params.id, getAbortSignal()),
+        getEventResult(page.params.id, getAbortSignal()),
+      ]);
 
-    const eventResultPromise = getEventResult(page.params.id, abortController.signal).then(
-      (eventResultsRes) => {
-        eventResults = eventResultsRes.filter((result) => result.section_index !== -1);
-      },
-    );
-
-    Promise.all([eventDataPromise, eventResultPromise])
-      .then(() => {
-        loading = false;
-      })
-      .catch((error: unknown) => {
-        console.error('Error fetching event data:', error);
-        showModal({
-          title: msg['championship.results.cannot_load.title'](),
-          message: msg['championship.results.cannot_load.desc'](),
-          cancelAction: () => {
-            goto('/championship');
-          },
-        });
+      eventData = eventDataRes;
+      eventResults = eventResultsRes.filter((result) => result.section_index !== -1);
+      loading = false;
+    } catch (error: unknown) {
+      console.error('Error fetching event data:', error);
+      showModal({
+        title: msg['championship.results.cannot_load.title'](),
+        message: msg['championship.results.cannot_load.desc'](),
+        cancelAction: () => {
+          goto('/championship');
+        },
       });
-
-    return () => {
-      abortController.abort();
-    };
+    }
   });
 
   const loadingOrNoData = $derived(loading || !eventData);

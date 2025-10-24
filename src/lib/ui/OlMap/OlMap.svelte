@@ -65,7 +65,7 @@
 
   let target: HTMLDivElement;
   const {
-    class: propsClassName,
+    class: propsClass,
     zoomClass,
     zoomInClass,
     zoomOutClass,
@@ -202,4 +202,4 @@
   });
 </script>
 
-<div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClassName]} bind:this={target}></div>
+<div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClass]} bind:this={target}></div>

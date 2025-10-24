@@ -39,14 +39,15 @@ jobs:
 
       - name: 🎭 Install Playwright Browsers
         run: pnpm exec playwright install chromium --only-shell
+
       - name: 🌐 Generate i18n
-        run: pnpm run paraglide:compile
+        run: pnpm paraglide:compile
 
       - name: 🎨 Lint code
-        run: pnpm run lint
+        run: pnpm lint
 
       - name: 🔍 Type check
-        run: pnpm run check
+        run: pnpm check
 
       - name: 🧪 Run tests
-        run: pnpm run test
+        run: pnpm test

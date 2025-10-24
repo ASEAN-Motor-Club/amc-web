@@ -45,14 +45,14 @@
   </picture>
   <div class="pointer-events-none fixed inset-0 -z-1 bg-black/70 dark:bg-black/90"></div>
 
-  <CommonHead class="text-text-dark justify-center">{msg['radio.title']()}</CommonHead>
+  <CommonHead class="text-text-dark text-center">{msg['radio.title']()}</CommonHead>
 
   <div class="relative min-h-screen overflow-hidden pb-8">
     <div class="relative z-10 mx-auto w-full px-3">
       <Player />
     </div>
     <div class="px-3">
-      <Card class="mx-auto mt-8 max-w-175 p-6 !ring-white/20">
+      <Card class="mx-auto mt-8 max-w-175 p-8 !ring-white/20">
         <div class="-mb-[1.25em]">
           <MarkdownText text={msg['radio_guide.content_markdown']()} noSanitize />
         </div>

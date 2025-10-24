@@ -15,6 +15,10 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { deliveryPoints } from '$lib/data/deliveryPoint';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import Table from '$lib/ui/Table/Table.svelte';
+  import TableHead from '$lib/ui/Table/TableHead.svelte';
+  import TableRow from '$lib/ui/Table/TableRow.svelte';
+  import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
 
   interface Props {
     id: string;
@@ -210,6 +214,7 @@
         {/if}
       </div>
     </div>
+
     <div class={['flex flex-1', fullScreen && 'lg:max-w-100']}>
       <Card
         class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
@@ -217,40 +222,19 @@
         <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
           {msg['jobs.contributors']()}
         </div>
-        <div class={['flex flex-1 flex-col', loading ? 'overflow-y-hidden' : 'overflow-y-auto']}>
-          {#if loading}
-            <div
-              class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
-            >
-              <div>
-                {msg['jobs.table.name']()}
-              </div>
-              <div class="text-right whitespace-nowrap">
-                {msg['jobs.table.amount']()}
-              </div>
-              <div class="text-right whitespace-nowrap">
-                {msg['jobs.table.reward_cut']()}
-              </div>
-            </div>
-            {#each Array(100) as _, i (i)}
-              <div
-                class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
-              >
-                <TextSkeleton />
-                <TextSkeleton />
-                <TextSkeleton />
-              </div>
-            {/each}
-          {:else if contributors.length === 0}
-            <div
-              class="text-text/60 dark:text-text-dark/60 flex flex-1 items-center justify-center px-4 py-12 text-center text-sm italic"
-            >
+        <Table
+          gridClass="grid-cols-[6fr_4rem_6rem]"
+          skeletonCount={100}
+          {loading}
+          empty={contributors.length === 0}
+        >
+          {#snippet emptyState()}
+            <TableEmptyState class="py-12">
               {censored.c ? msg['jobs.no_contributors_c']() : msg['jobs.no_contributors']()}
-            </div>
-          {:else}
-            <div
-              class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-neutral-500/10 bg-neutral-500/5 px-4 py-2 text-sm font-semibold last:border-0"
-            >
+            </TableEmptyState>
+          {/snippet}
+          {#snippet head()}
+            <TableHead>
               <div>
                 {msg['jobs.table.name']()}
               </div>
@@ -260,24 +244,23 @@
               <div class="text-right whitespace-nowrap">
                 {msg['jobs.table.reward_cut']()}
               </div>
-            </div>
-            {#each contributors as contrib (contrib.id)}
-              <div
-                class="grid grid-cols-[6fr_4rem_6rem] gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
-              >
-                <TruncateText text={contrib.name} />
-                <div class="text-right whitespace-nowrap">
-                  {contrib.quantity} ({Math.round(
-                    (contrib.quantity / (job?.quantity_requested ?? 1)) * 100,
-                  )}%)
-                </div>
-                <div class="text-right whitespace-nowrap">
-                  ${Math.floor(rewardPerQuantity * contrib.quantity)}
-                </div>
+            </TableHead>
+          {/snippet}
+
+          {#each contributors as contrib (contrib.id)}
+            <TableRow>
+              <TruncateText text={contrib.name} />
+              <div class="text-right whitespace-nowrap">
+                {contrib.quantity} ({Math.round(
+                  (contrib.quantity / (job?.quantity_requested ?? 1)) * 100,
+                )}%)
               </div>
-            {/each}
-          {/if}
-        </div>
+              <div class="text-right whitespace-nowrap">
+                ${Math.floor(rewardPerQuantity * contrib.quantity)}
+              </div>
+            </TableRow>
+          {/each}
+        </Table>
       </Card>
     </div>
   </div>

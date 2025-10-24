@@ -15,12 +15,14 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{censored.c ? msg['jobs.title_c']() : msg['jobs.title']()}</CommonHead>
+  <CommonHead class="border-b border-neutral-500/20"
+    >{censored.c ? msg['jobs.title_c']() : msg['jobs.title']()}</CommonHead
+  >
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if loading || jobsData.length > 0}
       <div
         class={[
-          'grid justify-items-stretch gap-8 px-8 pb-8',
+          'grid justify-items-stretch gap-8 p-8',
           fullScreen && 'sm:grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_100),_1fr))]',
         ]}
       >

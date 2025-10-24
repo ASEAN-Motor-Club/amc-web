@@ -112,7 +112,7 @@
     value,
     placeholder: propsPlaceholder,
     name,
-    class: propsClassname,
+    class: propsClass,
     error = false,
     variant = 'outlined',
     size = 'md',
@@ -134,15 +134,15 @@
 
   const id = $derived(propsId ?? contextId ?? '');
 
-  const variantClasses = $derived.by(() => {
+  const variantClass = $derived.by(() => {
     switch (variant) {
       case 'contained': {
-        const baseClasses =
+        const baseClass =
           'focus:outline-solid focus:outline-1 focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10';
         if (error) {
-          return `${baseClasses} placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800`;
+          return `${baseClass} placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800`;
         } else {
-          return `${baseClasses} bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20`;
+          return `${baseClass} bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20`;
         }
       }
       case 'outlined': {
@@ -158,7 +158,7 @@
     }
   });
 
-  const sizeClasses = $derived.by(() => {
+  const sizeClass = $derived.by(() => {
     switch (size) {
       case 'sm':
         return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-sm px-2'}`;
@@ -176,11 +176,11 @@
   <input
     class={twMerge(
       'flex w-full items-center transition-colors outline-none',
-      variantClasses,
-      sizeClasses,
+      variantClass,
+      sizeClass,
       disabled && 'pointer-events-none opacity-50',
       onClear && 'pr-10',
-      clsx(propsClassname),
+      clsx(propsClass),
     )}
     onchange={onChange}
     oninput={onInput}

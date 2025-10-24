@@ -6,7 +6,7 @@
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
   import { m as msg } from '$lib/paraglide/messages';
-  import { onMount, onDestroy, tick } from 'svelte';
+  import { onMount, onDestroy, tick, getAbortSignal, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { getTeams } from '$lib/api/teams';
@@ -27,7 +27,6 @@
   let teamText: HTMLDivElement[] = $state([]);
 
   let scrollContext: gsap.MatchMedia | undefined;
-  let abortController: AbortController = new AbortController();
 
   let teams = $state<Team[]>([]);
 
@@ -36,7 +35,7 @@
   onMount(async () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    teams = await getTeams(abortController.signal);
+    teams = await getTeams(getAbortSignal());
     loading = false;
     await tick();
 
@@ -137,19 +136,19 @@
 
     const initialHash = page.url.hash;
 
-    setTimeout(() => {
-      if (initialHash.startsWith('#team-')) {
-        const teamTag = decodeURIComponent(initialHash.replace('#team-', ''));
-        const teamIndex = teams.findIndex((team) => team.tag === teamTag);
-        if (teamIndex !== -1 && teamTriggers[teamIndex]) {
-          const rect = teamTriggers[teamIndex].getBoundingClientRect();
-          window.scrollTo({
-            top: window.scrollY + rect.top + 1500 / 3,
-            behavior: 'instant',
-          });
-        }
+    await settled();
+
+    if (initialHash.startsWith('#team-')) {
+      const teamTag = decodeURIComponent(initialHash.replace('#team-', ''));
+      const teamIndex = teams.findIndex((team) => team.tag === teamTag);
+      if (teamIndex !== -1 && teamTriggers[teamIndex]) {
+        const rect = teamTriggers[teamIndex].getBoundingClientRect();
+        window.scrollTo({
+          top: window.scrollY + rect.top + 1500 / 3,
+          behavior: 'instant',
+        });
       }
-    }, 0);
+    }
   });
 
   const onTeamClick = () => {
@@ -164,7 +163,6 @@
 
   onDestroy(() => {
     scrollContext?.revert();
-    abortController.abort();
   });
 
   const title = $derived(

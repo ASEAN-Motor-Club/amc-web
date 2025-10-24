@@ -50,7 +50,7 @@
     onChange,
     value,
     name,
-    class: propsClassname,
+    class: propsClass,
     id: propsId,
     color = 'neutral',
     min,
@@ -123,7 +123,7 @@
 
   const percent = $derived(((valueLocal - min) / (max - min)) * 100);
 
-  const containerSizeClasses = $derived.by(() => {
+  const containerSizeClass = $derived.by(() => {
     switch (size) {
       case 'sm':
         return 'h-4 min-h-4';
@@ -141,11 +141,7 @@
 />
 
 <div
-  class={twMerge(
-    'relative flex cursor-pointer items-center',
-    containerSizeClasses,
-    clsx(propsClassname),
-  )}
+  class={twMerge('relative flex cursor-pointer items-center', containerSizeClass, clsx(propsClass))}
   onmousedown={handleSliderMouseDown}
   ontouchstart={handleSliderMouseDown}
   bind:this={slider}

@@ -43,7 +43,7 @@
     onClose,
     portal = true,
     portalTarget = 'body',
-    class: propsClassName,
+    class: propsClass,
   }: ModalProps = $props();
 
   const id = Math.random().toString(36).substring(2, 15);
@@ -83,7 +83,7 @@
     <div
       class={twMerge(
         'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
-        clsx(propsClassName),
+        clsx(propsClass),
       )}
       transition:fade={{
         duration: defaultTransitionDurationMs,

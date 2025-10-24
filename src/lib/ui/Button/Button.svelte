@@ -110,7 +110,7 @@
     variant = 'contained',
     size = 'md',
     onClick,
-    class: propsClassName,
+    class: propsClass,
     round,
     disabled,
     icon = false,
@@ -123,7 +123,7 @@
     getSize: () => size,
   });
 
-  const variantClassName = $derived.by(() => {
+  const variantClass = $derived.by(() => {
     switch (variant) {
       case 'contained': {
         const containedBase = 'text-text-dark';
@@ -213,7 +213,7 @@
     }
   });
 
-  const sizeClasses = $derived.by(() => {
+  const sizeClass = $derived.by(() => {
     switch (size) {
       case 'xs':
         return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1.5'}`;
@@ -233,11 +233,11 @@
   this={props.tag ?? 'button'}
   class={twMerge(
     'inline-flex flex-none cursor-pointer items-center justify-center leading-none font-semibold whitespace-nowrap transition-colors select-none',
-    variantClassName,
-    sizeClasses,
+    variantClass,
+    sizeClass,
     icon && 'aspect-square p-0',
     disabled && 'pointer-events-none opacity-50',
-    clsx(propsClassName),
+    clsx(propsClass),
   )}
   onclick={onClick as MouseEventHandler<HTMLDivElement>}
   type={props.tag === 'button' || props.tag === undefined ? (props.type ?? 'button') : undefined}

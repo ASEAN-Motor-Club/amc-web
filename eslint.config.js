@@ -78,6 +78,8 @@ export default defineConfig(
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/prefer-nullish-coalescing': 'off',
+      // it confuse type sometimes
+      '@typescript-eslint/restrict-plus-operands': 'off',
     },
   },
   {

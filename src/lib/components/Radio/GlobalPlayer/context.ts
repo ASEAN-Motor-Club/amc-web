@@ -1,6 +1,5 @@
-import { getContext, setContext } from 'svelte';
+import { createContext } from 'svelte';
 
-const key = {};
 export interface GlobalPlayerContext {
   togglePlay: () => void;
   changeVolume: (value: number) => void;
@@ -10,14 +9,5 @@ export interface GlobalPlayerContext {
   readonly audioContext: AudioContext | null;
 }
 
-export function setGlobalPlayerContext(player: GlobalPlayerContext) {
-  setContext(key, player);
-}
-
-export function getGlobalPlayerContext() {
-  const context = getContext(key);
-  if (context === undefined) {
-    throw new Error('GlobalPlayer context not found. Make sure to set it before using.');
-  }
-  return context as GlobalPlayerContext;
-}
+const [getGlobalPlayerContext, setGlobalPlayerContext] = createContext<GlobalPlayerContext>();
+export { getGlobalPlayerContext, setGlobalPlayerContext };

@@ -24,13 +24,7 @@
   }
   // @unocss-skip-end
 
-  const {
-    children,
-    text,
-    class: propsClassName,
-    tag = 'span',
-    extra,
-  }: TruncateTextProps = $props();
+  const { children, text, class: propsClass, tag = 'span', extra }: TruncateTextProps = $props();
 
   let containerElement: HTMLSpanElement | undefined = $state(undefined);
 
@@ -54,16 +48,17 @@
     };
   });
 
-  const baseClasses = 'inline-block truncate max-w-full';
+  const baseClass = 'inline-block truncate max-w-full';
 </script>
 
 <svelte:element
   this={tag}
   bind:this={containerElement}
-  class={twMerge(baseClasses, clsx(propsClassName))}
+  class={twMerge(baseClass, clsx(propsClass))}
   {...extra}
   >{#if children}{@render children()}{:else}{text}{/if}</svelte:element
-><Tooltip
+>
+<Tooltip
   anchor={containerElement}
   position="top"
   disabled={!isOverflowing}

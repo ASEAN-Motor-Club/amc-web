@@ -2,7 +2,7 @@
   import type { ClassValue } from 'svelte/elements';
 
   // @unocss-skip-start
-  interface HighlightTextProps {
+  export interface HighlightTextProps {
     text: string;
     highlight: string;
     caseInSensitive?: boolean;

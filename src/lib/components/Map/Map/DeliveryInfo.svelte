@@ -8,7 +8,7 @@
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
   import { startDeliveryPointPolling } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
-  import { onDestroy, untrack } from 'svelte';
+  import { getAbortSignal, untrack } from 'svelte';
   import { debounce } from 'lodash-es';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
@@ -40,18 +40,18 @@
 
   let guid = $derived(hoverInfo.info.guid);
 
-  let stopPolling: (() => void) | undefined;
-
-  const debouncedGetInfo = debounce((guid: string) => {
-    stopPolling?.();
-
-    stopPolling = startDeliveryPointPolling(guid, (info) => {
-      if (info) {
-        deliveryInfoCaches.set(guid, info);
-      }
-      deliveryPointInfo = info;
-      deliveryPointInfoLoading = false;
-    });
+  const debouncedGetInfo = debounce((guid: string, signal: AbortSignal) => {
+    startDeliveryPointPolling(
+      guid,
+      (info) => {
+        if (info) {
+          deliveryInfoCaches.set(guid, info);
+        }
+        deliveryPointInfo = info;
+        deliveryPointInfoLoading = false;
+      },
+      signal,
+    );
   }, 200);
 
   $effect(() => {
@@ -72,17 +72,16 @@
     deliveryPointInfoLoading = true;
     deliveryPointInfo = undefined;
 
-    debouncedGetInfo(guid);
+    debouncedGetInfo(guid, getAbortSignal());
+
+    return () => {
+      debouncedGetInfo.cancel();
+    };
   });
 
   const lastUpdated = $derived.by(() => {
     const curr = new Date();
     return min([deliveryPointInfo?.last_updated ?? curr, curr]);
-  });
-
-  onDestroy(() => {
-    debouncedGetInfo.cancel();
-    stopPolling?.();
   });
 
   const svelteDate = createSvelteDate();

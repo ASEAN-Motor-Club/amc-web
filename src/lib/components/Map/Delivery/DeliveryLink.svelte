@@ -18,7 +18,7 @@
   const {
     fullScreen,
     guid,
-    class: className,
+    class: propsClass,
     wrapperClass,
     truncate,
   }: DeliveryLinkProps = $props();
@@ -34,12 +34,13 @@
     <TruncateText
       tag="a"
       extra={{ href: getLinkHref(fullScreen, DetailsFeatures.Delivery, guid) }}
-      class={[baseClass, className]}
+      class={[baseClass, propsClass]}
       {text}
     />
   {:else}
-    <a class={[baseClass, className]} href={getLinkHref(fullScreen, DetailsFeatures.Delivery, guid)}
-      >{text}</a
+    <a
+      class={[baseClass, propsClass]}
+      href={getLinkHref(fullScreen, DetailsFeatures.Delivery, guid)}>{text}</a
     >
   {/if}
   <Button

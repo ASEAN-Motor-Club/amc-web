@@ -21,7 +21,7 @@
 </script>
 
 <Story name="Default">
-  {#snippet template({ class: className, ...args })}
-    <OlMap {...args} class={['h-screen w-full', className]} />
+  {#snippet template({ class: propsClass, ...args })}
+    <OlMap {...args} class={['h-screen w-full', propsClass]} />
   {/snippet}
 </Story>

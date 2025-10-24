@@ -11,13 +11,13 @@
     lines?: number;
   }
 
-  const { class: propsClassName, lines = 1 }: TextSkeletonProps = $props();
+  const { class: propsClass, lines = 1 }: TextSkeletonProps = $props();
 </script>
 
 <span
   class={twMerge(
     `inline-block animate-pulse rounded-md bg-neutral-500/20 text-transparent select-none`,
-    clsx(propsClassName),
+    clsx(propsClass),
   )}
   >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br />{/if}{/each}.</span
 >

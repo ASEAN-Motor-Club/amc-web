@@ -11,14 +11,14 @@
     class?: ClassValue;
   }
 
-  const { fullScreen, job, showId, idOnly, class: className }: DeliveryLinkProps = $props();
+  const { fullScreen, job, showId, idOnly, class: propsClass }: DeliveryLinkProps = $props();
 </script>
 
 <a
   href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job.id)}
   class={[
     'text-orange-600 hover:text-orange-500 dark:text-orange-500 dark:hover:text-orange-400',
-    className,
+    propsClass,
   ]}
   >{#if idOnly}{job.id}{:else}{showId ? `${job.id}. ` : ''}{job.name}{/if}</a
 >

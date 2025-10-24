@@ -22,6 +22,7 @@
   import { Features, getViewHref } from '../utils';
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
+  import { getAbortSignal } from 'svelte';
 
   interface Props {
     id: string;
@@ -35,16 +36,14 @@
   let deliveryPointInfo = $state<DeliveryPointInfo | undefined>(undefined);
 
   $effect(() => {
-    deliveryPointInfoLoading = true;
-
-    const stopPolling = startDeliveryPointPolling(id, (data) => {
-      deliveryPointInfo = data;
-      deliveryPointInfoLoading = false;
-    });
-
-    return () => {
-      stopPolling();
-    };
+    startDeliveryPointPolling(
+      id,
+      (data) => {
+        deliveryPointInfo = data;
+        deliveryPointInfoLoading = false;
+      },
+      getAbortSignal(),
+    );
   });
 
   const deliveryPoint = $derived(deliveryPointsMap.get(id));

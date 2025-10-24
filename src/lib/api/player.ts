@@ -4,13 +4,16 @@ import { startVisibilityAwareEventSource } from './_api';
 
 export const getPlayerRealtimePosition = (
   callback: (data: PlayerEventData) => void,
-): (() => void) => {
-  return startVisibilityAwareEventSource(
+  abortSignal: AbortSignal,
+) => {
+  startVisibilityAwareEventSource(
     'Player position',
     `${PUBLIC_API_BASE}/api/player_positions/`,
     (data: unknown) => {
       const typedData = data as PlayerEventData;
       callback(typedData);
     },
+    undefined,
+    abortSignal,
   );
 };

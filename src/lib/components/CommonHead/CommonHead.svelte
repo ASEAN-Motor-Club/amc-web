@@ -6,9 +6,9 @@
     children: Snippet;
   }
 
-  const { class: className, children }: Props = $props();
+  const { class: propsClass, children }: Props = $props();
 </script>
 
-<div class={['flex p-8', className]}>
+<div class={['flex p-8', propsClass]}>
   <h1 class="w-full text-5xl font-bold tracking-tight">{@render children()}</h1>
 </div>

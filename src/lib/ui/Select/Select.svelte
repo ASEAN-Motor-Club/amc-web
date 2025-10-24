@@ -85,7 +85,7 @@
     value,
     placeholder: propsPlaceholder,
     name,
-    class: propsClassname,
+    class: propsClass,
     error = false,
     variant = 'outlined',
     size = 'md',
@@ -142,7 +142,7 @@
   const uniqueOpen = $derived(open && activeSelect.a === uid);
 </script>
 
-<div class={twMerge('relative flex w-full items-center', clsx(propsClassname))}>
+<div class={twMerge('relative flex w-full items-center', clsx(propsClass))}>
   <button class="group w-full cursor-pointer" onclick={handleInputClick}>
     <TextInput
       class={twMerge('pointer-events-none w-full pr-10', clsx(inputClass))}

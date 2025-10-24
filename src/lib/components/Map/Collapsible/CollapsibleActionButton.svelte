@@ -13,7 +13,7 @@
     icon: string;
   }
 
-  const { class: className, href, icon, color }: Props = $props();
+  const { class: propsClass, href, icon, color }: Props = $props();
 </script>
 
 <div
@@ -23,7 +23,7 @@
   }}
 >
   <Button
-    class={['size-11 flex-none rounded-none', className]}
+    class={['size-11 flex-none rounded-none', propsClass]}
     icon
     variant="contained-light"
     {color}

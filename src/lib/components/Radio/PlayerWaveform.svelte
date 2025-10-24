@@ -1,7 +1,11 @@
 <script lang="ts">
   import { colorNeutral400 } from '$lib/tw-var';
-  import { onMount } from 'svelte';
+  import { devicePixelRatio } from 'svelte/reactivity/window';
   import { prefersReducedMotion } from 'svelte/motion';
+  import { expoOut } from 'svelte/easing';
+
+  const sampleInterval = 1000 / 30;
+  const antiDecayRate = -2;
 
   interface Props {
     analyser: AnalyserNode;
@@ -11,18 +15,9 @@
 
   let canvasCover: HTMLDivElement;
   let canvas: HTMLCanvasElement;
-  let animationId: number;
 
-  const sampleInterval = 1000 / 30;
-  const antiDecayRate = -2;
-  let lastTime = 0;
-  let lastSampleTime = 0;
-
-  function scaleWave(x: number): number {
-    return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
-  }
-
-  onMount(() => {
+  $effect(() => {
+    const pixelRatio = devicePixelRatio.current || 1;
     const maybeCtx = canvas.getContext('2d');
     if (!maybeCtx) {
       console.error('Failed to get 2D context');
@@ -36,7 +31,7 @@
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
       const { width, height } = entry.contentRect;
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = pixelRatio;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -47,6 +42,9 @@
 
     observer.observe(canvasCover);
 
+    let lastTime = 0;
+    let lastSampleTime = 0;
+    let animationId: number;
     function draw(timestamp: number) {
       animationId = requestAnimationFrame(draw);
 
@@ -79,7 +77,7 @@
       let x = 0;
 
       for (let i = 0; i < prevWaveData.length; i++) {
-        const v = scaleWave(Math.abs(prevWaveData[i])) * Math.sign(prevWaveData[i]);
+        const v = expoOut(Math.abs(prevWaveData[i])) * Math.sign(prevWaveData[i]);
 
         const y = height / 2 + (v * height) / 2;
 

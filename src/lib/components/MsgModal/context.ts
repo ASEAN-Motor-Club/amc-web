@@ -1,6 +1,4 @@
-import { getContext, setContext } from 'svelte';
-
-const key = {};
+import { createContext } from 'svelte';
 
 export interface ModalParams {
   title: string;
@@ -17,14 +15,5 @@ export interface MsgModalContext {
   readonly isOpen: boolean;
 }
 
-export function setMsgModalContext(msgModal: MsgModalContext) {
-  setContext(key, msgModal);
-}
-
-export function getMsgModalContext() {
-  const context = getContext(key);
-  if (context === undefined) {
-    throw new Error('MsgModal context not found. Make sure to set it before using.');
-  }
-  return context as MsgModalContext;
-}
+const [getMsgModalContext, setMsgModalContext] = createContext<MsgModalContext>();
+export { getMsgModalContext, setMsgModalContext };

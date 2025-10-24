@@ -16,13 +16,13 @@
     size?: 'xs' | 'sm' | 'md' | 'lg' | `!text-${string}`;
   }
 
-  const { size = 'md', class: propsClassName }: IconProps = $props();
+  const { size = 'md', class: propsClass }: IconProps = $props();
 
   const sizeContext = getBtnIconSizeContext();
 
   const iconSize = $derived(sizeContext ? sizeContext.getSize() : size);
 
-  const sizeClasses = $derived.by(() => {
+  const sizeClass = $derived.by(() => {
     switch (iconSize) {
       case 'xs':
         return '!text-[0.9rem]';
@@ -38,4 +38,4 @@
   });
 </script>
 
-<div class={twMerge(sizeClasses, clsx(propsClassName))}></div>
+<div class={twMerge(sizeClass, clsx(propsClass))}></div>

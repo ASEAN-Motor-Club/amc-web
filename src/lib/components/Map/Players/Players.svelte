@@ -31,7 +31,12 @@
 
 <div class="flex h-full flex-col">
   <CommonHead>{msg['players.title']()}</CommonHead>
-  <div class={['flex flex-col justify-between gap-2 px-8 pb-8', fullScreen && 'sm:flex-row']}>
+  <div
+    class={[
+      'flex flex-col justify-between gap-2 border-b border-neutral-500/20 px-8 pb-8',
+      fullScreen && 'sm:flex-row',
+    ]}
+  >
     <TextInput
       value={searchValue}
       placeholder={msg['players.search_placeholder']()}
@@ -45,7 +50,7 @@
   <div class={playerDataLoading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if playerDataLoading || filteredPlayers.length > 0}
       <div
-        class="grid grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))] justify-items-stretch gap-8 px-8 pb-8"
+        class="grid grid-cols-[repeat(auto-fill,_minmax(calc(var(--spacing)_*_80),_1fr))] justify-items-stretch gap-8 p-8"
       >
         {#if playerDataLoading}
           {#each Array(50) as _, i (i)}

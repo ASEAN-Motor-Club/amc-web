@@ -2,7 +2,8 @@
   import type { ClassValue } from 'svelte/elements';
   import lottie, { type AnimationItem } from 'lottie-web/build/player/lottie_light';
   import { onMount } from 'svelte';
-  interface LottieProps {
+
+  export interface LottieProps {
     animationData: unknown;
     autoplay?: boolean;
     loop?: boolean | number;
@@ -10,7 +11,7 @@
     speed?: number;
   }
 
-  const { animationData, autoplay, loop, class: className, speed }: LottieProps = $props();
+  const { animationData, autoplay, loop, class: propsClass, speed }: LottieProps = $props();
 
   let lottieEl: HTMLDivElement;
 
@@ -45,4 +46,4 @@
   });
 </script>
 
-<div class={className} bind:this={lottieEl}></div>
+<div class={propsClass} bind:this={lottieEl}></div>

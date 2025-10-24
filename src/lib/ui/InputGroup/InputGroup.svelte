@@ -5,7 +5,7 @@
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 
-  interface Props {
+  export interface InputGroupProps {
     /**
      * The label text for the input group
      */
@@ -32,14 +32,15 @@
      */
     focusIndex?: number;
   }
+
   const {
     label,
     appendLabel,
-    class: className,
+    class: propsClass,
     labelClass,
     children,
     focusIndex = 0,
-  }: Props = $props();
+  }: InputGroupProps = $props();
 
   const id = `input-group-${Math.random().toString(36).substring(2, 15)}`;
 
@@ -56,7 +57,7 @@
   });
 </script>
 
-<div class={twMerge('flex flex-col gap-1', clsx(className))}>
+<div class={twMerge('flex flex-col gap-1', clsx(propsClass))}>
   <div
     class={twMerge(
       'text-text/80 dark:text-text-dark/80 flex items-center justify-between text-xs font-semibold',

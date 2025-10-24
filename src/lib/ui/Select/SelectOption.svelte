@@ -26,7 +26,7 @@
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';
 
-  const { id, value, class: className, children }: SelectOptionProps<T> = $props();
+  const { id, value, class: propsClass, children }: SelectOptionProps<T> = $props();
 
   const { onSelect, addOption, getOption } = getSelectContext<T>();
 
@@ -45,7 +45,7 @@
 <button
   class={twMerge(
     'cursor-pointer px-4 py-2 text-left transition-colors hover:bg-neutral-500/10 active:bg-neutral-500/15',
-    clsx(className),
+    clsx(propsClass),
   )}
   onclick={handleClick}
 >

@@ -1,3 +1,40 @@
+import isError from 'lodash-es/isError';
+
+/**
+ * Generic API fetch function with standardized error handling
+ *
+ * @param url - The URL to fetch
+ * @param signal - AbortSignal for cancellation
+ * @param defaultValue - Default value to return on abort
+ * @param errorContext - Context for error logging (e.g., "teams", "delivery points")
+ * @returns Promise with the parsed JSON data or default value on abort
+ */
+export const apiClient = async <TData>(
+  url: string,
+  signal: AbortSignal,
+  defaultValue: TData,
+  errorContext: string,
+): Promise<TData> => {
+  try {
+    const response = await fetch(url, {
+      signal: signal,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = (await response.json()) as TData;
+    return data;
+  } catch (error) {
+    if (isAbortError(error)) {
+      console.info('Fetch aborted');
+      return defaultValue;
+    }
+    console.error(`Error fetching ${errorContext}:`, error);
+    throw error;
+  }
+};
+
 /**
  * Generic visibility-aware polling function
  * Automatically pauses polling when page is hidden and resumes when visible
@@ -6,7 +43,6 @@
  * @param fetchFn - Async function that fetches data and takes an AbortSignal
  * @param callback - Callback function to handle the fetched data or errors
  * @param interval - Polling interval in milliseconds
- * @returns Cleanup function to stop polling
  */
 export const startVisibilityAwarePolling = <TData, TErrorData>(
   name: string,
@@ -14,13 +50,13 @@ export const startVisibilityAwarePolling = <TData, TErrorData>(
   callback: (data: TData | TErrorData) => void,
   errorDataGetter: () => TErrorData,
   interval: number,
-): (() => void) => {
-  const controller = new AbortController();
+  abortSignal: AbortSignal,
+): void => {
   let timer: NodeJS.Timeout | null = null;
 
   const fetchAndUpdate = async () => {
     try {
-      const data = await fetchFn(controller.signal);
+      const data = await fetchFn(abortSignal);
       callback(data);
     } catch (error) {
       console.error(`${name} polling error:`, error);
@@ -62,14 +98,10 @@ export const startVisibilityAwarePolling = <TData, TErrorData>(
 
   document.addEventListener('visibilitychange', handleVisibilityChange);
 
-  controller.signal.addEventListener('abort', () => {
+  abortSignal.addEventListener('abort', () => {
     stopTimer();
     document.removeEventListener('visibilitychange', handleVisibilityChange);
   });
-
-  return () => {
-    controller.abort();
-  };
 };
 
 /**
@@ -80,16 +112,15 @@ export const startVisibilityAwarePolling = <TData, TErrorData>(
  * @param url - EventSource URL
  * @param onMessage - Callback function to handle incoming messages
  * @param onError - Optional callback function to handle errors
- * @returns Cleanup function to close EventSource and remove listeners
  */
 export const startVisibilityAwareEventSource = (
   name: string,
   url: string,
   onMessage: (data: unknown) => void,
-  onError?: (error: Event) => void,
-): (() => void) => {
+  onError: ((error: Event) => void) | undefined,
+  abortSignal: AbortSignal,
+) => {
   let evt: EventSource | null = null;
-  let isActive = true;
 
   const createEventSource = () => {
     if (evt) {
@@ -123,8 +154,6 @@ export const startVisibilityAwareEventSource = (
   };
 
   const handleVisibilityChange = () => {
-    if (!isActive) return;
-
     if (document.hidden) {
       closeEventSource();
     } else {
@@ -143,10 +172,13 @@ export const startVisibilityAwareEventSource = (
   document.addEventListener('visibilitychange', handleVisibilityChange);
   window.addEventListener('beforeunload', handleBeforeUnload);
 
-  return () => {
-    isActive = false;
+  abortSignal.addEventListener('abort', () => {
     closeEventSource();
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     window.removeEventListener('beforeunload', handleBeforeUnload);
-  };
+  });
+};
+
+export const isAbortError = (error: unknown): boolean => {
+  return isError(error) && (error.name === 'StaleReactionError' || error.name === 'AbortError');
 };

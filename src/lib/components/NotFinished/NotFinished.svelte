@@ -5,10 +5,10 @@
     class?: string;
   }
 
-  const { class: className }: Props = $props();
+  const { class: propsClass }: Props = $props();
 </script>
 
-<div class={['flex h-[calc(100dvh_-_12rem)] flex-col items-center justify-center', className]}>
+<div class={['flex h-[calc(100dvh_-_12rem)] flex-col items-center justify-center', propsClass]}>
   <div
     class="i-material-symbols:car-crash-outline-rounded text-9xl tracking-tight text-neutral-500/50"
   ></div>

@@ -3,7 +3,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
 
-  interface DividerProps {
+  export interface DividerProps {
     /**
      * CSS class to apply to the divider component
      */
@@ -20,9 +20,9 @@
     vertical?: boolean;
   }
 
-  const { class: propsClassName, spacing = 'md', vertical = false }: DividerProps = $props();
+  const { class: propsClass, spacing = 'md', vertical = false }: DividerProps = $props();
 
-  const spacingClasses = {
+  const spacingClass = {
     sm: vertical ? 'mx-4' : 'my-4',
     md: vertical ? 'mx-6' : 'my-6',
     lg: vertical ? 'mx-8' : 'my-8',
@@ -33,7 +33,7 @@
   class={twMerge(
     'border-neutral-500',
     vertical && 'h-full w-0 border-t-0 border-l',
-    spacing && spacingClasses[spacing],
-    clsx(propsClassName),
+    spacing && spacingClass[spacing],
+    clsx(propsClass),
   )}
 />

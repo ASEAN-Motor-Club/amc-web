@@ -56,7 +56,7 @@
 </script>
 
 <Story name="Default">
-  {#snippet template({ class: className, ...args })}
+  {#snippet template({ class: propsClass, ...args })}
     <div class="flex h-screen w-full flex-col">
       <div class="border-b bg-gray-100 p-4">
         <h3 class="mb-2 text-lg font-semibold">EditorOlMap with Drag Support</h3>
@@ -73,7 +73,7 @@
       <div class="flex-1">
         <EditorOlMap
           {...args}
-          class={['h-full w-full', className]}
+          class={['h-full w-full', propsClass]}
           {points}
           {selectedPoint}
           onPointClick={handlePointClick}
@@ -85,7 +85,7 @@
 </Story>
 
 <Story name="With Selected Point">
-  {#snippet template({ class: className, ...args })}
+  {#snippet template({ class: propsClass, ...args })}
     <div class="flex h-screen w-full flex-col">
       <div class="border-b bg-gray-100 p-4">
         <h3 class="mb-2 text-lg font-semibold">EditorOlMap with Pre-selected Point</h3>
@@ -96,7 +96,7 @@
       <div class="flex-1">
         <EditorOlMap
           {...args}
-          class={['h-full w-full', className]}
+          class={['h-full w-full', propsClass]}
           points={[
             { coord: { x: -1200000, y: -300000 }, yaw: 0 },
             { coord: { x: -1150000, y: -280000 }, yaw: Math.PI / 4 },
@@ -120,7 +120,7 @@
 </Story>
 
 <Story name="Gate Mode">
-  {#snippet template({ class: className, ...args })}
+  {#snippet template({ class: propsClass, ...args })}
     <div class="flex h-screen w-full flex-col">
       <div class="border-b bg-gray-100 p-4">
         <h3 class="text-lg font-semibold">Gate Mode</h3>
@@ -135,7 +135,7 @@
       <div class="flex-1">
         <EditorOlMap
           {...args}
-          class={['h-full w-full', className]}
+          class={['h-full w-full', propsClass]}
           points={[
             { coord: { x: -1200000, y: -300000 }, yaw: 0, scaleY: 50 },
             { coord: { x: -1150000, y: -280000 }, yaw: Math.PI / 4, scaleY: 75 },

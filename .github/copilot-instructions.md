@@ -38,7 +38,7 @@ Every user-facing string must use Paraglide:
 - **Use Svelte 5 runes syntax only** (`$props`, `$state`, `$derived`, `$effect`). Do not use legacy `$:` reactive statements.
 - **Props must be properly typed and documented** using TypeScript JSDoc comments for each prop.
 - **Class props**: If your component accepts a `class` prop, type it as `ClassValue` from `svelte/elements`.
-- **Class merging**: If your component extends an existing class, use `twMerge(existingClass, clsx(propsClassName))` to merge classes safely.
+- **Class merging**: If your component extends an existing class, use `twMerge(existingClass, clsx(propsClass))` to merge classes safely.
 
 #### Minimal Example
 
@@ -55,13 +55,13 @@ Every user-facing string must use Paraglide:
     class?: ClassValue;
   };
 
-  const { class: propsClassName }: TextSkeletonProps = $props();
+  const { class: propsClass }: TextSkeletonProps = $props();
 </script>
 
 <span
   class={twMerge(
     'inline-block animate-pulse rounded-md bg-neutral-500/20 text-transparent select-none',
-    clsx(propsClassName),
+    clsx(propsClass),
   )}>.</span
 >
 ```
@@ -80,26 +80,26 @@ Prefer `-rounded` suffix variants when available.
 
 ```bash
 # Development
-pnpm run dev                 # Start dev server
-pnpm run dev:host           # Start dev server with host access
-pnpm run storybook          # Component development
+pnpm dev                 # Start dev server
+pnpm dev:host           # Start dev server with host access
+pnpm storybook          # Component development
 
 # Build & Deploy
-pnpm run build              # Build the static site
-pnpm run preview            # Preview built site locally
-pnpm run preview:host       # Preview built site with host access
-pnpm run paraglide:compile  # Regenerate i18n messages
+pnpm build              # Build the static site
+pnpm preview            # Preview built site locally
+pnpm preview:host       # Preview built site with host access
+pnpm paraglide:compile  # Regenerate i18n messages
 
 # Quality Checks
-pnpm run checklist          # Runs format, lint, paraglide:compile, check, test
-pnpm run format             # Prettier formatting
-pnpm run lint               # ESLint + Prettier check
-pnpm run lint:fix           # Auto-fix ESLint issues
-pnpm run check              # TypeScript + Svelte check
-pnpm run check:watch        # TypeScript + Svelte check in watch mode
-pnpm run test               # Run all tests
-pnpm run test:unit          # Run unit tests in watch mode
-pnpm run build:storybook    # Build Storybook for deployment
+pnpm checklist          # Runs format, lint, paraglide:compile, check, test
+pnpm format             # Prettier formatting
+pnpm lint               # ESLint + Prettier check
+pnpm lint:fix           # Auto-fix ESLint issues
+pnpm check              # TypeScript + Svelte check
+pnpm check:watch        # TypeScript + Svelte check in watch mode
+pnpm test               # Run all tests
+pnpm test:unit          # Run unit tests in watch mode
+pnpm build:storybook    # Build Storybook for deployment
 ```
 
 ## Project Structure Essentials

@@ -70,7 +70,7 @@
   }
 
   const {
-    class: propsClassName,
+    class: propsClass,
     points,
     onPointClick,
     onSelectedPointMove,
@@ -454,7 +454,7 @@
 </script>
 
 <OlMap
-  class={propsClassName}
+  class={propsClass}
   {zoomClass}
   {layers}
   onClick={handleMapClick}

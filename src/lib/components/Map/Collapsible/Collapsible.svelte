@@ -99,13 +99,13 @@
     };
   });
 
-  const openCollapsibleClasses = 'sm:w-100 lg:w-120 xl:w-140';
+  const openCollapsibleClass = 'sm:w-100 lg:w-120 xl:w-140';
 
   const showMapBtn = $derived(validOpenCollapsible && (!isSm.current || showFull));
 </script>
 
 {#if isSm.current && showFullAnimate}
-  <div class={['h-full', validOpenCollapsible ? openCollapsibleClasses : 'sm:w-11']}></div>
+  <div class={['h-full', validOpenCollapsible ? openCollapsibleClass : 'sm:w-11']}></div>
 {/if}
 <div
   class={[
@@ -194,7 +194,7 @@
     class={[
       'overflow-hidden duration-1000 motion-safe:transition-[width,height] sm:-ml-11 sm:h-full sm:pl-11',
       validOpenCollapsible
-        ? ['h-[calc(100dvh-7rem)] w-screen', !showFull && openCollapsibleClasses]
+        ? ['h-[calc(100dvh-7rem)] w-screen', !showFull && openCollapsibleClass]
         : 'h-0 sm:w-0',
     ]}
   >

@@ -65,28 +65,28 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 4. **Start development server**
 
    ```bash
-   pnpm run dev
+   pnpm dev
    ```
 
    Your app will be available at `http://localhost:5173`
 
 5. **Start Storybook** (for UI component development)
    ```bash
-   pnpm run storybook
+   pnpm storybook
    ```
    Storybook will be available at `http://localhost:6006`
 
 ## 📜 Available Scripts
 
-- `pnpm run dev` - Start development server
-- `pnpm run build` - Build for production
-- `pnpm run preview` - Preview production build locally
-- `pnpm run storybook` - Start Storybook for component development
-- `pnpm run test` - Run unit tests
-- `pnpm run test:unit` - Run unit tests in watch mode
-- `pnpm run check` - Run type checking
-- `pnpm run lint` - Check code formatting and linting
-- `pnpm run format` - Format code with Prettier
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build locally
+- `pnpm storybook` - Start Storybook for component development
+- `pnpm test` - Run unit tests
+- `pnpm test:unit` - Run unit tests in watch mode
+- `pnpm check` - Run type checking
+- `pnpm lint` - Check code formatting and linting
+- `pnpm format` - Format code with Prettier
 
 ## 🔧 Development Tools
 
@@ -156,20 +156,30 @@ Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and 
 
 This project uses **Vitest** for unit testing with **Playwright** as the browser provider for testing Svelte components in a real browser environment. Tests are configured to run in two modes:
 
-- **Client tests**: Svelte component tests that run in a Chromium browser using Playwright
-- **Server tests**: Node.js environment tests for server-side logic
+- **Component tests**: Svelte component tests that run in a Chromium browser using Playwright
+- **Unit tests**: Tests for utility functions and non-rendering logic that run in Node.js environment
 
 Test files should follow these naming conventions:
 
 - `*.svelte.test.ts` or `*.svelte.spec.ts` for component tests (run in browser)
-- `*.test.ts` or `*.spec.ts` for server-side tests (run in Node.js)
+- `*.test.ts` or `*.spec.ts` for unit tests (run in Node.js)
+
+### Setup
+
+Before running tests that use Playwright, install the browser dependencies:
+
+```bash
+pnpm exec playwright install
+```
+
+### Running Tests
 
 ```bash
 # Run tests once
-pnpm run test
+pnpm test
 
 # Run tests in watch mode
-pnpm run test:unit
+pnpm test:unit
 ```
 
 ## 🧩 Component Development
@@ -178,7 +188,7 @@ Components are developed using Storybook for isolated development and documentat
 
 - Components are located in `src/lib/ui/`
 - Each component includes a `.stories.svelte` file for Storybook
-- Run `pnpm run storybook` to develop and test components in isolation
+- Run `pnpm storybook` to develop and test components in isolation
 
 ## 🤝 Collaboration Guidelines
 
@@ -204,12 +214,12 @@ Before merging any pull request, ensure that:
 Run these commands before committing:
 
 ```bash
-pnpm run format  # Format code
-pnpm run lint    # Check linting
-pnpm run check   # Type checking
-pnpm run test    # Run tests
+pnpm format  # Format code
+pnpm lint    # Check linting
+pnpm check   # Type checking
+pnpm test    # Run tests
 # or
-pnpm run checklist
+pnpm checklist
 ```
 
 ---

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { onMount } from 'svelte';
+  import { getAbortSignal, onMount } from 'svelte';
   import { trackSchema, type Track } from '$lib/schema/track';
   import type { ChangeEventHandler } from 'svelte/elements';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
@@ -135,23 +135,16 @@
 
   let fetchFromUri = $state(false);
 
-  onMount(() => {
-    const abortController = new AbortController();
-
+  onMount(async () => {
     const uri = clientSearchParamsGet('uri');
     if (!uri) return;
     fetchFromUri = true;
     const proxiedUri = `${PUBLIC_PROXY_URL}?url=${encodeURIComponent(uri)}`;
-    tryFetchTrack(proxiedUri, abortController.signal).then((trackData) => {
-      if (trackData) {
-        parseTrackData(trackData);
-      }
-      fetchFromUri = false;
-    });
-
-    return () => {
-      abortController.abort();
-    };
+    const trackData = await tryFetchTrack(proxiedUri, getAbortSignal());
+    if (trackData) {
+      parseTrackData(trackData);
+    }
+    fetchFromUri = false;
   });
 </script>
 

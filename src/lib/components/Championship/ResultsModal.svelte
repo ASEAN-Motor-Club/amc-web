@@ -4,10 +4,13 @@
   import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
-  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import { getAbortSignal } from 'svelte';
+  import Table from '$lib/ui/Table/Table.svelte';
+  import TableRow from '$lib/ui/Table/TableRow.svelte';
+  import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
 
   interface ResultsModalProps {
     event: ScheduledEvent | undefined;
@@ -23,9 +26,7 @@
   $effect(() => {
     if (!event?.id) return;
 
-    const abortController = new AbortController();
-
-    getEventResult(event.id, abortController.signal).then((eventResults) => {
+    getEventResult(event.id, getAbortSignal()).then((eventResults) => {
       results = eventResults.filter((result) => result.section_index !== -1);
       loading = false;
     });
@@ -33,7 +34,6 @@
     return () => {
       results = [];
       loading = true;
-      abortController.abort();
     };
   });
 
@@ -67,80 +67,57 @@
         ? msg['championship.event.event_results']({ event: event.name })
         : msg['championship.event.results']()}
     </h1>
-    <div
-      class="min-h-0 flex-1 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5"
+    <Table
+      gridClass="grid-cols-[1fr_4fr_2fr_1fr_2fr]"
+      skeletonCount={32}
+      {loading}
+      class="bg-neutral-500/ md:aspect-1 aspect-9/16 w-full overflow-y-auto border-t border-b border-neutral-500/10"
+      rowClass="px-5 text-sm sm:text-base"
+      empty={results.length === 0}
     >
-      <div
-        class={[
-          'md:aspect-1 flex aspect-9/16 w-full flex-col overflow-y-hidden',
-          !loading && results.length === 0 && 'items-center justify-center',
-          !loading && results.length > 0 && '!overflow-y-auto',
-        ]}
-      >
-        {#if loading}
-          <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            {#each Array(32) as _, index (index)}
-              <div
-                class={[
-                  'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-2 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
-                ]}
-              >
-                <TextSkeleton />
-                <TextSkeleton />
-                <TextSkeleton />
-                <TextSkeleton />
-                <TextSkeleton />
-              </div>
-            {/each}
+      {#snippet emptyState()}
+        <TableEmptyState>
+          {msg['championship.event.no_results']()}
+        </TableEmptyState>
+      {/snippet}
+      {#each results as result, index (result.character.id)}
+        <TableRow
+          class={{
+            'text-amber-600 dark:text-amber-500': index === 0,
+            'text-gray-700 dark:text-gray-400': index === 1,
+            'text-amber-700 dark:text-amber-600': index === 2,
+          }}
+        >
+          <div>{index + 1}</div>
+          <div class="min-w-0">
+            <TruncateText text={result.character.name} />
           </div>
-        {:else if results.length === 0}
-          <div class="text-text/60 dark:text-text-dark/60 text-center text-sm italic">
-            {msg['championship.event.no_results']()}
+          <div>
+            <span class="font-bold">{getTeamTag(result)}</span>
           </div>
-        {:else}
-          {#each results as result, index (result.character.id)}
-            <div
-              class={[
-                'grid grid-cols-[1fr_4fr_2fr_1fr_2fr] gap-2 border-b border-neutral-500/10 px-5 py-3 text-sm last:border-0 sm:text-base',
-                {
-                  'text-amber-600 dark:text-amber-500': index === 0,
-                  'text-gray-700 dark:text-gray-400': index === 1,
-                  'text-amber-700 dark:text-amber-600': index === 2,
-                },
-              ]}
-            >
-              <div>{index + 1}</div>
-              <div class="min-w-0">
-                <TruncateText text={result.character.name} />
-              </div>
-              <div>
-                <span class="font-bold">{getTeamTag(result)}</span>
-              </div>
-              <div class="text-center">
-                {#if result.championship_point}
-                  {#if result.finished}
-                    <div class="font-bold">
-                      {result.championship_point.points}
-                    </div>
-                  {:else}
-                    <div class="text-xs font-bold opacity-50">-</div>
-                  {/if}
-                {/if}
-              </div>
-              <div class="text-right">
-                <div>
-                  {#if result.finished}
-                    {formatResultTime(result)}
-                  {:else}
-                    <span class="text-xs italic opacity-50">{msg['championship.event.dnf']()}</span>
-                  {/if}
+          <div class="text-center">
+            {#if result.championship_point}
+              {#if result.finished}
+                <div class="font-bold">
+                  {result.championship_point.points}
                 </div>
-              </div>
+              {:else}
+                <div class="text-xs font-bold opacity-50">-</div>
+              {/if}
+            {/if}
+          </div>
+          <div class="text-right">
+            <div>
+              {#if result.finished}
+                {formatResultTime(result)}
+              {:else}
+                <span class="text-xs italic opacity-50">{msg['championship.event.dnf']()}</span>
+              {/if}
             </div>
-          {/each}
-        {/if}
-      </div>
-    </div>
+          </div>
+        </TableRow>
+      {/each}
+    </Table>
     <div class="flex justify-between p-2">
       <Button
         onClick={onViewEvent}
