@@ -1,15 +1,11 @@
 <script lang="ts">
-  import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import type { ScheduledEvent } from '$lib/api/types';
   import { m as msg } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { format, isAfter, isBefore, isSameDay, isSameYear } from '$lib/date';
-  import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
-  import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { format, isAfter, isBefore, isSameDay } from '$lib/date';
+  import EventCard from './EventCard.svelte';
 
   interface EventModalProps {
     date?: Date;
@@ -33,33 +29,6 @@
   });
 
   const formattedDate = $derived(date ? format(date, msg['format.dateFull']()) : '');
-
-  const formatEventStyle = (event: ScheduledEvent) => {
-    const sameDay = isSameDay(event.start_time, event.end_time);
-    const sameYear = isSameYear(event.start_time, event.end_time);
-    return sameDay
-      ? msg['format.scheduleFormat.sameDay']()
-      : sameYear
-        ? msg['format.scheduleFormat.sameYear']()
-        : msg['format.scheduleFormat.crossYear']();
-  };
-
-  const svelteDate = createSvelteDate();
-
-  const pastEventTime = (event: ScheduledEvent) => {
-    return isBefore(event.start_time, svelteDate.getTime());
-  };
-
-  const openEvent = (e: Event, event: ScheduledEvent) => {
-    e.preventDefault();
-    openResultsModal(event);
-  };
-
-  const getParams = (event: ScheduledEvent) => {
-    const newParams = new SvelteURLSearchParams(clientSearchParams());
-    newParams.append('event', event.id.toString());
-    return newParams.toString();
-  };
 </script>
 
 <Modal open={!!date} {onClose}>
@@ -71,54 +40,7 @@
       class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
     >
       {#each eventsToday as event (event.id)}
-        <Card>
-          <div
-            class={[
-              'mb-1 text-xs',
-              event.time_trial
-                ? 'text-warning-800 dark:text-warning-500'
-                : 'text-primary-800 dark:text-primary-500',
-            ]}
-          >
-            {format(event.start_time, formatEventStyle(event))} &ndash; {format(
-              event.end_time,
-              formatEventStyle(event),
-            )}
-          </div>
-          <h1 class="text-2xl font-semibold tracking-tight">
-            {event.name}
-          </h1>
-          <div class="my-4 text-sm wrap-anywhere opacity-80">
-            <MarkdownText size="prose-sm" text={event.description} />
-          </div>
-          <div class="-m-2 flex gap-1">
-            {#if event.discord_event_id}
-              <Button
-                color="info"
-                variant="text"
-                size="sm"
-                tag="a"
-                href="{PUBLIC_DISCORD_EVENT_BASE}/{event.discord_event_id}"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {msg['championship.event.more_info']()}
-              </Button>
-            {/if}
-            {#if pastEventTime(event)}
-              <Button
-                color="secondary"
-                variant="text"
-                size="sm"
-                tag="a"
-                href="?{getParams(event)}"
-                onClick={(e) => openEvent(e, event)}
-              >
-                {msg['championship.event.results']()}
-              </Button>
-            {/if}
-          </div>
-        </Card>
+        <EventCard {event} {openResultsModal} />
       {/each}
     </div>
     <div class="-mx-3 -mb-3 flex justify-end pt-2">
