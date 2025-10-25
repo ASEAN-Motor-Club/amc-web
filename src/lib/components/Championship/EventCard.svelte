@@ -68,7 +68,7 @@
           return `# ${p2} #`;
         case RichTextTag.Small:
         case RichTextTag.Secondary:
-          return `<sub>${p2}</sub>`;
+          return `<small>${p2}</small>`;
         case RichTextTag.Default:
         case RichTextTag.Chat:
         default:
