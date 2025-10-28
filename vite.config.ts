@@ -5,16 +5,10 @@ import UnoCSS from 'unocss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
-import { noop } from 'lodash-es';
 
-export default defineConfig(async ({ mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const { isCi } = envCi();
-
-  let webdriverio = noop;
-  if (mode !== 'production') {
-    webdriverio = (await import('@vitest/browser-webdriverio')).webdriverio;
-  }
 
   return {
     plugins: [
@@ -33,34 +27,6 @@ export default defineConfig(async ({ mode }) => {
         exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
       }),
     ],
-    test: {
-      projects: [
-        {
-          extends: './vite.config.ts',
-          test: {
-            name: 'comp',
-            browser: {
-              enabled: true,
-              provider: webdriverio(),
-              instances: [{ browser: 'chrome' }],
-              headless: true,
-            },
-            include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-            exclude: ['src/lib/server/**'],
-            setupFiles: ['./vitest-setup-client.ts'],
-          },
-        },
-        {
-          extends: './vite.config.ts',
-          test: {
-            name: 'unit',
-            environment: 'node',
-            include: ['src/**/*.{test,spec}.{js,ts}'],
-            exclude: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-          },
-        },
-      ],
-    },
     server: {
       proxy: {
         '/stream_high': {

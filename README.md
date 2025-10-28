@@ -8,7 +8,7 @@ Website for ASEAN Motor Club
 - **Package Manager**: [pnpm](https://pnpm.io/) for fast, disk space efficient dependency management
 - **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
 - **Icons**: [UnoCSS Icons preset](https://unocss.dev/presets/icons) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
-- **Testing**: [Vitest](https://vitest.dev/) with [Playwright](https://playwright.dev/) browser provider for component testing
+- **Testing**: [Vitest](https://vitest.dev/) with [WebdriverIO](https://webdriver.io/) browser provider for component testing
 - **Internationalization**: [Paraglide](https://inlang.com/paraglide)
 - **Component Development**: [Storybook](https://storybook.js.org/)
 - **Code Quality**: [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
@@ -154,23 +154,15 @@ Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and 
 
 ## 🧪 Testing
 
-This project uses **Vitest** for unit testing with **Playwright** as the browser provider for testing Svelte components in a real browser environment. Tests are configured to run in two modes:
+This project uses **Vitest** for unit testing with **WebdriverIO** as the browser provider for testing Svelte components in a real browser environment. Tests are configured to run in two modes:
 
-- **Component tests**: Svelte component tests that run in a Chromium browser using Playwright
+- **Component tests**: Svelte component tests that run in a Chromium browser using WebdriverIO
 - **Unit tests**: Tests for utility functions and non-rendering logic that run in Node.js environment
 
 Test files should follow these naming conventions:
 
 - `*.svelte.test.ts` or `*.svelte.spec.ts` for component tests (run in browser)
 - `*.test.ts` or `*.spec.ts` for unit tests (run in Node.js)
-
-### Setup
-
-Before running tests that use Playwright, install the browser dependencies:
-
-```bash
-pnpm exec playwright install
-```
 
 ### Running Tests
 
