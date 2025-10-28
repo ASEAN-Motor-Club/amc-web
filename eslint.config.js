@@ -108,11 +108,7 @@ export default defineConfig(
   },
   storybook.configs['flat/recommended'],
   {
-    files: [
-      '*.config.{js,ts}',
-      '**/*.{test,spec}.{js,ts}',
-      '.storybook/*.ts',
-    ],
+    files: ['*.config.{js,ts}', '**/*.{test,spec}.{js,ts}', '.storybook/*.ts'],
     extends: [ts.configs.disableTypeChecked],
   },
 );
