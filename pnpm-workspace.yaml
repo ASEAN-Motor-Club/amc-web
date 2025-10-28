@@ -1,3 +1,8 @@
+ignoredBuiltDependencies:
+  - edgedriver
+  - geckodriver
+
+minimumReleaseAge: 1440
+
 onlyBuiltDependencies:
   - esbuild
-minimumReleaseAge: 1440

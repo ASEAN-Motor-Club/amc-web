@@ -59,14 +59,14 @@ export default defineConfig(
           ],
           patterns: [
             {
-              group: ['date-fns*'],
+              group: ['date-fns', 'date-fns/*'],
               message: 'Use unified imports from $lib/date instead',
               allowTypeImports: true,
             },
             {
-              group: ['react*'],
+              group: ['react', 'react/*'],
               message: 'React is not allowed in Svelte projects (but installed for storybook)',
-            }
+            },
           ],
         },
       ],
