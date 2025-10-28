@@ -1,15 +1,20 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import UnoCSS from 'unocss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { analyzer } from 'vite-bundle-analyzer';
-import { playwright } from '@vitest/browser-playwright';
 import envCi from 'env-ci';
+import { noop } from 'lodash-es';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const { isCi } = envCi();
+
+  let webdriverio = noop;
+  if (mode !== 'production') {
+    webdriverio = (await import('@vitest/browser-webdriverio')).webdriverio;
+  }
 
   return {
     plugins: [
@@ -36,8 +41,8 @@ export default defineConfig(({ mode }) => {
             name: 'comp',
             browser: {
               enabled: true,
-              provider: playwright(),
-              instances: [{ browser: 'chromium' }],
+              provider: webdriverio(),
+              instances: [{ browser: 'chrome' }],
               headless: true,
             },
             include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
@@ -67,7 +72,7 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_ICE_CAST,
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(/^\/icecast-status/, '/status-json.xsl'),
+          rewrite: (path: string) => path.replace(/^\/icecast-status/, '/status-json.xsl'),
         },
         '/login/token': {
           target: env.VITE_API_NEW_BASE,
@@ -84,5 +89,5 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-  };
+  } as UserConfig;
 });

@@ -63,6 +63,10 @@ export default defineConfig(
               message: 'Use unified imports from $lib/date instead',
               allowTypeImports: true,
             },
+            {
+              group: ['react*'],
+              message: 'React is not allowed in Svelte projects (but installed for storybook)',
+            }
           ],
         },
       ],

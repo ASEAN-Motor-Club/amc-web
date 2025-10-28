@@ -37,9 +37,6 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
-      - name: 🎭 Install Playwright Browsers
-        run: pnpm exec playwright install chromium --only-shell
-
       - name: 🌐 Generate i18n
         run: pnpm paraglide:compile
 
