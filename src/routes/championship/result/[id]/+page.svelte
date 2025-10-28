@@ -71,7 +71,7 @@
 </svelte:head>
 
 <div class="flex flex-col items-center p-8">
-  <h1 class="font-sans-alt pt-8 pb-5 text-center text-7xl font-bold">
+  <h1 class="font-sans-em pt-8 pb-5 text-center text-7xl font-bold tracking-wide">
     {#if eventData}
       {eventData.name}
     {:else if loadingOrNoData}

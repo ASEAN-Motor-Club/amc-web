@@ -189,7 +189,7 @@
   <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
-  <a href="/" class="font-sans-alt mr-6 text-2xl leading-none tracking-wide">
+  <a href="/" class="font-sans-em mr-6 text-2xl leading-none tracking-wide">
     {msg.site_name()}
   </a>
   {#if isLg.current}
@@ -205,7 +205,11 @@
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
       >
-        <a href="/" class="font-sans-alt mb-10 text-2xl" onclick={() => setMenu(false)}>
+        <a
+          href="/"
+          class="font-sans-em mb-10 text-2xl tracking-wide"
+          onclick={() => setMenu(false)}
+        >
           {msg.site_name()}
         </a>
         <div class="flex flex-col gap-4">

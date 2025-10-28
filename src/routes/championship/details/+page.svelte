@@ -14,7 +14,7 @@
       date: format(startDate, msg['format.dateFull']()),
     })}
   </h3>
-  <h1 class="font-sans-alt pb-12 text-center text-4xl font-bold sm:text-7xl xl:pb-20">
+  <h1 class="font-sans-em pb-12 text-center text-4xl font-bold tracking-wide sm:text-7xl xl:pb-20">
     {msg['championship.title']()}
   </h1>
   <div class="xl:w-unset grid w-full grid-cols-1 place-items-center gap-10 xl:grid-cols-2">

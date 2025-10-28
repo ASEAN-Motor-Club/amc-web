@@ -382,9 +382,17 @@
     PinLabels: 5,
   };
 
+  const nameMap = $derived({
+    [layerId.Delivery]: msg['map.delivery_point'](),
+    [layerId.House]: msg['map.house'](),
+    [layerId.Player]: msg['map.player'](),
+    [layerId.PlayerName]: msg['map.player_name'](),
+    [layerId.Pins]: msg['map.pins'](),
+    [layerId.PinLabels]: msg['map.pin_labels'](),
+  });
+
   const deliveryLayerData = $state({
     id: layerId.Delivery,
-    name: msg['map.delivery_point'](),
     layer: [deliveryPointLayer, residentPointLayer, deliveryLineLayer],
     enabled: true,
     color: '!bg-yellow-500 hover:!bg-yellow-400',
@@ -392,7 +400,6 @@
 
   const houseLayerData = $state({
     id: layerId.House,
-    name: msg['map.house'](),
     layer: [houseLayer],
     enabled: true,
     color: '!bg-cyan-500 hover:!bg-cyan-400',
@@ -400,7 +407,6 @@
 
   const playerNameLayerData = $state({
     id: layerId.PlayerName,
-    name: msg['map.player_name'](),
     layer: [playerNameLayer],
     enabled: true,
     color: '!bg-emerald-300 hover:!bg-emerald-200',
@@ -408,7 +414,6 @@
 
   const playerLayerData = $state({
     id: layerId.Player,
-    name: msg['map.player'](),
     layer: [playerPointLayer],
     enabled: true,
     color: '!bg-emerald-400 hover:!bg-emerald-300',
@@ -416,7 +421,6 @@
 
   const pinsLayerData = $state({
     id: layerId.Pins,
-    name: msg['map.pins'](),
     layer: [pinsLayer],
     enabled: true,
     color: '!bg-red-400 hover:!bg-red-300',
@@ -424,13 +428,12 @@
 
   const pinLabelsLayerData = $state({
     id: layerId.PinLabels,
-    name: msg['map.pin_labels'](),
     layer: [pinLabelsLayer],
     enabled: true,
     color: '!bg-red-300 hover:!bg-red-200',
   });
 
-  const layersData = $state([
+  const layersData = $derived([
     deliveryLayerData,
     houseLayerData,
     playerLayerData,
@@ -596,9 +599,12 @@
       return;
     }
     if (hoverInfo.pointType === PointType.Delivery) {
-      goto(`/delivery/${hoverInfo.info.guid}`);
+      const newParams = getSelectionClearedParams();
+      newParams.set('delivery', hoverInfo.info.guid);
+      goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
     } else if (hoverInfo.pointType === PointType.House) {
       const newParams = getSelectionClearedParams();
+      newParams.set('house', hoverInfo.info.name);
       newParams.set('hf', hoverInfo.info.name);
       goto(`/housing?${newParams.toString()}`);
     }
@@ -902,7 +908,7 @@
         {msg['map.point_of_interests']()}
       </h2>
       <div class="flex flex-wrap gap-2">
-        {#each layersDataCheckPins as layer (layer.name)}
+        {#each layersDataCheckPins as layer (layer.id)}
           <Button
             class={[
               '!text-text !px-2',
@@ -926,7 +932,7 @@
             {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
               {censored.c ? msg['map.jobs_only_c']() : msg['map.jobs_only']()}
             {:else}
-              {layer.name}
+              {nameMap[layer.id]}
             {/if}
           </Button>
         {/each}

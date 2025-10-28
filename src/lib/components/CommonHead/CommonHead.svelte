@@ -10,5 +10,5 @@
 </script>
 
 <div class={['flex p-8', propsClass]}>
-  <h1 class="w-full text-5xl font-bold tracking-tight">{@render children()}</h1>
+  <h1 class="font-sans-em w-full text-5xl font-bold tracking-wide">{@render children()}</h1>
 </div>

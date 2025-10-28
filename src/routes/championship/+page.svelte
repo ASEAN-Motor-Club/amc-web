@@ -197,10 +197,10 @@
           date: format(startDate, msg['format.dateFull']()),
         })}
       </h3>
-      <h1 class="font-sans-alt pb-8 text-center text-4xl font-bold sm:text-7xl">
+      <h1 class="font-sans-em pb-8 text-center text-4xl font-bold tracking-wide sm:text-7xl">
         {msg['championship.title']()}
       </h1>
-      <h2 class="font-sans-alt pb-8 text-2xl font-semibold sm:text-3xl">
+      <h2 class="font-sans-em pb-8 text-2xl font-semibold tracking-wide sm:text-3xl">
         {msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
       <div class="flex gap-3">

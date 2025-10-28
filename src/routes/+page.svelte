@@ -60,7 +60,7 @@
           </Button>
         </div>
         <h1
-          class="text-text-dark font-sans-alt pointer-events-none z-100 mb-4 text-center text-7xl select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
+          class="text-text-dark font-sans-em pointer-events-none z-100 mb-4 text-center text-7xl select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
           {msg.site_name()}
         </h1>
@@ -112,7 +112,7 @@
     class="-mt-16 grid min-h-svh w-full max-w-340 items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
-      <h2 class="font-sans-alt mb-3 text-2xl tracking-wide">
+      <h2 class="font-sans-em mb-3 text-2xl tracking-wide">
         {msg['home.desc_title']()}
       </h2>
       <p class="text-lg">{msg['home.description']()}</p>

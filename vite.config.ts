@@ -5,9 +5,11 @@ import UnoCSS from 'unocss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { analyzer } from 'vite-bundle-analyzer';
 import { playwright } from '@vitest/browser-playwright';
+import envCi from 'env-ci';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
+  const { isCi } = envCi();
 
   return {
     plugins: [
@@ -21,7 +23,7 @@ export default defineConfig(({ mode }) => {
         localStorageKey: 'siteLocale',
       }),
       analyzer({
-        enabled: false,
+        enabled: !isCi,
         analyzerMode: 'static',
         exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
       }),

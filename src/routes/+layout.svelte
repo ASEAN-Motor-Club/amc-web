@@ -1,6 +1,15 @@
 <script lang="ts">
+  import '@fontsource-variable/noto-sans';
+  import '@fontsource-variable/noto-sans-sc';
+  import '@fontsource-variable/noto-sans-jp';
+  import '@fontsource-variable/noto-sans-kr';
+  import '@fontsource-variable/noto-sans-thai-looped';
+  import '@fontsource-variable/noto-sans-mono';
+  import '@fontsource/kanit';
+  import '@fontsource/koulen';
   import 'virtual:uno.css';
   import '../app.css';
+
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
   import { onMount } from 'svelte';
