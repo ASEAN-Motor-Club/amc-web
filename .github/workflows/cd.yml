@@ -39,16 +39,10 @@ jobs:
           cache: 'pnpm'
 
       - name: 📦 Install dependencies
-        run: pnpm install
+        run: pnpm install -P
 
       - name: 🏗️ Build application
         run: pnpm build
-
-      - name: 📖 Build storybook
-        run: pnpm build:storybook
-
-      - name: ⬇️ Copy storybook to build
-        run: cp -r ./storybook-static ./build/storybook
 
       - name: 🚀 Deploy
         uses: burnett01/rsync-deployments@7.1.0
