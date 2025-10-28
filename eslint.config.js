@@ -112,7 +112,6 @@ export default defineConfig(
       '*.config.{js,ts}',
       '**/*.{test,spec}.{js,ts}',
       '.storybook/*.ts',
-      'vitest-setup-client.ts',
     ],
     extends: [ts.configs.disableTypeChecked],
   },
