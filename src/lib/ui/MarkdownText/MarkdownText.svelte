@@ -136,7 +136,11 @@
       async: false,
       renderer,
     });
-    return noSanitize ? rawHtml : DOMPurify.sanitize(rawHtml);
+    return noSanitize
+      ? rawHtml
+      : DOMPurify.sanitize(rawHtml, {
+          ADD_ATTR: ['target'],
+        });
   });
 
   let textContainer: HTMLSpanElement | undefined;

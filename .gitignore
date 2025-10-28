@@ -29,3 +29,5 @@ src/lib/paraglide
 storybook-static
 
 .vscode/settings.json
+
+**/__screenshots__

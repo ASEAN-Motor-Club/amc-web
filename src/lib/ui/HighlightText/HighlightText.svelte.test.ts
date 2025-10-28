@@ -57,7 +57,7 @@ describe('HighlightText', () => {
     expect(output.baseElement.innerHTML).toContain('Gangjung, Gangjung');
   });
 
-  it('should not render highlight text without highlight empty', () => {
+  it('should not render highlight when highlight string is empty', () => {
     const output = render(HighlightText, {
       text: 'Gangjung, Gangjung',
       highlight: '',

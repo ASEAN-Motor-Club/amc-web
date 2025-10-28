@@ -97,7 +97,7 @@ pnpm lint               # ESLint + Prettier check
 pnpm lint:fix           # Auto-fix ESLint issues
 pnpm check              # TypeScript + Svelte check
 pnpm check:watch        # TypeScript + Svelte check in watch mode
-pnpm test               # Run all tests
+pnpm test               # Run all tests. Prefer this one since you don't have to terminate it
 pnpm test:unit          # Run unit tests in watch mode
 pnpm build:storybook    # Build Storybook for deployment
 ```
