@@ -1,7 +1,7 @@
 import type { Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
 import { getMtLocale } from '$lib/utils/getMtLocale';
-import { m as msg } from '$lib/paraglide/messages';
+import { m } from '$lib/paraglide/messages';
 
 const flagOrder = {
   '': 0,
@@ -58,5 +58,5 @@ export const getLocationAtPoint = (point: Vector2) => {
   }
 
   matchArea.sort((a, b) => a.order - b.order);
-  return matchArea.map((area) => getMtLocale(area.name)).join(', ') || msg.unknown_location();
+  return matchArea.map((area) => getMtLocale(area.name)).join(', ') || m.unknown_location();
 };

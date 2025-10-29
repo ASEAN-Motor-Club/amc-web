@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   const title = $derived(
-    msg['players.head']({
-      siteName: msg.site_name_short(),
+    m['players.head']({
+      siteName: m.site_name_short(),
     }),
   );
 </script>

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
 
   const { children } = $props();
   const title = $derived(
-    msg['delivery.head']({
-      siteName: msg.site_name_short(),
+    m['delivery.head']({
+      siteName: m.site_name_short(),
     }),
   );
 </script>

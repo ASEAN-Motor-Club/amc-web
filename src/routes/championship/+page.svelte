@@ -5,7 +5,7 @@
   import poster1818 from '$lib/assets/images/poster/asean_poster_w1818.avif';
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { onMount, onDestroy, tick, getAbortSignal, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -166,8 +166,8 @@
   });
 
   const title = $derived(
-    msg['championship.head']({
-      siteName: msg.site_name_short(),
+    m['championship.head']({
+      siteName: m.site_name_short(),
       seasonNo: PUBLIC_SEASON_NO,
     }),
   );
@@ -193,22 +193,22 @@
     </div>
     <div class="contents" bind:this={textContainer}>
       <h3 class="pt-8 pb-5 font-semibold">
-        {msg['championship.starting_from']({
-          date: format(startDate, msg['format.dateFull']()),
+        {m['championship.starting_from']({
+          date: format(startDate, m['format.dateFull']()),
         })}
       </h3>
       <h1 class="font-sans-em pb-8 text-center text-4xl font-bold tracking-wide sm:text-7xl">
-        {msg['championship.title']()}
+        {m['championship.title']()}
       </h1>
       <h2 class="font-sans-em pb-8 text-2xl font-semibold tracking-wide sm:text-3xl">
-        {msg['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
+        {m['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
       <div class="flex gap-3">
         <Button class="w-36" variant="contained" tag="a" href="/championship/details">
-          {msg['championship.event_details']()}
+          {m['championship.event_details']()}
         </Button>
         <Button class="w-36" variant="contained" onClick={onTeamClick}>
-          {msg['championship.our_teams']()}
+          {m['championship.our_teams']()}
         </Button>
       </div>
     </div>
@@ -228,7 +228,7 @@
               <div class="min-h-0 w-full max-w-40 md:max-w-80">
                 <img
                   src={team.logo}
-                  alt={msg['championship.team_logo_alt']({
+                  alt={m['championship.team_logo_alt']({
                     team: team.name,
                   })}
                   class={[

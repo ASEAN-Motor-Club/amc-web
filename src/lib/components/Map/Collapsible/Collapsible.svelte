@@ -5,7 +5,7 @@
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import DeliveryDetails from '../Delivery/DeliveryDetails.svelte';
   import type { PlayerData } from '../Map/types';
@@ -141,7 +141,7 @@
         <CollapsibleButton
           class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/20 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
           icon="i-material-symbols:map-outline-rounded"
-          text={msg['map.side_menu.map']()}
+          text={m['map.side_menu.map']()}
           href={closeHref}
         />
       </div>
@@ -152,7 +152,7 @@
             'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
         ]}
         icon="i-material-symbols:person-outline-rounded"
-        text={msg['map.side_menu.players']()}
+        text={m['map.side_menu.players']()}
         href={getCollapsibleHref('players')}
       />
       <CollapsibleButton
@@ -161,7 +161,7 @@
           openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
         ]}
         icon="i-material-symbols:home-outline-rounded"
-        text={msg['map.side_menu.housing']()}
+        text={m['map.side_menu.housing']()}
         href={getCollapsibleHref('housing')}
       />
       <CollapsibleButton
@@ -170,7 +170,7 @@
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
         icon="i-material-symbols:delivery-truck-speed-outline-rounded"
-        text={censored.c ? msg['map.side_menu.jobs_c']() : msg['map.side_menu.jobs']()}
+        text={censored.c ? m['map.side_menu.jobs_c']() : m['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
       />
     </div>
@@ -184,7 +184,7 @@
         <CollapsibleButton
           class="h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/20 hover:text-yellow-700 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
-          text={msg['map.side_menu.delivery']()}
+          text={m['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}
         />
       </div>

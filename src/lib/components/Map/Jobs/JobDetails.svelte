@@ -5,7 +5,7 @@
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
   import Card from '$lib/ui/Card/Card.svelte';
@@ -52,7 +52,7 @@
 
     // If rent has expired
     if (expired) {
-      return msg['jobs.expired']();
+      return m['jobs.expired']();
     }
 
     const time = svelteDate.getTime();
@@ -139,14 +139,14 @@
         {/if}
       </div>
       <div class="mb-8">
-        <span class="font-semibold">{msg['jobs.bonus_multiplier']()}:</span>
+        <span class="font-semibold">{m['jobs.bonus_multiplier']()}:</span>
         {#if loading}
           <TextSkeleton class="w-12" />
         {:else}
           {(job?.bonus_multiplier ?? 0) * 100}%
         {/if}
         <br />
-        <span class="font-semibold">{msg['jobs.completion_bonus']()}:</span>
+        <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>
         {#if loading}
           <TextSkeleton class="w-12" />
         {:else}
@@ -154,16 +154,16 @@
         {/if}
       </div>
       <div>
-        <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>
+        <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
         <br />
         {#if loading}
           <TextSkeleton class="w-full" lines={3} />
         {:else}
-          <span class="font-semibold">{msg['jobs.constrains_cargo']()}:</span>
+          <span class="font-semibold">{m['jobs.constrains_cargo']()}:</span>
           {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
           <br />
           {#if job?.source_points && job.source_points.length > 0}
-            <span class="font-semibold">{msg['jobs.constrains_source_points']()}:</span>
+            <span class="font-semibold">{m['jobs.constrains_source_points']()}:</span>
             {#each job.source_points as point, i (point.guid)}
               <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
                 ? ', '
@@ -172,7 +172,7 @@
             <br />
           {/if}
           {#if job?.destination_points && job.destination_points.length > 0}
-            <span class="font-semibold">{msg['jobs.constrains_destination_points']()}:</span>
+            <span class="font-semibold">{m['jobs.constrains_destination_points']()}:</span>
             {#each job.destination_points as point, i (point.guid)}
               <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
                 ? ', '
@@ -190,7 +190,7 @@
       <div>
         {#if validSupply.length > 0}
           <div class="mb-4">
-            <div class="font-semibold">{msg['jobs.job_supply']()}</div>
+            <div class="font-semibold">{m['jobs.job_supply']()}</div>
             <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
               {#each validSupply as point (point.guid)}
                 <li class="ml-8">
@@ -202,7 +202,7 @@
         {/if}
         {#if validDemand.length > 0}
           <div>
-            <div class="font-semibold">{msg['jobs.job_demand']()}</div>
+            <div class="font-semibold">{m['jobs.job_demand']()}</div>
             <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
               {#each validDemand as point (point.guid)}
                 <li class="ml-8">
@@ -220,7 +220,7 @@
         class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
       >
         <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-          {msg['jobs.contributors']()}
+          {m['jobs.contributors']()}
         </div>
         <Table
           gridClass="grid-cols-[6fr_4rem_6rem]"
@@ -230,19 +230,19 @@
         >
           {#snippet emptyState()}
             <TableEmptyState class="py-12">
-              {censored.c ? msg['jobs.no_contributors_c']() : msg['jobs.no_contributors']()}
+              {censored.c ? m['jobs.no_contributors_c']() : m['jobs.no_contributors']()}
             </TableEmptyState>
           {/snippet}
           {#snippet head()}
             <TableHead>
               <div>
-                {msg['jobs.table.name']()}
+                {m['jobs.table.name']()}
               </div>
               <div class="text-right whitespace-nowrap">
-                {msg['jobs.table.amount']()}
+                {m['jobs.table.amount']()}
               </div>
               <div class="text-right whitespace-nowrap">
-                {msg['jobs.table.reward_cut']()}
+                {m['jobs.table.reward_cut']()}
               </div>
             </TableHead>
           {/snippet}
@@ -268,6 +268,6 @@
   <div
     class="text-text/60 dark:text-text-dark/60 flex h-full items-center justify-center p-8 text-sm"
   >
-    {censored.c ? msg['jobs.job_not_found_c']() : msg['jobs.job_not_found']()}
+    {censored.c ? m['jobs.job_not_found_c']() : m['jobs.job_not_found']()}
   </div>
 {/if}

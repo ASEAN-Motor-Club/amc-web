@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import { getEventResult } from '$lib/api/championship';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -64,8 +64,8 @@
   <Card class="flex max-h-full w-150 max-w-full flex-col p-0">
     <h1 class="p-5 text-2xl font-bold tracking-tight">
       {event
-        ? msg['championship.event.event_results']({ event: event.name })
-        : msg['championship.event.results']()}
+        ? m['championship.event.event_results']({ event: event.name })
+        : m['championship.event.results']()}
     </h1>
     <Table
       gridClass="grid-cols-[1fr_4fr_2fr_1fr_2fr]"
@@ -77,7 +77,7 @@
     >
       {#snippet emptyState()}
         <TableEmptyState>
-          {msg['championship.event.no_results']()}
+          {m['championship.event.no_results']()}
         </TableEmptyState>
       {/snippet}
       {#each results as result, index (result.character.id)}
@@ -111,7 +111,7 @@
               {#if result.finished}
                 {formatResultTime(result)}
               {:else}
-                <span class="text-xs italic opacity-50">{msg['championship.event.dnf']()}</span>
+                <span class="text-xs italic opacity-50">{m['championship.event.dnf']()}</span>
               {/if}
             </div>
           </div>
@@ -126,10 +126,10 @@
         tag="a"
         href={`?date=${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`}
       >
-        {msg['championship.event.view_event']()}
+        {m['championship.event.view_event']()}
       </Button>
       <Button onClick={onClose} color="secondary" variant="text">
-        {msg['action.close']()}
+        {m['action.close']()}
       </Button>
     </div>
   </Card>

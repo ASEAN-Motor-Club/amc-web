@@ -41,7 +41,7 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { isMouse } from '$lib/utils/media.svelte';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
@@ -383,12 +383,12 @@
   };
 
   const nameMap = $derived({
-    [layerId.Delivery]: msg['map.delivery_point'](),
-    [layerId.House]: msg['map.house'](),
-    [layerId.Player]: msg['map.player'](),
-    [layerId.PlayerName]: msg['map.player_name'](),
-    [layerId.Pins]: msg['map.pins'](),
-    [layerId.PinLabels]: msg['map.pin_labels'](),
+    [layerId.Delivery]: m['map.delivery_point'](),
+    [layerId.House]: m['map.house'](),
+    [layerId.Player]: m['map.player'](),
+    [layerId.PlayerName]: m['map.player_name'](),
+    [layerId.Pins]: m['map.pins'](),
+    [layerId.PinLabels]: m['map.pin_labels'](),
   });
 
   const deliveryLayerData = $state({
@@ -826,7 +826,7 @@
         const data = pinsJson.map((p, i) => ({
           ...p,
           pointType: PointType.Pin,
-          label: p.label ?? msg['map.pin_no']({ index: i + 1 }),
+          label: p.label ?? m['map.pin_no']({ index: i + 1 }),
         }));
         pinsSource.addFeatures(
           data.map(
@@ -848,8 +848,8 @@
       } catch (e) {
         console.error('Invalid pins data:', e);
         showModal({
-          title: msg['map.pins_invalid.title'](),
-          message: msg['map.pins_invalid.desc'](),
+          title: m['map.pins_invalid.title'](),
+          message: m['map.pins_invalid.desc'](),
         });
       }
     }
@@ -905,7 +905,7 @@
       class="media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
     >
       <h2 class="text-text-dark mb-1 text-xs">
-        {msg['map.point_of_interests']()}
+        {m['map.point_of_interests']()}
       </h2>
       <div class="flex flex-wrap gap-2">
         {#each layersDataCheckPins as layer (layer.id)}
@@ -930,7 +930,7 @@
             }}
           >
             {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
-              {censored.c ? msg['map.jobs_only_c']() : msg['map.jobs_only']()}
+              {censored.c ? m['map.jobs_only_c']() : m['map.jobs_only']()}
             {:else}
               {nameMap[layer.id]}
             {/if}

@@ -24,7 +24,7 @@
     baseLocale,
     type Locale,
   } from '$lib/paraglide/runtime';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';
@@ -83,7 +83,7 @@
 </script>
 
 <svelte:head>
-  <meta name="description" content={msg['home.desc_title']()} />
+  <meta name="description" content={m['home.desc_title']()} />
   <meta
     name="theme-color"
     content={color ?? colorBackground100}
@@ -95,17 +95,17 @@
     media="(prefers-color-scheme: dark)"
   />
 
-  <meta property="og:site_name" content={msg.site_name()} />
-  <meta property="og:description" content={msg['home.desc_title']()} />
+  <meta property="og:site_name" content={m.site_name()} />
+  <meta property="og:description" content={m['home.desc_title']()} />
   <meta property="og:image" content={splashBig} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:type" content="website" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content={msg.site_name_short()} />
+  <meta name="apple-mobile-web-app-title" content={m.site_name_short()} />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-status-bar-style" content="default" />
-  <meta name="mobile-web-app-title" content={msg.site_name_short()} />
+  <meta name="mobile-web-app-title" content={m.site_name_short()} />
 </svelte:head>
 
 <GlobalPlayer>

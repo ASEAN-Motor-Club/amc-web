@@ -1,6 +1,6 @@
 <script lang="ts">
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';
   import Button from '$lib/ui/Button/Button.svelte';
   import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
@@ -12,13 +12,13 @@
   const year = $derived(svelteDate.getFullYear());
 
   const features = $derived([
-    msg['home.friendly_community'](),
-    msg['home.regular_events'](),
-    msg['home.ig_live_radio'](),
-    msg['home.ig_bot'](),
+    m['home.friendly_community'](),
+    m['home.regular_events'](),
+    m['home.ig_live_radio'](),
+    m['home.ig_bot'](),
   ]);
 
-  const title = $derived(msg.site_name());
+  const title = $derived(m.site_name());
 </script>
 
 <svelte:head>
@@ -56,13 +56,13 @@
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
-            {msg['home.live_server_no_count']()}
+            {m['home.live_server_no_count']()}
           </Button>
         </div>
         <h1
           class="text-text-dark font-sans-em pointer-events-none z-100 mb-4 text-center text-7xl select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
-          {msg.site_name()}
+          {m.site_name()}
         </h1>
         <div class="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-15 sm:justify-start">
           {#each features as feature (feature)}
@@ -82,7 +82,7 @@
             tag="a"
             href={PUBLIC_DISCORD_LINK}
             target="_blank"
-            rel="noreferrer">{msg['home.join_discord']()}</Button
+            rel="noreferrer">{m['home.join_discord']()}</Button
           >
           <div class="rounded-md bg-white">
             <Button
@@ -91,7 +91,7 @@
               tag="a"
               href={PUBLIC_PATREON_LINK}
               target="_blank"
-              rel="noreferrer">{msg['home.join_patreon']()}</Button
+              rel="noreferrer">{m['home.join_patreon']()}</Button
             >
           </div>
           <Button
@@ -99,7 +99,7 @@
             tag="a"
             href="/radio"
             class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/12.5 backdrop-blur-xs"
-            >{msg['home.listen_radio']()}</Button
+            >{m['home.listen_radio']()}</Button
           >
         </div>
       </div>
@@ -113,16 +113,16 @@
   >
     <div>
       <h2 class="font-sans-em mb-3 text-2xl tracking-wide">
-        {msg['home.desc_title']()}
+        {m['home.desc_title']()}
       </h2>
-      <p class="text-lg">{msg['home.description']()}</p>
+      <p class="text-lg">{m['home.description']()}</p>
       <div class="text-text/75 dark:text-text-dark/75 mt-2 text-sm">
-        {msg['home.copyright']({ year })}
+        {m['home.copyright']({ year })}
       </div>
     </div>
     <div class="justify-self-end">
       <iframe
-        title={msg['home.iframe_discord']()}
+        title={m['home.iframe_discord']()}
         src="https://discordapp.com/widget?id=1341775494026231859&theme=dark"
         allowtransparency
         frameborder="0"

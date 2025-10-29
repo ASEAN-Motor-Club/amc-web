@@ -3,7 +3,7 @@
   import type { HouseData } from '$lib/api/types';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
 
@@ -32,7 +32,7 @@
     const time = svelteDate.getTime();
 
     if (isBefore(currentHouseData.rentLeft, time)) {
-      return msg['housing.expired']();
+      return m['housing.expired']();
     }
 
     return formatDistanceStrict(currentHouseData.rentLeft, time, {
@@ -45,27 +45,27 @@
 
 <div class="flex flex-col text-xs">
   <div>
-    <span class="font-semibold">{msg['housing.id']()}:</span>
+    <span class="font-semibold">{m['housing.id']()}:</span>
     {hoverInfo.info.name}
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.size']()}:</span>
+    <span class="font-semibold">{m['housing.size']()}:</span>
     {hoverInfo.info.size.x / 100} x {hoverInfo.info.size.y / 100}
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.rent_price']()}:</span>
+    <span class="font-semibold">{m['housing.rent_price']()}:</span>
     {(hoverInfo.info.cost / 10).toLocaleString(locale)}
   </div>
   {#if currentHouseData?.ownerName}
     <div>
-      <span class="font-semibold">{msg['housing.rent_left']()}:</span>
+      <span class="font-semibold">{m['housing.rent_left']()}:</span>
       {rentLeftText}
     </div>
   {/if}
   <!-- <div>
-    <span class="font-semibold">{msg['housing.depot']()}:</span> TODO
+    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
   </div>
   <div>
-    <span class="font-semibold">{msg['housing.depot_storage']()}:</span> TODO
+    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
   </div> -->
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Player from '$lib/components/Radio/Player.svelte';
@@ -18,8 +18,8 @@
   import tireTrackP1440 from '$lib/assets/images/tire_track/tire_tracks_p_w1440.avif';
 
   const title = $derived(
-    msg['radio.head']({
-      siteName: msg.site_name_short(),
+    m['radio.head']({
+      siteName: m.site_name_short(),
     }),
   );
 </script>
@@ -45,7 +45,7 @@
   </picture>
   <div class="pointer-events-none fixed inset-0 -z-1 bg-black/70 dark:bg-black/90"></div>
 
-  <CommonHead class="text-text-dark text-center">{msg['radio.title']()}</CommonHead>
+  <CommonHead class="text-text-dark text-center">{m['radio.title']()}</CommonHead>
 
   <div class="relative min-h-screen overflow-hidden pb-8">
     <div class="relative z-10 mx-auto w-full px-3">
@@ -54,7 +54,7 @@
     <div class="px-3">
       <Card class="mx-auto mt-8 max-w-175 p-8 !ring-white/20">
         <div class="-mb-[1.25em]">
-          <MarkdownText text={msg['radio_guide.content_markdown']()} noSanitize />
+          <MarkdownText text={m['radio_guide.content_markdown']()} noSanitize />
         </div>
       </Card>
     </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
@@ -24,39 +24,39 @@
   const links: NavbarItemType[] = $derived([
     {
       href: '/map',
-      label: msg['navbar.map'](),
+      label: m['navbar.map'](),
       icon: mapIcon,
       subItems: [
         {
           href: '/players',
-          label: msg['navbar.players'](),
+          label: m['navbar.players'](),
           icon: playerIcon,
         },
         {
           href: '/housing',
-          label: msg['navbar.housing'](),
+          label: m['navbar.housing'](),
           icon: housingIcon,
         },
         {
           href: '/jobs',
-          label: censored.c ? msg['navbar.jobs_c']() : msg['navbar.jobs'](),
+          label: censored.c ? m['navbar.jobs_c']() : m['navbar.jobs'](),
           icon: jobIcon,
         },
       ],
     },
     {
-      label: msg['navbar.tools'](),
+      label: m['navbar.tools'](),
       icon: toolsIcon,
       subItems: [
         {
           href: 'https://wiki.aseanmotorclub.com/',
-          label: msg['navbar.wiki'](),
+          label: m['navbar.wiki'](),
           icon: wikiIcon,
           external: true,
         },
         {
           href: '/track',
-          label: msg['navbar.track_editor'](),
+          label: m['navbar.track_editor'](),
           icon: trackIcon,
           exact: false,
         },
@@ -64,19 +64,19 @@
     },
     {
       href: '/radio',
-      label: msg['navbar.radio'](),
+      label: m['navbar.radio'](),
       textClass: playerContext.isPlaying ? '!text-orange-500' : undefined,
       icon: radioIcon,
     },
     {
       href: '/championship',
-      label: msg['navbar.amc_cup'](),
+      label: m['navbar.amc_cup'](),
       icon: trophyIcon,
       textClass: 'text-amber-600 dark:text-amber-400',
       subItems: [
         {
           href: '/championship/details',
-          label: msg['navbar.details'](),
+          label: m['navbar.details'](),
           icon: champDetailsIcon,
         },
       ],
@@ -178,7 +178,7 @@
       tag="a"
       href={PUBLIC_DISCORD_LINK}
       target="_blank"
-      rel="noreferrer">{msg['navbar.join_discord']()}</Button
+      rel="noreferrer">{m['navbar.join_discord']()}</Button
     >
   </div>
 {/snippet}
@@ -190,7 +190,7 @@
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-em mr-6 text-2xl leading-none tracking-wide">
-    {msg.site_name()}
+    {m.site_name()}
   </a>
   {#if isLg.current}
     <div class="flex h-full items-stretch gap-6">
@@ -210,7 +210,7 @@
           class="font-sans-em mb-10 text-2xl tracking-wide"
           onclick={() => setMenu(false)}
         >
-          {msg.site_name()}
+          {m.site_name()}
         </a>
         <div class="flex flex-col gap-4">
           {@render menuItems(true)}

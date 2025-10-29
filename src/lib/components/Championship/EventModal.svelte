@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -28,13 +28,13 @@
     });
   });
 
-  const formattedDate = $derived(date ? format(date, msg['format.dateFull']()) : '');
+  const formattedDate = $derived(date ? format(date, m['format.dateFull']()) : '');
 </script>
 
 <Modal open={!!date} {onClose}>
   <Card class="flex max-h-full w-150 max-w-full flex-col p-5">
     <h1 class="pb-5 text-2xl font-bold tracking-tight">
-      {msg['championship.event.title']({ date: formattedDate })}
+      {m['championship.event.title']({ date: formattedDate })}
     </h1>
     <div
       class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
@@ -45,7 +45,7 @@
     </div>
     <div class="-mx-3 -mb-3 flex justify-end pt-2">
       <Button onClick={onClose} color="secondary" variant="text">
-        {msg['action.close']()}
+        {m['action.close']()}
       </Button>
     </div>
   </Card>

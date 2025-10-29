@@ -9,7 +9,7 @@
   import type { House } from '$lib/data/house';
   import Button from '$lib/ui/Button/Button.svelte';
   import type { HouseData } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
@@ -47,11 +47,11 @@
 
     switch (hoverInfo.pointType) {
       case PointType.Delivery:
-        return msg['map.delivery_point']();
+        return m['map.delivery_point']();
       case PointType.Player:
-        return msg['map.player']();
+        return m['map.player']();
       case PointType.House:
-        return msg['map.house']();
+        return m['map.house']();
     }
   });
 
@@ -110,10 +110,10 @@
       <div class="text-sm">
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
-            ? msg['housing.owned_house']({
+            ? m['housing.owned_house']({
                 owner: houseData[hoverInfo.info.name].ownerName,
               })
-            : msg['housing.vacant_house']()}
+            : m['housing.vacant_house']()}
         {:else if hoverInfo.pointType === PointType.Delivery}
           {getMtLocale(hoverInfo.info.name)}
         {:else}
@@ -136,7 +136,7 @@
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">
-          {msg['map.click_lock']()}
+          {m['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
@@ -145,8 +145,8 @@
           class="media-not-mouse:pointer-events-auto mb-0.5 bg-white/10 px-2"
           {onClick}
         >
-          <span class="media-mouse:inline hidden">{msg['map.click_info']()}</span>
-          <span class="media-not-mouse:inline hidden">{msg['map.click_here_info']()}</span>
+          <span class="media-mouse:inline hidden">{m['map.click_info']()}</span>
+          <span class="media-not-mouse:inline hidden">{m['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>

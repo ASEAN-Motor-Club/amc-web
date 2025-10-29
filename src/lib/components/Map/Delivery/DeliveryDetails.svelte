@@ -12,7 +12,7 @@
   } from '$lib/utils/delivery';
   import type { DeliveryCargo } from '$lib/data/types';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -110,7 +110,7 @@
   </CommonHead>
   <div class="-mt-3 px-5 pb-5">
     <Button color="info" variant="text" tag="a" href={getViewHref(Features.Delivery, id)}>
-      {msg.view_on_map()}
+      {m.view_on_map()}
     </Button>
   </div>
   {#if deliveryPoint?.parent}
@@ -120,7 +120,7 @@
   {/if}
   {#if differenceInSeconds(svelteDate.getTime(), lastUpdated) > 30}
     <div class="px-8 pb-8 text-xs font-semibold text-red-500">
-      {msg['delivery.last_updated']({
+      {m['delivery.last_updated']({
         time: formatDistanceStrict(lastUpdated, svelteDate.getTime(), {
           addSuffix: true,
         }),
@@ -132,7 +132,7 @@
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {censored.c ? msg['delivery.job_supply_c']() : msg['delivery.job_supply']()}
+            {censored.c ? m['delivery.job_supply_c']() : m['delivery.job_supply']()}
           </div>
           {#each matchJobs as job (job.id)}
             <div
@@ -149,7 +149,7 @@
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {censored.c ? msg['delivery.job_demand_c']() : msg['delivery.job_demand']()}
+            {censored.c ? m['delivery.job_demand_c']() : m['delivery.job_demand']()}
           </div>
           {#each matchJobsDest as job (job.id)}
             <div
@@ -171,7 +171,7 @@
       {#if deliveryPoint.allSupply.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {msg['delivery.supply']()}
+            {m['delivery.supply']()}
           </div>
           {#each deliveryPoint.allSupply as item (item)}
             <div
@@ -197,7 +197,7 @@
       {#if deliveryPoint.allDemand.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {msg['delivery.demand']()}
+            {m['delivery.demand']()}
           </div>
           {#each deliveryPoint.allDemand as item (item)}
             <div
@@ -227,7 +227,7 @@
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
           <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
-            {msg['delivery.delivery']()}
+            {m['delivery.delivery']()}
           </div>
         </Card>
       </div>

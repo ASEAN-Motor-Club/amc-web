@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { DeliveryJob } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import JobCard from '$lib/components/Map/Jobs/JobCard.svelte';
   import { censored } from '$lib/censored.svelte';
 
@@ -16,7 +16,7 @@
 
 <div class="flex h-full flex-col">
   <CommonHead class="border-b border-neutral-500/20"
-    >{censored.c ? msg['jobs.title_c']() : msg['jobs.title']()}</CommonHead
+    >{censored.c ? m['jobs.title_c']() : m['jobs.title']()}</CommonHead
   >
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if loading || jobsData.length > 0}
@@ -38,7 +38,7 @@
       </div>
     {:else}
       <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
-        {censored.c ? msg['jobs.no_jobs_c']() : msg['jobs.no_jobs']()}
+        {censored.c ? m['jobs.no_jobs_c']() : m['jobs.no_jobs']()}
       </div>
     {/if}
   </div>

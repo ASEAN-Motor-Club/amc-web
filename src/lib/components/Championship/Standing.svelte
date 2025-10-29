@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { getAbortSignal, onMount } from 'svelte';
   import { getPersonalStandings, getTeamStandings } from '$lib/api/championship';
   import type { TeamStanding, PersonalStanding } from '$lib/api/types';
@@ -29,13 +29,13 @@
   class="-mx-8 flex flex-row items-center gap-4 overflow-x-auto px-8 py-4 sm:mx-0 sm:justify-center sm:overflow-x-visible sm:p-0"
 >
   <StandingCard
-    title={msg['championship.team_standing']()}
+    title={m['championship.team_standing']()}
     {loading}
     empty={teamStandings.length === 0}
   >
     {#snippet emptyState()}
       <TableEmptyState>
-        {msg['championship.no_standing']()}
+        {m['championship.no_standing']()}
       </TableEmptyState>
     {/snippet}
     {#snippet children({ getStandingRowClass })}
@@ -53,13 +53,13 @@
   </StandingCard>
 
   <StandingCard
-    title={msg['championship.personal_standing']()}
+    title={m['championship.personal_standing']()}
     {loading}
     empty={personalStandings.length === 0}
   >
     {#snippet emptyState()}
       <TableEmptyState>
-        {msg['championship.no_standing']()}
+        {m['championship.no_standing']()}
       </TableEmptyState>
     {/snippet}
     {#snippet children({ getStandingRowClass })}

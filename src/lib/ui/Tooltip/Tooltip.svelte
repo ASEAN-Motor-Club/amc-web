@@ -161,6 +161,7 @@
       }
     };
 
+    // @unocss-skip-start
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll, true);
 
@@ -171,26 +172,27 @@
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll, true);
     };
+    // @unocss-skip-end
   });
+
+  const show = $derived(showTooltip && !disabled);
 </script>
 
 {#snippet tooltipBase()}
-  {#if showTooltip && !disabled}
-    <div
-      bind:this={tooltipElement}
-      class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClass))}
-      role="tooltip"
-      transition:fade={{ duration: defaultTransitionDurationMs }}
-    >
-      {@render children()}
-    </div>
-  {/if}
+  <div
+    bind:this={tooltipElement}
+    class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClass))}
+    role="tooltip"
+    transition:fade={{ duration: defaultTransitionDurationMs }}
+  >
+    {@render children()}
+  </div>
 {/snippet}
 
-{#if portal}
+{#if portal && show}
   <Portal>
     {@render tooltipBase()}
   </Portal>
-{:else}
+{:else if show}
   {@render tooltipBase()}
 {/if}

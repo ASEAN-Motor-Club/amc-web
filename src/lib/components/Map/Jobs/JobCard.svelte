@@ -2,7 +2,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import type { DeliveryJob } from '$lib/api/types';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
   import { createSvelteDate } from '$lib/svelteDate.svelte';
@@ -35,7 +35,7 @@
 
     // If rent has expired
     if (expired) {
-      return msg['jobs.expired']();
+      return m['jobs.expired']();
     }
 
     const time = svelteDate.getTime();
@@ -62,20 +62,20 @@
     {timeLeftText}
   </div>
   <div class="mb-2">
-    <span class="font-semibold">{msg['jobs.bonus_multiplier']()}:</span>
+    <span class="font-semibold">{m['jobs.bonus_multiplier']()}:</span>
     {(job?.bonus_multiplier ?? 0) * 100}%
     <br />
-    <span class="font-semibold">{msg['jobs.completion_bonus']()}:</span>
+    <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>
     ${job?.completion_bonus}
   </div>
   <div class="mb-2 text-sm">
-    <span class="text-base font-semibold">{msg['jobs.constrains']()}</span>
+    <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
     <br />
-    <span class="font-semibold">{msg['jobs.constrains_cargo']()}:</span>
+    <span class="font-semibold">{m['jobs.constrains_cargo']()}:</span>
     {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
     <br />
     {#if job?.source_points && job.source_points.length > 0}
-      <span class="font-semibold">{msg['jobs.constrains_source_points']()}:</span>
+      <span class="font-semibold">{m['jobs.constrains_source_points']()}:</span>
       {#each job.source_points as point, i (point.guid)}
         <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
           ? ', '
@@ -84,7 +84,7 @@
       <br />
     {/if}
     {#if job?.destination_points && job.destination_points.length > 0}
-      <span class="font-semibold">{msg['jobs.constrains_destination_points']()}:</span>
+      <span class="font-semibold">{m['jobs.constrains_destination_points']()}:</span>
       {#each job.destination_points as point, i (point.guid)}
         <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
           ? ', '
@@ -106,7 +106,7 @@
       color="primary"
       size="sm"
     >
-      {msg['championship.event.more_info']()}
+      {m['championship.event.more_info']()}
     </Button>
   </div>
 </Card>

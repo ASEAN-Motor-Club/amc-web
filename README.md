@@ -108,13 +108,11 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
 </script>
 
-<h1>{msg['site_name']()}</h1>
+<h1>{m.site_name()}</h1><p>{m['radio.title']()}</p>
 ```
-
-**Important**: Use `msg['key']()` syntax for internationalized strings.
 
 ## 🎨 Styling
 

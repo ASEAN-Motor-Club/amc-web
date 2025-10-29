@@ -26,9 +26,9 @@
 
   const discordTime: TokenizerAndRendererExtension = {
     name: 'discordTime',
-    //unocss-skip-start
+    // @unocss-skip-start
     level: 'inline',
-    //unocss-skip-end
+    // @unocss-skip-end
     start(src: string) {
       return /<t:/.exec(src)?.index;
     },
@@ -64,9 +64,9 @@
 
   const discordMentions: TokenizerAndRendererExtension = {
     name: 'discordMentions',
-    //unocss-skip-start
+    // @unocss-skip-start
     level: 'inline',
-    //unocss-skip-end
+    // @unocss-skip-end
     start(src: string) {
       return /<@/.exec(src)?.index;
     },

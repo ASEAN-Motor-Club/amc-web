@@ -79,27 +79,25 @@
 </script>
 
 {#snippet modalBase()}
-  {#if open}
-    <div
-      class={twMerge(
-        'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
-        clsx(propsClass),
-      )}
-      transition:fade={{
-        duration: defaultTransitionDurationMs,
-      }}
-    >
-      <button
-        class="fixed inset-0 -z-1 h-full w-full overscroll-none opacity-0"
-        onclick={onClose}
-        aria-label="Close modal"
-      ></button>
-      {@render children()}
-    </div>
-  {/if}
+  <div
+    class={twMerge(
+      'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
+      clsx(propsClass),
+    )}
+    transition:fade={{
+      duration: defaultTransitionDurationMs,
+    }}
+  >
+    <button
+      class="fixed inset-0 -z-1 h-full w-full overscroll-none opacity-0"
+      onclick={onClose}
+      aria-label="Close modal"
+    ></button>
+    {@render children()}
+  </div>
 {/snippet}
 
-{#if portal}
+{#if portal && open}
   <Portal target={portalTarget}>
     {@render modalBase()}
   </Portal>

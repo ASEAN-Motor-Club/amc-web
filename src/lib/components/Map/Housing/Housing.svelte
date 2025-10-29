@@ -7,7 +7,7 @@
   import Select from '$lib/ui/Select/Select.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
@@ -36,7 +36,7 @@
       const searchLower = searchValue.trim().toLowerCase();
       return (
         house.name.toLowerCase().includes(searchLower) ||
-        (houseData?.[house.name].ownerName || msg['housing.vacant']())
+        (houseData?.[house.name].ownerName || m['housing.vacant']())
           .toLowerCase()
           .includes(searchLower)
       );
@@ -83,7 +83,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{msg['housing.title']()}</CommonHead>
+  <CommonHead>{m['housing.title']()}</CommonHead>
   <div
     class={[
       'flex flex-col justify-between gap-2 border-b border-neutral-500/20 px-8 pb-8',
@@ -92,7 +92,7 @@
   >
     <TextInput
       value={searchValue}
-      placeholder={msg['housing.search_placeholder']()}
+      placeholder={m['housing.search_placeholder']()}
       name="search"
       type="search"
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
@@ -106,10 +106,10 @@
       onChange={handleSortChange}
       class={['w-full flex-shrink-0', fullScreen && 'sm:max-w-45']}
     >
-      <SelectOption id="name" value={msg['housing.sort.name']()} />
-      <SelectOption id="id" value={msg['housing.sort.id']()} />
-      <SelectOption id="rentLeft" value={msg['housing.sort.rent_left']()} />
-      <!-- <SelectOption id="depotStorage" value={msg['housing.sort.depot_storage']()} /> -->
+      <SelectOption id="name" value={m['housing.sort.name']()} />
+      <SelectOption id="id" value={m['housing.sort.id']()} />
+      <SelectOption id="rentLeft" value={m['housing.sort.rent_left']()} />
+      <!-- <SelectOption id="depotStorage" value={m['housing.sort.depot_storage']()} /> -->
     </Select>
   </div>
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
@@ -126,7 +126,7 @@
       </div>
     {:else}
       <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
-        {msg['housing.no_results']()}
+        {m['housing.no_results']()}
       </div>
     {/if}
   </div>

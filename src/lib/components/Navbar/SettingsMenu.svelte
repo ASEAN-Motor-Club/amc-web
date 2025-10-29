@@ -5,7 +5,7 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import Select from '$lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import { mtLocale, setLocale } from '../Locale/locale.svelte';
   import type { MtLocaleKey } from '$lib/data/types';
@@ -91,55 +91,55 @@
   const getLocaleText = (localeKey: MtLocaleKey | Locale) => {
     switch (localeKey) {
       case 'cs':
-        return msg['locales.cs']();
+        return m['locales.cs']();
       case 'de':
-        return msg['locales.de']();
+        return m['locales.de']();
       case 'en':
-        return msg['locales.en']();
+        return m['locales.en']();
       case 'es-419':
-        return msg['locales.es-419']();
+        return m['locales.es-419']();
       case 'es-ES':
-        return msg['locales.es-ES']();
+        return m['locales.es-ES']();
       case 'fi':
-        return msg['locales.fi']();
+        return m['locales.fi']();
       case 'fr':
-        return msg['locales.fr']();
+        return m['locales.fr']();
       case 'hu':
-        return msg['locales.hu']();
+        return m['locales.hu']();
       case 'it':
-        return msg['locales.it']();
+        return m['locales.it']();
       case 'ja':
-        return msg['locales.ja']();
+        return m['locales.ja']();
       case 'ko':
-        return msg['locales.ko']();
+        return m['locales.ko']();
       case 'lt':
-        return msg['locales.lt']();
+        return m['locales.lt']();
       case 'nl':
-        return msg['locales.nl']();
+        return m['locales.nl']();
       case 'no':
-        return msg['locales.no']();
+        return m['locales.no']();
       case 'pl':
-        return msg['locales.pl']();
+        return m['locales.pl']();
       case 'pt-BR':
-        return msg['locales.pt-BR']();
+        return m['locales.pt-BR']();
       case 'ru':
-        return msg['locales.ru']();
+        return m['locales.ru']();
       case 'sv':
-        return msg['locales.sv']();
+        return m['locales.sv']();
       case 'tr':
-        return msg['locales.tr']();
+        return m['locales.tr']();
       case 'uk':
-        return msg['locales.uk']();
+        return m['locales.uk']();
       case 'vi':
-        return msg['locales.vi']();
+        return m['locales.vi']();
       case 'zh-Hans':
-        return msg['locales.zh-Hans']();
+        return m['locales.zh-Hans']();
       case 'zh-Hant':
-        return msg['locales.zh-Hant']();
+        return m['locales.zh-Hant']();
       case 'th':
-        return msg['locales.th']();
+        return m['locales.th']();
       case 'id':
-        return msg['locales.id']();
+        return m['locales.id']();
     }
   };
 </script>
@@ -158,7 +158,7 @@
     >
       <Card class="w-full">
         <div class="flex items-center justify-between gap-2">
-          <div class="font-semibold">{msg['settings.theme.title']()}</div>
+          <div class="font-semibold">{m['settings.theme.title']()}</div>
           <Button class="ml-auto" variant="contained-light" onClick={swapTheme}>
             {#snippet prependIcon()}
               <Icon
@@ -169,13 +169,13 @@
                 ]}
               />
             {/snippet}
-            {darkMode ? msg['settings.theme.dark']() : msg['settings.theme.light']()}
+            {darkMode ? m['settings.theme.dark']() : m['settings.theme.light']()}
           </Button>
         </div>
         <Divider spacing="sm" />
         <div class="mb-2 flex items-center justify-between gap-2">
           <TruncateText
-            text={msg['settings.site_language']()}
+            text={m['settings.site_language']()}
             class="font-semibold whitespace-nowrap"
           />
           <Select
@@ -192,7 +192,7 @@
         </div>
         <div class="flex items-center justify-between gap-2">
           <TruncateText
-            text={msg['settings.game_language']()}
+            text={m['settings.game_language']()}
             class="font-semibold whitespace-nowrap"
           />
           <Select

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
@@ -49,7 +49,7 @@
       color="info"
       onClick={() => onCenter([player?.coord.x ?? 0, player?.coord.y ?? 0])}
     >
-      {msg.view_on_map()}
+      {m.view_on_map()}
     </Button>
   </div>
 
@@ -57,13 +57,13 @@
     {loading
       ? '.'
       : player?.vehicleKey !== 'None'
-        ? msg['players.details_driving']({
+        ? m['players.details_driving']({
             vehicle: vehicleName
               ? getMtLocale(vehicleName)
-              : msg['map.player_info.unknown_vehicle'](),
+              : m['map.player_info.unknown_vehicle'](),
             location: getLocationAtPoint(player?.coord ?? { x: 0, y: 0 }),
           })
-        : msg['players.details']({
+        : m['players.details']({
             location: getLocationAtPoint(player.coord),
           })}
   </div>

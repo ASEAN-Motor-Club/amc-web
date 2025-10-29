@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import { getAbortSignal, onMount } from 'svelte';
   import { trackSchema, type Track } from '$lib/schema/track';
@@ -24,9 +24,9 @@
       const validate = trackSchema.safeParse(trackData);
       if (!validate.success) {
         showModal({
-          title: msg['track_editor.select_track.error.title'](),
+          title: m['track_editor.select_track.error.title'](),
           message:
-            msg['track_editor.select_track.error.invalid_track']() +
+            m['track_editor.select_track.error.invalid_track']() +
             `\n${validate.error.issues.map((issue) => issue.message).join('\n')}`,
         });
       } else {
@@ -35,8 +35,8 @@
     } catch (error) {
       console.error('Error parsing track data:', error);
       showModal({
-        title: msg['track_editor.select_track.error.title'](),
-        message: msg['track_editor.select_track.error.load_error'](),
+        title: m['track_editor.select_track.error.title'](),
+        message: m['track_editor.select_track.error.load_error'](),
       });
     }
   };
@@ -92,8 +92,8 @@
 
     if (!clipboard) {
       showModal({
-        title: msg['track_editor.select_track.error.title'](),
-        message: msg['track_editor.select_track.error.clipboard_empty'](),
+        title: m['track_editor.select_track.error.title'](),
+        message: m['track_editor.select_track.error.clipboard_empty'](),
       });
       return;
     }
@@ -127,8 +127,8 @@
       }
       console.error('Error loading track data:', error);
       showModal({
-        title: msg['track_editor.select_track.error.cannot_load_track'](),
-        message: msg['track_editor.select_track.error.cannot_load_track_desc'](),
+        title: m['track_editor.select_track.error.cannot_load_track'](),
+        message: m['track_editor.select_track.error.cannot_load_track_desc'](),
       });
     }
   };
@@ -156,7 +156,7 @@
     onClose={noop}
     class="text-text-dark bg-black/50 text-xl font-semibold"
   >
-    {msg['track_editor.select_track.loading_track']()}
+    {m['track_editor.select_track.loading_track']()}
   </Modal>
   <div
     class={[
@@ -172,23 +172,23 @@
     ondrop={handleDrop}
   >
     <h1 class="mb-10 text-center text-6xl font-bold tracking-tight">
-      {msg['track_editor.title']()}
+      {m['track_editor.title']()}
     </h1>
     <p class="text-text/80 dark:text-text-dark/80 flex items-center">
-      {msg['track_editor.select_track.drag_drop']()}
+      {m['track_editor.select_track.drag_drop']()}
     </p>
     <p class="text-text/60 dark:text-text-dark/60 my-4 text-sm leading-none">
-      {msg.or()}
+      {m.or()}
     </p>
     <Button onClick={handleLoadFromClipboard}>
-      {msg['track_editor.select_track.load_from_clipboard']()}
+      {m['track_editor.select_track.load_from_clipboard']()}
     </Button>
 
     <p class="text-text/60 dark:text-text-dark/60 my-4 text-sm leading-none">
-      {msg.or()}
+      {m.or()}
     </p>
     <Button onClick={handleSelectFileClick}>
-      {msg['track_editor.select_track.select_file']()}
+      {m['track_editor.select_track.select_file']()}
     </Button>
     <input
       type="file"

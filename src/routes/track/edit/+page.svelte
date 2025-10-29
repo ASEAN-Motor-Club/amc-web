@@ -2,7 +2,7 @@
   import Editor from '$lib/components/TrackEditor/Editor/Editor.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 
@@ -15,12 +15,12 @@
 
   const title = $derived(
     trackData.value?.routeName
-      ? msg['track_editor.head_editing']({
+      ? m['track_editor.head_editing']({
           routeName: trackData.value.routeName,
-          siteName: msg.site_name_short(),
+          siteName: m.site_name_short(),
         })
-      : msg['track_editor.head']({
-          siteName: msg.site_name_short(),
+      : m['track_editor.head']({
+          siteName: m.site_name_short(),
         }),
   );
 </script>

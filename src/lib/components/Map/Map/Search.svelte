@@ -12,7 +12,7 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import type { HouseData } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
@@ -107,7 +107,7 @@
 
     const housePoints = house.filter(
       (point) =>
-        (point.name || msg['housing.vacant']()).toLowerCase().includes(search) ||
+        (point.name || m['housing.vacant']()).toLowerCase().includes(search) ||
         point.guid.toLowerCase().includes(search),
     );
 
@@ -152,7 +152,7 @@
       value={searchValue}
       name="search"
       type="search"
-      placeholder={msg['map.search_placeholder']()}
+      placeholder={m['map.search_placeholder']()}
       class="text-text-dark pointer-events-auto w-full !border-none !bg-neutral-900/50 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
       onInput={handleInput}
       additionalAttributes={{
@@ -203,10 +203,10 @@
                   <HighlightText
                     text={point.pointType === PointType.House
                       ? point.name
-                        ? msg['housing.owned_house']({
+                        ? m['housing.owned_house']({
                             owner: point.name,
                           })
-                        : msg['housing.vacant_house']()
+                        : m['housing.vacant_house']()
                       : point.name}
                     highlight={searchValue}
                     caseInSensitive
@@ -218,7 +218,7 @@
                   <div class="flex flex-col text-neutral-300">
                     {#if point.supplyText}
                       <div class="text-xs">
-                        {msg['delivery.supply']()}: <HighlightText
+                        {m['delivery.supply']()}: <HighlightText
                           text={point.supplyText}
                           highlight={searchValue}
                           caseInSensitive
@@ -229,7 +229,7 @@
                     {/if}
                     {#if point.demandText}
                       <div class="text-xs">
-                        {msg['delivery.demand']()}: <HighlightText
+                        {m['delivery.demand']()}: <HighlightText
                           text={point.demandText}
                           highlight={searchValue}
                           caseInSensitive
@@ -241,8 +241,8 @@
                   </div>
                 {:else if point.pointType === PointType.House}
                   <div class="text-xs text-neutral-300">
-                    {msg['housing.id']()}: <HighlightText
-                      text={point.guid || msg.unknown()}
+                    {m['housing.id']()}: <HighlightText
+                      text={point.guid || m.unknown()}
                       highlight={searchValue}
                       caseInSensitive
                       tag="span"
@@ -262,7 +262,7 @@
           {/each}
           {#if searchValue && foundValues.length > maxShow}
             <div class="px-3 py-2 text-neutral-300 italic">
-              {msg['map.more_results']({
+              {m['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
             </div>
@@ -286,7 +286,7 @@
           class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
           <div class="px-3 py-2 text-neutral-300 italic">
-            {searchValue ? msg['map.no_results']() : msg['map.start_search']()}
+            {searchValue ? m['map.no_results']() : m['map.start_search']()}
           </div>
         </Card>
       </div>

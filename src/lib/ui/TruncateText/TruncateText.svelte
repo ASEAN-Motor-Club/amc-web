@@ -5,7 +5,6 @@
   import { twMerge } from 'tailwind-merge';
   import Tooltip from '../Tooltip/Tooltip.svelte';
 
-  // @unocss-skip-start
   export interface TruncateTextProps {
     tag?: 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div' | 'a';
     /**
@@ -22,7 +21,6 @@
     children?: Snippet;
     extra?: Record<string, unknown>;
   }
-  // @unocss-skip-end
 
   const { children, text, class: propsClass, tag = 'span', extra }: TruncateTextProps = $props();
 

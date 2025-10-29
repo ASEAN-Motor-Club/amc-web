@@ -4,7 +4,7 @@
   import { setMsgModalContext, type ModalParams } from './context';
   import type { Snippet } from 'svelte';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import { pushState, replaceState } from '$app/navigation';
   import { page } from '$app/state';
 
@@ -53,12 +53,12 @@
     <div class="-mx-3 -my-3 flex justify-end gap-2 pt-6">
       {#if modalParams.confirmAction}
         <Button onClick={handleConfirm} color="primary" variant="text">
-          {modalParams.confirmText || msg['action.confirm']()}
+          {modalParams.confirmText || m['action.confirm']()}
         </Button>
       {/if}
 
       <Button onClick={hideModal} color="secondary" variant="text">
-        {modalParams.cancelText || msg['action.close']()}
+        {modalParams.cancelText || m['action.close']()}
       </Button>
     </div>
   </Card>

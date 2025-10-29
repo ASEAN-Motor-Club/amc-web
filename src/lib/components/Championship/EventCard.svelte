@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import { format, isBefore, isSameDay, isSameYear } from '$lib/date';
@@ -22,10 +22,10 @@
     const sameDay = isSameDay(event.start_time, event.end_time);
     const sameYear = isSameYear(event.start_time, event.end_time);
     return sameDay
-      ? msg['format.scheduleFormat.sameDay']()
+      ? m['format.scheduleFormat.sameDay']()
       : sameYear
-        ? msg['format.scheduleFormat.sameYear']()
-        : msg['format.scheduleFormat.crossYear']();
+        ? m['format.scheduleFormat.sameYear']()
+        : m['format.scheduleFormat.crossYear']();
   });
 
   const svelteDate = createSvelteDate();
@@ -108,7 +108,7 @@
         target="_blank"
         rel="noreferrer"
       >
-        {msg['championship.event.more_info']()}
+        {m['championship.event.more_info']()}
       </Button>
     {/if}
     {#if pastEventTime}
@@ -120,7 +120,7 @@
         {href}
         onClick={(e) => openEvent(e, event)}
       >
-        {msg['championship.event.results']()}
+        {m['championship.event.results']()}
       </Button>
     {/if}
   </div>

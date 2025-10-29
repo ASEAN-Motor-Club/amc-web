@@ -2,7 +2,7 @@
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import type { PlayerData } from '../Map/types';
   import PlayerCard from '$lib/components/Map/Players/PlayerCard.svelte';
 
@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead>{msg['players.title']()}</CommonHead>
+  <CommonHead>{m['players.title']()}</CommonHead>
   <div
     class={[
       'flex flex-col justify-between gap-2 border-b border-neutral-500/20 px-8 pb-8',
@@ -39,7 +39,7 @@
   >
     <TextInput
       value={searchValue}
-      placeholder={msg['players.search_placeholder']()}
+      placeholder={m['players.search_placeholder']()}
       name="search"
       type="search"
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
@@ -65,9 +65,9 @@
     {:else}
       <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
         {#if playerData.length === 0}
-          {msg['players.no_players']()}
+          {m['players.no_players']()}
         {:else}
-          {msg['players.no_results']()}
+          {m['players.no_results']()}
         {/if}
       </div>
     {/if}

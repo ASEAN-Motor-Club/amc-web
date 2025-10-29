@@ -4,7 +4,7 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { m as msg } from '$lib/paraglide/messages';
+  import { m } from '$lib/paraglide/messages';
   import EventCard from '$lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
   import { getEvent, getEventResult } from '$lib/api/championship';
@@ -21,8 +21,8 @@
   onMount(async () => {
     if (!page.params.id) {
       showModal({
-        title: msg['championship.results.cannot_load.title'](),
-        message: msg['championship.results.cannot_load.desc'](),
+        title: m['championship.results.cannot_load.title'](),
+        message: m['championship.results.cannot_load.desc'](),
         cancelAction: () => {
           goto('/');
         },
@@ -42,8 +42,8 @@
     } catch (error: unknown) {
       console.error('Error fetching event data:', error);
       showModal({
-        title: msg['championship.results.cannot_load.title'](),
-        message: msg['championship.results.cannot_load.desc'](),
+        title: m['championship.results.cannot_load.title'](),
+        message: m['championship.results.cannot_load.desc'](),
         cancelAction: () => {
           goto('/championship');
         },
@@ -55,12 +55,12 @@
 
   const title = $derived(
     eventData?.name
-      ? msg['championship.results.head_loaded']({
+      ? m['championship.results.head_loaded']({
           name: eventData.name,
-          siteName: msg.site_name_short(),
+          siteName: m.site_name_short(),
         })
-      : msg['championship.results.head']({
-          siteName: msg.site_name_short(),
+      : m['championship.results.head']({
+          siteName: m.site_name_short(),
         }),
   );
 </script>
@@ -89,7 +89,7 @@
       disabled={loadingOrNoData}
       class="-mx-3"
     >
-      {msg['championship.event.more_info']()}
+      {m['championship.event.more_info']()}
     </Button>
   </div>
 
