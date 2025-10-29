@@ -134,5 +134,5 @@ export default defineConfig({
       'not-mouse': 'not ((hover) and (pointer: fine))',
     },
   },
-  blocklist: [/^[hpm].+$/],
+  blocklist: [/^m(\.\w|\[['"])/, /^[pm][trblxy]?\d+$/, /^[wh]\d+$/],
 });
