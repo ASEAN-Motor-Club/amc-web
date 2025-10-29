@@ -134,5 +134,10 @@ export default defineConfig({
       'not-mouse': 'not ((hover) and (pointer: fine))',
     },
   },
-  blocklist: [/^m(\.\w|\[['"])/, /^[pm][trblxy]?\d+$/, /^[wh]\d+$/],
+  blocklist: [
+    // paraglide message
+    /^m(\.\w|\[['"])/, 
+    // margin/padding/width/height without separator like mx2, w10 
+    /^[pm][trblxyse]?\d+$/,
+    /^[wh]\d+$/],
 });
