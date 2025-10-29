@@ -5,7 +5,7 @@
   import { m } from '$lib/paraglide/messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { DetailsFeatures, getLinkHref } from '../utils';
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
@@ -19,13 +19,11 @@
 
   const { job, fullScreen, loading }: Props = $props();
 
-  const svelteDate = createSvelteDate();
-
   const expired = $derived.by(() => {
     if (!job) {
       return true;
     }
-    return isBefore(job.expired_at, svelteDate.getTime());
+    return isBefore(job.expired_at, rtDate.d.getTime());
   });
 
   const timeLeftText = $derived.by(() => {
@@ -38,7 +36,7 @@
       return m['jobs.expired']();
     }
 
-    const time = svelteDate.getTime();
+    const time = rtDate.d.getTime();
 
     const duration = intervalToDuration({
       start: time,

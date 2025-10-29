@@ -7,7 +7,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import { getLocale } from '$lib/paraglide/runtime';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import { Features, getViewHref } from '../utils';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
 
@@ -24,14 +24,12 @@
     return houseData?.[house.name];
   });
 
-  const svelteDate = createSvelteDate();
-
   const rentLeftText = $derived.by(() => {
     if (!currentHouseData) {
       return '';
     }
 
-    const time = svelteDate.getTime();
+    const time = rtDate.d.getTime();
 
     // If rent has expired
     if (isBefore(currentHouseData.rentLeft, time)) {

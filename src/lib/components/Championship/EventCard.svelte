@@ -8,7 +8,7 @@
   import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import { RichTextTag } from './types';
 
   interface EventCardProps {
@@ -28,9 +28,7 @@
         : m['format.scheduleFormat.crossYear']();
   });
 
-  const svelteDate = createSvelteDate();
-
-  const pastEventTime = $derived(isBefore(event.start_time, svelteDate.getTime()));
+  const pastEventTime = $derived(isBefore(event.start_time, rtDate.d.getTime()));
 
   const openEvent = (e: Event, event: ScheduledEvent) => {
     e.preventDefault();

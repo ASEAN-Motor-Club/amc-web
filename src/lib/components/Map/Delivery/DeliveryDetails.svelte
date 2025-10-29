@@ -14,7 +14,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import { m } from '$lib/paraglide/messages';
   import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { getMatchJobSourceFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
@@ -67,8 +67,6 @@
     return min([deliveryPointInfo?.last_updated ?? curr, curr]);
   });
 
-  const svelteDate = createSvelteDate();
-
   const matchJobs = $derived.by(() => {
     const info = deliveryPointsMap.get(id);
     if (!info) return [];
@@ -118,10 +116,10 @@
       Drop point of <DeliveryLink {fullScreen} guid={deliveryPoint.parent} />
     </div>
   {/if}
-  {#if differenceInSeconds(svelteDate.getTime(), lastUpdated) > 30}
+  {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
     <div class="px-8 pb-8 text-xs font-semibold text-red-500">
       {m['delivery.last_updated']({
-        time: formatDistanceStrict(lastUpdated, svelteDate.getTime(), {
+        time: formatDistanceStrict(lastUpdated, rtDate.d.getTime(), {
           addSuffix: true,
         }),
       })}

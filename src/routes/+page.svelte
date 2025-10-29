@@ -5,11 +5,9 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
 
-  const svelteDate = createSvelteDate();
-
-  const year = $derived(svelteDate.getFullYear());
+  const year = $derived(rtDate.d.getFullYear());
 
   const features = $derived([
     m['home.friendly_community'](),

@@ -2,7 +2,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
 
   interface EventButtonProps {
     currentMonth: number;
@@ -26,13 +26,11 @@
 
   const haveEvent = $derived(eventToday !== undefined);
 
-  const svelteDate = createSvelteDate();
-
   const today = $derived.by(() => {
     return (
-      svelteDate.getDate() === day &&
-      svelteDate.getMonth() + 1 === month &&
-      svelteDate.getFullYear() === year
+      rtDate.d.getDate() === day &&
+      rtDate.d.getMonth() + 1 === month &&
+      rtDate.d.getFullYear() === year
     );
   });
 </script>

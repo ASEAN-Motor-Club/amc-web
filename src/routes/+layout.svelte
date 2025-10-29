@@ -28,6 +28,22 @@
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
+
+  $effect(() => {
+    let animationId: number;
+
+    const updateTime = () => {
+      rtDate.d = new Date();
+      animationId = requestAnimationFrame(updateTime);
+    };
+
+    animationId = requestAnimationFrame(updateTime);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  });
 
   defineCustomClientStrategy('custom-svelteReactiveLocale', {
     getLocale: () => {

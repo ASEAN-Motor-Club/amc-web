@@ -5,7 +5,7 @@
   import { formatDistanceStrict } from '$lib/date';
   import { m } from '$lib/paraglide/messages';
   import { getLocale } from '$lib/paraglide/runtime';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
 
   export interface HoverInfo {
     info: House;
@@ -18,8 +18,6 @@
 
   const { hoverInfo, houseData }: HoverInfoTooltipProps = $props();
 
-  const svelteDate = createSvelteDate();
-
   const currentHouseData = $derived.by(() => {
     return houseData?.[hoverInfo.info.name];
   });
@@ -29,7 +27,7 @@
       return '...';
     }
 
-    const time = svelteDate.getTime();
+    const time = rtDate.d.getTime();
 
     if (isBefore(currentHouseData.rentLeft, time)) {
       return m['housing.expired']();

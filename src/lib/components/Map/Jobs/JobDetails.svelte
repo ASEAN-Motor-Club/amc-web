@@ -2,7 +2,7 @@
   import type { DeliveryJob } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
   import { m } from '$lib/paraglide/messages';
@@ -36,13 +36,11 @@
     return jobsCache.get(Number(id));
   });
 
-  const svelteDate = createSvelteDate();
-
   const expired = $derived.by(() => {
     if (!job) {
       return true;
     }
-    return isBefore(job.expired_at, svelteDate.getTime());
+    return isBefore(job.expired_at, rtDate.d.getTime());
   });
 
   const timeLeftText = $derived.by(() => {
@@ -55,7 +53,7 @@
       return m['jobs.expired']();
     }
 
-    const time = svelteDate.getTime();
+    const time = rtDate.d.getTime();
 
     const duration = intervalToDuration({
       start: time,

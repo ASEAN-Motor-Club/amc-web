@@ -12,7 +12,7 @@
   import { debounce } from 'lodash-es';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
-  import { createSvelteDate } from '$lib/svelteDate.svelte';
+  import { rtDate } from '$lib/realtimeDate.svelte';
   import { isCargoType } from '$lib/utils/delivery';
 
   export interface HoverInfo {
@@ -83,8 +83,6 @@
     const curr = new Date();
     return min([deliveryPointInfo?.last_updated ?? curr, curr]);
   });
-
-  const svelteDate = createSvelteDate();
 </script>
 
 {#if hoverInfo.info.allSupply.length}
@@ -142,7 +140,7 @@
     {/each}
   </div>
 {/if}
-{#if differenceInSeconds(svelteDate.getTime(), lastUpdated) > 30}
+{#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
   <div class="text-xs">
     <span class="font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
@@ -150,7 +148,7 @@
       {#if deliveryPointInfoLoading}
         <span class="animate-pulse">...</span>
       {:else}
-        {formatDistanceStrict(lastUpdated, svelteDate.getTime(), {
+        {formatDistanceStrict(lastUpdated, rtDate.d.getTime(), {
           addSuffix: true,
         })}
       {/if}
