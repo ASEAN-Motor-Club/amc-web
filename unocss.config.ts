@@ -136,8 +136,9 @@ export default defineConfig({
   },
   blocklist: [
     // paraglide message
-    /^m(\.\w|\[['"])/, 
-    // margin/padding/width/height without separator like mx2, w10 
+    /^m(\.\w|\[['"])/,
+    // margin/padding/width/height without separator like mx2, w10
     /^[pm][trblxyse]?\d+$/,
-    /^[wh]\d+$/],
+    /^[wh]\d+$/,
+  ],
 });
