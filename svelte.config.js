@@ -8,6 +8,9 @@ const config = {
     adapter: adapter({
       fallback: 'fallback.html',
     }),
+    alias: {
+      $messages: './src/lib/paraglide/messages',
+    },
     prerender: {
       handleHttpError: ({ path, _, message }) => {
         if (path === '/stream_high') {

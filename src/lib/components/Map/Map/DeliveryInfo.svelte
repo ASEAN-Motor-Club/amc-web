@@ -2,7 +2,7 @@
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { cargoName } from '$lib/data/cargo';
   import type { DeliveryCargo } from '$lib/data/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import type { DeliveryPointInfo } from '$lib/api/types';
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';

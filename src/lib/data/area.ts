@@ -1,7 +1,7 @@
 import type { Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
 import { getMtLocale } from '$lib/utils/getMtLocale';
-import { m } from '$lib/paraglide/messages';
+import { m } from '$messages';
 
 const flagOrder = {
   '': 0,

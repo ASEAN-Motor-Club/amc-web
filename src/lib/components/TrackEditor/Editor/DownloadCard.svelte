@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import type { Track } from '$lib/schema/track';

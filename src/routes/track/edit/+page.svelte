@@ -2,7 +2,7 @@
   import Editor from '$lib/components/TrackEditor/Editor/Editor.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
   import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 

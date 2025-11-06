@@ -5,7 +5,7 @@
   import { rtDate } from '$lib/realtimeDate.svelte';
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
   import Card from '$lib/ui/Card/Card.svelte';
@@ -141,7 +141,7 @@
         {#if loading}
           <TextSkeleton class="w-12" />
         {:else}
-          {(job?.bonus_multiplier ?? 0) * 100}%
+          {Math.round((job?.bonus_multiplier ?? 0) * 100)}%
         {/if}
         <br />
         <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>

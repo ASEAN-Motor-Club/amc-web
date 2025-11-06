@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import { getEventResult } from '$lib/api/championship';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';

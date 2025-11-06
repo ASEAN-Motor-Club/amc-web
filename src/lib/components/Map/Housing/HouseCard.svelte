@@ -2,7 +2,7 @@
   import type { HouseData } from '$lib/api/types';
   import type { House } from '$lib/data/house';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';

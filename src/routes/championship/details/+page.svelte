@@ -2,7 +2,7 @@
   import { PUBLIC_SEASON_START_DATE } from '$env/static/public';
   import CalendarGroup from '$lib/components/Championship/CalendarGroup.svelte';
   import Standing from '$lib/components/Championship/Standing.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { format } from '$lib/date';
 
   const startDate = new Date(PUBLIC_SEASON_START_DATE);

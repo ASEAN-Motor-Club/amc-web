@@ -7,7 +7,7 @@
   import Select from '$lib/ui/Select/Select.svelte';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';

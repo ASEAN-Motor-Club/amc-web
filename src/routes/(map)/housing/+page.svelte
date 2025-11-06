@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   const title = $derived(
     m['housing.head']({
       siteName: m.site_name_short(),

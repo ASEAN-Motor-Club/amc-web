@@ -5,7 +5,7 @@
   import poster1818 from '$lib/assets/images/poster/asean_poster_w1818.avif';
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { onMount, onDestroy, tick, getAbortSignal, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';

@@ -2,7 +2,7 @@
   import TextInput from '$lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import type { PlayerData } from '../Map/types';
   import PlayerCard from '$lib/components/Map/Players/PlayerCard.svelte';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import { getAbortSignal, onMount } from 'svelte';
   import { trackSchema, type Track } from '$lib/schema/track';

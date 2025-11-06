@@ -41,7 +41,7 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { isMouse } from '$lib/utils/media.svelte';
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';

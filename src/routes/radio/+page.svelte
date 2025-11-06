@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Player from '$lib/components/Radio/Player.svelte';

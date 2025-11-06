@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { DeliveryJob } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import JobCard from '$lib/components/Map/Jobs/JobCard.svelte';
   import { censored } from '$lib/censored.svelte';
 

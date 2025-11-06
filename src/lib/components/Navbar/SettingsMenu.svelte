@@ -5,7 +5,7 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import Select from '$lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import SelectOption from '$lib/ui/Select/SelectOption.svelte';
   import { mtLocale, setLocale } from '../Locale/locale.svelte';
   import type { MtLocaleKey } from '$lib/data/types';

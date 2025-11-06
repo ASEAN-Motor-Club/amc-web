@@ -108,7 +108,7 @@ Example usage:
 
 ```svelte
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
 </script>
 
 <h1>{m.site_name()}</h1><p>{m['radio.title']()}</p>

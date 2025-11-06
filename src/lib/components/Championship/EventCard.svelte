@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import { format, isBefore, isSameDay, isSameYear } from '$lib/date';

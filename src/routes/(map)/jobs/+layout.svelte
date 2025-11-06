@@ -1,6 +1,6 @@
 <script lang="ts">
   import { censored } from '$lib/censored.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
 
   const { children } = $props();
   const title = $derived(

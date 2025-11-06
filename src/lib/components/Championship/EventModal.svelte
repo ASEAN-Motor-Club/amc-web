@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ScheduledEvent } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type Snippet, onMount } from 'svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { getStreamUrl } from '$lib/api/radio';
   import { setGlobalPlayerContext } from './context';
 

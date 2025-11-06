@@ -2,7 +2,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import type { DeliveryJob } from '$lib/api/types';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
   import { rtDate } from '$lib/realtimeDate.svelte';

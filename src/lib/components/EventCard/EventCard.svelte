@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { EventResult } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import Lottie from '$lib/ui/Lottie/Lottie.svelte';
   import lottieSpark from '$lib/assets/lottie/sparkle.json';

@@ -4,7 +4,7 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import Button from '$lib/ui/Button/Button.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import EventCard from '$lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
   import { getEvent, getEventResult } from '$lib/api/championship';

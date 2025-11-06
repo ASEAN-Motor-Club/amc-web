@@ -9,7 +9,7 @@
   import type { House } from '$lib/data/house';
   import Button from '$lib/ui/Button/Button.svelte';
   import type { HouseData } from '$lib/api/types';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';

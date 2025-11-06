@@ -1,5 +1,5 @@
 import * as z from 'zod/mini';
-import { m } from '$lib/paraglide/messages';
+import { m } from '$messages';
 import type { Vector3 } from '$lib/types';
 
 const createWaypointError = (iss: { path?: PropertyKey[]; expected: string }) => {

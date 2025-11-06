@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { getAbortSignal, onMount } from 'svelte';
   import { getPersonalStandings, getTeamStandings } from '$lib/api/championship';
   import type { TeamStanding, PersonalStanding } from '$lib/api/types';

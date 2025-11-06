@@ -1,6 +1,6 @@
 <script lang="ts">
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';
 

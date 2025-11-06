@@ -19,7 +19,7 @@ Every user-facing string must use Paraglide:
 
 ```svelte
 <script>
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
 </script>
 
 <h1>{m.site_name()}</h1><p>{m['radio.title']()}</p>

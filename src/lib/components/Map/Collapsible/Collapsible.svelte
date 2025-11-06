@@ -5,7 +5,7 @@
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
   import { isSm } from '$lib/utils/media.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import DeliveryDetails from '../Delivery/DeliveryDetails.svelte';
   import type { PlayerData } from '../Map/types';

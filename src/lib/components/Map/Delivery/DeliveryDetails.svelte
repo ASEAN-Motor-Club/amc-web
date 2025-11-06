@@ -12,7 +12,7 @@
   } from '$lib/utils/delivery';
   import type { DeliveryCargo } from '$lib/data/types';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
   import { rtDate } from '$lib/realtimeDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';

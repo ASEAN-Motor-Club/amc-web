@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import Card from '$lib/ui/Card/Card.svelte';
   import { getDateFnsLocale, format } from '$lib/date';
   import EventButton from './EventButton.svelte';

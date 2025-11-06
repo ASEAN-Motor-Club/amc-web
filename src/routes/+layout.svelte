@@ -24,7 +24,7 @@
     baseLocale,
     type Locale,
   } from '$lib/paraglide/runtime';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';

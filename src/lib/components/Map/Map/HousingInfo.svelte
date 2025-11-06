@@ -3,7 +3,7 @@
   import type { HouseData } from '$lib/api/types';
   import { isBefore } from '$lib/date';
   import { formatDistanceStrict } from '$lib/date';
-  import { m } from '$lib/paraglide/messages';
+  import { m } from '$messages';
   import { getLocale } from '$lib/paraglide/runtime';
   import { rtDate } from '$lib/realtimeDate.svelte';
 
