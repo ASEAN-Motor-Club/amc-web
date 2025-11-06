@@ -5,6 +5,7 @@ import UnoCSS from 'unocss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
+import { webmanifestPlugin } from './vite-plugins/webmanifest';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -26,6 +27,7 @@ export default defineConfig(({ mode }) => {
         analyzerMode: 'static',
         exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
       }),
+      webmanifestPlugin(),
     ],
     server: {
       proxy: {

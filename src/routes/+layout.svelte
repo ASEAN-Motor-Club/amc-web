@@ -18,6 +18,9 @@
   import { page } from '$app/state';
   import GlobalPlayer from '$lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
   import splashBig from '$lib/assets/images/splash_big.jpg';
+  import faviconIco from '$lib/assets/images/icon/favicon.ico';
+  import faviconSvg from '$lib/assets/images/icon/favicon.svg';
+  import appleTouchIcon from '$lib/assets/images/icon/apple-touch-icon.png';
   import {
     localStorageKey,
     defineCustomClientStrategy,
@@ -110,7 +113,9 @@
     content={color ?? colorBackground900}
     media="(prefers-color-scheme: dark)"
   />
-
+  <link rel="icon" href={faviconIco} sizes="32x32" />
+  <link rel="icon" href={faviconSvg} type="image/svg+xml" />
+  <link rel="apple-touch-icon" href={appleTouchIcon} />
   <meta property="og:site_name" content={m.site_name()} />
   <meta property="og:description" content={m['home.desc_title']()} />
   <meta property="og:image" content={splashBig} />
