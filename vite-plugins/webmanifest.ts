@@ -1,7 +1,6 @@
 import type { Plugin } from 'vite';
-import { createHash } from 'crypto';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { readdir, readFile, stat, writeFile } from 'fs/promises';
+import { resolve, join, basename } from 'path';
 
 export function webmanifestPlugin(): Plugin {
   let manifestFileName: string;
@@ -9,25 +8,24 @@ export function webmanifestPlugin(): Plugin {
   return {
     name: 'webmanifest-generator',
     apply: 'build',
-    generateBundle() {
+    async generateBundle() {
       const iconDir = resolve(process.cwd(), 'src/lib/assets/images/icon');
 
       // Emit all icon files and collect their references
       const resolvedAssets: Record<string, string> = {};
 
       const icons = [
-        { key: 'faviconMonochrome', file: 'favicon_monochrome.svg' },
         { key: 'faviconSvg', file: 'favicon.svg' },
         { key: 'androidChrome512', file: 'android-chrome-512x512.png' },
         { key: 'androidChrome192', file: 'android-chrome-192x192.png' },
-        { key: 'icoRadio', file: 'ico_radio.svg' },
-        { key: 'icoMap', file: 'ico_map.svg' },
-        { key: 'icoJobs', file: 'ico_jobs.svg' },
+        { key: 'icoRadio', file: 'ico_radio.png' },
+        { key: 'icoMap', file: 'ico_map.png' },
+        { key: 'icoJobs', file: 'ico_jobs.png' },
       ];
 
       for (const { key, file } of icons) {
         const filePath = resolve(iconDir, file);
-        const source = readFileSync(filePath);
+        const source = await readFile(filePath);
         const referenceId = this.emitFile({
           type: 'asset',
           name: file,
@@ -50,11 +48,6 @@ export function webmanifestPlugin(): Plugin {
         lang: 'en',
         categories: ['games', 'entertainment', 'social'],
         icons: [
-          {
-            src: resolvedAssets.faviconMonochrome,
-            sizes: 'any',
-            purpose: 'monochrome',
-          },
           {
             src: resolvedAssets.faviconSvg,
             sizes: 'any',
@@ -97,17 +90,13 @@ export function webmanifestPlugin(): Plugin {
 
       const manifestContent = JSON.stringify(manifest);
 
-      // Generate hash in Vite's format (Base64-like, 8 chars)
-      const hash = createHash('sha256').update(manifestContent).digest('base64url').slice(0, 8);
-
-      manifestFileName = `manifest.${hash}.json`;
-
       // Emit the manifest as a build asset
-      this.emitFile({
+      const manifestReferenceId = this.emitFile({
         type: 'asset',
-        fileName: manifestFileName,
+        name: 'manifest.json',
         source: manifestContent,
       });
+      manifestFileName = this.getFileName(manifestReferenceId);
 
       console.log(
         `✓ Generated ${manifestFileName} with ${Object.keys(resolvedAssets).length} resolved assets`,
@@ -115,42 +104,39 @@ export function webmanifestPlugin(): Plugin {
     },
     async closeBundle() {
       // After all bundles are written, update HTML files
-      const fs = await import('fs');
-      const path = await import('path');
-
-      const buildDir = path.resolve(process.cwd(), 'build');
+      const buildDir = resolve(process.cwd(), 'build');
       const manifestLink = `<link rel="manifest" href="/${manifestFileName}">`;
 
-      const updateHtmlFile = (filePath: string) => {
+      const updateHtmlFile = async (filePath: string) => {
         try {
-          let html = fs.readFileSync(filePath, 'utf-8');
+          let html = await readFile(filePath, 'utf-8');
           if (!html.includes('rel="manifest"')) {
             html = html.replace('</head>', `${manifestLink}</head>`);
-            fs.writeFileSync(filePath, html);
-            console.log(`  ✓ Added manifest link to ${path.basename(filePath)}`);
+            await writeFile(filePath, html);
+            console.log(`  ✓ Added manifest link to ${basename(filePath)}`);
           }
         } catch {
           // Ignore errors
         }
       };
 
-      const walkDir = (dir: string) => {
+      const walkDir = async (dir: string) => {
         try {
-          const files = fs.readdirSync(dir);
+          const files = await readdir(dir);
           for (const file of files) {
-            const filePath = path.join(dir, file);
-            const stat = fs.statSync(filePath);
-            if (stat.isDirectory()) {
-              walkDir(filePath);
+            const filePath = join(dir, file);
+            const fileStat = await stat(filePath);
+            if (fileStat.isDirectory()) {
+              await walkDir(filePath);
             } else if (file.endsWith('.html')) {
-              updateHtmlFile(filePath);
+              await updateHtmlFile(filePath);
             }
           }
         } catch {
           // Ignore errors
         }
       };
-      walkDir(buildDir);
+      await walkDir(buildDir);
     },
   };
 }

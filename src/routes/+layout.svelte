@@ -113,8 +113,8 @@
     content={color ?? colorBackground900}
     media="(prefers-color-scheme: dark)"
   />
-  <link rel="icon" href={faviconIco} sizes="32x32" />
   <link rel="icon" href={faviconSvg} type="image/svg+xml" />
+  <link rel="icon" href={faviconIco} />
   <link rel="apple-touch-icon" href={appleTouchIcon} />
   <meta property="og:site_name" content={m.site_name()} />
   <meta property="og:description" content={m['home.desc_title']()} />
