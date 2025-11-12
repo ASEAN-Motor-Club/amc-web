@@ -874,11 +874,24 @@
     "zh-Hans": "邦戈"
   },
   "Bongo_Bus": {
-    "en": "Bongo",
-    "ja": "ボンゴ",
-    "ko": "봉고",
-    "uk": "Бонго",
-    "zh-Hans": "邦戈"
+    "en": "Bongo Bus",
+    "cs": "Bongo Autobus",
+    "es-419": "Bongo Autobús",
+    "es-ES": "Bongo Autobús",
+    "fi": "Bongo Bussi",
+    "hu": "Bongo Busz",
+    "it": "Bongo Autobus",
+    "ja": "ボンゴ バス",
+    "ko": "봉고 Bus",
+    "lt": "Bongo Autobusas",
+    "pl": "Bongo Autobus",
+    "pt-BR": "Bongo Ônibus",
+    "ru": "Bongo Автобус",
+    "sv": "Bongo Buss",
+    "tr": "Bongo Otobüs",
+    "uk": "Бонго Автобус",
+    "zh-Hans": "邦戈 公交车",
+    "zh-Hant": "Bongo 巴士"
   },
   "Roadmaster": {
     "en": "Roadmaster",
@@ -1248,6 +1261,9 @@
   },
   "Monarch_Limo": {
     "en": "Monarch Limo"
+  },
+  "Raven": {
+    "en": "Raven"
   },
   "Van_01": {
     "en": "Vani",

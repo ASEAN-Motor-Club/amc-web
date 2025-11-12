@@ -99,7 +99,7 @@ export function webmanifestPlugin(): Plugin {
       manifestFileName = this.getFileName(manifestReferenceId);
 
       console.log(
-        `✓ Generated ${manifestFileName} with ${Object.keys(resolvedAssets).length} resolved assets`,
+        `\n✓ Generated ${manifestFileName} with ${Object.keys(resolvedAssets).length} resolved assets`,
       );
     },
     async closeBundle() {

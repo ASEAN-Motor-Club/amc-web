@@ -1,8 +1,8 @@
 <script lang="ts">
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
   import { m } from '$messages';
-  import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';
+  import type { MtNameRecord } from '$lib/types';
 
   export interface playerVehicleInfoProps {
     vehicleKey: string | 'None';
@@ -11,7 +11,7 @@
   const { vehicleKey }: playerVehicleInfoProps = $props();
 
   const vehicleName = $derived(
-    (vehiclesName as Record<string, Partial<Record<MtLocaleKey, string>> | undefined>)[vehicleKey],
+    (vehiclesName as Record<string, MtNameRecord | undefined>)[vehicleKey],
   );
 </script>
 

@@ -1,3 +1,5 @@
+import type { MtLocaleKey } from '$lib/data/types';
+
 export interface Quaternion {
   x: number;
   y: number;
@@ -17,3 +19,5 @@ export interface Vector3 {
 }
 
 export type EmptyObject = Record<PropertyKey, never>;
+
+export type MtNameRecord = Partial<Record<MtLocaleKey, string>> & { en: string };

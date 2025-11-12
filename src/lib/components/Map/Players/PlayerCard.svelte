@@ -5,11 +5,11 @@
   import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
   import type { PlayerData } from '../Map/types';
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
-  import type { MtLocaleKey } from '$lib/data/types';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getLocationAtPoint } from '$lib/data/area';
   import { Features, getViewHref } from '../utils';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import type { MtNameRecord } from '$lib/types';
 
   export interface Props {
     player?: PlayerData;
@@ -21,9 +21,7 @@
   const { player, highlight, onCenter, loading }: Props = $props();
 
   const vehicleName = $derived(
-    (vehiclesName as Record<string, Partial<Record<MtLocaleKey, string>> | undefined>)[
-      player?.vehicleKey ?? 'None'
-    ],
+    (vehiclesName as Record<string, MtNameRecord | undefined>)[player?.vehicleKey ?? 'None'],
   );
 
   const playerName = $derived(player?.name ?? '.');

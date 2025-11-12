@@ -23,7 +23,11 @@
     truncate,
   }: DeliveryLinkProps = $props();
 
-  const text = $derived(getMtLocale(deliveryPointsMap.get(guid)?.name ?? {}));
+  const text = $derived.by(() => {
+    const deliveryPoint = deliveryPointsMap.get(guid);
+    if (!deliveryPoint?.name) return '';
+    return getMtLocale(deliveryPoint.name);
+  });
 
   const baseClass =
     'text-yellow-700 hover:text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-400';

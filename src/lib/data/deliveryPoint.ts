@@ -1,13 +1,13 @@
 import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
-import type { Vector3 } from '$lib/types';
+import type { MtNameRecord, Vector3 } from '$lib/types';
 import { uniq } from 'lodash-es';
-import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType, MtLocaleKey } from './types';
+import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType } from './types';
 import residentName from '$lib/assets/data/resident_name.json';
 import { flattenCargoType } from '$lib/utils/delivery';
 
 export interface DeliveryPointJson {
   type: DeliveryPointType;
-  name: Partial<Record<MtLocaleKey, string>>;
+  name: MtNameRecord;
   coord: Vector3;
   guid: string;
   prod?: ProductionConfig[];
