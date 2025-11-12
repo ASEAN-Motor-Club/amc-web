@@ -86,7 +86,7 @@
 
   const tileLayer = new WebGLTileLayer({
     source: new ImageTile({
-      url: '/map_tiles/715p1/{z}_{x}_{y}.avif',
+      url: '/map_tiles/716/{z}_{x}_{y}.avif',
       minZoom: 2,
       maxZoom: 6,
       wrapX: false,
