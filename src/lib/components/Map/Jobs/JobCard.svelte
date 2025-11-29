@@ -61,7 +61,7 @@
   </div>
   <div class="mb-2">
     <span class="font-semibold">{m['jobs.bonus_multiplier']()}:</span>
-    {(job?.bonus_multiplier ?? 0) * 100}%
+    {Math.round((job?.bonus_multiplier ?? 0) * 100)}%
     <br />
     <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>
     ${job?.completion_bonus}
