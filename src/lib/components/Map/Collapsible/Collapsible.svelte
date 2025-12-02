@@ -18,6 +18,7 @@
   import CollapsibleButton from './CollapsibleButton.svelte';
   import CollapsibleActionButton from './CollapsibleActionButton.svelte';
   import type { CollapsibleType, CollapsibleTypeWithId } from '../types';
+  import { untrack } from 'svelte';
 
   interface Props {
     showFull: boolean;
@@ -79,6 +80,27 @@
     return `/map${str && `?${str}`}`;
   });
 
+  let previousCollapsibleWindow: CollapsibleType[] = $state([]);
+  const previousCollapsible: CollapsibleType = $derived(
+    previousCollapsibleWindow[previousCollapsibleWindow.length - 2],
+  );
+
+  $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    showFull;
+    let window = untrack(() => previousCollapsibleWindow);
+    if (window.length === 0) {
+      previousCollapsibleWindow = [openCollapsible];
+      return;
+    }
+
+    window = [...window, openCollapsible];
+    if (window.length > 2) {
+      window.shift();
+    }
+    previousCollapsibleWindow = window;
+  });
+
   let showFullAnimate = $state(showFull);
   $effect(() => {
     let timeout: ReturnType<typeof setTimeout> | undefined;
@@ -105,7 +127,12 @@
 </script>
 
 {#if isSm.current && showFullAnimate}
-  <div class={['h-full', validOpenCollapsible ? openCollapsibleClass : 'sm:w-11']}></div>
+  <div
+    class={[
+      'h-full',
+      validOpenCollapsible && previousCollapsible !== '' ? openCollapsibleClass : 'sm:w-11',
+    ]}
+  ></div>
 {/if}
 <div
   class={[
@@ -195,7 +222,7 @@
       'overflow-hidden duration-1000 motion-safe:transition-[width,height] sm:-ml-11 sm:h-full sm:pl-11',
       validOpenCollapsible
         ? ['h-[calc(100dvh-7rem)] w-screen', !showFull && openCollapsibleClass]
-        : 'h-0 sm:w-0',
+        : 'h-0 sm:w-11',
     ]}
   >
     {#if openCollapsible === 'housing'}
