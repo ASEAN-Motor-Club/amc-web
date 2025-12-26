@@ -1236,6 +1236,9 @@
     "zh-Hans": "Dinky 油罐车",
     "zh-Hant": "Dinky 罐車"
   },
+  "Trophy2": {
+    "en": "Trophy2"
+  },
   "Nuke": {
     "en": "Nuke",
     "ja": "ニューク",
@@ -1299,6 +1302,9 @@
     "uk": "Kira Фургон",
     "zh-Hans": "喀拉面包",
     "zh-Hant": "Kira 廂型車"
+  },
+  "EVan": {
+    "en": "EVan"
   },
   "Scooty": {
     "en": "Scooty",
@@ -1391,6 +1397,12 @@
     "uk": "Голіма Ротатор",
     "zh-Hans": "哥利马 Rotator"
   },
+  "Longhorn_Rollback": {
+    "en": "Longhorn Rollback"
+  },
+  "Longhorn_Rollback_UL": {
+    "en": "Longhorn Rollback UL"
+  },
   "Vulcan": {
     "en": "Vulcan"
   },
@@ -1399,6 +1411,9 @@
     "ja": "テラ",
     "uk": "Терра",
     "zh-Hans": "泰拉"
+  },
+  "Brutus_FireEngine": {
+    "en": "Brutus Fire Engine"
   },
   "Ambi": {
     "en": "Ambi",

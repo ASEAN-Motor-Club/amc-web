@@ -467,6 +467,26 @@
   },
   {
     "type": "BusStop_01_C",
+    "name": "Ara Dragstrip",
+    "coord": {
+      "x": 359550.0,
+      "y": 1135280.2,
+      "z": -19092.635
+    },
+    "guid": "4f11463f44bc9b9251bc4e8b7254dd26"
+  },
+  {
+    "type": "BusStop_01_C",
+    "name": "Ara Dragstrip",
+    "coord": {
+      "x": 354049.12,
+      "y": 1136723.6,
+      "z": -19096.818
+    },
+    "guid": "28c87ff8461ac60528294a96ea809282"
+  },
+  {
+    "type": "BusStop_01_C",
     "name": "Baram Sunflower Farm",
     "coord": {
       "x": -450722.75,
@@ -1049,9 +1069,9 @@
     "type": "BusStop_02_C",
     "name": "Dasa Harbor",
     "coord": {
-      "x": -767494.7,
-      "y": 1219174.5,
-      "z": -21652.979
+      "x": -776936.1,
+      "y": 1215847.6,
+      "z": -21663.482
     },
     "guid": "b2bf65c543de6bcd47a4409590a3c809"
   },
@@ -1059,9 +1079,9 @@
     "type": "BusStop_02_C",
     "name": "Dasa Harbor",
     "coord": {
-      "x": -767353.0,
-      "y": 1224449.8,
-      "z": -21643.947
+      "x": -777268.0,
+      "y": 1222591.0,
+      "z": -21634.12
     },
     "guid": "c36c9f7547ad526eed7ce2b8da6043ab"
   },
@@ -1639,9 +1659,9 @@
     "type": "BusStop_03_C",
     "name": "Trailer Dealership",
     "coord": {
-      "x": 183554.05,
-      "y": 77983.414,
-      "z": -21497.852
+      "x": 183571.48,
+      "y": 77968.836,
+      "z": -21504.977
     },
     "guid": "026cbc254a59a7dfe775e495dce000fd"
   },
@@ -1649,9 +1669,9 @@
     "type": "BusStop_03_C",
     "name": "Trailer Dealership",
     "coord": {
-      "x": 179928.84,
-      "y": 76204.68,
-      "z": -21483.97
+      "x": 179815.03,
+      "y": 76038.72,
+      "z": -21483.812
     },
     "guid": "2538a28542dd7b7a6d017cba885f6667"
   },
