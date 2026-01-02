@@ -7,7 +7,6 @@
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { noop } from 'lodash-es';
-  import { PUBLIC_PROXY_URL } from '$env/static/public';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   export interface SelectTrackProps {
@@ -139,8 +138,7 @@
     const uri = clientSearchParamsGet('uri');
     if (!uri) return;
     fetchFromUri = true;
-    const proxiedUri = `${PUBLIC_PROXY_URL}?url=${encodeURIComponent(uri)}`;
-    const trackData = await tryFetchTrack(proxiedUri, getAbortSignal());
+    const trackData = await tryFetchTrack(uri, getAbortSignal());
     if (trackData) {
       parseTrackData(trackData);
     }
