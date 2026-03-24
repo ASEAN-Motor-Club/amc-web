@@ -6,3 +6,6 @@ bun.lock
 bun.lockb
 
 .vscode/
+
+project.inlang/*
+!project.inlang/settings.json
