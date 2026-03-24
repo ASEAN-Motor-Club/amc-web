@@ -583,7 +583,7 @@
   const handleMapRightClick = () => {
     clearSelection();
 
-    if (hoverPoint && hoverPoint.get('pointType') === PointType.Delivery) {
+    if (hoverPoint?.get('pointType') === PointType.Delivery) {
       const newParams = getSelectionClearedParams();
       newParams.set('delivery', hoverPoint.get('info').guid ?? '');
       dontFocus = true;

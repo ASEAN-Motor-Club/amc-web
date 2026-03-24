@@ -22,11 +22,11 @@
 
   const { class: propsClass, spacing = 'md', vertical = false }: DividerProps = $props();
 
-  const spacingClass = {
+  const spacingClass = $derived({
     sm: vertical ? 'mx-4' : 'my-4',
     md: vertical ? 'mx-6' : 'my-6',
     lg: vertical ? 'mx-8' : 'my-8',
-  };
+  });
 </script>
 
 <hr

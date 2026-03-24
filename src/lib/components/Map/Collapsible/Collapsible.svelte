@@ -101,6 +101,8 @@
     previousCollapsibleWindow = window;
   });
 
+  // This need to be like this to capture initially then animate for subsequent state change.
+  // svelte-ignore state_referenced_locally
   let showFullAnimate = $state(showFull);
   $effect(() => {
     let timeout: ReturnType<typeof setTimeout> | undefined;

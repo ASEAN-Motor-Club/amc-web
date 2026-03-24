@@ -29,6 +29,8 @@
 
   const { showModal } = getMsgModalContext();
 
+  // TODO: I have to move this somewhere else to avoid state_referenced_locally
+  // svelte-ignore state_referenced_locally
   let trackData = $state(cloneDeep(initialTrackData));
   let selectedPointIndex = $state<number | undefined>(undefined);
   let showHidden = $state<boolean>(false);
