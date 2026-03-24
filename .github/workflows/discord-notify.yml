@@ -13,7 +13,7 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 📢 Run Discord notification script
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python3 scripts/discord_notify.py
+      - name: 📢 Run Discord notification
+        uses: ASEAN-Motor-Club/discord-notify@main
+        with:
+          discord-webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
