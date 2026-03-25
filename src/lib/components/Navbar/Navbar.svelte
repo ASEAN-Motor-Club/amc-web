@@ -175,6 +175,7 @@
   <div class="mt-6 flex items-center lg:mt-0">
     <Button
       variant="contained-light"
+      color="custom"
       class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
       tag="a"
       href={PUBLIC_DISCORD_LINK}
@@ -185,7 +186,7 @@
 {/snippet}
 
 <nav
-  class="bg-background-100 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-black/10 ring-black/1 select-none"
+  class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-black/10 ring-black/1 select-none"
 >
   <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />
@@ -200,7 +201,7 @@
   {:else}
     <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
       <div
-        class="bg-background-100 dark:bg-background-900 flex h-dvh flex-col px-4 py-8"
+        class="bg-background-200 dark:bg-background-900 flex h-dvh flex-col px-4 py-8"
         transition:fly={{
           x: '-100%',
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,

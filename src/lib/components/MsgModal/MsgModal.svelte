@@ -57,7 +57,7 @@
         </Button>
       {/if}
 
-      <Button onClick={hideModal} color="secondary" variant="text">
+      <Button onClick={hideModal} variant="text">
         {modalParams.cancelText || m['action.close']()}
       </Button>
     </div>

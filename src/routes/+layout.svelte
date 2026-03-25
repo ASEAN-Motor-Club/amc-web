@@ -27,7 +27,7 @@
   import { rtDate } from '$lib/realtimeDate.svelte';
 
   // lazy load these locale-specific fonts since they are large and not needed immediately
-  import('@fontsource-variable/noto-sans-thai-looped');
+  import('@fontsource-variable/noto-sans-thai');
   import('@fontsource-variable/noto-sans-sc');
   import('@fontsource-variable/noto-sans-jp');
   import('@fontsource-variable/noto-sans-kr');

@@ -8,6 +8,7 @@
   import { formatTime } from '$lib/utils/formatTime';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
   import { getAbortSignal } from 'svelte';
+  import { page } from '$app/state';
   import Table from '$lib/ui/Table/Table.svelte';
   import TableRow from '$lib/ui/Table/TableRow.svelte';
   import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
@@ -49,6 +50,12 @@
   };
 
   const eventDate = $derived(event ? new Date(event.start_time) : new Date());
+
+  const eventDateString = $derived(
+    `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`,
+  );
+
+  const isCurrentDay = $derived(page.url.searchParams.get('date') === eventDateString);
 
   const onViewEvent = (e: Event) => {
     e.preventDefault();
@@ -119,16 +126,20 @@
       {/each}
     </Table>
     <div class="flex justify-between p-2">
-      <Button
-        onClick={onViewEvent}
-        color="info"
-        variant="text"
-        tag="a"
-        href={`?date=${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`}
-      >
-        {m['championship.event.view_event']()}
-      </Button>
-      <Button onClick={onClose} color="secondary" variant="text">
+      {#if !isCurrentDay}
+        <Button
+          onClick={onViewEvent}
+          color="primary"
+          variant="text"
+          tag="a"
+          href={`?date=${eventDateString}`}
+        >
+          {m['championship.event.view_event']()}
+        </Button>
+      {:else}
+        <div></div>
+      {/if}
+      <Button onClick={onClose} variant="text">
         {m['action.close']()}
       </Button>
     </div>

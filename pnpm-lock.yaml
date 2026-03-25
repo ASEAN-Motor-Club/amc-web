@@ -24,9 +24,9 @@ importers:
       '@fontsource-variable/noto-sans-sc':
         specifier: 5.2.10
         version: 5.2.10
-      '@fontsource-variable/noto-sans-thai-looped':
-        specifier: 5.2.3
-        version: 5.2.3
+      '@fontsource-variable/noto-sans-thai':
+        specifier: 5.2.8
+        version: 5.2.8
       '@fontsource/kanit':
         specifier: 5.2.8
         version: 5.2.8
@@ -51,6 +51,9 @@ importers:
       '@unocss/extractor-svelte':
         specifier: 66.6.7
         version: 66.6.7
+      amc-uno-css-config:
+        specifier: github:ASEAN-Motor-Club/uno-css-config
+        version: https://codeload.github.com/ASEAN-Motor-Club/uno-css-config/tar.gz/f442e7fa10641e47fbeab5a39a569083ebad3847(@unocss/core@66.6.7)(@unocss/preset-wind4@66.6.7)(unocss@66.6.7)
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -433,8 +436,8 @@ packages:
   '@fontsource-variable/noto-sans-sc@5.2.10':
     resolution: {integrity: sha512-zdk10i5HrDQTXI7ldD61zToX1fsgig8vDTsu7zB48SXOitWfuX0e5viZAwnkHuhwh096PU6X6i1AyAsbBCISpA==}
 
-  '@fontsource-variable/noto-sans-thai-looped@5.2.3':
-    resolution: {integrity: sha512-TKVz/F+T2SXTwuELvOBuGBrmMccZa3lArCJnuzm2KgOmrTeCzRaArI9Thwowq+fxVI2FKKKHcM9blgy7dc6oaw==}
+  '@fontsource-variable/noto-sans-thai@5.2.8':
+    resolution: {integrity: sha512-btwMwVkcyGHc7UuC4+JJqiIrXxdswIA6RPzqiJ35dkD9ECfMM+1qECenQkaFPCiMWXfQvk0lV/N1BgBIq9ztdA==}
 
   '@fontsource-variable/noto-sans@5.2.10':
     resolution: {integrity: sha512-wyFgKkFu7jki5kEL8qv7avjQ8rxHX0J/nhLWvbR9T0hOH1HRKZEvb9EW9lMjZfWHHfEzKkYf5J+NadwgCS7TXA==}
@@ -1316,6 +1319,14 @@ packages:
 
   ajv@6.14.0:
     resolution: {integrity: sha512-IWrosm/yrn43eiKqkfkHis7QioDleaXQHdDVPKg0FSwwd/DuvyX79TZnFOnYpB7dcsFAMmtFztZuXPDvSePkFw==}
+
+  amc-uno-css-config@https://codeload.github.com/ASEAN-Motor-Club/uno-css-config/tar.gz/f442e7fa10641e47fbeab5a39a569083ebad3847:
+    resolution: {tarball: https://codeload.github.com/ASEAN-Motor-Club/uno-css-config/tar.gz/f442e7fa10641e47fbeab5a39a569083ebad3847}
+    version: 0.0.3
+    peerDependencies:
+      '@unocss/core': '>=66.6.7'
+      '@unocss/preset-wind4': '>=66.6.7'
+      unocss: '>=66.6.7'
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -3556,7 +3567,7 @@ snapshots:
 
   '@fontsource-variable/noto-sans-sc@5.2.10': {}
 
-  '@fontsource-variable/noto-sans-thai-looped@5.2.3': {}
+  '@fontsource-variable/noto-sans-thai@5.2.8': {}
 
   '@fontsource-variable/noto-sans@5.2.10': {}
 
@@ -4489,6 +4500,12 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  amc-uno-css-config@https://codeload.github.com/ASEAN-Motor-Club/uno-css-config/tar.gz/f442e7fa10641e47fbeab5a39a569083ebad3847(@unocss/core@66.6.7)(@unocss/preset-wind4@66.6.7)(unocss@66.6.7):
+    dependencies:
+      '@unocss/core': 66.6.7
+      '@unocss/preset-wind4': 66.6.7
+      unocss: 66.6.7(vite@8.0.2)
 
   ansi-regex@5.0.1: {}
 

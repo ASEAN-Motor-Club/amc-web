@@ -140,7 +140,7 @@
         const baseClass =
           'focus:outline-solid focus:outline-1 focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10';
         if (error) {
-          return `${baseClass} placeholder-error-500 dark:placeholder-error-700 bg-error-500/20 dark:bg-error-600/10 hover:bg-error-500/30 group-hover:bg-error-500/30 dark:hover:bg-error-600/20 dark:group-hover:bg-error-600/20 outline-error-500 dark:outline-error-800`;
+          return `${baseClass} placeholder-danger-500 dark:placeholder-danger-700 bg-danger-500/20 dark:bg-danger-600/10 hover:bg-danger-500/30 group-hover:bg-danger-500/30 dark:hover:bg-danger-600/20 dark:group-hover:bg-danger-600/20 outline-danger-500 dark:outline-danger-800`;
         } else {
           return `${baseClass} bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20`;
         }
@@ -148,7 +148,7 @@
       case 'outlined': {
         const borderBase = 'border bg-white dark:bg-neutral-900';
         if (error) {
-          return `${borderBase} placeholder-error-400 dark:placeholder-error-800 border-error-400 dark:border-error-800 dark:hover:border-error-500 dark:group-hover:border-error-500 hover:border-error-500 group-hover:border-error-500 focus:border-error-600 focus:dark:border-error-600`;
+          return `${borderBase} placeholder-danger-400 dark:placeholder-danger-800 border-danger-400 dark:border-danger-800 dark:hover:border-danger-500 dark:group-hover:border-danger-500 hover:border-danger-500 group-hover:border-danger-500 focus:border-danger-600 focus:dark:border-danger-600`;
         } else {
           return `${borderBase} border-neutral-400 hover:border-neutral-500 focus:border-neutral-600 group-hover:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-600 dark:group-hover:border-neutral-600`;
         }

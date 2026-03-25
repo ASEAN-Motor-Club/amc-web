@@ -11,254 +11,178 @@
 </script>
 
 <Story name="Default" asChild>
-  <div class="grid grid-cols-[repeat(12,max-content)] items-center gap-4">
-    {#each headers as header (header)}
-      <div class="justify-self-center text-xs">{header}</div>
-    {/each}
+  <div class="flex flex-col items-center">
+    <div class="grid grid-cols-[repeat(12,max-content)] items-center gap-4">
+      {#each headers as header (header)}
+        <div class="justify-self-center text-xs text-gray-500">{header}</div>
+      {/each}
 
-    <div class="text-sm">Background</div>
-    <div
-      class="bg-background-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-background-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Background</div>
+      <div
+        class="bg-background-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-background-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-background-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
+        title="Not defined"
+      >
+        <span class="text-xs leading-none font-bold text-red-400">✕</span>
+      </div>
+      <div
+        class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
+        title="Not defined"
+      >
+        <span class="text-xs leading-none font-bold text-red-400">✕</span>
+      </div>
+      <div
+        class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
+        title="Not defined"
+      >
+        <span class="text-xs leading-none font-bold text-red-400">✕</span>
+      </div>
+      <div
+        class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
+        title="Not defined"
+      >
+        <span class="text-xs leading-none font-bold text-red-400">✕</span>
+      </div>
+      <div
+        class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
+        title="Not defined"
+      >
+        <span class="text-xs leading-none font-bold text-red-400">✕</span>
+      </div>
+      <div
+        class="bg-background-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-background-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-background-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
 
-    <div class="text-sm">Primary</div>
-    <div
-      class="bg-primary-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-primary-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Primary</div>
+      <div
+        class="bg-primary-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-primary-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
 
-    <div class="text-sm">Secondary</div>
-    <div
-      class="bg-secondary-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-secondary-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Danger (Red)</div>
+      <div
+        class="bg-danger-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
 
-    <div class="text-sm">Info</div>
-    <div
-      class="bg-info-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-info-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="col-span-12 border-t border-black/10 dark:border-white/10"></div>
 
-    <div class="text-sm">Success</div>
-    <div
-      class="bg-success-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-success-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Accent</div>
+      <div
+        class="bg-accent aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
 
-    <div class="text-sm">Warning</div>
-    <div
-      class="bg-warning-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-warning-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Accent Secondary</div>
+      <div
+        class="bg-accent-secondary aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
 
-    <div class="text-sm">Error</div>
-    <div
-      class="bg-error-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
-    <div
-      class="bg-error-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
-    ></div>
+      <div class="text-sm text-gray-500">Text</div>
+      <div
+        class="bg-text aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
+
+      <div class="text-sm text-gray-500">Text Dark</div>
+      <div
+        class="bg-text-dark aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
+    </div>
+
+    <ul class="mt-10 w-180 list-disc space-y-1 pl-5 text-xs text-gray-500">
+      <li>
+        <strong>Background 100</strong> and <strong>Background 950</strong> are the main light and dark
+        background colors used as base (body background).
+      </li>
+      <li>
+        <strong>Primary</strong> is the main brand palette (blue), with <strong>Primary 900</strong>
+        matching the ASEAN flag blue.
+      </li>
+      <li>
+        <strong>Accent</strong> (red) and <strong>Accent Secondary</strong> (yellow) are single-tone
+        colors derived directly from the ASEAN flag. They have no shade palette and should only be
+        used for decorative purposes in conjunction with <strong>Primary</strong>.
+      </li>
+      <li>
+        For any other colors not defined above, use the standard
+        <strong>Tailwind CSS palette</strong> directly (e.g. <code>slate-500</code>,
+        <code>zinc-200</code>). Avoid introducing one-off custom colors outside this palette.
+      </li>
+    </ul>
   </div>
 </Story>

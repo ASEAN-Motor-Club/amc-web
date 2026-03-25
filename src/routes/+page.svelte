@@ -45,8 +45,8 @@
             href="/map"
             size="xs"
             round
-            class="h-6 px-2.5 font-medium backdrop-blur-xs"
-            color="success"
+            class="h-6 border-green-700 px-2.5 font-medium text-green-700 backdrop-blur-xs hover:bg-green-700/10 active:bg-green-700/15 dark:border-green-500 dark:text-green-500"
+            color="custom"
             tag="a"
           >
             <div class="relative mr-2 flex size-2">
@@ -77,6 +77,7 @@
         <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
           <Button
             variant="contained"
+            color="custom"
             class=" bg-[#5865f2] hover:bg-[color-mix(in_oklab,#5865f2_90%,white)] active:bg-[color-mix(in_oklab,#5865f2_95%,black)]"
             tag="a"
             href={PUBLIC_DISCORD_LINK}
@@ -86,6 +87,7 @@
           <div class="rounded-md bg-white">
             <Button
               variant="contained"
+              color="custom"
               class=" text-text bg-[#f96854] hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)]"
               tag="a"
               href={PUBLIC_PATREON_LINK}

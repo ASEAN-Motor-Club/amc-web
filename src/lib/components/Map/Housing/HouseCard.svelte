@@ -79,7 +79,7 @@
       variant="text"
       href={getViewHref(Features.House, house.name)}
       class="-mr-1.5"
-      color="info"
+      color="primary"
     >
       {m.view_on_map()}
     </Button>

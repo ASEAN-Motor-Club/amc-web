@@ -138,21 +138,21 @@
 {/if}
 <div
   class={[
-    'bg-background-300 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
+    'bg-background-100 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
     isSm.current && showFullAnimate && '!sm:absolute top-0 right-0',
   ]}
 >
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
     {#if validOpenCollapsible && isSm.current && !showFull}
       <CollapsibleActionButton
-        color="error"
+        color="danger"
         icon="i-material-symbols:close-rounded"
         href={closeHref}
       />
     {/if}
     {#if validOpenCollapsible}
       <CollapsibleActionButton
-        color="info"
+        color="primary"
         class="hidden sm:flex"
         icon={showFull
           ? 'i-material-symbols:collapse-content-rounded'
