@@ -138,7 +138,7 @@
 {/if}
 <div
   class={[
-    'bg-background-300 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
+    'bg-background-50 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
     isSm.current && showFullAnimate && '!sm:absolute top-0 right-0',
   ]}
 >

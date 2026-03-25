@@ -326,7 +326,7 @@ export const defaultTransitionDuration = '150ms';
 export const defaultTransitionDurationMs = 150;
 
 export const fontSans =
-  "'Noto Sans Variable', 'Noto Sans SC Variable', 'Noto Sans JP Variable', 'Noto Sans KR Variable', 'Noto Sans Thai Looped Variable', sans-serif";
+  "'Noto Sans Variable', 'Noto Sans SC Variable', 'Noto Sans JP Variable', 'Noto Sans KR Variable', 'Noto Sans Thai Variable', sans-serif";
 
 export const textXs = '0.75rem';
 
