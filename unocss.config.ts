@@ -1,7 +1,4 @@
-import {
-  defineConfig,
-  transformerDirectives,
-} from 'unocss';
+import { defineConfig, transformerDirectives } from 'unocss';
 import extractorSvelte from '@unocss/extractor-svelte';
 import amcConfig from 'amc-uno-css-config';
 

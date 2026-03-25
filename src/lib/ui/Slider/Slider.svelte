@@ -202,7 +202,7 @@
       clsx([
         { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
         doTransition && 'motion-safe:transition-[left]',
-      ])
+      ]),
     )}
     style:left={`${percent}%`}
   >
@@ -216,7 +216,7 @@
             'bg-gray-700 hover:bg-gray-500': color === 'gray',
           },
           knobClass,
-        ])
+        ]),
       )}
     >
       <input class="hidden" type="range" value={valueLocal} {name} {id} />

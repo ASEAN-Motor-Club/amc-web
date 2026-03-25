@@ -48,8 +48,7 @@
     },
     haveEvent &&
       !today && {
-        'bg-green-700 hover:bg-green-600 active:bg-green-800':
-          eventToday === EventType.Single,
+        'bg-green-700 hover:bg-green-600 active:bg-green-800': eventToday === EventType.Single,
         'bg-teal-700 hover:bg-teal-600 active:bg-teal-800': eventToday === EventType.MultiDay,
       },
   ]}
