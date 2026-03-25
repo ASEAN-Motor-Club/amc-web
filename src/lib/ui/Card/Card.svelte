@@ -43,7 +43,7 @@
     'rounded-md p-4',
     loading
       ? 'relative bg-transparent'
-      : 'bg-background-200 dark:bg-background-900 shadow-md ring ring-black/5 dark:shadow-white/3 dark:ring-white/5',
+      : 'bg-background-50 dark:bg-background-900 shadow-md ring ring-black/5 dark:shadow-white/3 dark:ring-white/5',
     clsx(propsClass),
   )}
   {...othersCardProps}
