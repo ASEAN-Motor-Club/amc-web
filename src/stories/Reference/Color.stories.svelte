@@ -131,6 +131,10 @@
         colors derived directly from the ASEAN flag. They have no shade palette and should only be
         used for decorative purposes in conjunction with <strong>Primary</strong>.
       </li>
+      <li>
+        For any other semantic or utility colors (e.g. success, error, warning), use the default
+        <strong>Tailwind CSS palette</strong> directly (e.g. <code>green-500</code>, <code>red-500</code>).
+      </li>
     </ul>
   </div>
 </Story>
