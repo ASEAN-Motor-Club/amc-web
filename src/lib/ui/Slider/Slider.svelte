@@ -28,7 +28,7 @@
     id?: string;
     /**
      * The color theme of the button
-     * @default 'neutral'
+     * @default 'gray'
      */
     color?: Color;
     /**
@@ -44,6 +44,18 @@
      * @default 'md'
      */
     size?: 'sm' | 'md';
+    /**
+     * CSS class to apply to the slider track
+     */
+    trackClass?: ClassValue;
+    /**
+     * CSS class to apply to the progressed portion of the slider track
+     */
+    progressedTrackClass?: ClassValue;
+    /**
+     * CSS class to apply to the slider knob
+     */
+    knobClass?: ClassValue;
   }
 
   const {
@@ -52,10 +64,13 @@
     name,
     class: propsClass,
     id: propsId,
-    color = 'neutral',
+    color = 'gray',
     min,
     max,
     size = 'md',
+    trackClass,
+    progressedTrackClass,
+    knobClass,
   }: TextInputProps = $props();
 
   const inputGroupContext = getInputGroupContext();
@@ -152,58 +167,57 @@
   aria-valuenow={valueLocal}
 >
   <div
-    class={[
+    class={twMerge(
       'flex w-full overflow-hidden rounded-full select-none',
-      {
-        'bg-primary-300': color === 'primary',
-        'bg-secondary-300': color === 'secondary',
-        'bg-info-300': color === 'info',
-        'bg-success-300': color === 'success',
-        'bg-warning-300': color === 'warning',
-        'bg-error-300': color === 'error',
-        'bg-neutral-300': color === 'neutral',
-      },
-      { 'h-1': size === 'sm', 'h-1.25': size === 'md' },
-    ]}
+      clsx([
+        {
+          'bg-primary-300': color === 'primary',
+          'bg-danger-300': color === 'danger',
+          'bg-gray-300': color === 'gray',
+        },
+        { 'h-1': size === 'sm', 'h-1.25': size === 'md' },
+        trackClass,
+      ]),
+    )}
   >
     <div
-      class={[
+      class={twMerge(
         'h-full',
-        {
-          'bg-primary-500': color === 'primary',
-          'bg-secondary-500': color === 'secondary',
-          'bg-info-500': color === 'info',
-          'bg-success-500': color === 'success',
-          'bg-warning-500': color === 'warning',
-          'bg-error-500': color === 'error',
-          'bg-neutral-500': color === 'neutral',
-        },
-        doTransition && 'motion-safe:transition-[width]',
-      ]}
+        clsx([
+          {
+            'bg-primary-500': color === 'primary',
+            'bg-danger-500': color === 'danger',
+            'bg-gray-500': color === 'gray',
+          },
+          doTransition && 'motion-safe:transition-[width]',
+          progressedTrackClass,
+        ]),
+      )}
       style:width={`${percent}%`}
     ></div>
   </div>
   <div
-    class={[
+    class={twMerge(
       'absolute flex -translate-x-1/2',
-      { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
-      doTransition && 'motion-safe:transition-[left]',
-    ]}
+      clsx([
+        { 'size-3.5': size === 'sm', 'size-4.5': size === 'md' },
+        doTransition && 'motion-safe:transition-[left]',
+      ])
+    )}
     style:left={`${percent}%`}
   >
     <div
-      class={[
+      class={twMerge(
         'h-full w-full rounded-full shadow-md shadow-black/30 transition-colors',
-        {
-          'bg-primary-700 hover:bg-primary-500': color === 'primary',
-          'bg-secondary-700 hover:bg-secondary-500': color === 'secondary',
-          'bg-info-700 hover:bg-info-500': color === 'info',
-          'bg-success-700 hover:bg-success-500': color === 'success',
-          'bg-warning-700 hover:bg-warning-500': color === 'warning',
-          'bg-error-700 hover:bg-error-500': color === 'error',
-          'bg-neutral-700 hover:bg-neutral-500': color === 'neutral',
-        },
-      ]}
+        clsx([
+          {
+            'bg-primary-700 hover:bg-primary-500': color === 'primary',
+            'bg-danger-700 hover:bg-danger-500': color === 'danger',
+            'bg-gray-700 hover:bg-gray-500': color === 'gray',
+          },
+          knobClass,
+        ])
+      )}
     >
       <input class="hidden" type="range" value={valueLocal} {name} {id} />
     </div>

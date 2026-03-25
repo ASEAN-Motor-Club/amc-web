@@ -34,7 +34,7 @@
       <Card class="flex flex-col gap-5">
         <h2 class="text-lg font-bold">Modal Title</h2>
         <p>This is the content of the modal.</p>
-        <Button color="secondary" onClick={() => (modalOpen = false)}>Close</Button>
+        <Button onClick={() => (modalOpen = false)}>Close</Button>
       </Card>
     </Modal>
   {/snippet}
@@ -50,7 +50,7 @@
       </p>
       <div class="-mx-3 -my-3 flex justify-end gap-2">
         <Button onClick={() => (modalOpen = false)} color="primary" variant="text">Confirm</Button>
-        <Button onClick={() => (modalOpen = false)} color="secondary" variant="text">Close</Button>
+        <Button onClick={() => (modalOpen = false)} variant="text">Close</Button>
       </div>
     </Card>
   </Modal>

@@ -13,7 +13,7 @@
     class?: ClassValue;
     /**
      * The color theme of the button
-     * @default 'neutral'
+     * @default 'gray'
      */
     color?: Color;
     /**
@@ -106,7 +106,7 @@
 
   const {
     children,
-    color = 'neutral',
+    color = 'gray',
     variant = 'contained',
     size = 'md',
     onClick,
@@ -130,20 +130,12 @@
         switch (color) {
           case 'primary':
             return `${containedBase} bg-primary-700 hover:bg-primary-600 active:bg-primary-800`;
-          case 'secondary':
-            return `${containedBase} bg-secondary-700 hover:bg-secondary-600 active:bg-secondary-800`;
-          case 'info':
-            return `${containedBase} bg-info-700 hover:bg-info-600 active:bg-info-800`;
-          case 'success':
-            return `${containedBase} bg-success-700 hover:bg-success-600 active:bg-success-800`;
-          case 'warning':
-            return `${containedBase} bg-warning-700 hover:bg-warning-600 active:bg-warning-800`;
-          case 'error':
-            return `${containedBase} bg-error-700 hover:bg-error-600 active:bg-error-800`;
-          case 'neutral':
-            return `${containedBase} bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-800`;
+          case 'danger':
+            return `${containedBase} bg-danger-700 hover:bg-danger-600 active:bg-danger-800`;
+          case 'gray':
+            return `${containedBase} bg-gray-700 hover:bg-gray-600 active:bg-gray-800`;
           default:
-            return '';
+            return containedBase;
         }
       }
       case 'contained-light': {
@@ -151,20 +143,12 @@
         switch (color) {
           case 'primary':
             return `${containedLightBase} bg-primary-700/10 hover:bg-primary-600/20 active:bg-primary-800/20`;
-          case 'secondary':
-            return `${containedLightBase} bg-secondary-700/10 hover:bg-secondary-600/20 active:bg-secondary-800/20`;
-          case 'info':
-            return `${containedLightBase} bg-info-700/10 hover:bg-info-600/20 active:bg-info-800/20`;
-          case 'success':
-            return `${containedLightBase} bg-success-700/10 hover:bg-success-600/20 active:bg-success-800/20`;
-          case 'warning':
-            return `${containedLightBase} bg-warning-700/10 hover:bg-warning-600/20 active:bg-warning-800/20`;
-          case 'error':
-            return `${containedLightBase} bg-error-700/10 hover:bg-error-600/20 active:bg-error-800/20`;
-          case 'neutral':
-            return `${containedLightBase} bg-neutral-700/10 hover:bg-neutral-600/20 active:bg-neutral-800/20`;
+          case 'danger':
+            return `${containedLightBase} bg-danger-700/10 hover:bg-danger-600/20 active:bg-danger-800/20`;
+          case 'gray':
+            return `${containedLightBase} bg-gray-700/10 hover:bg-gray-600/20 active:bg-gray-800/20`;
           default:
-            return '';
+            return containedLightBase;
         }
       }
       case 'outlined': {
@@ -172,38 +156,22 @@
         switch (color) {
           case 'primary':
             return `${outlinedBase} text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-700/15`;
-          case 'secondary':
-            return `${outlinedBase} text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 border-secondary-700 dark:border-secondary-500 active:bg-secondary-700/15`;
-          case 'info':
-            return `${outlinedBase} text-info-700 dark:text-info-500 hover:bg-info-700/10 border-info-700 dark:border-info-500 active:bg-info-700/15`;
-          case 'success':
-            return `${outlinedBase} text-success-700 dark:text-success-500 hover:bg-success-700/10 border-success-700 dark:border-success-500 active:bg-success-700/15`;
-          case 'warning':
-            return `${outlinedBase} text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 border-warning-700 dark:border-warning-500 active:bg-warning-700/15`;
-          case 'error':
-            return `${outlinedBase} text-error-700 dark:text-error-500 hover:bg-error-700/10 border-error-700 dark:border-error-500 active:bg-error-700/15`;
-          case 'neutral':
-            return `${outlinedBase} text-neutral-600 dark:text-neutral-400 hover:bg-neutral-700/10 border-neutral-700 dark:border-neutral-500 active:bg-neutral-700/15`;
+          case 'danger':
+            return `${outlinedBase} text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 border-danger-700 dark:border-danger-500 active:bg-danger-700/15`;
+          case 'gray':
+            return `${outlinedBase} text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 border-gray-700 dark:border-gray-500 active:bg-gray-700/15`;
           default:
-            return '';
+            return outlinedBase;
         }
       }
       case 'text': {
         switch (color) {
           case 'primary':
             return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 active:bg-primary-800/20`;
-          case 'secondary':
-            return `text-secondary-700 dark:text-secondary-500 hover:bg-secondary-700/10 active:bg-secondary-800/20`;
-          case 'info':
-            return `text-info-700 dark:text-info-500 hover:bg-info-700/10 active:bg-info-800/20`;
-          case 'success':
-            return `text-success-700 dark:text-success-500 hover:bg-success-700/10 active:bg-success-800/20`;
-          case 'warning':
-            return `text-warning-700 dark:text-warning-500 hover:bg-warning-700/10 active:bg-warning-800/20`;
-          case 'error':
-            return `text-error-700 dark:text-error-500 hover:bg-error-700/10 active:bg-error-800/20`;
-          case 'neutral':
-            return 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-700/10 active:bg-neutral-800/20';
+          case 'danger':
+            return `text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 active:bg-danger-800/20`;
+          case 'gray':
+            return 'text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 active:bg-gray-800/20';
           default:
             return '';
         }

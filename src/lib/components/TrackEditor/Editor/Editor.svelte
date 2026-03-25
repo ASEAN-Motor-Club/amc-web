@@ -188,7 +188,7 @@
             onClick={() => (showHidden = !showHidden)}
             size="xs"
             variant="text"
-            color="info"
+            color="primary"
             class="-mr-1.5"
           >
             {showHidden
@@ -200,20 +200,14 @@
           <Button disabled={!localDirty} onClick={handleSaveChanges}
             >{m['track_editor.editor.save_changes']()}</Button
           >
-          <Button onClick={handleDelete} color="error">{m['track_editor.editor.delete']()}</Button>
+          <Button onClick={handleDelete} color="danger">{m['track_editor.editor.delete']()}</Button>
         </div>
         <Divider vertical spacing={false} class="md:hidden" />
         <Divider spacing={false} class="hidden md:block" />
         <div class="flex flex-col gap-2">
           <InputGroup label={m['track_editor.editor.rotation_z']()} focusIndex={1}>
             {#snippet appendLabel()}
-              <Button
-                onClick={handleAutoRotatePoint}
-                size="xs"
-                variant="text"
-                color="success"
-                class="-mr-1.5"
-              >
+              <Button onClick={handleAutoRotatePoint} size="xs" variant="text" class="-mr-1.5">
                 {m['track_editor.editor.auto_rotate']()}
               </Button>
             {/snippet}

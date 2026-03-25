@@ -145,14 +145,14 @@
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
     {#if validOpenCollapsible && isSm.current && !showFull}
       <CollapsibleActionButton
-        color="error"
+        color="danger"
         icon="i-material-symbols:close-rounded"
         href={closeHref}
       />
     {/if}
     {#if validOpenCollapsible}
       <CollapsibleActionButton
-        color="info"
+        color="primary"
         class="hidden sm:flex"
         icon={showFull
           ? 'i-material-symbols:collapse-content-rounded'

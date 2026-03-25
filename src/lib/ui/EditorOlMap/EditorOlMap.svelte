@@ -7,9 +7,9 @@
   import { Feature } from 'ol';
   import { Point, LineString } from 'ol/geom';
   import {
-    colorPrimary400,
-    colorSecondary500,
-    colorPrimary600,
+    colorSky400,
+    colorSky600,
+    colorAmber500,
     colorRed600,
     colorYellow500,
     colorYellow300,
@@ -90,7 +90,7 @@
     source: trackPointSource,
     style: {
       'circle-radius': 6,
-      'circle-fill-color': ['match', ['get', 'hover'], 1, colorPrimary400, colorPrimary600],
+      'circle-fill-color': ['match', ['get', 'hover'], 1, colorSky400, colorSky600],
       'circle-stroke-color': 'black',
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
@@ -154,7 +154,7 @@
     source: selectedPointSource,
     style: {
       'circle-radius': 6,
-      'circle-fill-color': colorSecondary500,
+      'circle-fill-color': colorAmber500,
       'circle-stroke-color': 'white',
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,

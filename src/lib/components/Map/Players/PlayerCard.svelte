@@ -44,7 +44,7 @@
       variant="text"
       href={getViewHref(Features.Player, player?.guid ?? '')}
       class="-mr-1.5"
-      color="info"
+      color="primary"
       onClick={() => onCenter([player?.coord.x ?? 0, player?.coord.y ?? 0])}
     >
       {m.view_on_map()}

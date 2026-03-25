@@ -102,6 +102,41 @@
         class="bg-primary-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
 
+      <div class="text-sm text-gray-500">Danger (Red)</div>
+      <div
+        class="bg-danger-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div
+        class="bg-danger-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+
       <div class="col-span-12 border-t border-black/10 dark:border-white/10"></div>
 
       <div class="text-sm text-gray-500">Accent</div>
@@ -115,9 +150,21 @@
         class="bg-accent-secondary aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div class="col-span-10"></div>
+
+      <div class="text-sm text-gray-500">Text</div>
+      <div
+        class="bg-text aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
+
+      <div class="text-sm text-gray-500">Text Dark</div>
+      <div
+        class="bg-text-dark aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+      ></div>
+      <div class="col-span-10"></div>
     </div>
 
-    <ul class="mt-10 w-120 list-disc space-y-1 pl-5 text-xs text-gray-500">
+    <ul class="mt-10 w-180 list-disc space-y-1 pl-5 text-xs text-gray-500">
       <li>
         <strong>Background 100</strong> and <strong>Background 950</strong> are the main light and dark
         background colors used as base (body background).
@@ -132,9 +179,9 @@
         used for decorative purposes in conjunction with <strong>Primary</strong>.
       </li>
       <li>
-        For any other semantic or utility colors (e.g. success, error, warning), use the default
-        <strong>Tailwind CSS palette</strong> directly (e.g. <code>green-500</code>,
-        <code>red-500</code>).
+        For any other colors not defined above, use the standard
+        <strong>Tailwind CSS palette</strong> directly (e.g. <code>slate-500</code>,
+        <code>zinc-200</code>). Avoid introducing one-off custom colors outside this palette.
       </li>
     </ul>
   </div>

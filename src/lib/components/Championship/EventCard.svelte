@@ -80,9 +80,7 @@
   <div
     class={[
       'mb-1 text-xs',
-      event.time_trial
-        ? 'text-warning-800 dark:text-warning-500'
-        : 'text-primary-800 dark:text-primary-500',
+      event.time_trial ? 'text-teal-800 dark:text-teal-500' : 'text-green-800 dark:text-green-500',
     ]}
   >
     {format(event.start_time, eventStyle)} &ndash; {format(event.end_time, eventStyle)}
@@ -98,7 +96,7 @@
   <div class="-m-2 flex gap-1">
     {#if event.discord_event_id}
       <Button
-        color="info"
+        color="primary"
         variant="text"
         size="sm"
         tag="a"
@@ -111,7 +109,7 @@
     {/if}
     {#if pastEventTime}
       <Button
-        color="secondary"
+        color="primary"
         variant="text"
         size="sm"
         tag="a"

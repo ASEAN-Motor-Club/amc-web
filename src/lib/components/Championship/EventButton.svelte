@@ -39,19 +39,19 @@
   icon
   round
   variant={haveEvent ? 'contained' : 'text'}
-  color={haveEvent
-    ? today
-      ? 'success'
-      : eventToday === EventType.Single
-        ? 'primary'
-        : 'warning'
-    : 'neutral'}
+  color={haveEvent ? (today ? 'primary' : 'custom') : 'gray'}
   disabled={!haveEvent}
   class={[
     month === currentMonth ? 'opacity-100' : 'opacity-50',
     {
-      'ring-success-700 ring': today,
+      'ring-primary-700 ring': today,
     },
+    haveEvent &&
+      !today && {
+        'bg-green-700 hover:bg-green-600 active:bg-green-800':
+          eventToday === EventType.Single,
+        'bg-teal-700 hover:bg-teal-600 active:bg-teal-800': eventToday === EventType.MultiDay,
+      },
   ]}
   onClick={handleClick}
   tag="a"

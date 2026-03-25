@@ -175,6 +175,7 @@
   <div class="mt-6 flex items-center lg:mt-0">
     <Button
       variant="contained-light"
+      color="custom"
       class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
       tag="a"
       href={PUBLIC_DISCORD_LINK}

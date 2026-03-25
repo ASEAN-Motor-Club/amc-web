@@ -44,7 +44,7 @@
       {/each}
     </div>
     <div class="-mx-3 -mb-3 flex justify-end pt-2">
-      <Button onClick={onClose} color="secondary" variant="text">
+      <Button onClick={onClose} variant="text">
         {m['action.close']()}
       </Button>
     </div>

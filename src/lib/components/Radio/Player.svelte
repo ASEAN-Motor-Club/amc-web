@@ -80,7 +80,11 @@
         >
           {currentTrack}
         </div> -->
-      <Button onClick={playerContext.togglePlay} color="neutral" class="mb-4">
+      <Button
+        onClick={playerContext.togglePlay}
+        class="mb-4 bg-[#5a2c00] hover:bg-[color-mix(in_oklab,#5a2c00_90%,white)] active:bg-[color-mix(in_oklab,#5a2c00_95%,black)]"
+        color="custom"
+      >
         {#snippet prependIcon()}
           {#if playerContext.isPlaying}
             <Icon class="i-material-symbols:pause-rounded" />
@@ -98,7 +102,10 @@
         max={1}
         size="sm"
         class="w-full"
-        color="neutral"
+        color="custom"
+        trackClass="bg-[color-mix(in_oklab,#5a2c00_60%,white)]"
+        progressedTrackClass="bg-[color-mix(in_oklab,#5a2c00_90%,white)]"
+        knobClass="bg-[#5a2c00] hover:bg-[color-mix(in_oklab,#5a2c00_90%,white)]"
       />
     </div>
   </div>

@@ -107,7 +107,7 @@
     {deliveryPoint?.name && getMtLocale(deliveryPoint.name)}
   </CommonHead>
   <div class="-mt-3 px-5 pb-5">
-    <Button color="info" variant="text" tag="a" href={getViewHref(Features.Delivery, id)}>
+    <Button color="primary" variant="text" tag="a" href={getViewHref(Features.Delivery, id)}>
       {m.view_on_map()}
     </Button>
   </div>
