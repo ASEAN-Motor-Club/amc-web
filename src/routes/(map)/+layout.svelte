@@ -7,15 +7,16 @@
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
-  import Map from '$lib/components/Map/Map/Map.svelte';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
   import type { CollapsibleType } from '$lib/components/Map/types';
   import type { DeliveryCargo } from '$lib/data/types';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
   import { getAbortSignal, onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
+  import type Map from '$lib/components/Map/Map/Map.svelte';
 
   const { children } = $props();
 
@@ -39,7 +40,12 @@
     }
   });
 
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  let MapComponent: Promise<typeof import('$lib/components/Map/Map/Map.svelte')> | undefined =
+    $state(undefined);
+
   onMount(() => {
+    MapComponent = import('$lib/components/Map/Map/Map.svelte');
     if (!isSm.current && page.url.pathname === '/map' && openCollapsible) {
       const newParams = new SvelteURLSearchParams(clientSearchParams());
       newParams.delete('menu');
@@ -134,13 +140,32 @@
       ]}
     >
       <div class="contents duration-150">
-        <Map
-          {jobsData}
-          {houseData}
-          {playerData}
-          onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-          bind:this={map}
-        />
+        {#if MapComponent}
+          {#await MapComponent}
+            <div
+              class="flex h-full w-full items-center justify-center bg-[lab(47.888%_-2.821_-32.915)]"
+            >
+              <Icon
+                class="i-material-symbols:progress-activity animate-spin text-2xl text-white/20"
+              />
+            </div>
+          {:then M}
+            {@const Map = M.default}
+            <Map
+              {jobsData}
+              {houseData}
+              {playerData}
+              onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
+              bind:this={map}
+            />
+          {:catch _}
+            <div
+              class="text-text/80 dark:text-text-dark/80 flex h-full w-full items-center justify-center"
+            >
+              Problem loading the map. Please try refreshing the page.
+            </div>
+          {/await}
+        {/if}
       </div>
     </div>
   </div>

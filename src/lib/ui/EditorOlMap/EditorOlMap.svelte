@@ -409,7 +409,9 @@
     if (points.length) {
       const source = gateMode ? gateSource : trackPointSource;
       const extent = source.getExtent();
-      map.fit(extent, [64, 64, 64, 64]);
+      if (extent) {
+        map.fit(extent, [64, 64, 64, 64]);
+      }
     }
   };
 
