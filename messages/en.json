@@ -319,7 +319,7 @@
   },
   "unknown_location": "unknown location",
   "go_back": "Go Back",
-  "locales": {
+  "locales_do_not_duplicate": {
     "cs": "Čeština",
     "de": "Deutsch",
     "en": "English",

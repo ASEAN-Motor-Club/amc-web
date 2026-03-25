@@ -91,55 +91,55 @@
   const getLocaleText = (localeKey: MtLocaleKey | Locale) => {
     switch (localeKey) {
       case 'cs':
-        return m['locales.cs']();
+        return m['locales_do_not_duplicate.cs']();
       case 'de':
-        return m['locales.de']();
+        return m['locales_do_not_duplicate.de']();
       case 'en':
-        return m['locales.en']();
+        return m['locales_do_not_duplicate.en']();
       case 'es-419':
-        return m['locales.es-419']();
+        return m['locales_do_not_duplicate.es-419']();
       case 'es-ES':
-        return m['locales.es-ES']();
+        return m['locales_do_not_duplicate.es-ES']();
       case 'fi':
-        return m['locales.fi']();
+        return m['locales_do_not_duplicate.fi']();
       case 'fr':
-        return m['locales.fr']();
+        return m['locales_do_not_duplicate.fr']();
       case 'hu':
-        return m['locales.hu']();
+        return m['locales_do_not_duplicate.hu']();
       case 'it':
-        return m['locales.it']();
+        return m['locales_do_not_duplicate.it']();
       case 'ja':
-        return m['locales.ja']();
+        return m['locales_do_not_duplicate.ja']();
       case 'ko':
-        return m['locales.ko']();
+        return m['locales_do_not_duplicate.ko']();
       case 'lt':
-        return m['locales.lt']();
+        return m['locales_do_not_duplicate.lt']();
       case 'nl':
-        return m['locales.nl']();
+        return m['locales_do_not_duplicate.nl']();
       case 'no':
-        return m['locales.no']();
+        return m['locales_do_not_duplicate.no']();
       case 'pl':
-        return m['locales.pl']();
+        return m['locales_do_not_duplicate.pl']();
       case 'pt-BR':
-        return m['locales.pt-BR']();
+        return m['locales_do_not_duplicate.pt-BR']();
       case 'ru':
-        return m['locales.ru']();
+        return m['locales_do_not_duplicate.ru']();
       case 'sv':
-        return m['locales.sv']();
+        return m['locales_do_not_duplicate.sv']();
       case 'tr':
-        return m['locales.tr']();
+        return m['locales_do_not_duplicate.tr']();
       case 'uk':
-        return m['locales.uk']();
+        return m['locales_do_not_duplicate.uk']();
       case 'vi':
-        return m['locales.vi']();
+        return m['locales_do_not_duplicate.vi']();
       case 'zh-Hans':
-        return m['locales.zh-Hans']();
+        return m['locales_do_not_duplicate.zh-Hans']();
       case 'zh-Hant':
-        return m['locales.zh-Hant']();
+        return m['locales_do_not_duplicate.zh-Hant']();
       case 'th':
-        return m['locales.th']();
+        return m['locales_do_not_duplicate.th']();
       case 'id':
-        return m['locales.id']();
+        return m['locales_do_not_duplicate.id']();
     }
   };
 </script>

@@ -94,6 +94,9 @@
       "normalize": "Normalisasi",
       "auto_rotate_all_gates": "Putar Otomatis Semua Gerbang",
       "show_width": "Tampilkan Lebar",
+      "hide_width": "Sembunyikan Lebar",
+      "show_number": "Tampilkan Nomor",
+      "hide_number": "Sembunyikan Nomor",
       "recenter": "Pusatkan Ulang"
     }
   },
@@ -102,7 +105,11 @@
     "tools": "Alat",
     "track_editor": "Editor Lintasan",
     "map": "Peta",
+    "jobs": "Pekerjaan",
+    "jobs_c": "P*kerjaan",
+    "players": "Pemain",
     "housing": "Perumahan",
+    "delivery": "Pengantaran",
     "radio": "Radio",
     "wiki": "Wiki",
     "amc_cup": "AMC Cup",
@@ -143,7 +150,19 @@
     "pin_labels": "Label Pin",
     "pin_no": "Pin {index}",
     "last_updated": "Terakhir diperbarui",
-    "load_error": "Gagal memuat peta. Silakan coba muat ulang halaman."
+    "load_error": "Gagal memuat peta. Silakan coba muat ulang halaman.",
+    "side_menu": {
+      "housing": "RUMAH",
+      "map": "PETA",
+      "jobs": "KERJA",
+      "jobs_c": "K*RJA",
+      "delivery": "KIRIM",
+      "players": "PMAIN"
+    },
+    "start_search": "Mulai mengetik untuk mencari...",
+    "no_results": "Tidak ada hasil.",
+    "jobs_only": "Hanya Pekerjaan",
+    "jobs_only_c": "Hanya P*kerjaan"
   },
   "home": {
     "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",
@@ -193,12 +212,21 @@
     "cannot_load": {
       "title": "Tidak dapat memuat data perumahan",
       "desc": "Gagal memuat data perumahan. Silakan coba lagi nanti."
-    }
+    },
+    "no_results": "Tidak ada rumah ditemukan."
   },
   "view_on_map": "Lihat di Peta",
   "delivery": {
+    "head": "{siteName} | Pengantaran",
+    "title": "Pengantaran",
     "supply": "Pasokan",
-    "demand": "Permintaan"
+    "demand": "Permintaan",
+    "delivery": "Pengantaran",
+    "last_updated": "Data terakhir diperbarui {time}",
+    "job_supply": "Titik Pengambilan Valid",
+    "job_supply_c": "Titik Pengambilan P*kerjaan Valid",
+    "job_demand": "Titik Pengantaran Valid",
+    "job_demand_c": "Titik Pengantaran P*kerjaan Valid"
   },
   "radio": {
     "head": "{siteName} | Radio",
@@ -241,7 +269,8 @@
         "desc": "Gagal memuat data event. Silakan coba lagi nanti."
       },
       "pts": "{points} poin"
-    }
+    },
+    "no_standing": "Belum ada klasemen tersedia."
   },
   "settings": {
     "site_language": "Bahasa Situs",
@@ -251,5 +280,43 @@
       "dark": "Tema Gelap",
       "light": "Tema Terang"
     }
-  }
+  },
+  "jobs": {
+    "head": "{siteName} | Pekerjaan",
+    "head_c": "{siteName} | P*kerjaan",
+    "title": "Pekerjaan",
+    "title_c": "P*kerjaan",
+    "no_jobs": "Tidak ada pekerjaan diposting.",
+    "no_jobs_c": "Tidak ada p*kerjaan diposting.",
+    "expired": "Kedaluwarsa",
+    "completion_bonus": "Bonus Penyelesaian",
+    "bonus_multiplier": "Pengali Bonus",
+    "constrains": "Batasan",
+    "constrains_cargo": "Kargo",
+    "constrains_source_points": "Dari",
+    "constrains_destination_points": "Ke",
+    "contributors": "Kontributor",
+    "no_contributors": "Belum ada kontributor. Jadilah yang pertama mengambil pekerjaan ini!",
+    "no_contributors_c": "Belum ada kontributor. Jadilah yang pertama mengambil p*kerjaan ini!",
+    "job_not_found": "Pekerjaan yang Anda cari tidak ada atau sudah kedaluwarsa.",
+    "job_not_found_c": "P*kerjaan yang Anda cari tidak ada atau sudah kedaluwarsa.",
+    "table": {
+      "name": "Nama",
+      "amount": "Jumlah",
+      "reward_cut": "Potongan Hadiah"
+    },
+    "job_supply": "Titik Pengambilan Valid",
+    "job_demand": "Titik Pengantaran Valid"
+  },
+  "players": {
+    "head": "{siteName} | Pemain",
+    "title": "Pemain",
+    "search_placeholder": "Cari nama pemain",
+    "details_driving": "Mengemudi {vehicle} di {location}",
+    "details": "Di {location}",
+    "no_players": "Tidak ada pemain online.",
+    "no_results": "Tidak ada pemain ditemukan."
+  },
+  "unknown_location": "lokasi tidak diketahui",
+  "go_back": "Kembali"
 }
