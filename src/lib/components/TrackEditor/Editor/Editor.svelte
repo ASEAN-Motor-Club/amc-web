@@ -33,7 +33,7 @@
   // svelte-ignore state_referenced_locally
   let trackData = $state(cloneDeep(initialTrackData));
   let selectedPointIndex = $state<number | undefined>(undefined);
-  let showHidden = $state<boolean>(false);
+  let showHidden = $state(false);
 
   const points = $derived(
     trackData.waypoints.map((wp) => {
@@ -49,7 +49,7 @@
   const dirty = $derived(!isEqual(initialTrackData, trackData));
 
   let initialEditingPoint = $state<WaypointEuler | undefined>(undefined);
-  let editingPoint = $state<WaypointEuler>({
+  let editingPoint = $state({
     translation: { x: 0, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     scale3D: { x: 0, y: 0, z: 0 },
@@ -143,8 +143,8 @@
     map.zoomFit();
   });
 
-  let gateMode = $state<boolean>(false);
-  let showNum = $state<boolean>(true);
+  let gateMode = $state(false);
+  let showNum = $state(true);
 
   const mapBtnClass =
     ' text-text bg-white/80 hover:bg-white active:bg-neutral-100 backdrop-blur-xs';

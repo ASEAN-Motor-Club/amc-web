@@ -17,7 +17,7 @@
   let eventData: ScheduledEvent | undefined = $state();
   let eventResults: EventResult[] = $state([]);
   // records/b8724385ffc98c9a5ea86fb12771d8666db39c2469bdc9602336fae6b97c8cd4/laps/0
-  let loading = $state<boolean>(true);
+  let loading = $state(true);
 
   onMount(async () => {
     if (!page.params.id) {

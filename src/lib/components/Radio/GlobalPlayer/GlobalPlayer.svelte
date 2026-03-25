@@ -13,7 +13,7 @@
   const VOLUME_STORAGE_KEY = 'radioVolume';
 
   let audio: HTMLAudioElement;
-  let isPlaying = $state<boolean>(false);
+  let isPlaying = $state(false);
 
   let volume = $state(1);
 
