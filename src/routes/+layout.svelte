@@ -1,15 +1,8 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans';
-  import '@fontsource-variable/noto-sans-sc';
-  import '@fontsource-variable/noto-sans-jp';
-  import '@fontsource-variable/noto-sans-kr';
-  import '@fontsource-variable/noto-sans-thai-looped';
-  import '@fontsource-variable/noto-sans-mono';
-  import '@fontsource/kanit';
-  import '@fontsource/koulen';
+  import notoSansLatinWghtNormalWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2';
   import 'virtual:uno.css';
   import '../app.css';
-
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
   import { onMount } from 'svelte';
@@ -32,6 +25,12 @@
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';
   import { rtDate } from '$lib/realtimeDate.svelte';
+
+  // lazy load these locale-specific fonts since they are large and not needed immediately
+  import('@fontsource-variable/noto-sans-thai-looped');
+  import('@fontsource-variable/noto-sans-sc');
+  import('@fontsource-variable/noto-sans-jp');
+  import('@fontsource-variable/noto-sans-kr');
 
   $effect(() => {
     let animationId: number;
@@ -112,6 +111,13 @@
     name="theme-color"
     content={color ?? colorBackground900}
     media="(prefers-color-scheme: dark)"
+  />
+  <link
+    rel="preload"
+    as="font"
+    href={notoSansLatinWghtNormalWoff2 as string}
+    type="font/woff2"
+    crossorigin="anonymous"
   />
   <link rel="icon" href={faviconSvg} type="image/svg+xml" />
   <link rel="icon" href={faviconIco} />

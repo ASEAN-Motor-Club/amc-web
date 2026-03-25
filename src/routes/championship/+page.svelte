@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '$lib/font-sans-em';
   import poster455 from '$lib/assets/images/poster/asean_poster_w455.avif';
   import poster909 from '$lib/assets/images/poster/asean_poster_w909.avif';
   import poster1364 from '$lib/assets/images/poster/asean_poster_w1364.avif';

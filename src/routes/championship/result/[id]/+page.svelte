@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '$lib/font-sans-em';
   import { getAbortSignal, onMount } from 'svelte';
   import { page } from '$app/state';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';

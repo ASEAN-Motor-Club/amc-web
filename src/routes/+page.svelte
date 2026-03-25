@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '$lib/font-sans-em';
   import ScrollHint from '$lib/components/Home/ScrollHint.svelte';
   import { m } from '$messages';
   import posterVid from '$lib/assets/videos/background_trailer.mp4';

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '$lib/font-sans-em';
   import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
