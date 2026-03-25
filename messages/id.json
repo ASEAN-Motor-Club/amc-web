@@ -142,7 +142,8 @@
     "pins": "Pin",
     "pin_labels": "Label Pin",
     "pin_no": "Pin {index}",
-    "last_updated": "Terakhir diperbarui"
+    "last_updated": "Terakhir diperbarui",
+    "load_error": "Gagal memuat peta. Silakan coba muat ulang halaman."
   },
   "home": {
     "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",

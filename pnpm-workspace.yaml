@@ -1,8 +1,6 @@
-ignoredBuiltDependencies:
-  - edgedriver
-  - geckodriver
-
+allowBuilds:
+  edgedriver: false
+  esbuild: true
+  geckodriver: false
 minimumReleaseAge: 1440
-
-onlyBuiltDependencies:
-  - esbuild
+dedupePeers: true

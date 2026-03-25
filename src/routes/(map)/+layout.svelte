@@ -10,6 +10,7 @@
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
   import type { CollapsibleType } from '$lib/components/Map/types';
   import type { DeliveryCargo } from '$lib/data/types';
+  import { m } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
@@ -162,7 +163,7 @@
             <div
               class="text-text/80 dark:text-text-dark/80 flex h-full w-full items-center justify-center"
             >
-              Problem loading the map. Please try refreshing the page.
+              {m['map.load_error']()}
             </div>
           {/await}
         {/if}

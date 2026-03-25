@@ -161,7 +161,8 @@
     "start_search": "Start typing to search...",
     "no_results": "No results found.",
     "jobs_only": "Jobs Only",
-    "jobs_only_c": "J*bs Only"
+    "jobs_only_c": "J*bs Only",
+    "load_error": "Problem loading the map. Please try refreshing the page."
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
