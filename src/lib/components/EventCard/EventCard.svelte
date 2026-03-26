@@ -88,7 +88,7 @@
         {/if}
       </div>
 
-      <div class="text-center text-xs text-text/90 dark:text-text-dark/90 sm:text-right">
+      <div class="text-text/90 dark:text-text-dark/90 text-center text-xs sm:text-right">
         {#if loading}
           .
         {:else if time?.finished}
