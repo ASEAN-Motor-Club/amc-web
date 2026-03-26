@@ -86,7 +86,7 @@
   <CommonHead>{m['housing.title']()}</CommonHead>
   <div
     class={[
-      'flex flex-col justify-between gap-2 border-b border-neutral-500/20 px-8 pb-8',
+      'flex flex-col justify-between gap-2 border-b border-gray-500/20 px-8 pb-8',
       fullScreen && 'sm:flex-row',
     ]}
   >

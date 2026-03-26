@@ -138,19 +138,19 @@
     switch (variant) {
       case 'contained': {
         const baseClass =
-          'focus:outline-solid focus:outline-1 focus:bg-neutral-500/10 dark:focus:bg-neutral-500/10';
+          'focus:outline-solid focus:outline-1 focus:bg-gray-500/10 dark:focus:bg-gray-500/10';
         if (error) {
           return `${baseClass} placeholder-danger-500 dark:placeholder-danger-700 bg-danger-500/20 dark:bg-danger-600/10 hover:bg-danger-500/30 group-hover:bg-danger-500/30 dark:hover:bg-danger-600/20 dark:group-hover:bg-danger-600/20 outline-danger-500 dark:outline-danger-800`;
         } else {
-          return `${baseClass} bg-neutral-900/10 outline-neutral-400 hover:bg-neutral-900/20 group-hover:bg-neutral-900/20 dark:bg-neutral-100/10 dark:outline-neutral-600 dark:hover:bg-neutral-100/20 dark:group-hover:bg-neutral-100/20`;
+          return `${baseClass} bg-gray-900/10 outline-gray-400 hover:bg-gray-900/20 group-hover:bg-gray-900/20 dark:bg-gray-100/10 dark:outline-gray-600 dark:hover:bg-gray-100/20 dark:group-hover:bg-gray-100/20`;
         }
       }
       case 'outlined': {
-        const borderBase = 'border bg-white dark:bg-neutral-900';
+        const borderBase = 'border bg-white dark:bg-gray-900';
         if (error) {
           return `${borderBase} placeholder-danger-400 dark:placeholder-danger-800 border-danger-400 dark:border-danger-800 dark:hover:border-danger-500 dark:group-hover:border-danger-500 hover:border-danger-500 group-hover:border-danger-500 focus:border-danger-600 focus:dark:border-danger-600`;
         } else {
-          return `${borderBase} border-neutral-400 hover:border-neutral-500 focus:border-neutral-600 group-hover:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-600 dark:group-hover:border-neutral-600`;
+          return `${borderBase} border-gray-400 hover:border-gray-500 focus:border-gray-600 group-hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-600 dark:group-hover:border-gray-600`;
         }
       }
       default:

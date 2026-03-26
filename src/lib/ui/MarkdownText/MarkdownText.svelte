@@ -147,7 +147,7 @@
 </script>
 
 <section
-  class={['prose dark:prose-invert prose-neutral !prose-cyan contents', size]}
+  class={['prose dark:prose-invert prose-slate !prose-cyan contents', size]}
   bind:this={textContainer}
 >
   <HydrationSkip markup={sanitizedHtml} />

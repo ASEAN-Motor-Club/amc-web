@@ -14,7 +14,7 @@
 </script>
 
 <Button
-  class={['flex-col rounded-none bg-neutral-500/10 text-[0.625rem] font-normal', propsClass]}
+  class={['flex-col rounded-none bg-gray-500/10 text-[0.625rem] font-normal', propsClass]}
   variant="contained-light"
   tag="a"
   {href}

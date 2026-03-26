@@ -37,7 +37,7 @@
       {m['championship.event.title']({ date: formattedDate })}
     </h1>
     <div
-      class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-t border-b border-neutral-500/10 bg-neutral-500/5 px-5 py-5"
+      class="-mx-5 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto border-t border-b border-gray-500/10 bg-gray-500/5 px-5 py-5"
     >
       {#each eventsToday as event (event.id)}
         <EventCard {event} {openResultsModal} />

@@ -208,7 +208,7 @@
   >
     <div
       class={twMerge(
-        'h-full w-full rounded-full shadow-md shadow-black/30 transition-colors',
+        'h-full w-full rounded-full shadow-md shadow-gray-950/30 transition-colors',
         clsx([
           {
             'bg-primary-700 hover:bg-primary-500': color === 'primary',

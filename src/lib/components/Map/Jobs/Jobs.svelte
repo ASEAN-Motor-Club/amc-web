@@ -15,7 +15,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead class="border-b border-neutral-500/20"
+  <CommonHead class="border-b border-gray-500/20"
     >{censored.c ? m['jobs.title_c']() : m['jobs.title']()}</CommonHead
   >
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>

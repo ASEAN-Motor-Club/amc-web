@@ -78,7 +78,7 @@
       gridClass="grid-cols-[1fr_4fr_2fr_1fr_2fr]"
       skeletonCount={32}
       {loading}
-      class="bg-neutral-500/ md:aspect-1 aspect-9/16 w-full overflow-y-auto border-t border-b border-neutral-500/10"
+      class="md:aspect-1 aspect-9/16 w-full overflow-y-auto border-t border-b border-gray-500/10"
       rowClass="px-5 text-sm sm:text-base"
       empty={results.length === 0}
     >

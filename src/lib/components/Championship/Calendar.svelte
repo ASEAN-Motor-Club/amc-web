@@ -69,7 +69,7 @@
 </script>
 
 <Card class="overflow-hidden">
-  <div class="-m-4 mb-4 flex h-15 items-center justify-between bg-neutral-500/10 pr-2 pl-4">
+  <div class="-m-4 mb-4 flex h-15 items-center justify-between bg-gray-500/10 pr-2 pl-4">
     <h4 class="text-xl font-medium">
       {format(new Date(year, month - 1, 1), m['format.calendarFormat']())}
     </h4>

@@ -902,7 +902,7 @@
   >
     <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
     <Card
-      class="media-touch:mr-13 pointer-events-auto mr-10 !bg-neutral-900/50 p-1.5 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+      class="media-touch:mr-13 pointer-events-auto mr-10 !bg-gray-900/50 p-1.5 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
     >
       <h2 class="text-text-dark mb-1 text-xs">
         {m['map.point_of_interests']()}

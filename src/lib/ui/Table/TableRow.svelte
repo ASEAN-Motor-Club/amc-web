@@ -12,7 +12,7 @@
 
   const { children, class: propsClass }: TableProps = $props();
 
-  const baseRowClass = 'grid gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0';
+  const baseRowClass = 'grid gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0';
 
   const context = getTableContext();
 </script>

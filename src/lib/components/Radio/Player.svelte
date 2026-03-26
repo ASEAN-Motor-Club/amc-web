@@ -49,10 +49,10 @@
 </script>
 
 <div
-  class="mx-auto flex h-auto w-full max-w-175 flex-col overflow-hidden rounded-lg border-3 border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-black/30"
+  class="mx-auto flex h-auto w-full max-w-175 flex-col overflow-hidden rounded-lg border-3 border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-gray-950/30"
 >
   <div
-    class="border-b-2 border-black/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
+    class="border-b-2 border-gray-950/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
   >
     {m['radio.station_name']()}
   </div>
@@ -69,7 +69,7 @@
 
     <div class="flex flex-1 flex-col p-4">
       <div
-        class="mb-4 flex min-h-25 flex-grow-1 overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-black/50"
+        class="mb-4 flex min-h-25 flex-grow-1 overflow-hidden rounded-md border-2 border-[#5a2c00] shadow-sm shadow-gray-950/50"
       >
         {#if playerContext.analyser}
           <PlayerWaveform analyser={playerContext.analyser} />

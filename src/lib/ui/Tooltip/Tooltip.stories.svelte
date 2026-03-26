@@ -30,7 +30,7 @@
     },
     args: {
       class:
-        'max-w-xs whitespace-nowrap break-words rounded bg-neutral-800 px-2 py-1 text-sm text-neutral-100 shadow-lg dark:bg-neutral-200 dark:text-neutral-900',
+        'max-w-xs whitespace-nowrap break-words rounded bg-gray-800 px-2 py-1 text-sm text-gray-100 shadow-lg dark:bg-gray-200 dark:text-gray-900',
     },
   });
 

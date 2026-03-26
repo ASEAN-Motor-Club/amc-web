@@ -186,7 +186,7 @@
 {/snippet}
 
 <nav
-  class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-black/10 ring-black/1 select-none"
+  class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-gray-950/10 ring-gray-950/1 select-none"
 >
   <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
     <Icon class="i-material-symbols:menu-rounded" />

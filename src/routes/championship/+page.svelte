@@ -233,7 +233,7 @@
                     team: team.name,
                   })}
                   class={[
-                    'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-neutral-500/10 object-contain',
+                    'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-gray-500/10 object-contain',
                     team.logo ? '' : 'invisible',
                   ]}
                   fetchpriority="high"

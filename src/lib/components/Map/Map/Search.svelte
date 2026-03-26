@@ -153,7 +153,7 @@
       name="search"
       type="search"
       placeholder={m['map.search_placeholder']()}
-      class="text-text-dark pointer-events-auto w-full !border-none !bg-neutral-900/50 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-neutral-900/40 focus:!bg-neutral-900/60"
+      class="text-text-dark pointer-events-auto w-full !border-none !bg-gray-900/50 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),
@@ -176,11 +176,11 @@
         }}
       >
         <Card
-          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
-              <div class="w-full border-t border-neutral-100/20"></div>
+              <div class="w-full border-t border-gray-100/20"></div>
             {/if}
             <a
               class="flex p-2 pl-0"
@@ -189,7 +189,7 @@
             >
               <div
                 class={[
-                  'mx-3 my-1.5 size-3 shrink-0 rounded-full border-1 border-black',
+                  'mx-3 my-1.5 size-3 shrink-0 rounded-full border-1 border-gray-950',
                   {
                     'bg-yellow-500': point.pointType === PointType.Delivery,
                     'bg-cyan-500': point.pointType === PointType.House,
@@ -215,7 +215,7 @@
                   />
                 </div>
                 {#if point.pointType === PointType.Delivery}
-                  <div class="flex flex-col text-neutral-300">
+                  <div class="flex flex-col text-slate-300">
                     {#if point.supplyText}
                       <div class="text-xs">
                         {m['delivery.supply']()}: <HighlightText
@@ -240,7 +240,7 @@
                     {/if}
                   </div>
                 {:else if point.pointType === PointType.House}
-                  <div class="text-xs text-neutral-300">
+                  <div class="text-xs text-slate-300">
                     {m['housing.id']()}: <HighlightText
                       text={point.guid || m.unknown()}
                       highlight={searchValue}
@@ -250,18 +250,18 @@
                     />
                   </div>
                 {:else if point.pointType === PointType.Player}
-                  <div class="text-xs text-neutral-300">
+                  <div class="text-xs text-slate-300">
                     <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
                   </div>
                 {/if}
-                <div class="text-xs text-neutral-400">
+                <div class="text-xs text-slate-400">
                   {getLocationAtPoint(point.coord)}
                 </div>
               </div>
             </a>
           {/each}
           {#if searchValue && foundValues.length > maxShow}
-            <div class="px-3 py-2 text-neutral-300 italic">
+            <div class="px-3 py-2 text-slate-300 italic">
               {m['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
@@ -283,9 +283,9 @@
         }}
       >
         <Card
-          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-neutral-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
-          <div class="px-3 py-2 text-neutral-300 italic">
+          <div class="px-3 py-2 text-slate-300 italic">
             {searchValue ? m['map.no_results']() : m['map.start_search']()}
           </div>
         </Card>

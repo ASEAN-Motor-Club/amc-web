@@ -146,8 +146,7 @@
   let gateMode = $state(false);
   let showNum = $state(true);
 
-  const mapBtnClass =
-    ' text-text bg-white/80 hover:bg-white active:bg-neutral-100 backdrop-blur-xs';
+  const mapBtnClass = 'text-text bg-white/80 hover:bg-white active:bg-gray-50 backdrop-blur-xs';
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">

@@ -43,15 +43,13 @@
     'rounded-md p-4',
     loading
       ? 'relative bg-transparent'
-      : 'bg-background-50 dark:bg-background-900 shadow-md ring ring-black/5 dark:shadow-white/3 dark:ring-white/5',
+      : 'bg-background-50 dark:bg-background-900 shadow-md ring ring-gray-950/5 dark:shadow-white/3 dark:ring-white/5',
     clsx(propsClass),
   )}
   {...othersCardProps}
 >
   {#if loading}
-    <div
-      class="absolute top-0 left-0 h-full w-full animate-pulse rounded-md bg-neutral-500/20"
-    ></div>
+    <div class="absolute top-0 left-0 h-full w-full animate-pulse rounded-md bg-gray-500/20"></div>
   {/if}
   <div class={['contents', loading && 'invisible']}>
     {@render children()}

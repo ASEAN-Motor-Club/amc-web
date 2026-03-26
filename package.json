@@ -64,7 +64,7 @@
     "@sveltejs/kit": "2.55.0",
     "@sveltejs/vite-plugin-svelte": "7.0.0",
     "@unocss/extractor-svelte": "66.6.7",
-    "amc-uno-css-config": "github:ASEAN-Motor-Club/uno-css-config",
+    "amc-uno-css-config": "github:ASEAN-Motor-Club/uno-css-config#2fa615b0a0409b2253546ca685d6aa7abe89732a",
     "clsx": "2.1.1",
     "date-fns": "4.1.0",
     "dompurify": "3.3.3",

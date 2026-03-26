@@ -60,7 +60,7 @@ Every user-facing string must use Paraglide:
 
 <span
   class={twMerge(
-    'inline-block animate-pulse rounded-md bg-neutral-500/20 text-transparent select-none',
+    'inline-block animate-pulse rounded-md bg-gray-500/20 text-transparent select-none',
     clsx(propsClass),
   )}>.</span
 >

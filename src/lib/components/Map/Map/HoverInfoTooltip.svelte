@@ -102,7 +102,7 @@
     bind:this={tooltip}
   >
     <Card
-      class="text-text-dark media-mouse:m-2 m-1 flex flex-col gap-0.5 !bg-neutral-900/50 px-1.5 py-1 whitespace-nowrap shadow-white/3 ring-white/5 backdrop-blur-sm select-none"
+      class="text-text-dark media-mouse:m-2 m-1 flex flex-col gap-0.5 !bg-gray-900/50 px-1.5 py-1 whitespace-nowrap shadow-white/3 ring-white/5 backdrop-blur-sm select-none"
     >
       <div class="text-xs font-semibold">
         {typeText}
@@ -121,7 +121,7 @@
         {/if}
       </div>
       {#if hoverInfo.info}
-        <div class="my-0.5 w-full border-t-1 border-neutral-100/20"></div>
+        <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
         {#if hoverInfo.pointType === PointType.Delivery}
           <DeliveryInfo {hoverInfo} />
         {:else if hoverInfo.pointType === PointType.House}
@@ -130,8 +130,8 @@
           <PlayerInfo {hoverInfo} />
         {/if}
       {/if}
-      <div class="my-0.5 w-full border-t-1 border-neutral-100/20"></div>
-      <div class="mb-0.5 text-xs font-semibold text-neutral-300">
+      <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
+      <div class="mb-0.5 text-xs font-semibold text-gray-300">
         {getLocationAtPoint(hoverInfo.info.coord)}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}

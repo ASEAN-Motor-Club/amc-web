@@ -129,12 +129,12 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
             {censored.c ? m['delivery.job_supply_c']() : m['delivery.job_supply']()}
           </div>
           {#each matchJobs as job (job.id)}
             <div
-              class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
             >
               <JobLink {fullScreen} {job} showId />
               <div class="whitespace-nowrap">
@@ -146,12 +146,12 @@
       {/if}
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
             {censored.c ? m['delivery.job_demand_c']() : m['delivery.job_demand']()}
           </div>
           {#each matchJobsDest as job (job.id)}
             <div
-              class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
             >
               <JobLink {fullScreen} {job} showId />
               <div class="whitespace-nowrap">
@@ -168,12 +168,12 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if deliveryPoint.allSupply.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
             {m['delivery.supply']()}
           </div>
           {#each deliveryPoint.allSupply as item (item)}
             <div
-              class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
             >
               <div class="flex flex-1 items-baseline gap-2 overflow-hidden whitespace-nowrap">
                 {getMtLocale(cargoName[item])}
@@ -194,12 +194,12 @@
       {/if}
       {#if deliveryPoint.allDemand.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
             {m['delivery.demand']()}
           </div>
           {#each deliveryPoint.allDemand as item (item)}
             <div
-              class="flex justify-between gap-2 border-b border-neutral-500/10 px-4 py-3 last:border-0"
+              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
             >
               <div class="flex flex-1 items-baseline gap-2 overflow-hidden whitespace-nowrap">
                 {getMtLocale(cargoName[item])}
@@ -224,7 +224,7 @@
     <!-- {#if deliveryPoint.allSupply.length > 0}
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
-          <div class="bg-neutral-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
             {m['delivery.delivery']()}
           </div>
         </Card>

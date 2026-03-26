@@ -48,7 +48,7 @@
   >
     <div
       class={[
-        'fixed top-0 flex h-16 bg-neutral-500/10 transition-all ease-[cubic-bezier(0.16,1,0.3,1)]',
+        'fixed top-0 flex h-16 bg-gray-500/10 transition-all ease-[cubic-bezier(0.16,1,0.3,1)]',
         { 'transition-duration-30s w-90%': widthFull && !speedUp },
         { 'transition-duration-300 w-full': widthFull && speedUp },
         { 'transition-duration-300 w-0': !widthFull },

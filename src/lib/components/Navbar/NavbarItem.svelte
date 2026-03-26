@@ -66,7 +66,7 @@
 
   const baseLinkClass = $derived([
     'group flex items-center gap-1',
-    !mobile && '-mx-3 px-3 transition-colors hover:bg-neutral-500/10',
+    !mobile && '-mx-3 px-3 transition-colors hover:bg-gray-500/10',
   ]);
 </script>
 
@@ -88,7 +88,7 @@
       <div
         class={mobile
           ? 'contents'
-          : 'bg-background-200 dark:bg-background-900 absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full px-3 shadow-black/10'}
+          : 'bg-background-200 dark:bg-background-900 absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full px-3 shadow-gray-950/10'}
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
