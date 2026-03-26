@@ -17,8 +17,11 @@
     colorYellow100,
     textXs,
     fontSans,
-    colorGray950,
     colorWhite,
+    colorSky950,
+    adjustOpacity,
+    colorGray950,
+    colorTextDark,
   } from '$lib/tw-var';
   import type { MapBrowserEvent } from 'ol';
   import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
@@ -93,7 +96,7 @@
     style: {
       'circle-radius': 6,
       'circle-fill-color': ['match', ['get', 'hover'], 1, colorSky400, colorSky600],
-      'circle-stroke-color': colorGray950,
+      'circle-stroke-color': colorSky950,
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -122,13 +125,14 @@
 
   const numberLayerStyle = new Style({
     text: new Text({
-      font: `${textXs} ${fontSans}`,
+      font: `600 ${textXs} ${fontSans}`,
       offsetY: -22,
       fill: new Fill({
-        color: colorGray950,
+        color: colorTextDark,
       }),
+
       stroke: new Stroke({
-        color: colorWhite,
+        color: adjustOpacity(colorGray950, 0.4),
         width: 3,
       }),
     }),

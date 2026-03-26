@@ -25,9 +25,11 @@
     colorRed400,
     colorRed500,
     colorEmerald500,
-    colorText,
-    colorGray950,
     colorWhite,
+    colorRed950,
+    colorEmerald950,
+    colorGray950,
+    colorTextDark,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -93,7 +95,7 @@
         colorRed200,
         ['match', ['get', 'selected'], 1, colorRed500, colorRed400],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorGray950],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorRed950],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -102,13 +104,14 @@
 
   const PinLabelsStyle = new Style({
     text: new Text({
-      font: `${textXs} ${fontSans}`,
+      font: `600 ${textXs} ${fontSans}`,
       offsetY: -14,
       fill: new Fill({
-        color: colorGray950,
+        color: colorTextDark,
       }),
+
       stroke: new Stroke({
-        color: colorWhite,
+        color: adjustOpacity(colorGray950, 0.4),
         width: 3,
       }),
     }),
@@ -139,7 +142,7 @@
         colorEmerald200,
         ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorGray950],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorEmerald950],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -148,13 +151,14 @@
 
   const playerNameStyle = new Style({
     text: new Text({
-      font: `${textXs} ${fontSans}`,
+      font: `600 ${textXs} ${fontSans}`,
       offsetY: -12,
       fill: new Fill({
-        color: colorText,
+        color: colorTextDark,
       }),
+
       stroke: new Stroke({
-        color: colorWhite,
+        color: adjustOpacity(colorGray950, 0.4),
         width: 3,
       }),
     }),
