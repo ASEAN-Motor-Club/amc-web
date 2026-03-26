@@ -25,6 +25,9 @@
     colorRed400,
     colorRed500,
     colorEmerald500,
+    colorText,
+    colorGray950,
+    colorWhite,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -90,7 +93,7 @@
         colorRed200,
         ['match', ['get', 'selected'], 1, colorRed500, colorRed400],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorGray950],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -102,10 +105,10 @@
       font: `${textXs} ${fontSans}`,
       offsetY: -14,
       fill: new Fill({
-        color: 'black',
+        color: colorGray950,
       }),
       stroke: new Stroke({
-        color: 'white',
+        color: colorWhite,
         width: 3,
       }),
     }),
@@ -136,7 +139,7 @@
         colorEmerald200,
         ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, 'white', 'black'],
+      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorGray950],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -148,10 +151,10 @@
       font: `${textXs} ${fontSans}`,
       offsetY: -12,
       fill: new Fill({
-        color: 'black',
+        color: colorText,
       }),
       stroke: new Stroke({
-        color: 'white',
+        color: colorWhite,
         width: 3,
       }),
     }),

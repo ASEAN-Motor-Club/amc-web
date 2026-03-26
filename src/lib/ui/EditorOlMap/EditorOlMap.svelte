@@ -17,6 +17,8 @@
     colorYellow100,
     textXs,
     fontSans,
+    colorGray950,
+    colorWhite,
   } from '$lib/tw-var';
   import type { MapBrowserEvent } from 'ol';
   import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
@@ -91,7 +93,7 @@
     style: {
       'circle-radius': 6,
       'circle-fill-color': ['match', ['get', 'hover'], 1, colorSky400, colorSky600],
-      'circle-stroke-color': 'black',
+      'circle-stroke-color': colorGray950,
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -123,10 +125,10 @@
       font: `${textXs} ${fontSans}`,
       offsetY: -22,
       fill: new Fill({
-        color: 'black',
+        color: colorGray950,
       }),
       stroke: new Stroke({
-        color: 'white',
+        color: colorWhite,
         width: 3,
       }),
     }),
@@ -155,7 +157,7 @@
     style: {
       'circle-radius': 6,
       'circle-fill-color': colorAmber500,
-      'circle-stroke-color': 'white',
+      'circle-stroke-color': colorWhite,
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
