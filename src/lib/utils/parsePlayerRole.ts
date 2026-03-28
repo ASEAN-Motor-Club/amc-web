@@ -1,15 +1,14 @@
 export interface PlayerRole {
   letter: string;
-  label: string;
   level?: number;
   color: string;
 }
 
-const ROLE_MAP: Record<string, { label: string; color: string }> = {
-  P: { label: 'Police', color: 'bg-blue-600' },
-  G: { label: 'Gov Worker', color: 'bg-green-600' },
-  M: { label: 'Modded', color: 'bg-amber-600' },
-  C: { label: 'Criminal', color: 'bg-red-600' },
+const ROLE_MAP: Record<string, string> = {
+  P: 'bg-blue-600',
+  G: 'bg-green-600',
+  M: 'bg-amber-600',
+  C: 'bg-red-600',
 };
 
 export function parsePlayerRoles(name: string): PlayerRole[] {
@@ -22,8 +21,8 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
 
   while (i < tag.length) {
     const letter = tag[i].toUpperCase();
-    const meta = ROLE_MAP[letter];
-    if (!meta) {
+    const color = ROLE_MAP[letter];
+    if (!color) {
       i++;
       continue;
     }
@@ -38,8 +37,12 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
       i += 1;
     }
 
-    roles.push({ letter, label: meta.label, level, color: meta.color });
+    roles.push({ letter, level, color });
   }
 
   return roles;
+}
+
+export function stripPlayerRoleTag(name: string): string {
+  return name.replace(/^\[[^\]]+\]\s*/, '');
 }
