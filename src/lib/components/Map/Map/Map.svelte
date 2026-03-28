@@ -18,7 +18,8 @@
     colorEmerald200,
     colorEmerald400,
     colorBlue500,
-    colorGreen500,
+    colorBlue600,
+    colorRed700,
     adjustOpacity,
     colorYellow500,
     colorRed200,
@@ -56,6 +57,7 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
   import { getSelectionClearedParams } from '../utils';
+  import { parsePlayerRoles } from '$lib/utils/parsePlayerRole';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -169,7 +171,16 @@
     renderOrder: null as any,
     source: playerPointSource,
     style: (feature) => {
-      playerNameStyle.getText()?.setText(feature.get('info').name as string);
+      const name = feature.get('info').name as string;
+      playerNameStyle.getText()?.setText(name);
+
+      const roles = parsePlayerRoles(name);
+      const hasP = roles.some((r) => r.letter === 'P');
+      const hasC = roles.some((r) => r.letter === 'C');
+
+      const strokeColor = hasP ? colorBlue600 : hasC ? colorRed700 : adjustOpacity(colorGray950, 0.4);
+      playerNameStyle.getText()?.getStroke()?.setColor(strokeColor);
+
       return playerNameStyle;
     },
   });
