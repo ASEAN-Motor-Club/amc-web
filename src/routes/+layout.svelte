@@ -1,5 +1,9 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans';
+  import '@fontsource-variable/noto-sans-thai';
+  import '@fontsource-variable/noto-sans-sc';
+  import '@fontsource-variable/noto-sans-jp';
+  import '@fontsource-variable/noto-sans-kr';
   import notoSansLatinWghtNormalWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2';
   import 'virtual:uno.css';
   import '../app.css';
@@ -25,12 +29,6 @@
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';
   import { rtDate } from '$lib/realtimeDate.svelte';
-
-  // lazy load these locale-specific fonts since they are large and not needed immediately
-  import('@fontsource-variable/noto-sans-thai');
-  import('@fontsource-variable/noto-sans-sc');
-  import('@fontsource-variable/noto-sans-jp');
-  import('@fontsource-variable/noto-sans-kr');
 
   $effect(() => {
     let animationId: number;
