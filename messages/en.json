@@ -140,7 +140,13 @@
     "player_info": {
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",
-      "unknown_vehicle": "unknown vehicle"
+      "unknown_vehicle": "unknown vehicle",
+      "roles": {
+        "P": "Police",
+        "G": "Gov Worker",
+        "M": "Modded",
+        "C": "Criminal"
+      }
     },
     "pins_invalid": {
       "title": "Invalid Pin",
