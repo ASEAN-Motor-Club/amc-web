@@ -38,9 +38,9 @@
       <Button
         variant="contained"
         color="custom"
-        size="xs"
+        size="xxs"
         tag="div"
-        class="pointer-events-none h-5 px-1.5 font-medium {roleColorClass[role.letter]}"
+        class="pointer-events-none font-medium {roleColorClass[role.letter]}"
       >
         {roleLabels[role.letter]()}{role.level != null ? ` - ${role.level}` : ''}
       </Button>
