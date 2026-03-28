@@ -7,6 +7,16 @@
   import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
   import { prefersReducedMotion } from 'svelte/motion';
   import { rtDate } from '$lib/realtimeDate.svelte';
+  import { getPlayerCount } from '$lib/api/player';
+  import { getAbortSignal } from 'svelte';
+
+  let playerCount = $state<number | null>(null);
+
+  $effect(() => {
+    getPlayerCount((count) => {
+      playerCount = count;
+    }, getAbortSignal());
+  });
 
   const year = $derived(rtDate.d.getFullYear());
 
@@ -55,7 +65,7 @@
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
-            {m['home.live_server_no_count']()}
+            {playerCount != null ? m['home.live_server']({ players: playerCount }) : m['home.live_server_no_count']()}
           </Button>
         </div>
         <h1
