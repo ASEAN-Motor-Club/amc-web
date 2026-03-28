@@ -79,6 +79,23 @@ export const getResidentPointStyle = (jobOnly?: boolean) => ({
   'circle-displacement': [0, 0],
 });
 
+export const getHouseStyle = (vacantOnly?: boolean) => ({
+  'circle-opacity': vacantOnly ? ['match', ['get', 'vacant'], 1, 1, 0] : 1,
+  'circle-radius': 6,
+  'circle-fill-color': [
+    'case',
+    ['==', ['get', 'hover'], 1],
+    colorCyan300,
+    ['==', ['get', 'selected'], 1],
+    colorCyan600,
+    colorCyan500,
+  ],
+  'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorCyan950],
+  'circle-stroke-width': 1,
+  'circle-rotate-with-view': false,
+  'circle-displacement': [0, 0],
+});
+
 export function getStaticPoints() {
   const [deliPoint, residentPoint] = deliveryPoints.reduce(
     (acc, point) => {
@@ -138,21 +155,7 @@ export function getStaticPoints() {
     source: new VectorSource({
       features: houseFeatures,
     }),
-    style: {
-      'circle-radius': 6,
-      'circle-fill-color': [
-        'case',
-        ['==', ['get', 'hover'], 1],
-        colorCyan300,
-        ['==', ['get', 'selected'], 1],
-        colorCyan600,
-        colorCyan500,
-      ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorCyan950],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
+    style: getHouseStyle(),
   });
 
   return {

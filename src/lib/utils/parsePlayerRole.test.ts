@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { parsePlayerRoles, stripPlayerRoleTag, hasPoliceRole, hasCriminalRole } from './parsePlayerRole';
+import {
+  parsePlayerRoles,
+  stripPlayerRoleTag,
+  hasPoliceRole,
+  hasCriminalRole,
+} from './parsePlayerRole';
 
 describe('parsePlayerRoles', () => {
   it('returns empty array for names without role tag', () => {

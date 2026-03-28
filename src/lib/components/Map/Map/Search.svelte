@@ -183,7 +183,7 @@
               <div class="w-full border-t border-gray-100/20"></div>
             {/if}
             <a
-              class="flex p-2 pl-0"
+              class="flex p-2 pl-0 hover:bg-gray-100/5"
               href={getHref(point)}
               onclick={(e) => handleLinkClick(e, point)}
             >

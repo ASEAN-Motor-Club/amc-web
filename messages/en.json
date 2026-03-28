@@ -118,7 +118,7 @@
   },
   "map": {
     "head": "{siteName} | Map",
-    "point_of_interests": "Point of interests (click to hide)",
+    "point_of_interests": "Points of interest",
     "delivery_point": "Delivery Point",
     "house": "House",
     "player": "Player",
@@ -166,9 +166,30 @@
     },
     "start_search": "Start typing to search...",
     "no_results": "No results found.",
-    "jobs_only": "Jobs Only",
-    "jobs_only_c": "J*bs Only",
-    "load_error": "Problem loading the map. Please try refreshing the page."
+    "load_error": "Problem loading the map. Please try refreshing the page.",
+    "poi": {
+      "delivery": "Delivery points",
+      "delivery_desc": "Delivery stations & supply routes",
+      "jobs_only": "Jobs only",
+      "jobs_only_c": "J*bs only",
+      "jobs_only_desc": "Only show points with active job postings",
+      "house": "Houses",
+      "house_desc": "Player-owned and available houses",
+      "house_vacant_only": "Vacant only",
+      "house_vacant_only_desc": "Hide occupied houses, show only vacant ones",
+      "player": "Players",
+      "player_desc": "Live positions of online players",
+      "player_names": "Show names",
+      "player_names_desc": "Display name labels above player dots",
+      "player_police": "Police only",
+      "player_police_desc": "Filter to show only police-role players",
+      "player_criminal": "Criminals only",
+      "player_criminal_desc": "Filter to show only criminal-role players",
+      "pins": "Pins",
+      "pin_desc": "Custom pins shared via URL",
+      "pin_labels": "Show labels",
+      "pin_labels_desc": "Display text labels next to each pin"
+    }
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",

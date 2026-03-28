@@ -118,7 +118,7 @@
   },
   "map": {
     "head": "{siteName} | Peta",
-    "point_of_interests": "Titik penting (klik untuk sembunyikan)",
+    "point_of_interests": "Titik-titik penting",
     "delivery_point": "Titik Pengantaran",
     "house": "Rumah",
     "player": "Pemain",
@@ -161,8 +161,29 @@
     },
     "start_search": "Mulai mengetik untuk mencari...",
     "no_results": "Tidak ada hasil.",
-    "jobs_only": "Hanya Pekerjaan",
-    "jobs_only_c": "Hanya P*kerjaan"
+    "poi": {
+      "delivery": "Titik-titik pengantaran",
+      "delivery_desc": "Stasiun pengiriman & rute pasokan",
+      "jobs_only": "Hanya pekerjaan",
+      "jobs_only_c": "Hanya p*kerjaan",
+      "jobs_only_desc": "Tampilkan hanya titik dengan pekerjaan aktif",
+      "house": "Rumah-rumah",
+      "house_desc": "Rumah milik pemain & yang tersedia",
+      "house_vacant_only": "Hanya kosong",
+      "house_vacant_only_desc": "Sembunyikan rumah berpenghuni, tampilkan yang kosong saja",
+      "player": "Pemain-pemain",
+      "player_desc": "Posisi live pemain yang sedang online",
+      "player_names": "Tampilkan nama",
+      "player_names_desc": "Tampilkan label nama di atas titik pemain",
+      "player_police": "Hanya polisi",
+      "player_police_desc": "Filter untuk menampilkan hanya pemain berperan polisi",
+      "player_criminal": "Hanya kriminal",
+      "player_criminal_desc": "Filter untuk menampilkan hanya pemain berperan kriminal",
+      "pins": "Pin",
+      "pin_desc": "Pin kustom yang dibagikan lewat URL",
+      "pin_labels": "Tampilkan label",
+      "pin_labels_desc": "Tampilkan label teks di setiap pin"
+    }
   },
   "home": {
     "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",
