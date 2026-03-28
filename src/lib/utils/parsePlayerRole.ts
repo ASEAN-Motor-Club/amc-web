@@ -12,7 +12,7 @@ const ROLE_MAP: Record<string, string> = {
 };
 
 export function parsePlayerRoles(name: string): PlayerRole[] {
-  const match = name.match(/^\[([^\]]+)\]/);
+  const match = name.match(/^\[([^\]]+)\] /);
   if (!match) return [];
 
   const tag = match[1];
@@ -44,5 +44,5 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
 }
 
 export function stripPlayerRoleTag(name: string): string {
-  return name.replace(/^\[[^\]]+\]\s*/, '');
+  return name.replace(/^\[[^\]]+\] /, '');
 }

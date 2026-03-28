@@ -34,6 +34,14 @@ describe('parsePlayerRoles', () => {
     const roles = parsePlayerRoles('[X1P2] Player');
     expect(roles).toEqual([{ letter: 'P', level: 2, color: 'bg-blue-600' }]);
   });
+
+  it('ignores tag without space after bracket', () => {
+    expect(parsePlayerRoles('[M]Player')).toEqual([]);
+  });
+
+  it('ignores tag without space after bracket even with levels', () => {
+    expect(parsePlayerRoles('[P1G1M]Player')).toEqual([]);
+  });
 });
 
 describe('stripPlayerRoleTag', () => {
@@ -45,7 +53,7 @@ describe('stripPlayerRoleTag', () => {
     expect(stripPlayerRoleTag('SomePlayer')).toBe('SomePlayer');
   });
 
-  it('strips tag without space after', () => {
-    expect(stripPlayerRoleTag('[M]Player')).toBe('Player');
+  it('returns name unchanged when tag has no space after bracket', () => {
+    expect(stripPlayerRoleTag('[M]Player')).toBe('[M]Player');
   });
 });
