@@ -25,27 +25,28 @@
   };
 
   const roleColorClass: Record<string, string> = {
-    P: 'bg-blue-500',
-    G: 'bg-green-500',
-    M: 'bg-amber-500',
-    C: 'bg-red-500',
+    P: 'bg-blue-600',
+    G: 'bg-green-700',
+    M: 'bg-amber-600',
+    C: 'bg-red-700',
   };
 </script>
 
 {#if roles.length > 0}
-  <div class="mb-0.5 flex gap-1">
+  <div class="flex flex-wrap gap-x-1 gap-y-0.5">
     {#each roles as role (role.letter)}
       <Button
         variant="contained"
         color="custom"
         size="xxs"
         tag="div"
-        class="pointer-events-none font-medium {roleColorClass[role.letter]}"
+        class="pointer-events-none {roleColorClass[role.letter]}"
       >
         {roleLabels[role.letter]()}{role.level != null ? ` - ${role.level}` : ''}
       </Button>
     {/each}
   </div>
+  <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
 {/if}
 <div class="text-xs">
   <PlayerVehicleInfo vehicleKey={hoverInfo.info.vehicleKey} />
