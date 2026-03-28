@@ -189,12 +189,12 @@
             >
               <div
                 class={[
-                  'mx-3 my-1.5 size-3 shrink-0 rounded-full border-1 border-gray-950',
+                  'mx-3 my-1.5 size-3 shrink-0 rounded-full border-1',
                   {
-                    'bg-yellow-500': point.pointType === PointType.Delivery,
-                    'bg-cyan-500': point.pointType === PointType.House,
-                    'bg-emerald-400': point.pointType === PointType.Player,
-                    'bg-red-400': point.pointType === PointType.Pin,
+                    'border-yellow-950 bg-yellow-500': point.pointType === PointType.Delivery,
+                    'border-cyan-950 bg-cyan-500': point.pointType === PointType.House,
+                    'border-emerald-950 bg-emerald-400': point.pointType === PointType.Player,
+                    'border-red-950 bg-red-400': point.pointType === PointType.Pin,
                   },
                 ]}
               ></div>
