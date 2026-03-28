@@ -36,6 +36,14 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
   return roles;
 }
 
+export function hasPoliceRole(name: string): boolean {
+  return /^\[[^\]]*P[^\]]*\] /.test(name);
+}
+
+export function hasCriminalRole(name: string): boolean {
+  return /^\[[^\]]*C[^\]]*\] /.test(name);
+}
+
 export function stripPlayerRoleTag(name: string): string {
   return name.replace(/^\[[^\]]+\] /, '');
 }

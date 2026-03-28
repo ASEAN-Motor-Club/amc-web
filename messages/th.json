@@ -118,7 +118,7 @@
   },
   "map": {
     "head": "{siteName} | แผนที่",
-    "point_of_interests": "จุดสนใจ (คลิกเพื่อซ่อน)",
+    "point_of_interests": "จุดสนใจ",
     "delivery_point": "จุดรับส่งสินค้า",
     "house": "บ้าน",
     "player": "ผู้เล่น",
@@ -161,8 +161,29 @@
     },
     "start_search": "เริ่มพิมพ์เพื่อค้นหา...",
     "no_results": "ไม่พบผลลัพธ์",
-    "jobs_only": "เฉพาะงาน",
-    "jobs_only_c": "เฉพาะง*น"
+    "poi": {
+      "delivery": "จุดรับส่งสินค้า",
+      "delivery_desc": "สถานีขนส่ง & เส้นทางจัดส่ง",
+      "jobs_only": "เฉพาะงาน",
+      "jobs_only_c": "เฉพาะง*น",
+      "jobs_only_desc": "แสดงเฉพาะจุดที่มีงานที่เปิดรับอยู่",
+      "house": "บ้าน",
+      "house_desc": "บ้านของผู้เล่นและบ้านที่ว่าง",
+      "house_vacant_only": "Vacant only",
+      "house_vacant_only_desc": "ซ่อนบ้านที่มีคนอยู่ แสดงเฉพาะบ้านว่าง",
+      "player": "ผู้เล่น",
+      "player_desc": "ตำแหน่งสดของผู้เล่นที่ออนไลน์",
+      "player_names": "แสดงชื่อ",
+      "player_names_desc": "แสดงป้ายชื่อเหนือจุดผู้เล่น",
+      "player_police": "เฉพาะตำรวจ",
+      "player_police_desc": "กรองเพื่อแสดงเฉพาะผู้เล่นที่มีบทบาทตำรวจ",
+      "player_criminal": "เฉพาะอาชญากร",
+      "player_criminal_desc": "กรองเพื่อแสดงเฉพาะผู้เล่นที่มีบทบาทอาชญากร",
+      "pins": "หมุด",
+      "pin_desc": "พินที่กำหนดเองแชร์ผ่าน URL",
+      "pin_labels": "แสดงป้าย",
+      "pin_labels_desc": "แสดงป้ายข้อความถัดจากแต่ละพิน"
+    }
   },
   "home": {
     "desc_title": "เซิร์ฟเวอร์ชุมชนชั้นนำของ Motor Town ในเอเชียตะวันออกเฉียงใต้",

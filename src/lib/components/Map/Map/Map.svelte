@@ -5,20 +5,28 @@
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
   import { onMount, untrack } from 'svelte';
-  import Button from '$lib/ui/Button/Button.svelte';
+  import { fade } from 'svelte/transition';
+  import Icon from '$lib/ui/Icon/Icon.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
+  import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
+  import PoiItem from './PoiItem.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PointType, type PlayerData } from './types';
-  import { getDeliveryPointStyle, getResidentPointStyle, getStaticPoints } from './staticPoints';
+  import { PlayerRoles, PointType, type PlayerData } from './types';
+  import {
+    getDeliveryPointStyle,
+    getHouseStyle,
+    getResidentPointStyle,
+    getStaticPoints,
+  } from './staticPoints';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
     textXs,
     fontSans,
     colorEmerald200,
     colorEmerald400,
-    colorBlue500,
     colorGreen500,
+    colorBlue500,
     adjustOpacity,
     colorYellow500,
     colorRed200,
@@ -28,8 +36,10 @@
     colorWhite,
     colorRed950,
     colorEmerald950,
+    colorBlue950,
     colorGray950,
     colorTextDark,
+    defaultTransitionDurationMs,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -56,6 +66,7 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
   import { getSelectionClearedParams } from '../utils';
+  import { hasPoliceRole, hasCriminalRole } from '$lib/utils/parsePlayerRole';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -75,7 +86,7 @@
     houseLayer,
   } = getStaticPoints();
 
-  const DISABLED_DATA_STORAGE_KEY = 'mapDisabledLayer';
+  const MAP_STATE_STORAGE_KEY = 'mapState';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -89,11 +100,12 @@
     style: {
       'circle-radius': 5,
       'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
+        'case',
+        ['==', ['get', 'hover'], 1],
         colorRed200,
-        ['match', ['get', 'selected'], 1, colorRed500, colorRed400],
+        ['==', ['get', 'selected'], 1],
+        colorRed500,
+        colorRed400,
       ],
       'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorRed950],
       'circle-stroke-width': 1,
@@ -136,13 +148,27 @@
     style: {
       'circle-radius': 4,
       'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
+        'case',
+        ['==', ['get', 'hover'], 1],
         colorEmerald200,
-        ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
+        ['==', ['get', 'selected'], 1],
+        colorEmerald500,
+        ['==', ['get', 'role'], PlayerRoles.Police],
+        colorBlue500,
+        ['==', ['get', 'role'], PlayerRoles.Criminal],
+        colorRed500,
+        colorEmerald400,
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorEmerald950],
+      'circle-stroke-color': [
+        'case',
+        ['==', ['get', 'selected'], 1],
+        colorWhite,
+        ['==', ['get', 'role'], PlayerRoles.Police],
+        colorBlue950,
+        ['==', ['get', 'role'], PlayerRoles.Criminal],
+        colorRed950,
+        colorEmerald950,
+      ],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -187,13 +213,9 @@
         ['get', 'type'],
         DeliveryLineType.Supply,
         adjustOpacity(colorGreen500, 0.75),
-        [
-          'match',
-          ['get', 'type'],
-          DeliveryLineType.Demand,
-          adjustOpacity(colorBlue500, 0.75),
-          adjustOpacity(colorYellow500, 0.75),
-        ],
+        DeliveryLineType.Demand,
+        adjustOpacity(colorBlue500, 0.75),
+        adjustOpacity(colorYellow500, 0.75),
       ],
       'stroke-line-cap': 'round',
     },
@@ -389,15 +411,6 @@
     PinLabels: 5,
   };
 
-  const nameMap = $derived({
-    [layerId.Delivery]: m['map.delivery_point'](),
-    [layerId.House]: m['map.house'](),
-    [layerId.Player]: m['map.player'](),
-    [layerId.PlayerName]: m['map.player_name'](),
-    [layerId.Pins]: m['map.pins'](),
-    [layerId.PinLabels]: m['map.pin_labels'](),
-  });
-
   const deliveryLayerData = $state({
     id: layerId.Delivery,
     layer: [deliveryPointLayer, residentPointLayer, deliveryLineLayer],
@@ -449,15 +462,38 @@
     pinLabelsLayerData,
   ]);
 
+  const mapStateSchema = z.object({
+    layers: z.optional(
+      z.object({
+        delivery: z.optional(z.boolean()),
+        house: z.optional(z.boolean()),
+        player: z.optional(z.boolean()),
+        playerName: z.optional(z.boolean()),
+      }),
+    ),
+    jobOnly: z.optional(z.boolean()),
+    houseVacantOnly: z.optional(z.boolean()),
+    playerCopsOnly: z.optional(z.boolean()),
+    playerCriminalOnly: z.optional(z.boolean()),
+  });
+
+  const layerIdToStateKey = {
+    [layerId.Delivery]: 'delivery',
+    [layerId.House]: 'house',
+    [layerId.Player]: 'player',
+    [layerId.PlayerName]: 'playerName',
+  } as const;
+
   onMount(() => {
     try {
-      const stringArraySchema = z.array(z.enum(layerId));
-      const savedLayer = JSON.parse(localStorage.getItem(DISABLED_DATA_STORAGE_KEY) ?? '');
-      const result = stringArraySchema.safeParse(savedLayer);
+      const raw = JSON.parse(localStorage.getItem(MAP_STATE_STORAGE_KEY) ?? '');
+      const result = mapStateSchema.safeParse(raw);
       if (result.success) {
-        for (const layer of result.data) {
-          const layerData = layersData.find((l) => l.id === layer);
-          if (layerData) {
+        const state = result.data;
+        const savedLayers = state.layers ?? {};
+        for (const layerData of layersData) {
+          const key = layerIdToStateKey[layerData.id];
+          if (savedLayers[key] === false) {
             layerData.enabled = false;
             for (const l of layerData.layer) {
               l.setVisible(false);
@@ -467,20 +503,33 @@
             }
           }
         }
+        deliveryShowJobOnly = state.jobOnly ?? false;
+        houseShowVacantOnly = state.houseVacantOnly ?? false;
+        playerShowOnlyCops = state.playerCopsOnly ?? false;
+        playerShowOnlyCriminal = state.playerCriminalOnly ?? false;
       }
     } catch (e) {
-      console.error('Failed to load layer state:', e);
+      console.error('Failed to load map state:', e);
     }
   });
 
   $effect(() => {
     if (typeof window !== 'undefined') {
-      const disabledLayer = layersData
-        .filter(
-          (layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels && !layer.enabled,
-        )
-        .map((layer) => layer.id);
-      localStorage.setItem(DISABLED_DATA_STORAGE_KEY, JSON.stringify(disabledLayer));
+      localStorage.setItem(
+        MAP_STATE_STORAGE_KEY,
+        JSON.stringify({
+          layers: {
+            delivery: deliveryLayerData.enabled,
+            house: houseLayerData.enabled,
+            player: playerLayerData.enabled,
+            playerName: playerNameLayerData.enabled,
+          },
+          jobOnly: deliveryShowJobOnly,
+          houseVacantOnly: houseShowVacantOnly,
+          playerCopsOnly: playerShowOnlyCops,
+          playerCriminalOnly: playerShowOnlyCriminal,
+        }),
+      );
     }
   });
 
@@ -543,6 +592,20 @@
   let playerSelectingGuid: string | undefined = undefined;
   let initialFocus = true;
 
+  let houseShowVacantOnly = $state(false);
+  let playerShowOnlyCops = $state(false);
+  let playerShowOnlyCriminal = $state(false);
+  let poiOpen = $state(false);
+
+  const filteredPlayerData = $derived.by(() => {
+    if (!playerShowOnlyCops && !playerShowOnlyCriminal) return playerData;
+    return playerData.filter((p) => {
+      if (playerShowOnlyCops && hasPoliceRole(p.name)) return true;
+      if (playerShowOnlyCriminal && hasCriminalRole(p.name)) return true;
+      return false;
+    });
+  });
+
   const setPlayerPoints = (data: PlayerData[]) => {
     playerPointSource.clear(true);
     playerPointSource.addFeatures(
@@ -553,6 +616,11 @@
             pointType: PointType.Player,
             info: playerData,
             selected: playerData.guid === playerSelectingGuid,
+            role: hasPoliceRole(playerData.name)
+              ? PlayerRoles.Police
+              : hasCriminalRole(playerData.name)
+                ? PlayerRoles.Criminal
+                : 'none',
           }),
       ),
     );
@@ -570,7 +638,7 @@
   };
 
   $effect(() => {
-    setPlayerPoints(playerData);
+    setPlayerPoints(filteredPlayerData);
   });
 
   const clearSelection = () => {
@@ -673,56 +741,71 @@
     onPlayerLayerDataEnabledChange?.(playerLayerData.enabled);
   });
 
-  const JOB_ONLY_STORAGE_KEY = 'mapShowJobOnlyDelivery';
   let deliveryShowJobOnly = $state(false);
 
-  onMount(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(JOB_ONLY_STORAGE_KEY);
-      if (saved === '1') {
-        deliveryShowJobOnly = true;
-      }
-    }
-  });
+  const togglePlayerName = () => {
+    const enabled = !playerNameLayerData.enabled;
+    playerNameLayerData.enabled = enabled;
+    playerNameLayer.setVisible(playerLayerData.enabled && enabled);
+  };
 
-  $effect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(JOB_ONLY_STORAGE_KEY, deliveryShowJobOnly ? '1' : '0');
-    }
-  });
+  const togglePinLabels = () => {
+    const enabled = !pinLabelsLayerData.enabled;
+    pinLabelsLayerData.enabled = enabled;
+    pinLabelsLayer.setVisible(pinsLayerData.enabled && enabled);
+  };
 
-  const onHideShowClick = (layer: (typeof layersData)[number], forceTo?: boolean) => {
-    let enabled = forceTo ?? !layer.enabled;
-    if (layer.id === layerId.Player) {
-      if (!enabled) {
-        playerNameLayer.setVisible(false);
-      } else {
-        setPlayerPoints(playerData);
-        playerNameLayer.setVisible(playerNameLayerData.enabled);
-      }
-    } else if (layer.id === layerId.Pins) {
-      if (!enabled) {
-        pinLabelsLayer.setVisible(false);
-      } else {
-        setPlayerPoints(playerData);
-        pinLabelsLayer.setVisible(pinLabelsLayerData.enabled);
-      }
-    } else if (layer.id === layerId.Delivery) {
-      if (forceTo === undefined) {
-        if (!enabled && !deliveryShowJobOnly) {
-          deliveryShowJobOnly = true;
-          enabled = true;
-        } else {
-          deliveryShowJobOnly = false;
-        }
-      } else if (!forceTo) {
-        deliveryShowJobOnly = false;
-      }
+  const toggleDeliveryLayer = () => {
+    const enabled = !deliveryLayerData.enabled;
+    deliveryLayerData.enabled = enabled;
+    for (const l of deliveryLayerData.layer) l.setVisible(enabled);
+  };
+
+  const enableDeliveryLayer = () => {
+    deliveryLayerData.enabled = true;
+    for (const l of deliveryLayerData.layer) l.setVisible(true);
+  };
+
+  const toggleHouseLayer = () => {
+    const enabled = !houseLayerData.enabled;
+    houseLayerData.enabled = enabled;
+    houseLayer.setVisible(enabled);
+  };
+
+  const enableHouseLayer = () => {
+    houseLayerData.enabled = true;
+    houseLayer.setVisible(true);
+  };
+
+  const togglePlayerLayer = () => {
+    const enabled = !playerLayerData.enabled;
+    playerLayerData.enabled = enabled;
+    playerPointLayer.setVisible(enabled);
+    if (!enabled) {
+      playerNameLayer.setVisible(false);
+    } else {
+      setPlayerPoints(filteredPlayerData);
+      playerNameLayer.setVisible(playerNameLayerData.enabled);
     }
-    layer.enabled = enabled;
-    for (const l of layer.layer) {
-      l.setVisible(enabled);
-    }
+  };
+
+  const enablePlayerLayer = () => {
+    playerLayerData.enabled = true;
+    playerPointLayer.setVisible(true);
+    playerNameLayer.setVisible(playerNameLayerData.enabled);
+  };
+
+  const togglePinsLayer = () => {
+    const enabled = !pinsLayerData.enabled;
+    pinsLayerData.enabled = enabled;
+    pinsLayer.setVisible(enabled);
+    pinLabelsLayer.setVisible(enabled && pinLabelsLayerData.enabled);
+  };
+
+  const enablePinsLayer = () => {
+    pinsLayerData.enabled = true;
+    pinsLayer.setVisible(true);
+    pinLabelsLayer.setVisible(pinLabelsLayerData.enabled);
   };
 
   export const centerOnPoint = (point: [number, number]) => {
@@ -733,7 +816,7 @@
 
   const handleSearchClick = (point: SearchPoint) => {
     if (point.pointType === PointType.Pin) {
-      onHideShowClick(pinsLayerData, true);
+      enablePinsLayer();
     }
     map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
   };
@@ -765,7 +848,7 @@
     const housing = clientSearchParamsGet('house');
     if (housing) {
       untrack(() => {
-        onHideShowClick(houseLayerData, true);
+        enableHouseLayer();
       });
       const house = houseFeatures.find((h) => h.get('info').name === housing);
       if (house) {
@@ -790,7 +873,7 @@
         residentPointFeatures.find((d) => d.get('info').guid === deliveryGuid);
       if (deliveryPoint) {
         untrack(() => {
-          onHideShowClick(deliveryLayerData, true);
+          enableDeliveryLayer();
         });
         lockPoint?.set('selected', false);
         selectedPoint = deliveryPoint;
@@ -814,7 +897,7 @@
     const playerGuid = clientSearchParamsGet('player');
     if (playerGuid) {
       untrack(() => {
-        onHideShowClick(playerLayerData, true);
+        enablePlayerLayer();
       });
       playerSelectingGuid = playerGuid;
       if (oldPlayerSelectingGuid !== playerGuid) {
@@ -866,12 +949,6 @@
     playerStickyFocusGuid = undefined;
   };
 
-  const layersDataCheckPins = $derived(
-    havePins
-      ? layersData
-      : layersData.filter((layer) => layer.id !== layerId.Pins && layer.id !== layerId.PinLabels),
-  );
-
   const handleOnMoveStart = () => {
     hoverPoint?.set('hover', false);
     hoverInfo = undefined;
@@ -890,6 +967,17 @@
     deliveryPointLayer.setStyle(getDeliveryPointStyle(deliveryShowJobOnly));
     residentPointLayer.setStyle(getResidentPointStyle(deliveryShowJobOnly));
   });
+
+  $effect(() => {
+    for (const f of houseFeatures) {
+      const info = f.get('info') as { name: string };
+      f.set('vacant', !houseData?.[info.name]?.ownerName ? 1 : 0);
+    }
+  });
+
+  $effect(() => {
+    houseLayer.setStyle(getHouseStyle(houseShowVacantOnly));
+  });
 </script>
 
 <div class="relative h-full w-full">
@@ -904,47 +992,135 @@
     onPointerDrag={handlePointerDrag}
     onMoveStart={handleOnMoveStart}
   />
+  <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
   <div
-    class="pointer-events-none absolute top-0 left-0 flex h-full w-full flex-col items-start justify-between gap-2 overflow-hidden p-4"
+    class="pointer-events-none absolute top-0 right-0 left-0 flex h-full flex-col overflow-hidden p-4 pb-15"
   >
     <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
-    <Card
-      class="media-touch:mr-13 pointer-events-auto mr-10 !bg-gray-900/50 p-1.5 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
-    >
-      <h2 class="text-text-dark mb-1 text-xs">
-        {m['map.point_of_interests']()}
-      </h2>
-      <div class="flex flex-wrap gap-2">
-        {#each layersDataCheckPins as layer (layer.id)}
-          <Button
-            class={[
-              '!text-text !px-2',
-              layerId.Delivery === layer.id && deliveryShowJobOnly
-                ? '!bg-orange-400 hover:!bg-orange-300'
-                : layer.color,
-              {
-                'opacity-50':
-                  !layer.enabled ||
-                  (layer.id === layerId.PlayerName && !playerLayerData.enabled) ||
-                  (layer.id === layerId.PinLabels && !pinsLayerData.enabled),
-              },
-            ]}
-            size="xs"
-            disabled={(layer.id === layerId.PlayerName && !playerLayerData.enabled) ||
-              (layer.id === layerId.PinLabels && !pinsLayerData.enabled)}
-            onClick={() => {
-              onHideShowClick(layer);
-            }}
+  </div>
+
+  <!-- POI trigger + floating card (bottom-left) -->
+  <div class="pointer-events-none absolute bottom-0 left-0 w-full p-4">
+    <ClickAwayBlock active={poiOpen} onClickAway={() => (poiOpen = false)}>
+      <div class="relative">
+        {#if poiOpen}
+          <div
+            class="absolute bottom-full left-0 mb-2 w-max max-w-full"
+            transition:fade={{ duration: defaultTransitionDurationMs }}
           >
-            {#if layerId.Delivery === layer.id && deliveryShowJobOnly}
-              {censored.c ? m['map.jobs_only_c']() : m['map.jobs_only']()}
-            {:else}
-              {nameMap[layer.id]}
-            {/if}
-          </Button>
-        {/each}
+            <Card
+              class="pointer-events-auto overflow-hidden !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+            >
+              <div class="flex flex-col">
+                <!-- Delivery -->
+                <PoiItem
+                  dotClass="border-yellow-950 bg-yellow-500"
+                  label={m['map.poi.delivery']()}
+                  desc={m['map.poi.delivery_desc']()}
+                  enabled={deliveryLayerData.enabled}
+                  onclick={toggleDeliveryLayer}
+                />
+                <PoiItem
+                  dotClass="border-orange-950 bg-orange-400"
+                  label={censored.c ? m['map.poi.jobs_only_c']() : m['map.poi.jobs_only']()}
+                  desc={m['map.poi.jobs_only_desc']()}
+                  enabled={deliveryShowJobOnly}
+                  onclick={() => (deliveryShowJobOnly = !deliveryShowJobOnly)}
+                  sub
+                />
+
+                <div class="border-t border-gray-100/10"></div>
+
+                <!-- House -->
+                <PoiItem
+                  dotClass="border-cyan-950 bg-cyan-500"
+                  label={m['map.poi.house']()}
+                  desc={m['map.poi.house_desc']()}
+                  enabled={houseLayerData.enabled}
+                  onclick={toggleHouseLayer}
+                />
+                <PoiItem
+                  dotClass="border-cyan-950 bg-cyan-300"
+                  label={m['map.poi.house_vacant_only']()}
+                  desc={m['map.poi.house_vacant_only_desc']()}
+                  enabled={houseShowVacantOnly}
+                  onclick={() => (houseShowVacantOnly = !houseShowVacantOnly)}
+                  sub
+                />
+
+                <div class="border-t border-gray-100/10"></div>
+
+                <!-- Player -->
+                <PoiItem
+                  dotClass="border-emerald-950 bg-emerald-400"
+                  label={m['map.poi.player']()}
+                  desc={m['map.poi.player_desc']()}
+                  enabled={playerLayerData.enabled}
+                  onclick={togglePlayerLayer}
+                />
+                <PoiItem
+                  dotClass="border-gray-950 bg-white"
+                  label={m['map.poi.player_names']()}
+                  desc={m['map.poi.player_names_desc']()}
+                  enabled={playerNameLayerData.enabled}
+                  onclick={togglePlayerName}
+                  sub
+                />
+                <PoiItem
+                  dotClass="border-blue-950 bg-blue-500"
+                  label={m['map.poi.player_police']()}
+                  desc={m['map.poi.player_police_desc']()}
+                  enabled={playerShowOnlyCops}
+                  onclick={() => (playerShowOnlyCops = !playerShowOnlyCops)}
+                  sub
+                />
+                <PoiItem
+                  dotClass="border-red-950 bg-red-500"
+                  label={m['map.poi.player_criminal']()}
+                  desc={m['map.poi.player_criminal_desc']()}
+                  enabled={playerShowOnlyCriminal}
+                  onclick={() => (playerShowOnlyCriminal = !playerShowOnlyCriminal)}
+                  sub
+                />
+
+                {#if havePins}
+                  <div class="border-t border-gray-100/10"></div>
+
+                  <!-- Pin -->
+                  <PoiItem
+                    dotClass="border-red-950 bg-red-400"
+                    label={m['map.poi.pins']()}
+                    desc={m['map.poi.pin_desc']()}
+                    enabled={pinsLayerData.enabled}
+                    onclick={togglePinsLayer}
+                  />
+                  <PoiItem
+                    dotClass="border-red-950 bg-red-200"
+                    label={m['map.poi.pin_labels']()}
+                    desc={m['map.poi.pin_labels_desc']()}
+                    enabled={pinLabelsLayerData.enabled}
+                    onclick={togglePinLabels}
+                    sub
+                  />
+                {/if}
+              </div>
+            </Card>
+          </div>
+        {/if}
+
+        <Card
+          class="pointer-events-auto w-max overflow-hidden !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 active:!bg-gray-900/60"
+        >
+          <button
+            class="text-text-dark flex w-full cursor-pointer items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium"
+            onclick={() => (poiOpen = !poiOpen)}
+          >
+            <Icon class="i-material-symbols:location-on-rounded" size="xs" />
+            {m['map.point_of_interests']()}
+          </button>
+        </Card>
       </div>
-    </Card>
+    </ClickAwayBlock>
   </div>
 
   <HoverInfoTooltip {hoverInfo} {houseData} onClick={handleInfoClick} />
