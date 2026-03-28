@@ -144,7 +144,13 @@
         colorEmerald200,
         ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorEmerald950],
+      'circle-stroke-color': [
+        'match',
+        ['get', 'selected'],
+        1,
+        colorWhite,
+        ['case', ['==', ['get', 'role'], 'police'], colorBlue600, ['==', ['get', 'role'], 'criminal'], colorRed700, colorEmerald950],
+      ],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
@@ -171,12 +177,7 @@
     renderOrder: null as any,
     source: playerPointSource,
     style: (feature) => {
-      const name = feature.get('info').name as string;
-      playerNameStyle.getText()?.setText(name);
-
-      const strokeColor = hasPoliceRole(name) ? colorBlue600 : hasCriminalRole(name) ? colorRed700 : adjustOpacity(colorGray950, 0.4);
-      playerNameStyle.getText()?.getStroke()?.setColor(strokeColor);
-
+      playerNameStyle.getText()?.setText(feature.get('info').name as string);
       return playerNameStyle;
     },
   });
@@ -560,6 +561,7 @@
             pointType: PointType.Player,
             info: playerData,
             selected: playerData.guid === playerSelectingGuid,
+            role: hasPoliceRole(playerData.name) ? 'police' : hasCriminalRole(playerData.name) ? 'criminal' : 'none',
           }),
       ),
     );
