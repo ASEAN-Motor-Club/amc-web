@@ -18,10 +18,7 @@ export const getPlayerRealtimePosition = (
   );
 };
 
-export const getPlayerCount = (
-  callback: (count: number) => void,
-  abortSignal: AbortSignal,
-) => {
+export const getPlayerCount = (callback: (count: number) => void, abortSignal: AbortSignal) => {
   startVisibilityAwareEventSource(
     'Player count',
     `${PUBLIC_API_BASE}/api/player_count/`,

@@ -113,10 +113,11 @@ export const startVisibilityAwarePolling = <TData, TErrorData>(
  * @param onMessage - Callback function to handle incoming messages
  * @param onError - Optional callback function to handle errors
  */
-export const startVisibilityAwareEventSource = (
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+export const startVisibilityAwareEventSource = <T>(
   name: string,
   url: string,
-  onMessage: (data: unknown) => void,
+  onMessage: (data: T) => void,
   onError: ((error: Event) => void) | undefined,
   abortSignal: AbortSignal,
 ) => {
@@ -131,7 +132,7 @@ export const startVisibilityAwareEventSource = (
 
     evt.onmessage = (e) => {
       try {
-        const data = JSON.parse(e.data);
+        const data = JSON.parse(e.data) as T;
         onMessage(data);
       } catch (error) {
         console.error(`${name} EventSource message parsing error:`, error);

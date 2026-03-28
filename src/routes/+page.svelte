@@ -65,7 +65,9 @@
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
-            {playerCount != null ? m['home.live_server']({ players: playerCount }) : m['home.live_server_no_count']()}
+            {playerCount != null
+              ? m['home.live_server']({ players: playerCount })
+              : m['home.live_server_no_count']()}
           </Button>
         </div>
         <h1
