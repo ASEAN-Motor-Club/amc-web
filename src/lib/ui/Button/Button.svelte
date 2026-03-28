@@ -25,7 +25,7 @@
      * The size of the button
      * @default 'md'
      */
-    size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+    size?: 'xs' | 'sm' | 'md' | 'lg';
     /**
      * Content to be rendered inside the button component
      */
@@ -183,8 +183,6 @@
 
   const sizeClass = $derived.by(() => {
     switch (size) {
-      case 'xxs':
-        return `h-4 text-[10px] ${round ? 'rounded-full px-1.5' : 'rounded-sm px-1'}`;
       case 'xs':
         return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1.5'}`;
       case 'sm':

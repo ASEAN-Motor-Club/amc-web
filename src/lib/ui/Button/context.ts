@@ -3,7 +3,7 @@ import { getContext, setContext } from 'svelte';
 const key = {};
 
 export interface BtnIconSizeContext {
-  getSize: () => 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
+  getSize: () => 'xs' | 'sm' | 'md' | 'lg';
 }
 
 export function setBtnIconSizeContext(context: BtnIconSizeContext) {
