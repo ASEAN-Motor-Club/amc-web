@@ -13,6 +13,7 @@
   import PlayerInfo from './PlayerInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
+  import { stripPlayerRoleTag } from '$lib/utils/parsePlayerRole';
 
   export type HoverInfo = {
     pixelCoord: [number, number];
@@ -117,7 +118,7 @@
         {:else if hoverInfo.pointType === PointType.Delivery}
           {getMtLocale(hoverInfo.info.name)}
         {:else}
-          {hoverInfo.info.name}
+          {stripPlayerRoleTag(hoverInfo.info.name)}
         {/if}
       </div>
       {#if hoverInfo.info}
