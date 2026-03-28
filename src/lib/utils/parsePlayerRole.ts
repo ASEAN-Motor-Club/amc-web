@@ -6,7 +6,7 @@ export interface PlayerRole {
 const VALID_ROLES = new Set(['P', 'G', 'M', 'C']);
 
 export function parsePlayerRoles(name: string): PlayerRole[] {
-  const match = name.match(/^\[([^\]]+)\] /);
+  const match = /^\[([^\]]+)\] /.exec(name);
   if (!match) return [];
 
   const tag = match[1];
@@ -22,7 +22,7 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
 
     let level: number | undefined;
     const after = tag.slice(i + 1);
-    const levelMatch = after.match(/^(\d+)/);
+    const levelMatch = /^(\d+)/.exec(after);
     if (levelMatch) {
       level = parseInt(levelMatch[1], 10);
       i += 1 + levelMatch[1].length;
