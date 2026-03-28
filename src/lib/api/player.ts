@@ -22,8 +22,8 @@ export const getPlayerCount = (callback: (count: number) => void, abortSignal: A
   startVisibilityAwareEventSource(
     'Player count',
     `${PUBLIC_API_BASE}/api/player_count/`,
-    (data: unknown) => {
-      callback(data as number);
+    (data: number) => {
+      callback(data);
     },
     undefined,
     abortSignal,
