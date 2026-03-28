@@ -1,15 +1,9 @@
 export interface PlayerRole {
   letter: string;
   level?: number;
-  color: string;
 }
 
-const ROLE_MAP: Record<string, string> = {
-  P: 'bg-blue-600',
-  G: 'bg-green-600',
-  M: 'bg-amber-600',
-  C: 'bg-red-600',
-};
+const VALID_ROLES = new Set(['P', 'G', 'M', 'C']);
 
 export function parsePlayerRoles(name: string): PlayerRole[] {
   const match = name.match(/^\[([^\]]+)\] /);
@@ -21,8 +15,7 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
 
   while (i < tag.length) {
     const letter = tag[i].toUpperCase();
-    const color = ROLE_MAP[letter];
-    if (!color) {
+    if (!VALID_ROLES.has(letter)) {
       i++;
       continue;
     }
@@ -37,7 +30,7 @@ export function parsePlayerRoles(name: string): PlayerRole[] {
       i += 1;
     }
 
-    roles.push({ letter, level, color });
+    roles.push({ letter, level });
   }
 
   return roles;
