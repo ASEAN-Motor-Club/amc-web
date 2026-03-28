@@ -57,7 +57,7 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { censored } from '$lib/censored.svelte';
   import { getSelectionClearedParams } from '../utils';
-  import { parsePlayerRoles } from '$lib/utils/parsePlayerRole';
+  import { hasProle, hasCrole } from '$lib/utils/parsePlayerRole';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -174,11 +174,7 @@
       const name = feature.get('info').name as string;
       playerNameStyle.getText()?.setText(name);
 
-      const roles = parsePlayerRoles(name);
-      const hasP = roles.some((r) => r.letter === 'P');
-      const hasC = roles.some((r) => r.letter === 'C');
-
-      const strokeColor = hasP ? colorBlue600 : hasC ? colorRed700 : adjustOpacity(colorGray950, 0.4);
+      const strokeColor = hasProle(name) ? colorBlue600 : hasCrole(name) ? colorRed700 : adjustOpacity(colorGray950, 0.4);
       playerNameStyle.getText()?.getStroke()?.setColor(strokeColor);
 
       return playerNameStyle;
