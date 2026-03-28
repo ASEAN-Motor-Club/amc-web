@@ -25,10 +25,10 @@
   };
 
   const roleColorClass: Record<string, string> = {
-    P: 'bg-blue-600 hover:bg-[color-mix(in_oklab,#2563eb_90%,white)] active:bg-[color-mix(in_oklab,#2563eb_95%,black)]',
-    G: 'bg-green-600 hover:bg-[color-mix(in_oklab,#16a34a_90%,white)] active:bg-[color-mix(in_oklab,#16a34a_95%,black)]',
-    M: 'bg-amber-600 hover:bg-[color-mix(in_oklab,#d97706_90%,white)] active:bg-[color-mix(in_oklab,#d97706_95%,black)]',
-    C: 'bg-red-600 hover:bg-[color-mix(in_oklab,#dc2626_90%,white)] active:bg-[color-mix(in_oklab,#dc2626_95%,black)]',
+    P: 'bg-blue-500',
+    G: 'bg-green-500',
+    M: 'bg-amber-500',
+    C: 'bg-red-500',
   };
 </script>
 
