@@ -9,7 +9,7 @@
   import Card from '$lib/ui/Card/Card.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PointType, type PlayerData } from './types';
+  import { PlayerRoles, PointType, type PlayerData } from './types';
   import { getDeliveryPointStyle, getResidentPointStyle, getStaticPoints } from './staticPoints';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
@@ -17,9 +17,8 @@
     fontSans,
     colorEmerald200,
     colorEmerald400,
+    colorGreen500,
     colorBlue500,
-    colorBlue600,
-    colorRed700,
     adjustOpacity,
     colorYellow500,
     colorRed200,
@@ -29,6 +28,7 @@
     colorWhite,
     colorRed950,
     colorEmerald950,
+    colorBlue950,
     colorGray950,
     colorTextDark,
   } from '$lib/tw-var';
@@ -91,11 +91,12 @@
     style: {
       'circle-radius': 5,
       'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
+        'case',
+        ['==', ['get', 'hover'], 1],
         colorRed200,
-        ['match', ['get', 'selected'], 1, colorRed500, colorRed400],
+        ['==', ['get', 'selected'], 1],
+        colorRed500,
+        colorRed400,
       ],
       'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorRed950],
       'circle-stroke-width': 1,
@@ -138,18 +139,26 @@
     style: {
       'circle-radius': 4,
       'circle-fill-color': [
-        'match',
-        ['get', 'hover'],
-        1,
+        'case',
+        ['==', ['get', 'hover'], 1],
         colorEmerald200,
-        ['match', ['get', 'selected'], 1, colorEmerald500, colorEmerald400],
+        ['==', ['get', 'selected'], 1],
+        colorEmerald500,
+        ['==', ['get', 'role'], PlayerRoles.Police],
+        colorBlue500,
+        ['==', ['get', 'role'], PlayerRoles.Criminal],
+        colorRed500,
+        colorEmerald400,
       ],
       'circle-stroke-color': [
-        'match',
-        ['get', 'selected'],
-        1,
+        'case',
+        ['==', ['get', 'selected'], 1],
         colorWhite,
-        ['case', ['==', ['get', 'role'], 'police'], colorBlue600, ['==', ['get', 'role'], 'criminal'], colorRed700, colorEmerald950],
+        ['==', ['get', 'role'], PlayerRoles.Police],
+        colorBlue950,
+        ['==', ['get', 'role'], PlayerRoles.Criminal],
+        colorRed950,
+        colorEmerald950,
       ],
       'circle-stroke-width': 1,
       'circle-rotate-with-view': false,
@@ -195,13 +204,9 @@
         ['get', 'type'],
         DeliveryLineType.Supply,
         adjustOpacity(colorGreen500, 0.75),
-        [
-          'match',
-          ['get', 'type'],
-          DeliveryLineType.Demand,
-          adjustOpacity(colorBlue500, 0.75),
-          adjustOpacity(colorYellow500, 0.75),
-        ],
+        DeliveryLineType.Demand,
+        adjustOpacity(colorBlue500, 0.75),
+        adjustOpacity(colorYellow500, 0.75),
       ],
       'stroke-line-cap': 'round',
     },
@@ -561,7 +566,11 @@
             pointType: PointType.Player,
             info: playerData,
             selected: playerData.guid === playerSelectingGuid,
-            role: hasPoliceRole(playerData.name) ? 'police' : hasCriminalRole(playerData.name) ? 'criminal' : 'none',
+            role: hasPoliceRole(playerData.name)
+              ? PlayerRoles.Police
+              : hasCriminalRole(playerData.name)
+                ? PlayerRoles.Criminal
+                : 'none',
           }),
       ),
     );

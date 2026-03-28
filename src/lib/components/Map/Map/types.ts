@@ -15,3 +15,8 @@ export interface PlayerData {
   vehicleKey: string | 'None';
   guid: string;
 }
+
+export const enum PlayerRoles {
+  Police,
+  Criminal,
+}
