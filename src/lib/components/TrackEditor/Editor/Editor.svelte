@@ -158,7 +158,6 @@
       {selectedPoint}
       bind:this={map}
       onSelectedPointMove={handlePointMove}
-      zoomClass="!left-[unset] !top-[unset] bottom-4 right-4"
       {gateMode}
       {showNum}
     />

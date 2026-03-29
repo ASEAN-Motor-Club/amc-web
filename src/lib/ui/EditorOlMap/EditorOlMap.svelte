@@ -45,10 +45,6 @@
      */
     class?: ClassValue;
     /*
-     * The class to apply to the zoom element
-     */
-    zoomClass?: ClassValue;
-    /*
      * Map points
      */
     points: TrackPoint[];
@@ -80,7 +76,6 @@
     onPointClick,
     onSelectedPointMove,
     selectedPoint,
-    zoomClass,
     gateMode = false,
     showNum = false,
   }: EditorOlMapProps = $props();
@@ -463,7 +458,6 @@
 
 <OlMap
   class={propsClass}
-  {zoomClass}
   {layers}
   onClick={handleMapClick}
   onPointerMove={handlePointerMove}
