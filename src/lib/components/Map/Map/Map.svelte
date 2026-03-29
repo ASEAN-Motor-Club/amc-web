@@ -1043,7 +1043,7 @@
           </div>
         {/if}
         <Button
-          class="text-text-dark !shadow-white/3 !ring-white/5 pointer-events-auto !bg-gray-900/50 shadow ring backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          class="text-text-dark pointer-events-auto !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
           color="custom"
           onClick={() => (poiOpen = !poiOpen)}
           size="sm"
