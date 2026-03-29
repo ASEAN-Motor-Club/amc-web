@@ -67,6 +67,7 @@
   import { censored } from '$lib/censored.svelte';
   import { getSelectionClearedParams } from '../utils';
   import { hasPoliceRole, hasCriminalRole } from '$lib/utils/parsePlayerRole';
+  import Button from '$lib/ui/Button/Button.svelte';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -919,7 +920,6 @@
   <OlMap
     {layers}
     class="h-full w-full"
-    zoomClass="!left-[unset] !top-[unset] bottom-4 right-4"
     onPointerMove={handlePointerMove}
     onClick={handleClick}
     onRightClick={handleMapRightClick}
@@ -1042,18 +1042,17 @@
             </Card>
           </div>
         {/if}
-
-        <Card
-          class="pointer-events-auto w-max overflow-hidden !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 active:!bg-gray-900/60"
+        <Button
+          class="text-text-dark !shadow-white/3 !ring-white/5 pointer-events-auto !bg-gray-900/50 shadow ring backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          color="custom"
+          onClick={() => (poiOpen = !poiOpen)}
+          size="sm"
         >
-          <button
-            class="text-text-dark flex w-full cursor-pointer items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium"
-            onclick={() => (poiOpen = !poiOpen)}
-          >
-            <Icon class="i-material-symbols:location-on-rounded" size="xs" />
-            {m['map.point_of_interests']()}
-          </button>
-        </Card>
+          {#snippet prependIcon()}
+            <Icon class="i-material-symbols:location-on-rounded" />
+          {/snippet}
+          {m['map.point_of_interests']()}
+        </Button>
       </div>
     </ClickAwayBlock>
   </div>

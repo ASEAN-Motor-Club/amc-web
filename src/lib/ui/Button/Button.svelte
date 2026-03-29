@@ -188,7 +188,7 @@
       case 'xs':
         return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1.5'}`;
       case 'sm':
-        return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-sm px-2'}`;
+        return `h-8 text-sm ${round ? 'rounded-full px-3' : 'rounded-md px-2'}`;
       case 'md':
         return `h-10 text-base ${round ? 'rounded-full px-4' : 'rounded-md px-3'}`;
       case 'lg':

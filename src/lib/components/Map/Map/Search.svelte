@@ -153,7 +153,7 @@
       name="search"
       type="search"
       placeholder={m['map.search_placeholder']()}
-      class="text-text-dark pointer-events-auto w-full !border-none !bg-gray-900/50 !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+      class="text-text-dark pointer-events-auto w-full !border-none !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),

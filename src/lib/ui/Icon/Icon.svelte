@@ -27,7 +27,7 @@
       case 'xs':
         return '!text-[0.9rem]';
       case 'sm':
-        return '!text-[1.25rem]';
+        return '!text-[1rem]';
       case 'md':
         return '!text-[1.5rem]';
       case 'lg':

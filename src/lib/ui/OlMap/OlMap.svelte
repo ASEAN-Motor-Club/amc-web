@@ -8,8 +8,6 @@
   import { Projection } from 'ol/proj';
   import { ImageTile } from 'ol/source';
   import { getCenter, type Extent } from 'ol/extent';
-  import { Zoom } from 'ol/control';
-  import clsx from 'clsx';
   import type BaseLayer from 'ol/layer/Base';
   import { MAP_REAL_SIZE } from './utils';
   import type { MapBrowserEvent, MapEvent } from 'ol';
@@ -17,6 +15,8 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
   import type { SimpleGeometry } from 'ol/geom';
+  import Button from '../Button/Button.svelte';
+  import Icon from '../Icon/Icon.svelte';
 
   let map: Map;
 
@@ -29,18 +29,6 @@
      * The class to apply to the map element
      */
     class?: ClassValue;
-    /**
-     * The class to apply to ol zoom buttons
-     */
-    zoomClass?: ClassValue;
-    /**
-     * The class to apply to ol zoom in button
-     */
-    zoomInClass?: ClassValue;
-    /**
-     * The class to apply to ol zoom out button
-     */
-    zoomOutClass?: ClassValue;
     /**
      * Callback for pointer move events
      */
@@ -66,9 +54,6 @@
   let target: HTMLDivElement;
   const {
     class: propsClass,
-    zoomClass,
-    zoomInClass,
-    zoomOutClass,
     layers,
     onPointerMove,
     onClick,
@@ -101,18 +86,11 @@
   const allLayers = $derived([tileLayer, ...(layers ?? [])]);
 
   onMount(() => {
-    const zoom = new Zoom({
-      className: clsx('ol-zoom', zoomClass),
-      zoomInClassName: clsx('ol-zoom-in', zoomInClass),
-      zoomOutClassName: clsx('ol-zoom-out', zoomOutClass),
-      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
-    });
-
     const interactions = defaults({ altShiftDragRotate: false, pinchRotate: false });
 
     map = new Map({
       interactions,
-      controls: [zoom],
+      controls: [],
       layers: allLayers,
       target: target,
       view: new View({
@@ -202,4 +180,37 @@
   });
 </script>
 
-<div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClass]} bind:this={target}></div>
+<div class="relative h-full w-full">
+  <div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClass]} bind:this={target}></div>
+  <div
+    class="absolute right-4 bottom-4 flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5"
+  >
+    <Button
+      class="text-text-dark pointer-events-auto rounded-b-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+      color="custom"
+      size="sm"
+      icon
+      onClick={() =>
+        map.getView().animate({
+          zoom: (map.getView().getZoom() ?? 1) + 1,
+          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
+        })}
+    >
+      <Icon class="i-material-symbols:add-2-rounded" />
+    </Button>
+    <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
+    <Button
+      class="text-text-dark pointer-events-auto rounded-t-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+      color="custom"
+      size="sm"
+      icon
+      onClick={() =>
+        map.getView().animate({
+          zoom: (map.getView().getZoom() ?? 1) - 1,
+          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
+        })}
+    >
+      <Icon class="i-material-symbols:remove-rounded" />
+    </Button>
+  </div>
+</div>
