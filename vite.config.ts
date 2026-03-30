@@ -29,15 +29,7 @@ export default defineConfig(({ mode }) => {
       }),
       webmanifestPlugin(),
     ],
-    build: {
-      rolldownOptions: {
-        output: {
-          manualChunks: (id) => {
-            return id.match(/@fontsource-variable\/(noto-sans-(?:thai|sc|jp|kr))/)?.[1];
-          },
-        },
-      },
-    },
+    build: {},
     server: {
       proxy: {
         '/stream_high': {

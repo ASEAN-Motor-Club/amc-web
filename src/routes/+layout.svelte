@@ -1,30 +1,20 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans';
-  import '@fontsource-variable/noto-sans-thai';
-  import '@fontsource-variable/noto-sans-sc';
-  import '@fontsource-variable/noto-sans-jp';
-  import '@fontsource-variable/noto-sans-kr';
-  import notoSansLatinWghtNormalWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2';
   import 'virtual:uno.css';
   import '../app.css';
   import MsgModal from '$lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '$lib/components/Navbar/Navbar.svelte';
   import { onMount } from 'svelte';
-  import { colorBackground100, colorBackground900, defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
   import GlobalPlayer from '$lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
-  import splashBig from '$lib/assets/images/splash_big.jpg';
-  import faviconIco from '$lib/assets/images/icon/favicon.ico';
-  import faviconSvg from '$lib/assets/images/icon/favicon.svg';
-  import appleTouchIcon from '$lib/assets/images/icon/apple-touch-icon.png';
   import {
     localStorageKey,
     defineCustomClientStrategy,
     baseLocale,
     type Locale,
   } from '$lib/paraglide/runtime';
-  import { m } from '$messages';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
   import { noop } from 'lodash-es';
   import { censored } from '$lib/censored.svelte';
@@ -54,8 +44,6 @@
 
   const { children } = $props();
 
-  let color = $state<string | undefined>();
-
   $effect(() => {
     document.documentElement.lang = siteLocale.l;
   });
@@ -65,30 +53,6 @@
   onMount(() => {
     censored.c = localStorage.getItem(hasJobCensoredKey) === '1';
     siteLocale.l = (localStorage.getItem(localStorageKey) as Locale | null) || baseLocale;
-
-    const updateThemeColor = () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      color = isDark ? colorBackground900 : colorBackground100;
-    };
-
-    updateThemeColor();
-
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          updateThemeColor();
-        }
-      }
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-
-    return () => {
-      observer.disconnect();
-    };
   });
 
   $effect(() => {
@@ -97,41 +61,6 @@
 
   const id = $derived(page.route.id?.startsWith('/(map)') ? '/(map)' : page.route.id);
 </script>
-
-<svelte:head>
-  <meta name="description" content={m['home.desc_title']()} />
-  <meta
-    name="theme-color"
-    content={color ?? colorBackground100}
-    media="(prefers-color-scheme: light)"
-  />
-  <meta
-    name="theme-color"
-    content={color ?? colorBackground900}
-    media="(prefers-color-scheme: dark)"
-  />
-  <link
-    rel="preload"
-    as="font"
-    href={notoSansLatinWghtNormalWoff2 as string}
-    type="font/woff2"
-    crossorigin="anonymous"
-  />
-  <link rel="icon" href={faviconSvg} type="image/svg+xml" />
-  <link rel="icon" href={faviconIco} />
-  <link rel="apple-touch-icon" href={appleTouchIcon} />
-  <meta property="og:site_name" content={m.site_name()} />
-  <meta property="og:description" content={m['home.desc_title']()} />
-  <meta property="og:image" content={splashBig} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="og:type" content="website" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content={m.site_name_short()} />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-status-bar-style" content="default" />
-  <meta name="mobile-web-app-title" content={m.site_name_short()} />
-</svelte:head>
 
 <GlobalPlayer>
   <MsgModal>
