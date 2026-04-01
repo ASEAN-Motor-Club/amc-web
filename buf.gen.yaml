@@ -1,0 +1,7 @@
+version: v2
+inputs:
+  - directory: src/lib/api/proto
+plugins:
+  - local: protoc-gen-es
+    out: src/lib/api/proto
+    opt: target=ts

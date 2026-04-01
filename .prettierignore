@@ -9,3 +9,6 @@ bun.lockb
 
 project.inlang/*
 !project.inlang/settings.json
+
+# Generated protobuf files
+src/lib/api/proto/*_pb.ts

@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import { startDeliveryJobsPolling } from '$lib/api/delivery';
   import { getHousingData } from '$lib/api/housing';
-  import { getPlayerRealtimePosition } from '$lib/api/player';
+  import { getPlayerRealtimePositionV2 } from '$lib/api/player';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
@@ -70,14 +70,14 @@
 
   $effect(() => {
     if ((showMap && playerLayerDataEnabled) || openCollapsible === 'players') {
-      getPlayerRealtimePosition((data) => {
-        const result = Object.entries(data).map(([name, coord]) => ({
-          geometry: reProjectPoint([coord.x, coord.y]),
-          name,
-          coord,
+      getPlayerRealtimePositionV2((data) => {
+        const result = data.players.map((item) => ({
+          geometry: reProjectPoint([item.x, item.y]),
+          name: item.playerName,
+          coord: { x: item.x, y: item.y },
           pointType: PointType.Player as const,
-          vehicleKey: coord.vehicle_key,
-          guid: coord.unique_id,
+          vehicleKey: item.vehicleKey,
+          guid: item.uniqueId,
         }));
         playerData = result;
         playerDataLoading = false;

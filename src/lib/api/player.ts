@@ -1,6 +1,8 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
+import { fromBinary } from '@bufbuild/protobuf';
+import { PlayerPositionsSchema, type PlayerPositions } from './proto/player_positions_pb';
 import type { PlayerEventData } from './types';
-import { startVisibilityAwareEventSource } from './_api';
+import { startVisibilityAwareEventSource, startVisibilityAwareWebSocket } from './_api';
 
 export const getPlayerRealtimePosition = (
   callback: (data: PlayerEventData) => void,
@@ -24,6 +26,25 @@ export const getPlayerCount = (callback: (count: number) => void, abortSignal: A
     `${PUBLIC_API_BASE}/api/player_count/`,
     (data: number) => {
       callback(data);
+    },
+    undefined,
+    abortSignal,
+  );
+};
+
+export const getPlayerRealtimePositionV2 = (
+  callback: (data: PlayerPositions) => void,
+  abortSignal: AbortSignal,
+) => {
+  startVisibilityAwareWebSocket(
+    'Player position V2',
+    `${PUBLIC_API_BASE}/api/player_positions_b/`,
+    (data: ArrayBuffer) => {
+      try {
+        callback(fromBinary(PlayerPositionsSchema, new Uint8Array(data)));
+      } catch (error) {
+        console.error('Player position V2 decoding error:', error);
+      }
     },
     undefined,
     abortSignal,

@@ -1,6 +1,7 @@
 allowBuilds:
+  '@bufbuild/buf': true
   edgedriver: false
   esbuild: true
   geckodriver: false
-minimumReleaseAge: 1440
 dedupePeers: true
+minimumReleaseAge: 1440

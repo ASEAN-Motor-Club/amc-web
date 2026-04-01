@@ -180,6 +180,87 @@ export const startVisibilityAwareEventSource = <T>(
   });
 };
 
+/**
+ * Generic visibility-aware WebSocket function for binary (protobuf) streams.
+ * Automatically closes the WebSocket when the page is hidden, reopens when visible,
+ * and reconnects after unexpected disconnections.
+ *
+ * @param name - Name for logging purposes (e.g., "Player Position V2")
+ * @param url - WebSocket URL
+ * @param onMessage - Callback function to handle incoming binary messages
+ * @param onError - Optional callback function to handle errors
+ * @param abortSignal - AbortSignal for lifecycle control
+ */
+export const startVisibilityAwareWebSocket = (
+  name: string,
+  url: string,
+  onMessage: (data: ArrayBuffer) => void,
+  onError: ((error: Event) => void) | undefined,
+  abortSignal: AbortSignal,
+) => {
+  let ws: WebSocket | null = null;
+
+  const createWebSocket = () => {
+    if (ws) {
+      ws.onclose = null;
+      ws.close();
+    }
+
+    console.info(`Connecting to ${url} WebSocket...`);
+
+    ws = new WebSocket(url, ['protobuf']);
+    ws.binaryType = 'arraybuffer';
+
+    ws.onmessage = (e) => {
+      onMessage(e.data as ArrayBuffer);
+    };
+
+    ws.onerror = (error) => {
+      console.error(`${name} WebSocket connection error`);
+      if (onError) {
+        onError(error);
+      }
+    };
+
+    ws.onclose = () => {
+      ws = null;
+    };
+  };
+
+  const closeWebSocket = () => {
+    if (ws) {
+      ws.onclose = null;
+      ws.close();
+      ws = null;
+    }
+  };
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      closeWebSocket();
+    } else {
+      createWebSocket();
+    }
+  };
+
+  const handleBeforeUnload = () => {
+    closeWebSocket();
+  };
+
+  if (!document.hidden) {
+    createWebSocket();
+  }
+
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  abortSignal.addEventListener('abort', () => {
+    closeWebSocket();
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  });
+};
+
 export const isAbortError = (error: unknown): boolean => {
   return isError(error) && (error.name === 'StaleReactionError' || error.name === 'AbortError');
 };

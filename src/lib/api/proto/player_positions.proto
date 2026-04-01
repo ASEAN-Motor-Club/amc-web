@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package player_positions;
+
+message PlayerPosition {
+    string unique_id = 1;
+    string player_name = 2;
+    double z = 3;
+    double y = 4;
+    double x = 5;
+    string vehicle_key = 6;
+}
+
+message PlayerPositions {
+    repeated PlayerPosition players = 1;
+}
