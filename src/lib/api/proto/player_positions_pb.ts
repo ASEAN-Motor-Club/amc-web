@@ -2,22 +2,22 @@
 // @generated from file player_positions.proto (package player_positions, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file player_positions.proto.
  */
 export const file_player_positions: GenFile = /*@__PURE__*/
-  fileDesc("ChZwbGF5ZXJfcG9zaXRpb25zLnByb3RvEhBwbGF5ZXJfcG9zaXRpb25zIm4KDlBsYXllclBvc2l0aW9uEhEKCXVuaXF1ZV9pZBgBIAEoCRITCgtwbGF5ZXJfbmFtZRgCIAEoCRIJCgF6GAMgASgBEgkKAXkYBCABKAESCQoBeBgFIAEoARITCgt2ZWhpY2xlX2tleRgGIAEoCSJECg9QbGF5ZXJQb3NpdGlvbnMSMQoHcGxheWVycxgBIAMoCzIgLnBsYXllcl9wb3NpdGlvbnMuUGxheWVyUG9zaXRpb25iBnByb3RvMw");
+  fileDesc("ChZwbGF5ZXJfcG9zaXRpb25zLnByb3RvEhBwbGF5ZXJfcG9zaXRpb25zIsUBCg5QbGF5ZXJQb3NpdGlvbhIVCgl1bmlxdWVfaWQYASABKAZCAjABEhMKC3BsYXllcl9uYW1lGAIgASgJEgkKAXoYAyABKAESCQoBeRgEIAEoARIJCgF4GAUgASgBEjgKEHZlaGljbGVfa2V5X2VudW0YBiABKA4yHC5wbGF5ZXJfcG9zaXRpb25zLlZlaGljbGVLZXlIABIdChN2ZWhpY2xlX2tleV91bmtub3duGAcgASgJSABCDQoLdmVoaWNsZV9rZXkiRAoPUGxheWVyUG9zaXRpb25zEjEKB3BsYXllcnMYASADKAsyIC5wbGF5ZXJfcG9zaXRpb25zLlBsYXllclBvc2l0aW9uKsMlCgpWZWhpY2xlS2V5EhsKF1ZFSElDTEVfS0VZX1VOU1BFQ0lGSUVEEAASFAoQVkVISUNMRV9LRVlfTk9ORRABEhEKDVZFSElDTEVfS0VZXzEQAhIRCg1WRUhJQ0xFX0tFWV8yEAMSEQoNVkVISUNMRV9LRVlfMxAEEhEKDVZFSElDTEVfS0VZXzQQBRIWChJWRUhJQ0xFX0tFWV9UVVNDQU4QBhIXChNWRUhJQ0xFX0tFWV9LQVJUXzAxEAcSHAoYVkVISUNMRV9LRVlfU0NNX0tBUlRfT05FEAgSFQoRVkVISUNMRV9LRVlfREFGRlkQCRIVChFWRUhJQ0xFX0tFWV9NSUNLWRAKEhYKElZFSElDTEVfS0VZX1NURUxMQRALEhQKEFZFSElDTEVfS0VZX0tPTUEQDBIbChdWRUhJQ0xFX0tFWV9UUk9QSFlfVEFYSRANEhUKEVZFSElDTEVfS0VZX0VMSVNBEA4SFwoTVkVISUNMRV9LRVlfVEFYSV8wMRAPEhQKEFZFSElDTEVfS0VZX0RVS0UQEBIWChJWRUhJQ0xFX0tFWV9DRVJWT1MQERIUChBWRUhJQ0xFX0tFWV9OSU1PEBISGQoVVkVISUNMRV9LRVlfTklNT19UQVhJEBMSFgoSVkVISUNMRV9LRVlfU1RBR09OEBQSFwoTVkVISUNMRV9LRVlfUEFOVEhFUhAVEhUKEVZFSElDTEVfS0VZX1ZJU1RBEBYSFAoQVkVISUNMRV9LRVlfWklOTxAXEhUKEVZFSElDTEVfS0VZX01BR0lTEBgSFQoRVkVISUNMRV9LRVlfRVNTQU0QGRIUChBWRUhJQ0xFX0tFWV9DT1JBEBoSFgoSVkVISUNMRV9LRVlfRU5GT0dUEBsSEwoPVkVISUNMRV9LRVlfTkVPEBwSFgoSVkVISUNMRV9LRVlfRk9SVEVNEB0SFQoRVkVISUNMRV9LRVlfWllEUk8QHhIZChVWRUhJQ0xFX0tFWV9TUE9SVFNfMDEQHxITCg9WRUhJQ0xFX0tFWV9GT1gQIBIWChJWRUhJQ0xFX0tFWV9NSVRBR0UQIRIVChFWRUhJQ0xFX0tFWV9NVUhBThAiEiQKIFZFSElDTEVfS0VZX1BPTElDRUlOVEVSQ0VQVE9SXzAxECMSHAoYVkVISUNMRV9LRVlfRUxJU0FfUE9MSUNFECQSGQoVVkVISUNMRV9LRVlfUE9MSUNFXzAxECUSHAoYVkVISUNMRV9LRVlfTVVIQU5fUE9MSUNFECYSHAoYVkVISUNMRV9LRVlfWllEUk9fUE9MSUNFECcSFgoSVkVISUNMRV9LRVlfVE9XTklFECgSGgoWVkVISUNMRV9LRVlfVE9XTklFX0JVUxApEhcKE1ZFSElDTEVfS0VZX0xJTElQVVQQKhIcChhWRUhJQ0xFX0tFWV9TQ0hPT0xCVVNfMDEQKxITCg9WRUhJQ0xFX0tFWV9CVVMQLBIVChFWRUhJQ0xFX0tFWV9EVU1CSRAtEhoKFlZFSElDTEVfS0VZX0NIRUVUQUhNSzEQLhIZChVWRUhJQ0xFX0tFWV9QSUNLVVBfMDIQLxIWChJWRUhJQ0xFX0tFWV9WT0xURVgQMBIXChNWRUhJQ0xFX0tFWV9NQU1NT1RIEDESHAoYVkVISUNMRV9LRVlfS0lSQV9GTEFUQkVEEDISGAoUVkVISUNMRV9LRVlfS0lSQV9CT1gQMxIbChdWRUhJQ0xFX0tFWV9LSVJBX1RBTktFUhA0EhYKElZFSElDTEVfS0VZX1RST05LTxA1Eh8KG1ZFSElDTEVfS0VZX0dBUkJBR0VUUlVDS18wMRA2Eh0KGVZFSElDTEVfS0VZX01JWEVSVFJVQ0tfMDEQNxITCg9WRUhJQ0xFX0tFWV9TUlQQOBIcChhWRUhJQ0xFX0tFWV9TRU1JVFJVQ0tfMDEQORIVChFWRUhJQ0xFX0tFWV9USVRBThA6EhQKEFZFSElDTEVfS0VZX0tVREEQOxIVChFWRUhJQ0xFX0tFWV9DQU1QWRA8EhoKFlZFSElDTEVfS0VZX0ZPUk1VTEFTQ00QPRIaChZWRUhJQ0xFX0tFWV9UUk9QSFlfQUlSED4SGAoUVkVISUNMRV9LRVlfU0FWQU5OQUgQPxIUChBWRUhJQ0xFX0tFWV9ET1JZEEASFgoSVkVISUNMRV9LRVlfSkVNVVNJEEESHQoZVkVISUNMRV9LRVlfSkVNVVNJX1RBTktFUhBCEhsKF1ZFSElDTEVfS0VZX0pFTVVTSV9EVU1QEEMSGwoXVkVISUNMRV9LRVlfSkVNVVNJX1NFTUkQRBIUChBWRUhJQ0xFX0tFWV9MT0JPEEUSFAoQVkVISUNMRV9LRVlfQk9SQRBGEhQKEFZFSElDTEVfS0VZX0RBQk8QRxIcChhWRUhJQ0xFX0tFWV9EVU1QVFJVQ0tfMDEQSBIeChpWRUhJQ0xFX0tFWV9BVExBU184WDRfRFVNUBBJEiAKHFZFSElDTEVfS0VZX0FUTEFTXzZYMl9UQU5LRVIQShIgChxWRUhJQ0xFX0tFWV9BVExBU182WDJfRFJZVkFOEEsSHgoaVkVISUNMRV9LRVlfQVRMQVNfNFgyX1NFTUkQTBIeChpWRUhJQ0xFX0tFWV9BVExBU182WDRfU0VNSRBNEh4KGlZFSElDTEVfS0VZX0FUTEFTXzZYMl9TRU1JEE4SJQohVkVISUNMRV9LRVlfS1VEQV9MSVZFRklTSFRBTktfNFgyEE8SIgoeVkVISUNMRV9LRVlfS1VEQV9DT05UQUlORVJfNlgyEFASHwobVkVISUNMRV9LRVlfS1VEQV9EUllWQU5fNFgyEFESIAocVkVISUNMRV9LRVlfS1VEQV9GTEFUQkVEXzRYMhBSEhsKF1ZFSElDTEVfS0VZX0dPTElNQV9TRU1JEFMSHQoZVkVISUNMRV9LRVlfTE9OR0hPUk5fU0VNSRBUEh0KGVZFSElDTEVfS0VZX0JSVVRVU19UQU5LRVIQVRIVChFWRUhJQ0xFX0tFWV9CT05HTxBWEhkKFVZFSElDTEVfS0VZX0JPTkdPX0JVUxBXEhoKFlZFSElDTEVfS0VZX1JPQURNQVNURVIQWBIgChxWRUhJQ0xFX0tFWV9UUkFJTEVSX0ZMQU5LRVIzEFkSIQodVkVISUNMRV9LRVlfVFJBSUxFUl9GTEFOS0VSM1MQWhIiCh5WRUhJQ0xFX0tFWV9UUkFJTEVSX0NPVFJBXzIwXzMQWxIjCh9WRUhJQ0xFX0tFWV9UUkFJTEVSX0NPVFJBXzIwXzNMEFwSIgoeVkVISUNMRV9LRVlfVFJBSUxFUl9DT1RSQV80MF8zEF0SHgoaVkVISUNMRV9LRVlfVFJBSUxFUl9WQU1PUzMQXhIdChlWRUhJQ0xFX0tFWV9UUkFJTEVSX0xPTUFYEF8SHQoZVkVISUNMRV9LRVlfVFJBSUxFUl9DQVJSWRBgEh8KG1ZFSElDTEVfS0VZX1RSQUlMRVJfVEFOS080MBBhEiAKHFZFSElDTEVfS0VZX1RSQUlMRVJfRUFTVFdPT0QQYhIaChZWRUhJQ0xFX0tFWV9UUkFJTEVSXzAxEGMSIgoeVkVISUNMRV9LRVlfVFJBSUxFUl85TV9GTEFUXzAxEGQSIwofVkVISUNMRV9LRVlfVFJBSUxFUl8zMEZUX0xPR18wMRBlEiYKIlZFSElDTEVfS0VZX1RSQUlMRVJfMzBGVF9UQU5LRVJfMDEQZhIdChlWRUhJQ0xFX0tFWV9UUkFJTEVSX09MRFVNEGcSHQoZVkVISUNMRV9LRVlfVFJBSUxFUl9PTExPSxBoEhwKGFZFSElDTEVfS0VZX1RSQUlMRVJfT0xCRRBpEhwKGFZFSElDTEVfS0VZX1RSQUlMRVJfU1BUMRBqEh8KG1ZFSElDTEVfS0VZX1RSQUlMRVJfTE9CT1ZBThBrEh0KGVZFSElDTEVfS0VZX1RSQUlMRVJfQlVMS08QbBIgChxWRUhJQ0xFX0tFWV9UUkFJTEVSX0RPT0xZX1MxEG0SIAocVkVISUNMRV9LRVlfVFJBSUxFUl9ET09MWV9EMRBuEiAKHFZFSElDTEVfS0VZX1RSQUlMRVJfRE9PTFlfUzIQbxIgChxWRUhJQ0xFX0tFWV9UUkFJTEVSX0RPT0xZX0QyEHASIAocVkVISUNMRV9LRVlfVFJBSUxFUl9TSE9WQU5fNxBxEiEKHVZFSElDTEVfS0VZX1RSQUlMRVJfU0hPVkFOXzEwEHISIAocVkVISUNMRV9LRVlfVFJBSUxFUl9TSE9CRURfNxBzEiEKHVZFSElDTEVfS0VZX1RSQUlMRVJfU0hPQkVEXzEwEHQSIAocVkVISUNMRV9LRVlfVFJBSUxFUl9TSE9UQU5fNxB1EiEKHVZFSElDTEVfS0VZX1RSQUlMRVJfU0hPVEFOXzEwEHYSIwofVkVISUNMRV9LRVlfVFJBSUxFUl9IT0JCRVJfTEVBRBB3EiMKH1ZFSElDTEVfS0VZX1RSQUlMRVJfSE9CQkVSX1JFQVIQeBIjCh9WRUhJQ0xFX0tFWV9UUkFJTEVSX0ZMQUJFUl9MRUFEEHkSIwofVkVISUNMRV9LRVlfVFJBSUxFUl9GTEFCRVJfUkVBUhB6EiIKHlZFSElDTEVfS0VZX1RSQUlMRVJfVEFCRVJfTEVBRBB7EiIKHlZFSElDTEVfS0VZX1RSQUlMRVJfVEFCRVJfUkVBUhB8EigKJFZFSElDTEVfS0VZX1RSQUlMRVJfQ09OVEVSX0xFQURfMjBGVBB9EigKJFZFSElDTEVfS0VZX1RSQUlMRVJfQ09OVEVSX1JFQVJfMjBGVBB+EigKJFZFSElDTEVfS0VZX1RSQUlMRVJfQ09OVEVSX0xFQURfNDBGVBB/EikKJFZFSElDTEVfS0VZX1RSQUlMRVJfQ09OVEVSX1JFQVJfNDBGVBCAARImCiFWRUhJQ0xFX0tFWV9UUkFJTEVSX1NNQUxMX0NBR0VfMDEQgQESKQokVkVISUNMRV9LRVlfVFJBSUxFUl9NSURETEVfVEFOS0VSXzAxEIIBEiUKIFZFSElDTEVfS0VZX1RSQUlMRVJfRElOWV9GTEFUQkVEEIMBEiQKH1ZFSElDTEVfS0VZX1RSQUlMRVJfRElOWV9EUllWQU4QhAESJAofVkVISUNMRV9LRVlfVFJBSUxFUl9ESU5ZX1RBTktFUhCFARIYChNWRUhJQ0xFX0tFWV9UUk9QSFkyEIYBEhUKEFZFSElDTEVfS0VZX05VS0UQhwESHAoXVkVISUNMRV9LRVlfTlVLRV9QT0xJQ0UQiAESGgoVVkVISUNMRV9LRVlfTlVLRV9UQVhJEIkBEhYKEVZFSElDTEVfS0VZX1BVTFNFEIoBEhgKE1ZFSElDTEVfS0VZX01PTkFSQ0gQiwESHQoYVkVISUNMRV9LRVlfTU9OQVJDSF9MSU1PEIwBEhYKEVZFSElDTEVfS0VZX1JBVkVOEI0BEhcKElZFSElDTEVfS0VZX1ZBTl8wMRCOARIVChBWRUhJQ0xFX0tFWV9CT1hZEI8BEhYKEVZFSElDTEVfS0VZX1RBVkFOEJABEhkKFFZFSElDTEVfS0VZX0tJUkFfVkFOEJEBEhUKEFZFSElDTEVfS0VZX0VWQU4QkgESFwoSVkVISUNMRV9LRVlfU0NPT1RZEJMBEhgKE1ZFSElDTEVfS0VZX0dVTlRIT08QlAESFQoQVkVISUNMRV9LRVlfWkVSTxCVARIfChpWRUhJQ0xFX0tFWV9HVU5USE9PX1BPTElDRRCWARIdChhWRUhJQ0xFX0tFWV9ET1JZX1dSRUNLRVIQlwESHAoXVkVISUNMRV9LRVlfVE9XVFJVQ0tfMDEQmAESIQocVkVISUNMRV9LRVlfS0lSQV9ST0xMQkFDS1RPVxCZARIfChpWRUhJQ0xFX0tFWV9CUlVUVVNfV1JFQ0tFUhCaARIeChlWRUhJQ0xFX0tFWV9HT0xJTUFST1RBVE9SEJsBEiIKHVZFSElDTEVfS0VZX0xPTkdIT1JOX1JPTExCQUNLEJwBEiUKIFZFSElDTEVfS0VZX0xPTkdIT1JOX1JPTExCQUNLX1VMEJ0BEhcKElZFSElDTEVfS0VZX1ZVTENBThCeARIWChFWRUhJQ0xFX0tFWV9URVJSQRCfARIiCh1WRUhJQ0xFX0tFWV9CUlVUVVNfRklSRUVOR0lORRCgARIVChBWRUhJQ0xFX0tFWV9BTUJJEKEBEiAKG1ZFSElDTEVfS0VZX1RBVkFOX0FNQlVMQU5DRRCiARIhChxWRUhJQ0xFX0tFWV9CUlVUVVNfQU1CVUxBTkNFEKMBYgZwcm90bzM");
 
 /**
  * @generated from message player_positions.PlayerPosition
  */
 export type PlayerPosition = Message<"player_positions.PlayerPosition"> & {
   /**
-   * @generated from field: string unique_id = 1;
+   * @generated from field: fixed64 unique_id = 1 [jstype = JS_STRING];
    */
   uniqueId: string;
 
@@ -42,9 +42,21 @@ export type PlayerPosition = Message<"player_positions.PlayerPosition"> & {
   x: number;
 
   /**
-   * @generated from field: string vehicle_key = 6;
+   * @generated from oneof player_positions.PlayerPosition.vehicle_key
    */
-  vehicleKey: string;
+  vehicleKey: {
+    /**
+     * @generated from field: player_positions.VehicleKey vehicle_key_enum = 6;
+     */
+    value: VehicleKey;
+    case: "vehicleKeyEnum";
+  } | {
+    /**
+     * @generated from field: string vehicle_key_unknown = 7;
+     */
+    value: string;
+    case: "vehicleKeyUnknown";
+  } | { case: undefined; value?: undefined };
 };
 
 /**
@@ -70,4 +82,835 @@ export type PlayerPositions = Message<"player_positions.PlayerPositions"> & {
  */
 export const PlayerPositionsSchema: GenMessage<PlayerPositions> = /*@__PURE__*/
   messageDesc(file_player_positions, 1);
+
+/**
+ * @generated from enum player_positions.VehicleKey
+ */
+export enum VehicleKey {
+  /**
+   * @generated from enum value: VEHICLE_KEY_UNSPECIFIED = 0;
+   */
+  VEHICLE_KEY_UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NONE = 1;
+   */
+  VEHICLE_KEY_NONE = 1,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_1 = 2;
+   */
+  VEHICLE_KEY_1 = 2,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_2 = 3;
+   */
+  VEHICLE_KEY_2 = 3,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_3 = 4;
+   */
+  VEHICLE_KEY_3 = 4,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_4 = 5;
+   */
+  VEHICLE_KEY_4 = 5,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TUSCAN = 6;
+   */
+  VEHICLE_KEY_TUSCAN = 6,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KART_01 = 7;
+   */
+  VEHICLE_KEY_KART_01 = 7,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SCM_KART_ONE = 8;
+   */
+  VEHICLE_KEY_SCM_KART_ONE = 8,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DAFFY = 9;
+   */
+  VEHICLE_KEY_DAFFY = 9,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MICKY = 10;
+   */
+  VEHICLE_KEY_MICKY = 10,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_STELLA = 11;
+   */
+  VEHICLE_KEY_STELLA = 11,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KOMA = 12;
+   */
+  VEHICLE_KEY_KOMA = 12,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TROPHY_TAXI = 13;
+   */
+  VEHICLE_KEY_TROPHY_TAXI = 13,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ELISA = 14;
+   */
+  VEHICLE_KEY_ELISA = 14,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TAXI_01 = 15;
+   */
+  VEHICLE_KEY_TAXI_01 = 15,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DUKE = 16;
+   */
+  VEHICLE_KEY_DUKE = 16,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_CERVOS = 17;
+   */
+  VEHICLE_KEY_CERVOS = 17,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NIMO = 18;
+   */
+  VEHICLE_KEY_NIMO = 18,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NIMO_TAXI = 19;
+   */
+  VEHICLE_KEY_NIMO_TAXI = 19,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_STAGON = 20;
+   */
+  VEHICLE_KEY_STAGON = 20,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_PANTHER = 21;
+   */
+  VEHICLE_KEY_PANTHER = 21,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_VISTA = 22;
+   */
+  VEHICLE_KEY_VISTA = 22,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ZINO = 23;
+   */
+  VEHICLE_KEY_ZINO = 23,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MAGIS = 24;
+   */
+  VEHICLE_KEY_MAGIS = 24,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ESSAM = 25;
+   */
+  VEHICLE_KEY_ESSAM = 25,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_CORA = 26;
+   */
+  VEHICLE_KEY_CORA = 26,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ENFOGT = 27;
+   */
+  VEHICLE_KEY_ENFOGT = 27,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NEO = 28;
+   */
+  VEHICLE_KEY_NEO = 28,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_FORTEM = 29;
+   */
+  VEHICLE_KEY_FORTEM = 29,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ZYDRO = 30;
+   */
+  VEHICLE_KEY_ZYDRO = 30,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SPORTS_01 = 31;
+   */
+  VEHICLE_KEY_SPORTS_01 = 31,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_FOX = 32;
+   */
+  VEHICLE_KEY_FOX = 32,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MITAGE = 33;
+   */
+  VEHICLE_KEY_MITAGE = 33,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MUHAN = 34;
+   */
+  VEHICLE_KEY_MUHAN = 34,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_POLICEINTERCEPTOR_01 = 35;
+   */
+  VEHICLE_KEY_POLICEINTERCEPTOR_01 = 35,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ELISA_POLICE = 36;
+   */
+  VEHICLE_KEY_ELISA_POLICE = 36,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_POLICE_01 = 37;
+   */
+  VEHICLE_KEY_POLICE_01 = 37,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MUHAN_POLICE = 38;
+   */
+  VEHICLE_KEY_MUHAN_POLICE = 38,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ZYDRO_POLICE = 39;
+   */
+  VEHICLE_KEY_ZYDRO_POLICE = 39,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TOWNIE = 40;
+   */
+  VEHICLE_KEY_TOWNIE = 40,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TOWNIE_BUS = 41;
+   */
+  VEHICLE_KEY_TOWNIE_BUS = 41,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_LILIPUT = 42;
+   */
+  VEHICLE_KEY_LILIPUT = 42,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SCHOOLBUS_01 = 43;
+   */
+  VEHICLE_KEY_SCHOOLBUS_01 = 43,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BUS = 44;
+   */
+  VEHICLE_KEY_BUS = 44,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DUMBI = 45;
+   */
+  VEHICLE_KEY_DUMBI = 45,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_CHEETAHMK1 = 46;
+   */
+  VEHICLE_KEY_CHEETAHMK1 = 46,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_PICKUP_02 = 47;
+   */
+  VEHICLE_KEY_PICKUP_02 = 47,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_VOLTEX = 48;
+   */
+  VEHICLE_KEY_VOLTEX = 48,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MAMMOTH = 49;
+   */
+  VEHICLE_KEY_MAMMOTH = 49,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KIRA_FLATBED = 50;
+   */
+  VEHICLE_KEY_KIRA_FLATBED = 50,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KIRA_BOX = 51;
+   */
+  VEHICLE_KEY_KIRA_BOX = 51,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KIRA_TANKER = 52;
+   */
+  VEHICLE_KEY_KIRA_TANKER = 52,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRONKO = 53;
+   */
+  VEHICLE_KEY_TRONKO = 53,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_GARBAGETRUCK_01 = 54;
+   */
+  VEHICLE_KEY_GARBAGETRUCK_01 = 54,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MIXERTRUCK_01 = 55;
+   */
+  VEHICLE_KEY_MIXERTRUCK_01 = 55,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SRT = 56;
+   */
+  VEHICLE_KEY_SRT = 56,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SEMITRUCK_01 = 57;
+   */
+  VEHICLE_KEY_SEMITRUCK_01 = 57,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TITAN = 58;
+   */
+  VEHICLE_KEY_TITAN = 58,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KUDA = 59;
+   */
+  VEHICLE_KEY_KUDA = 59,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_CAMPY = 60;
+   */
+  VEHICLE_KEY_CAMPY = 60,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_FORMULASCM = 61;
+   */
+  VEHICLE_KEY_FORMULASCM = 61,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TROPHY_AIR = 62;
+   */
+  VEHICLE_KEY_TROPHY_AIR = 62,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SAVANNAH = 63;
+   */
+  VEHICLE_KEY_SAVANNAH = 63,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DORY = 64;
+   */
+  VEHICLE_KEY_DORY = 64,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_JEMUSI = 65;
+   */
+  VEHICLE_KEY_JEMUSI = 65,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_JEMUSI_TANKER = 66;
+   */
+  VEHICLE_KEY_JEMUSI_TANKER = 66,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_JEMUSI_DUMP = 67;
+   */
+  VEHICLE_KEY_JEMUSI_DUMP = 67,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_JEMUSI_SEMI = 68;
+   */
+  VEHICLE_KEY_JEMUSI_SEMI = 68,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_LOBO = 69;
+   */
+  VEHICLE_KEY_LOBO = 69,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BORA = 70;
+   */
+  VEHICLE_KEY_BORA = 70,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DABO = 71;
+   */
+  VEHICLE_KEY_DABO = 71,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DUMPTRUCK_01 = 72;
+   */
+  VEHICLE_KEY_DUMPTRUCK_01 = 72,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_8X4_DUMP = 73;
+   */
+  VEHICLE_KEY_ATLAS_8X4_DUMP = 73,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_6X2_TANKER = 74;
+   */
+  VEHICLE_KEY_ATLAS_6X2_TANKER = 74,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_6X2_DRYVAN = 75;
+   */
+  VEHICLE_KEY_ATLAS_6X2_DRYVAN = 75,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_4X2_SEMI = 76;
+   */
+  VEHICLE_KEY_ATLAS_4X2_SEMI = 76,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_6X4_SEMI = 77;
+   */
+  VEHICLE_KEY_ATLAS_6X4_SEMI = 77,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ATLAS_6X2_SEMI = 78;
+   */
+  VEHICLE_KEY_ATLAS_6X2_SEMI = 78,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KUDA_LIVEFISHTANK_4X2 = 79;
+   */
+  VEHICLE_KEY_KUDA_LIVEFISHTANK_4X2 = 79,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KUDA_CONTAINER_6X2 = 80;
+   */
+  VEHICLE_KEY_KUDA_CONTAINER_6X2 = 80,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KUDA_DRYVAN_4X2 = 81;
+   */
+  VEHICLE_KEY_KUDA_DRYVAN_4X2 = 81,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KUDA_FLATBED_4X2 = 82;
+   */
+  VEHICLE_KEY_KUDA_FLATBED_4X2 = 82,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_GOLIMA_SEMI = 83;
+   */
+  VEHICLE_KEY_GOLIMA_SEMI = 83,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_LONGHORN_SEMI = 84;
+   */
+  VEHICLE_KEY_LONGHORN_SEMI = 84,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BRUTUS_TANKER = 85;
+   */
+  VEHICLE_KEY_BRUTUS_TANKER = 85,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BONGO = 86;
+   */
+  VEHICLE_KEY_BONGO = 86,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BONGO_BUS = 87;
+   */
+  VEHICLE_KEY_BONGO_BUS = 87,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ROADMASTER = 88;
+   */
+  VEHICLE_KEY_ROADMASTER = 88,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_FLANKER3 = 89;
+   */
+  VEHICLE_KEY_TRAILER_FLANKER3 = 89,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_FLANKER3S = 90;
+   */
+  VEHICLE_KEY_TRAILER_FLANKER3S = 90,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_COTRA_20_3 = 91;
+   */
+  VEHICLE_KEY_TRAILER_COTRA_20_3 = 91,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_COTRA_20_3L = 92;
+   */
+  VEHICLE_KEY_TRAILER_COTRA_20_3L = 92,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_COTRA_40_3 = 93;
+   */
+  VEHICLE_KEY_TRAILER_COTRA_40_3 = 93,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_VAMOS3 = 94;
+   */
+  VEHICLE_KEY_TRAILER_VAMOS3 = 94,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_LOMAX = 95;
+   */
+  VEHICLE_KEY_TRAILER_LOMAX = 95,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_CARRY = 96;
+   */
+  VEHICLE_KEY_TRAILER_CARRY = 96,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_TANKO40 = 97;
+   */
+  VEHICLE_KEY_TRAILER_TANKO40 = 97,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_EASTWOOD = 98;
+   */
+  VEHICLE_KEY_TRAILER_EASTWOOD = 98,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_01 = 99;
+   */
+  VEHICLE_KEY_TRAILER_01 = 99,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_9M_FLAT_01 = 100;
+   */
+  VEHICLE_KEY_TRAILER_9M_FLAT_01 = 100,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_30FT_LOG_01 = 101;
+   */
+  VEHICLE_KEY_TRAILER_30FT_LOG_01 = 101,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_30FT_TANKER_01 = 102;
+   */
+  VEHICLE_KEY_TRAILER_30FT_TANKER_01 = 102,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_OLDUM = 103;
+   */
+  VEHICLE_KEY_TRAILER_OLDUM = 103,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_OLLOK = 104;
+   */
+  VEHICLE_KEY_TRAILER_OLLOK = 104,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_OLBE = 105;
+   */
+  VEHICLE_KEY_TRAILER_OLBE = 105,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SPT1 = 106;
+   */
+  VEHICLE_KEY_TRAILER_SPT1 = 106,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_LOBOVAN = 107;
+   */
+  VEHICLE_KEY_TRAILER_LOBOVAN = 107,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_BULKO = 108;
+   */
+  VEHICLE_KEY_TRAILER_BULKO = 108,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DOOLY_S1 = 109;
+   */
+  VEHICLE_KEY_TRAILER_DOOLY_S1 = 109,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DOOLY_D1 = 110;
+   */
+  VEHICLE_KEY_TRAILER_DOOLY_D1 = 110,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DOOLY_S2 = 111;
+   */
+  VEHICLE_KEY_TRAILER_DOOLY_S2 = 111,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DOOLY_D2 = 112;
+   */
+  VEHICLE_KEY_TRAILER_DOOLY_D2 = 112,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOVAN_7 = 113;
+   */
+  VEHICLE_KEY_TRAILER_SHOVAN_7 = 113,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOVAN_10 = 114;
+   */
+  VEHICLE_KEY_TRAILER_SHOVAN_10 = 114,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOBED_7 = 115;
+   */
+  VEHICLE_KEY_TRAILER_SHOBED_7 = 115,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOBED_10 = 116;
+   */
+  VEHICLE_KEY_TRAILER_SHOBED_10 = 116,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOTAN_7 = 117;
+   */
+  VEHICLE_KEY_TRAILER_SHOTAN_7 = 117,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SHOTAN_10 = 118;
+   */
+  VEHICLE_KEY_TRAILER_SHOTAN_10 = 118,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_HOBBER_LEAD = 119;
+   */
+  VEHICLE_KEY_TRAILER_HOBBER_LEAD = 119,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_HOBBER_REAR = 120;
+   */
+  VEHICLE_KEY_TRAILER_HOBBER_REAR = 120,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_FLABER_LEAD = 121;
+   */
+  VEHICLE_KEY_TRAILER_FLABER_LEAD = 121,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_FLABER_REAR = 122;
+   */
+  VEHICLE_KEY_TRAILER_FLABER_REAR = 122,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_TABER_LEAD = 123;
+   */
+  VEHICLE_KEY_TRAILER_TABER_LEAD = 123,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_TABER_REAR = 124;
+   */
+  VEHICLE_KEY_TRAILER_TABER_REAR = 124,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_CONTER_LEAD_20FT = 125;
+   */
+  VEHICLE_KEY_TRAILER_CONTER_LEAD_20FT = 125,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_CONTER_REAR_20FT = 126;
+   */
+  VEHICLE_KEY_TRAILER_CONTER_REAR_20FT = 126,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_CONTER_LEAD_40FT = 127;
+   */
+  VEHICLE_KEY_TRAILER_CONTER_LEAD_40FT = 127,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_CONTER_REAR_40FT = 128;
+   */
+  VEHICLE_KEY_TRAILER_CONTER_REAR_40FT = 128,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_SMALL_CAGE_01 = 129;
+   */
+  VEHICLE_KEY_TRAILER_SMALL_CAGE_01 = 129,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_MIDDLE_TANKER_01 = 130;
+   */
+  VEHICLE_KEY_TRAILER_MIDDLE_TANKER_01 = 130,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DINY_FLATBED = 131;
+   */
+  VEHICLE_KEY_TRAILER_DINY_FLATBED = 131,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DINY_DRYVAN = 132;
+   */
+  VEHICLE_KEY_TRAILER_DINY_DRYVAN = 132,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TRAILER_DINY_TANKER = 133;
+   */
+  VEHICLE_KEY_TRAILER_DINY_TANKER = 133,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TROPHY2 = 134;
+   */
+  VEHICLE_KEY_TROPHY2 = 134,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NUKE = 135;
+   */
+  VEHICLE_KEY_NUKE = 135,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NUKE_POLICE = 136;
+   */
+  VEHICLE_KEY_NUKE_POLICE = 136,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_NUKE_TAXI = 137;
+   */
+  VEHICLE_KEY_NUKE_TAXI = 137,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_PULSE = 138;
+   */
+  VEHICLE_KEY_PULSE = 138,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MONARCH = 139;
+   */
+  VEHICLE_KEY_MONARCH = 139,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_MONARCH_LIMO = 140;
+   */
+  VEHICLE_KEY_MONARCH_LIMO = 140,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_RAVEN = 141;
+   */
+  VEHICLE_KEY_RAVEN = 141,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_VAN_01 = 142;
+   */
+  VEHICLE_KEY_VAN_01 = 142,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BOXY = 143;
+   */
+  VEHICLE_KEY_BOXY = 143,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TAVAN = 144;
+   */
+  VEHICLE_KEY_TAVAN = 144,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KIRA_VAN = 145;
+   */
+  VEHICLE_KEY_KIRA_VAN = 145,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_EVAN = 146;
+   */
+  VEHICLE_KEY_EVAN = 146,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_SCOOTY = 147;
+   */
+  VEHICLE_KEY_SCOOTY = 147,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_GUNTHOO = 148;
+   */
+  VEHICLE_KEY_GUNTHOO = 148,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_ZERO = 149;
+   */
+  VEHICLE_KEY_ZERO = 149,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_GUNTHOO_POLICE = 150;
+   */
+  VEHICLE_KEY_GUNTHOO_POLICE = 150,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_DORY_WRECKER = 151;
+   */
+  VEHICLE_KEY_DORY_WRECKER = 151,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TOWTRUCK_01 = 152;
+   */
+  VEHICLE_KEY_TOWTRUCK_01 = 152,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_KIRA_ROLLBACKTOW = 153;
+   */
+  VEHICLE_KEY_KIRA_ROLLBACKTOW = 153,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BRUTUS_WRECKER = 154;
+   */
+  VEHICLE_KEY_BRUTUS_WRECKER = 154,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_GOLIMAROTATOR = 155;
+   */
+  VEHICLE_KEY_GOLIMAROTATOR = 155,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_LONGHORN_ROLLBACK = 156;
+   */
+  VEHICLE_KEY_LONGHORN_ROLLBACK = 156,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_LONGHORN_ROLLBACK_UL = 157;
+   */
+  VEHICLE_KEY_LONGHORN_ROLLBACK_UL = 157,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_VULCAN = 158;
+   */
+  VEHICLE_KEY_VULCAN = 158,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TERRA = 159;
+   */
+  VEHICLE_KEY_TERRA = 159,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BRUTUS_FIREENGINE = 160;
+   */
+  VEHICLE_KEY_BRUTUS_FIREENGINE = 160,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_AMBI = 161;
+   */
+  VEHICLE_KEY_AMBI = 161,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_TAVAN_AMBULANCE = 162;
+   */
+  VEHICLE_KEY_TAVAN_AMBULANCE = 162,
+
+  /**
+   * @generated from enum value: VEHICLE_KEY_BRUTUS_AMBULANCE = 163;
+   */
+  VEHICLE_KEY_BRUTUS_AMBULANCE = 163,
+}
+
+/**
+ * Describes the enum player_positions.VehicleKey.
+ */
+export const VehicleKeySchema: GenEnum<VehicleKey> = /*@__PURE__*/
+  enumDesc(file_player_positions, 0);
 

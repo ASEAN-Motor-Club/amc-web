@@ -12,6 +12,7 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { m } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { vehicleKeyToString } from '$lib/api/proto/vehicleKeyUtils';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
@@ -76,7 +77,10 @@
           name: item.playerName,
           coord: { x: item.x, y: item.y },
           pointType: PointType.Player as const,
-          vehicleKey: item.vehicleKey,
+          vehicleKey:
+            item.vehicleKey.case === 'vehicleKeyEnum'
+              ? vehicleKeyToString(item.vehicleKey.value)
+              : (item.vehicleKey.value ?? 'None'),
           guid: item.uniqueId,
         }));
         playerData = result;
