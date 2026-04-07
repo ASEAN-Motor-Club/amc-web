@@ -199,7 +199,7 @@
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
         icon="i-material-symbols:delivery-truck-speed-outline-rounded"
-        text={ m['map.side_menu.jobs']()}
+        text={m['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
       />
     </div>
