@@ -85,7 +85,7 @@
 
   <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}
-      <span class="text-xs font-semibold">
+      <span class="text-700 dark:text-300 text-xs font-semibold">
         {days[(i + firstDayOfWeek) % 7]}
       </span>
     {/each}

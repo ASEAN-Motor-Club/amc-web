@@ -51,7 +51,7 @@
     </Button>
   </div>
 
-  <div class="text-sm opacity-85">
+  <div class="text-700 dark:text-300 text-sm">
     {loading
       ? '.'
       : player?.vehicleKey !== 'None'

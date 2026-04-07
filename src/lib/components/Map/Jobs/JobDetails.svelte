@@ -151,7 +151,7 @@
           ${job?.completion_bonus}
         {/if}
       </div>
-      <div>
+      <div class="text-700 dark:text-300">
         <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
         <br />
         {#if loading}
@@ -180,7 +180,7 @@
         {/if}
       </div>
       {#if job?.description}
-        <div class="mt-8 text-sm opacity-85">
+        <div class="text-700 dark:text-300 mt-8 text-sm">
           {job.description}
         </div>
       {/if}

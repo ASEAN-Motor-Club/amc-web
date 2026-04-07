@@ -105,10 +105,10 @@
     <Card
       class="text-text-dark media-mouse:m-2 m-1 flex flex-col gap-0.5 !bg-gray-900/50 px-1.5 py-1 whitespace-nowrap shadow-white/3 ring-white/5 backdrop-blur-sm select-none"
     >
-      <div class="text-xs font-semibold">
+      <div class="text-text-dark text-xs font-semibold">
         {typeText}
       </div>
-      <div class="text-sm">
+      <div class="text-300 text-sm">
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
             ? m['housing.owned_house']({
