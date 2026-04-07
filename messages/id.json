@@ -140,7 +140,9 @@
     "player_info": {
       "driving": "Mengemudi {vehicle}",
       "on_foot": "Berjalan kaki/Penumpang",
-      "unknown_vehicle": "kendaraan tidak diketahui"
+      "unknown_vehicle": "kendaraan tidak diketahui",
+      "vehicle": "Kendaraan",
+      "location": "Lokasi"
     },
     "pins_invalid": {
       "title": "Pin Tidak Valid",
@@ -188,7 +190,7 @@
   "home": {
     "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",
     "description": "Tempat para pemain yang ramah dan penuh semangat mengasah kemampuan mereka hingga batas. Balapan melintasi berbagai medan, desain livery menarik, dan atur mobil Anda untuk meraih kemenangan di event akhir pekan kami. Kami mengadakan balapan rutin, kompetisi kreatif, bahkan menyiarkan radio kami sendiri. Gabung Discord kami untuk terlibat dan tetap mengikuti perkembangan!",
-    "copyright": "© {year} ASEAN Motor Club. Semua hak dilindungi.",
+    "copyright": "© {year} ASEAN Motor Club. Semua hak dilindungi. Motor Town: Behind the Wheel adalah merek dagang dari P3 Games.",
     "join_discord": "Gabung Discord",
     "join_patreon": "Donasi di Patreon",
     "listen_radio": "Dengarkan AMC Radio",

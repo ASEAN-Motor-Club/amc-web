@@ -23,6 +23,8 @@
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
   import { getAbortSignal } from 'svelte';
+  import Table from '$lib/ui/Table/Table.svelte';
+  import TableRow from '$lib/ui/Table/TableRow.svelte';
 
   interface Props {
     id: string;
@@ -129,36 +131,36 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold">
             {m['delivery.job_supply']()}
           </div>
-          {#each matchJobs as job (job.id)}
-            <div
-              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
-            >
-              <JobLink {fullScreen} {job} showId />
-              <div class="whitespace-nowrap">
-                {job.quantity_fulfilled}/{job.quantity_requested}
-              </div>
-            </div>
-          {/each}
+          <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
+            {#each matchJobs as job (job.id)}
+              <TableRow>
+                <JobLink {fullScreen} {job} showId />
+                <div class="whitespace-nowrap">
+                  {job.quantity_fulfilled}/{job.quantity_requested}
+                </div>
+              </TableRow>
+            {/each}
+          </Table>
         </Card>
       {/if}
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold">
             {m['delivery.job_demand']()}
           </div>
-          {#each matchJobsDest as job (job.id)}
-            <div
-              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
-            >
-              <JobLink {fullScreen} {job} showId />
-              <div class="whitespace-nowrap">
-                {job.quantity_fulfilled}/{job.quantity_requested}
-              </div>
-            </div>
-          {/each}
+          <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
+            {#each matchJobsDest as job (job.id)}
+              <TableRow>
+                <JobLink {fullScreen} {job} showId />
+                <div class="whitespace-nowrap">
+                  {job.quantity_fulfilled}/{job.quantity_requested}
+                </div>
+              </TableRow>
+            {/each}
+          </Table>
         </Card>
       {/if}
     </div>
@@ -168,55 +170,55 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if deliveryPoint.allSupply.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold">
             {m['delivery.supply']()}
           </div>
-          {#each deliveryPoint.allSupply as item (item)}
-            <div
-              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
-            >
-              <div class="flex flex-1 items-baseline gap-2 overflow-hidden whitespace-nowrap">
-                {getMtLocale(cargoName[item])}
-                {#each filterMatchJobs(matchJobs, item) as job (job.id)}
-                  <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
-                {/each}
-              </div>
-              <div class="w-21 text-right whitespace-nowrap">
-                {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
-                  >{:else}{getInventoryAmount(
-                    item,
-                    true,
-                  )}{/if}{#if !isCargoType(item)}/{deliveryPoint.supplyStorage[item]}{/if}
-              </div>
-            </div>
-          {/each}
+          <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
+            {#each deliveryPoint.allSupply as item (item)}
+              <TableRow>
+                <div class="flex items-baseline gap-2 overflow-hidden whitespace-nowrap">
+                  {getMtLocale(cargoName[item])}
+                  {#each filterMatchJobs(matchJobs, item) as job (job.id)}
+                    <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
+                  {/each}
+                </div>
+                <div class="w-21 text-right whitespace-nowrap">
+                  {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
+                    >{:else}{getInventoryAmount(
+                      item,
+                      true,
+                    )}{/if}{#if !isCargoType(item)}/{deliveryPoint.supplyStorage[item]}{/if}
+                </div>
+              </TableRow>
+            {/each}
+          </Table>
         </Card>
       {/if}
       {#if deliveryPoint.allDemand.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold">
             {m['delivery.demand']()}
           </div>
-          {#each deliveryPoint.allDemand as item (item)}
-            <div
-              class="flex justify-between gap-2 border-b border-gray-500/10 px-4 py-3 last:border-0"
-            >
-              <div class="flex flex-1 items-baseline gap-2 overflow-hidden whitespace-nowrap">
-                {getMtLocale(cargoName[item])}
-                {@render dropPointName(findDropPoint(item))}
-                {#each filterMatchJobs(matchJobsDest, item) as job (job.id)}
-                  <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
-                {/each}
-              </div>
-              <div class="w-21 text-right whitespace-nowrap">
-                {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
-                  >{:else}{getInventoryAmount(
-                    item,
-                    true,
-                  )}{/if}{#if !isCargoType(item)}/{deliveryPoint.demandStorage[item]}{/if}
-              </div>
-            </div>
-          {/each}
+          <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
+            {#each deliveryPoint.allDemand as item (item)}
+              <TableRow>
+                <div class="flex items-baseline gap-2 overflow-hidden whitespace-nowrap">
+                  {getMtLocale(cargoName[item])}
+                  {@render dropPointName(findDropPoint(item))}
+                  {#each filterMatchJobs(matchJobsDest, item) as job (job.id)}
+                    <JobLink {fullScreen} {job} idOnly class="text-xs font-semibold" />
+                  {/each}
+                </div>
+                <div class="w-21 text-right whitespace-nowrap">
+                  {#if deliveryPointInfoLoading}<span class="animate-pulse">...</span
+                    >{:else}{getInventoryAmount(
+                      item,
+                      true,
+                    )}{/if}{#if !isCargoType(item)}/{deliveryPoint.demandStorage[item]}{/if}
+                </div>
+              </TableRow>
+            {/each}
+          </Table>
         </Card>
       {/if}
     </div>
@@ -224,7 +226,7 @@
     <!-- {#if deliveryPoint.allSupply.length > 0}
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
-          <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold">
             {m['delivery.delivery']()}
           </div>
         </Card>

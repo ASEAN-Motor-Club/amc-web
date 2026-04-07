@@ -105,10 +105,10 @@
     <Card
       class="text-text-dark media-mouse:m-2 m-1 flex flex-col gap-0.5 !bg-gray-900/50 px-1.5 py-1 whitespace-nowrap shadow-white/3 ring-white/5 backdrop-blur-sm select-none"
     >
-      <div class="text-text-dark text-xs font-semibold">
+      <div class="text-text-400 text-xs font-bold">
         {typeText}
       </div>
-      <div class="text-text-300 text-sm">
+      <div class="text-text-dark text-sm font-semibold">
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
             ? m['housing.owned_house']({
@@ -132,18 +132,18 @@
         {/if}
       {/if}
       <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
-      <div class="mb-0.5 text-xs font-semibold text-gray-300">
+      <div class="text-text-400 mb-0.5 text-xs font-semibold">
         {getLocationAtPoint(hoverInfo.info.coord)}
       </div>
       {#if hoverInfo.pointType === PointType.Delivery}
-        <Button size="xs" class="media-not-mouse:hidden mb-0.5 bg-white/10 px-2">
+        <Button size="xs" class="media-not-mouse:hidden text-text-300 mb-0.5 bg-white/10 px-2">
           {m['map.click_lock']()}
         </Button>
       {/if}
       {#if typeHasMoreInfo}
         <Button
           size="xs"
-          class="media-not-mouse:pointer-events-auto mb-0.5 bg-white/10 px-2"
+          class="media-not-mouse:pointer-events-auto text-text-300 mb-0.5 bg-white/10 px-2"
           {onClick}
         >
           <span class="media-mouse:inline hidden">{m['map.click_info']()}</span>

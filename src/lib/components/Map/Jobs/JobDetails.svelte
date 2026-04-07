@@ -217,7 +217,7 @@
       <Card
         class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
       >
-        <div class="bg-gray-500/10 p-4 text-lg font-semibold">
+        <div class="bg-gray-500/10 p-4 font-semibold">
           {m['jobs.contributors']()}
         </div>
         <Table

@@ -20,16 +20,18 @@
 
   const { player, highlight, onCenter, loading }: Props = $props();
 
+  const vehicleKey = $derived(player?.vehicleKey ?? 'None');
+
   const vehicleName = $derived(
-    (vehiclesName as Record<string, MtNameRecord | undefined>)[player?.vehicleKey ?? 'None'],
+    (vehiclesName as Record<string, MtNameRecord | undefined>)[vehicleKey],
   );
 
   const playerName = $derived(player?.name ?? '.');
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
-  <div class="mb-2 flex w-full items-center justify-between">
-    <TruncateText tag="h2" text={playerName} class="flex-1 text-lg font-semibold">
+  <div class="flex w-full items-center justify-between">
+    <TruncateText tag="h2" text={playerName} class="flex-1 font-semibold">
       <HighlightText
         text={playerName}
         {highlight}
@@ -51,18 +53,22 @@
     </Button>
   </div>
 
-  <div class="text-text-700 dark:text-text-300 text-sm">
-    {loading
-      ? '.'
-      : player?.vehicleKey !== 'None'
-        ? m['players.details_driving']({
-            vehicle: vehicleName
-              ? getMtLocale(vehicleName)
-              : m['map.player_info.unknown_vehicle'](),
-            location: getLocationAtPoint(player?.coord ?? { x: 0, y: 0 }),
-          })
-        : m['players.details']({
-            location: getLocationAtPoint(player.coord),
-          })}
+  <div class="text-text-700 dark:text-text-300 mt-2 flex justify-between gap-1 text-sm">
+    <div class="truncate">
+      <div class="text-text-500 text-xs font-semibold">{m['map.player_info.vehicle']()}</div>
+      <div class={[vehicleKey === 'None' ? 'italic' : '']}>
+        {vehicleKey === 'None'
+          ? m['map.player_info.on_foot']()
+          : vehicleName
+            ? getMtLocale(vehicleName)
+            : m['map.player_info.unknown_vehicle']()}
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="text-text-500 text-xs font-semibold">{m['map.player_info.location']()}</div>
+      <div>
+        {player ? getLocationAtPoint(player.coord) : '.'}
+      </div>
+    </div>
   </div>
 </Card>

@@ -43,20 +43,20 @@
 
 <div class="text-text-300 flex flex-col text-xs">
   <div>
-    <span class="text-text-dark font-semibold">{m['housing.id']()}:</span>
+    <div class="text-text-200 font-semibold">{m['housing.id']()}</div>
     {hoverInfo.info.name}
   </div>
   <div>
-    <span class="text-text-dark font-semibold">{m['housing.size']()}:</span>
+    <div class="text-text-200 font-semibold">{m['housing.size']()}</div>
     {hoverInfo.info.size.x / 100} x {hoverInfo.info.size.y / 100}
   </div>
   <div>
-    <span class="text-text-dark font-semibold">{m['housing.rent_price']()}:</span>
+    <div class="text-text-200 font-semibold">{m['housing.rent_price']()}</div>
     {(hoverInfo.info.cost / 10).toLocaleString(locale)}
   </div>
   {#if currentHouseData?.ownerName}
     <div>
-      <span class="text-text-dark font-semibold">{m['housing.rent_left']()}:</span>
+      <div class="text-text-200 font-semibold">{m['housing.rent_left']()}</div>
       {rentLeftText}
     </div>
   {/if}

@@ -199,7 +199,7 @@
                 ]}
               ></div>
               <div class="flex flex-col gap-0.5">
-                <div class="text-text-dark">
+                <div class="text-text-dark font-semibold">
                   <HighlightText
                     text={point.pointType === PointType.House
                       ? point.name
@@ -215,7 +215,7 @@
                   />
                 </div>
                 {#if point.pointType === PointType.Delivery}
-                  <div class="flex flex-col text-slate-300">
+                  <div class="text-text-300 flex flex-col">
                     {#if point.supplyText}
                       <div class="text-xs">
                         {m['delivery.supply']()}: <HighlightText
@@ -240,7 +240,7 @@
                     {/if}
                   </div>
                 {:else if point.pointType === PointType.House}
-                  <div class="text-xs text-slate-300">
+                  <div class="text-text-300 text-xs">
                     {m['housing.id']()}: <HighlightText
                       text={point.guid || m.unknown()}
                       highlight={searchValue}
@@ -250,18 +250,18 @@
                     />
                   </div>
                 {:else if point.pointType === PointType.Player}
-                  <div class="text-xs text-slate-300">
+                  <div class="text-text-300 text-xs">
                     <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
                   </div>
                 {/if}
-                <div class="text-xs text-slate-400">
+                <div class="text-text-400 text-xs font-semibold">
                   {getLocationAtPoint(point.coord)}
                 </div>
               </div>
             </a>
           {/each}
           {#if searchValue && foundValues.length > maxShow}
-            <div class="px-3 py-2 text-slate-300 italic">
+            <div class="text-text-300 px-3 py-2 italic">
               {m['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
@@ -285,7 +285,7 @@
         <Card
           class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
         >
-          <div class="px-3 py-2 text-slate-300 italic">
+          <div class="text-text-300 px-3 py-2 italic">
             {searchValue ? m['map.no_results']() : m['map.start_search']()}
           </div>
         </Card>
