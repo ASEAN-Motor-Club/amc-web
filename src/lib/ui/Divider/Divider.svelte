@@ -31,7 +31,7 @@
 
 <hr
   class={twMerge(
-    'border-gray-500',
+    'border-gray-500/25',
     vertical && 'h-full w-0 border-t-0 border-l',
     spacing && spacingClass[spacing],
     clsx(propsClass),

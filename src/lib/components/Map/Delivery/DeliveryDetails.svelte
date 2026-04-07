@@ -131,7 +131,7 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-gray-500/10 p-4 font-semibold">
+          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
             {m['delivery.job_supply']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -148,7 +148,7 @@
       {/if}
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
-          <div class="bg-gray-500/10 p-4 font-semibold">
+          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
             {m['delivery.job_demand']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -170,7 +170,7 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if deliveryPoint.allSupply.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-gray-500/10 p-4 font-semibold">
+          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
             {m['delivery.supply']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -196,7 +196,7 @@
       {/if}
       {#if deliveryPoint.allDemand.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="bg-gray-500/10 p-4 font-semibold">
+          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
             {m['delivery.demand']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -226,7 +226,7 @@
     <!-- {#if deliveryPoint.allSupply.length > 0}
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
-          <div class="bg-gray-500/10 p-4 font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold text-text-700 dark:text-text-300">
             {m['delivery.delivery']()}
           </div>
         </Card>

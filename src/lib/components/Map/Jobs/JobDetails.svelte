@@ -111,8 +111,22 @@
 </script>
 
 {#if job || loading}
-  <div class={['flex h-full flex-col gap-8 overflow-y-auto p-8', fullScreen && 'lg:flex-row']}>
-    <div class={['flex flex-1 flex-col', fullScreen && 'lg:overflow-x-hidden lg:overflow-y-auto']}>
+  <div
+    class={[
+      'flex h-full flex-col gap-8 p-8',
+      loading ? 'overflow-hidden' : 'overflow-y-auto',
+      fullScreen && 'lg:flex-row',
+    ]}
+  >
+    <div
+      class={[
+        'flex flex-1 flex-col',
+        fullScreen &&
+          (loading
+            ? 'lg:overflow-hidden lg:overflow-x-hidden'
+            : 'lg:overflow-x-hidden lg:overflow-y-auto'),
+      ]}
+    >
       <CommonHead class="w-full !p-0 !pb-8">
         {#if loading}
           <TextSkeleton class="w-full max-w-150" />
@@ -122,93 +136,147 @@
       </CommonHead>
       <div class="mb-8 text-6xl font-bold tabular-nums">
         {#if loading}
-          <TextSkeleton class="w-15" /> <span class="opacity-50">/</span>
+          <TextSkeleton class="w-15" /> <span class="text-text-500">/</span>
           <TextSkeleton class="w-15" />
         {:else}
-          {job?.quantity_fulfilled} <span class="opacity-50">/</span>
+          {job?.quantity_fulfilled} <span class="text-text-500">/</span>
           {job?.quantity_requested}
         {/if}
       </div>
-      <div class="mb-8 font-semibold">
+      <div class="text-text-700 dark:text-text-300 mb-8 font-semibold">
         {#if loading}
           <TextSkeleton class="w-full max-w-50" />
         {:else}
           {timeLeftText}
         {/if}
       </div>
-      <div class="mb-8">
-        <span class="font-semibold">{m['jobs.bonus_multiplier']()}:</span>
-        {#if loading}
-          <TextSkeleton class="w-12" />
-        {:else}
-          {Math.round((job?.bonus_multiplier ?? 0) * 100)}%
-        {/if}
-        <br />
-        <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>
-        {#if loading}
-          <TextSkeleton class="w-12" />
-        {:else}
-          ${job?.completion_bonus}
-        {/if}
-      </div>
-      <div class="text-text-700 dark:text-text-300">
-        <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
-        <br />
-        {#if loading}
-          <TextSkeleton class="w-full" lines={3} />
-        {:else}
-          <span class="font-semibold">{m['jobs.constrains_cargo']()}:</span>
-          {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
-          <br />
-          {#if job?.source_points && job.source_points.length > 0}
-            <span class="font-semibold">{m['jobs.constrains_source_points']()}:</span>
-            {#each job.source_points as point, i (point.guid)}
-              <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
-                ? ', '
-                : ''}
-            {/each}
-            <br />
+      <div class="text-text-700 dark:text-text-300 mb-8 flex gap-8">
+        <div>
+          <div class="text-text-600 dark:text-text-400 text-sm font-semibold">
+            {m['jobs.bonus_multiplier']()}
+          </div>
+          {#if loading}
+            <TextSkeleton class="w-12" />
+          {:else}
+            {Math.round((job?.bonus_multiplier ?? 0) * 100)}%
           {/if}
-          {#if job?.destination_points && job.destination_points.length > 0}
-            <span class="font-semibold">{m['jobs.constrains_destination_points']()}:</span>
-            {#each job.destination_points as point, i (point.guid)}
-              <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
-                ? ', '
-                : ''}
-            {/each}
+        </div>
+        <div>
+          <div class="text-text-600 dark:text-text-400 text-sm font-semibold">
+            {m['jobs.completion_bonus']()}
+          </div>
+          {#if loading}
+            <TextSkeleton class="w-12" />
+          {:else}
+            ${job?.completion_bonus}
           {/if}
-        {/if}
+        </div>
       </div>
       {#if job?.description}
-        <div class="text-text-700 dark:text-text-300 mt-8 text-sm">
+        <div class="text-text-600 dark:text-text-400 text-sm">
           {job.description}
         </div>
       {/if}
       <Divider spacing="lg" />
-      <div>
-        {#if validSupply.length > 0}
-          <div class="mb-4">
-            <div class="font-semibold">{m['jobs.job_supply']()}</div>
-            <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
-              {#each validSupply as point (point.guid)}
-                <li class="ml-8">
-                  <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
-                </li>
+      <div class="text-text-700 dark:text-text-300">
+        {#if loading}
+          <TextSkeleton class="mt-2 w-full" lines={8} />
+        {:else}
+          <div class="mb-2">
+            <div class="text-text-600 dark:text-text-400 font-semibold">
+              {m['jobs.constrains_cargo']()}
+            </div>
+            <ul
+              class={['marker:text-text-500 list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}
+            >
+              {#each job?.cargos ?? [] as cargo (cargo.key)}
+                <li class="ml-8">{getMtLocale(cargoName[cargo.key])}</li>
               {/each}
             </ul>
           </div>
+          {#if job?.source_points && job.source_points.length > 0}
+            <div class="mb-2">
+              <div class="text-text-600 dark:text-text-400 font-semibold">
+                {m['jobs.constrains_source_points']()}
+              </div>
+              <ul
+                class={[
+                  'marker:text-text-500 list-disc',
+                  fullScreen && 'lg:columns-2 2xl:columns-3',
+                ]}
+              >
+                {#each job.source_points as point (point.guid)}
+                  <li class="ml-8">
+                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
+          {#if job?.destination_points && job.destination_points.length > 0}
+            <div>
+              <div class="text-text-600 dark:text-text-400 font-semibold">
+                {m['jobs.constrains_destination_points']()}
+              </div>
+              <ul
+                class={[
+                  'marker:text-text-500 list-disc',
+                  fullScreen && 'lg:columns-2 2xl:columns-3',
+                ]}
+              >
+                {#each job.destination_points as point (point.guid)}
+                  <li class="ml-8">
+                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
         {/if}
-        {#if validDemand.length > 0}
-          <div>
-            <div class="font-semibold">{m['jobs.job_demand']()}</div>
-            <ul class={['list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}>
-              {#each validDemand as point (point.guid)}
-                <li class="ml-8">
-                  <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
-                </li>
-              {/each}
-            </ul>
-          </div>
+      </div>
+      <Divider spacing="lg" />
+      <div>
+        {#if loading}
+          <TextSkeleton class="mt-2 w-full" lines={8} />
+        {:else}
+          {#if validSupply.length > 0}
+            <div class="mb-4">
+              <div class="text-text-600 dark:text-text-400 font-semibold">
+                {m['jobs.job_supply']()}
+              </div>
+              <ul
+                class={[
+                  'marker:text-text-500 list-disc',
+                  fullScreen && 'lg:columns-2 2xl:columns-3',
+                ]}
+              >
+                {#each validSupply as point (point.guid)}
+                  <li class="ml-8">
+                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
+          {#if validDemand.length > 0}
+            <div>
+              <div class="text-text-600 dark:text-text-400 font-semibold">
+                {m['jobs.job_demand']()}
+              </div>
+              <ul
+                class={[
+                  'marker:text-text-500 list-disc',
+                  fullScreen && 'lg:columns-2 2xl:columns-3',
+                ]}
+              >
+                {#each validDemand as point (point.guid)}
+                  <li class="ml-8">
+                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/if}
         {/if}
       </div>
     </div>
@@ -217,7 +285,7 @@
       <Card
         class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
       >
-        <div class="bg-gray-500/10 p-4 font-semibold">
+        <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
           {m['jobs.contributors']()}
         </div>
         <Table
