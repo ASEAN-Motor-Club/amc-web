@@ -13,7 +13,7 @@ const config = {
     },
     prerender: {
       handleHttpError: ({ path, _, message }) => {
-        if (path === '/stream_high') {
+        if (path === '/stream') {
           return;
         }
         throw new Error(message);

@@ -1,3 +1,3 @@
 export const getStreamUrl = (): string => {
-  return `/stream_high?t=${Date.now()}`;
+  return `/stream?t=${Date.now()}`;
 };
