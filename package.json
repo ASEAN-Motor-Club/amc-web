@@ -74,7 +74,7 @@
     "dompurify": "3.3.3",
     "env-ci": "11.2.0",
     "gsap": "3.14.2",
-    "lodash-es": "4.17.23",
+    "lodash-es": "4.18.1",
     "lottie-web": "5.13.0",
     "marked": "17.0.5",
     "ol": "10.8.0",
