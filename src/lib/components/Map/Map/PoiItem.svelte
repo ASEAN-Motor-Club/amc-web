@@ -28,9 +28,7 @@
     class={['mt-1.25 size-3 shrink-0 rounded-full border', dotClass, !enabled && 'opacity-30']}
   ></div>
   <div class="flex flex-col">
-    <span class={['text-sm font-semibold', enabled ? 'text-text-dark' : 'text-400']}
-      >{label}</span
-    >
+    <span class={['text-sm font-semibold', enabled ? 'text-text-dark' : 'text-400']}>{label}</span>
     <span class="text-300 text-xs">{desc}</span>
   </div>
 </button>

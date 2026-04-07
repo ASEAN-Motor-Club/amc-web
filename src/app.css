@@ -10,13 +10,3 @@ body {
 .dark body {
   --at-apply: bg-background-950 text-text-dark;
 }
-
-p,
-small {
-  --at-apply: text-700;
-}
-
-.dark p,
-.dark small {
-  --at-apply: text-300;
-}

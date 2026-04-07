@@ -263,9 +263,7 @@
     </div>
   </div>
 {:else}
-  <div
-    class="text-600 dark:text-400 flex h-full items-center justify-center p-8 text-sm"
-  >
+  <div class="text-600 dark:text-400 flex h-full items-center justify-center p-8 text-sm">
     {censored.c ? m['jobs.job_not_found_c']() : m['jobs.job_not_found']()}
   </div>
 {/if}
