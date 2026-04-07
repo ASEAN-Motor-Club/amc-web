@@ -56,7 +56,7 @@
     {job?.quantity_fulfilled} <span class="opacity-50">/</span>
     {job?.quantity_requested}
   </div>
-  <div class="text-700 dark:text-300 mb-2 text-sm font-semibold">
+  <div class="text-text-700 dark:text-text-300 mb-2 text-sm font-semibold">
     {timeLeftText}
   </div>
   <div class="mb-2">
@@ -66,7 +66,7 @@
     <span class="font-semibold">{m['jobs.completion_bonus']()}:</span>
     ${job?.completion_bonus}
   </div>
-  <div class="text-700 dark:text-300 mb-2 text-sm">
+  <div class="text-text-700 dark:text-text-300 mb-2 text-sm">
     <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
     <br />
     <span class="font-semibold">{m['jobs.constrains_cargo']()}:</span>
@@ -91,7 +91,7 @@
     {/if}
   </div>
   {#if job?.description}
-    <div class="text-700 dark:text-300 mt-2 mb-2 text-sm">
+    <div class="text-text-700 dark:text-text-300 mt-2 mb-2 text-sm">
       {job.description}
     </div>
   {/if}

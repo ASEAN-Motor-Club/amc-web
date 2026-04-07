@@ -32,7 +32,7 @@
   <span
     class={twMerge(
       'absolute left-0 leading-none whitespace-nowrap motion-safe:transition-all motion-reduce:transition-colors',
-      pathMatch(href, external, exact) ? 'font-bold' : 'text-700 dark:text-300',
+      pathMatch(href, external, exact) ? 'font-bold' : 'text-text-700 dark:text-text-300',
       clsx(textClass),
     )}>{label}</span
   >

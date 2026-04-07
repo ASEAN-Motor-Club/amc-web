@@ -37,7 +37,7 @@
         {/if}
       </div>
     {:else}
-      <div class="text-600 dark:text-400 p-8 text-center text-sm">
+      <div class="text-text-600 dark:text-text-400 p-8 text-center text-sm">
         {censored.c ? m['jobs.no_jobs_c']() : m['jobs.no_jobs']()}
       </div>
     {/if}

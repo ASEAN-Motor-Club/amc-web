@@ -41,7 +41,7 @@
   const locale = $derived.by(getLocale);
 </script>
 
-<div class="text-300 flex flex-col text-xs">
+<div class="text-text-300 flex flex-col text-xs">
   <div>
     <span class="text-text-dark font-semibold">{m['housing.id']()}:</span>
     {hoverInfo.info.name}

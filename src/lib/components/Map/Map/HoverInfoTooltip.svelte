@@ -108,7 +108,7 @@
       <div class="text-text-dark text-xs font-semibold">
         {typeText}
       </div>
-      <div class="text-300 text-sm">
+      <div class="text-text-300 text-sm">
         {#if hoverInfo.pointType === PointType.House}
           {houseData?.[hoverInfo.info.name]?.ownerName
             ? m['housing.owned_house']({

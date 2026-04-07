@@ -109,7 +109,7 @@
                   {result.championship_point.points}
                 </div>
               {:else}
-                <div class="text-600 dark:text-400 text-xs font-bold">-</div>
+                <div class="text-text-600 dark:text-text-400 text-xs font-bold">-</div>
               {/if}
             {/if}
           </div>
@@ -118,7 +118,7 @@
               {#if result.finished}
                 {formatResultTime(result)}
               {:else}
-                <span class="text-600 dark:text-400 text-xs italic">
+                <span class="text-text-600 dark:text-text-400 text-xs italic">
                   {m['championship.event.dnf']()}
                 </span>
               {/if}

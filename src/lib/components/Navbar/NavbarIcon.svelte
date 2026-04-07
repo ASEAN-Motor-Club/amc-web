@@ -19,7 +19,11 @@
   const { pathMatch = false, class: propsClass }: NavbarIconProps = $props();
 
   const baseClass = $derived(
-    twMerge('transition-colors', !pathMatch && 'text-700 dark:text-300', clsx(propsClass)),
+    twMerge(
+      'transition-colors',
+      !pathMatch && 'text-text-700 dark:text-text-300',
+      clsx(propsClass),
+    ),
   );
 </script>
 

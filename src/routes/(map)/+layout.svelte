@@ -164,7 +164,9 @@
               bind:this={map}
             />
           {:catch _}
-            <div class="text-700 dark:text-300 flex h-full w-full items-center justify-center">
+            <div
+              class="text-text-700 dark:text-text-300 flex h-full w-full items-center justify-center"
+            >
               {m['map.load_error']()}
             </div>
           {/await}

@@ -151,7 +151,7 @@
           ${job?.completion_bonus}
         {/if}
       </div>
-      <div class="text-700 dark:text-300">
+      <div class="text-text-700 dark:text-text-300">
         <span class="text-base font-semibold">{m['jobs.constrains']()}</span>
         <br />
         {#if loading}
@@ -180,7 +180,7 @@
         {/if}
       </div>
       {#if job?.description}
-        <div class="text-700 dark:text-300 mt-8 text-sm">
+        <div class="text-text-700 dark:text-text-300 mt-8 text-sm">
           {job.description}
         </div>
       {/if}
@@ -263,7 +263,7 @@
     </div>
   </div>
 {:else}
-  <div class="text-600 dark:text-400 flex h-full items-center justify-center p-8 text-sm">
+  <div class="text-text-600 dark:text-text-400 flex h-full items-center justify-center p-8 text-sm">
     {censored.c ? m['jobs.job_not_found_c']() : m['jobs.job_not_found']()}
   </div>
 {/if}

@@ -86,7 +86,7 @@
 </script>
 
 {#if hoverInfo.info.allSupply.length}
-  <div class="text-300 flex flex-col text-xs">
+  <div class="text-text-300 flex flex-col text-xs">
     <div class="text-text-dark font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
       {m['delivery.supply']()}
@@ -111,7 +111,7 @@
   </div>
 {/if}
 {#if hoverInfo.info.allDemand.length}
-  <div class="text-300 flex flex-col text-xs">
+  <div class="text-text-300 flex flex-col text-xs">
     <div class="text-text-dark font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
       {m['delivery.demand']()}
@@ -141,7 +141,7 @@
   </div>
 {/if}
 {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
-  <div class="text-300 text-xs">
+  <div class="text-text-300 text-xs">
     <span class="text-text-dark font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
       {m['map.last_updated']()}:

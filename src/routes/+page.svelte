@@ -128,8 +128,8 @@
       <h2 class="font-sans-em mb-3 text-2xl tracking-wide">
         {m['home.desc_title']()}
       </h2>
-      <p class="text-700 dark:text-300 text-lg">{m['home.description']()}</p>
-      <div class="text-700 dark:text-300 mt-2 text-sm">
+      <p class="text-text-700 dark:text-text-300 text-lg">{m['home.description']()}</p>
+      <div class="text-text-700 dark:text-text-300 mt-2 text-sm">
         {m['home.copyright']({ year })}
       </div>
     </div>
