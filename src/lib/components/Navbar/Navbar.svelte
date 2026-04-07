@@ -18,7 +18,6 @@
   import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
   import SoundBarIcon from './SoundBarIcon.svelte';
   import { isLg } from '$lib/utils/media.svelte';
-  import { censored } from '$lib/censored.svelte';
 
   const playerContext = getGlobalPlayerContext();
 
@@ -40,7 +39,7 @@
         },
         {
           href: '/jobs',
-          label: censored.c ? m['navbar.jobs_c']() : m['navbar.jobs'](),
+          label: m['navbar.jobs'](),
           icon: jobIcon,
         },
       ],

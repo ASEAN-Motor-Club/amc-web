@@ -64,7 +64,7 @@
   import * as z from 'zod/mini';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-  import { censored } from '$lib/censored.svelte';
+
   import { getSelectionClearedParams } from '../utils';
   import { hasPoliceRole, hasCriminalRole } from '$lib/utils/parsePlayerRole';
   import Button from '$lib/ui/Button/Button.svelte';
@@ -957,7 +957,7 @@
                 />
                 <PoiItem
                   dotClass="border-orange-950 bg-orange-400"
-                  label={censored.c ? m['map.poi.jobs_only_c']() : m['map.poi.jobs_only']()}
+                  label={m['map.poi.jobs_only']()}
                   desc={m['map.poi.jobs_only_desc']()}
                   enabled={mapState.jobOnly}
                   onclick={() => (mapState.jobOnly = !mapState.jobOnly)}

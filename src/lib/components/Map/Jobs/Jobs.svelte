@@ -3,7 +3,6 @@
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { m } from '$messages';
   import JobCard from '$lib/components/Map/Jobs/JobCard.svelte';
-  import { censored } from '$lib/censored.svelte';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -15,9 +14,7 @@
 </script>
 
 <div class="flex h-full flex-col">
-  <CommonHead class="border-b border-gray-500/20"
-    >{censored.c ? m['jobs.title_c']() : m['jobs.title']()}</CommonHead
-  >
+  <CommonHead class="border-b border-gray-500/20">{m['jobs.title']()}</CommonHead>
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
     {#if loading || jobsData.length > 0}
       <div
@@ -38,7 +35,7 @@
       </div>
     {:else}
       <div class="text-text-600 dark:text-text-400 p-8 text-center text-sm">
-        {censored.c ? m['jobs.no_jobs_c']() : m['jobs.no_jobs']()}
+        {m['jobs.no_jobs']()}
       </div>
     {/if}
   </div>

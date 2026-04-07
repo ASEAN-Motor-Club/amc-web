@@ -9,7 +9,7 @@
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { cargoName } from '$lib/data/cargo';
   import Card from '$lib/ui/Card/Card.svelte';
-  import { censored } from '$lib/censored.svelte';
+
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
@@ -228,7 +228,7 @@
         >
           {#snippet emptyState()}
             <TableEmptyState class="py-12">
-              {censored.c ? m['jobs.no_contributors_c']() : m['jobs.no_contributors']()}
+              {m['jobs.no_contributors']()}
             </TableEmptyState>
           {/snippet}
           {#snippet head()}
@@ -264,6 +264,6 @@
   </div>
 {:else}
   <div class="text-text-600 dark:text-text-400 flex h-full items-center justify-center p-8 text-sm">
-    {censored.c ? m['jobs.job_not_found_c']() : m['jobs.job_not_found']()}
+    {m['jobs.job_not_found']()}
   </div>
 {/if}

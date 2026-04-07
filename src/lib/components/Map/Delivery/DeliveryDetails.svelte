@@ -17,7 +17,7 @@
   import { rtDate } from '$lib/realtimeDate.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { getMatchJobSourceFn } from '$lib/utils/delivery';
-  import { censored } from '$lib/censored.svelte';
+
   import { isCargoType } from '$lib/utils/delivery';
   import { Features, getViewHref } from '../utils';
   import DeliveryLink from './DeliveryLink.svelte';
@@ -130,7 +130,7 @@
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-gray-500/10 p-4 text-lg font-semibold">
-            {censored.c ? m['delivery.job_supply_c']() : m['delivery.job_supply']()}
+            {m['delivery.job_supply']()}
           </div>
           {#each matchJobs as job (job.id)}
             <div
@@ -147,7 +147,7 @@
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
           <div class="bg-gray-500/10 p-4 text-lg font-semibold">
-            {censored.c ? m['delivery.job_demand_c']() : m['delivery.job_demand']()}
+            {m['delivery.job_demand']()}
           </div>
           {#each matchJobsDest as job (job.id)}
             <div
