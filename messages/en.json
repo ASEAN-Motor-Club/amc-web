@@ -141,6 +141,8 @@
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",
       "unknown_vehicle": "unknown vehicle",
+      "vehicle": "Vehicle",
+      "location": "Location",
       "roles": {
         "P": "Police",
         "G": "Gov Worker",
@@ -194,7 +196,7 @@
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
     "description": "Where friendly and passionate players push their skills to the limit. Race across diverse terrains, design eye-catching liveries, and fine-tune your cars to claim victory in our weekend events. We host regular races and creative competitions, and even run our own radio station. Join our Discord to get involved and stay up to speed!",
-    "copyright": "© {year} ASEAN Motor Club. All rights reserved.",
+    "copyright": "© {year} ASEAN Motor Club. All rights reserved. Motor Town: Behind the Wheel is a trademark of P3 Games.",
     "join_discord": "Join Discord",
     "join_patreon": "Donate on Patreon",
     "listen_radio": "Listen to AMC Radio",

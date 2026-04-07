@@ -146,7 +146,7 @@
         }
       }
       case 'outlined': {
-        const borderBase = 'border bg-white dark:bg-gray-900';
+        const borderBase = 'border bg-white dark:bg-gray-900/10';
         if (error) {
           return `${borderBase} placeholder-danger-400 dark:placeholder-danger-800 border-danger-400 dark:border-danger-800 dark:hover:border-danger-500 dark:group-hover:border-danger-500 hover:border-danger-500 group-hover:border-danger-500 focus:border-danger-600 focus:dark:border-danger-600`;
         } else {

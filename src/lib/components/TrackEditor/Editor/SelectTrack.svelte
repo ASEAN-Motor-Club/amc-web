@@ -172,17 +172,17 @@
     <h1 class="mb-10 text-center text-6xl font-bold tracking-tight">
       {m['track_editor.title']()}
     </h1>
-    <p class="text-text/80 dark:text-text-dark/80 flex items-center">
+    <p class="text-text-700 dark:text-text-300 flex items-center">
       {m['track_editor.select_track.drag_drop']()}
     </p>
-    <p class="text-text/60 dark:text-text-dark/60 my-4 text-sm leading-none">
+    <p class="text-text-500 my-4 text-sm leading-none">
       {m.or()}
     </p>
     <Button onClick={handleLoadFromClipboard}>
       {m['track_editor.select_track.load_from_clipboard']()}
     </Button>
 
-    <p class="text-text/60 dark:text-text-dark/60 my-4 text-sm leading-none">
+    <p class="text-text-500 my-4 text-sm leading-none">
       {m.or()}
     </p>
     <Button onClick={handleSelectFileClick}>

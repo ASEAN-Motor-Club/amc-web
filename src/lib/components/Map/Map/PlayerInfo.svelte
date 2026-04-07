@@ -48,6 +48,6 @@
   </div>
   <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
 {/if}
-<div class="text-xs">
+<div class="text-text-300 text-xs">
   <PlayerVehicleInfo vehicleKey={hoverInfo.info.vehicleKey} />
 </div>

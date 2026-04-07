@@ -86,8 +86,8 @@
 </script>
 
 {#if hoverInfo.info.allSupply.length}
-  <div class="flex flex-col text-xs">
-    <div class="font-semibold">
+  <div class="text-text-300 flex flex-col text-xs">
+    <div class="text-text-200 font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
       {m['delivery.supply']()}
     </div>
@@ -111,14 +111,14 @@
   </div>
 {/if}
 {#if hoverInfo.info.allDemand.length}
-  <div class="flex flex-col text-xs">
-    <div class="font-semibold">
+  <div class="text-text-300 flex flex-col text-xs">
+    <div class="text-text-200 font-semibold">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
       {m['delivery.demand']()}
     </div>
     {#each hoverInfo.info.allDemand as item (item)}
       <div class="flex justify-between gap-11">
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center gap-1">
           {getMtLocale(cargoName[item])}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
             <Icon class="i-material-symbols:link-rounded -mb-0.5 text-yellow-500" size="xs" />
@@ -141,8 +141,8 @@
   </div>
 {/if}
 {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
-  <div class="text-xs">
-    <span class="font-semibold">
+  <div class="text-text-300 text-xs">
+    <span class="text-text-dark font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
       {m['map.last_updated']()}:
       {#if deliveryPointInfoLoading}

@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
     build: {},
     server: {
       proxy: {
-        '/stream_high': {
+        '/stream': {
           target: env.VITE_MAIN_SITE,
           changeOrigin: true,
           secure: true,

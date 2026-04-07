@@ -59,11 +59,11 @@
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
-  <div class="mb-2 flex w-full items-center justify-between">
+  <div class="flex w-full items-center justify-between">
     <TruncateText
       tag="h2"
       text={houseTitle}
-      class={['flex-1 text-lg font-semibold', currentHouseData?.ownerName ? '' : 'italic']}
+      class={['flex-1 font-semibold', currentHouseData?.ownerName ? '' : 'italic']}
     >
       <HighlightText
         text={houseTitle}
@@ -85,32 +85,43 @@
     </Button>
   </div>
 
-  <div>
-    <span class="font-semibold">{m['housing.id']()}:</span>
-    <HighlightText
-      text={house.name}
-      {highlight}
-      caseInSensitive
-      tag="span"
-      highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25"
-    />
+  <div class="text-text-700 dark:text-text-300 my-2 flex justify-between gap-1 text-sm">
+    <div class="truncate">
+      <div class="text-text-500 text-xs font-semibold">{m['housing.id']()}</div>
+      <HighlightText
+        text={house.name}
+        {highlight}
+        caseInSensitive
+        tag="div"
+        highlightClass="inline-block bg-yellow-500/20 dark:bg-yellow-500/25 "
+      />
+    </div>
+    <div class="text-right">
+      <div class="text-text-500 text-xs font-semibold">{m['housing.size']()}</div>
+      <div>
+        {house.size.x / 100} x {house.size.y / 100}
+      </div>
+    </div>
   </div>
-  <div>
-    <span class="font-semibold">{m['housing.size']()}:</span>
-    {house.size.x / 100} x {house.size.y / 100}
+  <div class="text-text-700 dark:text-text-300 flex justify-between gap-1 text-sm">
+    <div>
+      <div class="text-text-500 text-xs font-bold">{m['housing.rent_price']()}</div>
+      <div>
+        {(house.cost / 10).toLocaleString(locale)}
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="text-text-500 text-xs font-bold">{m['housing.rent_left']()}</div>
+      <div>
+        {#if currentHouseData?.ownerName}
+          {rentLeftText}
+        {:else}
+          <span class="text-text-600 dark:text-text-400 italic">{m['housing.vacant']()}</span>
+        {/if}
+      </div>
+    </div>
   </div>
-  <div>
-    <span class="font-semibold">{m['housing.rent_price']()}:</span>
-    {(house.cost / 10).toLocaleString(locale)}
-  </div>
-  <div>
-    <span class="font-semibold">{m['housing.rent_left']()}:</span>
-    {#if currentHouseData?.ownerName}
-      {rentLeftText}
-    {:else}
-      <span class="text-text/70 dark:text-text-dark/70 italic">{m['housing.vacant']()}</span>
-    {/if}
-  </div>
+
   <!-- <div>
     <span class="font-semibold">{m['housing.depot']()}:</span> TODO
   </div>

@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex w-full flex-col items-center justify-center p-8 lg:p-16 xl:h-full">
-  <h3 class="pt-8 pb-5 font-semibold">
+  <h3 class="text-text-600 dark:text-text-400 pt-8 pb-5 font-semibold">
     {m['championship.starting_from']({
       date: format(startDate, m['format.dateFull']()),
     })}

@@ -60,7 +60,7 @@
 <div class={twMerge('flex flex-col gap-1', clsx(propsClass))}>
   <div
     class={twMerge(
-      'text-text/80 dark:text-text-dark/80 flex items-center justify-between text-xs font-semibold',
+      'text-text-700 dark:text-text-300 flex items-center justify-between text-xs font-semibold',
       clsx(labelClass),
     )}
   >

@@ -13,7 +13,7 @@
   import Jobs from '../Jobs/Jobs.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import JobDetails from '../Jobs/JobDetails.svelte';
-  import { censored } from '$lib/censored.svelte';
+
   import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';
   import CollapsibleButton from './CollapsibleButton.svelte';
   import CollapsibleActionButton from './CollapsibleActionButton.svelte';
@@ -199,7 +199,7 @@
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
         ]}
         icon="i-material-symbols:delivery-truck-speed-outline-rounded"
-        text={censored.c ? m['map.side_menu.jobs_c']() : m['map.side_menu.jobs']()}
+        text={m['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
       />
     </div>

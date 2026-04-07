@@ -4,7 +4,7 @@
   const playerContext = getGlobalPlayerContext();
 
   let animationId: number;
-  let barHeights = $state([0, 0, 0, 0]);
+  let barHeights = $state([0, 0, 0]);
 
   $effect(() => {
     if (playerContext.audioContext && playerContext.analyser) {
@@ -12,16 +12,16 @@
 
       // outside of bar 44 (at 64 frequencyBinCount and 48khz equal 33khz) usually contains nothing
       const binsCount = 44;
-      const binsPerBar = Math.floor(binsCount / 4);
+      const binsPerBar = Math.floor(binsCount / 3);
 
       function draw() {
         animationId = requestAnimationFrame(draw);
 
         if (playerContext.analyser) {
           playerContext.analyser.getByteFrequencyData(freqData);
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 3; i++) {
             const startBin = i * binsPerBar;
-            const endBin = i === 3 ? binsCount : (i + 1) * binsPerBar;
+            const endBin = i === 2 ? binsCount : (i + 1) * binsPerBar;
 
             let sum = 0;
             const binCount = endBin - startBin;
@@ -49,9 +49,9 @@
 </script>
 
 <div class="flex h-6 w-6 items-center justify-center">
-  <div class="flex h-5 w-5 items-center justify-between">
+  <div class="flex h-5 w-4 items-center justify-between">
     {#each barHeights as height, i (i)}
-      <div class="min-h-0.75 w-0.75 rounded-sm bg-orange-500" style:height="{height}%"></div>
+      <div class="min-h-1 w-1 rounded-sm bg-orange-500" style:height="{height}%"></div>
     {/each}
   </div>
 </div>

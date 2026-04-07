@@ -125,7 +125,7 @@
         {/each}
       </div>
     {:else}
-      <div class="text-text/60 dark:text-text-dark/60 p-8 text-center text-sm">
+      <div class="text-text-600 dark:text-text-400 p-8 text-center text-sm">
         {m['housing.no_results']()}
       </div>
     {/if}
