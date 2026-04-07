@@ -108,7 +108,7 @@
     {#if currentHouseData?.ownerName}
       {rentLeftText}
     {:else}
-      <span class="text-text/70 dark:text-text-dark/70 italic">{m['housing.vacant']()}</span>
+      <span class="text-700 dark:text-300 italic">{m['housing.vacant']()}</span>
     {/if}
   </div>
   <!-- <div>

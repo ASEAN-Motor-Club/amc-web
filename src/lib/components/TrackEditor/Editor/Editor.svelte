@@ -374,7 +374,7 @@
           {/if}
         </div>
       {:else}
-        <div class="text-text/60 dark:text-text-dark/60 font-medium">
+        <div class="text-600 dark:text-400 font-medium">
           {m['track_editor.editor.select_point_to_edit']()}
         </div>
         <Divider vertical spacing={false} class="md:hidden" />

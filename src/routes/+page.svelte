@@ -129,7 +129,7 @@
         {m['home.desc_title']()}
       </h2>
       <p class="text-lg">{m['home.description']()}</p>
-      <div class="text-text/75 dark:text-text-dark/75 mt-2 text-sm">
+      <div class="text-700 dark:text-300 mt-2 text-sm">
         {m['home.copyright']({ year })}
       </div>
     </div>

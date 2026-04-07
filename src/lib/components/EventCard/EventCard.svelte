@@ -61,7 +61,7 @@
       >
         {loading ? '.' : time?.character.name}
       </div>
-      <div class="text-text/80 dark:text-text-dark/80 text-xs">
+      <div class="text-700 dark:text-300 text-xs">
         {#if loading}
           .
         {:else if time?.championship_point}
@@ -88,7 +88,7 @@
         {/if}
       </div>
 
-      <div class="text-text/90 dark:text-text-dark/90 text-center text-xs sm:text-right">
+      <div class="text-800 dark:text-200 text-center text-xs sm:text-right">
         {#if loading}
           .
         {:else if time?.finished}

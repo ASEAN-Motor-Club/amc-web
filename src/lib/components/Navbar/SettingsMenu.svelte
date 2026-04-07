@@ -208,7 +208,7 @@
           </Select>
         </div>
         <button
-          class="text-text/60 dark:text-text-dark/60 hover:text-text/80 hover:dark:text-text-dark/80 mt-4 flex cursor-pointer items-center justify-between gap-2 text-xs underline"
+          class="text-600 dark:text-400 hover:text-700 hover:dark:text-300 mt-4 flex cursor-pointer items-center justify-between gap-2 text-xs underline"
           type="button"
           onclick={() => (censored.c = !censored.c)}
         >

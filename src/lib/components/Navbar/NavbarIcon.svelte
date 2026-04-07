@@ -21,7 +21,7 @@
   const baseClass = $derived(
     twMerge(
       'transition-colors',
-      !pathMatch && 'text-text/80 dark:text-text-dark/80',
+      !pathMatch && 'text-700 dark:text-300',
       clsx(propsClass),
     ),
   );

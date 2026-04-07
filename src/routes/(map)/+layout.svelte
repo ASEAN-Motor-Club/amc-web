@@ -165,7 +165,7 @@
             />
           {:catch _}
             <div
-              class="text-text/80 dark:text-text-dark/80 flex h-full w-full items-center justify-center"
+              class="text-700 dark:text-300 flex h-full w-full items-center justify-center"
             >
               {m['map.load_error']()}
             </div>
