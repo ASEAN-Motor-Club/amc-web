@@ -99,6 +99,13 @@
   "IronOre": {
     "type": "_TStone"
   },
+  "CopperOre": {
+    "type": "_TStone",
+    "minDist": 1
+  },
+  "CopperConcentrate": {
+    "type": "_TStone"
+  },
   "Concrete": {
     "type": "_TConcrete"
   },
@@ -290,6 +297,9 @@
   "SteelCoil_10t": {
     "type": "_TNone"
   },
+  "CopperRodCoil_2t": {
+    "type": "_TNone"
+  },
   "Cement": {
     "type": "_TNone"
   },
@@ -297,6 +307,18 @@
     "type": "_TNone"
   },
   "SunflowerSeed": {
+    "type": "_TNone"
+  },
+  "Transformer_20MVA": {
+    "type": "_TNone"
+  },
+  "Transformer_50MVA": {
+    "type": "_TNone"
+  },
+  "Tank_250kL": {
+    "type": "_TNone"
+  },
+  "Transformer_5MVA": {
     "type": "_TNone"
   }
 }

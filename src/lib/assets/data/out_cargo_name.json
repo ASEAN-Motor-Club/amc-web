@@ -669,6 +669,12 @@
     "zh-Hans": "铁矿",
     "zh-Hant": "鐵礦"
   },
+  "CopperOre": {
+    "en": "Copper Ore"
+  },
+  "CopperConcentrate": {
+    "en": "Copper Concentrate"
+  },
   "Concrete": {
     "en": "Concrete",
     "cs": "Beton",
@@ -1738,6 +1744,9 @@
     "zh-Hans": "钢卷",
     "zh-Hant": "鋼捲"
   },
+  "CopperRodCoil_2t": {
+    "en": "Copper Rod Coil"
+  },
   "Cement": {
     "en": "Cement",
     "de": "Zement",
@@ -1779,5 +1788,17 @@
     "uk": "Соняшник Насіння",
     "zh-Hans": "向日葵 种子",
     "zh-Hant": "向日葵 種子"
+  },
+  "Transformer_20MVA": {
+    "en": "Transformer 20MVA"
+  },
+  "Transformer_50MVA": {
+    "en": "Transformer 50MVA"
+  },
+  "Tank_250kL": {
+    "en": "Tank 250kL"
+  },
+  "Transformer_5MVA": {
+    "en": "Transformer 5MVA (Deprecated)"
   }
 }

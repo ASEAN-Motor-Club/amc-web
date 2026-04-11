@@ -533,13 +533,6 @@
     "ko": "트롱코",
     "zh-Hans": "特隆科"
   },
-  "GarbageTruck_01": {
-    "en": "Compacty",
-    "ja": "コンパクティー",
-    "ko": "컴팩티",
-    "ru": "Компактность",
-    "zh-Hans": "垃圾车"
-  },
   "MixerTruck_01": {
     "en": "Mixi",
     "ja": "ミキシー",
@@ -614,12 +607,20 @@
     "zh-Hans": "多莉"
   },
   "Jemusi": {
-    "en": "Jemusi",
-    "es-ES": "jemusi",
-    "ja": "ジェムシ",
-    "ko": "제무시",
-    "uk": "Джемусі",
-    "zh-Hans": "杰穆西"
+    "en": "Jemusi Logger",
+    "es-ES": "jemusi Logger",
+    "ja": "ジェムシ Logger",
+    "ko": "제무시 Logger",
+    "uk": "Джемусі Logger",
+    "zh-Hans": "杰穆西 Logger"
+  },
+  "Jemusi_Flatbed": {
+    "en": "Jemusi Flatbed",
+    "es-ES": "jemusi Flatbed",
+    "ja": "ジェムシ Flatbed",
+    "ko": "제무시 Flatbed",
+    "uk": "Джемусі Flatbed",
+    "zh-Hans": "杰穆西 Flatbed"
   },
   "Jemusi_Tanker": {
     "en": "Jemusi Tanker",
@@ -738,6 +739,13 @@
     "uk": "Атлас 6x2 Тентований фургон",
     "zh-Hans": "阿特拉斯 6x2 干货车",
     "zh-Hant": "Atlas 6x2 箱式貨車"
+  },
+  "Atlas_6x2_Garbage": {
+    "en": "Atlas 6x2 Garbage",
+    "ja": "アトラス 6x2 Garbage",
+    "ko": "아틀라스 6x2 Garbage",
+    "uk": "Атлас 6x2 Garbage",
+    "zh-Hans": "阿特拉斯 6x2 Garbage"
   },
   "Atlas_4x2_Semi": {
     "en": "Atlas 4x2 Semi",
@@ -865,6 +873,13 @@
     "uk": "Brutus Цистерна",
     "zh-Hans": "布鲁图斯油罐车",
     "zh-Hant": "Brutus 罐車"
+  },
+  "GarbageTruck_01": {
+    "en": "Compacty",
+    "ja": "コンパクティー",
+    "ko": "컴팩티",
+    "ru": "Компактность",
+    "zh-Hans": "垃圾车"
   },
   "Bongo": {
     "en": "Bongo",
@@ -1414,6 +1429,15 @@
   },
   "Brutus_FireEngine": {
     "en": "Brutus Fire Engine"
+  },
+  "Goliath4": {
+    "en": "Goliath-4"
+  },
+  "Goliath6": {
+    "en": "Goliath-6"
+  },
+  "Goliath10": {
+    "en": "Goliath-10"
   },
   "Ambi": {
     "en": "Ambi",
