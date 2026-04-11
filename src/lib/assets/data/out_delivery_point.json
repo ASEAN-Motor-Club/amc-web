@@ -91,95 +91,6 @@
     "dropPoint": ["e77cab32401e868b93379d9b16774f9f"]
   },
   {
-    "type": "CoalDrop_Harbor_C",
-    "name": {
-      "en": "Dasa Harbor",
-      "cs": "Přístav Dasa",
-      "de": "Hafen von Dasa",
-      "es-419": "Puerto de Dasa",
-      "es-ES": "Puerto de Dasa",
-      "fr": "Port de Dasa",
-      "hu": "Dasa Kikötő",
-      "it": "Porto di Dasa",
-      "ja": "ダサ港",
-      "ko": "다사항",
-      "lt": "Dasa uostas",
-      "nl": "De haven van Dasa",
-      "pl": "Port Dasa",
-      "pt-BR": "Porto de Dasa",
-      "ru": "Порт Dasa",
-      "tr": "Dasa Limanı",
-      "uk": "Гавань Даса",
-      "zh-Hans": "达萨港",
-      "zh-Hant": "達薩港"
-    },
-    "coord": {
-      "x": -823328,
-      "y": 1199687.5,
-      "z": -21951.936
-    },
-    "guid": "539345ab47a72bfeccfe249143a245d6",
-    "prod": [
-      {
-        "input": {
-          "Coal": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Coal": 100
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "CoalDrop_Harbor_C",
-    "name": {
-      "en": "Jeju Harbor",
-      "cs": "Přístav Jeju",
-      "de": "Hafen von Jeju",
-      "es-419": "Puerto de Jeju",
-      "es-ES": "Puerto de Jeju",
-      "fi": "Jejun satama",
-      "fr": "Port de Jeju",
-      "hu": "Jeju Kikötő",
-      "it": "Porto di Jeju",
-      "ja": "チェジュ港",
-      "ko": "제주항",
-      "lt": "Jeju uostas",
-      "nl": "haven van Jeju",
-      "pl": "Port w Jeju",
-      "pt-BR": "Porto de Jeju",
-      "ru": "Гавань Чеджу",
-      "sv": "Jeju Hamn",
-      "tr": "Jeju Limanı",
-      "uk": "Гавань Чеджу",
-      "vi": "Cảng Jeju",
-      "zh-Hans": "济州港",
-      "zh-Hant": "濟州港"
-    },
-    "coord": {
-      "x": -13251.688,
-      "y": -180322.45,
-      "z": -21951.936
-    },
-    "guid": "e8295a9d4ff492092483ebbc66ae9080",
-    "prod": [
-      {
-        "input": {
-          "Coal": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Coal": 100
-    },
-    "supplyStorage": {}
-  },
-  {
     "type": "CoalWarehouse_C",
     "name": {
       "en": "Gwangjin Coal Storage",
@@ -229,6 +140,285 @@
       "Coal": 200
     },
     "maxReceiveDist": 500000
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory",
+      "cs": "Tank Továrna",
+      "de": "Tank Fabrik",
+      "es-419": "Tank Fábrica",
+      "es-ES": "Tank Fábrica",
+      "fi": "Tank Tehdas",
+      "fr": "Tank Usine",
+      "hu": "Tank Gyár",
+      "it": "Tank Fabbrica",
+      "ja": "Tank 工場",
+      "nl": "Tank Fabriek",
+      "pl": "Tank Fabryka",
+      "pt-BR": "Tank Fábrica",
+      "ru": "Tank Завод",
+      "tr": "Tank Fabrika",
+      "uk": "Tank Фабрика",
+      "zh-Hans": "Tank 工厂",
+      "zh-Hant": "Tank 工廠"
+    },
+    "coord": {
+      "x": -308758.3,
+      "y": 120368.734,
+      "z": -21245
+    },
+    "guid": "685ae04c42bf567c31d4de860d8e1fae",
+    "demand": {
+      "SteelCoil_10t": 1
+    },
+    "demandStorage": {
+      "SteelCoil_10t": 60
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory",
+      "cs": "Tank Továrna",
+      "de": "Tank Fabrik",
+      "es-419": "Tank Fábrica",
+      "es-ES": "Tank Fábrica",
+      "fi": "Tank Tehdas",
+      "fr": "Tank Usine",
+      "hu": "Tank Gyár",
+      "it": "Tank Fabbrica",
+      "ja": "Tank 工場",
+      "nl": "Tank Fabriek",
+      "pl": "Tank Fabryka",
+      "pt-BR": "Tank Fábrica",
+      "ru": "Tank Завод",
+      "tr": "Tank Fabrika",
+      "uk": "Tank Фабрика",
+      "zh-Hans": "Tank 工厂",
+      "zh-Hant": "Tank 工廠"
+    },
+    "coord": {
+      "x": -307507.28,
+      "y": 121244.71,
+      "z": -21245
+    },
+    "guid": "8b633ee445aace12d31ea3b1f6092571",
+    "demand": {
+      "lHBeam_6m": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 20
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory",
+      "cs": "Tank Továrna",
+      "de": "Tank Fabrik",
+      "es-419": "Tank Fábrica",
+      "es-ES": "Tank Fábrica",
+      "fi": "Tank Tehdas",
+      "fr": "Tank Usine",
+      "hu": "Tank Gyár",
+      "it": "Tank Fabbrica",
+      "ja": "Tank 工場",
+      "nl": "Tank Fabriek",
+      "pl": "Tank Fabryka",
+      "pt-BR": "Tank Fábrica",
+      "ru": "Tank Завод",
+      "tr": "Tank Fabrika",
+      "uk": "Tank Фабрика",
+      "zh-Hans": "Tank 工厂",
+      "zh-Hant": "Tank 工廠"
+    },
+    "coord": {
+      "x": -304222.12,
+      "y": 118488.37,
+      "z": -21245
+    },
+    "guid": "366e02564dd09ecbac307e9945bc778b",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 20
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 20MVA",
+      "cs": "Transformer Továrna 20MVA",
+      "de": "Transformer Fabrik 20MVA",
+      "es-419": "Transformer Fábrica 20MVA",
+      "es-ES": "Transformer Fábrica 20MVA",
+      "fi": "Transformer Tehdas 20MVA",
+      "fr": "Transformer Usine 20MVA",
+      "hu": "Transformer Gyár 20MVA",
+      "it": "Transformer Fabbrica 20MVA",
+      "ja": "Transformer 工場 20MVA",
+      "nl": "Transformer Fabriek 20MVA",
+      "pl": "Transformer Fabryka 20MVA",
+      "pt-BR": "Transformer Fábrica 20MVA",
+      "ru": "Transformer Завод 20MVA",
+      "tr": "Transformer Fabrika 20MVA",
+      "uk": "Transformer Фабрика 20MVA",
+      "zh-Hans": "Transformer 工厂 20MVA",
+      "zh-Hant": "Transformer 工廠 20MVA"
+    },
+    "coord": {
+      "x": -318942.9,
+      "y": 1132639.9,
+      "z": -16395
+    },
+    "guid": "d0104ed646abaf502b12088cfa13dc80",
+    "demand": {
+      "lHBeam_6m": 1,
+      "SteelCoil_10t": 1,
+      "CopperRodCoil_2t": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA",
+      "cs": "Transformer Továrna 50MVA",
+      "de": "Transformer Fabrik 50MVA",
+      "es-419": "Transformer Fábrica 50MVA",
+      "es-ES": "Transformer Fábrica 50MVA",
+      "fi": "Transformer Tehdas 50MVA",
+      "fr": "Transformer Usine 50MVA",
+      "hu": "Transformer Gyár 50MVA",
+      "it": "Transformer Fabbrica 50MVA",
+      "ja": "Transformer 工場 50MVA",
+      "nl": "Transformer Fabriek 50MVA",
+      "pl": "Transformer Fabryka 50MVA",
+      "pt-BR": "Transformer Fábrica 50MVA",
+      "ru": "Transformer Завод 50MVA",
+      "tr": "Transformer Fabrika 50MVA",
+      "uk": "Transformer Фабрика 50MVA",
+      "zh-Hans": "Transformer 工厂 50MVA",
+      "zh-Hant": "Transformer 工廠 50MVA"
+    },
+    "coord": {
+      "x": -318474.38,
+      "y": 1132639.9,
+      "z": -16395
+    },
+    "guid": "879ede514946555f47f3b8bc8a1f9bdc",
+    "demand": {
+      "lHBeam_6m": 1,
+      "SteelCoil_10t": 1,
+      "CopperRodCoil_2t": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 20MVA",
+      "cs": "Transformer Továrna 20MVA",
+      "de": "Transformer Fabrik 20MVA",
+      "es-419": "Transformer Fábrica 20MVA",
+      "es-ES": "Transformer Fábrica 20MVA",
+      "fi": "Transformer Tehdas 20MVA",
+      "fr": "Transformer Usine 20MVA",
+      "hu": "Transformer Gyár 20MVA",
+      "it": "Transformer Fabbrica 20MVA",
+      "ja": "Transformer 工場 20MVA",
+      "nl": "Transformer Fabriek 20MVA",
+      "pl": "Transformer Fabryka 20MVA",
+      "pt-BR": "Transformer Fábrica 20MVA",
+      "ru": "Transformer Завод 20MVA",
+      "tr": "Transformer Fabrika 20MVA",
+      "uk": "Transformer Фабрика 20MVA",
+      "zh-Hans": "Transformer 工厂 20MVA",
+      "zh-Hant": "Transformer 工廠 20MVA"
+    },
+    "coord": {
+      "x": -319001.4,
+      "y": 1136772.2,
+      "z": -16375.047
+    },
+    "guid": "4f4eb95748943fb26e5294b82369775b",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA",
+      "cs": "Transformer Továrna 50MVA",
+      "de": "Transformer Fabrik 50MVA",
+      "es-419": "Transformer Fábrica 50MVA",
+      "es-ES": "Transformer Fábrica 50MVA",
+      "fi": "Transformer Tehdas 50MVA",
+      "fr": "Transformer Usine 50MVA",
+      "hu": "Transformer Gyár 50MVA",
+      "it": "Transformer Fabbrica 50MVA",
+      "ja": "Transformer 工場 50MVA",
+      "nl": "Transformer Fabriek 50MVA",
+      "pl": "Transformer Fabryka 50MVA",
+      "pt-BR": "Transformer Fábrica 50MVA",
+      "ru": "Transformer Завод 50MVA",
+      "tr": "Transformer Fabrika 50MVA",
+      "uk": "Transformer Фабрика 50MVA",
+      "zh-Hans": "Transformer 工厂 50MVA",
+      "zh-Hant": "Transformer 工廠 50MVA"
+    },
+    "coord": {
+      "x": -318597.94,
+      "y": 1136772.2,
+      "z": -16375.047
+    },
+    "guid": "fe6854144af31733f31ce9814d22e51e",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Copper Refinery"
+    },
+    "coord": {
+      "x": 430900.94,
+      "y": 1220442.6,
+      "z": -19439.416
+    },
+    "guid": "364f83784b99394690b7259d8834d4bc",
+    "demand": {
+      "CopperConcentrate": 1
+    },
+    "demandStorage": {
+      "CopperConcentrate": 100
+    },
+    "supplyStorage": {}
   },
   {
     "type": "ComonDrop_C",
@@ -826,107 +1016,6 @@
   {
     "type": "ConstructionSite_C",
     "name": {
-      "en": "Sado Construction Site #1",
-      "cs": "Sado Staveniště #1",
-      "de": "Sado Baustelle #1",
-      "es-419": "Sado Sitio de construcción #1",
-      "es-ES": "Sado Zona en construcción #1",
-      "fr": "Sado Chantier de construction #1",
-      "hu": "Sado Építési terület #1",
-      "it": "Sado Sito di costruzione #1",
-      "ja": "Sado 建設現場 #1",
-      "ko": "Sado 건설 현장 #1",
-      "lt": "Sado Statybvietė #1",
-      "nl": "Sado Bouwplaats #1",
-      "pl": "Sado Budowa #1",
-      "pt-BR": "Sado Local de construção #1",
-      "ru": "Sado Строительная площадка #1",
-      "tr": "Sado İnşaat sahası #1",
-      "uk": "Sado Будівельна площадка #1",
-      "zh-Hans": "Sado 建筑工地 #1",
-      "zh-Hant": "Sado 工地 #1"
-    },
-    "coord": {
-      "x": -319858.75,
-      "y": 1136825.8,
-      "z": -16288.583
-    },
-    "guid": "cdb8083c4e5fab3940ab25bc8d413a24",
-    "prod": [
-      {
-        "output": {
-          "Sand": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "output": {
-          "FineSand": 1
-        },
-        "prodTime": 5,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "WoodPlank_14ft_5t": 1
-        },
-        "prodTime": 900,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 360,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "PlasticPipes_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      }
-    ],
-    "demand": {
-      "WoodPlank_14ft_5t": 1,
-      "Fuel": 1,
-      "PlasticPipes_6m": 1,
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "Concrete": 100,
-      "WoodPlank_14ft_5t": 20,
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
-      "lHBeam_6m": 10
-    },
-    "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
-    }
-  },
-  {
-    "type": "ConstructionSite_C",
-    "name": {
       "en": "Ara Construction Site F1",
       "cs": "Ara Staveniště F1",
       "de": "Ara Baustelle F1",
@@ -953,107 +1042,6 @@
       "z": -15796.308
     },
     "guid": "c9706ffb47e057140a3262bee1d6a896",
-    "prod": [
-      {
-        "output": {
-          "Sand": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "output": {
-          "FineSand": 1
-        },
-        "prodTime": 5,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "WoodPlank_14ft_5t": 1
-        },
-        "prodTime": 900,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 360,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "PlasticPipes_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      }
-    ],
-    "demand": {
-      "WoodPlank_14ft_5t": 1,
-      "Fuel": 1,
-      "PlasticPipes_6m": 1,
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "Concrete": 100,
-      "WoodPlank_14ft_5t": 20,
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
-      "lHBeam_6m": 10
-    },
-    "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
-    }
-  },
-  {
-    "type": "ConstructionSite_C",
-    "name": {
-      "en": "Gwangjin Construction Site F1",
-      "cs": "Gwangjin Staveniště F1",
-      "de": "Gwangjin Baustelle F1",
-      "es-419": "Gwangjin Sitio de construcción F1",
-      "es-ES": "Gwangjin Zona en construcción F1",
-      "fr": "Gwangjin Chantier de construction F1",
-      "hu": "Gwangjin Építési terület F1",
-      "it": "Gwangjin Sito di costruzione F1",
-      "ja": "クァンジン 建設現場 F1",
-      "ko": "광진 건설 현장 F1",
-      "lt": "Gwangjin Statybvietė F1",
-      "nl": "Gwangjin Bouwplaats F1",
-      "pl": "Gwangjin Budowa F1",
-      "pt-BR": "Gwangjin Local de construção F1",
-      "ru": "Gwangjin Строительная площадка F1",
-      "tr": "Gwangjin İnşaat sahası F1",
-      "uk": "Гванджін Будівельна площадка F1",
-      "zh-Hans": "广津 建筑工地 F1",
-      "zh-Hant": "廣津 工地 F1"
-    },
-    "coord": {
-      "x": 202240.72,
-      "y": 822449,
-      "z": -486.9842
-    },
-    "guid": "8cad4d0043db2bca9bc364baf5140826",
     "prod": [
       {
         "output": {
@@ -1531,30 +1519,131 @@
     }
   },
   {
-    "type": "ContainerDropper_C",
+    "type": "ConstructionSite_C",
     "name": {
-      "en": "Jeju Harbor",
-      "cs": "Přístav Jeju",
-      "de": "Hafen von Jeju",
-      "es-419": "Puerto de Jeju",
-      "es-ES": "Puerto de Jeju",
-      "fi": "Jejun satama",
-      "fr": "Port de Jeju",
-      "hu": "Jeju Kikötő",
-      "it": "Porto di Jeju",
-      "ja": "チェジュ港",
-      "ko": "제주항",
-      "lt": "Jeju uostas",
-      "nl": "haven van Jeju",
-      "pl": "Port w Jeju",
-      "pt-BR": "Porto de Jeju",
-      "ru": "Гавань Чеджу",
-      "sv": "Jeju Hamn",
-      "tr": "Jeju Limanı",
-      "uk": "Гавань Чеджу",
-      "vi": "Cảng Jeju",
-      "zh-Hans": "济州港",
-      "zh-Hant": "濟州港"
+      "en": "Ara Construction Site D1",
+      "cs": "Ara Staveniště D1",
+      "de": "Ara Baustelle D1",
+      "es-419": "Ara Sitio de construcción D1",
+      "es-ES": "Ara Zona en construcción D1",
+      "fr": "Ara Chantier de construction D1",
+      "hu": "Ara Építési terület D1",
+      "it": "Ara Sito di costruzione D1",
+      "ja": "アラ 建設現場 D1",
+      "ko": "아라 건설 현장 D1",
+      "lt": "Ara Statybvietė D1",
+      "nl": "Ara Bouwplaats D1",
+      "pl": "Ara Budowa D1",
+      "pt-BR": "Ara Local de construção D1",
+      "ru": "Ara Строительная площадка D1",
+      "tr": "Ara İnşaat sahası D1",
+      "uk": "Ара Будівельна площадка D1",
+      "zh-Hans": "阿拉伯 建筑工地 D1",
+      "zh-Hant": "雅羅 工地 D1"
+    },
+    "coord": {
+      "x": 412807.3,
+      "y": 1103579.5,
+      "z": -19099.912
+    },
+    "guid": "0f0ce05643dabcbc05af558932011bd6",
+    "prod": [
+      {
+        "output": {
+          "Sand": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "output": {
+          "FineSand": 1
+        },
+        "prodTime": 5,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Concrete": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 1
+        },
+        "prodTime": 900,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 360,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "PlasticPipes_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1.03
+      },
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1.03
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1,
+      "Fuel": 1,
+      "PlasticPipes_6m": 1,
+      "lHBeam_6m": 1
+    },
+    "demandStorage": {
+      "Concrete": 100,
+      "WoodPlank_14ft_5t": 20,
+      "Fuel": 10,
+      "PlasticPipes_6m": 10,
+      "lHBeam_6m": 10
+    },
+    "supplyStorage": {
+      "Sand": 100,
+      "FineSand": 100
+    }
+  },
+  {
+    "type": "Container_ExportImport_C",
+    "name": {
+      "en": "Jeju Harbor Container Export Import",
+      "cs": "Přístav Jeju Kontejner Export Import",
+      "de": "Hafen von Jeju Container Export Import",
+      "es-419": "Puerto de Jeju Contenedor Exportar Import",
+      "es-ES": "Puerto de Jeju Contenedor Exportar Import",
+      "fi": "Jejun satama Container Export Import",
+      "fr": "Port de Jeju Conteneur Exportation Import",
+      "hu": "Jeju Kikötő Konténer Export Import",
+      "it": "Porto di Jeju Container Export Import",
+      "ja": "チェジュ港 コンテナ 輸出品倉庫 Import",
+      "ko": "제주항 Container Export Import",
+      "lt": "Jeju uostas Container Export Import",
+      "nl": "haven van Jeju Container Export Import",
+      "pl": "Port w Jeju Kontener Eksport Import",
+      "pt-BR": "Porto de Jeju Recipiente Exportar Import",
+      "ru": "Гавань Чеджу Контейнер Экспорт Import",
+      "sv": "Jeju Hamn Container Export Import",
+      "tr": "Jeju Limanı Konteyner İhracat Import",
+      "uk": "Гавань Чеджу Контейнер Експорт Import",
+      "vi": "Cảng Jeju Container Export Import",
+      "zh-Hans": "济州港 集装箱 出口 Import",
+      "zh-Hant": "濟州港 貨櫃 出口區 Import"
     },
     "coord": {
       "x": 17579.258,
@@ -1576,30 +1665,30 @@
     }
   },
   {
-    "type": "ContainerDropper_C",
+    "type": "Container_ExportImport_C",
     "name": {
-      "en": "Jeju Harbor",
-      "cs": "Přístav Jeju",
-      "de": "Hafen von Jeju",
-      "es-419": "Puerto de Jeju",
-      "es-ES": "Puerto de Jeju",
-      "fi": "Jejun satama",
-      "fr": "Port de Jeju",
-      "hu": "Jeju Kikötő",
-      "it": "Porto di Jeju",
-      "ja": "チェジュ港",
-      "ko": "제주항",
-      "lt": "Jeju uostas",
-      "nl": "haven van Jeju",
-      "pl": "Port w Jeju",
-      "pt-BR": "Porto de Jeju",
-      "ru": "Гавань Чеджу",
-      "sv": "Jeju Hamn",
-      "tr": "Jeju Limanı",
-      "uk": "Гавань Чеджу",
-      "vi": "Cảng Jeju",
-      "zh-Hans": "济州港",
-      "zh-Hant": "濟州港"
+      "en": "Jeju Harbor Container Export Import",
+      "cs": "Přístav Jeju Kontejner Export Import",
+      "de": "Hafen von Jeju Container Export Import",
+      "es-419": "Puerto de Jeju Contenedor Exportar Import",
+      "es-ES": "Puerto de Jeju Contenedor Exportar Import",
+      "fi": "Jejun satama Container Export Import",
+      "fr": "Port de Jeju Conteneur Exportation Import",
+      "hu": "Jeju Kikötő Konténer Export Import",
+      "it": "Porto di Jeju Container Export Import",
+      "ja": "チェジュ港 コンテナ 輸出品倉庫 Import",
+      "ko": "제주항 Container Export Import",
+      "lt": "Jeju uostas Container Export Import",
+      "nl": "haven van Jeju Container Export Import",
+      "pl": "Port w Jeju Kontener Eksport Import",
+      "pt-BR": "Porto de Jeju Recipiente Exportar Import",
+      "ru": "Гавань Чеджу Контейнер Экспорт Import",
+      "sv": "Jeju Hamn Container Export Import",
+      "tr": "Jeju Limanı Konteyner İhracat Import",
+      "uk": "Гавань Чеджу Контейнер Експорт Import",
+      "vi": "Cảng Jeju Container Export Import",
+      "zh-Hans": "济州港 集装箱 出口 Import",
+      "zh-Hant": "濟州港 貨櫃 出口區 Import"
     },
     "coord": {
       "x": 13715.555,
@@ -1621,7 +1710,7 @@
     }
   },
   {
-    "type": "ContainerDropper_C",
+    "type": "Container_ExportImport_C",
     "name": {
       "en": "Overseas Imports Company",
       "cs": "Dovoz ze zámoří",
@@ -1666,27 +1755,27 @@
     }
   },
   {
-    "type": "ContainerDropper_C",
+    "type": "Container_ExportImport_C",
     "name": {
-      "en": "Dasa Harbor",
-      "cs": "Přístav Dasa",
-      "de": "Hafen von Dasa",
-      "es-419": "Puerto de Dasa",
-      "es-ES": "Puerto de Dasa",
-      "fr": "Port de Dasa",
-      "hu": "Dasa Kikötő",
-      "it": "Porto di Dasa",
-      "ja": "ダサ港",
-      "ko": "다사항",
-      "lt": "Dasa uostas",
-      "nl": "De haven van Dasa",
-      "pl": "Port Dasa",
-      "pt-BR": "Porto de Dasa",
-      "ru": "Порт Dasa",
-      "tr": "Dasa Limanı",
-      "uk": "Гавань Даса",
-      "zh-Hans": "达萨港",
-      "zh-Hant": "達薩港"
+      "en": "Dasa Harbor Container Export Import",
+      "cs": "Přístav Dasa Kontejner Export Import",
+      "de": "Hafen von Dasa Container Export Import",
+      "es-419": "Puerto de Dasa Contenedor Exportar Import",
+      "es-ES": "Puerto de Dasa Contenedor Exportar Import",
+      "fr": "Port de Dasa Conteneur Exportation Import",
+      "hu": "Dasa Kikötő Konténer Export Import",
+      "it": "Porto di Dasa Container Export Import",
+      "ja": "ダサ港 コンテナ 輸出品倉庫 Import",
+      "ko": "다사항 Container Export Import",
+      "lt": "Dasa uostas Container Export Import",
+      "nl": "De haven van Dasa Container Export Import",
+      "pl": "Port Dasa Kontener Eksport Import",
+      "pt-BR": "Porto de Dasa Recipiente Exportar Import",
+      "ru": "Порт Dasa Контейнер Экспорт Import",
+      "tr": "Dasa Limanı Konteyner İhracat Import",
+      "uk": "Гавань Даса Контейнер Експорт Import",
+      "zh-Hans": "达萨港 集装箱 出口 Import",
+      "zh-Hant": "達薩港 貨櫃 出口區 Import"
     },
     "coord": {
       "x": -801040.44,
@@ -1708,28 +1797,271 @@
     }
   },
   {
+    "type": "CopperConcentrator_C",
+    "name": {
+      "en": "Gwangjin Copper Concentrator",
+      "ja": "クァンジン Copper Concentrator",
+      "ko": "광진 Copper Concentrator",
+      "uk": "Гванджін Copper Concentrator",
+      "zh-Hans": "广津 Copper Concentrator",
+      "zh-Hant": "廣津 Copper Concentrator"
+    },
+    "coord": {
+      "x": 207520.14,
+      "y": 823719.25,
+      "z": -500.03085
+    },
+    "guid": "ba115def416481f2ef0e6791754ac77b",
+    "prod": [
+      {
+        "input": {
+          "CopperOre": 30
+        },
+        "output": {
+          "CopperConcentrate": 1
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CopperOre": 300
+    },
+    "supplyStorage": {
+      "CopperConcentrate": 100
+    }
+  },
+  {
+    "type": "CopperRefinery_C",
+    "name": {
+      "en": "Copper Refinery"
+    },
+    "coord": {
+      "x": 426476.3,
+      "y": 1216740.5,
+      "z": -19500
+    },
+    "guid": "9c9adfca4346c68e7b5f83ae60c21b93",
+    "prod": [
+      {
+        "input": {
+          "CopperConcentrate": 3
+        },
+        "output": {
+          "CopperRodCoil_2t": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CopperConcentrate": 100
+    },
+    "supplyStorage": {
+      "CopperRodCoil_2t": 30
+    },
+    "dropPoint": ["364f83784b99394690b7259d8834d4bc"]
+  },
+  {
+    "type": "CourierService_C",
+    "name": {
+      "en": "Gujwa Olle Express",
+      "cs": "Gu-Jwa Olle Express",
+      "de": "Gu-Jwa Olle Express",
+      "es-419": "Olle Express de Gu-Jwa",
+      "es-ES": "Gu-Jwa Olle Express",
+      "fr": "Olle Express de Gu-Jwa",
+      "hu": "Gu-Jwa Olle Express",
+      "it": "Gu-Jwa Olle Express",
+      "ja": "クジャ オルレ運輸",
+      "ko": "구좌 올레 특송",
+      "lt": "Gu-Jwa Olle Express",
+      "nl": "Gu-Jwa Olle Express",
+      "pl": "Gu-Jwa Olle Express",
+      "pt-BR": "Gu-Jwa Olle Express",
+      "ru": "Гу-Джва Олле Экспресс",
+      "sv": "Gu-Jwa Olle Express",
+      "tr": "Gu-Jwa Olle Ekspres",
+      "uk": "Гу-Жва Olle Express",
+      "zh-Hans": "库加-奥尔 特快",
+      "zh-Hant": "舊左偶來快遞"
+    },
+    "coord": {
+      "x": 242898.81,
+      "y": -177002.6,
+      "z": -22079.715
+    },
+    "guid": "b696d8de49e389fd0a93898a7cd5f5a3",
+    "prod": [
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "_TSmallPackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TSmallPackage": 4
+        },
+        "output": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
+    },
+    "supplyStorage": {
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
+    },
+    "maxDist": 150000
+  },
+  {
+    "type": "CourierService_C",
+    "name": {
+      "en": "Gangjung Olle Express",
+      "cs": "Gang-Jung Olle Express",
+      "de": "Gang-Jung Olle Express",
+      "es-419": "Olle Express de Gang-Jung",
+      "es-ES": "Gang-Jung Olle Express",
+      "fr": "Olle Express de Gang-Jung",
+      "hu": "Gang-Jung Olle Express",
+      "it": "Gang-Jung Olle Express",
+      "ja": "カンジョン オルレ運輸",
+      "ko": "강정 올레 특송",
+      "lt": "Gang-Jung Olle Express",
+      "nl": "Gang-Jung Olle Express",
+      "pl": "Gang-Jung Olle Express",
+      "pt-BR": "Gang-Jung Olle Express",
+      "ru": "Gang-Jung Олле Экспресс",
+      "sv": "Gang-Jung Olle Express",
+      "tr": "Çete Jung Olle Ekspres",
+      "uk": "Ган-Юнг Olle Express",
+      "zh-Hans": "江骏-奥尔 特快",
+      "zh-Hant": "江汀偶來快遞"
+    },
+    "coord": {
+      "x": -64674.047,
+      "y": 154129.17,
+      "z": -20760.16
+    },
+    "guid": "4d66e1bb4e223e140c853f876594a5d7",
+    "prod": [
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "_TSmallPackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TSmallPackage": 4
+        },
+        "output": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
+    },
+    "supplyStorage": {
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
+    },
+    "maxDist": 150000
+  },
+  {
+    "type": "CourierService_C",
+    "name": {
+      "en": "Olle Express - Seo-Gui-Po",
+      "hu": "Olle Express – Seo-Gui-Po",
+      "ja": "オルレ運輸 - ソギポ",
+      "ko": "올레 익스프레스-서귀포",
+      "lt": "Olle Express – Seo-Gui-Po",
+      "ru": "Олле Экспресс - Сео-Гуи-По",
+      "uk": "Олле Експрес - Сео-Гуї-По",
+      "zh-Hans": "奥尔物流 - 西桂浦",
+      "zh-Hant": "偶來快遞 - 西歸浦"
+    },
+    "coord": {
+      "x": -14016.029,
+      "y": 136273.08,
+      "z": -20105
+    },
+    "guid": "26f9073f4f6d6a6fdcd3bd97897a3b6f",
+    "prod": [
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "_TSmallPackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TSmallPackage": 4
+        },
+        "output": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "_TLargePackage": 6,
+      "_TSmallPackage": 50
+    },
+    "supplyStorage": {
+      "_TSmallPackage": 10,
+      "_TLargePackage": 10
+    },
+    "maxDist": 150000
+  },
+  {
     "type": "CrudeOil_Refinery_Input_C",
     "name": {
-      "en": "Sanho Oil Refinery Drop Off",
-      "cs": "Ropná rafinérie Sanho Vykládka",
-      "de": "Ölraffinerie Sanho Abladen",
-      "es-419": "Refinería de Petróleo Sanho Dejar",
-      "es-ES": "Refinería de petróleo de Sanho Dejar",
-      "fr": "Raffinerie de pétrole de Sanho Déposer",
-      "hu": "Sanho Olajfinomító Lerakás",
-      "it": "Raffineria di petrolio di Sanho Consegna",
-      "ja": "サンホ製油所 荷卸場",
-      "ko": "산호 정유 공장 하차",
-      "lt": "Sanho naftos perdirbimo gamykla Išleisti",
-      "nl": "Sanho-olieraffinaderij Afleveren",
-      "pl": "Rafineria ropy naftowej w Sanho Miejsce doręczenia",
-      "pt-BR": "Refinaria de Petróleo de Sanho Desembarque",
-      "ru": "Sanho Oil Refinery Точка разгрузки",
-      "sv": "Sanho Oljeraffinaderi Drop Off",
-      "tr": "Sanho Petrol Rafinerisi Bırakmak",
-      "uk": "НПЗ Санхо Вигрузити",
-      "zh-Hans": "三湖炼油厂 投放点",
-      "zh-Hant": "三和煉油廠 卸貨區"
+      "en": "Sanho Fuel Refinery Drop Off",
+      "cs": "Sanho Palivo Refinery Vykládka",
+      "de": "Sanho Treibstoff Refinery Abladen",
+      "es-419": "Sanho Combustible Refinery Dejar",
+      "es-ES": "Sanho Combustible Refinery Dejar",
+      "fi": "Sanho Polttoaine Refinery Drop Off",
+      "fr": "Sanho Carburant Refinery Déposer",
+      "hu": "Sanho Üzemanyag Refinery Lerakás",
+      "it": "Sanho Carburante Refinery Consegna",
+      "ja": "サンホ 燃料 Refinery 荷卸場",
+      "ko": "산호 연료 Refinery 하차",
+      "lt": "Sanho Kuras Refinery Išleisti",
+      "nl": "Sanho Brandstof Refinery Afleveren",
+      "pl": "Sanho Paliwo Refinery Miejsce doręczenia",
+      "pt-BR": "Sanho Combustível Refinery Desembarque",
+      "ru": "Sanho Топливо Refinery Точка разгрузки",
+      "sv": "Sanho Bränsle Refinery Drop Off",
+      "tr": "Sanho Benzin Refinery Bırakmak",
+      "uk": "Санхо Паливо Refinery Вигрузити",
+      "vi": "Sanho Nhiên liệu Refinery Drop Off",
+      "zh-Hans": "三湖 汽油 Refinery 投放点",
+      "zh-Hant": "三和 燃料 Refinery 卸貨區"
     },
     "coord": {
       "x": -787548.3,
@@ -1746,28 +2078,69 @@
     "supplyStorage": {}
   },
   {
+    "type": "CrudeOil_Refinery_Input_C",
+    "name": {
+      "en": "Sanho Oil Refinery Drop Off",
+      "cs": "Sanho Olej Refinery Vykládka",
+      "de": "Sanho Öl Refinery Abladen",
+      "es-419": "Sanho Petróleo Refinery Dejar",
+      "es-ES": "Sanho Petróleo Refinery Dejar",
+      "fi": "Sanho Öljy Refinery Drop Off",
+      "fr": "Sanho Pétrole Refinery Déposer",
+      "hu": "Sanho Olaj Refinery Lerakás",
+      "it": "Sanho Olio Refinery Consegna",
+      "ja": "サンホ 石油 Refinery 荷卸場",
+      "ko": "산호 Oil Refinery 하차",
+      "lt": "Sanho Aliejus Refinery Išleisti",
+      "nl": "Sanho Olie Refinery Afleveren",
+      "pl": "Sanho Olej Refinery Miejsce doręczenia",
+      "pt-BR": "Sanho Combustível Refinery Desembarque",
+      "ru": "Sanho Масло Refinery Точка разгрузки",
+      "sv": "Sanho Olja Refinery Drop Off",
+      "tr": "Sanho Yağ Refinery Bırakmak",
+      "uk": "Санхо Нафта Refinery Вигрузити",
+      "zh-Hans": "三湖 石油 Refinery 投放点",
+      "zh-Hant": "三和 油料 Refinery 卸貨區"
+    },
+    "coord": {
+      "x": -788349.9,
+      "y": 1482099.5,
+      "z": -19795
+    },
+    "guid": "6f6eeb7b4bf0fc6ec82cac989a19d67d",
+    "demand": {
+      "CrudeOil": 1
+    },
+    "demandStorage": {
+      "CrudeOil": 300
+    },
+    "supplyStorage": {}
+  },
+  {
     "type": "CrudeOil_Refinery_Input_Container_C",
     "name": {
-      "en": "Sanho Oil Refinery Warehouse",
-      "cs": "Ropná rafinérie Sanho Sklad",
-      "de": "Ölraffinerie Sanho Lagerhaus",
-      "es-419": "Refinería de Petróleo Sanho Depósito",
-      "es-ES": "Refinería de petróleo de Sanho Almacén",
-      "fr": "Raffinerie de pétrole de Sanho Entrepôt",
-      "hu": "Sanho Olajfinomító Raktár",
-      "it": "Raffineria di petrolio di Sanho Magazzino",
-      "ja": "サンホ製油所 倉庫",
-      "ko": "산호 정유 공장 Warehouse",
-      "lt": "Sanho naftos perdirbimo gamykla Sandėlis",
-      "nl": "Sanho-olieraffinaderij Magazijn",
-      "pl": "Rafineria ropy naftowej w Sanho Magazyn",
-      "pt-BR": "Refinaria de Petróleo de Sanho Armazém",
-      "ru": "Sanho Oil Refinery Склад",
-      "sv": "Sanho Oljeraffinaderi Warehouse",
-      "tr": "Sanho Petrol Rafinerisi Depo",
-      "uk": "НПЗ Санхо Склад",
-      "zh-Hans": "三湖炼油厂 仓库",
-      "zh-Hant": "三和煉油廠 倉庫"
+      "en": "Sanho Fuel Refinery Drop Off",
+      "cs": "Sanho Palivo Refinery Vykládka",
+      "de": "Sanho Treibstoff Refinery Abladen",
+      "es-419": "Sanho Combustible Refinery Dejar",
+      "es-ES": "Sanho Combustible Refinery Dejar",
+      "fi": "Sanho Polttoaine Refinery Drop Off",
+      "fr": "Sanho Carburant Refinery Déposer",
+      "hu": "Sanho Üzemanyag Refinery Lerakás",
+      "it": "Sanho Carburante Refinery Consegna",
+      "ja": "サンホ 燃料 Refinery 荷卸場",
+      "ko": "산호 연료 Refinery 하차",
+      "lt": "Sanho Kuras Refinery Išleisti",
+      "nl": "Sanho Brandstof Refinery Afleveren",
+      "pl": "Sanho Paliwo Refinery Miejsce doręczenia",
+      "pt-BR": "Sanho Combustível Refinery Desembarque",
+      "ru": "Sanho Топливо Refinery Точка разгрузки",
+      "sv": "Sanho Bränsle Refinery Drop Off",
+      "tr": "Sanho Benzin Refinery Bırakmak",
+      "uk": "Санхо Паливо Refinery Вигрузити",
+      "vi": "Sanho Nhiên liệu Refinery Drop Off",
+      "zh-Hans": "三湖 汽油 Refinery 投放点",
+      "zh-Hant": "三和 燃料 Refinery 卸貨區"
     },
     "coord": {
       "x": -768651.3,
@@ -1788,89 +2161,47 @@
     "supplyStorage": {}
   },
   {
-    "type": "CrudeOil_Refinery_Ouput_C",
+    "type": "CrudeOil_Refinery_Input_Container_C",
     "name": {
-      "en": "Sanho Oil Refinery",
-      "cs": "Ropná rafinérie Sanho",
-      "de": "Ölraffinerie Sanho",
-      "es-419": "Refinería de Petróleo Sanho",
-      "es-ES": "Refinería de petróleo de Sanho",
-      "fr": "Raffinerie de pétrole de Sanho",
-      "hu": "Sanho Olajfinomító",
-      "it": "Raffineria di petrolio di Sanho",
-      "ja": "サンホ製油所",
-      "ko": "산호 정유 공장",
-      "lt": "Sanho naftos perdirbimo gamykla",
-      "nl": "Sanho-olieraffinaderij",
-      "pl": "Rafineria ropy naftowej w Sanho",
-      "pt-BR": "Refinaria de Petróleo de Sanho",
-      "sv": "Sanho Oljeraffinaderi",
-      "tr": "Sanho Petrol Rafinerisi",
-      "uk": "НПЗ Санхо",
-      "zh-Hans": "三湖炼油厂",
-      "zh-Hant": "三和煉油廠"
+      "en": "Sanho Oil Refinery Drop Off",
+      "cs": "Sanho Olej Refinery Vykládka",
+      "de": "Sanho Öl Refinery Abladen",
+      "es-419": "Sanho Petróleo Refinery Dejar",
+      "es-ES": "Sanho Petróleo Refinery Dejar",
+      "fi": "Sanho Öljy Refinery Drop Off",
+      "fr": "Sanho Pétrole Refinery Déposer",
+      "hu": "Sanho Olaj Refinery Lerakás",
+      "it": "Sanho Olio Refinery Consegna",
+      "ja": "サンホ 石油 Refinery 荷卸場",
+      "ko": "산호 Oil Refinery 하차",
+      "lt": "Sanho Aliejus Refinery Išleisti",
+      "nl": "Sanho Olie Refinery Afleveren",
+      "pl": "Sanho Olej Refinery Miejsce doręczenia",
+      "pt-BR": "Sanho Combustível Refinery Desembarque",
+      "ru": "Sanho Масло Refinery Точка разгрузки",
+      "sv": "Sanho Olja Refinery Drop Off",
+      "tr": "Sanho Yağ Refinery Bırakmak",
+      "uk": "Санхо Нафта Refinery Вигрузити",
+      "zh-Hans": "三湖 石油 Refinery 投放点",
+      "zh-Hant": "三和 油料 Refinery 卸貨區"
     },
     "coord": {
-      "x": -738385.7,
-      "y": 1465264.9,
-      "z": -19795
+      "x": -768651.3,
+      "y": 1483874.1,
+      "z": -19769.512
     },
-    "guid": "5c6a24444e199bd34da3d3aee97b022a",
-    "prod": [
-      {
-        "input": {
-          "CrudeOil": 5
-        },
-        "output": {
-          "Fuel": 10
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "CrudeOil": 10,
-          "_TContainer": 1
-        },
-        "output": {
-          "Fuel": 30
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "CrudeOil": 2
-        },
-        "output": {
-          "Oil": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "CrudeOil": 10,
-          "_TContainer": 1
-        },
-        "output": {
-          "Oil": 30
-        },
-        "prodTime": 180,
-        "prodSpeedMul": 1
-      }
-    ],
+    "guid": "05abbab9444e087e51bb08bc75d2eabf",
+    "demand": {
+      "Container_40ft_01": 1,
+      "Container_20ft_01": 1,
+      "_TContainer": 1
+    },
     "demandStorage": {
-      "CrudeOil": 300,
-      "_TContainer": 20,
       "Container_40ft_01": 20,
-      "Container_20ft_01": 20
+      "Container_20ft_01": 20,
+      "_TContainer": 20
     },
-    "supplyStorage": {
-      "Fuel": 500,
-      "Oil": 500
-    },
-    "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
+    "supplyStorage": {}
   },
   {
     "type": "CrudeOil_Supplier_C",
@@ -1919,18 +2250,353 @@
         },
         "prodTime": 30,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Tank_250kL": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1.3
       }
     ],
     "demand": {
       "Fuel": 1,
-      "WoodPlank_14ft_5t": 1
+      "WoodPlank_14ft_5t": 1,
+      "Tank_250kL": 1
     },
     "demandStorage": {
       "Fuel": 100,
-      "WoodPlank_14ft_5t": 100
+      "WoodPlank_14ft_5t": 100,
+      "Tank_250kL": 3
     },
     "supplyStorage": {
       "CrudeOil": 300
+    }
+  },
+  {
+    "type": "Export_Coal_C",
+    "name": {
+      "en": "Dasa Harbor Coal Export",
+      "cs": "Přístav Dasa Uhlí Export",
+      "de": "Hafen von Dasa Kohle Export",
+      "es-419": "Puerto de Dasa Carbón Exportar",
+      "es-ES": "Puerto de Dasa Carbón Exportar",
+      "fi": "Dasa Harbor Hiili Export",
+      "fr": "Port de Dasa Charbon Exportation",
+      "hu": "Dasa Kikötő Szén Export",
+      "it": "Porto di Dasa Carbone Export",
+      "ja": "ダサ港 石炭 輸出品倉庫",
+      "ko": "다사항 석탄 Export",
+      "lt": "Dasa uostas Anglis Export",
+      "nl": "De haven van Dasa Kolen Export",
+      "pl": "Port Dasa Węgiel Eksport",
+      "pt-BR": "Porto de Dasa Carvão Exportar",
+      "ru": "Порт Dasa Каменный уголь Экспорт",
+      "sv": "Dasa Harbor Kol Export",
+      "tr": "Dasa Limanı Kömür İhracat",
+      "uk": "Гавань Даса Вугілля Експорт",
+      "zh-Hans": "达萨港 煤炭 出口",
+      "zh-Hant": "達薩港 煤炭 出口區"
+    },
+    "coord": {
+      "x": -823328,
+      "y": 1199687.5,
+      "z": -21951.936
+    },
+    "guid": "539345ab47a72bfeccfe249143a245d6",
+    "prod": [
+      {
+        "input": {
+          "Coal": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Coal": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Export_Coal_C",
+    "name": {
+      "en": "Jeju Harbor Coal Export",
+      "cs": "Přístav Jeju Uhlí Export",
+      "de": "Hafen von Jeju Kohle Export",
+      "es-419": "Puerto de Jeju Carbón Exportar",
+      "es-ES": "Puerto de Jeju Carbón Exportar",
+      "fi": "Jejun satama Hiili Export",
+      "fr": "Port de Jeju Charbon Exportation",
+      "hu": "Jeju Kikötő Szén Export",
+      "it": "Porto di Jeju Carbone Export",
+      "ja": "チェジュ港 石炭 輸出品倉庫",
+      "ko": "제주항 석탄 Export",
+      "lt": "Jeju uostas Anglis Export",
+      "nl": "haven van Jeju Kolen Export",
+      "pl": "Port w Jeju Węgiel Eksport",
+      "pt-BR": "Porto de Jeju Carvão Exportar",
+      "ru": "Гавань Чеджу Каменный уголь Экспорт",
+      "sv": "Jeju Hamn Kol Export",
+      "tr": "Jeju Limanı Kömür İhracat",
+      "uk": "Гавань Чеджу Вугілля Експорт",
+      "vi": "Cảng Jeju Coal Export",
+      "zh-Hans": "济州港 煤炭 出口",
+      "zh-Hant": "濟州港 煤炭 出口區"
+    },
+    "coord": {
+      "x": -13251.688,
+      "y": -180322.45,
+      "z": -21951.936
+    },
+    "guid": "e8295a9d4ff492092483ebbc66ae9080",
+    "prod": [
+      {
+        "input": {
+          "Coal": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Coal": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Export_Harbor_C",
+    "name": {
+      "en": "Dasa Harbor Export",
+      "cs": "Přístav Dasa Export",
+      "de": "Hafen von Dasa Export",
+      "es-419": "Puerto de Dasa Exportar",
+      "es-ES": "Puerto de Dasa Exportar",
+      "fr": "Port de Dasa Exportation",
+      "hu": "Dasa Kikötő Export",
+      "it": "Porto di Dasa Export",
+      "ja": "ダサ港 輸出品倉庫",
+      "ko": "다사항 Export",
+      "lt": "Dasa uostas Export",
+      "nl": "De haven van Dasa Export",
+      "pl": "Port Dasa Eksport",
+      "pt-BR": "Porto de Dasa Exportar",
+      "ru": "Порт Dasa Экспорт",
+      "tr": "Dasa Limanı İhracat",
+      "uk": "Гавань Даса Експорт",
+      "zh-Hans": "达萨港 出口",
+      "zh-Hant": "達薩港 出口區"
+    },
+    "coord": {
+      "x": -797078.6,
+      "y": 1185255.8,
+      "z": -22000
+    },
+    "guid": "6596fda643e30bc19e6cb6af2bec2bc7",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "SteelCoil_10t": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Transformer_20MVA": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Transformer_50MVA": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "Transformer_20MVA": 30,
+      "Transformer_50MVA": 30,
+      "ToyBoxes": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Export_Harbor_C",
+    "name": {
+      "en": "Jeju Harbor Export",
+      "cs": "Přístav Jeju Export",
+      "de": "Hafen von Jeju Export",
+      "es-419": "Puerto de Jeju Exportar",
+      "es-ES": "Puerto de Jeju Exportar",
+      "fi": "Jejun satama Export",
+      "fr": "Port de Jeju Exportation",
+      "hu": "Jeju Kikötő Export",
+      "it": "Porto di Jeju Export",
+      "ja": "チェジュ港 輸出品倉庫",
+      "ko": "제주항 Export",
+      "lt": "Jeju uostas Export",
+      "nl": "haven van Jeju Export",
+      "pl": "Port w Jeju Eksport",
+      "pt-BR": "Porto de Jeju Exportar",
+      "ru": "Гавань Чеджу Экспорт",
+      "sv": "Jeju Hamn Export",
+      "tr": "Jeju Limanı İhracat",
+      "uk": "Гавань Чеджу Експорт",
+      "vi": "Cảng Jeju Export",
+      "zh-Hans": "济州港 出口",
+      "zh-Hant": "濟州港 出口區"
+    },
+    "coord": {
+      "x": -21596.209,
+      "y": -180551.22,
+      "z": -22000
+    },
+    "guid": "604c378e4b5672274c5ce0b00c91fdcc",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "SteelCoil_10t": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Transformer_20MVA": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Transformer_50MVA": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "Transformer_20MVA": 30,
+      "Transformer_50MVA": 30,
+      "ToyBoxes": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Factory_Bakery_C",
+    "name": {
+      "en": "Jeju Bakery",
+      "cs": "Pekárna Jeju",
+      "de": "Jeju Bäckerei",
+      "es-419": "Panadería de Jeju",
+      "es-ES": "Panadería Jeju",
+      "fi": "Jejun leipomo",
+      "fr": "Boulangerie de Jeju",
+      "hu": "Jejui Pékség",
+      "it": "Forno Jeju",
+      "ja": "チェジュベーカリー",
+      "ko": "제주 베이커리",
+      "lt": "Jeju kepykla",
+      "nl": "Jeju bakkerij",
+      "pl": "Piekarnia Jeju",
+      "pt-BR": "Padaria Jeju",
+      "ru": "Пекарня Чеджу",
+      "sv": "Jeju bageri",
+      "tr": "Jeju Fırını",
+      "uk": "Чеджу Пекарня",
+      "zh-Hans": "济州面包店",
+      "zh-Hant": "濟州麵包工廠"
+    },
+    "coord": {
+      "x": 218455.1,
+      "y": -187283.33,
+      "z": -21927.95
+    },
+    "guid": "2d316bd8483afa0e39bee3a62d2fd391",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "BreadPallet": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "BreadPallet": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "BreadBox": 20
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "BreadBox": 4
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "_TContainer": 50,
+      "_TLargePackage": 50
+    },
+    "supplyStorage": {
+      "BreadPallet": 50,
+      "BreadBox": 100
     }
   },
   {
@@ -2472,71 +3138,6 @@
     "maxReceiveDist": 0
   },
   {
-    "type": "Factory_Furniture_C",
-    "name": {
-      "en": "Nivart Furniture Factory",
-      "cs": "Továrna na nábytek Nivart",
-      "de": "Möbelfabrik Nivart",
-      "es-419": "Fábrica de Muebles Nivart",
-      "es-ES": "Fábrica de muebles Nivart",
-      "fi": "Nivartin huonekalutehdas",
-      "fr": "Fabrique de meubles Nivart",
-      "hu": "Nivarti Bútorgyár",
-      "it": "Fabbrica di mobili Nivart",
-      "ja": "ニバート家具工場",
-      "ko": "니바트 가구 공장",
-      "lt": "Nivart baldų gamykla",
-      "nl": "Meubelfabriek Nivart",
-      "pl": "Fabryka Mebli Nivart",
-      "pt-BR": "Fábrica de Móveis Nivart",
-      "ru": "Мебельная Фабрика Ниварт",
-      "sv": "Nivart Möbelfabrik",
-      "tr": "Nivart Mobilya Fabrikası",
-      "uk": "Меблева фабрика Nivart",
-      "vi": "Nhà máy nội thất Nivart",
-      "zh-Hans": "尼瓦尔特家具厂",
-      "zh-Hant": "尼瓦特家具工廠"
-    },
-    "coord": {
-      "x": -15026.475,
-      "y": 129794.01,
-      "z": -20123.98
-    },
-    "guid": "28afef7b4a917e641cc460acaf6cf91f",
-    "prod": [
-      {
-        "input": {
-          "WoodPlank_14ft_5t": 2,
-          "PlasticPallete": 1
-        },
-        "output": {
-          "_TFurniture": 10
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 180,
-        "prodSpeedMul": 1.1
-      }
-    ],
-    "demand": {
-      "WoodPlank_14ft_5t": 1,
-      "Fuel": 1
-    },
-    "demandStorage": {
-      "WoodPlank_14ft_5t": 100,
-      "PlasticPallete": 30,
-      "Fuel": 20
-    },
-    "supplyStorage": {
-      "_TFurniture": 30
-    }
-  },
-  {
     "type": "Factory_LimestoneProcessing_C",
     "name": {
       "en": "Dongsan Limestone",
@@ -2902,6 +3503,55 @@
     "dropPoint": ["66548d0e48da78a9dfa5e392abb2cb8c"]
   },
   {
+    "type": "Factory_Quicklime_C",
+    "name": {
+      "en": "Nobong Quicklime Factory",
+      "cs": "Nobong Quicklime Továrna",
+      "de": "Nobong Quicklime Fabrik",
+      "es-419": "Nobong Quicklime Fábrica",
+      "es-ES": "Nobong Quicklime Fábrica",
+      "fi": "Nobong Quicklime Tehdas",
+      "fr": "Nobong Quicklime Usine",
+      "hu": "Nobong Quicklime Gyár",
+      "it": "Nobong Quicklime Fabbrica",
+      "ja": "ノボン Quicklime 工場",
+      "ko": "노봉 Quicklime Factory",
+      "nl": "Geen bong Quicklime Fabriek",
+      "pl": "Nobong Quicklime Fabryka",
+      "pt-BR": "Nobong Quicklime Fábrica",
+      "ru": "Nobong Quicklime Завод",
+      "tr": "Nobong Quicklime Fabrika",
+      "uk": "Нобонг Quicklime Фабрика",
+      "zh-Hans": "诺峰 Quicklime 工厂",
+      "zh-Hant": "諾峰 Quicklime 工廠"
+    },
+    "coord": {
+      "x": -176713.78,
+      "y": 511512.16,
+      "z": -12600.144
+    },
+    "guid": "c9d3fbaa4ab074a2ae15048cbaa41c67",
+    "prod": [
+      {
+        "input": {
+          "Limestone": 1
+        },
+        "output": {
+          "QuicklimePallet": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Limestone": 300
+    },
+    "supplyStorage": {
+      "QuicklimePallet": 300
+    },
+    "dropPoint": ["317f5597493a20d14363b7b84c6af267"]
+  },
+  {
     "type": "Factory_Raven_C",
     "name": {
       "en": "Ansan Raven Factory",
@@ -2958,6 +3608,62 @@
       "Raven": 2
     },
     "maxReceiveDist": 0
+  },
+  {
+    "type": "Factory_Tank_250kL_C",
+    "name": {
+      "en": "Tank Factory",
+      "cs": "Tank Továrna",
+      "de": "Tank Fabrik",
+      "es-419": "Tank Fábrica",
+      "es-ES": "Tank Fábrica",
+      "fi": "Tank Tehdas",
+      "fr": "Tank Usine",
+      "hu": "Tank Gyár",
+      "it": "Tank Fabbrica",
+      "ja": "Tank 工場",
+      "nl": "Tank Fabriek",
+      "pl": "Tank Fabryka",
+      "pt-BR": "Tank Fábrica",
+      "ru": "Tank Завод",
+      "tr": "Tank Fabrika",
+      "uk": "Tank Фабрика",
+      "zh-Hans": "Tank 工厂",
+      "zh-Hant": "Tank 工廠"
+    },
+    "coord": {
+      "x": -312500,
+      "y": 112000,
+      "z": -21045
+    },
+    "guid": "f995403a49f48d573961f0bedb112adb",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1,
+          "SteelCoil_10t": 3,
+          "PlasticPallete": 1
+        },
+        "output": {
+          "Tank_250kL": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 20,
+      "SteelCoil_10t": 60,
+      "PlasticPallete": 20
+    },
+    "supplyStorage": {
+      "Tank_250kL": 10
+    },
+    "dropPoint": [
+      "685ae04c42bf567c31d4de860d8e1fae",
+      "8b633ee445aace12d31ea3b1f6092571",
+      "366e02564dd09ecbac307e9945bc778b"
+    ]
   },
   {
     "type": "Factory_Terra_C",
@@ -3088,6 +3794,126 @@
     "supplyStorage": {
       "ToyBoxes": 100
     }
+  },
+  {
+    "type": "Factory_Transformer_20MVA_C",
+    "name": {
+      "en": "Transformer Factory 20MVA",
+      "cs": "Transformer Továrna 20MVA",
+      "de": "Transformer Fabrik 20MVA",
+      "es-419": "Transformer Fábrica 20MVA",
+      "es-ES": "Transformer Fábrica 20MVA",
+      "fi": "Transformer Tehdas 20MVA",
+      "fr": "Transformer Usine 20MVA",
+      "hu": "Transformer Gyár 20MVA",
+      "it": "Transformer Fabbrica 20MVA",
+      "ja": "Transformer 工場 20MVA",
+      "nl": "Transformer Fabriek 20MVA",
+      "pl": "Transformer Fabryka 20MVA",
+      "pt-BR": "Transformer Fábrica 20MVA",
+      "ru": "Transformer Завод 20MVA",
+      "tr": "Transformer Fabrika 20MVA",
+      "uk": "Transformer Фабрика 20MVA",
+      "zh-Hans": "Transformer 工厂 20MVA",
+      "zh-Hant": "Transformer 工廠 20MVA"
+    },
+    "coord": {
+      "x": -323700,
+      "y": 1132500,
+      "z": -16195
+    },
+    "guid": "c7a31b4d4703af9089abc2a089e0c0f6",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1,
+          "SteelCoil_10t": 3,
+          "PlasticPallete": 2,
+          "Oil": 1,
+          "CopperRodCoil_2t": 1
+        },
+        "output": {
+          "Transformer_20MVA": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "PlasticPallete": 30,
+      "Oil": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {
+      "Transformer_20MVA": 10
+    },
+    "dropPoint": [
+      "c6ac1e9448bfe0eb8eb53fb15a08a07d",
+      "d0104ed646abaf502b12088cfa13dc80",
+      "4f4eb95748943fb26e5294b82369775b"
+    ]
+  },
+  {
+    "type": "Factory_Transformer_50MVA_C",
+    "name": {
+      "en": "Transformer Factory 50MVA",
+      "cs": "Transformer Továrna 50MVA",
+      "de": "Transformer Fabrik 50MVA",
+      "es-419": "Transformer Fábrica 50MVA",
+      "es-ES": "Transformer Fábrica 50MVA",
+      "fi": "Transformer Tehdas 50MVA",
+      "fr": "Transformer Usine 50MVA",
+      "hu": "Transformer Gyár 50MVA",
+      "it": "Transformer Fabbrica 50MVA",
+      "ja": "Transformer 工場 50MVA",
+      "nl": "Transformer Fabriek 50MVA",
+      "pl": "Transformer Fabryka 50MVA",
+      "pt-BR": "Transformer Fábrica 50MVA",
+      "ru": "Transformer Завод 50MVA",
+      "tr": "Transformer Fabrika 50MVA",
+      "uk": "Transformer Фабрика 50MVA",
+      "zh-Hans": "Transformer 工厂 50MVA",
+      "zh-Hant": "Transformer 工廠 50MVA"
+    },
+    "coord": {
+      "x": -327700,
+      "y": 1132500,
+      "z": -16195
+    },
+    "guid": "fee9327b4f1c20033310fa9db503f47a",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 3,
+          "SteelCoil_10t": 10,
+          "PlasticPallete": 6,
+          "Oil": 3,
+          "CopperRodCoil_2t": 3
+        },
+        "output": {
+          "Transformer_50MVA": 1
+        },
+        "prodTime": 900,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "PlasticPallete": 30,
+      "Oil": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {
+      "Transformer_50MVA": 5
+    },
+    "dropPoint": [
+      "9837d4f34ce8f7af223c908adc94e5fa",
+      "fe6854144af31733f31ce9814d22e51e",
+      "879ede514946555f47f3b8bc8a1f9bdc"
+    ]
   },
   {
     "type": "Farm_Bean_C",
@@ -3926,6 +4752,170 @@
     "supplyStorage": {
       "RicePallet": 10,
       "Rice": 3
+    }
+  },
+  {
+    "type": "Factory_Furniture_C",
+    "name": {
+      "en": "Nivart Furniture Factory",
+      "cs": "Továrna na nábytek Nivart",
+      "de": "Möbelfabrik Nivart",
+      "es-419": "Fábrica de Muebles Nivart",
+      "es-ES": "Fábrica de muebles Nivart",
+      "fi": "Nivartin huonekalutehdas",
+      "fr": "Fabrique de meubles Nivart",
+      "hu": "Nivarti Bútorgyár",
+      "it": "Fabbrica di mobili Nivart",
+      "ja": "ニバート家具工場",
+      "ko": "니바트 가구 공장",
+      "lt": "Nivart baldų gamykla",
+      "nl": "Meubelfabriek Nivart",
+      "pl": "Fabryka Mebli Nivart",
+      "pt-BR": "Fábrica de Móveis Nivart",
+      "ru": "Мебельная Фабрика Ниварт",
+      "sv": "Nivart Möbelfabrik",
+      "tr": "Nivart Mobilya Fabrikası",
+      "uk": "Меблева фабрика Nivart",
+      "vi": "Nhà máy nội thất Nivart",
+      "zh-Hans": "尼瓦尔特家具厂",
+      "zh-Hant": "尼瓦特家具工廠"
+    },
+    "coord": {
+      "x": -15026.475,
+      "y": 129794.01,
+      "z": -20123.98
+    },
+    "guid": "28afef7b4a917e641cc460acaf6cf91f",
+    "prod": [
+      {
+        "input": {
+          "WoodPlank_14ft_5t": 2,
+          "PlasticPallete": 1
+        },
+        "output": {
+          "_TFurniture": 10
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 180,
+        "prodSpeedMul": 1.1
+      }
+    ],
+    "demand": {
+      "WoodPlank_14ft_5t": 1,
+      "Fuel": 1
+    },
+    "demandStorage": {
+      "WoodPlank_14ft_5t": 100,
+      "PlasticPallete": 30,
+      "Fuel": 20
+    },
+    "supplyStorage": {
+      "_TFurniture": 30
+    }
+  },
+  {
+    "type": "LimestoneRockDrop_C",
+    "name": {
+      "en": "Dongsan Limestone Rock Drop",
+      "cs": "Dongsan Vápenec Kámen Drop",
+      "de": "Dongsan Kalkstein Brocken Ablieferung",
+      "es-419": "Dongsan Caliza Roca Drop",
+      "es-ES": "Dongsan Piedra caliza Rocas Soltar",
+      "fi": "Dongsan Kalkkikivi Rock Drop",
+      "fr": "Dongsan Calcaire Roche Larguer",
+      "hu": "Dongsan Mészkő Szikla Lerakó",
+      "it": "Dongsan Calcare Rock Far cadere",
+      "ja": "ドンサン 石灰石 粗鉱 荷卸場",
+      "ko": "동산 석회암 Rock Drop",
+      "lt": "Dongsan Kalkakmenis Rock Drop",
+      "nl": "Dongsan Kalksteen Rock Laten vallen",
+      "pl": "Dongsan Wapień Kamień Dostawa",
+      "pt-BR": "Dongsan Calcário Pedra Soltar",
+      "ru": "Dongsan Известняк Камни Место разгрузки",
+      "tr": "Dongsan Kireçtaşı Taş Düşüş",
+      "uk": "Донгсан Вапняк Камінь Скинути",
+      "zh-Hans": "东山 石灰石 岩 卸货区",
+      "zh-Hant": "東山 石灰岩 石塊 卸貨區"
+    },
+    "coord": {
+      "x": -419889.88,
+      "y": 627256.6,
+      "z": -17464.758
+    },
+    "guid": "c03e3600420084f54b4bb2930a50fd26",
+    "demand": {
+      "LimestoneRock": 1
+    },
+    "demandStorage": {
+      "LimestoneRock": 200
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Mine_Coal_C",
+    "name": {
+      "en": "Gwangjin Coal",
+      "cs": "Gwangjin uhelná",
+      "de": "Gwangjin Kohle",
+      "es-419": "Carbonería de Gwangjin",
+      "es-ES": "Mina de carbón de Gwangjin",
+      "fr": "Charbon de Gwangjin",
+      "hu": "Gwangjin szén",
+      "it": "Carbone Gwangjin",
+      "ja": "クァンジン炭鉱",
+      "ko": "광진 석탄",
+      "lt": "Gwangjin anglis",
+      "pl": "Węgiel Guangjin",
+      "pt-BR": "Carvão Guangjin",
+      "ru": "Угольные копи Gwangjin",
+      "sv": "Gwangjin-kol",
+      "tr": "Gwangjin Kömür",
+      "uk": "Вугілля Гванджін",
+      "zh-Hans": "广津煤炭",
+      "zh-Hant": "廣津煤炭"
+    },
+    "coord": {
+      "x": 318627.34,
+      "y": 746839,
+      "z": 1341.8037
+    },
+    "guid": "6d3c9bc9431afaae1b2c4eb5a30ff87b",
+    "prod": [
+      {
+        "output": {
+          "Coal": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 3,
+          "WoodPlank_14ft_5t": 1
+        },
+        "output": {
+          "Coal": 30
+        },
+        "prodTime": 30,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "Fuel": 1,
+      "WoodPlank_14ft_5t": 1
+    },
+    "demandStorage": {
+      "Fuel": 100,
+      "WoodPlank_14ft_5t": 100
+    },
+    "supplyStorage": {
+      "Coal": 200
     }
   },
   {
@@ -4867,472 +5857,88 @@
     "supplyStorage": {}
   },
   {
-    "type": "CourierService_C",
+    "type": "Import_Coal_C",
     "name": {
-      "en": "Gujwa Olle Express",
-      "cs": "Gu-Jwa Olle Express",
-      "de": "Gu-Jwa Olle Express",
-      "es-419": "Olle Express de Gu-Jwa",
-      "es-ES": "Gu-Jwa Olle Express",
-      "fr": "Olle Express de Gu-Jwa",
-      "hu": "Gu-Jwa Olle Express",
-      "it": "Gu-Jwa Olle Express",
-      "ja": "クジャ オルレ運輸",
-      "ko": "구좌 올레 특송",
-      "lt": "Gu-Jwa Olle Express",
-      "nl": "Gu-Jwa Olle Express",
-      "pl": "Gu-Jwa Olle Express",
-      "pt-BR": "Gu-Jwa Olle Express",
-      "ru": "Гу-Джва Олле Экспресс",
-      "sv": "Gu-Jwa Olle Express",
-      "tr": "Gu-Jwa Olle Ekspres",
-      "uk": "Гу-Жва Olle Express",
-      "zh-Hans": "库加-奥尔 特快",
-      "zh-Hant": "舊左偶來快遞"
+      "en": "Dasa Harbor Coal Import",
+      "cs": "Přístav Dasa Uhlí Import",
+      "de": "Hafen von Dasa Kohle Import",
+      "es-419": "Puerto de Dasa Carbón Import",
+      "es-ES": "Puerto de Dasa Carbón Import",
+      "fi": "Dasa Harbor Hiili Import",
+      "fr": "Port de Dasa Charbon Import",
+      "hu": "Dasa Kikötő Szén Import",
+      "it": "Porto di Dasa Carbone Import",
+      "ja": "ダサ港 石炭 Import",
+      "ko": "다사항 석탄 Import",
+      "lt": "Dasa uostas Anglis Import",
+      "nl": "De haven van Dasa Kolen Import",
+      "pl": "Port Dasa Węgiel Import",
+      "pt-BR": "Porto de Dasa Carvão Import",
+      "ru": "Порт Dasa Каменный уголь Import",
+      "sv": "Dasa Harbor Kol Import",
+      "tr": "Dasa Limanı Kömür Import",
+      "uk": "Гавань Даса Вугілля Import",
+      "zh-Hans": "达萨港 煤炭 Import",
+      "zh-Hant": "達薩港 煤炭 Import"
     },
     "coord": {
-      "x": 242898.81,
-      "y": -177002.6,
-      "z": -22079.715
+      "x": -824557,
+      "y": 1198004.9,
+      "z": -22000
     },
-    "guid": "b696d8de49e389fd0a93898a7cd5f5a3",
+    "guid": null,
     "prod": [
       {
-        "input": {
-          "_TLargePackage": 1
-        },
         "output": {
-          "_TSmallPackage": 4
+          "Coal": 1
         },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TSmallPackage": 4
-        },
-        "output": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 1,
+        "prodTime": 300,
         "prodSpeedMul": 1
       }
     ],
-    "demandStorage": {
-      "_TLargePackage": 6,
-      "_TSmallPackage": 50
-    },
     "supplyStorage": {
-      "_TSmallPackage": 10,
-      "_TLargePackage": 10
-    },
-    "maxDist": 150000
-  },
-  {
-    "type": "CourierService_C",
-    "name": {
-      "en": "Gangjung Olle Express",
-      "cs": "Gang-Jung Olle Express",
-      "de": "Gang-Jung Olle Express",
-      "es-419": "Olle Express de Gang-Jung",
-      "es-ES": "Gang-Jung Olle Express",
-      "fr": "Olle Express de Gang-Jung",
-      "hu": "Gang-Jung Olle Express",
-      "it": "Gang-Jung Olle Express",
-      "ja": "カンジョン オルレ運輸",
-      "ko": "강정 올레 특송",
-      "lt": "Gang-Jung Olle Express",
-      "nl": "Gang-Jung Olle Express",
-      "pl": "Gang-Jung Olle Express",
-      "pt-BR": "Gang-Jung Olle Express",
-      "ru": "Gang-Jung Олле Экспресс",
-      "sv": "Gang-Jung Olle Express",
-      "tr": "Çete Jung Olle Ekspres",
-      "uk": "Ган-Юнг Olle Express",
-      "zh-Hans": "江骏-奥尔 特快",
-      "zh-Hant": "江汀偶來快遞"
-    },
-    "coord": {
-      "x": -64674.047,
-      "y": 154129.17,
-      "z": -20760.16
-    },
-    "guid": "4d66e1bb4e223e140c853f876594a5d7",
-    "prod": [
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "_TSmallPackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TSmallPackage": 4
-        },
-        "output": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "_TLargePackage": 6,
-      "_TSmallPackage": 50
-    },
-    "supplyStorage": {
-      "_TSmallPackage": 10,
-      "_TLargePackage": 10
-    },
-    "maxDist": 150000
-  },
-  {
-    "type": "CourierService_C",
-    "name": {
-      "en": "Olle Express - Seo-Gui-Po",
-      "hu": "Olle Express – Seo-Gui-Po",
-      "ja": "オルレ運輸 - ソギポ",
-      "ko": "올레 익스프레스-서귀포",
-      "lt": "Olle Express – Seo-Gui-Po",
-      "ru": "Олле Экспресс - Сео-Гуи-По",
-      "uk": "Олле Експрес - Сео-Гуї-По",
-      "zh-Hans": "奥尔物流 - 西桂浦",
-      "zh-Hant": "偶來快遞 - 西歸浦"
-    },
-    "coord": {
-      "x": -14016.029,
-      "y": 136273.08,
-      "z": -20105
-    },
-    "guid": "26f9073f4f6d6a6fdcd3bd97897a3b6f",
-    "prod": [
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "_TSmallPackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TSmallPackage": 4
-        },
-        "output": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "_TLargePackage": 6,
-      "_TSmallPackage": 50
-    },
-    "supplyStorage": {
-      "_TSmallPackage": 10,
-      "_TLargePackage": 10
-    },
-    "maxDist": 150000
-  },
-  {
-    "type": "Factory_Bakery_C",
-    "name": {
-      "en": "Jeju Bakery",
-      "cs": "Pekárna Jeju",
-      "de": "Jeju Bäckerei",
-      "es-419": "Panadería de Jeju",
-      "es-ES": "Panadería Jeju",
-      "fi": "Jejun leipomo",
-      "fr": "Boulangerie de Jeju",
-      "hu": "Jejui Pékség",
-      "it": "Forno Jeju",
-      "ja": "チェジュベーカリー",
-      "ko": "제주 베이커리",
-      "lt": "Jeju kepykla",
-      "nl": "Jeju bakkerij",
-      "pl": "Piekarnia Jeju",
-      "pt-BR": "Padaria Jeju",
-      "ru": "Пекарня Чеджу",
-      "sv": "Jeju bageri",
-      "tr": "Jeju Fırını",
-      "uk": "Чеджу Пекарня",
-      "zh-Hans": "济州面包店",
-      "zh-Hant": "濟州麵包工廠"
-    },
-    "coord": {
-      "x": 218455.1,
-      "y": -187283.33,
-      "z": -21927.95
-    },
-    "guid": "2d316bd8483afa0e39bee3a62d2fd391",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "BreadPallet": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "BreadPallet": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "BreadBox": 20
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "BreadBox": 4
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "_TContainer": 50,
-      "_TLargePackage": 50
-    },
-    "supplyStorage": {
-      "BreadPallet": 50,
-      "BreadBox": 100
+      "Coal": 100
     }
   },
   {
-    "type": "Factory_Quicklime_C",
+    "type": "Import_IronOre_C",
     "name": {
-      "en": "Nobong Quicklime Factory",
-      "cs": "Nobong Quicklime Továrna",
-      "de": "Nobong Quicklime Fabrik",
-      "es-419": "Nobong Quicklime Fábrica",
-      "es-ES": "Nobong Quicklime Fábrica",
-      "fi": "Nobong Quicklime Tehdas",
-      "fr": "Nobong Quicklime Usine",
-      "hu": "Nobong Quicklime Gyár",
-      "it": "Nobong Quicklime Fabbrica",
-      "ja": "ノボン Quicklime 工場",
-      "ko": "노봉 Quicklime Factory",
-      "nl": "Geen bong Quicklime Fabriek",
-      "pl": "Nobong Quicklime Fabryka",
-      "pt-BR": "Nobong Quicklime Fábrica",
-      "ru": "Nobong Quicklime Завод",
-      "tr": "Nobong Quicklime Fabrika",
-      "uk": "Нобонг Quicklime Фабрика",
-      "zh-Hans": "诺峰 Quicklime 工厂",
-      "zh-Hant": "諾峰 Quicklime 工廠"
+      "en": "Dasa Harbor Iron Ore Import",
+      "cs": "Přístav Dasa Železná ruda Import",
+      "de": "Hafen von Dasa Eisenerz Import",
+      "es-419": "Puerto de Dasa Mineral de hierro Import",
+      "es-ES": "Puerto de Dasa Mineral de hierro Import",
+      "fi": "Dasa Harbor Rautamalmi Import",
+      "fr": "Port de Dasa Minerai de fer Import",
+      "hu": "Dasa Kikötő Vasérc Import",
+      "it": "Porto di Dasa Minerale di ferro Import",
+      "ja": "ダサ港 鉄鉱石 Import",
+      "ko": "다사항 Iron Ore Import",
+      "lt": "Dasa uostas Geležies Rūda Import",
+      "nl": "De haven van Dasa Ijzererts Import",
+      "pl": "Port Dasa Ruda żelaza Import",
+      "pt-BR": "Porto de Dasa Minério de ferro Import",
+      "ru": "Порт Dasa Железная руда Import",
+      "tr": "Dasa Limanı Demir Cevheri Import",
+      "uk": "Гавань Даса Залізна руда Import",
+      "zh-Hans": "达萨港 铁矿 Import",
+      "zh-Hant": "達薩港 鐵礦 Import"
     },
     "coord": {
-      "x": -176713.78,
-      "y": 511512.16,
-      "z": -12600.144
-    },
-    "guid": "c9d3fbaa4ab074a2ae15048cbaa41c67",
-    "prod": [
-      {
-        "input": {
-          "Limestone": 1
-        },
-        "output": {
-          "QuicklimePallet": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Limestone": 300
-    },
-    "supplyStorage": {
-      "QuicklimePallet": 300
-    },
-    "dropPoint": ["317f5597493a20d14363b7b84c6af267"]
-  },
-  {
-    "type": "SteelMill_H-Beam_C",
-    "name": {
-      "en": "Steel Mill H-Beam",
-      "cs": "Ocelárna Nosník",
-      "de": "Stahlwerk H-Träger",
-      "es-419": "Fábrica de Acero Viga en H",
-      "es-ES": "Acería Viga en H",
-      "fi": "Steel Mill H-palkki",
-      "fr": "Aciérie Poutre en H",
-      "hu": "Acélgyár H-gerenda",
-      "it": "Acciaieria Travi ad H",
-      "ja": "製鉄所 H形鋼",
-      "ko": "제철소 H-Beam",
-      "lt": "Steel Mill Sijos",
-      "nl": "Staalfabriek H-balk",
-      "pl": "Huta Stali Belka H",
-      "pt-BR": "Usina siderúrgica Viga H",
-      "ru": "Сталелитейный завод Двутавровые балки",
-      "tr": "Çelik Fabrikası H-Kiriş",
-      "uk": "Сталеливарний завод Двотаврова балка",
-      "zh-Hans": "钢厂 H型钢",
-      "zh-Hant": "鋼鐵廠 H 型鋼"
-    },
-    "coord": {
-      "x": 437442.3,
-      "y": 1209900,
-      "z": -19475
-    },
-    "guid": "11879bc34c43c8dd63d48e855c0a6bf4",
-    "prod": [
-      {
-        "input": {
-          "Coal": 12,
-          "IronOre": 8,
-          "Limestone": 2
-        },
-        "output": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Coal": 200,
-      "IronOre": 100,
-      "Limestone": 200
-    },
-    "supplyStorage": {
-      "lHBeam_6m": 30
-    },
-    "dropPoint": [
-      "4484526c4d38e28d665d4c96e83c4976",
-      "a721ab8b4bab838f832bf28370409a64",
-      "dff3152b4b782bc59c9f22a021dd983e"
-    ]
-  },
-  {
-    "type": "Harbor_Export_C",
-    "name": {
-      "en": "Dasa Harbor",
-      "cs": "Přístav Dasa",
-      "de": "Hafen von Dasa",
-      "es-419": "Puerto de Dasa",
-      "es-ES": "Puerto de Dasa",
-      "fr": "Port de Dasa",
-      "hu": "Dasa Kikötő",
-      "it": "Porto di Dasa",
-      "ja": "ダサ港",
-      "ko": "다사항",
-      "lt": "Dasa uostas",
-      "nl": "De haven van Dasa",
-      "pl": "Port Dasa",
-      "pt-BR": "Porto de Dasa",
-      "ru": "Порт Dasa",
-      "tr": "Dasa Limanı",
-      "uk": "Гавань Даса",
-      "zh-Hans": "达萨港",
-      "zh-Hant": "達薩港"
-    },
-    "coord": {
-      "x": -797078.6,
-      "y": 1185255.8,
+      "x": -825550.94,
+      "y": 1197541.4,
       "z": -22000
     },
-    "guid": "6596fda643e30bc19e6cb6af2bec2bc7",
+    "guid": null,
     "prod": [
       {
-        "input": {
-          "lHBeam_6m": 1
+        "output": {
+          "IronOre": 1
         },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "SteelCoil_10t": 1
-        },
-        "prodTime": 1200,
+        "prodTime": 300,
         "prodSpeedMul": 1
       }
     ],
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "Harbor_Export_C",
-    "name": {
-      "en": "Jeju Harbor",
-      "cs": "Přístav Jeju",
-      "de": "Hafen von Jeju",
-      "es-419": "Puerto de Jeju",
-      "es-ES": "Puerto de Jeju",
-      "fi": "Jejun satama",
-      "fr": "Port de Jeju",
-      "hu": "Jeju Kikötő",
-      "it": "Porto di Jeju",
-      "ja": "チェジュ港",
-      "ko": "제주항",
-      "lt": "Jeju uostas",
-      "nl": "haven van Jeju",
-      "pl": "Port w Jeju",
-      "pt-BR": "Porto de Jeju",
-      "ru": "Гавань Чеджу",
-      "sv": "Jeju Hamn",
-      "tr": "Jeju Limanı",
-      "uk": "Гавань Чеджу",
-      "vi": "Cảng Jeju",
-      "zh-Hans": "济州港",
-      "zh-Hant": "濟州港"
-    },
-    "coord": {
-      "x": -21596.209,
-      "y": -180551.22,
-      "z": -22000
-    },
-    "guid": "604c378e4b5672274c5ce0b00c91fdcc",
-    "prod": [
-      {
-        "input": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "SteelCoil_10t": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30
-    },
     "supplyStorage": {}
   },
   {
@@ -5387,44 +5993,6 @@
     "maxReceiveDist": 500000
   },
   {
-    "type": "LimestoneRockDrop_C",
-    "name": {
-      "en": "Dongsan Limestone Rock Drop",
-      "cs": "Dongsan Vápenec Kámen Drop",
-      "de": "Dongsan Kalkstein Brocken Ablieferung",
-      "es-419": "Dongsan Caliza Roca Drop",
-      "es-ES": "Dongsan Piedra caliza Rocas Soltar",
-      "fi": "Dongsan Kalkkikivi Rock Drop",
-      "fr": "Dongsan Calcaire Roche Larguer",
-      "hu": "Dongsan Mészkő Szikla Lerakó",
-      "it": "Dongsan Calcare Rock Far cadere",
-      "ja": "ドンサン 石灰石 粗鉱 荷卸場",
-      "ko": "동산 석회암 Rock Drop",
-      "lt": "Dongsan Kalkakmenis Rock Drop",
-      "nl": "Dongsan Kalksteen Rock Laten vallen",
-      "pl": "Dongsan Wapień Kamień Dostawa",
-      "pt-BR": "Dongsan Calcário Pedra Soltar",
-      "ru": "Dongsan Известняк Камни Место разгрузки",
-      "tr": "Dongsan Kireçtaşı Taş Düşüş",
-      "uk": "Донгсан Вапняк Камінь Скинути",
-      "zh-Hans": "东山 石灰石 岩 卸货区",
-      "zh-Hant": "東山 石灰岩 石塊 卸貨區"
-    },
-    "coord": {
-      "x": -419889.88,
-      "y": 627256.6,
-      "z": -17464.758
-    },
-    "guid": "c03e3600420084f54b4bb2930a50fd26",
-    "demand": {
-      "LimestoneRock": 1
-    },
-    "demandStorage": {
-      "LimestoneRock": 200
-    },
-    "supplyStorage": {}
-  },
-  {
     "type": "LiquidSupplier_C",
     "name": {
       "en": "Jeju Harbor",
@@ -5460,9 +6028,6 @@
       {
         "input": {
           "CrudeOil": 1
-        },
-        "output": {
-          "Fuel": 1
         },
         "prodTime": 60,
         "prodSpeedMul": 1
@@ -5532,87 +6097,6 @@
   {
     "type": "LogDrop_C",
     "name": {
-      "en": "Dasa Harbor Log Drop",
-      "cs": "Přístav Dasa Kláda Drop",
-      "de": "Hafen von Dasa Holzstamm Ablieferung",
-      "es-419": "Puerto de Dasa Tronco Drop",
-      "es-ES": "Puerto de Dasa Tronco Soltar",
-      "fr": "Port de Dasa Journal Larguer",
-      "hu": "Dasa Kikötő Farönk Lerakó",
-      "it": "Porto di Dasa Tronco Far cadere",
-      "ja": "ダサ港 丸太 荷卸場",
-      "ko": "다사항 Log Drop",
-      "lt": "Dasa uostas Log Drop",
-      "nl": "De haven van Dasa Boomstam Laten vallen",
-      "pl": "Port Dasa Kłoda Dostawa",
-      "pt-BR": "Porto de Dasa Tora Soltar",
-      "ru": "Порт Dasa Журнал Место разгрузки",
-      "tr": "Dasa Limanı Odun Düşüş",
-      "uk": "Гавань Даса Журнал Скинути",
-      "zh-Hans": "达萨港 原木 卸货区",
-      "zh-Hant": "達薩港 原木 卸貨區"
-    },
-    "coord": {
-      "x": -796591.25,
-      "y": 1184445.9,
-      "z": -22000
-    },
-    "guid": "fee538644111a8ac5974ea8e4e4e419a",
-    "demand": {
-      "Log_20ft": 1,
-      "Log_Oak_12ft": 1
-    },
-    "demandStorage": {
-      "Log_20ft": 50,
-      "Log_Oak_12ft": 50
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "LogDrop_C",
-    "name": {
-      "en": "Jeju Harbor Log Drop",
-      "cs": "Přístav Jeju Kláda Drop",
-      "de": "Hafen von Jeju Holzstamm Ablieferung",
-      "es-419": "Puerto de Jeju Tronco Drop",
-      "es-ES": "Puerto de Jeju Tronco Soltar",
-      "fi": "Jejun satama Log Drop",
-      "fr": "Port de Jeju Journal Larguer",
-      "hu": "Jeju Kikötő Farönk Lerakó",
-      "it": "Porto di Jeju Tronco Far cadere",
-      "ja": "チェジュ港 丸太 荷卸場",
-      "ko": "제주항 Log Drop",
-      "lt": "Jeju uostas Log Drop",
-      "nl": "haven van Jeju Boomstam Laten vallen",
-      "pl": "Port w Jeju Kłoda Dostawa",
-      "pt-BR": "Porto de Jeju Tora Soltar",
-      "ru": "Гавань Чеджу Журнал Место разгрузки",
-      "sv": "Jeju Hamn Log Drop",
-      "tr": "Jeju Limanı Odun Düşüş",
-      "uk": "Гавань Чеджу Журнал Скинути",
-      "vi": "Cảng Jeju Log Drop",
-      "zh-Hans": "济州港 原木 卸货区",
-      "zh-Hant": "濟州港 原木 卸貨區"
-    },
-    "coord": {
-      "x": -21367.375,
-      "y": -179700.92,
-      "z": -22000
-    },
-    "guid": "43c8d713415d39be76c42f9cc4c0db7e",
-    "demand": {
-      "Log_20ft": 1,
-      "Log_Oak_12ft": 1
-    },
-    "demandStorage": {
-      "Log_20ft": 50,
-      "Log_Oak_12ft": 50
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "LogDrop_C",
-    "name": {
       "en": "Sangdo Lumbermil Drop Off",
       "cs": "Dřevařský závod Sangdo Vykládka",
       "de": "Sandgo Sägewerk Abladen",
@@ -5642,6 +6126,87 @@
       "z": -21575.02
     },
     "guid": "f6ba0c254c1d2258122fc984769f43f9",
+    "demand": {
+      "Log_20ft": 1,
+      "Log_Oak_12ft": 1
+    },
+    "demandStorage": {
+      "Log_20ft": 50,
+      "Log_Oak_12ft": 50
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "LogExport_C",
+    "name": {
+      "en": "Dasa Harbor Log Export",
+      "cs": "Přístav Dasa Kláda Export",
+      "de": "Hafen von Dasa Holzstamm Export",
+      "es-419": "Puerto de Dasa Tronco Exportar",
+      "es-ES": "Puerto de Dasa Tronco Exportar",
+      "fr": "Port de Dasa Journal Exportation",
+      "hu": "Dasa Kikötő Farönk Export",
+      "it": "Porto di Dasa Tronco Export",
+      "ja": "ダサ港 丸太 輸出品倉庫",
+      "ko": "다사항 Log Export",
+      "lt": "Dasa uostas Log Export",
+      "nl": "De haven van Dasa Boomstam Export",
+      "pl": "Port Dasa Kłoda Eksport",
+      "pt-BR": "Porto de Dasa Tora Exportar",
+      "ru": "Порт Dasa Журнал Экспорт",
+      "tr": "Dasa Limanı Odun İhracat",
+      "uk": "Гавань Даса Журнал Експорт",
+      "zh-Hans": "达萨港 原木 出口",
+      "zh-Hant": "達薩港 原木 出口區"
+    },
+    "coord": {
+      "x": -796591.25,
+      "y": 1184445.9,
+      "z": -22000
+    },
+    "guid": "ee0baf554278fd5d3148e8aa53e25362",
+    "demand": {
+      "Log_20ft": 1,
+      "Log_Oak_12ft": 1
+    },
+    "demandStorage": {
+      "Log_20ft": 50,
+      "Log_Oak_12ft": 50
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "LogExport_C",
+    "name": {
+      "en": "Jeju Harbor Log Export",
+      "cs": "Přístav Jeju Kláda Export",
+      "de": "Hafen von Jeju Holzstamm Export",
+      "es-419": "Puerto de Jeju Tronco Exportar",
+      "es-ES": "Puerto de Jeju Tronco Exportar",
+      "fi": "Jejun satama Log Export",
+      "fr": "Port de Jeju Journal Exportation",
+      "hu": "Jeju Kikötő Farönk Export",
+      "it": "Porto di Jeju Tronco Export",
+      "ja": "チェジュ港 丸太 輸出品倉庫",
+      "ko": "제주항 Log Export",
+      "lt": "Jeju uostas Log Export",
+      "nl": "haven van Jeju Boomstam Export",
+      "pl": "Port w Jeju Kłoda Eksport",
+      "pt-BR": "Porto de Jeju Tora Exportar",
+      "ru": "Гавань Чеджу Журнал Экспорт",
+      "sv": "Jeju Hamn Log Export",
+      "tr": "Jeju Limanı Odun İhracat",
+      "uk": "Гавань Чеджу Журнал Експорт",
+      "vi": "Cảng Jeju Log Export",
+      "zh-Hans": "济州港 原木 出口",
+      "zh-Hant": "濟州港 原木 出口區"
+    },
+    "coord": {
+      "x": -21367.375,
+      "y": -179700.92,
+      "z": -22000
+    },
+    "guid": "c0ab0d5145bbaa802461509da46f1ced",
     "demand": {
       "Log_20ft": 1,
       "Log_Oak_12ft": 1
@@ -6124,38 +6689,34 @@
     "supplyStorage": {}
   },
   {
-    "type": "Mine_Coal_C",
+    "type": "Mine_CopperOre_C",
     "name": {
-      "en": "Gwangjin Coal",
-      "cs": "Gwangjin uhelná",
-      "de": "Gwangjin Kohle",
-      "es-419": "Carbonería de Gwangjin",
-      "es-ES": "Mina de carbón de Gwangjin",
-      "fr": "Charbon de Gwangjin",
-      "hu": "Gwangjin szén",
-      "it": "Carbone Gwangjin",
-      "ja": "クァンジン炭鉱",
-      "ko": "광진 석탄",
-      "lt": "Gwangjin anglis",
-      "pl": "Węgiel Guangjin",
-      "pt-BR": "Carvão Guangjin",
-      "ru": "Угольные копи Gwangjin",
-      "sv": "Gwangjin-kol",
-      "tr": "Gwangjin Kömür",
-      "uk": "Вугілля Гванджін",
-      "zh-Hans": "广津煤炭",
-      "zh-Hant": "廣津煤炭"
+      "en": "Copper Mine -G",
+      "es-419": "Copper Mina -G",
+      "es-ES": "Copper Mina -G",
+      "fi": "Copper Kaivos -G",
+      "hu": "Copper Bánya -G",
+      "it": "Copper Miniera -G",
+      "ja": "Copper 鉱山 -G",
+      "nl": "Copper De mijne -G",
+      "pl": "Copper Kopalnia -G",
+      "pt-BR": "Copper Mina -G",
+      "ru": "Copper Шахта -G",
+      "tr": "Copper Maden -G",
+      "uk": "Copper Шахта -G",
+      "zh-Hans": "Copper 矿场 -G",
+      "zh-Hant": "Copper 礦場 -G"
     },
     "coord": {
-      "x": 318627.34,
-      "y": 746839,
-      "z": 1341.8037
+      "x": 301459.88,
+      "y": 936512.25,
+      "z": -5059.0513
     },
-    "guid": "6d3c9bc9431afaae1b2c4eb5a30ff87b",
+    "guid": "35d17a32419be1763e4b9786cbf1d04d",
     "prod": [
       {
         "output": {
-          "Coal": 1
+          "CopperOre": 1
         },
         "prodTime": 300,
         "prodSpeedMul": 1
@@ -6166,7 +6727,7 @@
           "WoodPlank_14ft_5t": 1
         },
         "output": {
-          "Coal": 30
+          "CopperOre": 30
         },
         "prodTime": 30,
         "prodSpeedMul": 1
@@ -6181,51 +6742,178 @@
       "WoodPlank_14ft_5t": 100
     },
     "supplyStorage": {
-      "Coal": 200
+      "CopperOre": 100
     }
   },
   {
-    "type": "Mine_Coal_C",
+    "type": "Mine_CopperOre_C",
     "name": {
-      "en": "Dasa Harbor Coal Pickup",
-      "cs": "Přístav Dasa Uhlí Pickup",
-      "de": "Hafen von Dasa Kohle Abholung",
-      "es-419": "Puerto de Dasa Carbón Camionetas",
-      "es-ES": "Puerto de Dasa Carbón Recogida",
-      "fi": "Dasa Harbor Hiili Pickup",
-      "fr": "Port de Dasa Charbon Ramasser",
-      "hu": "Dasa Kikötő Szén Felvenni",
-      "it": "Porto di Dasa Carbone Pickup",
-      "ja": "ダサ港 石炭 積込場",
-      "ko": "다사항 석탄 Pickup",
-      "lt": "Dasa uostas Anglis Pickup",
-      "nl": "De haven van Dasa Kolen oppakken",
-      "pl": "Port Dasa Węgiel Odbiór",
-      "pt-BR": "Porto de Dasa Carvão Pegar",
-      "ru": "Порт Dasa Каменный уголь Подобрать",
-      "sv": "Dasa Harbor Kol Pickup",
-      "tr": "Dasa Limanı Kömür Kamyonet",
-      "uk": "Гавань Даса Вугілля Погрузка",
-      "zh-Hans": "达萨港 煤炭 载货区",
-      "zh-Hant": "達薩港 煤炭 揀貨區"
+      "en": "Copper Mine #1",
+      "es-419": "Copper Mina #1",
+      "es-ES": "Copper Mina #1",
+      "fi": "Copper Kaivos #1",
+      "hu": "Copper Bánya #1",
+      "it": "Copper Miniera #1",
+      "ja": "Copper 鉱山 #1",
+      "nl": "Copper De mijne #1",
+      "pl": "Copper Kopalnia #1",
+      "pt-BR": "Copper Mina #1",
+      "ru": "Copper Шахта #1",
+      "tr": "Copper Maden #1",
+      "uk": "Copper Шахта #1",
+      "zh-Hans": "Copper 矿场 #1",
+      "zh-Hant": "Copper 礦場 #1"
     },
     "coord": {
-      "x": -824557,
-      "y": 1198004.9,
-      "z": -22000
+      "x": 176319.56,
+      "y": 815064.3,
+      "z": -4000.8293
     },
-    "guid": "9456d1a04f860d2733dfe6a0d5392985",
+    "guid": "c5d5e5c942b3d3958c83ac92e69c2b37",
     "prod": [
       {
         "output": {
-          "Coal": 1
+          "CopperOre": 1
         },
-        "prodTime": 300,
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 3,
+          "WoodPlank_14ft_5t": 1
+        },
+        "output": {
+          "CopperOre": 30
+        },
+        "prodTime": 90,
         "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Fuel": 1,
+      "WoodPlank_14ft_5t": 1
+    },
+    "demandStorage": {
+      "Fuel": 20,
+      "WoodPlank_14ft_5t": 10
+    },
     "supplyStorage": {
-      "Coal": 100
+      "CopperOre": 50
+    }
+  },
+  {
+    "type": "Mine_CopperOre_C",
+    "name": {
+      "en": "Copper Mine #2",
+      "es-419": "Copper Mina #2",
+      "es-ES": "Copper Mina #2",
+      "fi": "Copper Kaivos #2",
+      "hu": "Copper Bánya #2",
+      "it": "Copper Miniera #2",
+      "ja": "Copper 鉱山 #2",
+      "nl": "Copper De mijne #2",
+      "pl": "Copper Kopalnia #2",
+      "pt-BR": "Copper Mina #2",
+      "ru": "Copper Шахта #2",
+      "tr": "Copper Maden #2",
+      "uk": "Copper Шахта #2",
+      "zh-Hans": "Copper 矿场 #2",
+      "zh-Hant": "Copper 礦場 #2"
+    },
+    "coord": {
+      "x": 237963.55,
+      "y": 828610.6,
+      "z": -1635.3544
+    },
+    "guid": "a5ffa69546e8d17f7ce6b195d8294be3",
+    "prod": [
+      {
+        "output": {
+          "CopperOre": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 3,
+          "WoodPlank_14ft_5t": 1
+        },
+        "output": {
+          "CopperOre": 30
+        },
+        "prodTime": 90,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "Fuel": 1,
+      "WoodPlank_14ft_5t": 1
+    },
+    "demandStorage": {
+      "Fuel": 20,
+      "WoodPlank_14ft_5t": 10
+    },
+    "supplyStorage": {
+      "CopperOre": 50
+    }
+  },
+  {
+    "type": "Mine_CopperOre_C",
+    "name": {
+      "en": "Copper Mine #3",
+      "es-419": "Copper Mina #3",
+      "es-ES": "Copper Mina #3",
+      "fi": "Copper Kaivos #3",
+      "hu": "Copper Bánya #3",
+      "it": "Copper Miniera #3",
+      "ja": "Copper 鉱山 #3",
+      "nl": "Copper De mijne #3",
+      "pl": "Copper Kopalnia #3",
+      "pt-BR": "Copper Mina #3",
+      "ru": "Copper Шахта #3",
+      "tr": "Copper Maden #3",
+      "uk": "Copper Шахта #3",
+      "zh-Hans": "Copper 矿场 #3",
+      "zh-Hant": "Copper 礦場 #3"
+    },
+    "coord": {
+      "x": 225000,
+      "y": 841400,
+      "z": 1593.7408
+    },
+    "guid": "2904caab498f9e70ddb664bd3625b658",
+    "prod": [
+      {
+        "output": {
+          "CopperOre": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 3,
+          "WoodPlank_14ft_5t": 1
+        },
+        "output": {
+          "CopperOre": 30
+        },
+        "prodTime": 90,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "Fuel": 1,
+      "WoodPlank_14ft_5t": 1
+    },
+    "demandStorage": {
+      "Fuel": 20,
+      "WoodPlank_14ft_5t": 10
+    },
+    "supplyStorage": {
+      "CopperOre": 50
     }
   },
   {
@@ -6286,49 +6974,6 @@
       "Fuel": 100,
       "WoodPlank_14ft_5t": 100
     },
-    "supplyStorage": {
-      "IronOre": 100
-    }
-  },
-  {
-    "type": "Mine_IronOre_C",
-    "name": {
-      "en": "Dasa Harbor Iron Ore Pickup",
-      "cs": "Přístav Dasa Železná ruda Pickup",
-      "de": "Hafen von Dasa Eisenerz Abholung",
-      "es-419": "Puerto de Dasa Mineral de hierro Camionetas",
-      "es-ES": "Puerto de Dasa Mineral de hierro Recogida",
-      "fi": "Dasa Harbor Rautamalmi Pickup",
-      "fr": "Port de Dasa Minerai de fer Ramasser",
-      "hu": "Dasa Kikötő Vasérc Felvenni",
-      "it": "Porto di Dasa Minerale di ferro Pickup",
-      "ja": "ダサ港 鉄鉱石 積込場",
-      "ko": "다사항 Iron Ore Pickup",
-      "lt": "Dasa uostas Geležies Rūda Pickup",
-      "nl": "De haven van Dasa Ijzererts oppakken",
-      "pl": "Port Dasa Ruda żelaza Odbiór",
-      "pt-BR": "Porto de Dasa Minério de ferro Pegar",
-      "ru": "Порт Dasa Железная руда Подобрать",
-      "tr": "Dasa Limanı Demir Cevheri Kamyonet",
-      "uk": "Гавань Даса Залізна руда Погрузка",
-      "zh-Hans": "达萨港 铁矿 载货区",
-      "zh-Hant": "達薩港 鐵礦 揀貨區"
-    },
-    "coord": {
-      "x": -825550.94,
-      "y": 1197541.4,
-      "z": -22000
-    },
-    "guid": "889a69004c7d2d9a9486e1ad466238ef",
-    "prod": [
-      {
-        "output": {
-          "IronOre": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
     "supplyStorage": {
       "IronOre": 100
     }
@@ -6546,6 +7191,78 @@
   {
     "type": "Oil_Drop_C",
     "name": {
+      "en": "Transformer Factory 20MVA",
+      "cs": "Transformer Továrna 20MVA",
+      "de": "Transformer Fabrik 20MVA",
+      "es-419": "Transformer Fábrica 20MVA",
+      "es-ES": "Transformer Fábrica 20MVA",
+      "fi": "Transformer Tehdas 20MVA",
+      "fr": "Transformer Usine 20MVA",
+      "hu": "Transformer Gyár 20MVA",
+      "it": "Transformer Fabbrica 20MVA",
+      "ja": "Transformer 工場 20MVA",
+      "nl": "Transformer Fabriek 20MVA",
+      "pl": "Transformer Fabryka 20MVA",
+      "pt-BR": "Transformer Fábrica 20MVA",
+      "ru": "Transformer Завод 20MVA",
+      "tr": "Transformer Fabrika 20MVA",
+      "uk": "Transformer Фабрика 20MVA",
+      "zh-Hans": "Transformer 工厂 20MVA",
+      "zh-Hant": "Transformer 工廠 20MVA"
+    },
+    "coord": {
+      "x": -312640.88,
+      "y": 1139108.5,
+      "z": -16395
+    },
+    "guid": "c6ac1e9448bfe0eb8eb53fb15a08a07d",
+    "demand": {
+      "Oil": 1
+    },
+    "demandStorage": {
+      "Oil": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Oil_Drop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA",
+      "cs": "Transformer Továrna 50MVA",
+      "de": "Transformer Fabrik 50MVA",
+      "es-419": "Transformer Fábrica 50MVA",
+      "es-ES": "Transformer Fábrica 50MVA",
+      "fi": "Transformer Tehdas 50MVA",
+      "fr": "Transformer Usine 50MVA",
+      "hu": "Transformer Gyár 50MVA",
+      "it": "Transformer Fabbrica 50MVA",
+      "ja": "Transformer 工場 50MVA",
+      "nl": "Transformer Fabriek 50MVA",
+      "pl": "Transformer Fabryka 50MVA",
+      "pt-BR": "Transformer Fábrica 50MVA",
+      "ru": "Transformer Завод 50MVA",
+      "tr": "Transformer Fabrika 50MVA",
+      "uk": "Transformer Фабрика 50MVA",
+      "zh-Hans": "Transformer 工厂 50MVA",
+      "zh-Hant": "Transformer 工廠 50MVA"
+    },
+    "coord": {
+      "x": -312640.88,
+      "y": 1140914.4,
+      "z": -16395
+    },
+    "guid": "9837d4f34ce8f7af223c908adc94e5fa",
+    "demand": {
+      "Oil": 1
+    },
+    "demandStorage": {
+      "Oil": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Oil_Drop_C",
+    "name": {
       "en": "Jeoji Plastic Oil Drop",
       "cs": "Plast Jeoji Olej Drop",
       "de": "Jeoji Kunststoff Öl Ablieferung",
@@ -6672,13 +7389,176 @@
     "dropPoint": ["b30d9a6a480fe326011b069b78ecf229"]
   },
   {
+    "type": "Refinery_Fuel_C",
+    "name": {
+      "en": "Sanho Fuel Refinery",
+      "cs": "Sanho Palivo Refinery",
+      "de": "Sanho Treibstoff Refinery",
+      "es-419": "Sanho Combustible Refinery",
+      "es-ES": "Sanho Combustible Refinery",
+      "fi": "Sanho Polttoaine Refinery",
+      "fr": "Sanho Carburant Refinery",
+      "hu": "Sanho Üzemanyag Refinery",
+      "it": "Sanho Carburante Refinery",
+      "ja": "サンホ 燃料 Refinery",
+      "ko": "산호 연료 Refinery",
+      "lt": "Sanho Kuras Refinery",
+      "nl": "Sanho Brandstof Refinery",
+      "pl": "Sanho Paliwo Refinery",
+      "pt-BR": "Sanho Combustível Refinery",
+      "ru": "Sanho Топливо Refinery",
+      "sv": "Sanho Bränsle Refinery",
+      "tr": "Sanho Benzin Refinery",
+      "uk": "Санхо Паливо Refinery",
+      "vi": "Sanho Nhiên liệu Refinery",
+      "zh-Hans": "三湖 汽油 Refinery",
+      "zh-Hant": "三和 燃料 Refinery"
+    },
+    "coord": {
+      "x": -738385.7,
+      "y": 1465264.9,
+      "z": -19795
+    },
+    "guid": "5c6a24444e199bd34da3d3aee97b022a",
+    "prod": [
+      {
+        "input": {
+          "CrudeOil": 5
+        },
+        "output": {
+          "Fuel": 10
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "CrudeOil": 10,
+          "_TContainer": 1
+        },
+        "output": {
+          "Fuel": 30
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CrudeOil": 300,
+      "_TContainer": 20,
+      "Container_40ft_01": 20,
+      "Container_20ft_01": 20
+    },
+    "supplyStorage": {
+      "Fuel": 500
+    },
+    "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
+  },
+  {
+    "type": "Refinery_Oil_C",
+    "name": {
+      "en": "Sanho Oil Refinery",
+      "cs": "Sanho Olej Refinery",
+      "de": "Sanho Öl Refinery",
+      "es-419": "Sanho Petróleo Refinery",
+      "es-ES": "Sanho Petróleo Refinery",
+      "fi": "Sanho Öljy Refinery",
+      "fr": "Sanho Pétrole Refinery",
+      "hu": "Sanho Olaj Refinery",
+      "it": "Sanho Olio Refinery",
+      "ja": "サンホ 石油 Refinery",
+      "ko": "산호 Oil Refinery",
+      "lt": "Sanho Aliejus Refinery",
+      "nl": "Sanho Olie Refinery",
+      "pl": "Sanho Olej Refinery",
+      "pt-BR": "Sanho Combustível Refinery",
+      "ru": "Sanho Масло Refinery",
+      "sv": "Sanho Olja Refinery",
+      "tr": "Sanho Yağ Refinery",
+      "uk": "Санхо Нафта Refinery",
+      "zh-Hans": "三湖 石油 Refinery",
+      "zh-Hant": "三和 油料 Refinery"
+    },
+    "coord": {
+      "x": -738385.7,
+      "y": 1466014.5,
+      "z": -19795
+    },
+    "guid": "e01d6ebb4f6898ece172fdbff6349c82",
+    "prod": [
+      {
+        "input": {
+          "CrudeOil": 2
+        },
+        "output": {
+          "Oil": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "CrudeOil": 10,
+          "_TContainer": 1
+        },
+        "output": {
+          "Oil": 30
+        },
+        "prodTime": 180,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CrudeOil": 300,
+      "_TContainer": 20,
+      "Container_40ft_01": 20,
+      "Container_20ft_01": 20
+    },
+    "supplyStorage": {
+      "Oil": 500
+    },
+    "dropPoint": ["6f6eeb7b4bf0fc6ec82cac989a19d67d", "05abbab9444e087e51bb08bc75d2eabf"]
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 352182.22,
+      "y": 1387350.8,
+      "z": -21987.578
+    },
+    "guid": "146026e1438885337d4107a577f46735",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
     "type": "Resident_C",
     "coord": {
       "x": 338514.34,
       "y": 1386094.1,
       "z": -21993.781
     },
-    "guid": "ab75754a4819030b0751f194639ab7da",
+    "guid": "ae1ef41244decfcfe7b3a2bb8c4b204e",
     "prod": [
       {
         "input": {
@@ -6710,7 +7590,7 @@
       "y": 1386632.8,
       "z": -21996.219
     },
-    "guid": "81a061f246c6bda22410bc9d953c272d",
+    "guid": "e60cba05407e2c5fe3721e917609d578",
     "prod": [
       {
         "input": {
@@ -6742,71 +7622,7 @@
       "y": 1389234.4,
       "z": -21994.143
     },
-    "guid": "20fcd97342bcf2dee0ce56b6fde55048",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 353217.84,
-      "y": 1378495.6,
-      "z": -21994.842
-    },
-    "guid": "3020c6db48c48903ddda4b87678f86a2",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 348270.84,
-      "y": 1378479,
-      "z": -21998.748
-    },
-    "guid": "b33f01364bd69f4cd02e4293027f5d50",
+    "guid": "6bb16b5f4b487ff82e8f99ad1870c4e5",
     "prod": [
       {
         "input": {
@@ -6838,7 +7654,7 @@
       "y": 1374684.1,
       "z": -21999.08
     },
-    "guid": "db55ccc9456143a1286b9cbe961155fa",
+    "guid": "eb05ecf946818fbcfc697f89823c9a8d",
     "prod": [
       {
         "input": {
@@ -6866,11 +7682,43 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 344594.7,
-      "y": 1377542.6,
-      "z": -21987.574
+      "x": 348270.84,
+      "y": 1378479,
+      "z": -21998.748
     },
-    "guid": "67734f724561add94cb79a974eef2204",
+    "guid": "a81f626b40cfb66600478daf445a7fc4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 353217.84,
+      "y": 1378495.6,
+      "z": -21994.842
+    },
+    "guid": "11dd98774c6e9a19b3e119bbfa372a8b",
     "prod": [
       {
         "input": {
@@ -6902,7 +7750,7 @@
       "y": 1383983.8,
       "z": -21990.15
     },
-    "guid": "4a3e46084d01b3ef3a77ab9ef63cfc59",
+    "guid": "c0f56f77420dd617f2e52f9b9a81a0e0",
     "prod": [
       {
         "input": {
@@ -6934,7 +7782,39 @@
       "y": 1373308.1,
       "z": -21999.684
     },
-    "guid": "b1fdc1af4fd6a6a825e3b9b8311ca324",
+    "guid": "421bb6c443a19c12afef818060621558",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 344594.7,
+      "y": 1377542.6,
+      "z": -21987.574
+    },
+    "guid": "b92033bb4bfd69b467be299671ce081b",
     "prod": [
       {
         "input": {
@@ -6966,7 +7846,7 @@
       "y": 1379479.1,
       "z": -21999.154
     },
-    "guid": "5196e0d64436fa071710acbff55c92d1",
+    "guid": "b3c69fdf4f04f42e0548389907423d2b",
     "prod": [
       {
         "input": {
@@ -6998,7 +7878,7 @@
       "y": 1369188.9,
       "z": -21998.717
     },
-    "guid": "e8ae905f4db95595cdcec9b784b0c91d",
+    "guid": "ecfb2daf44607c85774e9aa54d24fc1b",
     "prod": [
       {
         "input": {
@@ -7030,71 +7910,7 @@
       "y": 1367213.8,
       "z": -21991.283
     },
-    "guid": "ec27f7e342e1a97cfc18e988625be227",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 330717.6,
-      "y": 1371704,
-      "z": -21998.492
-    },
-    "guid": "fb3ef6d141f545233b0325afe5e026f5",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 326659.38,
-      "y": 1372649.1,
-      "z": -22002.414
-    },
-    "guid": "a18c654b4c7452f2a5eba280fcd45622",
+    "guid": "b3ae74804c6e9952297158858403cd92",
     "prod": [
       {
         "input": {
@@ -7126,7 +7942,39 @@
       "y": 1374801.2,
       "z": -21990.33
     },
-    "guid": "93c73ca5401332b23513a9999ff8820e",
+    "guid": "f39e634d460aa4d5799d91b7d1d8f1a5",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 330717.6,
+      "y": 1371704,
+      "z": -21998.492
+    },
+    "guid": "5668682d45c83f16c60e62b730f41523",
     "prod": [
       {
         "input": {
@@ -7158,103 +8006,7 @@
       "y": 1380172.1,
       "z": -21993.744
     },
-    "guid": "499a9997459f0f996f42fab133e21906",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 322447.4,
-      "y": 1359738.8,
-      "z": -21999.066
-    },
-    "guid": "19d18236495baee122d8c7a41e13f76d",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 326919.8,
-      "y": 1361356.1,
-      "z": -21997.73
-    },
-    "guid": "8e3dff0a4c36b5a7df69dabae549bdc8",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 323865.84,
-      "y": 1361876.8,
-      "z": -21998.137
-    },
-    "guid": "78ffd0ed475e38e4e13be4af5d0436a3",
+    "guid": "42744e134c0a07f4bffbc5a373083f8f",
     "prod": [
       {
         "input": {
@@ -7286,7 +8038,7 @@
       "y": 1369757.6,
       "z": -21990.889
     },
-    "guid": "5ba8864c4d82c3c7e0627fb193c1e5ee",
+    "guid": "8d4ddce349649c1ff7841b83eda4f249",
     "prod": [
       {
         "input": {
@@ -7314,11 +8066,75 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 323009.06,
-      "y": 1369182.2,
-      "z": -21996.309
+      "x": 326919.8,
+      "y": 1361356.1,
+      "z": -21997.73
     },
-    "guid": "a52c979b45e32589a1e92ab2bde929f0",
+    "guid": "d9c37681429dac2ac5541c85df7f4886",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 323865.84,
+      "y": 1361876.8,
+      "z": -21998.137
+    },
+    "guid": "f6e5bf9c4eb0be82c166618003531820",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 322447.4,
+      "y": 1359738.8,
+      "z": -21999.066
+    },
+    "guid": "dd35ae0e4f55cf032af1cab9c422c4a2",
     "prod": [
       {
         "input": {
@@ -7350,7 +8166,7 @@
       "y": 1374382.2,
       "z": -21998.322
     },
-    "guid": "79ca26734db44288ee727684543c5874",
+    "guid": "7eb7ff334027867794527480f8277bdd",
     "prod": [
       {
         "input": {
@@ -7378,11 +8194,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 314709.9,
-      "y": 1364431.5,
-      "z": -21990.771
+      "x": 311631.12,
+      "y": 1371363.1,
+      "z": -21999.955
     },
-    "guid": "7043c17d47eae65977207c856038f3e6",
+    "guid": "94ef23d94b32b9540fd7e28a1796a33d",
     "prod": [
       {
         "input": {
@@ -7410,75 +8226,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 314125.88,
-      "y": 1362411.8,
-      "z": -21996.135
+      "x": 320953.12,
+      "y": 1372340.9,
+      "z": -21989.105
     },
-    "guid": "541a2c174852c59d3ec932a4ea00b7b6",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 319312.72,
-      "y": 1360572.2,
-      "z": -21991.693
-    },
-    "guid": "3bfdc0904dbd3790d6be06a12310e69b",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 317676.25,
-      "y": 1363409.2,
-      "z": -21998.78
-    },
-    "guid": "18fc4db4477399bc91b346b09953a9b9",
+    "guid": "470dc32f43ec10d668fb84ba0969505e",
     "prod": [
       {
         "input": {
@@ -7510,7 +8262,7 @@
       "y": 1361448.9,
       "z": -21991.629
     },
-    "guid": "ab32255b4233a59b1aa60fb5af0808fb",
+    "guid": "5a4dcb264a3db40822e2a190442d4cf8",
     "prod": [
       {
         "input": {
@@ -7538,11 +8290,75 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 321027.5,
-      "y": 1368619.6,
-      "z": -21991.54
+      "x": 317676.25,
+      "y": 1363409.2,
+      "z": -21998.78
     },
-    "guid": "953fd9b0435283c22c6fc1bd6634d10e",
+    "guid": "a9ffb0814054fa8a3f8552a5cc2c2686",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 314125.88,
+      "y": 1362411.8,
+      "z": -21996.135
+    },
+    "guid": "3ec04baf4ac822ab8dd6f99b7296ca65",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 314709.9,
+      "y": 1364431.5,
+      "z": -21990.771
+    },
+    "guid": "703246714bc0c4c36547bc805f6a7dab",
     "prod": [
       {
         "input": {
@@ -7574,7 +8390,7 @@
       "y": 1365296.1,
       "z": -21998.957
     },
-    "guid": "7d7213aa4b9c4aa540cb5ab308fd2c11",
+    "guid": "357c19e9474d9b615df6d2ab692f92ce",
     "prod": [
       {
         "input": {
@@ -7606,7 +8422,39 @@
       "y": 1363339.8,
       "z": -21990.139
     },
-    "guid": "6bb4314d4f450808029cc7ae69bde665",
+    "guid": "d427496e43a1857d751f11882cdf4954",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 319312.72,
+      "y": 1360572.2,
+      "z": -21991.693
+    },
+    "guid": "35ef62944d5f67b307ff868d111244a4",
     "prod": [
       {
         "input": {
@@ -7638,7 +8486,7 @@
       "y": 1359269.5,
       "z": -21988.59
     },
-    "guid": "0ae2ba5e4f39b77b621788a5aeca5659",
+    "guid": "2dc4038f47f6c0c2d0089b8b08dcceff",
     "prod": [
       {
         "input": {
@@ -7670,7 +8518,7 @@
       "y": 1387549.4,
       "z": -21990.752
     },
-    "guid": "52a2680145ed76b2996df1a3dea3e04d",
+    "guid": "aed26f444a575819e40f918a989a3de0",
     "prod": [
       {
         "input": {
@@ -7702,7 +8550,7 @@
       "y": 1386424.1,
       "z": -22001.059
     },
-    "guid": "4746b14c43343e2a8f3afe98b075f86f",
+    "guid": "07f042964df0b52bf2baa2aca3030338",
     "prod": [
       {
         "input": {
@@ -7734,71 +8582,7 @@
       "y": 1376357.9,
       "z": -21993.93
     },
-    "guid": "403c4dd344fcdc2be5d646b6339b646a",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 300463.22,
-      "y": 1374887.8,
-      "z": -21995.637
-    },
-    "guid": "2b9050ef4796d358437525a940be54cd",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 298438.8,
-      "y": 1374507,
-      "z": -21994.363
-    },
-    "guid": "2c091dd649eb378a38041593590b8816",
+    "guid": "ed42ee3845048cb609c5cd9adada0e25",
     "prod": [
       {
         "input": {
@@ -7830,7 +8614,7 @@
       "y": 1375692.2,
       "z": -21991.258
     },
-    "guid": "5b10c49e456e97a3c548e59a8c31db40",
+    "guid": "7d78cd3f437c710c9ef011af99794042",
     "prod": [
       {
         "input": {
@@ -7858,11 +8642,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 305432.28,
-      "y": 1367003.1,
-      "z": -21999.227
+      "x": 298438.8,
+      "y": 1374507,
+      "z": -21994.363
     },
-    "guid": "18e21a2740d383bc5758d9ad1187a08c",
+    "guid": "1eb639c14812517cc5e0b4a8241f928b",
     "prod": [
       {
         "input": {
@@ -7890,75 +8674,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 296282.53,
-      "y": 1369945,
-      "z": -21998.34
+      "x": 300463.22,
+      "y": 1374887.8,
+      "z": -21995.637
     },
-    "guid": "1a079abf41ad31520dfbe896ae89b462",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 308013.1,
-      "y": 1364169.4,
-      "z": -21987.617
-    },
-    "guid": "165514d843c4f4e4da6f1e9237d3a004",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 300859.56,
-      "y": 1366155.8,
-      "z": -21991.363
-    },
-    "guid": "aee568e6464cce64bfb2618076a45dfb",
+    "guid": "a0ae64e2415f83d827b539bc77136b85",
     "prod": [
       {
         "input": {
@@ -7990,7 +8710,135 @@
       "y": 1365094.8,
       "z": -21991.393
     },
-    "guid": "fe5d97134221777262c395a004b6158d",
+    "guid": "759d9c874cb3e247333c40b14accb19f",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 305432.28,
+      "y": 1367003.1,
+      "z": -21999.227
+    },
+    "guid": "763f91714da36ef6c95ab788799b23d6",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 296282.53,
+      "y": 1369945,
+      "z": -21998.34
+    },
+    "guid": "b23a0deb446c40399029a6a9458a4dac",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 300859.56,
+      "y": 1366155.8,
+      "z": -21991.363
+    },
+    "guid": "4d20073e45f6e30a43ef45b1e20cbcae",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 308013.1,
+      "y": 1364169.4,
+      "z": -21987.617
+    },
+    "guid": "3ea838ce464f7d64fb96a08bddff0177",
     "prod": [
       {
         "input": {
@@ -8022,39 +8870,7 @@
       "y": 1378138.6,
       "z": -21994.209
     },
-    "guid": "67a0b38949d91323453dbdbe8acafd84",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 295137.9,
-      "y": 1378813.9,
-      "z": -21991.424
-    },
-    "guid": "5b5b12334bbc800cbee85486925feeb8",
+    "guid": "e56458f4406d81612d8c9a87ad730c1e",
     "prod": [
       {
         "input": {
@@ -8086,7 +8902,7 @@
       "y": 1371933.8,
       "z": -22002.447
     },
-    "guid": "895e608244ae2b0e3cc545a093a62ce1",
+    "guid": "ae3d5d49461fed9cf27d149887ba5707",
     "prod": [
       {
         "input": {
@@ -8114,11 +8930,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 292286.25,
-      "y": 1370863.9,
-      "z": -22002.436
+      "x": 295137.9,
+      "y": 1378813.9,
+      "z": -21991.424
     },
-    "guid": "360b3b5e49c901dc2103b7b3a72668d7",
+    "guid": "22efe6a247ac88f4346fc1810c5ca609",
     "prod": [
       {
         "input": {
@@ -8150,7 +8966,7 @@
       "y": 1370019,
       "z": -21990.668
     },
-    "guid": "86a0212247eaa89c5fdc4daa05ffc46f",
+    "guid": "d116854242d4bf1116704d8420ce83a2",
     "prod": [
       {
         "input": {
@@ -8182,7 +8998,7 @@
       "y": 1368935.2,
       "z": -21990.777
     },
-    "guid": "7878c67a435edc4e84754ca41e8c4f55",
+    "guid": "ab4b0a6442f07019fb945da93baf118e",
     "prod": [
       {
         "input": {
@@ -8214,7 +9030,7 @@
       "y": 1367868.5,
       "z": -21991.66
     },
-    "guid": "78655fcd49bdee4896780fb53c54bc7a",
+    "guid": "fce13c134f9e0671c20d459f14bd9ec1",
     "prod": [
       {
         "input": {
@@ -8242,43 +9058,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 283161.1,
-      "y": 1383492,
-      "z": -21990.365
+      "x": 292286.25,
+      "y": 1370863.9,
+      "z": -22002.436
     },
-    "guid": "930f18204eab8a4a76887baee362a170",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 281137.25,
-      "y": 1384640.6,
-      "z": -21987.545
-    },
-    "guid": "69585f9d4ff0249c4a663e826de140f7",
+    "guid": "8f27c5544fdc10f16a07aab4ca17e875",
     "prod": [
       {
         "input": {
@@ -8310,7 +9094,39 @@
       "y": 1379290.1,
       "z": -21998.945
     },
-    "guid": "76aaaf064e6468d254bbe5807923dc5e",
+    "guid": "2a8d5ee44844b6ab96d006a70ce1e4d8",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 283161.1,
+      "y": 1383492,
+      "z": -21990.365
+    },
+    "guid": "bf530c0647db7a78710413b03093105f",
     "prod": [
       {
         "input": {
@@ -8342,7 +9158,39 @@
       "y": 1376205.6,
       "z": -21990.295
     },
-    "guid": "64407fda423c696f0a9b1da0d6d9ddd7",
+    "guid": "36c18c19437846d6329f668f864516f3",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 281137.25,
+      "y": 1384640.6,
+      "z": -21987.545
+    },
+    "guid": "229a11f446b888a0edc4669b4b574bdb",
     "prod": [
       {
         "input": {
@@ -8374,7 +9222,7 @@
       "y": 1372166.6,
       "z": -21991.182
     },
-    "guid": "58d8b8e54eb749edd166df9dbcadaa0c",
+    "guid": "e9bd80c04ed841d72baa55b92f28093a",
     "prod": [
       {
         "input": {
@@ -8406,39 +9254,7 @@
       "y": 1377432.1,
       "z": -21991.055
     },
-    "guid": "f846ad6d47f2cf5893c1e19c886625de",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 251862.7,
-      "y": 1398775.2,
-      "z": -21989.816
-    },
-    "guid": "c112831243b5eff01929d2b19fbc6c04",
+    "guid": "1683ac7d4993ab2f811b0e8b7faecf3a",
     "prod": [
       {
         "input": {
@@ -8470,7 +9286,39 @@
       "y": 1401275.6,
       "z": -21991.516
     },
-    "guid": "f12f421c4003ebdd78ae0e867b8c43b9",
+    "guid": "dd83db5e4c9b11d9364a20bf283bc859",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 251862.7,
+      "y": 1398775.2,
+      "z": -21989.816
+    },
+    "guid": "17c800af4cfa1280d2884f8ff59fa6ea",
     "prod": [
       {
         "input": {
@@ -8502,39 +9350,7 @@
       "y": 1389577.6,
       "z": -21990.652
     },
-    "guid": "7f5cbfc7497f4f5a0fdefd93720d451d",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 253991.17,
-      "y": 1385252,
-      "z": -21989.398
-    },
-    "guid": "c6310f794c8ab3b70ade2784d1d64af7",
+    "guid": "9e451aa9450247bb6fd6e481e8a9d516",
     "prod": [
       {
         "input": {
@@ -8566,7 +9382,7 @@
       "y": 1390606,
       "z": -21987.553
     },
-    "guid": "ba7c394b4344ba527734a28594537e81",
+    "guid": "bd66d56345d6081e77011392296ef6f1",
     "prod": [
       {
         "input": {
@@ -8598,7 +9414,39 @@
       "y": 1388876.8,
       "z": -22000.818
     },
-    "guid": "e018429847967647b93173b6264c80de",
+    "guid": "7317f5b046da0c6defcc9cb35834b1d1",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 253991.17,
+      "y": 1385252,
+      "z": -21989.398
+    },
+    "guid": "210fb90446cc77be13d690b5017ec1c2",
     "prod": [
       {
         "input": {
@@ -8630,39 +9478,7 @@
       "y": 1400564.5,
       "z": -21990.299
     },
-    "guid": "575542f641f8f88c3ef0909c5fe8ac5b",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 235930.45,
-      "y": 1393829,
-      "z": -21988.889
-    },
-    "guid": "fa9528f44c82378038914e84fd80f34c",
+    "guid": "b2d9d12441915e990c50fbbd059098e7",
     "prod": [
       {
         "input": {
@@ -8694,7 +9510,7 @@
       "y": 1391219,
       "z": -21988.31
     },
-    "guid": "7bca277f43ca07d0d08e04a5355f19d4",
+    "guid": "0918910040c318b74115faaf48b69fa5",
     "prod": [
       {
         "input": {
@@ -8722,75 +9538,11 @@
   {
     "type": "Resident_C",
     "coord": {
-      "x": 251519.53,
-      "y": 1375743.8,
-      "z": -21994.879
+      "x": 235930.45,
+      "y": 1393829,
+      "z": -21988.889
     },
-    "guid": "8bb5c778412be6e7f76d1b81dbf7384f",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 254851.12,
-      "y": 1377534.6,
-      "z": -21997.756
-    },
-    "guid": "5cbac018476ef7ce0acb3e880b6d3b89",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 256459.06,
-      "y": 1381190.1,
-      "z": -22000.525
-    },
-    "guid": "2a88bd14495649519e0ae18f4a5a0e3b",
+    "guid": "ceff37f549884546f60de5952a0f3c77",
     "prod": [
       {
         "input": {
@@ -8822,7 +9574,103 @@
       "y": 1374860.6,
       "z": -21993.111
     },
-    "guid": "d8fe8a054a8c70d456f7809cd98ade8b",
+    "guid": "19cc5ba240f69081dea618940cf3a68c",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 254851.12,
+      "y": 1377534.6,
+      "z": -21997.756
+    },
+    "guid": "b677f5a5471ccdf4ed9b5d9b620523ad",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 256459.06,
+      "y": 1381190.1,
+      "z": -22000.525
+    },
+    "guid": "5e904cfa4c658d8a9a6becbaaea387c4",
+    "prod": [
+      {
+        "input": {
+          "GroceryBag": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1,
+        "foodSupply": 1
+      }
+    ],
+    "demand": {
+      "_TSmallPackage": 1,
+      "_TFurniture": 1,
+      "_TFood": 1
+    },
+    "demandStorage": {
+      "GroceryBag": 3,
+      "_TSmallPackage": 3,
+      "_TFurniture": 4,
+      "_TFood": 5
+    },
+    "supplyStorage": {},
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "Resident_C",
+    "coord": {
+      "x": 251519.53,
+      "y": 1375743.8,
+      "z": -21994.879
+    },
+    "guid": "efa2d5d341feea00879e3990e202f06a",
     "prod": [
       {
         "input": {
@@ -8854,103 +9702,7 @@
       "y": 1374438,
       "z": -21993.557
     },
-    "guid": "6f1a1a8f434fab341083fbba64e9fd44",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 232572.52,
-      "y": 1376250.2,
-      "z": -21995.736
-    },
-    "guid": "8b0daf9d4234cb398c38e7b21a6d0806",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 235210.25,
-      "y": 1376295,
-      "z": -22001.912
-    },
-    "guid": "4f72833f496078822190248b8b38c542",
-    "prod": [
-      {
-        "input": {
-          "GroceryBag": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1,
-        "foodSupply": 1
-      }
-    ],
-    "demand": {
-      "_TSmallPackage": 1,
-      "_TFurniture": 1,
-      "_TFood": 1
-    },
-    "demandStorage": {
-      "GroceryBag": 3,
-      "_TSmallPackage": 3,
-      "_TFurniture": 4,
-      "_TFood": 5
-    },
-    "supplyStorage": {},
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "Resident_C",
-    "coord": {
-      "x": 352182.22,
-      "y": 1387350.8,
-      "z": -21987.578
-    },
-    "guid": "179050f042c3bb4d6eec489eac9ac3df",
+    "guid": "d1ef808f4ebf17afe55958bb71f6dfb6",
     "prod": [
       {
         "input": {
@@ -8982,7 +9734,7 @@
       "y": 1388770.4,
       "z": -21990.227
     },
-    "guid": "3f8388d94181c40c34869b8bddfb0a93",
+    "guid": "6bd404eb4c67292384c159914c9d6cd2",
     "prod": [
       {
         "input": {
@@ -14022,6 +14774,64 @@
     ]
   },
   {
+    "type": "SteelMill_H-Beam_C",
+    "name": {
+      "en": "Steel Mill H-Beam",
+      "cs": "Ocelárna Nosník",
+      "de": "Stahlwerk H-Träger",
+      "es-419": "Fábrica de Acero Viga en H",
+      "es-ES": "Acería Viga en H",
+      "fi": "Steel Mill H-palkki",
+      "fr": "Aciérie Poutre en H",
+      "hu": "Acélgyár H-gerenda",
+      "it": "Acciaieria Travi ad H",
+      "ja": "製鉄所 H形鋼",
+      "ko": "제철소 H-Beam",
+      "lt": "Steel Mill Sijos",
+      "nl": "Staalfabriek H-balk",
+      "pl": "Huta Stali Belka H",
+      "pt-BR": "Usina siderúrgica Viga H",
+      "ru": "Сталелитейный завод Двутавровые балки",
+      "tr": "Çelik Fabrikası H-Kiriş",
+      "uk": "Сталеливарний завод Двотаврова балка",
+      "zh-Hans": "钢厂 H型钢",
+      "zh-Hant": "鋼鐵廠 H 型鋼"
+    },
+    "coord": {
+      "x": 437442.3,
+      "y": 1209900,
+      "z": -19475
+    },
+    "guid": "11879bc34c43c8dd63d48e855c0a6bf4",
+    "prod": [
+      {
+        "input": {
+          "Coal": 12,
+          "IronOre": 8,
+          "Limestone": 2
+        },
+        "output": {
+          "lHBeam_6m": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Coal": 200,
+      "IronOre": 100,
+      "Limestone": 200
+    },
+    "supplyStorage": {
+      "lHBeam_6m": 30
+    },
+    "dropPoint": [
+      "4484526c4d38e28d665d4c96e83c4976",
+      "a721ab8b4bab838f832bf28370409a64",
+      "dff3152b4b782bc59c9f22a021dd983e"
+    ]
+  },
+  {
     "type": "SteelMill_IronOreDrop_C",
     "name": {
       "en": "Steel Mill Steel Coil Iron Ore Drop",
@@ -14312,7 +15122,7 @@
     "supplyStorage": {
       "Fuel": 50
     },
-    "maxDist": 100000
+    "maxDist": 200000
   },
   {
     "type": "Storage_Fuel_C",
@@ -16602,208 +17412,6 @@
     "supplyStorage": {
       "_TLargePackage": 50,
       "MilitarySupplyBox_01": 50
-    }
-  },
-  {
-    "type": "ConstructionSite_C",
-    "name": {
-      "en": "Ara Construction Site D1",
-      "cs": "Ara Staveniště D1",
-      "de": "Ara Baustelle D1",
-      "es-419": "Ara Sitio de construcción D1",
-      "es-ES": "Ara Zona en construcción D1",
-      "fr": "Ara Chantier de construction D1",
-      "hu": "Ara Építési terület D1",
-      "it": "Ara Sito di costruzione D1",
-      "ja": "アラ 建設現場 D1",
-      "ko": "아라 건설 현장 D1",
-      "lt": "Ara Statybvietė D1",
-      "nl": "Ara Bouwplaats D1",
-      "pl": "Ara Budowa D1",
-      "pt-BR": "Ara Local de construção D1",
-      "ru": "Ara Строительная площадка D1",
-      "tr": "Ara İnşaat sahası D1",
-      "uk": "Ара Будівельна площадка D1",
-      "zh-Hans": "阿拉伯 建筑工地 D1",
-      "zh-Hant": "雅羅 工地 D1"
-    },
-    "coord": {
-      "x": 412807.3129,
-      "y": 1103579.5234,
-      "z": -19099.912608176
-    },
-    "guid": "0f0ce05643dabcbc05af558932011bd6",
-    "prod": [
-      {
-        "output": {
-          "Sand": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "output": {
-          "FineSand": 1
-        },
-        "prodTime": 5,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "WoodPlank_14ft_5t": 1
-        },
-        "prodTime": 900,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 360,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "PlasticPipes_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      }
-    ],
-    "demand": {
-      "WoodPlank_14ft_5t": 1,
-      "Fuel": 1,
-      "PlasticPipes_6m": 1,
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "Concrete": 100,
-      "WoodPlank_14ft_5t": 20,
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
-      "lHBeam_6m": 10
-    },
-    "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
-    }
-  },
-  {
-    "type": "ConstructionSite_C",
-    "name": {
-      "en": "Ara Construction Site D1",
-      "cs": "Ara Staveniště D1",
-      "de": "Ara Baustelle D1",
-      "es-419": "Ara Sitio de construcción D1",
-      "es-ES": "Ara Zona en construcción D1",
-      "fr": "Ara Chantier de construction D1",
-      "hu": "Ara Építési terület D1",
-      "it": "Ara Sito di costruzione D1",
-      "ja": "アラ 建設現場 D1",
-      "ko": "아라 건설 현장 D1",
-      "lt": "Ara Statybvietė D1",
-      "nl": "Ara Bouwplaats D1",
-      "pl": "Ara Budowa D1",
-      "pt-BR": "Ara Local de construção D1",
-      "ru": "Ara Строительная площадка D1",
-      "tr": "Ara İnşaat sahası D1",
-      "uk": "Ара Будівельна площадка D1",
-      "zh-Hans": "阿拉伯 建筑工地 D1",
-      "zh-Hant": "雅羅 工地 D1"
-    },
-    "coord": {
-      "x": 412807.3129,
-      "y": 1103579.5234,
-      "z": -19099.912608176
-    },
-    "guid": "0f0ce05643dabcbc05af558932011bd6",
-    "prod": [
-      {
-        "output": {
-          "Sand": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "output": {
-          "FineSand": 1
-        },
-        "prodTime": 5,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Concrete": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "WoodPlank_14ft_5t": 1
-        },
-        "prodTime": 900,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 360,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "PlasticPipes_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      },
-      {
-        "input": {
-          "lHBeam_6m": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1.03
-      }
-    ],
-    "demand": {
-      "WoodPlank_14ft_5t": 1,
-      "Fuel": 1,
-      "PlasticPipes_6m": 1,
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "Concrete": 100,
-      "WoodPlank_14ft_5t": 20,
-      "Fuel": 10,
-      "PlasticPipes_6m": 10,
-      "lHBeam_6m": 10
-    },
-    "supplyStorage": {
-      "Sand": 100,
-      "FineSand": 100
     }
   }
 ]

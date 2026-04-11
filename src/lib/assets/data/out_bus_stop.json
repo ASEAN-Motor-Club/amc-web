@@ -437,6 +437,16 @@
   },
   {
     "type": "BusStop_01_C",
+    "name": "Gangjung Plant Nursery",
+    "coord": {
+      "x": -62392.812,
+      "y": 106514.94,
+      "z": -14967.584
+    },
+    "guid": "172c13cb433c16999f232794f1378c93"
+  },
+  {
+    "type": "BusStop_01_C",
     "name": "Nobong Cement Factory",
     "coord": {
       "x": -184939.9,
@@ -464,6 +474,26 @@
       "z": -9793.544
     },
     "guid": "d21247e54d10e7ecff4dc2b8ccd0b3a6"
+  },
+  {
+    "type": "BusStop_01_C",
+    "name": "Sado Transformer Factory",
+    "coord": {
+      "x": -339802.1,
+      "y": 1075080.9,
+      "z": -18972.023
+    },
+    "guid": "d854c3da460e20f8c6a29d9f65c03c40"
+  },
+  {
+    "type": "BusStop_01_C",
+    "name": "Sado Transformer Factory",
+    "coord": {
+      "x": -343973.94,
+      "y": 1070875.6,
+      "z": -19438.377
+    },
+    "guid": "5fa35a964c1bc947348ed1ab7e6555d9"
   },
   {
     "type": "BusStop_01_C",
@@ -1710,8 +1740,8 @@
     "type": "BusTerminal_01_C",
     "name": "Hallim Bus Terminal",
     "coord": {
-      "x": -330530.0,
-      "y": 2639.2893,
+      "x": -329743.34,
+      "y": 4800.582,
       "z": -21930.0
     },
     "guid": "ed02cfda4a5c5f64ee2f1aafb32de445",
@@ -1754,9 +1784,9 @@
     "type": "BusTerminal_01_C",
     "name": "Seongsan Bus Terminal",
     "coord": {
-      "x": 304372.28,
-      "y": -108580.234,
-      "z": -22080.0
+      "x": 304725.88,
+      "y": -108145.445,
+      "z": -22075.0
     },
     "guid": "c4bddc2b4f1bb33a3fc3aa8b0ca663dd",
     "terminal": true
