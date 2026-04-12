@@ -2,7 +2,6 @@ import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import UnoCSS from 'unocss/vite';
-import devtoolsJson from 'vite-plugin-devtools-json';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest';
@@ -13,7 +12,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      devtoolsJson(),
       UnoCSS(),
       sveltekit(),
       paraglideVitePlugin({
