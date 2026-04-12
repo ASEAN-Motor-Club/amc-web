@@ -68,19 +68,19 @@
       textClass: playerContext.isPlaying ? '!text-orange-500' : undefined,
       icon: radioIcon,
     },
-    {
-      href: '/championship',
-      label: m['navbar.amc_cup'](),
-      icon: trophyIcon,
-      textClass: 'text-amber-600 dark:text-amber-400',
-      subItems: [
-        {
-          href: '/championship/details',
-          label: m['navbar.details'](),
-          icon: champDetailsIcon,
-        },
-      ],
-    },
+    // {
+    //   href: '/championship',
+    //   label: m['navbar.amc_cup'](),
+    //   icon: trophyIcon,
+    //   textClass: 'text-amber-600 dark:text-amber-400',
+    //   subItems: [
+    //     {
+    //       href: '/championship/details',
+    //       label: m['navbar.details'](),
+    //       icon: champDetailsIcon,
+    //     },
+    //   ],
+    // },
   ]);
 
   const menu = $derived(page.state.navbarMenuOpen ?? false);
@@ -142,7 +142,7 @@
   />
 {/snippet}
 
-{#snippet champDetailsIcon(pathMatch: boolean)}
+<!-- {#snippet champDetailsIcon(pathMatch: boolean)}
   <NavbarIcon
     class="i-material-symbols:calendar-month-outline-rounded group-hover:text-yellow-500"
     {pathMatch}
@@ -151,7 +151,7 @@
 
 {#snippet trophyIcon()}
   <NavbarIcon class="i-material-symbols:trophy-rounded text-amber-500" pathMatch />
-{/snippet}
+{/snippet} -->
 
 {#snippet jobIcon(pathMatch: boolean)}
   <NavbarIcon
