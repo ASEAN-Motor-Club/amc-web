@@ -30,6 +30,12 @@ importers:
       '@fontsource-variable/noto-sans-thai':
         specifier: 5.2.8
         version: 5.2.8
+      '@fontsource-variable/playfair-display':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/great-vibes':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@fontsource/kanit':
         specifier: 5.2.8
         version: 5.2.8
@@ -513,6 +519,12 @@ packages:
 
   '@fontsource-variable/noto-sans@5.2.10':
     resolution: {integrity: sha512-wyFgKkFu7jki5kEL8qv7avjQ8rxHX0J/nhLWvbR9T0hOH1HRKZEvb9EW9lMjZfWHHfEzKkYf5J+NadwgCS7TXA==}
+
+  '@fontsource-variable/playfair-display@5.2.8':
+    resolution: {integrity: sha512-ZzVIXPOrL85yyOvZYoBzUszIJM+xKkHqni4IYn2CVLaGQQdJR8sBeC8yFNgjxSJ7ludTwta8qpULeOFuk5X75A==}
+
+  '@fontsource/great-vibes@5.2.8':
+    resolution: {integrity: sha512-/PATz436NGixjNaigierUpv50wfNv2UhAAijcCPkn4ynvl41x66TCLbXVSVfp4pth9gjWnGqgoj0lVIhHapAuw==}
 
   '@fontsource/kanit@5.2.8':
     resolution: {integrity: sha512-vISPW1kRoy+BTqplYCymdYRJcNFGmlPxWXqo178eGPe7P+lMX24JiQOxWdI4HLWR+0ROUzaFneXy/v1I9u99yg==}
@@ -1528,6 +1540,7 @@ packages:
   basic-ftp@5.2.0:
     resolution: {integrity: sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==}
     engines: {node: '>=10.0.0'}
+    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -3704,6 +3717,10 @@ snapshots:
   '@fontsource-variable/noto-sans-thai@5.2.8': {}
 
   '@fontsource-variable/noto-sans@5.2.10': {}
+
+  '@fontsource-variable/playfair-display@5.2.8': {}
+
+  '@fontsource/great-vibes@5.2.8': {}
 
   '@fontsource/kanit@5.2.8': {}
 
