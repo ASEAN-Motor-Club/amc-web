@@ -4,6 +4,13 @@ import amcConfig from 'amc-uno-css-config';
 
 export default defineConfig({
   ...amcConfig,
+  theme: {
+    ...amcConfig.theme,
+    font: {
+      ...amcConfig.theme?.font,
+      cursive: "'Great Vibes', cursive",
+    },
+  },
   transformers: [transformerDirectives()],
   extractors: [extractorSvelte()],
   blocklist: [
