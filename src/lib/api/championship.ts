@@ -10,12 +10,7 @@ export const getEvent = async (
   id: number | string,
   signal: AbortSignal,
 ): Promise<ScheduledEvent | undefined> => {
-  return apiClient(
-    `${PUBLIC_API_BASE}/api/scheduled_events/${id}/`,
-    signal,
-    undefined,
-    'event',
-  );
+  return apiClient(`${PUBLIC_API_BASE}/api/scheduled_events/${id}/`, signal, undefined, 'event');
 };
 
 export const getTeamStandings = async (
