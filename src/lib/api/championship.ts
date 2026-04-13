@@ -1,9 +1,9 @@
-import { PUBLIC_API_NEW_BASE } from '$env/static/public';
+import { PUBLIC_API_BASE } from '$env/static/public';
 import type { EventResult, PersonalStanding, ScheduledEvent, TeamStanding } from './types';
 import { apiClient } from './_api';
 
 export const getEvents = async (signal: AbortSignal): Promise<ScheduledEvent[]> => {
-  return apiClient(`${PUBLIC_API_NEW_BASE}/api/scheduled_events/`, signal, [], 'events');
+  return apiClient(`${PUBLIC_API_BASE}/api/scheduled_events/`, signal, [], 'events');
 };
 
 export const getEvent = async (
@@ -11,7 +11,7 @@ export const getEvent = async (
   signal: AbortSignal,
 ): Promise<ScheduledEvent | undefined> => {
   return apiClient(
-    `${PUBLIC_API_NEW_BASE}/api/scheduled_events/${id}/`,
+    `${PUBLIC_API_BASE}/api/scheduled_events/${id}/`,
     signal,
     undefined,
     'event',
@@ -23,7 +23,7 @@ export const getTeamStandings = async (
   signal: AbortSignal,
 ): Promise<TeamStanding[]> => {
   return apiClient(
-    `${PUBLIC_API_NEW_BASE}/championships/${season - 1}/team_standings/`,
+    `${PUBLIC_API_BASE}/api/championships/${season - 1}/team_standings/`,
     signal,
     [],
     'team standings',
@@ -35,7 +35,7 @@ export const getPersonalStandings = async (
   signal: AbortSignal,
 ): Promise<PersonalStanding[]> => {
   return apiClient(
-    `${PUBLIC_API_NEW_BASE}/championships/${season - 1}/personal_standings/`,
+    `${PUBLIC_API_BASE}/api/championships/${season - 1}/personal_standings/`,
     signal,
     [],
     'personal standings',
@@ -47,7 +47,7 @@ export const getEventResult = async (
   signal: AbortSignal,
 ): Promise<EventResult[]> => {
   return apiClient(
-    `${PUBLIC_API_NEW_BASE}/scheduled_events/${id}/results/`,
+    `${PUBLIC_API_BASE}/api/scheduled_events/${id}/results/`,
     signal,
     [],
     'event results',

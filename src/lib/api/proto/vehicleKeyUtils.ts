@@ -1,6 +1,7 @@
 import { VehicleKey } from './player_positions_pb';
+import type vehiclesName from '$lib/assets/data/out_vehicles_name.json';
 
-export function vehicleKeyToString(key: VehicleKey): string {
+export function vehicleKeyToString(key: VehicleKey): keyof typeof vehiclesName | 'None' {
   switch (key) {
     case VehicleKey.VEHICLE_KEY_1:
       return '1';
@@ -326,6 +327,16 @@ export function vehicleKeyToString(key: VehicleKey): string {
       return 'Tavan_Ambulance';
     case VehicleKey.VEHICLE_KEY_BRUTUS_AMBULANCE:
       return 'Brutus_Ambulance';
+    case VehicleKey.VEHICLE_KEY_JEMUSI_FLATBED:
+      return 'Jemusi_Flatbed';
+    case VehicleKey.VEHICLE_KEY_ATLAS_6X2_GARBAGE:
+      return 'Atlas_6x2_Garbage';
+    case VehicleKey.VEHICLE_KEY_GOLIATH4:
+      return 'Goliath4';
+    case VehicleKey.VEHICLE_KEY_GOLIATH6:
+      return 'Goliath6';
+    case VehicleKey.VEHICLE_KEY_GOLIATH10:
+      return 'Goliath10';
     case VehicleKey.VEHICLE_KEY_NONE:
     case VehicleKey.VEHICLE_KEY_UNSPECIFIED:
       return 'None';

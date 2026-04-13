@@ -1,9 +1,9 @@
-import { PUBLIC_API_NEW_BASE } from '$env/static/public';
+import { PUBLIC_API_BASE } from '$env/static/public';
 import type { DeliveryJob, DeliveryPointInfo } from './types';
 import { apiClient, startVisibilityAwarePolling } from './_api';
 
 export const getDeliveryPointInfos = async (signal: AbortSignal): Promise<DeliveryPointInfo[]> => {
-  return apiClient(`${PUBLIC_API_NEW_BASE}/api/deliverypoints/`, signal, [], 'delivery points');
+  return apiClient(`${PUBLIC_API_BASE}/api/deliverypoints/`, signal, [], 'delivery points');
 };
 
 export const getDeliveryPointInfo = async (
@@ -11,7 +11,7 @@ export const getDeliveryPointInfo = async (
   signal: AbortSignal,
 ): Promise<DeliveryPointInfo | undefined> => {
   return apiClient(
-    `${PUBLIC_API_NEW_BASE}/api/deliverypoints/${id}`,
+    `${PUBLIC_API_BASE}/api/deliverypoints/${id}`,
     signal,
     undefined,
     'delivery point',
@@ -35,7 +35,7 @@ export const startDeliveryPointPolling = (
 };
 
 export const getDeliveryJobs = async (signal: AbortSignal): Promise<DeliveryJob[]> => {
-  return apiClient(`${PUBLIC_API_NEW_BASE}/deliveryjobs/`, signal, [], 'delivery jobs');
+  return apiClient(`${PUBLIC_API_BASE}/api/deliveryjobs/`, signal, [], 'delivery jobs');
 };
 
 export const startDeliveryJobsPolling = (

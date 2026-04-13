@@ -42,8 +42,9 @@ export default defineConfig(({ mode }) => {
           rewrite: (path: string) => path.replace(/^\/icecast-status/, '/status-json.xsl'),
         },
         '/login/token': {
-          target: env.VITE_API_NEW_BASE,
+          target: env.VITE_API_BASE,
           secure: true,
+          rewrite: (path: string) => path.replace(/^\/login/, '/api/login'),
         },
       },
     },

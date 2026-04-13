@@ -5,7 +5,7 @@
   import type { MtNameRecord } from '$lib/types';
 
   export interface playerVehicleInfoProps {
-    vehicleKey: string | 'None';
+    vehicleKey: keyof typeof vehiclesName | 'None' | string;
   }
 
   const { vehicleKey }: playerVehicleInfoProps = $props();
