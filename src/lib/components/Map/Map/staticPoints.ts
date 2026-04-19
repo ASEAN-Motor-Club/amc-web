@@ -151,10 +151,12 @@ export function getStaticPoints() {
       }),
   );
 
+  const houseSource = new VectorSource({
+    features: houseFeatures,
+  });
+
   const houseLayer = new WebGLVectorLayer({
-    source: new VectorSource({
-      features: houseFeatures,
-    }),
+    source: houseSource,
     style: getHouseStyle(),
   });
 
@@ -164,6 +166,7 @@ export function getStaticPoints() {
     houseFeatures,
     deliveryPointLayer,
     residentPointLayer,
+    houseSource,
     houseLayer,
   };
 }

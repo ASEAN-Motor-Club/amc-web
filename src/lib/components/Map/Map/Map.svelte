@@ -89,6 +89,7 @@
     houseFeatures,
     deliveryPointLayer,
     residentPointLayer,
+    houseSource,
     houseLayer,
   } = getStaticPoints();
 
@@ -147,6 +148,31 @@
 
   let teleportData = $state<TeleportPoint[]>([]);
   const haveTeleports = $derived(teleportData.length > 0);
+
+  const houseNameStyle = new Style({
+    text: new Text({
+      font: `600 0.6rem ${fontSans}`,
+      offsetY: -12,
+      fill: new Fill({
+        color: colorTextDark,
+      }),
+      stroke: new Stroke({
+        color: adjustOpacity(colorGray950, 0.4),
+        width: 3,
+      }),
+    }),
+  });
+
+  const houseNameLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: houseSource,
+    visible: false,
+    style: (feature) => {
+      houseNameStyle.getText()?.setText(feature.get('label') as string);
+      return houseNameStyle;
+    },
+  });
 
   const teleportSource = new VectorSource({
     features: [] as Feature<Point>[],
@@ -446,6 +472,7 @@
     deliveryPointLayer,
     residentPointLayer,
     houseLayer,
+    houseNameLayer,
     playerPointLayer,
     playerNameLayer,
     ...(haveTeleports ? [teleportLayer, teleportLabelsLayer] : []),
@@ -460,9 +487,10 @@
     pins: true,
     pinLabels: true,
     teleport: true,
-    teleportLabels: true,
+    teleportLabels: false,
     jobOnly: false,
     houseVacantOnly: false,
+    houseLabels: false,
     playerCopsOnly: false,
     playerCriminalOnly: false,
   });
@@ -476,6 +504,7 @@
     playerName: z.optional(z.boolean()),
     jobOnly: z.optional(z.boolean()),
     houseVacantOnly: z.optional(z.boolean()),
+    houseLabels: z.optional(z.boolean()),
     playerCopsOnly: z.optional(z.boolean()),
     playerCriminalOnly: z.optional(z.boolean()),
     teleport: z.optional(z.boolean()),
@@ -517,6 +546,10 @@
         }
         mapState.jobOnly = state.jobOnly ?? false;
         mapState.houseVacantOnly = state.houseVacantOnly ?? false;
+        if (state.houseLabels === true) {
+          mapState.houseLabels = true;
+          if (mapState.house) houseNameLayer.setVisible(true);
+        }
         mapState.playerCopsOnly = state.playerCopsOnly ?? false;
         mapState.playerCriminalOnly = state.playerCriminalOnly ?? false;
       }
@@ -560,6 +593,7 @@
           playerName: mapState.playerName,
           jobOnly: mapState.jobOnly,
           houseVacantOnly: mapState.houseVacantOnly,
+          houseLabels: mapState.houseLabels,
           playerCopsOnly: mapState.playerCopsOnly,
           playerCriminalOnly: mapState.playerCriminalOnly,
           teleport: mapState.teleport,
@@ -820,11 +854,22 @@
   const toggleHouseLayer = () => {
     mapState.house = !mapState.house;
     houseLayer.setVisible(mapState.house);
+    if (!mapState.house) {
+      houseNameLayer.setVisible(false);
+    } else {
+      houseNameLayer.setVisible(mapState.houseLabels);
+    }
   };
 
   const enableHouseLayer = () => {
     mapState.house = true;
     houseLayer.setVisible(true);
+    houseNameLayer.setVisible(mapState.houseLabels);
+  };
+
+  const toggleHouseNameLayer = () => {
+    mapState.houseLabels = !mapState.houseLabels;
+    houseNameLayer.setVisible(mapState.house && mapState.houseLabels);
   };
 
   const togglePlayerLayer = () => {
@@ -1030,12 +1075,27 @@
   $effect(() => {
     for (const f of houseFeatures) {
       const info = f.get('info') as { name: string };
-      f.set('vacant', !houseData?.[info.name]?.ownerName ? 1 : 0);
+      const ownerName = houseData?.[info.name]?.ownerName;
+      f.set('vacant', !ownerName ? 1 : 0);
+      f.set('label', ownerName ?? m['housing.vacant']());
     }
+    houseNameLayer.changed();
   });
 
   $effect(() => {
     houseLayer.setStyle(getHouseStyle(mapState.houseVacantOnly));
+    houseNameLayer.setStyle(
+      mapState.houseVacantOnly
+        ? (feature) => {
+            if (!feature.get('vacant')) return [];
+            houseNameStyle.getText()?.setText(feature.get('label') as string);
+            return houseNameStyle;
+          }
+        : (feature) => {
+            houseNameStyle.getText()?.setText(feature.get('label') as string);
+            return houseNameStyle;
+          },
+    );
   });
 </script>
 
@@ -1103,6 +1163,14 @@
                   desc={m['map.poi.house_vacant_only_desc']()}
                   enabled={mapState.houseVacantOnly}
                   onclick={() => (mapState.houseVacantOnly = !mapState.houseVacantOnly)}
+                  sub
+                />
+                <PoiItem
+                  dotClass="border-gray-950 bg-white"
+                  label={m['map.poi.house_labels']()}
+                  desc={m['map.poi.house_labels_desc']()}
+                  enabled={mapState.houseLabels}
+                  onclick={toggleHouseNameLayer}
                   sub
                 />
 
@@ -1174,7 +1242,7 @@
                     onclick={toggleTeleportLayer}
                   />
                   <PoiItem
-                    dotClass="border-violet-950 bg-violet-200"
+                    dotClass="border-gray-950 bg-white"
                     label={m['map.poi.teleport_labels']()}
                     desc={m['map.poi.teleport_labels_desc']()}
                     enabled={mapState.teleportLabels}
