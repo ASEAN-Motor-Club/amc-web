@@ -15,18 +15,16 @@ export const flattenCargoType = (cargo: DeliveryCargo): DeliveryCargoKey[] => {
 
 export const getMatchJobSourceFn = (info: DeliveryPoint) => (job: DeliveryJob) =>
   job.cargos.some((cargo) =>
-    flattenCargoType(cargo.key).some((cargoKey) => info.allSupplyKey.includes(cargoKey)),
+    flattenCargoType(cargo).some((cargoKey) => info.allSupplyKey.includes(cargoKey)),
   ) &&
-  (job.source_points.length > 0
-    ? job.source_points.some((point) => point.guid === info.guid)
-    : true);
+  (job.source_points.length > 0 ? job.source_points.some((point) => point === info.guid) : true);
 
 export const getMatchJobDestFn = (info: DeliveryPoint) => (job: DeliveryJob) =>
   job.cargos.some((cargo) =>
-    flattenCargoType(cargo.key).some((cargoKey) => info.allDemandKey.includes(cargoKey)),
+    flattenCargoType(cargo).some((cargoKey) => info.allDemandKey.includes(cargoKey)),
   ) &&
   (job.destination_points.length > 0
-    ? job.destination_points.some((point) => point.guid === info.guid)
+    ? job.destination_points.some((point) => point === info.guid)
     : true);
 
 export const getInventoryAmount = (

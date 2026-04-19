@@ -78,14 +78,14 @@ describe('delivery utilities', () => {
       mockJob = {
         id: 1,
         name: 'Test Job',
-        cargos: [{ key: 'SmallBox' as DeliveryCargo, label: 'Small Box' }],
+        cargos: ['SmallBox'],
         source_points: [],
         destination_points: [],
         deliveries: [],
         quantity_requested: 10,
         quantity_fulfilled: 0,
         requested_at: '2024-01-01T00:00:00Z',
-        fulfilled_at: '',
+        fulfilled_at: null,
         expired_at: '2024-12-31T23:59:59Z',
         bonus_multiplier: 1.0,
         completion_bonus: 1000,
@@ -100,13 +100,13 @@ describe('delivery utilities', () => {
     });
 
     it('should not match jobs with cargo that delivery point does not supply', () => {
-      mockJob.cargos = [{ key: 'Coal' as DeliveryCargo, label: 'Coal' }];
+      mockJob.cargos = ['Coal'];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });
 
     it('should match jobs with cargo types that expand to supported keys', () => {
-      mockJob.cargos = [{ key: '_TSmallPackage' as DeliveryCargo, label: 'Small Package' }];
+      mockJob.cargos = ['_TSmallPackage'];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
@@ -118,57 +118,28 @@ describe('delivery utilities', () => {
     });
 
     it('should match when delivery point is in source points', () => {
-      mockJob.source_points = [
-        {
-          coord: { x: 0, y: 0, z: 0 },
-          guid: 'test-guid-123',
-          name: 'Test Point',
-          type: 'Warehouse_C',
-          data: {
-            deliveries: [],
-            inputInventory: [],
-            outputInventory: [],
-          },
-          last_updated: '2024-01-01T00:00:00Z',
-        },
-      ];
+      mockJob.source_points = ['test-guid-123'];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
     it('should not match when delivery point is not in source points', () => {
-      mockJob.source_points = [
-        {
-          coord: { x: 0, y: 0, z: 0 },
-          guid: 'different-guid',
-          name: 'Different Point',
-          type: 'Warehouse_C',
-          data: {
-            deliveries: [],
-            inputInventory: [],
-            outputInventory: [],
-          },
-          last_updated: '2024-01-01T00:00:00Z',
-        },
-      ];
+      mockJob.source_points = ['different-guid'];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });
 
     it('should handle multiple cargos - match if any is supported', () => {
       mockJob.cargos = [
-        { key: 'Coal' as DeliveryCargo, label: 'Coal' }, // Not supported
-        { key: 'SmallBox' as DeliveryCargo, label: 'Small Box' }, // Supported
+        'Coal', // Not supported
+        'SmallBox', // Supported
       ];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(true);
     });
 
     it('should not match when no cargos are supported', () => {
-      mockJob.cargos = [
-        { key: 'Coal' as DeliveryCargo, label: 'Coal' },
-        { key: 'Oil' as DeliveryCargo, label: 'Oil' },
-      ];
+      mockJob.cargos = ['Coal', 'Oil'];
       const matchFn = getMatchJobSourceFn(mockDeliveryPoint);
       expect(matchFn(mockJob)).toBe(false);
     });

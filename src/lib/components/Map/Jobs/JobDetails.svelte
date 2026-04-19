@@ -72,13 +72,16 @@
     }
 
     // eslint-disable-next-line svelte/prefer-svelte-reactivity
-    const contribMap = new Map<number, [string, number]>();
+    const contribMap = new Map<string, [string, number]>();
     for (const delivery of job.deliveries) {
-      const [currentName, currentQuantity] = contribMap.get(delivery.character.id) ?? [
+      const [currentName, currentQuantity] = contribMap.get(delivery.character.player_id) ?? [
         delivery.character.name,
         0,
       ];
-      contribMap.set(delivery.character.id, [currentName, currentQuantity + delivery.quantity]);
+      contribMap.set(delivery.character.player_id, [
+        currentName,
+        currentQuantity + delivery.quantity,
+      ]);
     }
 
     return Array.from(contribMap.entries()).map(([id, [name, quantity]]) => ({
@@ -189,8 +192,8 @@
             <ul
               class={['marker:text-text-500 list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}
             >
-              {#each job?.cargos ?? [] as cargo (cargo.key)}
-                <li class="ml-8">{getMtLocale(cargoName[cargo.key])}</li>
+              {#each job?.cargos ?? [] as cargo (cargo)}
+                <li class="ml-8">{getMtLocale(cargoName[cargo])}</li>
               {/each}
             </ul>
           </div>
@@ -205,9 +208,9 @@
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
-                {#each job.source_points as point (point.guid)}
+                {#each job.source_points as point (point)}
                   <li class="ml-8">
-                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                    <DeliveryLink {fullScreen} guid={point} truncate wrapperClass="w-full" />
                   </li>
                 {/each}
               </ul>
@@ -224,9 +227,9 @@
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
-                {#each job.destination_points as point (point.guid)}
+                {#each job.destination_points as point (point)}
                   <li class="ml-8">
-                    <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
+                    <DeliveryLink {fullScreen} guid={point} truncate wrapperClass="w-full" />
                   </li>
                 {/each}
               </ul>

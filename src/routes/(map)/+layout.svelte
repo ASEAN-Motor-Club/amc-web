@@ -122,10 +122,7 @@
       startDeliveryJobsPolling((jobs) => {
         jobsData = jobs.map((job) => ({
           ...job,
-          cargos: job.cargos.map((cargo) => ({
-            ...cargo,
-            key: cargo.key.replace('T::', '_T') as DeliveryCargo,
-          })),
+          cargos: job.cargos.map((cargo) => cargo.replace('T::', '_T') as DeliveryCargo),
         }));
         for (const job of jobsData) {
           jobsCache.set(job.id, job);

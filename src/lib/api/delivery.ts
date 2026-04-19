@@ -35,7 +35,7 @@ export const startDeliveryPointPolling = (
 };
 
 export const getDeliveryJobs = async (signal: AbortSignal): Promise<DeliveryJob[]> => {
-  return apiClient(`${PUBLIC_API_BASE}/api/deliveryjobs/`, signal, [], 'delivery jobs');
+  return apiClient(`${PUBLIC_API_BASE}/api/webui/deliveryjobs/`, signal, [], 'delivery jobs');
 };
 
 export const startDeliveryJobsPolling = (

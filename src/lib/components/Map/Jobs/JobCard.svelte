@@ -73,13 +73,13 @@
   <div class="text-text-700 dark:text-text-300 mb-2 text-sm">
     <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_cargo']()}</div>
     <div class="mb-2">
-      {job?.cargos.map((point) => getMtLocale(cargoName[point.key])).join(', ')}
+      {job?.cargos.map((point) => getMtLocale(cargoName[point])).join(', ')}
     </div>
     {#if job?.source_points && job.source_points.length > 0}
       <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_source_points']()}</div>
       <div class="mb-2">
-        {#each job.source_points as point, i (point.guid)}
-          <DeliveryLink {fullScreen} guid={point.guid} />{i < job.source_points.length - 1
+        {#each job.source_points as point, i (point)}
+          <DeliveryLink {fullScreen} guid={point} />{i < job.source_points.length - 1
             ? ', '
             : ''}
         {/each}
@@ -88,8 +88,8 @@
     {#if job?.destination_points && job.destination_points.length > 0}
       <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_destination_points']()}</div>
       <div class="mb-2">
-        {#each job.destination_points as point, i (point.guid)}
-          <DeliveryLink {fullScreen} guid={point.guid} />{i < job.destination_points.length - 1
+        {#each job.destination_points as point, i (point)}
+          <DeliveryLink {fullScreen} guid={point} />{i < job.destination_points.length - 1
             ? ', '
             : ''}
         {/each}

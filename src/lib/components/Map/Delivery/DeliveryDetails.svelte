@@ -84,7 +84,7 @@
   const filterMatchJobs = (job: DeliveryJob[], cargoToFilter: DeliveryCargo) => {
     return job.filter((job: DeliveryJob) =>
       job.cargos.some((cargo) =>
-        flattenCargoType(cargo.key).some((cargoKey) =>
+        flattenCargoType(cargo).some((cargoKey) =>
           flattenCargoType(cargoToFilter).includes(cargoKey),
         ),
       ),

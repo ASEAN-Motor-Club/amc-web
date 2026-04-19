@@ -139,16 +139,16 @@ export interface InputInventoryElement {
 }
 
 export interface DeliveryJob {
-  cargos: DeliveryJobCargo[];
-  source_points: DeliveryPointInfo[];
-  destination_points: DeliveryPointInfo[];
+  cargos: DeliveryCargo[];
+  source_points: string[];
+  destination_points: string[];
   deliveries: DeliveryJobDelivery[];
   id: number;
   name: string;
   quantity_requested: number;
   quantity_fulfilled: number;
   requested_at: string;
-  fulfilled_at: string;
+  fulfilled_at: string | null;
   expired_at: string;
   bonus_multiplier: number;
   completion_bonus: number;
@@ -156,13 +156,8 @@ export interface DeliveryJob {
   fulfilled: boolean;
 }
 
-export interface DeliveryJobCargo {
-  key: DeliveryCargo;
-  label: string;
-}
-
 export interface DeliveryJobDelivery {
-  character: Character;
+  character: Pick<Character, 'player_id' | 'name'>;
   timestamp: string;
   cargo_key: string;
   quantity: number;
