@@ -122,6 +122,10 @@
     "delivery_point": "จุดรับส่งสินค้า",
     "house": "บ้าน",
     "player": "ผู้เล่น",
+    "teleport_point": "เทเลพอร์ต",
+    "teleport_copy": "คัดลอกคำสั่ง /tp",
+    "teleport_copy_hint": "คลิกซ้ายเพื่อคัดลอกคำสั่ง /tp",
+    "teleport_copied": "คัดลอกแล้ว!",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",
     "more_results": [
@@ -184,7 +188,11 @@
       "pins": "หมุด",
       "pin_desc": "พินที่กำหนดเองแชร์ผ่าน URL",
       "pin_labels": "แสดงป้าย",
-      "pin_labels_desc": "แสดงป้ายข้อความถัดจากแต่ละพิน"
+      "pin_labels_desc": "แสดงป้ายข้อความถัดจากแต่ละพิน",
+      "teleport": "เทเลพอร์ต",
+      "teleport_desc": "จุดเทเลพอร์ตในเกม",
+      "teleport_labels": "แสดงป้าย",
+      "teleport_labels_desc": "แสดงป้ายชื่อถัดจากแต่ละจุดเทเลพอร์ต"
     }
   },
   "home": {

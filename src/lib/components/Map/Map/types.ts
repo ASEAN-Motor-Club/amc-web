@@ -1,10 +1,16 @@
-import type { Vector2 } from '$lib/types';
+import type { Vector2, Vector3 } from '$lib/types';
 
 export const enum PointType {
   Delivery,
   House,
   Player,
   Pin,
+  Teleport,
+}
+
+export interface TeleportPoint {
+  name: string;
+  coord: Vector3;
 }
 
 export interface PlayerData {

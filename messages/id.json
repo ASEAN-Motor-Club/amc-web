@@ -122,6 +122,10 @@
     "delivery_point": "Titik Pengantaran",
     "house": "Rumah",
     "player": "Pemain",
+    "teleport_point": "Teleport",
+    "teleport_copy": "Salin perintah /tp",
+    "teleport_copy_hint": "Klik kiri untuk menyalin perintah /tp",
+    "teleport_copied": "Disalin!",
     "player_name": "Nama Pemain",
     "search_placeholder": "Cari lokasi",
     "more_results": [
@@ -184,7 +188,11 @@
       "pins": "Pin",
       "pin_desc": "Pin kustom yang dibagikan lewat URL",
       "pin_labels": "Tampilkan label",
-      "pin_labels_desc": "Tampilkan label teks di setiap pin"
+      "pin_labels_desc": "Tampilkan label teks di setiap pin",
+      "teleport": "Teleport",
+      "teleport_desc": "Lokasi teleport dalam game",
+      "teleport_labels": "Tampilkan label",
+      "teleport_labels_desc": "Tampilkan label nama di setiap titik teleport"
     }
   },
   "home": {

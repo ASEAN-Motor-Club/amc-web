@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { PointType, type PlayerData } from './types';
+  import { PointType, type PlayerData, type TeleportPoint } from './types';
   import Card from '$lib/ui/Card/Card.svelte';
   import DeliveryInfo from './DeliveryInfo.svelte';
   import HousingInfo from './HousingInfo.svelte';
@@ -31,15 +31,22 @@
         pointType: PointType.House;
         info: House;
       }
+    | {
+        pointType: PointType.Teleport;
+        info: TeleportPoint;
+      }
   );
 
   export interface HoverInfoTooltipProps {
     houseData: HouseData | undefined;
     hoverInfo: HoverInfo | undefined;
     onClick?: () => void;
+    onCopyTeleport?: () => void;
+    teleportCopied?: boolean;
   }
 
-  const { hoverInfo, onClick, houseData }: HoverInfoTooltipProps = $props();
+  const { hoverInfo, onClick, houseData, onCopyTeleport, teleportCopied }: HoverInfoTooltipProps =
+    $props();
 
   const typeText = $derived.by(() => {
     if (!hoverInfo) {
@@ -53,6 +60,8 @@
         return m['map.player']();
       case PointType.House:
         return m['map.house']();
+      case PointType.Teleport:
+        return m['map.teleport_point']();
     }
   });
 
@@ -115,6 +124,8 @@
                 owner: houseData[hoverInfo.info.name].ownerName,
               })
             : m['housing.vacant_house']()}
+        {:else if hoverInfo.pointType === PointType.Teleport}
+          {hoverInfo.info.name}
         {:else if hoverInfo.pointType === PointType.Delivery}
           {getMtLocale(hoverInfo.info.name)}
         {:else}
@@ -129,6 +140,12 @@
           <HousingInfo {hoverInfo} {houseData} />
         {:else if hoverInfo.pointType === PointType.Player}
           <PlayerInfo {hoverInfo} />
+        {:else if hoverInfo.pointType === PointType.Teleport}
+          <div class="text-text-300 text-xs">
+            {Math.round(hoverInfo.info.coord.x)},
+            {Math.round(hoverInfo.info.coord.y)},
+            {Math.round(hoverInfo.info.coord.z)}
+          </div>
         {/if}
       {/if}
       <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
@@ -138,6 +155,27 @@
       {#if hoverInfo.pointType === PointType.Delivery}
         <Button size="xs" class="media-not-mouse:hidden text-text-300 mb-0.5 bg-white/10 px-2">
           {m['map.click_lock']()}
+        </Button>
+      {/if}
+      {#if hoverInfo.pointType === PointType.Teleport}
+        <Button
+          size="xs"
+          class="media-not-mouse:pointer-events-auto text-text-300 mb-0.5 bg-white/10 px-2"
+          onClick={onCopyTeleport}
+        >
+          <span class="relative">
+            <span class={['media-mouse:inline hidden', { invisible: teleportCopied }]}
+              >{m['map.teleport_copy_hint']()}</span
+            >
+            <span class={['media-not-mouse:inline hidden', { invisible: teleportCopied }]}
+              >{m['map.teleport_copy']()}</span
+            >
+            {#if teleportCopied}
+              <span class="absolute inset-0 flex items-center justify-center">
+                {m['map.teleport_copied']()}
+              </span>
+            {/if}
+          </span>
         </Button>
       {/if}
       {#if typeHasMoreInfo}

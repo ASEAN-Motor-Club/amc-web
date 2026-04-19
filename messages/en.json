@@ -122,6 +122,10 @@
     "delivery_point": "Delivery Point",
     "house": "House",
     "player": "Player",
+    "teleport_point": "Teleport",
+    "teleport_copy": "Copy /tp command",
+    "teleport_copy_hint": "Left click to copy /tp command",
+    "teleport_copied": "Copied!",
     "player_name": "Player Name",
     "search_placeholder": "Search for a location",
     "more_results": [
@@ -190,7 +194,11 @@
       "pins": "Pins",
       "pin_desc": "Custom pins shared via URL",
       "pin_labels": "Show labels",
-      "pin_labels_desc": "Display text labels next to each pin"
+      "pin_labels_desc": "Display text labels next to each pin",
+      "teleport": "Teleports",
+      "teleport_desc": "In-game teleport locations",
+      "teleport_labels": "Show labels",
+      "teleport_labels_desc": "Display name labels next to each teleport point"
     }
   },
   "home": {

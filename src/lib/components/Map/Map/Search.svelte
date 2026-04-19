@@ -31,7 +31,7 @@
         demandText?: string;
       }
     | {
-        pointType: PointType.House | PointType.Player | PointType.Pin;
+        pointType: PointType.House | PointType.Player | PointType.Pin | PointType.Teleport;
       }
   );
 

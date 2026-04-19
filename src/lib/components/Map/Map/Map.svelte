@@ -4,7 +4,7 @@
   import VectorSource from 'ol/source/Vector';
   import Point from 'ol/geom/Point';
   import Feature from 'ol/Feature';
-  import { onMount, untrack } from 'svelte';
+  import { onMount, untrack, getAbortSignal } from 'svelte';
   import { fade } from 'svelte/transition';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
@@ -12,7 +12,7 @@
   import PoiItem from './PoiItem.svelte';
   import type { MapBrowserEvent } from 'ol';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PlayerRoles, PointType, type PlayerData } from './types';
+  import { PlayerRoles, PointType, type PlayerData, type TeleportPoint } from './types';
   import {
     getDeliveryPointStyle,
     getHouseStyle,
@@ -40,6 +40,10 @@
     colorGray950,
     colorTextDark,
     defaultTransitionDurationMs,
+    colorViolet200,
+    colorViolet400,
+    colorViolet500,
+    colorViolet950,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
@@ -52,6 +56,7 @@
   import Search, { type SearchPoint } from './Search.svelte';
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
+  import { getTeleports } from '$lib/api/teleport';
   import { LineString } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
@@ -137,6 +142,49 @@
     style: (feature) => {
       PinLabelsStyle.getText()?.setText(feature.get('label') as string);
       return PinLabelsStyle;
+    },
+  });
+
+  let teleportData = $state<TeleportPoint[]>([]);
+  const haveTeleports = $derived(teleportData.length > 0);
+
+  const teleportSource = new VectorSource({
+    features: [] as Feature<Point>[],
+  });
+
+  const teleportLayer = new WebGLVectorLayer({
+    source: teleportSource,
+    style: {
+      'circle-radius': 5,
+      'circle-fill-color': ['case', ['==', ['get', 'hover'], 1], colorViolet200, colorViolet400],
+      'circle-stroke-color': colorViolet950,
+      'circle-stroke-width': 1,
+      'circle-rotate-with-view': false,
+      'circle-displacement': [0, 0],
+    },
+  });
+
+  const TeleportLabelsStyle = new Style({
+    text: new Text({
+      font: `600 0.5rem ${fontSans}`,
+      offsetY: -12,
+      fill: new Fill({
+        color: colorTextDark,
+      }),
+      stroke: new Stroke({
+        color: adjustOpacity(colorGray950, 0.4),
+        width: 3,
+      }),
+    }),
+  });
+
+  const teleportLabelsLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: teleportSource,
+    style: (feature) => {
+      TeleportLabelsStyle.getText()?.setText(feature.get('label') as string);
+      return TeleportLabelsStyle;
     },
   });
 
@@ -400,6 +448,7 @@
     houseLayer,
     playerPointLayer,
     playerNameLayer,
+    ...(haveTeleports ? [teleportLayer, teleportLabelsLayer] : []),
     ...(havePins ? [pinsLayer, pinLabelsLayer] : []),
   ]);
 
@@ -410,6 +459,8 @@
     playerName: true,
     pins: true,
     pinLabels: true,
+    teleport: true,
+    teleportLabels: true,
     jobOnly: false,
     houseVacantOnly: false,
     playerCopsOnly: false,
@@ -427,6 +478,8 @@
     houseVacantOnly: z.optional(z.boolean()),
     playerCopsOnly: z.optional(z.boolean()),
     playerCriminalOnly: z.optional(z.boolean()),
+    teleport: z.optional(z.boolean()),
+    teleportLabels: z.optional(z.boolean()),
   });
 
   onMount(() => {
@@ -453,6 +506,15 @@
           mapState.playerName = false;
           if (mapState.player) playerNameLayer.setVisible(false);
         }
+        if (state.teleport === false) {
+          mapState.teleport = false;
+          teleportLayer.setVisible(false);
+          teleportLabelsLayer.setVisible(false);
+        }
+        if (state.teleportLabels === false) {
+          mapState.teleportLabels = false;
+          if (mapState.teleport) teleportLabelsLayer.setVisible(false);
+        }
         mapState.jobOnly = state.jobOnly ?? false;
         mapState.houseVacantOnly = state.houseVacantOnly ?? false;
         mapState.playerCopsOnly = state.playerCopsOnly ?? false;
@@ -461,6 +523,30 @@
     } catch (e) {
       console.error('Failed to load map state:', e);
     }
+
+    getTeleports(getAbortSignal())
+      .then((data) => {
+        const points: TeleportPoint[] = data.map((d) => ({
+          name: d.name,
+          coord: { x: d.x, y: d.y, z: d.z },
+        }));
+        teleportSource.addFeatures(
+          points.map(
+            (p) =>
+              new Feature({
+                geometry: new Point(reProjectPoint([p.coord.x, p.coord.y])),
+                pointType: PointType.Teleport,
+                info: p,
+                label: p.name,
+                hover: 0,
+              }),
+          ),
+        );
+        teleportData = points;
+      })
+      .catch((e: unknown) => {
+        console.error('Failed to load teleport data:', e);
+      });
   });
 
   $effect(() => {
@@ -476,6 +562,8 @@
           houseVacantOnly: mapState.houseVacantOnly,
           playerCopsOnly: mapState.playerCopsOnly,
           playerCriminalOnly: mapState.playerCriminalOnly,
+          teleport: mapState.teleport,
+          teleportLabels: mapState.teleportLabels,
         }),
       );
     }
@@ -485,6 +573,22 @@
   let lockPoint: Feature | undefined = undefined;
   let hoverPoint: Feature | undefined = undefined;
   let hoverInfo: HoverInfo | undefined = $state();
+
+  let teleportCopyTimeout: ReturnType<typeof setTimeout> | undefined;
+  let copiedTeleportName = $state<string | undefined>(undefined);
+
+  const teleportCopied = $derived(
+    hoverInfo?.pointType === PointType.Teleport && hoverInfo.info.name === copiedTeleportName,
+  );
+
+  const handleCopyTeleport = () => {
+    if (hoverInfo?.pointType !== PointType.Teleport) return;
+    const name = hoverInfo.info.name;
+    navigator.clipboard.writeText(`/tp ${name}`);
+    copiedTeleportName = name;
+    clearTimeout(teleportCopyTimeout);
+    teleportCopyTimeout = setTimeout(() => (copiedTeleportName = undefined), 2000);
+  };
 
   const handlePointerMoveOrClick = (e: MapBrowserEvent) => {
     let currentHoverInfo: HoverInfo | undefined = undefined;
@@ -510,7 +614,8 @@
             layer !== playerNameLayer &&
             layer !== deliveryLineLayer &&
             layer !== pinLabelsLayer &&
-            layer !== pinsLayer
+            layer !== pinsLayer &&
+            layer !== teleportLabelsLayer
           );
         },
         hitTolerance: 10,
@@ -663,13 +768,20 @@
             goto(`/map?${newParams.toString()}`);
             return true;
           }
+          if (type === PointType.Teleport) {
+            handleCopyTeleport();
+            return true;
+          }
 
           return true;
         },
         {
           layerFilter: (layer) => {
             return (
-              layer === deliveryPointLayer || layer === residentPointLayer || layer === houseLayer
+              layer === deliveryPointLayer ||
+              layer === residentPointLayer ||
+              layer === houseLayer ||
+              layer === teleportLayer
             );
           },
           hitTolerance: 10,
@@ -742,6 +854,17 @@
     mapState.pins = true;
     pinsLayer.setVisible(true);
     pinLabelsLayer.setVisible(mapState.pinLabels);
+  };
+
+  const toggleTeleportLayer = () => {
+    mapState.teleport = !mapState.teleport;
+    teleportLayer.setVisible(mapState.teleport);
+    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
+  };
+
+  const toggleTeleportLabels = () => {
+    mapState.teleportLabels = !mapState.teleportLabels;
+    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
   };
 
   export const centerOnPoint = (point: [number, number]) => {
@@ -1038,6 +1161,27 @@
                     sub
                   />
                 {/if}
+
+                {#if haveTeleports}
+                  <div class="border-t border-gray-100/10"></div>
+
+                  <!-- Teleport -->
+                  <PoiItem
+                    dotClass="border-violet-950 bg-violet-400"
+                    label={m['map.poi.teleport']()}
+                    desc={m['map.poi.teleport_desc']()}
+                    enabled={mapState.teleport}
+                    onclick={toggleTeleportLayer}
+                  />
+                  <PoiItem
+                    dotClass="border-violet-950 bg-violet-200"
+                    label={m['map.poi.teleport_labels']()}
+                    desc={m['map.poi.teleport_labels_desc']()}
+                    enabled={mapState.teleportLabels}
+                    onclick={toggleTeleportLabels}
+                    sub
+                  />
+                {/if}
               </div>
             </Card>
           </div>
@@ -1057,5 +1201,11 @@
     </ClickAwayBlock>
   </div>
 
-  <HoverInfoTooltip {hoverInfo} {houseData} onClick={handleInfoClick} />
+  <HoverInfoTooltip
+    {hoverInfo}
+    {houseData}
+    onClick={handleInfoClick}
+    onCopyTeleport={handleCopyTeleport}
+    {teleportCopied}
+  />
 </div>
