@@ -226,7 +226,7 @@
     stroke: new Stroke({
       color: colorRed500,
       width: 2,
-      lineDash: [8, 6],
+      lineDash: [4, 6],
     }),
     text: new Text({
       font: `600 0.5rem ${fontSans}`,
