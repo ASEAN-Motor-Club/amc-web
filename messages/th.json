@@ -194,7 +194,9 @@
       "teleport": "เทเลพอร์ต",
       "teleport_desc": "จุดเทเลพอร์ตในเกม",
       "teleport_labels": "แสดงป้าย",
-      "teleport_labels_desc": "แสดงป้ายชื่อถัดจากแต่ละจุดเทเลพอร์ต"
+      "teleport_labels_desc": "แสดงป้ายชื่อถัดจากแต่ละจุดเทเลพอร์ต",
+      "shortcut_zone": "โซนทางลัด",
+      "shortcut_zone_desc": "โซนต้องห้ามสำหรับเงินอุดหนุนจากภาครัฐ"
     }
   },
   "home": {

@@ -79,9 +79,7 @@
       <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_source_points']()}</div>
       <div class="mb-2">
         {#each job.source_points as point, i (point)}
-          <DeliveryLink {fullScreen} guid={point} />{i < job.source_points.length - 1
-            ? ', '
-            : ''}
+          <DeliveryLink {fullScreen} guid={point} />{i < job.source_points.length - 1 ? ', ' : ''}
         {/each}
       </div>
     {/if}

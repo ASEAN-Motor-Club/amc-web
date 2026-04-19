@@ -194,7 +194,9 @@
       "teleport": "Teleport",
       "teleport_desc": "Lokasi teleport dalam game",
       "teleport_labels": "Tampilkan label",
-      "teleport_labels_desc": "Tampilkan label nama di setiap titik teleport"
+      "teleport_labels_desc": "Tampilkan label nama di setiap titik teleport",
+      "shortcut_zone": "Zona Shortcut",
+      "shortcut_zone_desc": "Zona terlarang untuk subsidi pemerintah"
     }
   },
   "home": {

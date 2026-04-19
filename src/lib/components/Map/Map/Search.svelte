@@ -31,7 +31,12 @@
         demandText?: string;
       }
     | {
-        pointType: PointType.House | PointType.Player | PointType.Pin | PointType.Teleport;
+        pointType:
+          | PointType.House
+          | PointType.Player
+          | PointType.Pin
+          | PointType.Teleport
+          | PointType.ShortcutZone;
       }
   );
 

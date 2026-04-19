@@ -6,6 +6,7 @@ export const enum PointType {
   Player,
   Pin,
   Teleport,
+  ShortcutZone,
 }
 
 export interface TeleportPoint {

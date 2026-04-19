@@ -42,7 +42,6 @@
     defaultTransitionDurationMs,
     colorViolet200,
     colorViolet400,
-    colorViolet500,
     colorViolet950,
   } from '$lib/tw-var';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
@@ -57,7 +56,8 @@
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
-  import { LineString } from 'ol/geom';
+  import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
+  import { LineString, Polygon } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
@@ -211,6 +211,41 @@
     style: (feature) => {
       TeleportLabelsStyle.getText()?.setText(feature.get('label') as string);
       return TeleportLabelsStyle;
+    },
+  });
+
+  let shortcutZoneData = $state<ShortcutZone[]>([]);
+  const haveShortcutZones = $derived(shortcutZoneData.length > 0);
+
+  const shortcutZoneSource = new VectorSource({
+    features: [] as Feature<Polygon>[],
+  });
+
+  const shortcutZoneStyle = new Style({
+    fill: new Fill({ color: adjustOpacity(colorRed500, 0.12) }),
+    stroke: new Stroke({
+      color: colorRed500,
+      width: 2,
+      lineDash: [8, 6],
+    }),
+    text: new Text({
+      font: `600 0.5rem ${fontSans}`,
+      overflow: true,
+      fill: new Fill({ color: colorTextDark }),
+      stroke: new Stroke({
+        color: adjustOpacity(colorGray950, 0.4),
+        width: 3,
+      }),
+    }),
+  });
+
+  const shortcutZoneLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: shortcutZoneSource,
+    style: (feature) => {
+      shortcutZoneStyle.getText()?.setText(feature.get('name') as string);
+      return shortcutZoneStyle;
     },
   });
 
@@ -468,6 +503,7 @@
   };
 
   const layers = $derived([
+    ...(haveShortcutZones ? [shortcutZoneLayer] : []),
     deliveryLineLayer,
     deliveryPointLayer,
     residentPointLayer,
@@ -488,6 +524,7 @@
     pinLabels: true,
     teleport: true,
     teleportLabels: false,
+    shortcutZone: true,
     jobOnly: false,
     houseVacantOnly: false,
     houseLabels: false,
@@ -509,6 +546,7 @@
     playerCriminalOnly: z.optional(z.boolean()),
     teleport: z.optional(z.boolean()),
     teleportLabels: z.optional(z.boolean()),
+    shortcutZone: z.optional(z.boolean()),
   });
 
   onMount(() => {
@@ -543,6 +581,10 @@
         if (state.teleportLabels === false) {
           mapState.teleportLabels = false;
           if (mapState.teleport) teleportLabelsLayer.setVisible(false);
+        }
+        if (state.shortcutZone === false) {
+          mapState.shortcutZone = false;
+          shortcutZoneLayer.setVisible(false);
         }
         mapState.jobOnly = state.jobOnly ?? false;
         mapState.houseVacantOnly = state.houseVacantOnly ?? false;
@@ -580,6 +622,27 @@
       .catch((e: unknown) => {
         console.error('Failed to load teleport data:', e);
       });
+
+    getShortcutZones(getAbortSignal())
+      .then((data) => {
+        shortcutZoneSource.addFeatures(
+          data.map(
+            (zone) =>
+              new Feature({
+                geometry: new Polygon([
+                  zone.coordinates.map(([x, y]) => reProjectPoint([x, y] as [number, number])),
+                ]),
+                pointType: PointType.ShortcutZone,
+                name: zone.name,
+                info: zone,
+              }),
+          ),
+        );
+        shortcutZoneData = data;
+      })
+      .catch((e: unknown) => {
+        console.error('Failed to load shortcut zone data:', e);
+      });
   });
 
   $effect(() => {
@@ -598,6 +661,7 @@
           playerCriminalOnly: mapState.playerCriminalOnly,
           teleport: mapState.teleport,
           teleportLabels: mapState.teleportLabels,
+          shortcutZone: mapState.shortcutZone,
         }),
       );
     }
@@ -910,6 +974,11 @@
   const toggleTeleportLabels = () => {
     mapState.teleportLabels = !mapState.teleportLabels;
     teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
+  };
+
+  const toggleShortcutZoneLayer = () => {
+    mapState.shortcutZone = !mapState.shortcutZone;
+    shortcutZoneLayer.setVisible(mapState.shortcutZone);
   };
 
   export const centerOnPoint = (point: [number, number]) => {
@@ -1248,6 +1317,19 @@
                     enabled={mapState.teleportLabels}
                     onclick={toggleTeleportLabels}
                     sub
+                  />
+                {/if}
+
+                {#if haveShortcutZones}
+                  <div class="border-t border-gray-100/10"></div>
+
+                  <!-- Shortcut Zones -->
+                  <PoiItem
+                    dotClass="border-red-500 bg-red-500/12 border-dashed border-2"
+                    label={m['map.poi.shortcut_zone']()}
+                    desc={m['map.poi.shortcut_zone_desc']()}
+                    enabled={mapState.shortcutZone}
+                    onclick={toggleShortcutZoneLayer}
                   />
                 {/if}
               </div>

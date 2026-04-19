@@ -200,7 +200,9 @@
       "teleport": "Teleports",
       "teleport_desc": "In-game teleport locations",
       "teleport_labels": "Show labels",
-      "teleport_labels_desc": "Display name labels next to each teleport point"
+      "teleport_labels_desc": "Display name labels next to each teleport point",
+      "shortcut_zone": "Shortcut Zones",
+      "shortcut_zone_desc": "Prohibited zones for government subsidies"
     }
   },
   "home": {
