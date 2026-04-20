@@ -196,7 +196,9 @@
       "teleport_labels": "แสดงป้าย",
       "teleport_labels_desc": "แสดงป้ายชื่อถัดจากแต่ละจุดเทเลพอร์ต",
       "shortcut_zone": "โซนทางลัด",
-      "shortcut_zone_desc": "โซนต้องห้ามสำหรับเงินอุดหนุนจากภาครัฐ"
+      "shortcut_zone_desc": "โซนต้องห้ามสำหรับเงินอุดหนุนจากภาครัฐ",
+      "shortcut_zone_labels": "แสดงป้าย",
+      "shortcut_zone_labels_desc": "แสดงป้ายชื่อบนแต่ละโซนทางลัด"
     }
   },
   "home": {

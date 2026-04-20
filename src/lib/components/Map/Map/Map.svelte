@@ -170,6 +170,7 @@
     source: houseSource,
     visible: false,
     style: (feature) => {
+      if (mapState.houseVacantOnly && !feature.get('vacant')) return [];
       houseNameStyle.getText()?.setText(feature.get('label') as string);
       return houseNameStyle;
     },
@@ -209,6 +210,7 @@
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderOrder: null as any,
     source: teleportSource,
+    visible: false,
     style: (feature) => {
       TeleportLabelsStyle.getText()?.setText(feature.get('label') as string);
       return TeleportLabelsStyle;
@@ -245,7 +247,9 @@
     renderOrder: null as any,
     source: shortcutZoneSource,
     style: (feature) => {
-      shortcutZoneStyle.getText()?.setText(feature.get('name') as string);
+      shortcutZoneStyle
+        .getText()
+        ?.setText(mapState.shortcutZoneLabels ? (feature.get('name') as string) : '');
       return shortcutZoneStyle;
     },
   });
@@ -530,6 +534,7 @@
     teleport: true,
     teleportLabels: false,
     shortcutZone: true,
+    shortcutZoneLabels: true,
     jobOnly: false,
     houseVacantOnly: false,
     houseLabels: false,
@@ -552,6 +557,7 @@
     teleport: z.optional(z.boolean()),
     teleportLabels: z.optional(z.boolean()),
     shortcutZone: z.optional(z.boolean()),
+    shortcutZoneLabels: z.optional(z.boolean()),
   });
 
   onMount(() => {
@@ -590,6 +596,9 @@
         if (state.shortcutZone === false) {
           mapState.shortcutZone = false;
           shortcutZoneLayer.setVisible(false);
+        }
+        if (state.shortcutZoneLabels === false) {
+          mapState.shortcutZoneLabels = false;
         }
         mapState.jobOnly = state.jobOnly ?? false;
         mapState.houseVacantOnly = state.houseVacantOnly ?? false;
@@ -667,6 +676,7 @@
           teleport: mapState.teleport,
           teleportLabels: mapState.teleportLabels,
           shortcutZone: mapState.shortcutZone,
+          shortcutZoneLabels: mapState.shortcutZoneLabels,
         }),
       );
     }
@@ -1001,6 +1011,11 @@
     shortcutZoneLayer.setVisible(mapState.shortcutZone);
   };
 
+  const toggleShortcutZoneLabels = () => {
+    mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
+    shortcutZoneLayer.changed();
+  };
+
   export const centerOnPoint = (point: [number, number]) => {
     map.centerOn(reProjectPoint(point));
   };
@@ -1173,18 +1188,7 @@
 
   $effect(() => {
     houseLayer.setStyle(getHouseStyle(mapState.houseVacantOnly));
-    houseNameLayer.setStyle(
-      mapState.houseVacantOnly
-        ? (feature) => {
-            if (!feature.get('vacant')) return [];
-            houseNameStyle.getText()?.setText(feature.get('label') as string);
-            return houseNameStyle;
-          }
-        : (feature) => {
-            houseNameStyle.getText()?.setText(feature.get('label') as string);
-            return houseNameStyle;
-          },
-    );
+    houseNameLayer.changed();
   });
 </script>
 
@@ -1233,6 +1237,7 @@
                   desc={m['map.poi.jobs_only_desc']()}
                   enabled={mapState.jobOnly}
                   onclick={() => (mapState.jobOnly = !mapState.jobOnly)}
+                  parentEnabled={mapState.delivery}
                   sub
                 />
 
@@ -1247,19 +1252,21 @@
                   onclick={toggleHouseLayer}
                 />
                 <PoiItem
-                  dotClass="border-cyan-950 bg-cyan-300"
-                  label={m['map.poi.house_vacant_only']()}
-                  desc={m['map.poi.house_vacant_only_desc']()}
-                  enabled={mapState.houseVacantOnly}
-                  onclick={() => (mapState.houseVacantOnly = !mapState.houseVacantOnly)}
-                  sub
-                />
-                <PoiItem
                   dotClass="border-gray-950 bg-white"
                   label={m['map.poi.house_labels']()}
                   desc={m['map.poi.house_labels_desc']()}
                   enabled={mapState.houseLabels}
                   onclick={toggleHouseNameLayer}
+                  parentEnabled={mapState.house}
+                  sub
+                />
+                <PoiItem
+                  dotClass="border-cyan-950 bg-cyan-300"
+                  label={m['map.poi.house_vacant_only']()}
+                  desc={m['map.poi.house_vacant_only_desc']()}
+                  enabled={mapState.houseVacantOnly}
+                  onclick={() => (mapState.houseVacantOnly = !mapState.houseVacantOnly)}
+                  parentEnabled={mapState.house}
                   sub
                 />
 
@@ -1279,6 +1286,7 @@
                   desc={m['map.poi.player_names_desc']()}
                   enabled={mapState.playerName}
                   onclick={togglePlayerName}
+                  parentEnabled={mapState.player}
                   sub
                 />
                 <PoiItem
@@ -1287,6 +1295,7 @@
                   desc={m['map.poi.player_police_desc']()}
                   enabled={mapState.playerCopsOnly}
                   onclick={() => (mapState.playerCopsOnly = !mapState.playerCopsOnly)}
+                  parentEnabled={mapState.player}
                   sub
                 />
                 <PoiItem
@@ -1295,6 +1304,7 @@
                   desc={m['map.poi.player_criminal_desc']()}
                   enabled={mapState.playerCriminalOnly}
                   onclick={() => (mapState.playerCriminalOnly = !mapState.playerCriminalOnly)}
+                  parentEnabled={mapState.player}
                   sub
                 />
 
@@ -1315,6 +1325,7 @@
                     desc={m['map.poi.pin_labels_desc']()}
                     enabled={mapState.pinLabels}
                     onclick={togglePinLabels}
+                    parentEnabled={mapState.pins}
                     sub
                   />
                 {/if}
@@ -1336,6 +1347,7 @@
                     desc={m['map.poi.teleport_labels_desc']()}
                     enabled={mapState.teleportLabels}
                     onclick={toggleTeleportLabels}
+                    parentEnabled={mapState.teleport}
                     sub
                   />
                 {/if}
@@ -1350,6 +1362,15 @@
                     desc={m['map.poi.shortcut_zone_desc']()}
                     enabled={mapState.shortcutZone}
                     onclick={toggleShortcutZoneLayer}
+                  />
+                  <PoiItem
+                    dotClass="border-gray-950 bg-white"
+                    label={m['map.poi.shortcut_zone_labels']()}
+                    desc={m['map.poi.shortcut_zone_labels_desc']()}
+                    enabled={mapState.shortcutZoneLabels}
+                    onclick={toggleShortcutZoneLabels}
+                    parentEnabled={mapState.shortcutZone}
+                    sub
                   />
                 {/if}
               </div>

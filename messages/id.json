@@ -196,7 +196,9 @@
       "teleport_labels": "Tampilkan label",
       "teleport_labels_desc": "Tampilkan label nama di setiap titik teleport",
       "shortcut_zone": "Zona Shortcut",
-      "shortcut_zone_desc": "Zona terlarang untuk subsidi pemerintah"
+      "shortcut_zone_desc": "Zona terlarang untuk subsidi pemerintah",
+      "shortcut_zone_labels": "Tampilkan label",
+      "shortcut_zone_labels_desc": "Tampilkan label nama di setiap zona shortcut"
     }
   },
   "home": {

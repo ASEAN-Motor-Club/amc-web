@@ -202,7 +202,9 @@
       "teleport_labels": "Show labels",
       "teleport_labels_desc": "Display name labels next to each teleport point",
       "shortcut_zone": "Shortcut Zones",
-      "shortcut_zone_desc": "Prohibited zones for government subsidies"
+      "shortcut_zone_desc": "Prohibited zones for government subsidies",
+      "shortcut_zone_labels": "Show labels",
+      "shortcut_zone_labels_desc": "Display name labels on each shortcut zone"
     }
   },
   "home": {
