@@ -2,11 +2,6 @@
   import type { Vector2 } from '$lib/types';
   import type { ClassValue } from 'svelte/elements';
   import OlMap from '../OlMap/OlMap.svelte';
-  import VectorSource from 'ol/source/Vector';
-  import WebGLVectorLayer from 'ol/layer/WebGLVector';
-  import { Feature } from 'ol';
-  import Collection from 'ol/Collection';
-  import { Point, LineString } from 'ol/geom';
   import {
     colorSky400,
     colorSky600,
@@ -16,19 +11,14 @@
     colorYellow300,
     colorOrange500,
     colorYellow100,
-    textXs,
-    fontSans,
     colorWhite,
     colorSky950,
-    adjustOpacity,
-    colorGray950,
     colorTextDark,
+    defaultTransitionDurationMs,
   } from '$lib/tw-var';
-  import type { MapBrowserEvent } from 'ol';
   import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
-  import Translate from 'ol/interaction/Translate';
-  import VectorLayer from 'ol/layer/Vector';
-  import { Fill, Stroke, Style, Text } from 'ol/style';
+  import { prefersReducedMotion } from 'svelte/motion';
+  import type { Map as MaplibreMap, MapMouseEvent } from 'maplibre-gl';
 
   export interface TrackPoint {
     coord: Vector2;
@@ -81,391 +71,441 @@
     showNum = false,
   }: EditorOlMapProps = $props();
 
-  const trackPointFeaturesCollection = new Collection<Feature>();
-  const trackPointSource = new VectorSource({ features: trackPointFeaturesCollection });
-  const lineFeaturesCollection = new Collection<Feature>();
-  const lineSource = new VectorSource({ features: lineFeaturesCollection });
-  const selectedPointFeaturesCollection = new Collection<Feature>();
-  const selectedPointSource = new VectorSource({ features: selectedPointFeaturesCollection });
-  const gateFeaturesCollection = new Collection<Feature>();
-  const gateSource = new VectorSource({ features: gateFeaturesCollection });
-  const selectedGateFeaturesCollection = new Collection<Feature>();
-  const selectedGateSource = new VectorSource({ features: selectedGateFeaturesCollection });
+  // ──────────────────────────────────────────────
+  // Source IDs
+  // ──────────────────────────────────────────────
+  const SRC_TRACK = 'editor-track';
+  const SRC_LINE = 'editor-line';
+  const SRC_SELECTED = 'editor-selected';
+  const SRC_GATE = 'editor-gate';
+  const SRC_SELECTED_GATE = 'editor-selected-gate';
 
-  const trackPointLayer = new WebGLVectorLayer({
-    source: trackPointSource,
-    style: {
-      'circle-radius': 6,
-      'circle-fill-color': ['match', ['get', 'hover'], 1, colorSky400, colorSky600],
-      'circle-stroke-color': colorSky950,
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-      'circle-opacity': ['match', ['get', 'selected'], 1, 0.5, 1],
-    },
-  });
+  // Layer IDs
+  const LYR_LINE = 'editor-line-layer';
+  const LYR_TRACK = 'editor-track-layer';
+  const LYR_ARROW = 'editor-arrow-layer';
+  const LYR_NUMBER = 'editor-number-layer';
+  const LYR_SELECTED = 'editor-selected-layer';
+  const LYR_SELECTED_ARROW = 'editor-selected-arrow-layer';
+  const LYR_GATE = 'editor-gate-layer';
+  const LYR_SELECTED_GATE = 'editor-selected-gate-layer';
 
-  const arrowLayer = new WebGLVectorLayer({
-    source: trackPointSource,
-    style: {
-      'icon-src':
-        'data:image/svg+xml;base64,' +
-        btoa(`
-        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 2 L18 10 L14 10 L14 18 L6 18 L6 10 L2 10 Z" fill="${colorRed600}"/>
-        </svg>
-      `),
-      'icon-width': 20,
-      'icon-height': 20,
-      'icon-rotation': ['+', ['get', 'yaw'], Math.PI / 2],
-      'icon-rotate-with-view': false,
-      'icon-anchor': [0.5, 0.8],
-      'icon-opacity': ['match', ['get', 'selected'], 1, 0.5, 1],
-    },
-  });
+  // Arrow icon as base64 SVG
+  const ARROW_SVG =
+    'data:image/svg+xml;base64,' +
+    btoa(
+      `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">` +
+        `<path d="M10 2 L18 10 L14 10 L14 18 L6 18 L6 10 L2 10 Z" fill="${colorRed600}"/>` +
+        `</svg>`,
+    );
 
-  const numberLayerStyle = new Style({
-    text: new Text({
-      font: `600 ${textXs} ${fontSans}`,
-      offsetY: -22,
-      fill: new Fill({
-        color: colorTextDark,
+  let mlMap: MaplibreMap | undefined = $state();
+  let mapComponent: OlMap | undefined = $state();
+  // Track the feature id of the hovered track point (for feature-state hover)
+  let hoveredTrackId: number | null = null;
+  // Drag state
+  let isDragging = $state(false);
+
+  // ──────────────────────────────────────────────
+  // GeoJSON builders
+  // ──────────────────────────────────────────────
+  const buildTrackGeoJson = (): GeoJSON.FeatureCollection => ({
+    type: 'FeatureCollection',
+    features: points
+      .filter((_, i) => selectedPoint?.index !== i)
+      .map((pt, localIdx) => {
+        // map back to original index
+        const originalIdx =
+          selectedPoint !== undefined && localIdx >= selectedPoint.index
+            ? localIdx + 1
+            : localIdx;
+        const [lng, lat] = reProjectPoint([pt.coord.x, pt.coord.y]);
+        return {
+          type: 'Feature',
+          id: originalIdx,
+          geometry: { type: 'Point', coordinates: [lng, lat] },
+          properties: {
+            index: originalIdx,
+            yaw: pt.yaw ?? 0,
+          },
+        } satisfies GeoJSON.Feature;
       }),
-
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
   });
 
-  const trackPointNumberLayer = new VectorLayer({
-    source: trackPointSource,
-    style: (feature) => {
-      numberLayerStyle.getText()?.setText(((feature.get('index') as number) + 1).toString());
-      return numberLayerStyle;
-    },
-  });
-
-  const lineLayer = new WebGLVectorLayer({
-    source: lineSource,
-    style: {
-      'stroke-color': 'rgba(255, 255, 255, 0.25)',
-      'stroke-width': 2,
-      'stroke-line-cap': 'round',
-      'stroke-line-join': 'round',
-    },
-  });
-
-  const selectedPointLayer = new WebGLVectorLayer({
-    source: selectedPointSource,
-    style: {
-      'circle-radius': 6,
-      'circle-fill-color': colorAmber500,
-      'circle-stroke-color': colorWhite,
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const selectedArrowLayer = new WebGLVectorLayer({
-    source: selectedPointSource,
-    style: {
-      'icon-src':
-        'data:image/svg+xml;base64,' +
-        btoa(`
-        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 2 L18 10 L14 10 L14 18 L6 18 L6 10 L2 10 Z" fill="${colorRed600}"/>
-        </svg>
-      `),
-      'icon-width': 20,
-      'icon-height': 20,
-      'icon-rotation': ['+', ['get', 'yaw'], Math.PI / 2],
-      'icon-rotate-with-view': false,
-      'icon-anchor': [0.5, 0.8],
-    },
-  });
-
-  const gateLayer = new WebGLVectorLayer({
-    source: gateSource,
-    style: {
-      'stroke-color': [
-        'case',
-        ['==', ['get', 'selected'], 1],
-        colorYellow100,
-        ['==', ['get', 'hover'], 1],
-        colorYellow300,
-        colorYellow500,
+  const buildLineGeoJson = (): GeoJSON.FeatureCollection => {
+    if (points.length < 2) return { type: 'FeatureCollection', features: [] };
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 0,
+          geometry: {
+            type: 'LineString',
+            coordinates: points.map((pt) => reProjectPoint([pt.coord.x, pt.coord.y])),
+          },
+          properties: {},
+        },
       ],
-      'stroke-width': 4,
-      'stroke-line-cap': 'butt',
-    },
-  });
-
-  const selectedGateLayer = new WebGLVectorLayer({
-    source: selectedGateSource,
-    style: {
-      'stroke-color': colorOrange500,
-      'stroke-width': 4,
-      'stroke-line-cap': 'butt',
-    },
-  });
-
-  $effect(() => {
-    trackPointFeaturesCollection.clear();
-    lineFeaturesCollection.clear();
-    selectedPointFeaturesCollection.clear();
-    gateFeaturesCollection.clear();
-    selectedGateFeaturesCollection.clear();
-
-    const pointFeatures: Feature[] = [];
-    const gateFeatures: Feature[] = [];
-
-    for (let i = 0; i < points.length; i++) {
-      const point = points[i];
-      const reprojectedPoint = reProjectPoint([point.coord.x, point.coord.y]);
-
-      const isSelected = selectedPoint?.index === i;
-
-      if (gateMode) {
-        const yaw = point.yaw ?? 0;
-        const scaleY = point.scaleY ?? 1;
-        const halfWidth = (scaleY * 100) / 2;
-
-        const perpAngle = -(yaw + Math.PI / 2);
-
-        const x1 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
-        const y1 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
-        const x2 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
-        const y2 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
-
-        const gateFeature = new Feature({
-          geometry: new LineString([
-            [x1, y1],
-            [x2, y2],
-          ]),
-          index: i,
-          selected: isSelected,
-        });
-
-        gateFeatures.push(gateFeature);
-      } else {
-        const pointFeature = new Feature({
-          geometry: new Point(reprojectedPoint),
-          yaw: point.yaw ?? 0,
-          index: i,
-          selected: isSelected,
-        });
-
-        pointFeatures.push(pointFeature);
-      }
-    }
-
-    if (gateMode) {
-      gateFeaturesCollection.extend(gateFeatures);
-    } else {
-      trackPointFeaturesCollection.extend(pointFeatures);
-    }
-
-    if (selectedPoint) {
-      const selectedIndex = selectedPoint.index;
-      if (selectedIndex >= 0 && selectedIndex < points.length) {
-        const reprojectedPoint = reProjectPoint([selectedPoint.coord.x, selectedPoint.coord.y]);
-
-        if (gateMode) {
-          const yaw = selectedPoint.yaw ?? 0;
-          const scaleY = selectedPoint.scaleY ?? 1;
-          const halfWidth = (scaleY * 100) / 2;
-
-          const perpAngle = -(yaw + Math.PI / 2);
-
-          const x1 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
-          const y1 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
-          const x2 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
-          const y2 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
-
-          const selectedGateFeature = new Feature({
-            geometry: new LineString([
-              [x1, y1],
-              [x2, y2],
-            ]),
-          });
-
-          selectedGateFeaturesCollection.extend([selectedGateFeature]);
-        } else {
-          const selectedFeature = new Feature({
-            geometry: new Point(reprojectedPoint),
-            yaw: selectedPoint.yaw ?? 0,
-          });
-
-          selectedPointFeaturesCollection.extend([selectedFeature]);
-        }
-      }
-    }
-
-    if (points.length >= 2) {
-      const lineCoordinates = points.map((point) => reProjectPoint([point.coord.x, point.coord.y]));
-
-      const lineFeature = new Feature({
-        geometry: new LineString(lineCoordinates),
-      });
-
-      lineFeaturesCollection.extend([lineFeature]);
-    }
-  });
-
-  $effect(() => {
-    if (translateInteraction && map.getMap) {
-      map.getMap().removeInteraction(translateInteraction);
-      translateInteraction = null;
-    }
-
-    if (selectedPoint && onSelectedPointMove && map.getMap) {
-      translateInteraction = createTranslateInteraction();
-      map.getMap().addInteraction(translateInteraction);
-    }
-
-    return () => {
-      if (translateInteraction && map.getMap) {
-        map.getMap().removeInteraction(translateInteraction);
-        translateInteraction = null;
-      }
     };
+  };
+
+  const buildSelectedGeoJson = (): GeoJSON.FeatureCollection => {
+    if (!selectedPoint) return { type: 'FeatureCollection', features: [] };
+    const [lng, lat] = reProjectPoint([selectedPoint.coord.x, selectedPoint.coord.y]);
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 0,
+          geometry: { type: 'Point', coordinates: [lng, lat] },
+          properties: { yaw: selectedPoint.yaw ?? 0 },
+        },
+      ],
+    };
+  };
+
+  const buildGateGeoJson = (
+    pts: TrackPoint[],
+    excludeIdx?: number,
+  ): GeoJSON.FeatureCollection => ({
+    type: 'FeatureCollection',
+    features: pts
+      .map((pt, i) => {
+        if (i === excludeIdx) return null;
+        return makeGateFeature(pt, i, false);
+      })
+      .filter((f) => f !== null),
   });
 
-  let map: OlMap;
-  let currentHoveredFeature: Feature | null = null;
-  let translateInteraction: Translate | null = null;
+  const buildSelectedGateGeoJson = (): GeoJSON.FeatureCollection => {
+    if (!selectedPoint) return { type: 'FeatureCollection', features: [] };
+    const f = makeGateFeature(selectedPoint, 0, false);
+    return { type: 'FeatureCollection', features: [f] };
+  };
 
-  const createTranslateInteraction = () => {
-    const translate = new Translate({
-      layers: gateMode ? [selectedGateLayer] : [selectedPointLayer],
+  const makeGateFeature = (
+    pt: TrackPoint,
+    id: number,
+    _selected: boolean,
+  ): GeoJSON.Feature => {
+    const [cx, cy] = reProjectPoint([pt.coord.x, pt.coord.y]);
+    const yaw = pt.yaw ?? 0;
+    const scaleY = pt.scaleY ?? 1;
+    const halfWidth = (scaleY * 100) / 2;
+    // Compute perpendicular in screen-degree space (small enough to be linear)
+    const perpAngle = -(yaw + Math.PI / 2);
+    const dLng = Math.cos(perpAngle) * halfWidth * (360 / 2200000);
+    const dLat = Math.sin(perpAngle) * halfWidth * (170.102258 / 2200000);
+    return {
+      type: 'Feature',
+      id,
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [cx + dLng, cy + dLat],
+          [cx - dLng, cy - dLat],
+        ],
+      },
+      properties: { index: id },
+    };
+  };
+
+  // ──────────────────────────────────────────────
+  // Map setup
+  // ──────────────────────────────────────────────
+  const handleMapReady = (map: MaplibreMap) => {
+    mlMap = map;
+
+    // Load arrow icon
+    const img = new Image(20, 20);
+    img.onload = () => {
+      if (!map.hasImage('arrow-icon')) map.addImage('arrow-icon', img);
+    };
+    img.src = ARROW_SVG;
+
+    // Sources
+    map.addSource(SRC_LINE, { type: 'geojson', data: buildLineGeoJson() });
+    map.addSource(SRC_TRACK, { type: 'geojson', data: buildTrackGeoJson(), promoteId: 'index' });
+    map.addSource(SRC_SELECTED, { type: 'geojson', data: buildSelectedGeoJson() });
+    map.addSource(SRC_GATE, { type: 'geojson', data: buildGateGeoJson(points, selectedPoint?.index), promoteId: 'index' });
+    map.addSource(SRC_SELECTED_GATE, { type: 'geojson', data: buildSelectedGateGeoJson() });
+
+    // ── Line ──
+    map.addLayer({
+      id: LYR_LINE,
+      type: 'line',
+      source: SRC_LINE,
+      layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': 'rgba(255,255,255,0.25)', 'line-width': 2 },
     });
 
-    translate.on('translateend', (event) => {
-      if (!onSelectedPointMove || !selectedPoint) return;
+    // ── Track points (non-selected) ──
+    map.addLayer({
+      id: LYR_TRACK,
+      type: 'circle',
+      source: SRC_TRACK,
+      paint: {
+        'circle-radius': 6,
+        'circle-color': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          colorSky400,
+          colorSky600,
+        ],
+        'circle-stroke-color': colorSky950,
+        'circle-stroke-width': 1,
+        'circle-opacity': 1,
+      },
+    });
 
-      const features = event.features.getArray();
-      if (features.length > 0) {
-        const feature = features[0];
-        const geometry = feature.getGeometry();
-        let newCoordinates: [number, number];
+    // ── Arrow layer for non-selected points (symbol) ──
+    map.addLayer({
+      id: LYR_ARROW,
+      type: 'symbol',
+      source: SRC_TRACK,
+      layout: {
+        'icon-image': 'arrow-icon',
+        'icon-size': 1,
+        'icon-rotate': ['*', ['get', 'yaw'], 180 / Math.PI],
+        'icon-rotation-alignment': 'map',
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true,
+      },
+    });
 
-        if (gateMode) {
-          const lineGeometry = geometry as LineString;
-          const coordinates = lineGeometry.getCoordinates();
-          const center = [
-            (coordinates[0][0] + coordinates[1][0]) / 2,
-            (coordinates[0][1] + coordinates[1][1]) / 2,
-          ];
-          newCoordinates = center as [number, number];
-        } else {
-          const pointGeometry = geometry as Point;
-          newCoordinates = pointGeometry.getCoordinates() as [number, number];
-        }
+    // ── Point numbers ──
+    map.addLayer({
+      id: LYR_NUMBER,
+      type: 'symbol',
+      source: SRC_TRACK,
+      layout: {
+        'text-field': ['to-string', ['+', ['get', 'index'], 1]],
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 12,
+        'text-offset': [0, -2.5],
+        'text-allow-overlap': true,
+        'text-ignore-placement': true,
+        visibility: showNum ? 'visible' : 'none',
+      },
+      paint: {
+        'text-color': colorTextDark,
+        'text-halo-color': 'rgba(15,23,42,0.4)',
+        'text-halo-width': 2,
+      },
+    });
 
-        const originalCoord = reProjectPointInverse(newCoordinates);
+    // ── Selected point ──
+    map.addLayer({
+      id: LYR_SELECTED,
+      type: 'circle',
+      source: SRC_SELECTED,
+      paint: {
+        'circle-radius': 6,
+        'circle-color': colorAmber500,
+        'circle-stroke-color': colorWhite,
+        'circle-stroke-width': 1,
+      },
+    });
 
-        onSelectedPointMove({ x: originalCoord[0], y: originalCoord[1] });
+    // ── Selected arrow ──
+    map.addLayer({
+      id: LYR_SELECTED_ARROW,
+      type: 'symbol',
+      source: SRC_SELECTED,
+      layout: {
+        'icon-image': 'arrow-icon',
+        'icon-size': 1,
+        'icon-rotate': ['*', ['get', 'yaw'], 180 / Math.PI],
+        'icon-rotation-alignment': 'map',
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true,
+      },
+    });
+
+    // ── Gate layer ──
+    map.addLayer({
+      id: LYR_GATE,
+      type: 'line',
+      source: SRC_GATE,
+      layout: { 'line-cap': 'butt', visibility: 'none' },
+      paint: {
+        'line-color': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          colorYellow300,
+          colorYellow500,
+        ],
+        'line-width': 4,
+      },
+    });
+
+    // ── Selected gate ──
+    map.addLayer({
+      id: LYR_SELECTED_GATE,
+      type: 'line',
+      source: SRC_SELECTED_GATE,
+      layout: { 'line-cap': 'butt', visibility: 'none' },
+      paint: { 'line-color': colorOrange500, 'line-width': 4 },
+    });
+
+    // ── Hover interactions ──
+    map.on('mousemove', LYR_TRACK, (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      const f = e.features?.[0];
+      if (f && f.id !== hoveredTrackId) {
+        if (hoveredTrackId !== null)
+          map.setFeatureState({ source: SRC_TRACK, id: hoveredTrackId }, { hover: false });
+        hoveredTrackId = f.id as number;
+        map.setFeatureState({ source: SRC_TRACK, id: hoveredTrackId }, { hover: true });
       }
     });
+    map.on('mouseleave', LYR_TRACK, () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredTrackId !== null)
+        map.setFeatureState({ source: SRC_TRACK, id: hoveredTrackId }, { hover: false });
+      hoveredTrackId = null;
+    });
 
-    return translate;
+    map.on('mousemove', LYR_GATE, (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      const f = e.features?.[0];
+      if (f && f.id !== hoveredTrackId) {
+        if (hoveredTrackId !== null)
+          map.setFeatureState({ source: SRC_GATE, id: hoveredTrackId }, { hover: false });
+        hoveredTrackId = f.id as number;
+        map.setFeatureState({ source: SRC_GATE, id: hoveredTrackId }, { hover: true });
+      }
+    });
+    map.on('mouseleave', LYR_GATE, () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredTrackId !== null)
+        map.setFeatureState({ source: SRC_GATE, id: hoveredTrackId }, { hover: false });
+      hoveredTrackId = null;
+    });
+
+    // ── Click to select ──
+    map.on('click', LYR_TRACK, (e) => {
+      const f = e.features?.[0];
+      onPointClick?.(f ? (f.id as number) : undefined);
+    });
+
+    map.on('click', LYR_GATE, (e) => {
+      const f = e.features?.[0];
+      onPointClick?.(f ? (f.id as number) : undefined);
+    });
+
+    map.on('click', (e) => {
+      const trackFeats = map.queryRenderedFeatures(e.point, {
+        layers: [gateMode ? LYR_GATE : LYR_TRACK],
+      });
+      if (!trackFeats.length) onPointClick?.(undefined);
+    });
+
+    // ── Drag selected point ──
+    map.on('mousedown', LYR_SELECTED, startDrag);
+    map.on('mousedown', LYR_SELECTED_GATE, startDrag);
   };
 
-  const handleMapClick = (e: MapBrowserEvent) => {
-    if (!onPointClick) return;
+  // ──────────────────────────────────────────────
+  // Drag implementation
+  // ──────────────────────────────────────────────
+  const startDrag = (e: MapMouseEvent) => {
+    if (!mlMap || !onSelectedPointMove || !selectedPoint) return;
+    e.preventDefault();
+    isDragging = true;
+    mlMap.getCanvas().style.cursor = 'grabbing';
+    mlMap.dragPan.disable();
 
-    let clickedIndex: number | undefined;
-    e.map.forEachFeatureAtPixel(
-      e.pixel,
-      (feature) => {
-        const index = feature.get('index');
-        if (index !== undefined) {
-          clickedIndex = index;
-          return true;
-        }
-        return false;
-      },
-      {
-        layerFilter: (layer) => layer === (gateMode ? gateLayer : trackPointLayer),
-      },
+    const onMove = (moveEvt: MapMouseEvent) => {
+      if (!isDragging || !mlMap) return;
+      const { lng, lat } = moveEvt.lngLat;
+      const [xGame, yGame] = reProjectPointInverse([lng, lat]);
+      onSelectedPointMove({ x: xGame, y: yGame });
+    };
+
+    const onUp = () => {
+      if (!mlMap) return;
+      isDragging = false;
+      mlMap.getCanvas().style.cursor = '';
+      mlMap.dragPan.enable();
+      mlMap.off('mousemove', onMove);
+      mlMap.off('mouseup', onUp);
+    };
+
+    mlMap.on('mousemove', onMove);
+    mlMap.on('mouseup', onUp);
+  };
+
+  // ──────────────────────────────────────────────
+  // Reactive source/layer updates
+  // ──────────────────────────────────────────────
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    (mlMap.getSource(SRC_TRACK) as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildTrackGeoJson(),
     );
-
-    onPointClick(clickedIndex);
-  };
-
-  const handlePointerMove = (e: MapBrowserEvent) => {
-    currentHoveredFeature?.set('hover', false);
-
-    e.map.forEachFeatureAtPixel(
-      e.pixel,
-      (feature) => {
-        (feature as Feature).set('hover', true);
-        currentHoveredFeature = feature as Feature;
-        return true;
-      },
-      {
-        layerFilter: (layer) => layer === (gateMode ? gateLayer : trackPointLayer),
-      },
+    (mlMap.getSource(SRC_LINE) as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildLineGeoJson(),
     );
-  };
+    (mlMap.getSource(SRC_SELECTED) as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildSelectedGeoJson(),
+    );
+    (mlMap.getSource(SRC_GATE) as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildGateGeoJson(points, selectedPoint?.index),
+    );
+    (mlMap.getSource(SRC_SELECTED_GATE) as maplibregl.GeoJSONSource | undefined)?.setData(
+      buildSelectedGateGeoJson(),
+    );
+  });
 
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    const visibility = (on: boolean): 'visible' | 'none' => (on ? 'visible' : 'none');
+    mlMap.setLayoutProperty(LYR_TRACK, 'visibility', visibility(!gateMode));
+    mlMap.setLayoutProperty(LYR_ARROW, 'visibility', visibility(!gateMode));
+    mlMap.setLayoutProperty(LYR_SELECTED, 'visibility', visibility(!gateMode));
+    mlMap.setLayoutProperty(LYR_SELECTED_ARROW, 'visibility', visibility(!gateMode));
+    mlMap.setLayoutProperty(LYR_GATE, 'visibility', visibility(gateMode));
+    mlMap.setLayoutProperty(LYR_SELECTED_GATE, 'visibility', visibility(gateMode));
+  });
+
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    mlMap.setLayoutProperty(LYR_NUMBER, 'visibility', showNum ? 'visible' : 'none');
+  });
+
+  // ──────────────────────────────────────────────
+  // Public API
+  // ──────────────────────────────────────────────
   export const zoomFit = () => {
-    if (points.length) {
-      const source = gateMode ? gateSource : trackPointSource;
-      const extent = source.getExtent();
-      if (extent) {
-        map.fit(extent, [64, 64, 64, 64]);
-      }
-    }
+    if (!points.length || !mlMap) return;
+    const coords = points.map((p) => reProjectPoint([p.coord.x, p.coord.y]));
+    const lngs = coords.map((c) => c[0]);
+    const lats = coords.map((c) => c[1]);
+    const bounds: [number, number, number, number] = [
+      Math.min(...lngs),
+      Math.min(...lats),
+      Math.max(...lngs),
+      Math.max(...lats),
+    ];
+    mlMap.fitBounds(bounds, {
+      padding: 64,
+      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 4,
+    });
   };
 
-  $effect(() => {
-    if (gateMode) {
-      gateLayer.setVisible(true);
-      selectedGateLayer.setVisible(true);
+  // Expose underlying map for compatibility with existing call sites that call
+  // map.getMap() (e.g. old translate interaction code, now unused).
+  export const getMap = () => mlMap;
 
-      trackPointLayer.setVisible(false);
-      arrowLayer.setVisible(false);
-      selectedPointLayer.setVisible(false);
-      selectedArrowLayer.setVisible(false);
-    } else {
-      gateLayer.setVisible(false);
-      selectedGateLayer.setVisible(false);
-
-      trackPointLayer.setVisible(true);
-      arrowLayer.setVisible(true);
-      selectedPointLayer.setVisible(true);
-      selectedArrowLayer.setVisible(true);
-    }
-  });
-
-  $effect(() => {
-    if (showNum) {
-      trackPointNumberLayer.setVisible(true);
-    } else {
-      trackPointNumberLayer.setVisible(false);
-    }
-  });
-
-  const layers = [
-    lineLayer,
-    arrowLayer,
-    trackPointLayer,
-    selectedArrowLayer,
-    selectedPointLayer,
-    gateLayer,
-    selectedGateLayer,
-    trackPointNumberLayer,
-  ];
+  // Import maplibregl namespace for type assertions in effects above
+  import maplibregl from 'maplibre-gl';
 </script>
 
 <OlMap
   class={propsClass}
-  {layers}
-  onClick={handleMapClick}
-  onPointerMove={handlePointerMove}
-  bind:this={map}
-></OlMap>
+  onMapReady={handleMapReady}
+  bind:this={mapComponent}
+/>

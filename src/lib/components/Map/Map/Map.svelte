@@ -1,28 +1,27 @@
 <script lang="ts">
   import OlMap from '$lib/ui/OlMap/OlMap.svelte';
-  import VectorLayer from 'ol/layer/Vector';
-  import VectorSource from 'ol/source/Vector';
-  import Point from 'ol/geom/Point';
-  import Feature from 'ol/Feature';
   import { onMount, untrack, getAbortSignal } from 'svelte';
   import { fade } from 'svelte/transition';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PoiItem from './PoiItem.svelte';
-  import type { MapBrowserEvent } from 'ol';
-  import { Fill, Stroke, Style, Text } from 'ol/style';
   import { PlayerRoles, PointType, type PlayerData, type TeleportPoint } from './types';
   import {
-    getDeliveryPointStyle,
-    getHouseStyle,
-    getResidentPointStyle,
-    getStaticPoints,
+    addStaticLayers,
+    getDeliveryPointPaint,
+    getResidentPointPaint,
+    getHousePaint,
+    SRC_DELIVERY,
+    SRC_RESIDENT,
+    SRC_HOUSE,
+    LYR_DELIVERY,
+    LYR_RESIDENT,
+    LYR_HOUSE,
+    LYR_HOUSE_LABEL,
   } from './staticPoints';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
-    textXs,
-    fontSans,
     colorEmerald200,
     colorEmerald400,
     colorGreen500,
@@ -37,14 +36,11 @@
     colorRed950,
     colorEmerald950,
     colorBlue950,
-    colorGray950,
-    colorTextDark,
-    defaultTransitionDurationMs,
     colorViolet200,
     colorViolet400,
     colorViolet950,
+    defaultTransitionDurationMs,
   } from '$lib/tw-var';
-  import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
     deliveryPointsMap,
     demandKeyMapNoResident,
@@ -57,7 +53,6 @@
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
-  import { LineString, Polygon } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
   import { uniq } from 'lodash-es';
   import { cargoMetadata } from '$lib/data/cargo';
@@ -66,14 +61,14 @@
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteSet } from 'svelte/reactivity';
-  import Collection from 'ol/Collection';
   import * as z from 'zod/mini';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-
   import { getSelectionClearedParams } from '../utils';
   import { hasPoliceRole, hasCriminalRole } from '$lib/utils/parsePlayerRole';
   import Button from '$lib/ui/Button/Button.svelte';
+  import type { Map as MaplibreMap, MapMouseEvent, LayerSpecification } from 'maplibre-gl';
+  import maplibregl from 'maplibre-gl';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -84,439 +79,30 @@
 
   const { jobsData, playerData, houseData, onPlayerLayerDataEnabledChange }: Props = $props();
 
-  const {
-    deliveryPointFeatures,
-    residentPointFeatures,
-    houseFeatures,
-    deliveryPointLayer,
-    residentPointLayer,
-    houseSource,
-    houseLayer,
-  } = getStaticPoints();
+  // ──────────────────────────────────────────────────────────────────────────
+  // Source / layer IDs
+  // ──────────────────────────────────────────────────────────────────────────
+  const SRC_DELIVERY_LINE = 'delivery-line-source';
+  const SRC_PLAYER = 'player-source';
+  const SRC_PINS = 'pins-source';
+  const SRC_TELEPORT = 'teleport-source';
+  const SRC_SHORTCUT = 'shortcut-source';
 
+  const LYR_DELIVERY_LINE = 'delivery-line-layer';
+  const LYR_PLAYER = 'player-layer';
+  const LYR_PLAYER_NAME = 'player-name-layer';
+  const LYR_PINS = 'pins-layer';
+  const LYR_PIN_LABEL = 'pin-label-layer';
+  const LYR_TELEPORT = 'teleport-layer';
+  const LYR_TELEPORT_LABEL = 'teleport-label-layer';
+  const LYR_SHORTCUT_FILL = 'shortcut-fill-layer';
+  const LYR_SHORTCUT_LINE = 'shortcut-line-layer';
+  const LYR_SHORTCUT_LABEL = 'shortcut-label-layer';
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Map state
+  // ──────────────────────────────────────────────────────────────────────────
   const MAP_STATE_STORAGE_KEY = 'mapState';
-
-  let pinsData = $state<Pins>([]);
-  const havePins = $derived(pinsData.length > 0);
-
-  const pinsSource = new VectorSource({
-    features: [] as Feature<Point>[],
-  });
-
-  const pinsLayer = new WebGLVectorLayer({
-    source: pinsSource,
-    style: {
-      'circle-radius': 5,
-      'circle-fill-color': [
-        'case',
-        ['==', ['get', 'hover'], 1],
-        colorRed200,
-        ['==', ['get', 'selected'], 1],
-        colorRed500,
-        colorRed400,
-      ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorRed950],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const PinLabelsStyle = new Style({
-    text: new Text({
-      font: `600 ${textXs} ${fontSans}`,
-      offsetY: -14,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const pinLabelsLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: pinsSource,
-    style: (feature) => {
-      PinLabelsStyle.getText()?.setText(feature.get('label') as string);
-      return PinLabelsStyle;
-    },
-  });
-
-  let teleportData = $state<TeleportPoint[]>([]);
-  const haveTeleports = $derived(teleportData.length > 0);
-
-  const houseNameStyle = new Style({
-    text: new Text({
-      font: `600 0.6rem ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const houseNameLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: houseSource,
-    visible: false,
-    style: (feature) => {
-      houseNameStyle.getText()?.setText(feature.get('label') as string);
-      return houseNameStyle;
-    },
-  });
-
-  const teleportSource = new VectorSource({
-    features: [] as Feature<Point>[],
-  });
-
-  const teleportLayer = new WebGLVectorLayer({
-    source: teleportSource,
-    style: {
-      'circle-radius': 5,
-      'circle-fill-color': ['case', ['==', ['get', 'hover'], 1], colorViolet200, colorViolet400],
-      'circle-stroke-color': colorViolet950,
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const TeleportLabelsStyle = new Style({
-    text: new Text({
-      font: `600 0.5rem ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const teleportLabelsLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: teleportSource,
-    style: (feature) => {
-      TeleportLabelsStyle.getText()?.setText(feature.get('label') as string);
-      return TeleportLabelsStyle;
-    },
-  });
-
-  let shortcutZoneData = $state<ShortcutZone[]>([]);
-  const haveShortcutZones = $derived(shortcutZoneData.length > 0);
-
-  const shortcutZoneSource = new VectorSource({
-    features: [] as Feature<Polygon>[],
-  });
-
-  const shortcutZoneStyle = new Style({
-    fill: new Fill({ color: adjustOpacity(colorRed500, 0.12) }),
-    stroke: new Stroke({
-      color: colorRed500,
-      width: 2,
-      lineDash: [4, 6],
-    }),
-    text: new Text({
-      font: `600 0.5rem ${fontSans}`,
-      overflow: true,
-      fill: new Fill({ color: colorTextDark }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const shortcutZoneLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: shortcutZoneSource,
-    style: (feature) => {
-      shortcutZoneStyle.getText()?.setText(feature.get('name') as string);
-      return shortcutZoneStyle;
-    },
-  });
-
-  const playerFeaturesCollection = new Collection<Feature<Point>>();
-
-  const playerPointSource = new VectorSource({
-    features: playerFeaturesCollection,
-  });
-
-  const playerPointLayer = new WebGLVectorLayer({
-    source: playerPointSource,
-    style: {
-      'circle-radius': 4,
-      'circle-fill-color': [
-        'case',
-        ['==', ['get', 'hover'], 1],
-        colorEmerald200,
-        ['==', ['get', 'selected'], 1],
-        colorEmerald500,
-        ['==', ['get', 'role'], PlayerRoles.Police],
-        colorBlue500,
-        ['==', ['get', 'role'], PlayerRoles.Criminal],
-        colorRed500,
-        colorEmerald400,
-      ],
-      'circle-stroke-color': [
-        'case',
-        ['==', ['get', 'selected'], 1],
-        colorWhite,
-        ['==', ['get', 'role'], PlayerRoles.Police],
-        colorBlue950,
-        ['==', ['get', 'role'], PlayerRoles.Criminal],
-        colorRed950,
-        colorEmerald950,
-      ],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const playerNameStyle = new Style({
-    text: new Text({
-      font: `600 ${textXs} ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const playerNameLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: playerPointSource,
-    style: (feature) => {
-      playerNameStyle.getText()?.setText(feature.get('info').name as string);
-      return playerNameStyle;
-    },
-  });
-
-  const deliveryLineFeaturesCollection = new Collection<Feature<LineString>>();
-
-  const deliveryLineLayer = new WebGLVectorLayer({
-    source: new VectorSource({
-      features: deliveryLineFeaturesCollection,
-    }),
-    style: {
-      'stroke-width': 2,
-      'stroke-color': [
-        'match',
-        ['get', 'type'],
-        DeliveryLineType.Supply,
-        adjustOpacity(colorGreen500, 0.75),
-        DeliveryLineType.Demand,
-        adjustOpacity(colorBlue500, 0.75),
-        adjustOpacity(colorYellow500, 0.75),
-      ],
-      'stroke-line-cap': 'round',
-    },
-  });
-
-  const getDeliveryPoint = (guid: string) => {
-    const point = deliveryPointsMap.get(guid);
-    if (!point) {
-      throw new Error(`Delivery point not found: ${guid}`);
-    }
-    return point;
-  };
-
-  const updateDeliveryLine = (deliveryPoint: DeliveryPoint) => {
-    const matchSourceJob = jobsData.filter(getMatchJobSourceFn(deliveryPoint));
-    const matchDestJob = jobsData.filter(getMatchJobDestFn(deliveryPoint));
-
-    if (mapState.jobOnly && matchSourceJob.length === 0 && matchDestJob.length === 0) {
-      return;
-    }
-
-    const allDropPointLink: [DeliveryPoint, DeliveryPoint][] = [];
-
-    if (deliveryPoint.parent) {
-      allDropPointLink.push([deliveryPoint, getDeliveryPoint(deliveryPoint.parent)]);
-    }
-
-    const connectedDrop = new SvelteSet<DeliveryCargo>();
-
-    if (deliveryPoint.dropPoint) {
-      for (const dropPointGuid of deliveryPoint.dropPoint) {
-        const dropPoint = getDeliveryPoint(dropPointGuid);
-        for (const cargoType of dropPoint.allDemand) {
-          connectedDrop.add(cargoType);
-        }
-        allDropPointLink.push([deliveryPoint, dropPoint]);
-      }
-    }
-
-    const allSupplyDestinations = uniq(
-      deliveryPoint.allSupplyKey
-        .map((d) => [d, cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
-        .flatMap(([d, cd, dps]) =>
-          dps.map((dp) => {
-            const point = getDeliveryPoint(dp);
-            if (mapState.jobOnly) {
-              const hasDestJob = matchSourceJob.some(getMatchJobDestFn(point));
-              if (!hasDestJob) {
-                return undefined;
-              }
-            }
-            if (point.dropPoint) {
-              const hasConnectedDrop = point.dropPoint.some((dropPointGuid) =>
-                deliveryPointsMap.get(dropPointGuid)?.allDemandKey.includes(d),
-              );
-              if (hasConnectedDrop) {
-                return undefined;
-              }
-            }
-            if (cd.minDist || cd.maxDist || deliveryPoint.maxDist || point.maxReceiveDist) {
-              const dist = Math.hypot(
-                point.coord.x - deliveryPoint.coord.x,
-                point.coord.y - deliveryPoint.coord.y,
-              );
-              if (cd.minDist) {
-                if (dist < cd.minDist) {
-                  return undefined;
-                }
-              }
-              if (cd.maxDist) {
-                if (dist > cd.maxDist) {
-                  return undefined;
-                }
-              }
-              if (deliveryPoint.maxDist) {
-                if (dist > deliveryPoint.maxDist) {
-                  return undefined;
-                }
-              }
-              if (point.maxReceiveDist) {
-                if (dist > point.maxReceiveDist) {
-                  return undefined;
-                }
-              }
-            }
-            if (point.parent) {
-              allDropPointLink.push([point, getDeliveryPoint(point.parent)]);
-            }
-            return point;
-          }),
-        )
-        .filter((d) => d !== undefined),
-    );
-
-    const allDemandDestinations = uniq(
-      deliveryPoint.allDemandKey
-        .filter((d) => !connectedDrop.has(d))
-        .map((d) => [cargoMetadata[d], supplyKeyMap.get(d) ?? []] as const)
-        .flatMap(([cd, dps]) =>
-          dps.map((dp) => {
-            const point = getDeliveryPoint(dp);
-            if (mapState.jobOnly) {
-              const hasSourceJob = matchDestJob.some(getMatchJobSourceFn(point));
-              if (!hasSourceJob) {
-                return undefined;
-              }
-            }
-            if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
-              const dist = Math.hypot(
-                point.coord.x - deliveryPoint.coord.x,
-                point.coord.y - deliveryPoint.coord.y,
-              );
-              if (cd.minDist) {
-                if (dist < cd.minDist) {
-                  return undefined;
-                }
-              }
-              if (cd.maxDist) {
-                if (dist > cd.maxDist) {
-                  return undefined;
-                }
-              }
-              if (deliveryPoint.maxReceiveDist) {
-                if (dist > deliveryPoint.maxReceiveDist) {
-                  return undefined;
-                }
-              }
-              if (point.maxDist) {
-                if (dist > point.maxDist) {
-                  return undefined;
-                }
-              }
-            }
-            if (point.dropPoint) {
-              for (const dropPointGuid of point.dropPoint) {
-                const dropPoint = getDeliveryPoint(dropPointGuid);
-                allDropPointLink.push([point, dropPoint]);
-              }
-            }
-            return point;
-          }),
-        )
-        .filter((d) => d !== undefined),
-    );
-
-    deliveryLineFeaturesCollection.extend([
-      ...allDemandDestinations.map((d) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]),
-            reProjectPoint([d.coord.x, d.coord.y]),
-          ]),
-          type: DeliveryLineType.Demand,
-        });
-      }),
-      ...allSupplyDestinations.map((d) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]),
-            reProjectPoint([d.coord.x, d.coord.y]),
-          ]),
-          type: DeliveryLineType.Supply,
-        });
-      }),
-      ...allDropPointLink.map(([d1, d2]) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([d1.coord.x, d1.coord.y]),
-            reProjectPoint([d2.coord.x, d2.coord.y]),
-          ]),
-          type: DeliveryLineType.Drop,
-        });
-      }),
-    ]);
-  };
-
-  const layers = $derived([
-    ...(haveShortcutZones ? [shortcutZoneLayer] : []),
-    deliveryLineLayer,
-    deliveryPointLayer,
-    residentPointLayer,
-    houseLayer,
-    houseNameLayer,
-    playerPointLayer,
-    playerNameLayer,
-    ...(haveTeleports ? [teleportLayer, teleportLabelsLayer] : []),
-    ...(havePins ? [pinsLayer, pinLabelsLayer] : []),
-  ]);
 
   const mapState = $state({
     delivery: true,
@@ -552,102 +138,835 @@
     shortcutZone: z.optional(z.boolean()),
   });
 
-  onMount(() => {
+  // ──────────────────────────────────────────────────────────────────────────
+  // Reactive / mutable data
+  // ──────────────────────────────────────────────────────────────────────────
+  let pinsData = $state<Pins>([]);
+  const havePins = $derived(pinsData.length > 0);
+  let teleportData = $state<TeleportPoint[]>([]);
+  const haveTeleports = $derived(teleportData.length > 0);
+  let shortcutZoneData = $state<ShortcutZone[]>([]);
+  const haveShortcutZones = $derived(shortcutZoneData.length > 0);
+
+  // MapLibre instance (available after onMapReady)
+  let mlMap: MaplibreMap | undefined = $state();
+
+  // Hover / selection tracking
+  let hoverInfo: HoverInfo | undefined = $state();
+  let hoveredSource: string | null = null;
+  let hoveredId: string | number | null = null;
+  let selectedSource: string | null = null;
+  let selectedId: string | number | null = null;
+  let lockSource: string | null = null;
+  let lockId: string | number | null = null;
+
+  let playerStickyFocusGuid: string | undefined = undefined;
+  let playerSelectingGuid: string | undefined = undefined;
+  let initialFocus = true;
+
+  // Teleport copy feedback
+  let teleportCopyTimeout: ReturnType<typeof setTimeout> | undefined;
+  let copiedTeleportName = $state<string | undefined>(undefined);
+  const teleportCopied = $derived(
+    hoverInfo?.pointType === PointType.Teleport && hoverInfo.info.name === copiedTeleportName,
+  );
+
+  // Delivery line GeoJSON (rebuilt on hover/selection changes)
+  const emptyGeoJson = (): GeoJSON.FeatureCollection => ({
+    type: 'FeatureCollection',
+    features: [],
+  });
+  let deliveryLineGeoJson = $state<GeoJSON.FeatureCollection>(emptyGeoJson());
+
+  // Handles into static layer feature arrays (set in handleMapReady)
+  let staticHandle: ReturnType<typeof addStaticLayers> | undefined;
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Visibility helpers
+  // ──────────────────────────────────────────────────────────────────────────
+  const vis = (on: boolean): 'visible' | 'none' => (on ? 'visible' : 'none');
+  const setVis = (id: string, on: boolean) => mlMap?.setLayoutProperty(id, 'visibility', vis(on));
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Feature state helpers
+  // ──────────────────────────────────────────────────────────────────────────
+  const clearHover = () => {
+    if (hoveredSource !== null && hoveredId !== null)
+      mlMap?.setFeatureState({ source: hoveredSource, id: hoveredId }, { hover: false });
+    hoveredSource = null;
+    hoveredId = null;
+  };
+
+  const setHover = (source: string, id: string | number) => {
+    clearHover();
+    hoveredSource = source;
+    hoveredId = id;
+    mlMap?.setFeatureState({ source, id }, { hover: true });
+  };
+
+  const clearSelection = () => {
+    if (selectedSource !== null && selectedId !== null)
+      mlMap?.setFeatureState({ source: selectedSource, id: selectedId }, { selected: false });
+    selectedSource = null;
+    selectedId = null;
+    clearLock();
+    playerSelectingGuid = undefined;
+    playerStickyFocusGuid = undefined;
+    clearDeliveryLines();
+    const newParams = getSelectionClearedParams();
+    goto(`?${newParams.toString()}`);
+  };
+
+  const setSelection = (source: string, id: string | number) => {
+    if (selectedSource !== null && selectedId !== null)
+      mlMap?.setFeatureState({ source: selectedSource, id: selectedId }, { selected: false });
+    selectedSource = source;
+    selectedId = id;
+    mlMap?.setFeatureState({ source, id }, { selected: true });
+  };
+
+  const clearLock = () => {
+    if (lockSource !== null && lockId !== null)
+      mlMap?.setFeatureState({ source: lockSource, id: lockId }, { selected: false });
+    lockSource = null;
+    lockId = null;
+  };
+
+  const setLock = (source: string, id: string | number) => {
+    clearLock();
+    lockSource = source;
+    lockId = id;
+    mlMap?.setFeatureState({ source, id }, { selected: true });
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Delivery-line helpers
+  // ──────────────────────────────────────────────────────────────────────────
+  const clearDeliveryLines = () => {
+    deliveryLineGeoJson = emptyGeoJson();
+  };
+
+  const getDeliveryPoint = (guid: string) => {
+    const point = deliveryPointsMap.get(guid);
+    if (!point) throw new Error(`Delivery point not found: ${guid}`);
+    return point;
+  };
+
+  const updateDeliveryLine = (deliveryPoint: DeliveryPoint) => {
+    const matchSourceJob = jobsData.filter(getMatchJobSourceFn(deliveryPoint));
+    const matchDestJob = jobsData.filter(getMatchJobDestFn(deliveryPoint));
+
+    if (mapState.jobOnly && matchSourceJob.length === 0 && matchDestJob.length === 0) return;
+
+    const allDropPointLink: [DeliveryPoint, DeliveryPoint][] = [];
+
+    if (deliveryPoint.parent) {
+      allDropPointLink.push([deliveryPoint, getDeliveryPoint(deliveryPoint.parent)]);
+    }
+
+    const connectedDrop = new SvelteSet<DeliveryCargo>();
+    if (deliveryPoint.dropPoint) {
+      for (const dropPointGuid of deliveryPoint.dropPoint) {
+        const dropPoint = getDeliveryPoint(dropPointGuid);
+        for (const cargoType of dropPoint.allDemand) connectedDrop.add(cargoType);
+        allDropPointLink.push([deliveryPoint, dropPoint]);
+      }
+    }
+
+    const allSupplyDestinations = uniq(
+      deliveryPoint.allSupplyKey
+        .map((d) => [d, cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
+        .flatMap(([d, cd, dps]) =>
+          dps.map((dp) => {
+            const point = getDeliveryPoint(dp);
+            if (mapState.jobOnly) {
+              const hasDestJob = matchSourceJob.some(getMatchJobDestFn(point));
+              if (!hasDestJob) return undefined;
+            }
+            if (point.dropPoint) {
+              const hasConnectedDrop = point.dropPoint.some((g) =>
+                deliveryPointsMap.get(g)?.allDemandKey.includes(d),
+              );
+              if (hasConnectedDrop) return undefined;
+            }
+            if (cd.minDist || cd.maxDist || deliveryPoint.maxDist || point.maxReceiveDist) {
+              const dist = Math.hypot(
+                point.coord.x - deliveryPoint.coord.x,
+                point.coord.y - deliveryPoint.coord.y,
+              );
+              if (cd.minDist && dist < cd.minDist) return undefined;
+              if (cd.maxDist && dist > cd.maxDist) return undefined;
+              if (deliveryPoint.maxDist && dist > deliveryPoint.maxDist) return undefined;
+              if (point.maxReceiveDist && dist > point.maxReceiveDist) return undefined;
+            }
+            if (point.parent) allDropPointLink.push([point, getDeliveryPoint(point.parent)]);
+            return point;
+          }),
+        )
+        .filter((d) => d !== undefined),
+    );
+
+    const allDemandDestinations = uniq(
+      deliveryPoint.allDemandKey
+        .filter((d) => !connectedDrop.has(d))
+        .map((d) => [cargoMetadata[d], supplyKeyMap.get(d) ?? []] as const)
+        .flatMap(([cd, dps]) =>
+          dps.map((dp) => {
+            const point = getDeliveryPoint(dp);
+            if (mapState.jobOnly) {
+              const hasSourceJob = matchDestJob.some(getMatchJobSourceFn(point));
+              if (!hasSourceJob) return undefined;
+            }
+            if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
+              const dist = Math.hypot(
+                point.coord.x - deliveryPoint.coord.x,
+                point.coord.y - deliveryPoint.coord.y,
+              );
+              if (cd.minDist && dist < cd.minDist) return undefined;
+              if (cd.maxDist && dist > cd.maxDist) return undefined;
+              if (deliveryPoint.maxReceiveDist && dist > deliveryPoint.maxReceiveDist)
+                return undefined;
+              if (point.maxDist && dist > point.maxDist) return undefined;
+            }
+            if (point.dropPoint) {
+              for (const g of point.dropPoint) {
+                const dp2 = getDeliveryPoint(g);
+                allDropPointLink.push([point, dp2]);
+              }
+            }
+            return point;
+          }),
+        )
+        .filter((d) => d !== undefined),
+    );
+
+    const makeLineFeature = (
+      a: DeliveryPoint,
+      b: DeliveryPoint,
+      type: DeliveryLineType,
+    ): GeoJSON.Feature => ({
+      type: 'Feature',
+      id: `${a.guid}-${b.guid}-${type}`,
+      geometry: {
+        type: 'LineString',
+        coordinates: [reProjectPoint([a.coord.x, a.coord.y]), reProjectPoint([b.coord.x, b.coord.y])],
+      },
+      properties: { type },
+    });
+
+    deliveryLineGeoJson = {
+      type: 'FeatureCollection',
+      features: [
+        ...allDemandDestinations.map((d) =>
+          makeLineFeature(deliveryPoint, d, DeliveryLineType.Demand),
+        ),
+        ...allSupplyDestinations.map((d) =>
+          makeLineFeature(deliveryPoint, d, DeliveryLineType.Supply),
+        ),
+        ...allDropPointLink.map(([d1, d2]) => makeLineFeature(d1, d2, DeliveryLineType.Drop)),
+      ],
+    };
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Map ready – add all dynamic sources and layers
+  // ──────────────────────────────────────────────────────────────────────────
+  const handleMapReady = (map: MaplibreMap) => {
+    mlMap = map;
+
+    // --- Static layers (delivery / house) ---
+    staticHandle = addStaticLayers(map);
+
+    // --- Delivery lines ---
+    map.addSource(SRC_DELIVERY_LINE, { type: 'geojson', data: deliveryLineGeoJson });
+    map.addLayer({
+      id: LYR_DELIVERY_LINE,
+      type: 'line',
+      source: SRC_DELIVERY_LINE,
+      layout: { 'line-cap': 'round' },
+      paint: {
+        'line-width': 2,
+        'line-color': [
+          'match',
+          ['get', 'type'],
+          DeliveryLineType.Supply,
+          adjustOpacity(colorGreen500, 0.75),
+          DeliveryLineType.Demand,
+          adjustOpacity(colorBlue500, 0.75),
+          adjustOpacity(colorYellow500, 0.75),
+        ],
+      },
+    } as LayerSpecification);
+
+    // --- Players ---
+    map.addSource(SRC_PLAYER, {
+      type: 'geojson',
+      data: emptyGeoJson(),
+      promoteId: 'guid',
+    });
+    map.addLayer({
+      id: LYR_PLAYER,
+      type: 'circle',
+      source: SRC_PLAYER,
+      paint: {
+        'circle-radius': 4,
+        'circle-color': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          colorEmerald200,
+          ['boolean', ['feature-state', 'selected'], false],
+          colorEmerald500,
+          ['==', ['get', 'role'], PlayerRoles.Police],
+          colorBlue500,
+          ['==', ['get', 'role'], PlayerRoles.Criminal],
+          colorRed500,
+          colorEmerald400,
+        ],
+        'circle-stroke-color': [
+          'case',
+          ['boolean', ['feature-state', 'selected'], false],
+          colorWhite,
+          ['==', ['get', 'role'], PlayerRoles.Police],
+          colorBlue950,
+          ['==', ['get', 'role'], PlayerRoles.Criminal],
+          colorRed950,
+          colorEmerald950,
+        ],
+        'circle-stroke-width': 1,
+      },
+    } as LayerSpecification);
+    map.addLayer({
+      id: LYR_PLAYER_NAME,
+      type: 'symbol',
+      source: SRC_PLAYER,
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 12,
+        'text-offset': [0, -1.5],
+        'text-allow-overlap': true,
+        'text-ignore-placement': true,
+      },
+      paint: {
+        'text-color': '#f1f5f9',
+        'text-halo-color': 'rgba(15,23,42,0.4)',
+        'text-halo-width': 2,
+      },
+    });
+
+    // --- Pins ---
+    map.addSource(SRC_PINS, { type: 'geojson', data: emptyGeoJson(), promoteId: 'pinIndex' });
+    map.addLayer({
+      id: LYR_PINS,
+      type: 'circle',
+      source: SRC_PINS,
+      paint: {
+        'circle-radius': 5,
+        'circle-color': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          colorRed200,
+          ['boolean', ['feature-state', 'selected'], false],
+          colorRed500,
+          colorRed400,
+        ],
+        'circle-stroke-color': [
+          'case',
+          ['boolean', ['feature-state', 'selected'], false],
+          colorWhite,
+          colorRed950,
+        ],
+        'circle-stroke-width': 1,
+      },
+    } as LayerSpecification);
+    map.addLayer({
+      id: LYR_PIN_LABEL,
+      type: 'symbol',
+      source: SRC_PINS,
+      layout: {
+        'text-field': ['get', 'label'],
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 12,
+        'text-offset': [0, -1.5],
+        'text-allow-overlap': true,
+        'text-ignore-placement': true,
+      },
+      paint: {
+        'text-color': '#f1f5f9',
+        'text-halo-color': 'rgba(15,23,42,0.4)',
+        'text-halo-width': 2,
+      },
+    });
+
+    // --- Teleports ---
+    map.addSource(SRC_TELEPORT, { type: 'geojson', data: emptyGeoJson(), promoteId: 'name' });
+    map.addLayer({
+      id: LYR_TELEPORT,
+      type: 'circle',
+      source: SRC_TELEPORT,
+      paint: {
+        'circle-radius': 5,
+        'circle-color': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          colorViolet200,
+          colorViolet400,
+        ],
+        'circle-stroke-color': colorViolet950,
+        'circle-stroke-width': 1,
+      },
+    } as LayerSpecification);
+    map.addLayer({
+      id: LYR_TELEPORT_LABEL,
+      type: 'symbol',
+      source: SRC_TELEPORT,
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 8,
+        'text-offset': [0, -1.5],
+        'text-allow-overlap': false,
+        visibility: 'none',
+      },
+      paint: {
+        'text-color': '#f1f5f9',
+        'text-halo-color': 'rgba(15,23,42,0.4)',
+        'text-halo-width': 2,
+      },
+    });
+
+    // --- Shortcut zones ---
+    map.addSource(SRC_SHORTCUT, { type: 'geojson', data: emptyGeoJson() });
+    map.addLayer({
+      id: LYR_SHORTCUT_FILL,
+      type: 'fill',
+      source: SRC_SHORTCUT,
+      paint: {
+        'fill-color': adjustOpacity(colorRed500, 0.12),
+      },
+    });
+    map.addLayer({
+      id: LYR_SHORTCUT_LINE,
+      type: 'line',
+      source: SRC_SHORTCUT,
+      paint: {
+        'line-color': colorRed500,
+        'line-width': 2,
+        'line-dasharray': [4, 6],
+      },
+    });
+    map.addLayer({
+      id: LYR_SHORTCUT_LABEL,
+      type: 'symbol',
+      source: SRC_SHORTCUT,
+      layout: {
+        'text-field': ['get', 'name'],
+        'text-font': ['Noto Sans Regular'],
+        'text-size': 8,
+        'text-allow-overlap': false,
+      },
+      paint: {
+        'text-color': '#f1f5f9',
+        'text-halo-color': 'rgba(15,23,42,0.4)',
+        'text-halo-width': 2,
+      },
+    });
+
+    // ── Load initial state from localStorage ──
     try {
       const raw = JSON.parse(localStorage.getItem(MAP_STATE_STORAGE_KEY) ?? '');
       const result = mapStateSchema.safeParse(raw);
       if (result.success) {
-        const state = result.data;
-        if (state.delivery === false) {
+        const s = result.data;
+        if (s.delivery === false) {
           mapState.delivery = false;
-          for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer])
-            l.setVisible(false);
+          setVis(LYR_DELIVERY, false);
+          setVis(LYR_RESIDENT, false);
+          setVis(LYR_DELIVERY_LINE, false);
         }
-        if (state.house === false) {
+        if (s.house === false) {
           mapState.house = false;
-          houseLayer.setVisible(false);
+          setVis(LYR_HOUSE, false);
         }
-        if (state.player === false) {
+        if (s.player === false) {
           mapState.player = false;
-          playerPointLayer.setVisible(false);
-          playerNameLayer.setVisible(false);
+          setVis(LYR_PLAYER, false);
+          setVis(LYR_PLAYER_NAME, false);
         }
-        if (state.playerName === false) {
+        if (s.playerName === false) {
           mapState.playerName = false;
-          if (mapState.player) playerNameLayer.setVisible(false);
+          if (mapState.player) setVis(LYR_PLAYER_NAME, false);
         }
-        if (state.teleport === false) {
+        if (s.teleport === false) {
           mapState.teleport = false;
-          teleportLayer.setVisible(false);
-          teleportLabelsLayer.setVisible(false);
+          setVis(LYR_TELEPORT, false);
+          setVis(LYR_TELEPORT_LABEL, false);
         }
-        if (state.teleportLabels === false) {
-          mapState.teleportLabels = false;
-          if (mapState.teleport) teleportLabelsLayer.setVisible(false);
+        if (s.teleportLabels === true) {
+          mapState.teleportLabels = true;
+          if (mapState.teleport) setVis(LYR_TELEPORT_LABEL, true);
         }
-        if (state.shortcutZone === false) {
+        if (s.shortcutZone === false) {
           mapState.shortcutZone = false;
-          shortcutZoneLayer.setVisible(false);
+          setVis(LYR_SHORTCUT_FILL, false);
+          setVis(LYR_SHORTCUT_LINE, false);
+          setVis(LYR_SHORTCUT_LABEL, false);
         }
-        mapState.jobOnly = state.jobOnly ?? false;
-        mapState.houseVacantOnly = state.houseVacantOnly ?? false;
-        if (state.houseLabels === true) {
+        mapState.jobOnly = s.jobOnly ?? false;
+        mapState.houseVacantOnly = s.houseVacantOnly ?? false;
+        if (s.houseLabels === true) {
           mapState.houseLabels = true;
-          if (mapState.house) houseNameLayer.setVisible(true);
+          if (mapState.house) setVis(LYR_HOUSE_LABEL, true);
         }
-        mapState.playerCopsOnly = state.playerCopsOnly ?? false;
-        mapState.playerCriminalOnly = state.playerCriminalOnly ?? false;
+        mapState.playerCopsOnly = s.playerCopsOnly ?? false;
+        mapState.playerCriminalOnly = s.playerCriminalOnly ?? false;
       }
-    } catch (e) {
-      console.error('Failed to load map state:', e);
+    } catch {
+      // ignore parse errors
     }
 
+    // ── Fetch teleports ──
     getTeleports(getAbortSignal())
       .then((data) => {
         const points: TeleportPoint[] = data.map((d) => ({
           name: d.name,
           coord: { x: d.x, y: d.y, z: d.z },
         }));
-        teleportSource.addFeatures(
-          points.map(
-            (p) =>
-              new Feature({
-                geometry: new Point(reProjectPoint([p.coord.x, p.coord.y])),
-                pointType: PointType.Teleport,
-                info: p,
-                label: p.name,
-                hover: 0,
-              }),
-          ),
-        );
+        const geoJson: GeoJSON.FeatureCollection = {
+          type: 'FeatureCollection',
+          features: points.map((p) => {
+            const [lng, lat] = reProjectPoint([p.coord.x, p.coord.y]);
+            return {
+              type: 'Feature',
+              id: p.name,
+              geometry: { type: 'Point', coordinates: [lng, lat] },
+              properties: { pointType: PointType.Teleport, name: p.name },
+            } satisfies GeoJSON.Feature;
+          }),
+        };
+        (map.getSource(SRC_TELEPORT) as maplibregl.GeoJSONSource | undefined)?.setData(geoJson);
         teleportData = points;
       })
-      .catch((e: unknown) => {
-        console.error('Failed to load teleport data:', e);
-      });
+      .catch((e: unknown) => console.error('Failed to load teleport data:', e));
 
+    // ── Fetch shortcut zones ──
     getShortcutZones(getAbortSignal())
       .then((data) => {
-        shortcutZoneSource.addFeatures(
-          data.map(
-            (zone) =>
-              new Feature({
-                geometry: new Polygon([
-                  zone.coordinates.map(([x, y]) => reProjectPoint([x, y] as [number, number])),
-                ]),
-                pointType: PointType.ShortcutZone,
-                name: zone.name,
-                info: zone,
-              }),
-          ),
-        );
+        const geoJson: GeoJSON.FeatureCollection = {
+          type: 'FeatureCollection',
+          features: data.map((zone, i) => ({
+            type: 'Feature',
+            id: i,
+            geometry: {
+              type: 'Polygon',
+              coordinates: [zone.coordinates.map(([x, y]) => reProjectPoint([x, y] as [number, number]))],
+            },
+            properties: { pointType: PointType.ShortcutZone, name: zone.name },
+          })),
+        };
+        (map.getSource(SRC_SHORTCUT) as maplibregl.GeoJSONSource | undefined)?.setData(geoJson);
         shortcutZoneData = data;
       })
-      .catch((e: unknown) => {
-        console.error('Failed to load shortcut zone data:', e);
+      .catch((e: unknown) => console.error('Failed to load shortcut zone data:', e));
+
+    // ── Pointer-move hover ──
+    const hoverableLayers = [
+      LYR_DELIVERY,
+      LYR_RESIDENT,
+      LYR_HOUSE,
+      LYR_TELEPORT,
+      LYR_PLAYER,
+    ];
+
+    map.on('mousemove', (e: MapMouseEvent) => {
+      if (!isMouse.current) {
+        hoverInfo = undefined;
+        return;
+      }
+      handlePointerMoveOrClick(e);
+    });
+
+    map.on('movestart', () => {
+      clearHover();
+      hoverInfo = undefined;
+    });
+
+    map.on('drag', () => {
+      playerStickyFocusGuid = undefined;
+    });
+
+    map.on('contextmenu', (e: MapMouseEvent) => {
+      e.preventDefault();
+      clearSelection();
+      // Allow right-click to "pin" a delivery point
+      if (hoverInfo?.pointType === PointType.Delivery) {
+        const newParams = getSelectionClearedParams();
+        newParams.set('delivery', hoverInfo.info.guid ?? '');
+        dontFocus = true;
+        goto(`?${newParams.toString()}`, { noScroll: true, keepFocus: true });
+      }
+    });
+
+    // ── Click ──
+    map.on('click', (e: MapMouseEvent) => {
+      clearSelection();
+      if (isMouse.current) {
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: [LYR_DELIVERY, LYR_RESIDENT, LYR_HOUSE, LYR_TELEPORT],
+        });
+        if (features.length > 0) {
+          const f = features[0];
+          const type = f.properties?.pointType as PointType | undefined;
+          if (type === PointType.Delivery) {
+            const guid = f.id as string;
+            const newParams = getSelectionClearedParams();
+            newParams.set('menu', `deliveries/${guid}`);
+            newParams.set('delivery', guid);
+            goto(`/map?${newParams.toString()}`);
+          } else if (type === PointType.House) {
+            const name = f.id as string;
+            const newParams = getSelectionClearedParams();
+            newParams.set('menu', 'housing');
+            newParams.set('house', name);
+            newParams.set('hf', name);
+            goto(`/map?${newParams.toString()}`);
+          } else if (type === PointType.Teleport) {
+            handleCopyTeleport();
+          }
+        }
+        return;
+      }
+      handlePointerMoveOrClick(e);
+    });
+
+    // Hover cursors
+    for (const lyr of hoverableLayers) {
+      map.on('mouseenter', lyr, () => {
+        map.getCanvas().style.cursor = 'pointer';
       });
+      map.on('mouseleave', lyr, () => {
+        map.getCanvas().style.cursor = '';
+      });
+    }
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Pointer-move / click feature detection
+  // ──────────────────────────────────────────────────────────────────────────
+  let dontFocus = false;
+
+  const handlePointerMoveOrClick = (e: MapMouseEvent) => {
+    if (!mlMap) return;
+    const features = mlMap.queryRenderedFeatures(e.point, {
+      layers: [LYR_DELIVERY, LYR_RESIDENT, LYR_HOUSE, LYR_TELEPORT, LYR_PLAYER],
+    });
+
+    if (features.length === 0) {
+      clearHover();
+      hoverInfo = undefined;
+      return;
+    }
+
+    const f = features[0];
+    const type = f.properties?.pointType as PointType | undefined;
+    const source = f.source;
+    const id = f.id;
+
+    if (id === undefined || id === null) return;
+
+    if (hoveredId !== id || hoveredSource !== source) {
+      if (!lockId) {
+        clearDeliveryLines();
+        if (type === PointType.Delivery) {
+          const guid = id as string;
+          const dp = deliveryPointsMap.get(guid);
+          if (dp) updateDeliveryLine(dp);
+        }
+      }
+      setHover(source, id);
+    }
+
+    const pixelCoord: [number, number] = [e.point.x, e.point.y];
+
+    if (type === PointType.Delivery) {
+      const guid = id as string;
+      const dp = deliveryPointsMap.get(guid);
+      if (dp) {
+        hoverInfo = {
+          pointType: PointType.Delivery,
+          pixelCoord,
+          info: dp,
+          jobOnly: 0,
+        };
+      }
+    } else if (type === PointType.House) {
+      const name = id as string;
+      const house = { name } as { name: string };
+      hoverInfo = {
+        pointType: PointType.House,
+        pixelCoord,
+        info: house as import('$lib/data/house').House,
+      };
+    } else if (type === PointType.Teleport) {
+      const tp = teleportData.find((t) => t.name === id);
+      if (tp)
+        hoverInfo = { pointType: PointType.Teleport, pixelCoord, info: tp };
+    } else if (type === PointType.Player) {
+      const guid = id as string;
+      const pd = playerData.find((p) => p.guid === guid);
+      if (pd) hoverInfo = { pointType: PointType.Player, pixelCoord, info: pd };
+    } else {
+      hoverInfo = undefined;
+    }
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Teleport copy
+  // ──────────────────────────────────────────────────────────────────────────
+  const handleCopyTeleport = () => {
+    if (hoverInfo?.pointType !== PointType.Teleport) return;
+    const name = hoverInfo.info.name;
+    navigator.clipboard.writeText(`/tp ${name}`);
+    copiedTeleportName = name;
+    clearTimeout(teleportCopyTimeout);
+    teleportCopyTimeout = setTimeout(() => (copiedTeleportName = undefined), 2000);
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // HoverInfoTooltip click handler
+  // ──────────────────────────────────────────────────────────────────────────
+  const handleInfoClick = () => {
+    if (!hoverInfo) return;
+    if (hoverInfo.pointType === PointType.Delivery) {
+      const newParams = getSelectionClearedParams();
+      newParams.set('delivery', hoverInfo.info.guid);
+      goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
+    } else if (hoverInfo.pointType === PointType.House) {
+      const newParams = getSelectionClearedParams();
+      newParams.set('house', hoverInfo.info.name);
+      newParams.set('hf', hoverInfo.info.name);
+      goto(`/housing?${newParams.toString()}`);
+    }
+    clearHover();
+    hoverInfo = undefined;
+  };
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Player data updates
+  // ──────────────────────────────────────────────────────────────────────────
+  const filteredPlayerData = $derived.by(() => {
+    if (!mapState.playerCopsOnly && !mapState.playerCriminalOnly) return playerData;
+    return playerData.filter((p) => {
+      if (mapState.playerCopsOnly && hasPoliceRole(p.name)) return true;
+      if (mapState.playerCriminalOnly && hasCriminalRole(p.name)) return true;
+      return false;
+    });
   });
 
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    const geoJson: GeoJSON.FeatureCollection = {
+      type: 'FeatureCollection',
+      features: filteredPlayerData.map((pd) => {
+        const role = hasPoliceRole(pd.name)
+          ? PlayerRoles.Police
+          : hasCriminalRole(pd.name)
+            ? PlayerRoles.Criminal
+            : 'none';
+        const [lng, lat] = reProjectPoint([pd.coord.x, pd.coord.y]);
+        return {
+          type: 'Feature',
+          id: pd.guid,
+          geometry: { type: 'Point', coordinates: [lng, lat] },
+          properties: {
+            pointType: PointType.Player,
+            name: pd.name,
+            guid: pd.guid,
+            role,
+          },
+        } satisfies GeoJSON.Feature;
+      }),
+    };
+    (mlMap.getSource(SRC_PLAYER) as maplibregl.GeoJSONSource | undefined)?.setData(geoJson);
+
+    if (playerStickyFocusGuid) {
+      const initialPlayer = filteredPlayerData.find((p) => p.guid === playerStickyFocusGuid);
+      if (initialPlayer) {
+        mapComponent?.centerOn(
+          reProjectPoint([initialPlayer.coord.x, initialPlayer.coord.y]),
+          0,
+          initialFocus,
+        );
+        initialFocus = false;
+      }
+    }
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Delivery-line GeoJSON reactive sync
+  // ──────────────────────────────────────────────────────────────────────────
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    (mlMap.getSource(SRC_DELIVERY_LINE) as maplibregl.GeoJSONSource | undefined)?.setData(
+      deliveryLineGeoJson,
+    );
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Jobs-count update
+  // ──────────────────────────────────────────────────────────────────────────
+  $effect(() => {
+    if (!mlMap?.loaded() || !staticHandle) return;
+    for (const f of staticHandle.deliveryFeatures) {
+      const guid = f.id as string;
+      const dp = deliveryPointsMap.get(guid);
+      if (!dp) continue;
+      const matchSrc = jobsData.some(getMatchJobSourceFn(dp));
+      const matchDst = jobsData.some(getMatchJobDestFn(dp));
+      mlMap.setFeatureState(
+        { source: SRC_DELIVERY, id: guid },
+        { jobs: matchSrc ? 1 : matchDst ? 2 : 0 },
+      );
+    }
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // House data update (vacant / labels)
+  // ──────────────────────────────────────────────────────────────────────────
+  $effect(() => {
+    if (!mlMap?.loaded() || !staticHandle) return;
+    for (const f of staticHandle.houseFeatures) {
+      const name = f.id as string;
+      const ownerName = houseData?.[name]?.ownerName;
+      mlMap.setFeatureState(
+        { source: SRC_HOUSE, id: name },
+        { vacant: !ownerName ? 1 : 0, label: ownerName ?? m['housing.vacant']() },
+      );
+    }
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // jobOnly style updates
+  // ──────────────────────────────────────────────────────────────────────────
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    mlMap.setPaintProperty(LYR_DELIVERY, 'circle-opacity', getDeliveryPointPaint(mapState.jobOnly)['circle-opacity']);
+    mlMap.setPaintProperty(LYR_RESIDENT, 'circle-opacity', getResidentPointPaint(mapState.jobOnly)['circle-opacity']);
+  });
+
+  // houseVacantOnly style update
+  $effect(() => {
+    if (!mlMap?.loaded()) return;
+    mlMap.setPaintProperty(LYR_HOUSE, 'circle-opacity', getHousePaint(mapState.houseVacantOnly)['circle-opacity']);
+    setVis(
+      LYR_HOUSE_LABEL,
+      mapState.house && mapState.houseLabels,
+    );
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Persist map state
+  // ──────────────────────────────────────────────────────────────────────────
   $effect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(
@@ -670,360 +989,21 @@
     }
   });
 
-  let selectedPoint: Feature | undefined = undefined;
-  let lockPoint: Feature | undefined = undefined;
-  let hoverPoint: Feature | undefined = undefined;
-  let hoverInfo: HoverInfo | undefined = $state();
-
-  let teleportCopyTimeout: ReturnType<typeof setTimeout> | undefined;
-  let copiedTeleportName = $state<string | undefined>(undefined);
-
-  const teleportCopied = $derived(
-    hoverInfo?.pointType === PointType.Teleport && hoverInfo.info.name === copiedTeleportName,
-  );
-
-  const handleCopyTeleport = () => {
-    if (hoverInfo?.pointType !== PointType.Teleport) return;
-    const name = hoverInfo.info.name;
-    navigator.clipboard.writeText(`/tp ${name}`);
-    copiedTeleportName = name;
-    clearTimeout(teleportCopyTimeout);
-    teleportCopyTimeout = setTimeout(() => (copiedTeleportName = undefined), 2000);
-  };
-
-  const handlePointerMoveOrClick = (e: MapBrowserEvent) => {
-    let currentHoverInfo: HoverInfo | undefined = undefined;
-    let currentHoverPoint = undefined as Feature | undefined;
-
-    e.map.forEachFeatureAtPixel(
-      e.pixel,
-      (feature) => {
-        const f = feature as Feature;
-        f.set('hover', true);
-        currentHoverInfo = {
-          pointType: f.get('pointType'),
-          pixelCoord: e.pixel as [number, number],
-          info: f.get('info'),
-          jobOnly: (f.get('jobOnly') ?? 0) as number,
-        };
-        currentHoverPoint = f;
-        return true;
-      },
-      {
-        layerFilter: (layer) => {
-          return (
-            layer === deliveryPointLayer ||
-            layer === residentPointLayer ||
-            layer === houseLayer ||
-            layer === teleportLayer ||
-            layer === playerPointLayer
-          );
-        },
-        hitTolerance: 10,
-      },
-    );
-
-    if (currentHoverPoint !== hoverPoint) {
-      if (!lockPoint) {
-        deliveryLineFeaturesCollection.clear();
-        if ((currentHoverInfo as unknown as HoverInfo)?.pointType === PointType.Delivery) {
-          const deliveryPoint = currentHoverInfo as unknown as Extract<
-            HoverInfo,
-            {
-              pointType: PointType.Delivery;
-            }
-          >;
-          updateDeliveryLine(deliveryPoint.info);
-        }
-      }
-      hoverPoint?.set('hover', false);
-      hoverPoint = currentHoverPoint;
-    }
-    hoverInfo = currentHoverInfo;
-  };
-
-  let playerStickyFocusGuid: string | undefined = undefined;
-  let playerSelectingGuid: string | undefined = undefined;
-  let initialFocus = true;
-
-  const filteredPlayerData = $derived.by(() => {
-    if (!mapState.playerCopsOnly && !mapState.playerCriminalOnly) return playerData;
-    return playerData.filter((p) => {
-      if (mapState.playerCopsOnly && hasPoliceRole(p.name)) return true;
-      if (mapState.playerCriminalOnly && hasCriminalRole(p.name)) return true;
-      return false;
-    });
-  });
-
-  const setPlayerPoints = (data: PlayerData[]) => {
-    // Remove excess features from the end
-    while (playerFeaturesCollection.getLength() > data.length) {
-      playerFeaturesCollection.pop();
-    }
-
-    // Update existing and add new features
-    for (let i = 0; i < data.length; i++) {
-      const pd = data[i];
-      const role = hasPoliceRole(pd.name)
-        ? PlayerRoles.Police
-        : hasCriminalRole(pd.name)
-          ? PlayerRoles.Criminal
-          : 'none';
-      if (i < playerFeaturesCollection.getLength()) {
-        const feature = playerFeaturesCollection.item(i);
-        feature.getGeometry()?.setCoordinates(pd.geometry);
-        feature.set('info', pd);
-        feature.set('selected', pd.guid === playerSelectingGuid);
-        feature.set('role', role);
-      } else {
-        playerFeaturesCollection.push(
-          new Feature<Point>({
-            geometry: new Point(pd.geometry),
-            pointType: PointType.Player,
-            info: pd,
-            selected: pd.guid === playerSelectingGuid,
-            role,
-          }),
-        );
-      }
-    }
-
-    if (playerStickyFocusGuid) {
-      const initialPlayer = data.find((p) => p.guid === playerStickyFocusGuid);
-      if (initialPlayer) {
-        map.centerOn(
-          reProjectPoint([initialPlayer.coord.x, initialPlayer.coord.y]),
-          0,
-          initialFocus,
-        );
-        initialFocus = false;
-      }
-    }
-  };
-
-  $effect(() => {
-    setPlayerPoints(filteredPlayerData);
-  });
-
-  const clearSelection = () => {
-    selectedPoint?.set('selected', false);
-    selectedPoint = undefined;
-    playerSelectingGuid = undefined;
-    playerStickyFocusGuid = undefined;
-    deliveryLineFeaturesCollection.clear();
-    lockPoint?.set('selected', false);
-    lockPoint = undefined;
-    const newParams = getSelectionClearedParams();
-    goto(`?${newParams.toString()}`);
-  };
-
-  let dontFocus = false;
-
-  const handleMapRightClick = () => {
-    clearSelection();
-
-    if (hoverPoint?.get('pointType') === PointType.Delivery) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('delivery', hoverPoint.get('info').guid ?? '');
-      dontFocus = true;
-      goto(`?${newParams.toString()}`, {
-        noScroll: true,
-        keepFocus: true,
-      });
-    }
-  };
-
-  const handleInfoClick = () => {
-    if (!hoverInfo) {
-      return;
-    }
-    if (hoverInfo.pointType === PointType.Delivery) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('delivery', hoverInfo.info.guid);
-      goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
-    } else if (hoverInfo.pointType === PointType.House) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('house', hoverInfo.info.name);
-      newParams.set('hf', hoverInfo.info.name);
-      goto(`/housing?${newParams.toString()}`);
-    }
-    hoverPoint?.set('hover', false);
-    hoverInfo = undefined;
-  };
-
-  const handlePointerMove = (e: MapBrowserEvent) => {
-    if (isMouse.current) {
-      handlePointerMoveOrClick(e);
-    } else {
-      hoverInfo = undefined;
-    }
-  };
-
-  const handleClick = (e: MapBrowserEvent) => {
-    clearSelection();
-
-    if (isMouse.current) {
-      e.map.forEachFeatureAtPixel(
-        e.pixel,
-        (feature) => {
-          const f = feature as Feature;
-          const type = f.get('pointType') as PointType | undefined;
-          if (type === PointType.Delivery) {
-            const info = f.get('info') as DeliveryPoint;
-            const newParams = getSelectionClearedParams();
-            newParams.set('menu', `deliveries/${info.guid}`);
-            newParams.set('delivery', info.guid);
-            goto(`/map?${newParams.toString()}`);
-            return true;
-          }
-          if (type === PointType.House) {
-            const newParams = getSelectionClearedParams();
-            newParams.set('menu', 'housing');
-            newParams.set('house', f.get('info').name);
-            newParams.set('hf', f.get('info').name);
-            goto(`/map?${newParams.toString()}`);
-            return true;
-          }
-          if (type === PointType.Teleport) {
-            handleCopyTeleport();
-            return true;
-          }
-
-          return true;
-        },
-        {
-          layerFilter: (layer) => {
-            return (
-              layer === deliveryPointLayer ||
-              layer === residentPointLayer ||
-              layer === houseLayer ||
-              layer === teleportLayer
-            );
-          },
-          hitTolerance: 10,
-        },
-      );
-      return;
-    }
-    handlePointerMoveOrClick(e);
-  };
-
-  $effect(() => {
-    onPlayerLayerDataEnabledChange?.(mapState.player);
-  });
-
-  const togglePlayerName = () => {
-    mapState.playerName = !mapState.playerName;
-    playerNameLayer.setVisible(mapState.player && mapState.playerName);
-  };
-
-  const togglePinLabels = () => {
-    mapState.pinLabels = !mapState.pinLabels;
-    pinLabelsLayer.setVisible(mapState.pins && mapState.pinLabels);
-  };
-
-  const toggleDeliveryLayer = () => {
-    mapState.delivery = !mapState.delivery;
-    for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer])
-      l.setVisible(mapState.delivery);
-  };
-
-  const enableDeliveryLayer = () => {
-    mapState.delivery = true;
-    for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer]) l.setVisible(true);
-  };
-
-  const toggleHouseLayer = () => {
-    mapState.house = !mapState.house;
-    houseLayer.setVisible(mapState.house);
-    if (!mapState.house) {
-      houseNameLayer.setVisible(false);
-    } else {
-      houseNameLayer.setVisible(mapState.houseLabels);
-    }
-  };
-
-  const enableHouseLayer = () => {
-    mapState.house = true;
-    houseLayer.setVisible(true);
-    houseNameLayer.setVisible(mapState.houseLabels);
-  };
-
-  const toggleHouseNameLayer = () => {
-    mapState.houseLabels = !mapState.houseLabels;
-    houseNameLayer.setVisible(mapState.house && mapState.houseLabels);
-  };
-
-  const togglePlayerLayer = () => {
-    mapState.player = !mapState.player;
-    playerPointLayer.setVisible(mapState.player);
-    if (!mapState.player) {
-      playerNameLayer.setVisible(false);
-    } else {
-      setPlayerPoints(filteredPlayerData);
-      playerNameLayer.setVisible(mapState.playerName);
-    }
-  };
-
-  const enablePlayerLayer = () => {
-    mapState.player = true;
-    playerPointLayer.setVisible(true);
-    playerNameLayer.setVisible(mapState.playerName);
-  };
-
-  const togglePinsLayer = () => {
-    mapState.pins = !mapState.pins;
-    pinsLayer.setVisible(mapState.pins);
-    pinLabelsLayer.setVisible(mapState.pins && mapState.pinLabels);
-  };
-
-  const enablePinsLayer = () => {
-    mapState.pins = true;
-    pinsLayer.setVisible(true);
-    pinLabelsLayer.setVisible(mapState.pinLabels);
-  };
-
-  const toggleTeleportLayer = () => {
-    mapState.teleport = !mapState.teleport;
-    teleportLayer.setVisible(mapState.teleport);
-    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
-  };
-
-  const toggleTeleportLabels = () => {
-    mapState.teleportLabels = !mapState.teleportLabels;
-    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
-  };
-
-  const toggleShortcutZoneLayer = () => {
-    mapState.shortcutZone = !mapState.shortcutZone;
-    shortcutZoneLayer.setVisible(mapState.shortcutZone);
-  };
-
-  export const centerOnPoint = (point: [number, number]) => {
-    map.centerOn(reProjectPoint(point));
-  };
-
-  let map: OlMap;
-
-  const handleSearchClick = (point: SearchPoint) => {
-    if (point.pointType === PointType.Pin) {
-      enablePinsLayer();
-    }
-    map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
-  };
-
-  const { showModal } = getMsgModalContext();
-
+  // ──────────────────────────────────────────────────────────────────────────
+  // URL param → selection sync
+  // ──────────────────────────────────────────────────────────────────────────
   let init = true;
-
   let selectedHouse: string | undefined = undefined;
   let selectedDelivery: string | undefined = undefined;
 
   $effect(() => {
-    if (lockPoint !== selectedPoint) {
-      selectedPoint?.set('selected', false);
-      selectedPoint = undefined;
+    if (lockId !== (selectedId ?? lockId)) {
+      if (selectedSource && selectedId)
+        mlMap?.setFeatureState({ source: selectedSource, id: selectedId }, { selected: false });
+      selectedSource = null;
+      selectedId = null;
     }
+
     const oldPlayerSelectingGuid = playerSelectingGuid;
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
@@ -1038,19 +1018,13 @@
 
     const housing = clientSearchParamsGet('house');
     if (housing) {
-      untrack(() => {
-        enableHouseLayer();
-      });
-      const house = houseFeatures.find((h) => h.get('info').name === housing);
-      if (house) {
-        selectedPoint = house;
-        house.set('selected', true);
+      untrack(() => enableHouseLayer());
+      const hf = staticHandle?.houseFeatures.find((h) => h.id === housing);
+      if (hf) {
+        setSelection(SRC_HOUSE, housing);
         if (cachedSelectedHouse !== housing && !cacheDontFocus) {
-          map.centerOn(
-            house.getGeometry()?.getCoordinates() as [number, number],
-            cacheInit ? 0 : undefined,
-            cacheInit,
-          );
+          const [lng, lat] = (hf.geometry as GeoJSON.Point).coordinates as [number, number];
+          mapComponent?.centerOn([lng, lat], cacheInit ? 0 : undefined, cacheInit);
         }
       }
       selectedHouse = housing;
@@ -1059,26 +1033,24 @@
 
     const deliveryGuid = clientSearchParamsGet('delivery');
     if (deliveryGuid) {
-      const deliveryPoint =
-        deliveryPointFeatures.find((d) => d.get('info').guid === deliveryGuid) ??
-        residentPointFeatures.find((d) => d.get('info').guid === deliveryGuid);
-      if (deliveryPoint) {
-        untrack(() => {
-          enableDeliveryLayer();
-        });
-        lockPoint?.set('selected', false);
-        selectedPoint = deliveryPoint;
-        lockPoint = deliveryPoint;
-        deliveryPoint.set('selected', true);
-        deliveryLineFeaturesCollection.clear();
-        const deliveryPointInfo = deliveryPoint.get('info') as DeliveryPoint;
-        updateDeliveryLine(deliveryPointInfo);
+      const allDf = [
+        ...(staticHandle?.deliveryFeatures ?? []),
+        ...(staticHandle?.residentFeatures ?? []),
+      ];
+      const df = allDf.find((d) => d.id === deliveryGuid);
+      if (df) {
+        untrack(() => enableDeliveryLayer());
+        clearLock();
+        const isResident = staticHandle?.residentFeatures.includes(df);
+        const dfSource = isResident ? SRC_RESIDENT : SRC_DELIVERY;
+        setLock(dfSource, deliveryGuid);
+        setSelection(dfSource, deliveryGuid);
+        clearDeliveryLines();
+        const dp = deliveryPointsMap.get(deliveryGuid);
+        if (dp) updateDeliveryLine(dp);
         if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
-          map.centerOn(
-            deliveryPoint.getGeometry()?.getCoordinates() as [number, number],
-            cacheInit ? 0 : undefined,
-            cacheInit,
-          );
+          const [lng, lat] = (df.geometry as GeoJSON.Point).coordinates as [number, number];
+          mapComponent?.centerOn([lng, lat], cacheInit ? 0 : undefined, cacheInit);
         }
       }
       selectedDelivery = deliveryGuid;
@@ -1087,9 +1059,7 @@
 
     const playerGuid = clientSearchParamsGet('player');
     if (playerGuid) {
-      untrack(() => {
-        enablePlayerLayer();
-      });
+      untrack(() => enablePlayerLayer());
       playerSelectingGuid = playerGuid;
       if (oldPlayerSelectingGuid !== playerGuid) {
         playerStickyFocusGuid = playerGuid;
@@ -1109,21 +1079,22 @@
           pointType: PointType.Pin,
           label: p.label ?? m['map.pin_no']({ index: i + 1 }),
         }));
-        pinsSource.addFeatures(
-          data.map(
-            (p: Pin, i) =>
-              new Feature({
-                geometry: new Point(reProjectPoint([p.x, p.y])),
-                label: p.label,
-                pointType: PointType.Pin,
-                selected: focusIndex === i,
-              }),
-          ),
-        );
-
-        if (focusIndex < data.length && focusIndex >= 0) {
-          const focusPin = data[focusIndex];
-          map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), cacheInit ? 0 : undefined);
+        const pinsGeoJson: GeoJSON.FeatureCollection = {
+          type: 'FeatureCollection',
+          features: data.map((p: Pin & { label: string }, i) => {
+            const [lng, lat] = reProjectPoint([p.x, p.y]);
+            return {
+              type: 'Feature',
+              id: i,
+              geometry: { type: 'Point', coordinates: [lng, lat] },
+              properties: { label: p.label, pointType: PointType.Pin, pinIndex: i },
+            } satisfies GeoJSON.Feature;
+          }),
+        };
+        (mlMap?.getSource(SRC_PINS) as maplibregl.GeoJSONSource | undefined)?.setData(pinsGeoJson);
+        if (focusIndex >= 0 && focusIndex < data.length) {
+          const fp = data[focusIndex];
+          mapComponent?.centerOn(reProjectPoint([fp.x, fp.y]), cacheInit ? 0 : undefined);
         }
         pinsData = data;
       } catch (e) {
@@ -1136,66 +1107,110 @@
     }
   });
 
-  const handlePointerDrag = () => {
-    playerStickyFocusGuid = undefined;
+  // ──────────────────────────────────────────────────────────────────────────
+  // POI toggle helpers
+  // ──────────────────────────────────────────────────────────────────────────
+  const toggleDeliveryLayer = () => {
+    mapState.delivery = !mapState.delivery;
+    setVis(LYR_DELIVERY, mapState.delivery);
+    setVis(LYR_RESIDENT, mapState.delivery);
+    setVis(LYR_DELIVERY_LINE, mapState.delivery);
+  };
+  const enableDeliveryLayer = () => {
+    mapState.delivery = true;
+    setVis(LYR_DELIVERY, true);
+    setVis(LYR_RESIDENT, true);
+    setVis(LYR_DELIVERY_LINE, true);
+  };
+  const toggleHouseLayer = () => {
+    mapState.house = !mapState.house;
+    setVis(LYR_HOUSE, mapState.house);
+    setVis(LYR_HOUSE_LABEL, mapState.house && mapState.houseLabels);
+  };
+  const enableHouseLayer = () => {
+    mapState.house = true;
+    setVis(LYR_HOUSE, true);
+    setVis(LYR_HOUSE_LABEL, mapState.houseLabels);
+  };
+  const toggleHouseNameLayer = () => {
+    mapState.houseLabels = !mapState.houseLabels;
+    setVis(LYR_HOUSE_LABEL, mapState.house && mapState.houseLabels);
+  };
+  const togglePlayerLayer = () => {
+    mapState.player = !mapState.player;
+    setVis(LYR_PLAYER, mapState.player);
+    setVis(LYR_PLAYER_NAME, mapState.player && mapState.playerName);
+  };
+  const enablePlayerLayer = () => {
+    mapState.player = true;
+    setVis(LYR_PLAYER, true);
+    setVis(LYR_PLAYER_NAME, mapState.playerName);
+  };
+  const togglePlayerName = () => {
+    mapState.playerName = !mapState.playerName;
+    setVis(LYR_PLAYER_NAME, mapState.player && mapState.playerName);
+  };
+  const togglePinsLayer = () => {
+    mapState.pins = !mapState.pins;
+    setVis(LYR_PINS, mapState.pins);
+    setVis(LYR_PIN_LABEL, mapState.pins && mapState.pinLabels);
+  };
+  const togglePinLabels = () => {
+    mapState.pinLabels = !mapState.pinLabels;
+    setVis(LYR_PIN_LABEL, mapState.pins && mapState.pinLabels);
+  };
+  const toggleTeleportLayer = () => {
+    mapState.teleport = !mapState.teleport;
+    setVis(LYR_TELEPORT, mapState.teleport);
+    setVis(LYR_TELEPORT_LABEL, mapState.teleport && mapState.teleportLabels);
+  };
+  const toggleTeleportLabels = () => {
+    mapState.teleportLabels = !mapState.teleportLabels;
+    setVis(LYR_TELEPORT_LABEL, mapState.teleport && mapState.teleportLabels);
+  };
+  const toggleShortcutZoneLayer = () => {
+    mapState.shortcutZone = !mapState.shortcutZone;
+    setVis(LYR_SHORTCUT_FILL, mapState.shortcutZone);
+    setVis(LYR_SHORTCUT_LINE, mapState.shortcutZone);
+    setVis(LYR_SHORTCUT_LABEL, mapState.shortcutZone);
   };
 
-  const handleOnMoveStart = () => {
-    hoverPoint?.set('hover', false);
-    hoverInfo = undefined;
+  $effect(() => {
+    onPlayerLayerDataEnabledChange?.(mapState.player);
+  });
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Public API
+  // ──────────────────────────────────────────────────────────────────────────
+  let mapComponent: OlMap | undefined = $state();
+
+  export const centerOnPoint = (point: [number, number]) => {
+    mapComponent?.centerOn(reProjectPoint(point));
   };
 
-  $effect(() => {
-    for (const d of deliveryPointFeatures) {
-      const info = d.get('info') as DeliveryPoint;
-      const matchSourceJob = jobsData.some(getMatchJobSourceFn(info));
-      const matchDestJob = jobsData.some(getMatchJobDestFn(info));
-      d.set('jobs', matchSourceJob ? 1 : matchDestJob ? 2 : 0);
-    }
-  });
+  const handleSearchClick = (point: SearchPoint) => {
+    if (point.pointType === PointType.Pin) enablePinsLayer();
+    mapComponent?.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
+  };
 
-  $effect(() => {
-    deliveryPointLayer.setStyle(getDeliveryPointStyle(mapState.jobOnly));
-    residentPointLayer.setStyle(getResidentPointStyle(mapState.jobOnly));
-  });
+  const enablePinsLayer = () => {
+    mapState.pins = true;
+    setVis(LYR_PINS, true);
+    setVis(LYR_PIN_LABEL, mapState.pinLabels);
+  };
 
-  $effect(() => {
-    for (const f of houseFeatures) {
-      const info = f.get('info') as { name: string };
-      const ownerName = houseData?.[info.name]?.ownerName;
-      f.set('vacant', !ownerName ? 1 : 0);
-      f.set('label', ownerName ?? m['housing.vacant']());
-    }
-    houseNameLayer.changed();
-  });
+  const { showModal } = getMsgModalContext();
 
-  $effect(() => {
-    houseLayer.setStyle(getHouseStyle(mapState.houseVacantOnly));
-    houseNameLayer.setStyle(
-      mapState.houseVacantOnly
-        ? (feature) => {
-            if (!feature.get('vacant')) return [];
-            houseNameStyle.getText()?.setText(feature.get('label') as string);
-            return houseNameStyle;
-          }
-        : (feature) => {
-            houseNameStyle.getText()?.setText(feature.get('label') as string);
-            return houseNameStyle;
-          },
-    );
+  onMount(() => {
+    // nothing extra needed – map setup happens in handleMapReady
   });
 </script>
 
 <div class="relative h-full w-full">
   <OlMap
-    {layers}
     class="h-full w-full"
-    onPointerMove={handlePointerMove}
-    onClick={handleClick}
-    onRightClick={handleMapRightClick}
-    bind:this={map}
-    onPointerDrag={handlePointerDrag}
-    onMoveStart={handleOnMoveStart}
+    onMapReady={handleMapReady}
+    bind:this={mapComponent}
   />
   <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
   <div
