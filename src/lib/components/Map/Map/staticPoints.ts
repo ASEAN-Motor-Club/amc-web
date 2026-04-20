@@ -138,7 +138,7 @@ export function getStaticPoints() {
     source: new VectorSource({
       features: residentPointFeatures,
     }),
-    minZoom: 4,
+    minZoom: 5,
     style: getResidentPointStyle(),
   });
 

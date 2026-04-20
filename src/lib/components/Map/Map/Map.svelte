@@ -709,11 +709,11 @@
       {
         layerFilter: (layer) => {
           return (
-            layer !== playerNameLayer &&
-            layer !== deliveryLineLayer &&
-            layer !== pinLabelsLayer &&
-            layer !== pinsLayer &&
-            layer !== teleportLabelsLayer
+            layer === deliveryPointLayer ||
+            layer === residentPointLayer ||
+            layer === houseLayer ||
+            layer === teleportLayer ||
+            layer === playerPointLayer
           );
         },
         hitTolerance: 10,
@@ -1187,16 +1187,16 @@
   </div>
 
   <!-- POI trigger + floating card (bottom-left) -->
-  <div class="pointer-events-none absolute bottom-0 left-0 w-full p-4">
+  <div class="pointer-events-none absolute bottom-0 left-0 h-full w-full p-4 pt-18">
     <ClickAwayBlock active={poiOpen} onClickAway={() => (poiOpen = false)}>
-      <div class="relative">
+      <div class="flex h-full w-full flex-col items-start justify-end gap-2">
         {#if poiOpen}
           <div
-            class="absolute bottom-full left-0 mb-2 w-max max-w-full"
+            class="flex min-h-0 shrink"
             transition:fade={{ duration: defaultTransitionDurationMs }}
           >
             <Card
-              class="pointer-events-auto overflow-hidden !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+              class="pointer-events-auto min-h-0 flex-1 overflow-y-auto !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
             >
               <div class="flex flex-col">
                 <!-- Delivery -->

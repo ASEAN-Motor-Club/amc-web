@@ -2,7 +2,6 @@ import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
 import type { MtNameRecord, Vector3 } from '$lib/types';
 import { uniq } from 'lodash-es';
 import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType } from './types';
-import residentName from '$lib/assets/data/resident_name.json';
 import { flattenCargoType } from '$lib/utils/delivery';
 
 export interface DeliveryPointJson {
@@ -103,7 +102,6 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
 
   const point = {
     ...dp,
-    name: dp.type === 'Resident_C' ? residentName : dp.name,
     allSupply,
     allDemand,
     allSupplyKey,
