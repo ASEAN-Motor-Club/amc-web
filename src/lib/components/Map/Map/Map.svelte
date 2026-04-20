@@ -506,16 +506,18 @@
   };
 
   const layers = $derived([
-    ...(haveShortcutZones ? [shortcutZoneLayer] : []),
     deliveryLineLayer,
     deliveryPointLayer,
     residentPointLayer,
     houseLayer,
-    houseNameLayer,
     playerPointLayer,
+    ...(haveTeleports ? [teleportLayer] : []),
+    ...(havePins ? [pinsLayer] : []),
+    ...(haveShortcutZones ? [shortcutZoneLayer] : []),
+    houseNameLayer,
     playerNameLayer,
-    ...(haveTeleports ? [teleportLayer, teleportLabelsLayer] : []),
-    ...(havePins ? [pinsLayer, pinLabelsLayer] : []),
+    ...(haveTeleports ? [teleportLabelsLayer] : []),
+    ...(havePins ? [pinLabelsLayer] : []),
   ]);
 
   const mapState = $state({
