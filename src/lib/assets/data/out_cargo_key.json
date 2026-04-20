@@ -55,7 +55,10 @@
     "Transformer_20MVA",
     "Transformer_50MVA",
     "Tank_250kL",
-    "Transformer_5MVA"
+    "Transformer_5MVA",
+    "Money",
+    "MoneyPallet",
+    "Moonshine"
   ],
   "_TFinalProduct": ["ToyBoxes", "BottlePallete"],
   "_TWood": ["WoodPlank_14ft_5t"],

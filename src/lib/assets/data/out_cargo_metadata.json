@@ -320,5 +320,14 @@
   },
   "Transformer_5MVA": {
     "type": "_TNone"
+  },
+  "Money": {
+    "type": "_TNone"
+  },
+  "MoneyPallet": {
+    "type": "_TNone"
+  },
+  "Moonshine": {
+    "type": "_TNone"
   }
 }

@@ -1800,5 +1800,14 @@
   },
   "Transformer_5MVA": {
     "en": "Transformer 5MVA (Deprecated)"
+  },
+  "Money": {
+    "en": "Money Stack"
+  },
+  "MoneyPallet": {
+    "en": "Money Pallet"
+  },
+  "Moonshine": {
+    "en": "Moonshine Keg"
   }
 }

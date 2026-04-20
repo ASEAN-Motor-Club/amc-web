@@ -2428,6 +2428,20 @@
         },
         "prodTime": 600,
         "prodSpeedMul": 1
+      },
+      {
+        "output": {
+          "Money": 1
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "output": {
+          "MoneyPallet": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
@@ -2437,7 +2451,10 @@
       "Transformer_50MVA": 30,
       "ToyBoxes": 30
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "Money": 30,
+      "MoneyPallet": 30
+    }
   },
   {
     "type": "Export_Harbor_C",
@@ -2506,6 +2523,20 @@
         },
         "prodTime": 600,
         "prodSpeedMul": 1
+      },
+      {
+        "output": {
+          "Money": 1
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "output": {
+          "MoneyPallet": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
@@ -2515,7 +2546,10 @@
       "Transformer_50MVA": 30,
       "ToyBoxes": 30
     },
-    "supplyStorage": {}
+    "supplyStorage": {
+      "Money": 30,
+      "MoneyPallet": 30
+    }
   },
   {
     "type": "Factory_Bakery_C",
@@ -3784,12 +3818,28 @@
         },
         "prodTime": 10,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Money": 1
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MoneyPallet": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
       }
     ],
     "demandStorage": {
       "PlasticPallete": 100,
       "_TContainer": 10,
-      "_TLargePackage": 100
+      "_TLargePackage": 100,
+      "Money": 100,
+      "MoneyPallet": 100
     },
     "supplyStorage": {
       "ToyBoxes": 100
@@ -5197,10 +5247,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5228,10 +5289,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5273,10 +5345,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5318,10 +5401,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5363,10 +5457,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5403,10 +5508,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5433,10 +5549,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5463,10 +5590,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5494,10 +5632,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5539,10 +5688,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5586,13 +5746,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
     "demand": {
       "Fuel": 1.2
     },
     "demandStorage": {
-      "Fuel": 10
+      "Fuel": 10,
+      "Moonshine": 50
     },
     "supplyStorage": {}
   },
@@ -5635,10 +5803,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5673,10 +5852,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5717,10 +5907,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -5760,10 +5961,21 @@
         },
         "prodTime": 1800,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 480,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.2
+    },
     "demandStorage": {
-      "Fuel": 50
+      "Fuel": 50,
+      "Moonshine": 10
     },
     "supplyStorage": {}
   },
@@ -6731,18 +6943,31 @@
         },
         "prodTime": 30,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "output": {
+          "Moonshine": 5
+        },
+        "prodTime": 180,
+        "prodSpeedMul": 1
       }
     ],
     "demand": {
       "Fuel": 1,
-      "WoodPlank_14ft_5t": 1
+      "WoodPlank_14ft_5t": 1,
+      "CornPallet": 1
     },
     "demandStorage": {
       "Fuel": 100,
-      "WoodPlank_14ft_5t": 100
+      "WoodPlank_14ft_5t": 100,
+      "CornPallet": 20
     },
     "supplyStorage": {
-      "CopperOre": 100
+      "CopperOre": 100,
+      "Moonshine": 100
     }
   },
   {
@@ -21151,8 +21376,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21166,7 +21401,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -21304,8 +21540,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21319,7 +21565,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -21461,8 +21708,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21476,7 +21733,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -21618,8 +21876,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21633,7 +21901,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -21771,8 +22040,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21786,7 +22065,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -21924,8 +22204,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -21939,7 +22229,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
@@ -22077,8 +22368,18 @@
         },
         "prodTime": 1,
         "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Moonshine": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
       }
     ],
+    "demand": {
+      "Moonshine": 1.5
+    },
     "demandStorage": {
       "BottlePallete": 5,
       "RicePallet": 3,
@@ -22092,7 +22393,8 @@
       "BreadPallet": 3,
       "MeatBox": 5,
       "ToyBoxes": 3,
-      "_TLargePackage": 3
+      "_TLargePackage": 3,
+      "Moonshine": 10
     },
     "supplyStorage": {
       "GroceryBag": 30
