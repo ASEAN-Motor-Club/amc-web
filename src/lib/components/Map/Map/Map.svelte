@@ -997,7 +997,7 @@
   let selectedDelivery: string | undefined = undefined;
 
   $effect(() => {
-    if (lockId !== (selectedId ?? lockId)) {
+    if (lockId !== selectedId) {
       if (selectedSource && selectedId)
         mlMap?.setFeatureState({ source: selectedSource, id: selectedId }, { selected: false });
       selectedSource = null;

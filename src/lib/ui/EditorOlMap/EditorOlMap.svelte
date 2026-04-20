@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Vector2 } from '$lib/types';
   import type { ClassValue } from 'svelte/elements';
+  import maplibregl from 'maplibre-gl';
   import OlMap from '../OlMap/OlMap.svelte';
   import {
     colorSky400,
@@ -16,9 +17,14 @@
     colorTextDark,
     defaultTransitionDurationMs,
   } from '$lib/tw-var';
-  import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
+  import { reProjectPoint, reProjectPointInverse, MAP_REAL_SIZE } from '../OlMap/utils';
   import { prefersReducedMotion } from 'svelte/motion';
   import type { Map as MaplibreMap, MapMouseEvent } from 'maplibre-gl';
+
+  // Full web-mercator world extents used to convert game-pixel offsets to degrees
+  // 360° of longitude and ≈170.1° of latitude (the Mercator latitude limit)
+  const MERCATOR_LNG_RANGE = 360;
+  const MERCATOR_LAT_RANGE = (Math.atan(Math.sinh(Math.PI)) * 2 * 180) / Math.PI; // ≈ 170.10
 
   export interface TrackPoint {
     coord: Vector2;
@@ -196,8 +202,8 @@
     const halfWidth = (scaleY * 100) / 2;
     // Compute perpendicular in screen-degree space (small enough to be linear)
     const perpAngle = -(yaw + Math.PI / 2);
-    const dLng = Math.cos(perpAngle) * halfWidth * (360 / 2200000);
-    const dLat = Math.sin(perpAngle) * halfWidth * (170.102258 / 2200000);
+    const dLng = Math.cos(perpAngle) * halfWidth * (MERCATOR_LNG_RANGE / MAP_REAL_SIZE);
+    const dLat = Math.sin(perpAngle) * halfWidth * (MERCATOR_LAT_RANGE / MAP_REAL_SIZE);
     return {
       type: 'Feature',
       id,
@@ -499,9 +505,6 @@
   // Expose underlying map for compatibility with existing call sites that call
   // map.getMap() (e.g. old translate interaction code, now unused).
   export const getMap = () => mlMap;
-
-  // Import maplibregl namespace for type assertions in effects above
-  import maplibregl from 'maplibre-gl';
 </script>
 
 <OlMap
