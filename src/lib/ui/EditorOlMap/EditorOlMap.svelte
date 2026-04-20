@@ -5,6 +5,7 @@
   import VectorSource from 'ol/source/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import { Feature } from 'ol';
+  import Collection from 'ol/Collection';
   import { Point, LineString } from 'ol/geom';
   import {
     colorSky400,
@@ -80,11 +81,16 @@
     showNum = false,
   }: EditorOlMapProps = $props();
 
-  const trackPointSource = new VectorSource();
-  const lineSource = new VectorSource();
-  const selectedPointSource = new VectorSource();
-  const gateSource = new VectorSource();
-  const selectedGateSource = new VectorSource();
+  const trackPointFeaturesCollection = new Collection<Feature>();
+  const trackPointSource = new VectorSource({ features: trackPointFeaturesCollection });
+  const lineFeaturesCollection = new Collection<Feature>();
+  const lineSource = new VectorSource({ features: lineFeaturesCollection });
+  const selectedPointFeaturesCollection = new Collection<Feature>();
+  const selectedPointSource = new VectorSource({ features: selectedPointFeaturesCollection });
+  const gateFeaturesCollection = new Collection<Feature>();
+  const gateSource = new VectorSource({ features: gateFeaturesCollection });
+  const selectedGateFeaturesCollection = new Collection<Feature>();
+  const selectedGateSource = new VectorSource({ features: selectedGateFeaturesCollection });
 
   const trackPointLayer = new WebGLVectorLayer({
     source: trackPointSource,
@@ -207,11 +213,11 @@
   });
 
   $effect(() => {
-    trackPointSource.clear(true);
-    lineSource.clear(true);
-    selectedPointSource.clear(true);
-    gateSource.clear(true);
-    selectedGateSource.clear(true);
+    trackPointFeaturesCollection.clear();
+    lineFeaturesCollection.clear();
+    selectedPointFeaturesCollection.clear();
+    gateFeaturesCollection.clear();
+    selectedGateFeaturesCollection.clear();
 
     const pointFeatures: Feature[] = [];
     const gateFeatures: Feature[] = [];
@@ -257,9 +263,9 @@
     }
 
     if (gateMode) {
-      gateSource.addFeatures(gateFeatures);
+      gateFeaturesCollection.extend(gateFeatures);
     } else {
-      trackPointSource.addFeatures(pointFeatures);
+      trackPointFeaturesCollection.extend(pointFeatures);
     }
 
     if (selectedPoint) {
@@ -286,14 +292,14 @@
             ]),
           });
 
-          selectedGateSource.addFeatures([selectedGateFeature]);
+          selectedGateFeaturesCollection.extend([selectedGateFeature]);
         } else {
           const selectedFeature = new Feature({
             geometry: new Point(reprojectedPoint),
             yaw: selectedPoint.yaw ?? 0,
           });
 
-          selectedPointSource.addFeatures([selectedFeature]);
+          selectedPointFeaturesCollection.extend([selectedFeature]);
         }
       }
     }
@@ -305,7 +311,7 @@
         geometry: new LineString(lineCoordinates),
       });
 
-      lineSource.addFeatures([lineFeature]);
+      lineFeaturesCollection.extend([lineFeature]);
     }
   });
 

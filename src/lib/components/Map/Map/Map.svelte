@@ -66,6 +66,7 @@
   import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import { SvelteSet } from 'svelte/reactivity';
+  import Collection from 'ol/Collection';
   import * as z from 'zod/mini';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
@@ -249,8 +250,10 @@
     },
   });
 
+  const playerFeaturesCollection = new Collection<Feature<Point>>();
+
   const playerPointSource = new VectorSource({
-    features: [] as Feature<Point>[],
+    features: playerFeaturesCollection,
   });
 
   const playerPointLayer = new WebGLVectorLayer({
@@ -310,12 +313,12 @@
     },
   });
 
-  const deliveryLineSource = new VectorSource({
-    features: [] as Feature<LineString>[],
-  });
+  const deliveryLineFeaturesCollection = new Collection<Feature<LineString>>();
 
   const deliveryLineLayer = new WebGLVectorLayer({
-    source: deliveryLineSource,
+    source: new VectorSource({
+      features: deliveryLineFeaturesCollection,
+    }),
     style: {
       'stroke-width': 2,
       'stroke-color': [
@@ -471,7 +474,7 @@
         .filter((d) => d !== undefined),
     );
 
-    deliveryLineSource.addFeatures([
+    deliveryLineFeaturesCollection.extend([
       ...allDemandDestinations.map((d) => {
         return new Feature({
           geometry: new LineString([
@@ -722,7 +725,7 @@
 
     if (currentHoverPoint !== hoverPoint) {
       if (!lockPoint) {
-        deliveryLineSource.clear(true);
+        deliveryLineFeaturesCollection.clear();
         if ((currentHoverInfo as unknown as HoverInfo)?.pointType === PointType.Delivery) {
           const deliveryPoint = currentHoverInfo as unknown as Extract<
             HoverInfo,
@@ -753,23 +756,38 @@
   });
 
   const setPlayerPoints = (data: PlayerData[]) => {
-    playerPointSource.clear(true);
-    playerPointSource.addFeatures(
-      data.map(
-        (playerData: PlayerData) =>
-          new Feature({
-            geometry: new Point(playerData.geometry),
+    // Remove excess features from the end
+    while (playerFeaturesCollection.getLength() > data.length) {
+      playerFeaturesCollection.pop();
+    }
+
+    // Update existing and add new features
+    for (let i = 0; i < data.length; i++) {
+      const pd = data[i];
+      const role = hasPoliceRole(pd.name)
+        ? PlayerRoles.Police
+        : hasCriminalRole(pd.name)
+          ? PlayerRoles.Criminal
+          : 'none';
+      if (i < playerFeaturesCollection.getLength()) {
+        const feature = playerFeaturesCollection.item(i);
+        feature.getGeometry()?.setCoordinates(pd.geometry);
+        feature.set('info', pd);
+        feature.set('selected', pd.guid === playerSelectingGuid);
+        feature.set('role', role);
+      } else {
+        playerFeaturesCollection.push(
+          new Feature<Point>({
+            geometry: new Point(pd.geometry),
             pointType: PointType.Player,
-            info: playerData,
-            selected: playerData.guid === playerSelectingGuid,
-            role: hasPoliceRole(playerData.name)
-              ? PlayerRoles.Police
-              : hasCriminalRole(playerData.name)
-                ? PlayerRoles.Criminal
-                : 'none',
+            info: pd,
+            selected: pd.guid === playerSelectingGuid,
+            role,
           }),
-      ),
-    );
+        );
+      }
+    }
+
     if (playerStickyFocusGuid) {
       const initialPlayer = data.find((p) => p.guid === playerStickyFocusGuid);
       if (initialPlayer) {
@@ -792,7 +810,7 @@
     selectedPoint = undefined;
     playerSelectingGuid = undefined;
     playerStickyFocusGuid = undefined;
-    deliveryLineSource.clear(true);
+    deliveryLineFeaturesCollection.clear();
     lockPoint?.set('selected', false);
     lockPoint = undefined;
     const newParams = getSelectionClearedParams();
@@ -1052,7 +1070,7 @@
         selectedPoint = deliveryPoint;
         lockPoint = deliveryPoint;
         deliveryPoint.set('selected', true);
-        deliveryLineSource.clear(true);
+        deliveryLineFeaturesCollection.clear();
         const deliveryPointInfo = deliveryPoint.get('info') as DeliveryPoint;
         updateDeliveryLine(deliveryPointInfo);
         if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
