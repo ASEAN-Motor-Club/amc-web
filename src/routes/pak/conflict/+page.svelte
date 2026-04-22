@@ -6,6 +6,7 @@
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { Status } from '$lib/utils/status';
+  import { filterSubsets } from '$lib/utils/filterSubsets';
 
   const title = $derived(
     m['pak.conflict.head']({
@@ -13,13 +14,9 @@
     }),
   );
 
-  interface PakConflict {
-    paks: string[];
-  }
-
   let status: Status = $state(Status.Idle);
   let error: string | null = $state(null);
-  let conflicts: PakConflict[] = $state.raw([]);
+  let conflicts: string[][] = $state.raw([]);
   let totalPaks = $state(0);
 
   let fileInput: HTMLInputElement;
@@ -68,19 +65,19 @@
 
       // eslint-disable-next-line svelte/prefer-svelte-reactivity
       const pairSet = new Set<string>();
-      const pairList: PakConflict[] = [];
-      for (const [, paks] of pathMap.entries()) {
+      const pairList: string[][] = [];
+      for (const paks of pathMap.values()) {
         if (paks.length > 1) {
           const sorted = [...new Set(paks)].sort();
           const key = sorted.join('\0');
           if (!pairSet.has(key)) {
             pairSet.add(key);
-            pairList.push({ paks: sorted });
+            pairList.push(sorted);
           }
         }
       }
 
-      conflicts = pairList.sort((a, b) => a.paks[0].localeCompare(b.paks[0]));
+      conflicts = filterSubsets(pairList).sort((a, b) => a[0].localeCompare(b[0]));
 
       status = Status.Done;
     } catch (e) {
@@ -148,15 +145,15 @@
             <ul
               class="rounded border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
             >
-              {#each conflicts as conflict (conflict.paks.join('\0'))}
+              {#each conflicts as conflict (conflict.join('\0'))}
                 <li
                   class="flex flex-wrap items-center gap-2 border-b border-gray-100 px-3 py-2 last:border-0 dark:border-gray-800"
                 >
-                  {#each conflict.paks as pak, i (pak)}
+                  {#each conflict as pak, i (pak)}
                     <p class="rounded bg-gray-500/10 px-2 py-1 text-xs">
                       {pak}
                     </p>
-                    {#if conflict.paks.length >= 2 && i !== conflict.paks.length - 1}
+                    {#if conflict.length >= 2 && i !== conflict.length - 1}
                       <Icon
                         class="i-material-symbols:add-rounded text-gray-400 dark:text-gray-600"
                         size="xs"
