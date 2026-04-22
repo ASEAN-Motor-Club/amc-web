@@ -146,7 +146,24 @@
         }
       ],
       "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser.",
-      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak)"
+      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak)."
+    },
+    "inspect": {
+      "title": "Inspektur File Pak",
+      "description": "Unggah file .pak untuk melihat semua file yang ada di dalamnya.",
+      "select_file": "Pilih File .pak",
+      "parsing": "Memproses…",
+      "files_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} file ditemukan.",
+            "p=other": "{count} file ditemukan."
+          }
+        }
+      ],
+      "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser."
     }
   },
   "map": {

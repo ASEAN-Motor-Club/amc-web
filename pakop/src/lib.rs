@@ -27,7 +27,10 @@ pub fn list(data: &[u8]) -> Result<Vec<String>, JsError> {
     let paths = pak
         .files()
         .into_iter()
-        .map(|f| mount_point.join(&f).to_slash_lossy().into_owned())
+        .map(|f| {
+            let raw = mount_point.join(&f).to_slash_lossy().into_owned();
+            raw.strip_prefix("../../../").unwrap_or(&raw).to_owned()
+        })
         .collect();
 
     Ok(paths)

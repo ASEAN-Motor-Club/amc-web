@@ -145,6 +145,22 @@
       ],
       "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ",
       "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak)"
+    },
+    "inspect": {
+      "title": "ตรวจสอบไฟล์ Pak",
+      "description": "อัปโหลดไฟล์ .pak เพื่อดูไฟล์ทั้งหมดที่อยู่ภายใน",
+      "select_file": "เลือกไฟล์ .pak",
+      "parsing": "กำลังประมวลผล…",
+      "files_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=other": "พบ {count} ไฟล์"
+          }
+        }
+      ],
+      "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ"
     }
   },
   "map": {
