@@ -114,7 +114,40 @@
     "wiki": "Wiki",
     "amc_cup": "AMC Cup",
     "details": "Detail",
-    "join_discord": "GABUNG DISCORD KAMI"
+    "join_discord": "GABUNG DISCORD KAMI",
+    "pak_conflict": "Konflik Mod"
+  },
+  "pak": {
+    "conflict": {
+      "title": "Pemeriksa Konflik Pak",
+      "description": "Pilih folder yang berisi file mod pak untuk menemukan mod yang berkonflik.",
+      "select_folder": "Pilih Folder",
+      "scanning": "Memindai…",
+      "scanned": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} file mod pak dipindai.",
+            "p=other": "{count} file mod pak dipindai."
+          }
+        }
+      ],
+      "no_pak_files": "Tidak ada file mod pak di folder yang dipilih.",
+      "no_conflicts": "Tidak ada konflik!",
+      "found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} konflik ditemukan.",
+            "p=other": "{count} konflik ditemukan."
+          }
+        }
+      ],
+      "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser.",
+      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak)"
+    }
   },
   "map": {
     "head": "{siteName} | Peta",

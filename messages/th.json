@@ -114,7 +114,38 @@
     "wiki": "วิกิ",
     "amc_cup": "ถ้วย AMC",
     "details": "รายละเอียด",
-    "join_discord": "เข้าร่วม Discord ของเรา"
+    "join_discord": "เข้าร่วม Discord ของเรา",
+    "pak_conflict": "ความขัดแย้งของมอด"
+  },
+  "pak": {
+    "conflict": {
+      "title": "ตรวจสอบความขัดแย้ง Pak",
+      "description": "เลือกโฟลเดอร์ที่มีไฟล์ pak มอด เพื่อค้นหามอดที่ขัดแย้งกัน",
+      "select_folder": "เลือกโฟลเดอร์",
+      "scanning": "กำลังสแกน…",
+      "scanned": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=other": "สแกนไฟล์ pak มอดแล้ว {count} ไฟล์"
+          }
+        }
+      ],
+      "no_pak_files": "ไม่พบไฟล์ pak มอดในโฟลเดอร์ที่เลือก",
+      "no_conflicts": "ไม่พบความขัดแย้ง!",
+      "found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=other": "พบ {count} ความขัดแย้ง"
+          }
+        }
+      ],
+      "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ",
+      "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak)"
+    }
   },
   "map": {
     "head": "{siteName} | แผนที่",
@@ -133,7 +164,6 @@
         "declarations": ["input count", "local p = count: plural"],
         "selectors": ["p"],
         "match": {
-          "p=one": "มีผลลัพธ์อีก {count} รายการ ลองค้นหาให้เจาะจงมากขึ้น",
           "p=other": "มีผลลัพธ์อีก {count} รายการ ลองค้นหาให้เจาะจงมากขึ้น"
         }
       }
@@ -218,7 +248,6 @@
         "declarations": ["input players", "local p = players: plural"],
         "selectors": ["p"],
         "match": {
-          "p=one": "เซิร์ฟเวอร์ออนไลน์ - ผู้เล่น {players} คนออนไลน์",
           "p=other": "เซิร์ฟเวอร์ออนไลน์ - ผู้เล่น {players} คนออนไลน์"
         }
       }

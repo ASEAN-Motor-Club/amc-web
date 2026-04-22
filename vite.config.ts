@@ -1,6 +1,7 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv, type UserConfig } from 'vite';
+import wasm from 'vite-plugin-wasm';
 import UnoCSS from 'unocss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
@@ -12,6 +13,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      wasm(),
       UnoCSS(),
       sveltekit(),
       paraglideVitePlugin({

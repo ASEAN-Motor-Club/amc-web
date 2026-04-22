@@ -117,10 +117,16 @@
      * @default false
      */
     noSanitize?: boolean;
+    /**
+     * Render only the inner HTML without the prose <section> wrapper.
+     * Useful for inline text fragments.
+     * @default false
+     */
+    textOnly?: boolean;
   }
   // @unocss-skip-end
 
-  const { size = 'prose-base', text, noSanitize }: MarkdownTextProps = $props();
+  const { size = 'prose-base', text, noSanitize, textOnly = false }: MarkdownTextProps = $props();
 
   let renderer = new marked.Renderer();
   renderer.link = function (token: Tokens.Link) {
@@ -143,12 +149,16 @@
         });
   });
 
-  let textContainer: HTMLSpanElement | undefined;
+  let textContainer: HTMLSpanElement | undefined = $state(undefined);
 </script>
 
-<section
-  class={['prose dark:prose-invert prose-slate !prose-cyan contents', size]}
-  bind:this={textContainer}
->
+{#if textOnly}
   <HydrationSkip markup={sanitizedHtml} />
-</section>
+{:else}
+  <section
+    class={['prose dark:prose-invert prose-slate !prose-cyan contents', size]}
+    bind:this={textContainer}
+  >
+    <HydrationSkip markup={sanitizedHtml} />
+  </section>
+{/if}

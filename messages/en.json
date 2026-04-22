@@ -114,7 +114,40 @@
     "wiki": "Wiki",
     "amc_cup": "AMC Cup",
     "details": "Details",
-    "join_discord": "JOIN OUR DISCORD"
+    "join_discord": "JOIN OUR DISCORD",
+    "pak_conflict": "Mod Conflict"
+  },
+  "pak": {
+    "conflict": {
+      "title": "Mod Pak Conflict Checker",
+      "description": "Select a folder containing mod pak files to find conflicting mods.",
+      "select_folder": "Select Folder",
+      "scanning": "Scanning…",
+      "scanned": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "Scanned {count} mod pak file.",
+            "p=other": "Scanned {count} mod pak files."
+          }
+        }
+      ],
+      "no_pak_files": "No mod pak files found in the selected folder.",
+      "no_conflicts": "No conflicts found!",
+      "found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} conflict found.",
+            "p=other": "{count} conflicts found."
+          }
+        }
+      ],
+      "privacy_note": "Your files never leave your device — all processing happens locally in your browser.",
+      "repak_credit": "Pak unpacking powered by [repak](https://github.com/trumank/repak)"
+    }
   },
   "map": {
     "head": "{siteName} | Map",
