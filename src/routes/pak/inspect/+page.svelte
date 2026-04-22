@@ -6,6 +6,12 @@
   import { MarkdownText } from '$lib/ui/MarkdownText';
   import { Status } from '$lib/utils/status';
 
+  const title = $derived(
+    m['pak.inspect.head']({
+      siteName: m.site_name_short(),
+    }),
+  );
+
   let status: Status = $state(Status.Idle);
   let error: string | null = $state(null);
   let files: string[] = $state.raw([]);
@@ -39,6 +45,11 @@
     }
   };
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
+</svelte:head>
 
 <div class="flex h-full w-full p-8">
   <div class="relative flex h-full w-full flex-col items-center">

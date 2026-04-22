@@ -7,6 +7,12 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { Status } from '$lib/utils/status';
 
+  const title = $derived(
+    m['pak.conflict.head']({
+      siteName: m.site_name_short(),
+    }),
+  );
+
   interface PakConflict {
     paks: string[];
   }
@@ -83,6 +89,11 @@
     }
   };
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="og:title" content={title} />
+</svelte:head>
 
 <div class="flex h-full w-full p-8">
   <div class="relative flex h-full w-full flex-col items-center">

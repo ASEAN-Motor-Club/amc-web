@@ -119,6 +119,7 @@
   },
   "pak": {
     "conflict": {
+      "head": "{siteName} | Pemeriksa Konflik Pak",
       "title": "Pemeriksa Konflik Pak",
       "description": "Pilih folder yang berisi file mod pak untuk menemukan mod yang berkonflik.",
       "select_folder": "Pilih Folder",
@@ -149,6 +150,7 @@
       "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak)."
     },
     "inspect": {
+      "head": "{siteName} | Inspektur File Pak",
       "title": "Inspektur File Pak",
       "description": "Unggah file .pak untuk melihat semua file yang ada di dalamnya.",
       "select_file": "Pilih File .pak",

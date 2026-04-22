@@ -119,6 +119,7 @@
   },
   "pak": {
     "conflict": {
+      "head": "{siteName} | ตรวจสอบความขัดแย้ง Pak",
       "title": "ตรวจสอบความขัดแย้ง Pak",
       "description": "เลือกโฟลเดอร์ที่มีไฟล์ pak มอด เพื่อค้นหามอดที่ขัดแย้งกัน",
       "select_folder": "เลือกโฟลเดอร์",
@@ -147,6 +148,7 @@
       "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak)"
     },
     "inspect": {
+      "head": "{siteName} | ตรวจสอบไฟล์ Pak",
       "title": "ตรวจสอบไฟล์ Pak",
       "description": "อัปโหลดไฟล์ .pak เพื่อดูไฟล์ทั้งหมดที่อยู่ภายใน",
       "select_file": "เลือกไฟล์ .pak",

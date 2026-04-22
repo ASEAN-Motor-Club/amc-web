@@ -119,6 +119,7 @@
   },
   "pak": {
     "conflict": {
+      "head": "{siteName} | Mod Pak Conflict Checker",
       "title": "Mod Pak Conflict Checker",
       "description": "Select a folder containing mod pak files to find conflicting mods.",
       "select_folder": "Select Folder",
@@ -149,6 +150,7 @@
       "repak_credit": "Pak unpacking powered by [repak](https://github.com/trumank/repak)."
     },
     "inspect": {
+      "head": "{siteName} | Pak File Inspector",
       "title": "Pak File Inspector",
       "description": "Upload a .pak file to see all files contained within it.",
       "select_file": "Select .pak File",
