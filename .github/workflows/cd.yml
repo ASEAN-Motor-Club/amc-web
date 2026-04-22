@@ -39,6 +39,22 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install -P
 
+      - name: 🦀 Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: 🗂️ Cache Rust artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: pakop
+
+      - name: 📦 Install wasm-pack
+        run: cargo install wasm-pack
+
+      - name: 🔨 Build WASM
+        run: pnpm build:pakop
+
       - name: 🏗️ Build application
         run: pnpm build
 
