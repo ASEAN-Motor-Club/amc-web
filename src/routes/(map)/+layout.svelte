@@ -63,7 +63,7 @@
 
   const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
 
-  let playerData: PlayerData[] = $state([]);
+  let playerData: PlayerData[] = $state.raw([]);
   let playerDataLoading = $state(true);
   let playerLayerDataEnabled = $state(true);
 

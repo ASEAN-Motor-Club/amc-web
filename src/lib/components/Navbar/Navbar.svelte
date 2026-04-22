@@ -60,6 +60,12 @@
           icon: trackIcon,
           exact: false,
         },
+        {
+          href: '/pak/conflict',
+          label: m['navbar.pak_conflict'](),
+          icon: pakIcon,
+          exact: false,
+        },
       ],
     },
     {
@@ -133,6 +139,13 @@
 
 {#snippet trackIcon(pathMatch: boolean)}
   <NavbarIcon class="i-material-symbols:route-outline group-hover:text-red-500" {pathMatch} />
+{/snippet}
+
+{#snippet pakIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:folder-zip-outline-rounded group-hover:text-yellow-500"
+    {pathMatch}
+  />
 {/snippet}
 
 {#snippet wikiIcon(pathMatch: boolean)}
