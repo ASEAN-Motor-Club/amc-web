@@ -12,3 +12,9 @@ project.inlang/*
 
 # Generated protobuf files
 src/lib/api/proto/*_pb.ts
+
+# Generated WASM files
+src/lib/wasm/pakop
+pakop/target
+pakop/debug
+
