@@ -32,9 +32,6 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
-      - name: 📦 Install dependencies
-        run: pnpm install
-
       - name: 🦀 Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -50,6 +47,9 @@ jobs:
 
       - name: 🔨 Build WASM
         run: pnpm build:pakop --dev
+
+      - name: 📦 Install dependencies
+        run: pnpm install
 
       - name: 🌐 Generate i18n
         run: pnpm paraglide:compile
