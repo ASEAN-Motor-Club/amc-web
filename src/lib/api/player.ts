@@ -1,6 +1,6 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
 import { fromBinary } from '@bufbuild/protobuf';
-import { PlayerPositionsSchema, type PlayerPositions } from './proto/player_positions_pb';
+import { PlayerPositionsSchema, type PlayerPositions } from './proto/generated/player_positions_pb';
 import type { PlayerEventData } from './types';
 import { startVisibilityAwareEventSource, startVisibilityAwareWebSocket } from './_api';
 

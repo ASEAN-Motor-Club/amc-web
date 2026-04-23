@@ -3,5 +3,5 @@ inputs:
   - directory: src/lib/api/proto
 plugins:
   - local: protoc-gen-es
-    out: src/lib/api/proto
+    out: src/lib/api/proto/generated
     opt: target=ts

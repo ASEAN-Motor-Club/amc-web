@@ -16,13 +16,22 @@ Website for ASEAN Motor Club
 
 ## 🚀 Prerequisites
 
-- **Node.js**: LTS version recommended
+- **Node.js**: LTS version recommended, download [here](https://nodejs.org/en/download/current)
 - **pnpm**: This project uses [pnpm](https://pnpm.io/) as the package manager. Install it using [Corepack](https://pnpm.io/installation#using-corepack) (recommended):
   ```bash
   npm install --global corepack@latest
   corepack enable
   ```
-- **VS Code Extensions** (highly recommended):
+- **Rust**: Required for building the WASM module. Install via [rustup](https://rustup.rs/)
+- **wasm-pack**: Required for building the WASM module. Install via:
+  ```bash
+  cargo install wasm-pack
+  ```
+- **Clang** (macOS): Required for building the WASM module. Apple's bundled clang strips out the WebAssembly backend, so the full LLVM from Homebrew is needed instead:
+  ```bash
+  brew install llvm
+  ```
+- **VS Code Extensions** (optional, highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
   - [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) ([Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) should work too)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
@@ -62,7 +71,15 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
    pnpm install
    ```
 
-4. **Start development server**
+4. **Generate protobuf types and WASM**
+
+   ```bash
+   pnpm proto:generate        # Regenerate _pb.ts files from .proto definitions
+   pnpm build:pakop           # Build WASM
+   pnpm build:pakop:mac       # or on macOS
+   ```
+
+5. **Start development server**
 
    ```bash
    pnpm dev
@@ -70,7 +87,7 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 
    Your app will be available at `http://localhost:5173`
 
-5. **Start Storybook** (for UI component development)
+6. **Start Storybook** (for UI component development)
    ```bash
    pnpm storybook
    ```
@@ -79,14 +96,24 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 ## 📜 Available Scripts
 
 - `pnpm dev` - Start development server
+- `pnpm dev:host` - Start development server with host access
 - `pnpm build` - Build for production
 - `pnpm preview` - Preview production build locally
+- `pnpm preview:host` - Preview production build with host access
 - `pnpm storybook` - Start Storybook for component development
-- `pnpm test` - Run unit tests
+- `pnpm build:storybook` - Build Storybook for deployment
+- `pnpm test` - Run all tests once
 - `pnpm test:unit` - Run unit tests in watch mode
 - `pnpm check` - Run type checking
+- `pnpm check:watch` - Run type checking in watch mode
 - `pnpm lint` - Check code formatting and linting
+- `pnpm lint:fix` - Auto-fix ESLint issues
 - `pnpm format` - Format code with Prettier
+- `pnpm paraglide:compile` - Regenerate i18n messages
+- `pnpm proto:generate` - Regenerate `_pb.ts` files from `.proto` definitions
+- `pnpm build:pakop` - Build WASM module
+- `pnpm build:pakop:mac` - Build WASM module (macOS)
+- `pnpm checklist` - Run format, lint, paraglide:compile, check, and test
 
 ## 🔧 Development Tools
 

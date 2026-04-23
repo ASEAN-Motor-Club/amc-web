@@ -27,6 +27,26 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v6
 
+      - name: 🗃️ Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: 📦 Install proto tools
+        run: npm install --no-save @bufbuild/buf @bufbuild/protoc-gen-es
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
+
+      - name: 📤 Upload proto artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: proto-pkg
+          path: src/lib/api/proto/generated
+
       - name: 🦀 Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -72,6 +92,12 @@ jobs:
           name: wasm-pkg
           path: wasm/pakop/pkg
 
+      - name: 📥 Download proto artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: proto-pkg
+          path: src/lib/api/proto/generated
+
       - name: 📦 Install dependencies
         run: pnpm install
 
@@ -110,6 +136,12 @@ jobs:
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
+
+      - name: 📥 Download proto artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: proto-pkg
+          path: src/lib/api/proto/generated
 
       - name: 📦 Install dependencies
         run: pnpm install
