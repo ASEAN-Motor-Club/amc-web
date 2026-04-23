@@ -91,7 +91,7 @@ importers:
         specifier: 10.9.0
         version: 10.9.0
       pakop:
-        specifier: workspace:pakop
+        specifier: workspace:*
         version: link:wasm/pakop/pkg
       quaternion:
         specifier: 2.2.0
