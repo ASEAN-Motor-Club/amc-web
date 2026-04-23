@@ -27,6 +27,7 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v6
 
+      # pre-setup steps for to allow package.json scripts
       - name: 🗃️ Install pnpm
         uses: pnpm/action-setup@v5
 
@@ -34,19 +35,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-
-      - name: 📦 Install proto tools
-        run: npm install --no-save @bufbuild/buf @bufbuild/protoc-gen-es
-
-      - name: 🔌 Generate protobuf types
-        run: pnpm proto:generate
-
-      - name: 📤 Upload proto artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: proto-pkg
-          path: src/lib/api/proto/generated
-
+          cache: 'pnpm'
+      
+      # rust wasm setup
       - name: 🦀 Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -59,15 +50,28 @@ jobs:
 
       - name: 📦 Install wasm-pack
         run: cargo install wasm-pack
-
+    
       - name: 🔨 Build WASM
-        run: wasm-pack build wasm/pakop --target bundler
+        run: pnpm build:pakop
 
       - name: 📤 Upload WASM artifact
         uses: actions/upload-artifact@v7
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
+
+      # protobuf setup
+      - name: 📦 Install proto tools
+        run: pnpm install
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
+
+      - name: 📤 Upload proto artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: proto-pkg
+          path: src/lib/api/proto/generated
 
   check:
     name: 🔍 Check
