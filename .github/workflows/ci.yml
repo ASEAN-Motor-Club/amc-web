@@ -61,7 +61,7 @@ jobs:
           path: wasm/pakop/pkg
 
       # protobuf setup
-      - name: 📦 Install proto tools
+      - name: 📦 Install node dependencies
         run: pnpm install
 
       - name: 🔌 Generate protobuf types
