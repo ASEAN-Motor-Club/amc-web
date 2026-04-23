@@ -20,24 +20,13 @@ env:
   PUBLIC_PATREON_LINK: ${{ vars.PUBLIC_PATREON_LINK }}
 
 jobs:
-  setup:
-    name: 🔧 Setup
+  wasm:
+    name: 🦀 Build WASM
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v6
-
-      # pre-setup steps for to allow package.json scripts
-      - name: 🗃️ Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: 'pnpm'
       
-      # rust wasm setup
       - name: 🦀 Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -52,7 +41,7 @@ jobs:
         run: cargo install wasm-pack
     
       - name: 🔨 Build WASM
-        run: pnpm build:pakop
+        run: npm run build:pakop
 
       - name: 📤 Upload WASM artifact
         uses: actions/upload-artifact@v7
@@ -60,22 +49,9 @@ jobs:
           name: wasm-pkg
           path: wasm/pakop/pkg
 
-      # protobuf setup
-      - name: 📦 Install node dependencies
-        run: pnpm install
-
-      - name: 🔌 Generate protobuf types
-        run: pnpm proto:generate
-
-      - name: 📤 Upload proto artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: proto-pkg
-          path: src/lib/api/proto/generated
-
   check:
     name: 🔍 Check
-    needs: setup
+    needs: wasm
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
@@ -96,14 +72,11 @@ jobs:
           name: wasm-pkg
           path: wasm/pakop/pkg
 
-      - name: 📥 Download proto artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: proto-pkg
-          path: src/lib/api/proto/generated
-
       - name: 📦 Install dependencies
         run: pnpm install
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
 
       - name: 🌐 Generate i18n
         run: pnpm paraglide:compile
@@ -119,7 +92,7 @@ jobs:
 
   build:
     name: 🏗️ Build
-    needs: setup
+    needs: wasm
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -141,14 +114,11 @@ jobs:
           name: wasm-pkg
           path: wasm/pakop/pkg
 
-      - name: 📥 Download proto artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: proto-pkg
-          path: src/lib/api/proto/generated
-
       - name: 📦 Install dependencies
         run: pnpm install
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
 
       - name: 🏗️ Build application
         run: pnpm build
