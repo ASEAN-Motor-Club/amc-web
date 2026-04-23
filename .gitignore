@@ -31,3 +31,5 @@ storybook-static
 .vscode/settings.json
 
 **/__screenshots__
+
+**/*_pb.ts
