@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🦀 Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -44,7 +44,7 @@ jobs:
         run: wasm-pack build wasm/pakop --target bundler
 
       - name: 📤 Upload WASM artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
@@ -55,19 +55,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🗃️ Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
       - name: 📥 Download WASM artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
@@ -87,26 +87,26 @@ jobs:
       - name: 🧪 Run tests
         run: pnpm test
 
-  deploy:
-    name: 🚀 Deploy
-    needs: check
+  build:
+    name: 🏗️ Build
+    needs: setup
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🗃️ Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
 
       - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
       - name: 📥 Download WASM artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
@@ -117,8 +117,26 @@ jobs:
       - name: 🏗️ Build application
         run: pnpm build
 
+      - name: 📤 Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: build
+          path: build/
+
+  deploy:
+    name: 🚀 Deploy
+    needs: [check, build]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: build
+          path: build/
+
       - name: 🚀 Deploy
-        uses: burnett01/rsync-deployments@7.1.0
+        uses: burnett01/rsync-deployments@v8
         with:
           switches: -avzr --delete
           path: './build/'
