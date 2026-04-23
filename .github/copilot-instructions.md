@@ -89,6 +89,9 @@ pnpm build              # Build the static site
 pnpm preview            # Preview built site locally
 pnpm preview:host       # Preview built site with host access
 pnpm paraglide:compile  # Regenerate i18n messages
+pnpm proto:generate     # Regenerate _pb.ts files from .proto definitions
+pnpm build:pakop        # Build WASM module
+pnpm build:pakop:mac    # Build WASM module (macOS, requires llvm via Homebrew)
 
 # Quality Checks
 pnpm checklist          # Runs format, lint, paraglide:compile, check, test

@@ -1,4 +1,4 @@
-import { VehicleKey } from './player_positions_pb';
+import { VehicleKey } from './generated/player_positions_pb';
 import type vehiclesName from '$lib/assets/data/out_vehicles_name.json';
 
 export function vehicleKeyToString(key: VehicleKey): keyof typeof vehiclesName | 'None' {

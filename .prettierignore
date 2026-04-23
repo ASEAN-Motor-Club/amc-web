@@ -11,7 +11,7 @@ project.inlang/*
 !project.inlang/settings.json
 
 # Generated protobuf files
-src/lib/api/proto/*_pb.ts
+**/*_pb.ts
 
 # Generated WASM files
 wasm/*
