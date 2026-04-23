@@ -1,3 +1,6 @@
+packages:
+  - wasm/**
+
 allowBuilds:
   '@bufbuild/buf': true
   edgedriver: false

@@ -21,8 +21,8 @@
     "build:storybook": "storybook build",
     "paraglide:compile": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
     "proto:generate": "buf generate",
-    "build:pakop": "wasm-pack build pakop --target bundler --out-dir ../src/lib/wasm/pakop",
-    "build:pakop:mac": "CC=/opt/homebrew/opt/llvm/bin/clang wasm-pack build pakop --target bundler --out-dir ../src/lib/wasm/pakop",
+    "build:pakop": "wasm-pack build wasm/pakop --target bundler",
+    "build:pakop:mac": "CC=/opt/homebrew/opt/llvm/bin/clang wasm-pack build wasm/pakop --target bundler",
     "checklist": "pnpm format && pnpm lint && pnpm paraglide:compile && pnpm check && pnpm test"
   },
   "devDependencies": {
@@ -82,6 +82,7 @@
     "lottie-web": "5.13.0",
     "marked": "18.0.2",
     "ol": "10.9.0",
+    "pakop": "workspace:*",
     "quaternion": "2.2.0",
     "svelte": "5.55.4",
     "svelte-portal": "2.2.1",

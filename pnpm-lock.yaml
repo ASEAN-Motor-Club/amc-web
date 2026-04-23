@@ -90,6 +90,9 @@ importers:
       ol:
         specifier: 10.9.0
         version: 10.9.0
+      pakop:
+        specifier: workspace:pakop
+        version: link:wasm/pakop/pkg
       quaternion:
         specifier: 2.2.0
         version: 2.2.0
@@ -202,6 +205,8 @@ importers:
       vitest-browser-svelte:
         specifier: 2.1.1
         version: 2.1.1(svelte@5.55.4)(vitest@4.1.4)
+
+  wasm/pakop/pkg: {}
 
 packages:
 

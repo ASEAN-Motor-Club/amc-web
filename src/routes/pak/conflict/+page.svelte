@@ -43,7 +43,7 @@
     totalPaks = pakFiles.length;
 
     try {
-      const { list } = await import('$lib/wasm/pakop/pakop.js');
+      const { list } = await import('pakop');
 
       // map: path -> pak file names
       // eslint-disable-next-line svelte/prefer-svelte-reactivity

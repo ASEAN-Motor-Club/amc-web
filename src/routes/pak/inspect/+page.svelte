@@ -36,7 +36,7 @@
       const buffer = await file.arrayBuffer();
       const data = new Uint8Array(buffer);
 
-      const { list } = await import('$lib/wasm/pakop/pakop.js');
+      const { list } = await import('pakop');
       files = list(data);
       status = Status.Done;
     } catch (e) {

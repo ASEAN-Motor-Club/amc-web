@@ -17,7 +17,7 @@ const extraFileExtensions = ['.svelte'];
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
-  { ignores: ['src/lib/api/proto/*_pb.ts', 'src/lib/wasm/**'] },
+  { ignores: ['src/lib/api/proto/*_pb.ts', 'wasm/*'] },
   js.configs.recommended,
   ...ts.configs.strictTypeChecked,
   ...ts.configs.stylisticTypeChecked,
