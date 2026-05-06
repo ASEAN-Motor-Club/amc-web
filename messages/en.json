@@ -166,6 +166,24 @@
         }
       ],
       "privacy_note": "Your files never leave your device — all processing happens locally in your browser."
+    },
+    "uasset": {
+      "head": "{siteName} | UAsset Inspector",
+      "title": "UAsset Inspector",
+      "description": "Upload a .uasset file to inspect its object exports.",
+      "select_file": "Select .uasset File",
+      "parsing": "Parsing…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} export found.",
+            "p=other": "{count} exports found."
+          }
+        }
+      ],
+      "privacy_note": "Your files never leave your device — all processing happens locally in your browser."
     }
   },
   "map": {

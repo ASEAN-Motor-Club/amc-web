@@ -163,6 +163,23 @@
         }
       ],
       "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ"
+    },
+    "uasset": {
+      "head": "{siteName} | UAsset Inspector",
+      "title": "UAsset Inspector",
+      "description": "อัปโหลดไฟล์ .uasset เพื่อตรวจสอบ object exports",
+      "select_file": "เลือกไฟล์ .uasset",
+      "parsing": "กำลังประมวลผล…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=other": "พบ {count} exports"
+          }
+        }
+      ],
+      "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ"
     }
   },
   "map": {

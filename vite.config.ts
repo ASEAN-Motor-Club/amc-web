@@ -31,6 +31,9 @@ export default defineConfig(({ mode }) => {
     ],
     build: {},
     server: {
+      fs: {
+        allow: ['wasm'],
+      },
       proxy: {
         '/stream': {
           target: env.VITE_MAIN_SITE,

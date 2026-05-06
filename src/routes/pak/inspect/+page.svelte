@@ -14,12 +14,20 @@
 
   let status: Status = $state(Status.Idle);
   let error: string | null = $state(null);
-  let files: string[] = $state.raw([]);
+  let files: { raw_path: string; path: string; hash: string }[] = $state.raw([]);
+  let pakData: Uint8Array | null = null;
 
   let fileInput: HTMLInputElement;
 
   const handleSelectFile = () => {
     fileInput.click();
+  };
+
+  const handleInspectFile = async (rawPath: string) => {
+    if (!pakData) return;
+    const { read_uasset } = await import('pakop');
+    const result = read_uasset(pakData, rawPath);
+    console.log(result);
   };
 
   const handleFileChange = async (event: Event) => {
@@ -36,8 +44,9 @@
       const buffer = await file.arrayBuffer();
       const data = new Uint8Array(buffer);
 
-      const { list } = await import('pakop');
-      files = list(data);
+      const { list_hash } = await import('pakop');
+      pakData = data;
+      files = list_hash(data);
       status = Status.Done;
     } catch (e) {
       error = e instanceof Error ? e.message : String(e);
@@ -93,11 +102,16 @@
           <ul
             class="rounded border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
           >
-            {#each files as path (path)}
+            {#each files as f (f.path + f.hash)}
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
               <li
                 class="border-b border-gray-100 px-3 py-1 font-mono text-xs last:border-0 dark:border-gray-800"
+                onclick={() => handleInspectFile(f.raw_path)}
               >
-                {path}
+                {f.path}
+                <br />
+                <span class="text-text-600 dark:text-text-400 text-[0.625rem]">{f.hash}</span>
               </li>
             {/each}
           </ul>

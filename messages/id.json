@@ -166,6 +166,24 @@
         }
       ],
       "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser."
+    },
+    "uasset": {
+      "head": "{siteName} | Inspektor UAsset",
+      "title": "Inspektor UAsset",
+      "description": "Unggah file .uasset untuk memeriksa ekspor objeknya.",
+      "select_file": "Pilih File .uasset",
+      "parsing": "Memproses…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "Ditemukan {count} ekspor.",
+            "p=other": "Ditemukan {count} ekspor."
+          }
+        }
+      ],
+      "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser."
     }
   },
   "map": {
