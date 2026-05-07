@@ -124,7 +124,6 @@
             if (!lastPakData) throw new Error('missing data');
             const md = mappingData; // narrowed: confirmed non-null above
             const lastTable = get_datatables_names(lastPakData, lastEntry.raw_path, md);
-            console.log('table for', lastEntry.pak, lastEntry.raw_path, lastTable);
             const lastSet = new Set(lastTable);
 
             const annotated = sortedEntries.map((e, i) => {
@@ -132,7 +131,6 @@
               const pakData = pakDataMap.get(e.pak);
               if (!pakData) throw new Error('missing data');
               const table = get_datatables_names(pakData, e.raw_path, md);
-              console.log('table for', e.pak, e.raw_path, table);
               const extra = table.filter((row) => !lastSet.has(row));
               return { ...e, rows: extra.length > 0 ? extra : undefined };
             });
