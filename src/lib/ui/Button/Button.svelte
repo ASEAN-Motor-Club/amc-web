@@ -184,7 +184,7 @@
   const sizeClass = $derived.by(() => {
     switch (size) {
       case 'xxs':
-        return `h-4 text-[10px] ${round ? 'rounded-full px-1.5' : 'rounded-sm px-1'}`;
+        return `h-4 text-[0.625rem] ${round ? 'rounded-full px-1.5' : 'rounded-sm px-1'}`;
       case 'xs':
         return `h-5 text-xs ${round ? 'rounded-full px-2' : 'rounded-sm px-1.5'}`;
       case 'sm':

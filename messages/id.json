@@ -147,7 +147,13 @@
         }
       ],
       "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser.",
-      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak)."
+      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak). UAsset parsing menggunakan [unreal_asset](https://github.com/AstroTechies/unrealmodding).",
+      "summary": "Ringkasan",
+      "details": "Rincian",
+      "loaded": "(dimuat)",
+      "entry_missing": "entri tidak ada di pak yang dimuat",
+      "show_more": "tampilkan lebih banyak",
+      "show_less": "tampilkan lebih sedikit"
     },
     "inspect": {
       "head": "{siteName} | Inspektur File Pak",
@@ -162,6 +168,24 @@
           "match": {
             "p=one": "{count} file ditemukan.",
             "p=other": "{count} file ditemukan."
+          }
+        }
+      ],
+      "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser."
+    },
+    "uasset": {
+      "head": "{siteName} | Inspektor UAsset",
+      "title": "Inspektor UAsset",
+      "description": "Unggah file .uasset untuk memeriksa ekspor objeknya.",
+      "select_file": "Pilih File .uasset",
+      "parsing": "Memproses…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "Ditemukan {count} ekspor.",
+            "p=other": "Ditemukan {count} ekspor."
           }
         }
       ],

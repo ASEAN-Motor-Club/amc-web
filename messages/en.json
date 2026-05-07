@@ -147,7 +147,13 @@
         }
       ],
       "privacy_note": "Your files never leave your device — all processing happens locally in your browser.",
-      "repak_credit": "Pak unpacking powered by [repak](https://github.com/trumank/repak)."
+      "repak_credit": "Pak unpacking powered by [repak](https://github.com/trumank/repak). UAsset parsing powered by [unreal_asset](https://github.com/AstroTechies/unrealmodding).",
+      "summary": "Summary",
+      "details": "Details",
+      "loaded": "(loaded)",
+      "entry_missing": "entry missing from loaded pak",
+      "show_more": "show more",
+      "show_less": "show less"
     },
     "inspect": {
       "head": "{siteName} | Pak File Inspector",
@@ -162,6 +168,24 @@
           "match": {
             "p=one": "{count} file found.",
             "p=other": "{count} files found."
+          }
+        }
+      ],
+      "privacy_note": "Your files never leave your device — all processing happens locally in your browser."
+    },
+    "uasset": {
+      "head": "{siteName} | UAsset Inspector",
+      "title": "UAsset Inspector",
+      "description": "Upload a .uasset file to inspect its object exports.",
+      "select_file": "Select .uasset File",
+      "parsing": "Parsing…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=one": "{count} export found.",
+            "p=other": "{count} exports found."
           }
         }
       ],

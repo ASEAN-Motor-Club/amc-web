@@ -145,7 +145,13 @@
         }
       ],
       "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ",
-      "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak)"
+      "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak) UAsset parsing โดย [unreal_asset](https://github.com/AstroTechies/unrealmodding)",
+      "summary": "สรุป",
+      "details": "รายละเอียด",
+      "loaded": "(โหลดแล้ว)",
+      "entry_missing": "รายการที่ไม่มีใน pak ที่โหลด",
+      "show_more": "แสดงเพิ่มเติม",
+      "show_less": "แสดงน้อยลง"
     },
     "inspect": {
       "head": "{siteName} | ตรวจสอบไฟล์ Pak",
@@ -159,6 +165,23 @@
           "selectors": ["p"],
           "match": {
             "p=other": "พบ {count} ไฟล์"
+          }
+        }
+      ],
+      "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ"
+    },
+    "uasset": {
+      "head": "{siteName} | UAsset Inspector",
+      "title": "UAsset Inspector",
+      "description": "อัปโหลดไฟล์ .uasset เพื่อตรวจสอบ object exports",
+      "select_file": "เลือกไฟล์ .uasset",
+      "parsing": "กำลังประมวลผล…",
+      "exports_found": [
+        {
+          "declarations": ["input count", "local p = count: plural"],
+          "selectors": ["p"],
+          "match": {
+            "p=other": "พบ {count} exports"
           }
         }
       ],

@@ -98,7 +98,6 @@
 <script lang="ts">
   import { marked, type Tokens, type TokenizerAndRendererExtension } from 'marked';
   import DOMPurify from 'dompurify';
-  import HydrationSkip from './HydrationSkip.svelte';
 
   // @unocss-skip-start
   export interface MarkdownTextProps {
@@ -153,12 +152,14 @@
 </script>
 
 {#if textOnly}
-  <HydrationSkip markup={sanitizedHtml} />
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+  {@html sanitizedHtml}
 {:else}
   <section
     class={['prose dark:prose-invert prose-slate !prose-cyan contents', size]}
     bind:this={textContainer}
   >
-    <HydrationSkip markup={sanitizedHtml} />
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html sanitizedHtml}
   </section>
 {/if}

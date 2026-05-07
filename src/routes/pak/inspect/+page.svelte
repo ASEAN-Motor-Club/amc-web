@@ -1,10 +1,12 @@
 <script lang="ts">
+  import '@fontsource-variable/noto-sans-mono';
   import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import { MarkdownText } from '$lib/ui/MarkdownText';
   import { Status } from '$lib/utils/status';
+  import mappings from '$lib/assets/mappings/Mappings718.usmap?url';
 
   const title = $derived(
     m['pak.inspect.head']({
@@ -14,12 +16,20 @@
 
   let status: Status = $state(Status.Idle);
   let error: string | null = $state(null);
-  let files: string[] = $state.raw([]);
+  let files: { raw_path: string; path: string; hash: string }[] = $state.raw([]);
+  let pakData: Uint8Array | null = null;
 
   let fileInput: HTMLInputElement;
 
   const handleSelectFile = () => {
     fileInput.click();
+  };
+
+  const handleInspectFile = async (rawPath: string) => {
+    if (!pakData) return;
+    const [{ print_exports }, mappingRes] = await Promise.all([import('pakop'), fetch(mappings)]);
+    const mappingData = new Uint8Array(await mappingRes.arrayBuffer());
+    print_exports(pakData, rawPath, mappingData);
   };
 
   const handleFileChange = async (event: Event) => {
@@ -36,8 +46,9 @@
       const buffer = await file.arrayBuffer();
       const data = new Uint8Array(buffer);
 
-      const { list } = await import('pakop');
-      files = list(data);
+      const { list_hash } = await import('pakop');
+      pakData = data;
+      files = list_hash(data, false);
       status = Status.Done;
     } catch (e) {
       error = e instanceof Error ? e.message : String(e);
@@ -93,21 +104,26 @@
           <ul
             class="rounded border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
           >
-            {#each files as path (path)}
+            {#each files as f (f.path + f.hash)}
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
               <li
                 class="border-b border-gray-100 px-3 py-1 font-mono text-xs last:border-0 dark:border-gray-800"
+                onclick={() => handleInspectFile(f.raw_path)}
               >
-                {path}
+                {f.path}
+                <br />
+                <span class="text-text-600 dark:text-text-400 text-[0.625rem]">{f.hash}</span>
               </li>
             {/each}
           </ul>
         {/if}
       </div>
     </Card>
-    <p
+    <div
       class="text-text-600 dark:text-text-400 mt-3 w-full max-w-4xl text-right text-xs [&_a]:underline"
     >
       <MarkdownText text={m['pak.conflict.repak_credit']()} noSanitize textOnly />
-    </p>
+    </div>
   </div>
 </div>

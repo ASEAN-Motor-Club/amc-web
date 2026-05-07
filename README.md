@@ -65,21 +65,26 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
    corepack enable
    ```
 
-3. **Install dependencies**
+3. **Build WASM module** (required before installing dependencies)
+
+   ```bash
+   pnpm build:pakop           # Linux / Windows
+   pnpm build:pakop:mac       # macOS (requires Homebrew LLVM)
+   ```
+
+4. **Install dependencies**
 
    ```bash
    pnpm install
    ```
 
-4. **Generate protobuf types and WASM**
+5. **Generate protobuf types**
 
    ```bash
    pnpm proto:generate        # Regenerate _pb.ts files from .proto definitions
-   pnpm build:pakop           # Build WASM
-   pnpm build:pakop:mac       # or on macOS
    ```
 
-5. **Start development server**
+6. **Start development server**
 
    ```bash
    pnpm dev
@@ -87,7 +92,7 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 
    Your app will be available at `http://localhost:5173`
 
-6. **Start Storybook** (for UI component development)
+7. **Start Storybook** (for UI component development)
    ```bash
    pnpm storybook
    ```
