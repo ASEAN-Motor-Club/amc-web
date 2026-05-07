@@ -6,7 +6,6 @@ import UnoCSS from 'unocss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest';
-import { usmapCompressPlugin } from './vite-plugins/usmap-compress';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -14,7 +13,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      usmapCompressPlugin(),
       wasm(),
       UnoCSS(),
       sveltekit(),
