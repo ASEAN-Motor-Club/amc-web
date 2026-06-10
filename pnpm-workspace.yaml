@@ -3,8 +3,8 @@ packages:
 
 allowBuilds:
   '@bufbuild/buf': true
-  edgedriver: false
   esbuild: true
-  geckodriver: false
 dedupePeers: true
-minimumReleaseAge: 1440
+minimumReleaseAge: 4320
+savePrefix: ''
+engineStrict: true

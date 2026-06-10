@@ -1063,11 +1063,8 @@
         selectedPoint = house;
         house.set('selected', true);
         if (cachedSelectedHouse !== housing && !cacheDontFocus) {
-          map.centerOn(
-            house.getGeometry()?.getCoordinates() as [number, number],
-            cacheInit ? 0 : undefined,
-            cacheInit,
-          );
+          const coord = house.getGeometry()?.getCoordinates();
+          if (coord) map.centerOn([coord[0], coord[1]], cacheInit ? 0 : undefined, cacheInit);
         }
       }
       selectedHouse = housing;
@@ -1091,11 +1088,8 @@
         const deliveryPointInfo = deliveryPoint.get('info') as DeliveryPoint;
         updateDeliveryLine(deliveryPointInfo);
         if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
-          map.centerOn(
-            deliveryPoint.getGeometry()?.getCoordinates() as [number, number],
-            cacheInit ? 0 : undefined,
-            cacheInit,
-          );
+          const coord = deliveryPoint.getGeometry()?.getCoordinates();
+          if (coord) map.centerOn([coord[0], coord[1]], cacheInit ? 0 : undefined, cacheInit);
         }
       }
       selectedDelivery = deliveryGuid;

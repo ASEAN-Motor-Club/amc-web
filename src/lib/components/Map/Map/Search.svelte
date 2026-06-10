@@ -74,7 +74,10 @@
       ...pin,
       pointType: PointType.Pin,
       name: pin.label,
-      coord: pin as Vector2,
+      coord: {
+        x: pin.x,
+        y: pin.y,
+      },
     }));
   });
 

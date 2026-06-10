@@ -8,9 +8,7 @@ export const isCargoType = (cargo: DeliveryCargo): cargo is DeliveryCargoType =>
 };
 
 export const flattenCargoType = (cargo: DeliveryCargo): DeliveryCargoKey[] => {
-  return isCargoType(cargo)
-    ? (outCargoKey[cargo] as DeliveryCargoKey[])
-    : [cargo as DeliveryCargoKey];
+  return isCargoType(cargo) ? (outCargoKey[cargo] as DeliveryCargoKey[]) : [cargo];
 };
 
 export const getMatchJobSourceFn = (info: DeliveryPoint) => (job: DeliveryJob) =>

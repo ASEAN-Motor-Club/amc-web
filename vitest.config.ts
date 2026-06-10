@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
-import { webdriverio } from '@vitest/browser-webdriverio';
+import { playwright } from '@vitest/browser-playwright';
 import viteConfig from './vite.config';
 
 export default defineConfig((configEnv) =>
@@ -14,8 +14,8 @@ export default defineConfig((configEnv) =>
               name: 'comp',
               browser: {
                 enabled: true,
-                provider: webdriverio(),
-                instances: [{ browser: 'chrome' }],
+                provider: playwright(),
+                instances: [{ browser: 'chromium' }],
                 headless: true,
               },
               include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
