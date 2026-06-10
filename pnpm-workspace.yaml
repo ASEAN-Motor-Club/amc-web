@@ -4,6 +4,8 @@ packages:
 allowBuilds:
   '@bufbuild/buf': true
   esbuild: true
+  edgedriver: false
+  geckodriver: false
 dedupePeers: true
 minimumReleaseAge: 4320
 savePrefix: ''
