@@ -50,9 +50,8 @@ jobs:
         id: playwright-cache
         with:
           path: '~/.cache/ms-playwright'
-          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
-          restore-keys: |
-            ${{ runner.os }}-playwright-
+          key: 'playwright-${{ runner.os }}-${{ runner.arch }}-${{ steps.playwright-version.outputs.version }}'
+          restore-keys: playwright-${{ runner.os }}-${{ runner.arch }}-
 
       - name: 🗒️ Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
