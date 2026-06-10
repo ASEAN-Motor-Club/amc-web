@@ -1,0 +1,46 @@
+name: 🔍 Check
+permissions:
+  contents: read
+on:
+  - workflow_call
+
+jobs:
+  check:
+    name: 🔍 Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v6
+
+      - name: 🗃️ Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+
+      - name: 📥 Download WASM artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: wasm-pkg
+          path: wasm/pakop/pkg
+
+      - name: 📦 Install dependencies
+        run: pnpm install
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
+
+      - name: 🌐 Generate i18n
+        run: pnpm paraglide:compile
+
+      - name: 🎨 Lint code
+        run: pnpm lint
+
+      - name: 🔍 Type check
+        run: pnpm check
+
+      - name: 🧪 Run tests
+        run: pnpm test

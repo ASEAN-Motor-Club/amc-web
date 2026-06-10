@@ -1,0 +1,35 @@
+name: 🦀 Build WASM
+permissions:
+  contents: read
+on:
+  - workflow_call
+
+jobs:
+  wasm:
+    name: 🦀 Build WASM
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v6
+
+      - name: 🦀 Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: 🗂️ Cache Rust artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: wasm/pakop
+
+      - name: 📦 Install wasm-pack
+        run: cargo install wasm-pack
+
+      - name: 🔨 Build WASM
+        run: npm run build:pakop
+
+      - name: 📤 Upload WASM artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: wasm-pkg
+          path: wasm/pakop/pkg

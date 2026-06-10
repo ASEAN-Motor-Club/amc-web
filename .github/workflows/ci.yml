@@ -1,9 +1,7 @@
-name: 🔍 CI / 🚀 CD
+name: 🔍 CI
 permissions:
   contents: read
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -22,132 +20,8 @@ env:
 
 jobs:
   wasm:
-    name: 🦀 Build WASM
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v6
-
-      - name: 🦀 Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-
-      - name: 🗂️ Cache Rust artifacts
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: wasm/pakop
-
-      - name: 📦 Install wasm-pack
-        run: cargo install wasm-pack
-
-      - name: 🔨 Build WASM
-        run: npm run build:pakop
-
-      - name: 📤 Upload WASM artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: wasm-pkg
-          path: wasm/pakop/pkg
+    uses: ./.github/workflows/wasm.yml
 
   check:
-    name: 🔍 Check
+    uses: ./.github/workflows/check.yml
     needs: wasm
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v6
-
-      - name: 🗃️ Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: 'pnpm'
-
-      - name: 📥 Download WASM artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: wasm-pkg
-          path: wasm/pakop/pkg
-
-      - name: 📦 Install dependencies
-        run: pnpm install
-
-      - name: 🔌 Generate protobuf types
-        run: pnpm proto:generate
-
-      - name: 🌐 Generate i18n
-        run: pnpm paraglide:compile
-
-      - name: 🎨 Lint code
-        run: pnpm lint
-
-      - name: 🔍 Type check
-        run: pnpm check
-
-      - name: 🧪 Run tests
-        run: pnpm test
-
-  build:
-    name: 🏗️ Build
-    needs: wasm
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v6
-
-      - name: 🗃️ Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: 'pnpm'
-
-      - name: 📥 Download WASM artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: wasm-pkg
-          path: wasm/pakop/pkg
-
-      - name: 📦 Install dependencies
-        run: pnpm install
-
-      - name: 🔌 Generate protobuf types
-        run: pnpm proto:generate
-
-      - name: 🏗️ Build application
-        run: pnpm build
-
-      - name: 📤 Upload build artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: build
-          path: build/
-
-  deploy:
-    name: 🚀 Deploy
-    needs: [check, build]
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Download build artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: build
-          path: build/
-
-      - name: 🚀 Deploy
-        uses: burnett01/rsync-deployments@v8
-        with:
-          switches: -avzr --delete
-          path: './build/'
-          remote_path: '/'
-          remote_user: 'sftpuser'
-          remote_host: '${{ secrets.SERVER_IP }}'
-          remote_key: ${{ secrets.SFTP_KEY }}
