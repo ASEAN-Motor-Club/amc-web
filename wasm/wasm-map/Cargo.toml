@@ -14,7 +14,7 @@ wasm-bindgen = "0.2"
 js-sys = "0.3"
 web-sys = { version = "0.3", features = ["console"] }
 console_error_panic_hook = { version = "0.1", optional = true }
-bevy = { version = "0.18.1", features = ["pan_camera"] }
+bevy = "0.18.1"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
