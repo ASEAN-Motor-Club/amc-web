@@ -2,7 +2,7 @@ use bevy::camera::ScalingMode;
 use bevy::input::mouse::MouseWheel;
 use bevy::input::touch::Touches;
 use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
+use bevy::window::{PrimaryWindow, RequestRedraw};
 
 use crate::components::{DragState, MapCamera};
 use crate::constants::{MAP_SIZE, MAX_ZOOM, MIN_ZOOM, SMOOTH_SPEED, ZOOM_SPEED};
@@ -169,6 +169,7 @@ pub(crate) fn update_camera(
     time: Res<Time>,
     windows: Query<&Window, With<PrimaryWindow>>,
     mut camera_query: Query<(&mut MapCamera, &mut Transform, &mut Projection)>,
+    mut redraw: MessageWriter<RequestRedraw>,
 ) {
     let dt = time.delta_secs();
     let smooth = 1.0 - (-SMOOTH_SPEED * dt).exp();
@@ -176,9 +177,17 @@ pub(crate) fn update_camera(
         return;
     };
 
+    let mut still_animating = false;
+
     for (mut camera, mut transform, mut projection) in camera_query.iter_mut() {
         camera.pos = camera.pos.lerp(camera.target_pos, smooth);
         camera.zoom += (camera.target_zoom - camera.zoom) * smooth;
+
+        if (camera.target_pos - camera.pos).length_squared() > 0.01
+            || (camera.target_zoom - camera.zoom).abs() > 0.0001
+        {
+            still_animating = true;
+        }
 
         transform.translation = camera.pos.extend(0.0);
 
@@ -193,4 +202,9 @@ pub(crate) fn update_camera(
             };
         }
     }
+
+    if still_animating {
+        redraw.write(RequestRedraw);
+    }
+
 }

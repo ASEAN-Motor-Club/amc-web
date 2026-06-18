@@ -1,6 +1,5 @@
 use bevy::prelude::*;
-use bevy::window::PrimaryWindow;
-use std::collections::HashSet;
+use bevy::window::{PrimaryWindow, RequestRedraw};
 
 use crate::components::{MapCamera, TileFadeIn, TileFadeOut, TileMarker, TileZoom};
 use crate::constants::{FADE_IN_DURATION, FADE_OUT_DURATION, MAP_SIZE, MAX_ZOOM, TILE_PX};
@@ -57,33 +56,30 @@ pub(crate) fn update_tiles(
     let y_min = y_min.max(0);
     let y_max = y_max.min(tiles_at_z);
 
-    let mut needed: HashSet<(i32, i32, i32)> = HashSet::new();
-    for x in x_min..x_max {
-        for y in y_min..y_max {
-            needed.insert((z, x, y));
-        }
-    }
+    let needed: Vec<(i32, i32)> = (x_min..x_max)
+        .flat_map(|x| (y_min..y_max).map(move |y| (x, y)))
+        .collect();
 
     for (entity, tile) in tile_query.iter() {
-        let should_keep = tile.z == z && needed.contains(&(tile.z, tile.x, tile.y));
+        let should_keep = tile.z == z && needed.contains(&(tile.x, tile.y));
         if !should_keep && !fade_out_query.contains(entity) {
             if fade_in_query.contains(entity) {
                 commands.entity(entity).remove::<TileFadeIn>();
             }
-            commands.entity(entity).insert(TileFadeOut(FADE_OUT_DURATION));
+            commands.entity(entity).insert(TileFadeOut(0.0));
         }
     }
 
-    for &(tz, tx, ty) in &needed {
+    for &(tx, ty) in &needed {
         let already_exists = tile_query
             .iter()
-            .any(|(_, t)| t.z == tz && t.x == tx && t.y == ty);
+            .any(|(_, t)| t.z == z && t.x == tx && t.y == ty);
         if already_exists {
             continue;
         }
 
-        let path = format!("map/{}_{}_{}.png", tz, tx, ty);
-        let ts = tile_size_at_zoom(tz);
+        let path = format!("map/{}_{}_{}.png", z, tx, ty);
+        let ts = tile_size_at_zoom(z);
         let map_cx = tx as f32 * ts + ts / 2.0;
         let map_cy = ty as f32 * ts + ts / 2.0;
         let world_pos = map_to_world(map_cx, map_cy);
@@ -96,12 +92,8 @@ pub(crate) fn update_tiles(
                 ..Default::default()
             },
             Transform::from_translation(world_pos.extend(0.0)),
-            TileMarker {
-                z: tz,
-                x: tx,
-                y: ty,
-            },
-            TileFadeIn(FADE_IN_DURATION),
+            TileMarker { z, x: tx, y: ty },
+            TileFadeIn(0.0),
         ));
     }
 }
@@ -111,37 +103,33 @@ pub(crate) fn update_fade(
     time: Res<Time>,
     mut fade_in_query: Query<(Entity, &mut TileFadeIn, &mut Sprite), Without<TileFadeOut>>,
     mut fade_out_query: Query<(Entity, &mut TileFadeOut, &mut Sprite), Without<TileFadeIn>>,
+    mut redraw: MessageWriter<RequestRedraw>,
 ) {
+    if fade_in_query.iter().next().is_some() || fade_out_query.iter().next().is_some() {
+        redraw.write(RequestRedraw);
+    }
     let dt = time.delta_secs();
 
-    let mut fade_in_done = Vec::new();
     for (entity, mut fade, mut sprite) in fade_in_query.iter_mut() {
-        fade.0 -= dt;
-        let alpha = (1.0 - fade.0 / FADE_IN_DURATION).clamp(0.0, 1.0);
+        fade.0 += dt;
+        let alpha = (fade.0 / FADE_IN_DURATION).clamp(0.0, 1.0);
         sprite.color = Color::srgba(1.0, 1.0, 1.0, alpha);
-        if fade.0 <= 0.0 {
+        if fade.0 >= FADE_IN_DURATION {
             sprite.color = Color::srgba(1.0, 1.0, 1.0, 1.0);
-            fade_in_done.push(entity);
-        }
-    }
-    for entity in fade_in_done {
-        if let Ok(mut e) = commands.get_entity(entity) {
-            e.remove::<TileFadeIn>();
+            if let Ok(mut e) = commands.get_entity(entity) {
+                e.remove::<TileFadeIn>();
+            }
         }
     }
 
-    let mut fade_out_done = Vec::new();
     for (entity, mut fade, mut sprite) in fade_out_query.iter_mut() {
-        fade.0 -= dt;
-        let alpha = (fade.0 / FADE_OUT_DURATION).clamp(0.0, 1.0);
+        fade.0 += dt;
+        let alpha = (1.0 - fade.0 / FADE_OUT_DURATION).clamp(0.0, 1.0);
         sprite.color = Color::srgba(1.0, 1.0, 1.0, alpha);
-        if fade.0 <= 0.0 {
-            fade_out_done.push(entity);
-        }
-    }
-    for entity in fade_out_done {
-        if let Ok(mut e) = commands.get_entity(entity) {
-            e.despawn();
+        if fade.0 >= FADE_OUT_DURATION {
+            if let Ok(mut e) = commands.get_entity(entity) {
+                e.despawn();
+            }
         }
     }
 }
