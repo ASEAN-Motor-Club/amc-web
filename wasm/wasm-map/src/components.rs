@@ -25,8 +25,12 @@ pub(crate) struct TileFadeOut(pub(crate) f32);
 pub(crate) struct DragState {
     pub(crate) dragging: bool,
     pub(crate) last_pos: Option<Vec2>,
+    pub(crate) touch_last_pos: Option<Vec2>,
+    pub(crate) pinch_distance: Option<f32>,
+    pub(crate) pinch_center: Option<Vec2>,
 }
 
+#[cfg(debug_assertions)]
 #[derive(Component)]
 pub(crate) struct ZoomText;
 

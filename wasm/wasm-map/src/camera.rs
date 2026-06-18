@@ -1,5 +1,6 @@
 use bevy::camera::ScalingMode;
 use bevy::input::mouse::MouseWheel;
+use bevy::input::touch::Touches;
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 
@@ -24,6 +25,7 @@ pub(crate) fn handle_input(
     mut camera_query: Query<&mut MapCamera>,
     windows: Query<&Window, With<PrimaryWindow>>,
     mut drag_state: ResMut<DragState>,
+    touches: Res<Touches>,
 ) {
     let Ok(mut camera) = camera_query.single_mut() else {
         return;
@@ -51,6 +53,73 @@ pub(crate) fn handle_input(
                 camera.target_pos += delta_world;
             }
             drag_state.last_pos = Some(cursor_pos);
+        }
+    }
+
+    // Touch input: collect active touches
+    let touch_list: Vec<_> = touches.iter().collect();
+    match touch_list.len() {
+        1 => {
+            // Single-finger pan
+            drag_state.pinch_distance = None;
+            drag_state.pinch_center = None;
+
+            let pos = touch_list[0].position();
+            if let Some(last_pos) = drag_state.touch_last_pos {
+                let delta_px = pos - last_pos;
+                let visible = MAP_SIZE / 2f32.powf(camera.target_zoom);
+                let world_per_px = visible / window.width().min(window.height());
+                camera.target_pos +=
+                    Vec2::new(-delta_px.x * world_per_px, delta_px.y * world_per_px);
+            }
+            drag_state.touch_last_pos = Some(pos);
+        }
+        2 => {
+            // Two-finger pinch zoom + pan
+            drag_state.touch_last_pos = None;
+
+            let pos_a = touch_list[0].position();
+            let pos_b = touch_list[1].position();
+            let center = (pos_a + pos_b) / 2.0;
+            let distance = pos_a.distance(pos_b);
+
+            if let Some(last_distance) = drag_state.pinch_distance {
+                if last_distance > 1.0 && distance > 1.0 {
+                    let zoom_delta = (distance / last_distance).log2();
+                    let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM as f32);
+
+                    // Keep the pinch midpoint fixed in world space
+                    let aspect = window.width() / window.height();
+                    let visible_h = MAP_SIZE / 2f32.powf(camera.target_zoom);
+                    let visible_w = visible_h * aspect;
+                    let ndc_x = (center.x / window.width()) * 2.0 - 1.0;
+                    let ndc_y = 1.0 - (center.y / window.height()) * 2.0;
+                    let world_x = camera.target_pos.x + ndc_x * visible_w / 2.0;
+                    let world_y = camera.target_pos.y + ndc_y * visible_h / 2.0;
+                    let new_visible_h = MAP_SIZE / 2f32.powf(new_zoom);
+                    let new_visible_w = new_visible_h * aspect;
+                    camera.target_pos.x = world_x - ndc_x * new_visible_w / 2.0;
+                    camera.target_pos.y = world_y - ndc_y * new_visible_h / 2.0;
+
+                    camera.target_zoom = new_zoom;
+                }
+            }
+            drag_state.pinch_distance = Some(distance);
+
+            // Pan based on midpoint movement
+            if let Some(last_center) = drag_state.pinch_center {
+                let delta_px = center - last_center;
+                let visible = MAP_SIZE / 2f32.powf(camera.target_zoom);
+                let world_per_px = visible / window.width().min(window.height());
+                camera.target_pos +=
+                    Vec2::new(-delta_px.x * world_per_px, delta_px.y * world_per_px);
+            }
+            drag_state.pinch_center = Some(center);
+        }
+        _ => {
+            drag_state.touch_last_pos = None;
+            drag_state.pinch_distance = None;
+            drag_state.pinch_center = None;
         }
     }
 
