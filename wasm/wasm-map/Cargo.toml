@@ -3,6 +3,9 @@ name = "wasm-map"
 version = "0.1.0"
 edition = "2024"
 
+[lints]
+workspace = true
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 
@@ -11,10 +14,15 @@ default = ["console_error_panic_hook"]
 
 [dependencies]
 wasm-bindgen = "0.2"
-js-sys = "0.3"
-web-sys = { version = "0.3", features = ["console"] }
 console_error_panic_hook = { version = "0.1", optional = true }
-bevy = "0.18.1"
+bevy = { version = "0.18.1", default-features = false, features = [
+    "2d_bevy_render",
+    "default_app",
+    "default_platform",
+    "ui",
+    "webgl2",
+    "png",
+] }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
