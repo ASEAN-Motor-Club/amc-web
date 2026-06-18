@@ -15,12 +15,6 @@ pub(crate) struct TileMarker {
     pub(crate) y: i32,
 }
 
-#[derive(Component)]
-pub(crate) struct TileFadeIn(pub(crate) f32);
-
-#[derive(Component)]
-pub(crate) struct TileFadeOut(pub(crate) f32);
-
 #[derive(Resource, Default)]
 pub(crate) struct DragState {
     pub(crate) dragging: bool,
@@ -34,5 +28,14 @@ pub(crate) struct DragState {
 #[derive(Component)]
 pub(crate) struct ZoomText;
 
+#[cfg(debug_assertions)]
 #[derive(Resource, Default)]
 pub(crate) struct TileZoom(pub(crate) i32);
+
+#[cfg(debug_assertions)]
+#[derive(Component)]
+pub(crate) struct DebugOverlay;
+
+#[cfg(debug_assertions)]
+#[derive(Resource, Default)]
+pub(crate) struct ShowDebugTiles(pub(crate) bool);

@@ -86,7 +86,7 @@ pub(crate) fn handle_input(
             if let Some(last_distance) = drag_state.pinch_distance {
                 if last_distance > 1.0 && distance > 1.0 {
                     let zoom_delta = (distance / last_distance).log2();
-                    let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM as f32);
+                    let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM);
 
                     // Keep the pinch midpoint fixed in world space
                     let aspect = window.width() / window.height();
@@ -125,7 +125,7 @@ pub(crate) fn handle_input(
 
     for event in scroll_events.read() {
         let zoom_delta = event.y * ZOOM_SPEED;
-        let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM as f32);
+        let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM);
 
         if let Some(cursor_pos) = window.cursor_position() {
             let aspect = window.width() / window.height();

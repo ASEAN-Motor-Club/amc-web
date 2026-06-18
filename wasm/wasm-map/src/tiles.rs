@@ -1,8 +1,10 @@
 use bevy::prelude::*;
-use bevy::window::{PrimaryWindow, RequestRedraw};
+use bevy::window::PrimaryWindow;
 
-use crate::components::{MapCamera, TileFadeIn, TileFadeOut, TileMarker, TileZoom};
-use crate::constants::{FADE_IN_DURATION, FADE_OUT_DURATION, MAP_SIZE, MAX_ZOOM, TILE_PX};
+#[cfg(debug_assertions)]
+use crate::components::{DebugOverlay, ShowDebugTiles};
+use crate::components::{MapCamera, TileMarker, TileZoom};
+use crate::constants::{MAP_SIZE, MAX_TILE_ZOOM, TILE_PX};
 
 fn map_to_world(mx: f32, my: f32) -> Vec2 {
     Vec2::new(mx - MAP_SIZE / 2.0, MAP_SIZE / 2.0 - my)
@@ -17,10 +19,9 @@ pub(crate) fn update_tiles(
     asset_server: Res<AssetServer>,
     camera_query: Query<&MapCamera>,
     tile_query: Query<(Entity, &TileMarker)>,
-    fade_in_query: Query<Entity, With<TileFadeIn>>,
-    fade_out_query: Query<Entity, With<TileFadeOut>>,
     windows: Query<&Window, With<PrimaryWindow>>,
-    mut tile_zoom: ResMut<TileZoom>,
+    #[cfg(debug_assertions)] mut tile_zoom: ResMut<TileZoom>,
+    #[cfg(debug_assertions)] show_debug: Res<ShowDebugTiles>,
 ) {
     let Ok(camera) = camera_query.single() else {
         return;
@@ -30,18 +31,19 @@ pub(crate) fn update_tiles(
     };
 
     // Pick tile z so that one tile occupies ~TILE_PX screen pixels:
-    // tile_screen_px = screen_height * 2^(cam_zoom - z) = TILE_PX
-    // → z = cam_zoom + log2(screen_height / TILE_PX)
     let z = (camera.zoom + (window.height() / TILE_PX).log2())
         .round()
-        .clamp(0.0, MAX_ZOOM as f32) as i32;
-    tile_zoom.0 = z;
+        .clamp(0.0, MAX_TILE_ZOOM as f32) as i32;
     let tile_size = tile_size_at_zoom(z);
     let tiles_at_z = 1 << z;
 
-    let aspect = 1.0f32;
+    #[cfg(debug_assertions)]
+    {
+        tile_zoom.0 = z;
+    }
+
     let visible_h = MAP_SIZE / 2f32.powf(camera.zoom);
-    let visible_w = visible_h * aspect;
+    let visible_w = visible_h * (window.width() / window.height());
 
     let cam_map_x = camera.pos.x + MAP_SIZE / 2.0;
     let cam_map_y = MAP_SIZE / 2.0 - camera.pos.y;
@@ -56,79 +58,66 @@ pub(crate) fn update_tiles(
     let y_min = y_min.max(0);
     let y_max = y_max.min(tiles_at_z);
 
-    let needed: Vec<(i32, i32)> = (x_min..x_max)
-        .flat_map(|x| (y_min..y_max).map(move |y| (x, y)))
-        .collect();
-
     for (entity, tile) in tile_query.iter() {
-        let should_keep = tile.z == z && needed.contains(&(tile.x, tile.y));
-        if !should_keep && !fade_out_query.contains(entity) {
-            if fade_in_query.contains(entity) {
-                commands.entity(entity).remove::<TileFadeIn>();
+        if tile.z != z || !(x_min..x_max).contains(&tile.x) || !(y_min..y_max).contains(&tile.y) {
+            commands.entity(entity).despawn();
+        }
+    }
+
+    for tx in x_min..x_max {
+        for ty in y_min..y_max {
+            if tile_query
+                .iter()
+                .any(|(_, t)| t.z == z && t.x == tx && t.y == ty)
+            {
+                continue;
             }
-            commands.entity(entity).insert(TileFadeOut(0.0));
-        }
-    }
 
-    for &(tx, ty) in &needed {
-        let already_exists = tile_query
-            .iter()
-            .any(|(_, t)| t.z == z && t.x == tx && t.y == ty);
-        if already_exists {
-            continue;
-        }
+            let path = format!("map/{}_{}_{}.png", z, tx, ty);
+            let ts = tile_size_at_zoom(z);
+            let map_cx = tx as f32 * ts + ts / 2.0;
+            let map_cy = ty as f32 * ts + ts / 2.0;
+            let world_pos = map_to_world(map_cx, map_cy);
 
-        let path = format!("map/{}_{}_{}.png", z, tx, ty);
-        let ts = tile_size_at_zoom(z);
-        let map_cx = tx as f32 * ts + ts / 2.0;
-        let map_cy = ty as f32 * ts + ts / 2.0;
-        let world_pos = map_to_world(map_cx, map_cy);
+            let mut tile = commands.spawn((
+                Sprite {
+                    image: asset_server.load::<Image>(&path),
+                    custom_size: Some(Vec2::splat(ts)),
+                    ..Default::default()
+                },
+                Transform::from_translation(world_pos.extend(0.0)),
+                TileMarker { z, x: tx, y: ty },
+            ));
 
-        commands.spawn((
-            Sprite {
-                image: asset_server.load(&path),
-                custom_size: Some(Vec2::splat(ts)),
-                color: Color::srgba(1.0, 1.0, 1.0, 0.0),
-                ..Default::default()
-            },
-            Transform::from_translation(world_pos.extend(0.0)),
-            TileMarker { z, x: tx, y: ty },
-            TileFadeIn(0.0),
-        ));
-    }
-}
-
-pub(crate) fn update_fade(
-    mut commands: Commands,
-    time: Res<Time>,
-    mut fade_in_query: Query<(Entity, &mut TileFadeIn, &mut Sprite), Without<TileFadeOut>>,
-    mut fade_out_query: Query<(Entity, &mut TileFadeOut, &mut Sprite), Without<TileFadeIn>>,
-    mut redraw: MessageWriter<RequestRedraw>,
-) {
-    if fade_in_query.iter().next().is_some() || fade_out_query.iter().next().is_some() {
-        redraw.write(RequestRedraw);
-    }
-    let dt = time.delta_secs();
-
-    for (entity, mut fade, mut sprite) in fade_in_query.iter_mut() {
-        fade.0 += dt;
-        let alpha = (fade.0 / FADE_IN_DURATION).clamp(0.0, 1.0);
-        sprite.color = Color::srgba(1.0, 1.0, 1.0, alpha);
-        if fade.0 >= FADE_IN_DURATION {
-            sprite.color = Color::srgba(1.0, 1.0, 1.0, 1.0);
-            if let Ok(mut e) = commands.get_entity(entity) {
-                e.remove::<TileFadeIn>();
-            }
-        }
-    }
-
-    for (entity, mut fade, mut sprite) in fade_out_query.iter_mut() {
-        fade.0 += dt;
-        let alpha = (1.0 - fade.0 / FADE_OUT_DURATION).clamp(0.0, 1.0);
-        sprite.color = Color::srgba(1.0, 1.0, 1.0, alpha);
-        if fade.0 >= FADE_OUT_DURATION {
-            if let Ok(mut e) = commands.get_entity(entity) {
-                e.despawn();
+            #[cfg(debug_assertions)]
+            {
+                let vis = if show_debug.0 {
+                    Visibility::Visible
+                } else {
+                    Visibility::Hidden
+                };
+                tile.with_children(|p| {
+                    p.spawn((
+                        Sprite {
+                            color: Color::BLACK,
+                            custom_size: Some(Vec2::splat(ts)),
+                            ..Default::default()
+                        },
+                        Transform::from_translation(Vec3::Z * 0.01),
+                        DebugOverlay,
+                        vis,
+                    ));
+                    p.spawn((
+                        Sprite {
+                            color: Color::WHITE,
+                            custom_size: Some(Vec2::splat(ts * 0.98)),
+                            ..Default::default()
+                        },
+                        Transform::from_translation(Vec3::Z * 0.02),
+                        DebugOverlay,
+                        vis,
+                    ));
+                });
             }
         }
     }

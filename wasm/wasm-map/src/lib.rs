@@ -11,6 +11,8 @@ use bevy::winit::WinitSettings;
 use wasm_bindgen::prelude::*;
 
 use components::{DragState, TileZoom};
+#[cfg(debug_assertions)]
+use components::ShowDebugTiles;
 
 #[wasm_bindgen]
 pub fn init(canvas_selector: String) {
@@ -42,14 +44,14 @@ pub fn init(canvas_selector: String) {
             camera::handle_input,
             camera::update_camera,
             tiles::update_tiles,
-            tiles::update_fade,
         )
             .chain(),
     );
 
     #[cfg(debug_assertions)]
-    app.add_systems(Startup, ui::setup_zoom_ui)
-        .add_systems(Update, ui::update_zoom_text);
+    app.init_resource::<ShowDebugTiles>()
+        .add_systems(Startup, ui::setup_zoom_ui)
+        .add_systems(Update, (ui::toggle_debug_tiles, ui::update_zoom_text));
 
     app.run();
 }
