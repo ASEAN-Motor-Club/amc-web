@@ -43,11 +43,16 @@ pub(crate) fn update_zoom_text(
     mut text_query: Query<&mut Text, With<ZoomText>>,
     tile_zoom: Res<TileZoom>,
     windows: Query<&Window, With<PrimaryWindow>>,
+    time: Res<Time>,
 ) {
     let Ok(camera) = camera_query.single() else { return };
     let Ok(mut text) = text_query.single_mut() else { return };
     let Ok(window) = windows.single() else { return };
 
     let tile_px = window.height() * 2f32.powf(camera.zoom) / (1 << tile_zoom.0) as f32;
-    text.0 = format!("Zoom: {:.2}  Tile: {}  ({:.0}px)", camera.zoom, tile_zoom.0, tile_px);
+    let fps = 1.0 / time.delta_secs();
+    text.0 = format!(
+        "FPS: {fps:.0}  Zoom: {:.2}  Tile: {}  ({:.0}px)",
+        camera.zoom, tile_zoom.0, tile_px
+    );
 }

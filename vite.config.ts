@@ -5,7 +5,7 @@ import UnoCSS from 'unocss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest';
-import { wasmBindgenPlugin } from './vite-plugins/wasm-bindgen';
+import wasm from 'vite-plugin-wasm';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      wasmBindgenPlugin(),
+      wasm(),
       UnoCSS(),
       sveltekit(),
       paraglideVitePlugin({

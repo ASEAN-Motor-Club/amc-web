@@ -3,16 +3,16 @@ mod components;
 mod constants;
 mod tiles;
 #[cfg(debug_assertions)]
-mod ui;
+mod debug_ui;
 
 use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
 use bevy::winit::WinitSettings;
 use wasm_bindgen::prelude::*;
 
-use components::{DragState, TileZoom};
+use components::DragState;
 #[cfg(debug_assertions)]
-use components::ShowDebugTiles;
+use components::{ShowDebugTiles, TileZoom};
 
 #[wasm_bindgen]
 pub fn init(canvas_selector: String) {
@@ -36,7 +36,6 @@ pub fn init(canvas_selector: String) {
     )
     .insert_resource(WinitSettings::desktop_app())
     .init_resource::<DragState>()
-    .init_resource::<TileZoom>()
     .add_systems(Startup, camera::setup)
     .add_systems(
         Update,
@@ -50,8 +49,9 @@ pub fn init(canvas_selector: String) {
 
     #[cfg(debug_assertions)]
     app.init_resource::<ShowDebugTiles>()
-        .add_systems(Startup, ui::setup_zoom_ui)
-        .add_systems(Update, (ui::toggle_debug_tiles, ui::update_zoom_text));
+        .init_resource::<TileZoom>()
+        .add_systems(Startup, debug_ui::setup_zoom_ui)
+        .add_systems(Update, (debug_ui::toggle_debug_tiles, debug_ui::update_zoom_text));
 
     app.run();
 }

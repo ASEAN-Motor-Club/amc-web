@@ -2,8 +2,8 @@ use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 
 #[cfg(debug_assertions)]
-use crate::components::{DebugOverlay, ShowDebugTiles};
-use crate::components::{MapCamera, TileMarker, TileZoom};
+use crate::components::{DebugOverlay, ShowDebugTiles, TileZoom};
+use crate::components::{MapCamera, TileMarker};
 use crate::constants::{MAP_SIZE, MAX_TILE_ZOOM, TILE_PX};
 
 fn map_to_world(mx: f32, my: f32) -> Vec2 {
@@ -31,8 +31,8 @@ pub(crate) fn update_tiles(
     };
 
     // Pick tile z so that one tile occupies ~TILE_PX screen pixels:
-    let z = (camera.zoom + (window.height() / TILE_PX).log2())
-        .round()
+    let z = (camera.target_zoom + (window.height() / TILE_PX).log2())
+        .ceil()
         .clamp(0.0, MAX_TILE_ZOOM as f32) as i32;
     let tile_size = tile_size_at_zoom(z);
     let tiles_at_z = 1 << z;
