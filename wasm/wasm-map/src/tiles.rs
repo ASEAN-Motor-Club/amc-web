@@ -10,10 +10,17 @@ fn map_to_world(mx: f32, my: f32) -> Vec2 {
     Vec2::new(mx - MAP_SIZE / 2.0, MAP_SIZE / 2.0 - my)
 }
 
+#[allow(clippy::cast_precision_loss)]
 fn tile_size_at_zoom(z: i32) -> f32 {
     MAP_SIZE / (1 << z) as f32
 }
 
+#[allow(
+    clippy::needless_pass_by_value,
+    clippy::cast_precision_loss,
+    clippy::cast_possible_truncation,
+    clippy::similar_names
+)]
 pub(crate) fn update_tiles(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
@@ -73,7 +80,7 @@ pub(crate) fn update_tiles(
                 continue;
             }
 
-            let path = format!("map/{}_{}_{}.png", z, tx, ty);
+            let path = format!("map/{z}_{tx}_{ty}.png");
             let ts = tile_size_at_zoom(z);
             let map_cx = tx as f32 * ts + ts / 2.0;
             let map_cy = ty as f32 * ts + ts / 2.0;

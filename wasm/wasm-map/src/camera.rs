@@ -20,6 +20,7 @@ pub(crate) fn setup(mut commands: Commands) {
     ));
 }
 
+#[allow(clippy::too_many_lines, clippy::needless_pass_by_value)]
 pub(crate) fn handle_input(
     mouse_button: Res<ButtonInput<MouseButton>>,
     mut scroll_events: MessageReader<MouseWheel>,
@@ -44,17 +45,17 @@ pub(crate) fn handle_input(
         drag_state.last_pos = None;
     }
 
-    if drag_state.dragging {
-        if let Some(cursor_pos) = window.cursor_position() {
-            if let Some(last_pos) = drag_state.last_pos {
-                let delta_px = cursor_pos - last_pos;
-                let visible = MAP_SIZE / 2f32.powf(camera.zoom);
-                let world_per_px = visible / window.width().min(window.height());
-                let delta_world = Vec2::new(-delta_px.x * world_per_px, delta_px.y * world_per_px);
-                camera.target_pos += delta_world;
-            }
-            drag_state.last_pos = Some(cursor_pos);
+    if drag_state.dragging
+        && let Some(cursor_pos) = window.cursor_position()
+    {
+        if let Some(last_pos) = drag_state.last_pos {
+            let delta_px = cursor_pos - last_pos;
+            let visible = MAP_SIZE / 2f32.powf(camera.zoom);
+            let world_per_px = visible / window.width().min(window.height());
+            let delta_world = Vec2::new(-delta_px.x * world_per_px, delta_px.y * world_per_px);
+            camera.target_pos += delta_world;
         }
+        drag_state.last_pos = Some(cursor_pos);
     }
 
     // Touch input: collect active touches
@@ -84,26 +85,27 @@ pub(crate) fn handle_input(
             let center = (pos_a + pos_b) / 2.0;
             let distance = pos_a.distance(pos_b);
 
-            if let Some(last_distance) = drag_state.pinch_distance {
-                if last_distance > 1.0 && distance > 1.0 {
-                    let zoom_delta = (distance / last_distance).log2();
-                    let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM);
+            if let Some(last_distance) = drag_state.pinch_distance
+                && last_distance > 1.0
+                && distance > 1.0
+            {
+                let zoom_delta = (distance / last_distance).log2();
+                let new_zoom = (camera.target_zoom + zoom_delta).clamp(MIN_ZOOM, MAX_ZOOM);
 
-                    // Keep the pinch midpoint fixed in world space
-                    let aspect = window.width() / window.height();
-                    let visible_h = MAP_SIZE / 2f32.powf(camera.target_zoom);
-                    let visible_w = visible_h * aspect;
-                    let ndc_x = (center.x / window.width()) * 2.0 - 1.0;
-                    let ndc_y = 1.0 - (center.y / window.height()) * 2.0;
-                    let world_x = camera.target_pos.x + ndc_x * visible_w / 2.0;
-                    let world_y = camera.target_pos.y + ndc_y * visible_h / 2.0;
-                    let new_visible_h = MAP_SIZE / 2f32.powf(new_zoom);
-                    let new_visible_w = new_visible_h * aspect;
-                    camera.target_pos.x = world_x - ndc_x * new_visible_w / 2.0;
-                    camera.target_pos.y = world_y - ndc_y * new_visible_h / 2.0;
+                // Keep the pinch midpoint fixed in world space
+                let aspect = window.width() / window.height();
+                let visible_h = MAP_SIZE / 2f32.powf(camera.target_zoom);
+                let visible_w = visible_h * aspect;
+                let ndc_x = (center.x / window.width()) * 2.0 - 1.0;
+                let ndc_y = 1.0 - (center.y / window.height()) * 2.0;
+                let world_x = camera.target_pos.x + ndc_x * visible_w / 2.0;
+                let world_y = camera.target_pos.y + ndc_y * visible_h / 2.0;
+                let new_visible_h = MAP_SIZE / 2f32.powf(new_zoom);
+                let new_visible_w = new_visible_h * aspect;
+                camera.target_pos.x = world_x - ndc_x * new_visible_w / 2.0;
+                camera.target_pos.y = world_y - ndc_y * new_visible_h / 2.0;
 
-                    camera.target_zoom = new_zoom;
-                }
+                camera.target_zoom = new_zoom;
             }
             drag_state.pinch_distance = Some(distance);
 
@@ -166,6 +168,7 @@ pub(crate) fn handle_input(
     }
 }
 
+#[allow(clippy::needless_pass_by_value)]
 pub(crate) fn update_camera(
     time: Res<Time>,
     windows: Query<&Window, With<PrimaryWindow>>,
@@ -180,7 +183,7 @@ pub(crate) fn update_camera(
 
     let mut still_animating = false;
 
-    for (mut camera, mut transform, mut projection) in camera_query.iter_mut() {
+    for (mut camera, mut transform, mut projection) in &mut camera_query {
         camera.pos = camera.pos.lerp(camera.target_pos, smooth);
         camera.zoom += (camera.target_zoom - camera.zoom) * smooth;
 

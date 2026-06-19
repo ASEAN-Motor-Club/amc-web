@@ -61,11 +61,11 @@ pub fn set_layer_features(id: u32, features: Vec<FeaturePoint>) {
 
 pub fn update_layer_feature_at(layer_id: u32, index: usize, point: FeaturePoint) {
     let mut s = store().lock().unwrap();
-    if let Some(features) = s.features.get_mut(&layer_id) {
-        if let Some(slot) = features.get_mut(index) {
-            *slot = point;
-            s.dirty.insert(layer_id);
-        }
+    if let Some(features) = s.features.get_mut(&layer_id)
+        && let Some(slot) = features.get_mut(index)
+    {
+        *slot = point;
+        s.dirty.insert(layer_id);
     }
 }
 
@@ -95,13 +95,13 @@ fn parse_color(s: &str) -> Color {
             return Color::oklcha(p[0], p[1], p[2], 1.0);
         }
     }
-    if let Some(hex) = s.strip_prefix('#') {
-        if hex.len() == 6 {
-            let r = u8::from_str_radix(&hex[0..2], 16).unwrap_or(255) as f32 / 255.0;
-            let g = u8::from_str_radix(&hex[2..4], 16).unwrap_or(255) as f32 / 255.0;
-            let b = u8::from_str_radix(&hex[4..6], 16).unwrap_or(255) as f32 / 255.0;
-            return Color::srgb(r, g, b);
-        }
+    if let Some(hex) = s.strip_prefix('#')
+        && hex.len() == 6
+    {
+        let r = f32::from(u8::from_str_radix(&hex[0..2], 16).unwrap_or(255)) / 255.0;
+        let g = f32::from(u8::from_str_radix(&hex[2..4], 16).unwrap_or(255)) / 255.0;
+        let b = f32::from(u8::from_str_radix(&hex[4..6], 16).unwrap_or(255)) / 255.0;
+        return Color::srgb(r, g, b);
     }
     if let Some(inner) = s.strip_prefix("rgb(").and_then(|s| s.strip_suffix(')')) {
         let p: Vec<f32> = inner
@@ -115,6 +115,7 @@ fn parse_color(s: &str) -> Color {
     Color::WHITE
 }
 
+#[allow(clippy::too_many_arguments, clippy::needless_pass_by_value, clippy::type_complexity)]
 pub fn sync_features(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -220,7 +221,7 @@ pub fn update_dot_scale(
     };
 
     let scale = dot_world_scale(camera, window);
-    for mut transform in dots.iter_mut() {
+    for mut transform in &mut dots {
         transform.scale = Vec3::new(scale, scale, 1.0);
     }
 }

@@ -32,20 +32,25 @@ fn list_ops(data: &[u8], skip_hash: bool, ignore_uexp: bool) -> Result<Vec<FileE
     let arr = pak
         .files()
         .iter()
-        .filter(|raw_path| !(ignore_uexp && raw_path.ends_with(".uexp")))
+        .filter(|raw_path| {
+            !(ignore_uexp
+                && std::path::Path::new(raw_path)
+                    .extension()
+                    .is_some_and(|ext| ext.eq_ignore_ascii_case("uexp")))
+        })
         .map(|raw_path| {
-            let joined_path = mount_point.join(&raw_path).to_slash_lossy().into_owned();
+            let joined_path = mount_point.join(raw_path).to_slash_lossy().into_owned();
             let path = joined_path
                 .strip_prefix("../../../")
                 .unwrap_or(&joined_path)
                 .to_owned();
 
             let hash = if skip_hash {
-                "".to_owned()
+                String::new()
             } else {
                 let mut data_cursor = Cursor::new(data);
                 let mut hasher = IoWrapper(Sha256::new());
-                pak.read_file(&raw_path, &mut data_cursor, &mut hasher)
+                pak.read_file(raw_path, &mut data_cursor, &mut hasher)
                     .map_err(|e| JsError::new(&e.to_string()))?;
 
                 let hash_bytes = hasher.0.finalize();
@@ -64,6 +69,9 @@ fn list_ops(data: &[u8], skip_hash: bool, ignore_uexp: bool) -> Result<Vec<FileE
 }
 
 /// List all file paths inside a .pak file.
+///
+/// # Errors
+/// Returns [`JsError`] if the pak data is invalid or cannot be parsed.
 #[wasm_bindgen]
 pub fn list(data: &[u8]) -> Result<Vec<String>, JsError> {
     #[cfg(feature = "console_error_panic_hook")]
@@ -76,6 +84,9 @@ pub fn list(data: &[u8]) -> Result<Vec<String>, JsError> {
 }
 
 /// List all file paths and their SHA-256 hashes inside a .pak file.
+///
+/// # Errors
+/// Returns [`JsError`] if the pak data is invalid or cannot be parsed.
 #[wasm_bindgen]
 pub fn list_hash(data: &[u8], ignore_uexp: bool) -> Result<Vec<FileEntry>, JsError> {
     #[cfg(feature = "console_error_panic_hook")]
@@ -84,17 +95,21 @@ pub fn list_hash(data: &[u8], ignore_uexp: bool) -> Result<Vec<FileEntry>, JsErr
     list_ops(data, false, ignore_uexp)
 }
 
+/// # Errors
+/// Returns [`JsError`] if the pak or asset data is invalid or cannot be parsed.
 #[wasm_bindgen]
 pub fn print_exports(pak_data: &[u8], raw_path: &str, mapping_data: &[u8]) -> Result<(), JsError> {
     let exports = get_exports(pak_data, raw_path, mapping_data)?;
 
     for export in exports {
-        console::log_1(&format!("{:?}", export).into());
+        console::log_1(&format!("{export:?}").into());
     }
 
     Ok(())
 }
 
+/// # Errors
+/// Returns [`JsError`] if the pak or asset data is invalid or cannot be parsed.
 pub fn get_exports(
     pak_data: &[u8],
     raw_path: &str,
@@ -146,6 +161,8 @@ pub fn get_exports(
     Ok(asset.asset_data.exports)
 }
 
+/// # Errors
+/// Returns [`JsError`] if the pak or asset data is invalid, or if no `DataTable` export is found.
 #[wasm_bindgen]
 pub fn get_datatables_names(
     pak_data: &[u8],

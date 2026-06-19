@@ -33,14 +33,15 @@ pub fn create_layer(id: u32, size: f32, stroke_size: f32, label_size: f32, color
     );
 }
 
-/// Convenience constructor for FeaturePoint.
+/// Convenience constructor for [`FeaturePoint`].
+#[must_use]
 #[wasm_bindgen]
 pub fn create_feature_point(x: f32, y: f32, label: String) -> FeaturePoint {
     FeaturePoint { x, y, label }
 }
 
 /// Replace all features on a layer. Pass an empty array to clear the layer.
-/// Coordinates are in data-space (MAP_REAL_X_LEFT = -1_280_000, MAP_REAL_Y_TOP = -320_000).
+/// Coordinates are in data-space (`MAP_REAL_X_LEFT` = -`1_280_000`, `MAP_REAL_Y_TOP` = -`320_000`).
 #[wasm_bindgen]
 pub fn set_layer_features(layer_id: u32, features: Vec<FeaturePoint>) {
     features::set_layer_features(layer_id, features);
