@@ -73,7 +73,7 @@ pub(crate) fn update_tiles(
                 continue;
             }
 
-            let path = format!("map/{z}_{tx}_{ty}.png");
+            let path = "map/0_0_0.png".to_owned();
             let ts = tile_size_at_zoom(z);
             let map_cx = tx as f32 * ts + ts / 2.0;
             let map_cy = ty as f32 * ts + ts / 2.0;
