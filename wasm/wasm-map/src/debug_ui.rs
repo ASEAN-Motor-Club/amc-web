@@ -31,7 +31,11 @@ pub(crate) fn toggle_debug_tiles(
         return;
     }
     show_debug.0 = !show_debug.0;
-    let vis = if show_debug.0 { Visibility::Visible } else { Visibility::Hidden };
+    let vis = if show_debug.0 {
+        Visibility::Visible
+    } else {
+        Visibility::Hidden
+    };
     for mut v in overlay_query.iter_mut() {
         *v = vis;
     }
@@ -45,8 +49,12 @@ pub(crate) fn update_zoom_text(
     windows: Query<&Window, With<PrimaryWindow>>,
     time: Res<Time>,
 ) {
-    let Ok(camera) = camera_query.single() else { return };
-    let Ok(mut text) = text_query.single_mut() else { return };
+    let Ok(camera) = camera_query.single() else {
+        return;
+    };
+    let Ok(mut text) = text_query.single_mut() else {
+        return;
+    };
     let Ok(window) = windows.single() else { return };
 
     let tile_px = window.height() * 2f32.powf(camera.zoom) / (1 << tile_zoom.0) as f32;

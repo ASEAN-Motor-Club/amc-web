@@ -87,7 +87,10 @@ fn dot_world_scale(camera: &MapCamera, window: &Window) -> f32 {
 fn parse_color(s: &str) -> Color {
     let s = s.trim();
     if let Some(inner) = s.strip_prefix("oklch(").and_then(|s| s.strip_suffix(')')) {
-        let p: Vec<f32> = inner.split_whitespace().filter_map(|v| v.parse().ok()).collect();
+        let p: Vec<f32> = inner
+            .split_whitespace()
+            .filter_map(|v| v.parse().ok())
+            .collect();
         if p.len() >= 3 {
             return Color::oklcha(p[0], p[1], p[2], 1.0);
         }
@@ -101,7 +104,10 @@ fn parse_color(s: &str) -> Color {
         }
     }
     if let Some(inner) = s.strip_prefix("rgb(").and_then(|s| s.strip_suffix(')')) {
-        let p: Vec<f32> = inner.split(',').filter_map(|v| v.trim().parse().ok()).collect();
+        let p: Vec<f32> = inner
+            .split(',')
+            .filter_map(|v| v.trim().parse().ok())
+            .collect();
         if p.len() >= 3 {
             return Color::srgb(p[0] / 255.0, p[1] / 255.0, p[2] / 255.0);
         }
