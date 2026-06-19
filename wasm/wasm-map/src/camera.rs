@@ -10,6 +10,7 @@ use crate::constants::{MAP_SIZE, MAX_ZOOM, MIN_ZOOM, SMOOTH_SPEED, ZOOM_SPEED};
 pub(crate) fn setup(mut commands: Commands) {
     commands.spawn((
         Camera2d,
+        Msaa::Sample2,
         MapCamera {
             pos: Vec2::new(MAP_SIZE / 2.0, -MAP_SIZE / 2.0),
             target_pos: Vec2::new(MAP_SIZE / 2.0, -MAP_SIZE / 2.0),
@@ -189,11 +190,14 @@ pub(crate) fn update_camera(
             still_animating = true;
         }
 
-        transform.translation = camera.pos.extend(0.0);
-
         let aspect = window.width() / window.height();
         let visible_h = MAP_SIZE / 2f32.powf(camera.zoom);
         let visible_w = visible_h * aspect;
+
+        // Snap to pixel grid to prevent sub-pixel shimmering on text/geometry.
+        let pixel = visible_h / window.height();
+        let snapped = (camera.pos / pixel).round() * pixel;
+        transform.translation = snapped.extend(0.0);
 
         if let Projection::Orthographic(ref mut ortho) = *projection {
             ortho.scaling_mode = ScalingMode::Fixed {
@@ -206,5 +210,4 @@ pub(crate) fn update_camera(
     if still_animating {
         redraw.write(RequestRedraw);
     }
-
 }

@@ -1,31 +1,27 @@
 mod camera;
 mod components;
 mod constants;
-mod features;
-mod tiles;
 #[cfg(debug_assertions)]
 mod debug_ui;
+mod features;
+mod font;
+mod tiles;
 
 use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
 use bevy::winit::WinitSettings;
+use bevy_woff::WoffPlugin;
 use wasm_bindgen::prelude::*;
 
 use components::DragState;
-use features::{FeaturePoint, LayerStyle};
 #[cfg(debug_assertions)]
 use components::{ShowDebugTiles, TileZoom};
+use features::{FeaturePoint, LayerStyle};
 
 /// Define or redefine a layer's visual style.
 /// Call this before or after `set_layer_features` — the layer renders once both are set.
 #[wasm_bindgen]
-pub fn create_layer(
-    id: u32,
-    size: f32,
-    stroke_size: f32,
-    label_size: f32,
-    color: String,
-) {
+pub fn create_layer(id: u32, size: f32, stroke_size: f32, label_size: f32, color: String) {
     features::create_layer(
         id,
         LayerStyle {
@@ -76,9 +72,10 @@ pub fn init(canvas_selector: String) {
                 ..Default::default()
             }),
     )
+    .add_plugins(WoffPlugin)
     .insert_resource(WinitSettings::desktop_app())
     .init_resource::<DragState>()
-    .add_systems(Startup, (camera::setup, features::setup_fonts))
+    .add_systems(Startup, (camera::setup, font::setup_fonts))
     .add_systems(
         Update,
         (
@@ -95,7 +92,10 @@ pub fn init(canvas_selector: String) {
     app.init_resource::<ShowDebugTiles>()
         .init_resource::<TileZoom>()
         .add_systems(Startup, debug_ui::setup_zoom_ui)
-        .add_systems(Update, (debug_ui::toggle_debug_tiles, debug_ui::update_zoom_text));
+        .add_systems(
+            Update,
+            (debug_ui::toggle_debug_tiles, debug_ui::update_zoom_text),
+        );
 
     app.run();
 }
