@@ -16,18 +16,34 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
+          components: rustfmt, clippy
 
       - name: 🗂️ Cache Rust artifacts
         uses: Swatinem/rust-cache@v2
 
+      - name: 🎨 Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: 📎 Clippy
+        run: cargo clippy --target wasm32-unknown-unknown -- -D warnings
+
       - name: 📦 Install wasm-pack
         run: cargo install wasm-pack
 
-      - name: 🔨 Build WASM
-        run: npm run build:pakop
+      - name: 🔨 Build WASM (pakop)
+        run: cargo xtask build-pakop
 
-      - name: 📤 Upload WASM artifact
+      - name: 🔨 Build WASM (wasm-map)
+        run: cargo xtask build-wasm-map
+
+      - name: 📤 Upload pakop artifact
         uses: actions/upload-artifact@v7
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
+
+      - name: 📤 Upload wasm-map artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: wasm-map-pkg
+          path: wasm/wasm-map/pkg

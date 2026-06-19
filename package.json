@@ -21,8 +21,6 @@
     "build:storybook": "storybook build",
     "paraglide:compile": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
     "proto:generate": "buf generate",
-    "build:pakop": "wasm-pack build wasm/pakop --target bundler",
-    "build:pakop:mac": "CC=/opt/homebrew/opt/llvm/bin/clang wasm-pack build wasm/pakop --target bundler",
     "checklist": "pnpm format && pnpm lint && pnpm paraglide:compile && pnpm check && pnpm test"
   },
   "devDependencies": {
@@ -93,6 +91,7 @@
     "vite": "8.0.16",
     "vite-bundle-analyzer": "1.3.8",
     "vite-plugin-wasm": "3.6.0",
+    "wasm-map": "workspace:*",
     "zod": "4.4.3"
   },
   "engines": {
