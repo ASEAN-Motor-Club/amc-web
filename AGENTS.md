@@ -137,9 +137,9 @@ src/
 
 ### WASM modules
 
-| Module | Source | Build command |
-|--------|--------|---------------|
-| `pakop` | `wasm/pakop/` | `cargo xtask build-pakop --dev` |
+| Module     | Source           | Build command                      |
+| ---------- | ---------------- | ---------------------------------- |
+| `pakop`    | `wasm/pakop/`    | `cargo xtask build-pakop --dev`    |
 | `wasm-map` | `wasm/wasm-map/` | `cargo xtask build-wasm-map --dev` |
 
 Both output to their respective `pkg/` directories and are referenced as `workspace:*` packages.

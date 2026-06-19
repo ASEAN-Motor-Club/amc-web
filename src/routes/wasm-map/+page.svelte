@@ -10,7 +10,7 @@
     create_layer(0, 20, 2, 12, colorAmber400);
     set_layer_features(
       0,
-      deliveryPoints.map((dp) => create_feature_point(dp.coord.x, dp.coord.y, dp.name.en))
+      deliveryPoints.map((dp) => create_feature_point(dp.coord.x, dp.coord.y, dp.name.en)),
     );
   });
 </script>
