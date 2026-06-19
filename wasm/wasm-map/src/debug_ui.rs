@@ -21,7 +21,6 @@ pub(crate) fn setup_zoom_ui(mut commands: Commands) {
         });
 }
 
-#[allow(clippy::needless_pass_by_value)]
 pub(crate) fn toggle_debug_tiles(
     keyboard: Res<ButtonInput<KeyCode>>,
     mut show_debug: ResMut<ShowDebugTiles>,
@@ -43,7 +42,6 @@ pub(crate) fn toggle_debug_tiles(
     redraw.write(RequestRedraw);
 }
 
-#[allow(clippy::needless_pass_by_value, clippy::cast_precision_loss)]
 pub(crate) fn update_zoom_text(
     camera_query: Query<&MapCamera>,
     mut text_query: Query<&mut Text, With<ZoomText>>,

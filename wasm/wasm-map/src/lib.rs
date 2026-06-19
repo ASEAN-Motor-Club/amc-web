@@ -1,3 +1,13 @@
+#![allow(
+    clippy::needless_pass_by_value,
+    clippy::cast_precision_loss,
+    clippy::cast_possible_truncation,
+    clippy::too_many_lines,
+    clippy::too_many_arguments,
+    clippy::type_complexity,
+    clippy::similar_names
+)]
+
 mod camera;
 mod components;
 mod constants;

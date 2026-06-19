@@ -115,7 +115,6 @@ fn parse_color(s: &str) -> Color {
     Color::WHITE
 }
 
-#[allow(clippy::too_many_arguments, clippy::needless_pass_by_value, clippy::type_complexity)]
 pub fn sync_features(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,

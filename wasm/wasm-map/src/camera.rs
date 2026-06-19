@@ -20,7 +20,6 @@ pub(crate) fn setup(mut commands: Commands) {
     ));
 }
 
-#[allow(clippy::too_many_lines, clippy::needless_pass_by_value)]
 pub(crate) fn handle_input(
     mouse_button: Res<ButtonInput<MouseButton>>,
     mut scroll_events: MessageReader<MouseWheel>,
@@ -168,7 +167,6 @@ pub(crate) fn handle_input(
     }
 }
 
-#[allow(clippy::needless_pass_by_value)]
 pub(crate) fn update_camera(
     time: Res<Time>,
     windows: Query<&Window, With<PrimaryWindow>>,
