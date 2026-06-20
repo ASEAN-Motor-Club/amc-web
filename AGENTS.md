@@ -92,8 +92,6 @@ pnpm paraglide:compile  # Regenerate i18n messages
 pnpm proto:generate     # Regenerate _pb.ts files from .proto definitions
 cargo xtask build-pakop           # Build pakop WASM module (release)
 cargo xtask build-pakop --dev     # Build pakop WASM module (dev, fast)
-cargo xtask build-wasm-map        # Build wasm-map (release, slow — runs wasm-opt)
-cargo xtask build-wasm-map --dev  # Build wasm-map (dev, fast — skips wasm-opt, use this during development)
 
 # Quality Checks
 pnpm checklist          # Runs format, lint, paraglide:compile, check, test
@@ -130,7 +128,6 @@ src/
 │   ├── pak/             # Pak file inspector and conflict checker
 │   ├── track/           # Track editor
 │   ├── radio/           # Radio page
-│   ├── wasm-map/        # Bevy WASM map renderer (experimental)
 │   └── ankhr, colors    # Misc pages
 └── stories/             # Storybook stories
 ```
@@ -140,9 +137,8 @@ src/
 | Module     | Source           | Build command                      |
 | ---------- | ---------------- | ---------------------------------- |
 | `pakop`    | `wasm/pakop/`    | `cargo xtask build-pakop --dev`    |
-| `wasm-map` | `wasm/wasm-map/` | `cargo xtask build-wasm-map --dev` |
 
-Both output to their respective `pkg/` directories and are referenced as `workspace:*` packages.
+This output to their respective `pkg/` directories and are referenced as `workspace:*` packages.
 
 ## Testing & Development
 

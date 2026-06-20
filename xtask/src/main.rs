@@ -7,7 +7,6 @@ fn main() {
 
     match task.as_deref() {
         Some("build-pakop") => wasm_pack("wasm/pakop", &extra, &[]),
-        Some("build-wasm-map") => wasm_pack("wasm/wasm-map", &extra, &[]),
         _ => {
             eprintln!("Available tasks: build-pakop, build-wasm-map");
             exit(1);
