@@ -33,17 +33,8 @@ jobs:
       - name: 🔨 Build WASM (pakop)
         run: cargo xtask build-pakop
 
-      - name: 🔨 Build WASM (wasm-map)
-        run: cargo xtask build-wasm-map
-
       - name: 📤 Upload pakop artifact
         uses: actions/upload-artifact@v7
         with:
           name: wasm-pkg
           path: wasm/pakop/pkg
-
-      - name: 📤 Upload wasm-map artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: wasm-map-pkg
-          path: wasm/wasm-map/pkg

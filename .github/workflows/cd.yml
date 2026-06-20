@@ -50,12 +50,6 @@ jobs:
           name: wasm-pkg
           path: wasm/pakop/pkg
 
-      - name: 📥 Download wasm-map artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: wasm-map-pkg
-          path: wasm/wasm-map/pkg
-
       - name: 📦 Install dependencies
         run: pnpm install
 
