@@ -20,8 +20,7 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
     "paraglide:compile": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-    "proto:generate": "buf generate",
-    "checklist": "pnpm format && pnpm lint && pnpm paraglide:compile && pnpm check && pnpm test"
+    "proto:generate": "buf generate"
   },
   "devDependencies": {
     "@bufbuild/buf": "1.70.0",
@@ -40,6 +39,7 @@
     "eslint-plugin-storybook": "10.4.2",
     "eslint-plugin-svelte": "3.19.0",
     "globals": "17.6.0",
+    "lefthook": "2.1.9",
     "playwright": "1.60.0",
     "prettier": "3.8.3",
     "prettier-plugin-svelte": "4.1.0",

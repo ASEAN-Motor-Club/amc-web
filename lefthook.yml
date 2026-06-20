@@ -1,0 +1,38 @@
+pre-commit:
+  piped: true
+  jobs:
+    - name: wasm
+      glob: 'wasm/*'
+      group:
+        parallel: true
+        jobs:
+          - name: cargo fmt
+            run: cargo fmt --all -- --check
+          - name: cargo clippy
+            run: cargo clippy --target wasm32-unknown-unknown
+          - name: build-pakop
+            run: cargo xtask build-pakop --dev
+
+    - name: pre-frontend
+      glob: 'src/*'
+      group:
+        parallel: true
+        jobs:
+          - name: paraglide compile
+            run: pnpm paraglide:compile
+          - name: proto generate
+            run: pnpm proto:generate
+
+    - name: frontend
+      glob: 'src/*'
+      group:
+        parallel: true
+        jobs:
+          - name: pnpm format
+            run: pnpm format
+          - name: pnpm lint
+            run: pnpm lint
+          - name: pnpm check
+            run: pnpm check
+          - name: pnpm test
+            run: pnpm test

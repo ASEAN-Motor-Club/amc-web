@@ -4,6 +4,7 @@ packages:
 allowBuilds:
   '@bufbuild/buf': true
   esbuild: true
+  lefthook: true
 dedupePeers: true
 minimumReleaseAge: 4320
 savePrefix: ''

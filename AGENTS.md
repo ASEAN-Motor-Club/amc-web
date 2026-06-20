@@ -94,7 +94,6 @@ cargo xtask build-pakop           # Build pakop WASM module (release)
 cargo xtask build-pakop --dev     # Build pakop WASM module (dev, fast)
 
 # Quality Checks
-pnpm checklist          # Runs format, lint, paraglide:compile, check, test
 pnpm format             # Prettier formatting
 pnpm lint               # ESLint + Prettier check
 pnpm lint:fix           # Auto-fix ESLint issues

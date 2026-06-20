@@ -13,6 +13,7 @@ Website for ASEAN Motor Club
 - **Component Development**: [Storybook](https://storybook.js.org/)
 - **Code Quality**: [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
 - **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
+- **Git Hooks**: [Lefthook](https://lefthook.dev/)
 
 ## 🚀 Prerequisites
 
@@ -118,7 +119,6 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 - `pnpm proto:generate` - Regenerate `_pb.ts` files from `.proto` definitions
 - `pnpm build:pakop` - Build WASM module
 - `pnpm build:pakop:mac` - Build WASM module (macOS)
-- `pnpm checklist` - Run format, lint, paraglide:compile, check, and test
 
 ## 🔧 Development Tools
 
@@ -230,19 +230,6 @@ Before merging any pull request, ensure that:
 - **Component Stories**: Add Storybook stories for new reusable UI components
 - **Type Safety**: Leverage TypeScript for better developer experience
 - **Styling**: Prefer Tailwind CSS utility classes for styling components
-
-### 🔧 Pre-commit Checklist
-
-Run these commands before committing:
-
-```bash
-pnpm format  # Format code
-pnpm lint    # Check linting
-pnpm check   # Type checking
-pnpm test    # Run tests
-# or
-pnpm checklist
-```
 
 ---
 
