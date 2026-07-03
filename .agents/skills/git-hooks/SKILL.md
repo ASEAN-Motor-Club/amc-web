@@ -15,12 +15,12 @@ Pre-commit hooks are managed by **lefthook** (`lefthook.yml`), installed via the
    - `pnpm paraglide:compile`
    - `pnpm proto:generate`
 3. **frontend** (when `src/*` files are staged):
-   - `pnpm format` (writes!) · `pnpm lint` · `pnpm check` · `pnpm test`
+   - `pnpm lint` · `pnpm check` · `pnpm test`
 
 ## Implications
 
-- Commits touching `src/` run the **full** format/lint/typecheck/test suite — expect commits to take a while; don't kill them mid-run.
-- `pnpm format` rewrites files during the hook; if a commit fails after formatting, re-stage the formatted files.
+- Commits touching `src/` run the **full** lint/typecheck/test suite — expect commits to take a while; don't kill them mid-run.
+- The hook only **checks** formatting (`pnpm lint` includes a Prettier check) — run `pnpm format` yourself before committing or the commit fails.
 - Rust changes must pass fmt + clippy for the `wasm32-unknown-unknown` target and build successfully.
 - Codegen (paraglide, proto) runs before checks, so stale generated files get refreshed automatically — but you still need to stage the regenerated output if it changed.
 - Run the same commands manually before committing to avoid hook failures: `pnpm format && pnpm lint && pnpm check && pnpm test`.
