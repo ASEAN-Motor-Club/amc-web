@@ -42,7 +42,7 @@ description: Directory layout of the AMC web repo — where UI components, featu
 ├── xtask/                       # Rust build orchestrator (cargo xtask build-pakop)
 ├── vite-plugins/                # Custom Vite plugins (webmanifest)
 ├── static/                      # Static assets served as-is
-└── scripts/                     # (currently empty)
+└── scripts/                     # Vite scripts (currently empty)
 ```
 
 Conventions:
