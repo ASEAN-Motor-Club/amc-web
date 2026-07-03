@@ -1,4 +1,5 @@
 import { apiClient } from './_api';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export interface ShortcutZone {
   id: number;
@@ -8,9 +9,5 @@ export interface ShortcutZone {
 }
 
 export const getShortcutZones = (signal: AbortSignal): Promise<ShortcutZone[]> =>
-  apiClient<ShortcutZone[]>(
-    'https://server.aseanmotorclub.com/api/shortcut_zones/',
-    signal,
-    [],
-    'shortcutZones',
-  );
+  apiClient<ShortcutZone[]>(`${PUBLIC_API_BASE}/api/shortcut_zones/`, signal, [], 'shortcutZones');
+
