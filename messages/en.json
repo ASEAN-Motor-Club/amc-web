@@ -217,6 +217,7 @@
     "click_lock": "Right click to lock supply line",
     "click_info": "Left click for more info",
     "click_here_info": "Click here for more info",
+    "pip_exit": "Map is in picture-in-picture. Click to return.",
     "player_info": {
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",

@@ -27,3 +27,39 @@ export const enum PlayerRoles {
   Police,
   Criminal,
 }
+
+export interface MapState {
+  delivery: boolean;
+  house: boolean;
+  player: boolean;
+  playerName: boolean;
+  pins: boolean;
+  pinLabels: boolean;
+  teleport: boolean;
+  teleportLabels: boolean;
+  shortcutZone: boolean;
+  shortcutZoneLabels: boolean;
+  jobOnly: boolean;
+  houseVacantOnly: boolean;
+  houseLabels: boolean;
+  playerCopsOnly: boolean;
+  playerCriminalOnly: boolean;
+}
+
+export const enum PoiType {
+  Delivery,
+  JobsOnly,
+  House,
+  HouseLabels,
+  HouseVacantOnly,
+  Player,
+  PlayerName,
+  PlayerCopsOnly,
+  PlayerCriminalOnly,
+  Pins,
+  PinLabels,
+  Teleport,
+  TeleportLabels,
+  ShortcutZone,
+  ShortcutZoneLabels,
+}

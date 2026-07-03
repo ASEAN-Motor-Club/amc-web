@@ -17,6 +17,7 @@
   import type { SimpleGeometry } from 'ol/geom';
   import Button from '../Button/Button.svelte';
   import Icon from '../Icon/Icon.svelte';
+  import { isSm } from '$lib/utils/media.svelte';
 
   let map: Map;
 
@@ -49,6 +50,14 @@
      * Callback for move start events
      */
     onMoveStart?: (e: MapEvent) => void;
+    /**
+     * Whether the map is currently detached into a picture-in-picture window
+     */
+    pipActive?: boolean;
+    /**
+     * Callback for the picture-in-picture button, shown above the zoom control while not in picture-in-picture
+     */
+    onEnterPip?: () => void;
   }
 
   let target: HTMLDivElement;
@@ -60,7 +69,13 @@
     onRightClick,
     onPointerDrag,
     onMoveStart,
+    pipActive,
+    onEnterPip,
   }: OlMapProps = $props();
+
+  const pipSupported = $derived(
+    typeof window !== 'undefined' && 'documentPictureInPicture' in window && isSm.current,
+  );
 
   const projection = new Projection({
     code: 'customData',
@@ -182,35 +197,48 @@
 
 <div class="relative h-full w-full">
   <div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClass]} bind:this={target}></div>
-  <div
-    class="absolute right-4 bottom-4 flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5"
-  >
-    <Button
-      class="text-text-dark pointer-events-auto rounded-b-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
-      color="custom"
-      size="sm"
-      icon
-      onClick={() =>
-        map.getView().animate({
-          zoom: (map.getView().getZoom() ?? 1) + 1,
-          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
-        })}
-    >
-      <Icon class="i-material-symbols:add-2-rounded" />
-    </Button>
-    <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
-    <Button
-      class="text-text-dark pointer-events-auto rounded-t-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
-      color="custom"
-      size="sm"
-      icon
-      onClick={() =>
-        map.getView().animate({
-          zoom: (map.getView().getZoom() ?? 1) - 1,
-          duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
-        })}
-    >
-      <Icon class="i-material-symbols:remove-rounded" />
-    </Button>
-  </div>
+  {#if !pipActive}
+    <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
+      {#if pipSupported}
+        <Button
+          class="text-text-dark pointer-events-auto rounded-sm !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          color="custom"
+          size="sm"
+          icon
+          onClick={() => onEnterPip?.()}
+        >
+          <Icon class="i-material-symbols:picture-in-picture-center-outline-rounded" />
+        </Button>
+      {/if}
+      <div class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5">
+        <Button
+          class="text-text-dark pointer-events-auto rounded-b-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          color="custom"
+          size="sm"
+          icon
+          onClick={() =>
+            map.getView().animate({
+              zoom: (map.getView().getZoom() ?? 1) + 1,
+              duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
+            })}
+        >
+          <Icon class="i-material-symbols:add-2-rounded" />
+        </Button>
+        <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
+        <Button
+          class="text-text-dark pointer-events-auto rounded-t-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          color="custom"
+          size="sm"
+          icon
+          onClick={() =>
+            map.getView().animate({
+              zoom: (map.getView().getZoom() ?? 1) - 1,
+              duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
+            })}
+        >
+          <Icon class="i-material-symbols:remove-rounded" />
+        </Button>
+      </div>
+    </div>
+  {/if}
 </div>
