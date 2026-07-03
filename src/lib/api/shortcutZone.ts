@@ -10,4 +10,3 @@ export interface ShortcutZone {
 
 export const getShortcutZones = (signal: AbortSignal): Promise<ShortcutZone[]> =>
   apiClient<ShortcutZone[]>(`${PUBLIC_API_BASE}/api/shortcut_zones/`, signal, [], 'shortcutZones');
-

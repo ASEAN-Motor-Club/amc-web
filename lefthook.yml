@@ -28,8 +28,6 @@ pre-commit:
       group:
         parallel: true
         jobs:
-          - name: pnpm format
-            run: pnpm format
           - name: pnpm lint
             run: pnpm lint
           - name: pnpm check
