@@ -4,7 +4,7 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 ## Agent Skills
 
-Detailed guidance has been split into skills under `.agents/skills/`. Read the relevant skill before working in its area:
+Detailed guidance has been split into skills under `.agents/skills/`. Read the relevant skill before working in its area
 
 ## Essential Commands
 
