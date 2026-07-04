@@ -6,44 +6,6 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 Detailed guidance has been split into skills under `.agents/skills/`. Read the relevant skill before working in its area:
 
-**Core**
-
-| Skill                                                          | Read it when…                                                                   |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [architecture](.agents/skills/architecture/SKILL.md)           | Making build, config, i18n-pipeline, WASM, or deployment-related changes        |
-| [project-structure](.agents/skills/project-structure/SKILL.md) | Adding new files or locating existing code                                      |
-| [path-aliases](.agents/skills/path-aliases/SKILL.md)           | Writing imports (`$lib`, `$messages`, `pakop`)                                  |
-| [codebase-patterns](.agents/skills/codebase-patterns/SKILL.md) | Writing any code (style rules, runes, props, class merging, i18n, icons, tests) |
-| [i18n-paraglide](.agents/skills/i18n-paraglide/SKILL.md)       | Adding or changing any user-facing text (messages, locales, fonts)              |
-| [app-shell](.agents/skills/app-shell/SKILL.md)                 | Changing global head tags, SEO metadata, fonts, or hooks                        |
-| [env-config](.agents/skills/env-config/SKILL.md)               | Adding configuration or touching `.env` (PUBLIC\_\* vs VITE\_\*)                |
-| [testing](.agents/skills/testing/SKILL.md)                     | Writing or running tests (browser `comp` vs node `unit` projects)               |
-| [git-hooks](.agents/skills/git-hooks/SKILL.md)                 | Committing or debugging a failed pre-commit hook (lefthook pipeline)            |
-
-**Features**
-
-| Skill                                            | Read it when…                                                           |
-| ------------------------------------------------ | ----------------------------------------------------------------------- |
-| [api-layer](.agents/skills/api-layer/SKILL.md)   | Adding any network call (fetch, polling, SSE, WebSocket)                |
-| [map-system](.agents/skills/map-system/SKILL.md) | Touching `src/lib/ui/OlMap`, `EditorOlMap`, or `src/lib/components/Map` |
-| [pakop-wasm](.agents/skills/pakop-wasm/SKILL.md) | Touching `wasm/pakop` or the `/pak` routes                              |
-
-**Libraries** (read before using the library)
-
-| Skill                                                            | Library                                     |
-| ---------------------------------------------------------------- | ------------------------------------------- |
-| [zod](.agents/skills/zod/SKILL.md)                               | `zod/mini` validation schemas               |
-| [openlayers](.agents/skills/openlayers/SKILL.md)                 | `ol` maps                                   |
-| [date-fns](.agents/skills/date-fns/SKILL.md)                     | Dates and reactive current time             |
-| [gsap](.agents/skills/gsap/SKILL.md)                             | Scripted animations                         |
-| [lottie](.agents/skills/lottie/SKILL.md)                         | `lottie-web` vector animations              |
-| [lodash](.agents/skills/lodash/SKILL.md)                         | `lodash-es` + `src/lib/utils` helpers       |
-| [markdown-rendering](.agents/skills/markdown-rendering/SKILL.md) | `marked` + `dompurify` (XSS-safe markdown)  |
-| [protobuf](.agents/skills/protobuf/SKILL.md)                     | `@bufbuild/protobuf` + buf codegen          |
-| [svelte-portal](.agents/skills/svelte-portal/SKILL.md)           | Overlays (modals, tooltips, popovers)       |
-| [quaternion](.agents/skills/quaternion/SKILL.md)                 | Rotation math in the track editor           |
-| [class-merging](.agents/skills/class-merging/SKILL.md)           | `clsx` + `tailwind-merge` for `class` props |
-
 ## Essential Commands
 
 ```bash
