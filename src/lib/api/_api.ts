@@ -1,4 +1,4 @@
-import isError from 'lodash-es/isError';
+import { isError } from 'es-toolkit';
 
 /**
  * Generic API fetch function with standardized error handling

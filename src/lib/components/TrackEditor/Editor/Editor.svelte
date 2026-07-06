@@ -6,7 +6,7 @@
   import InputGroup from '$lib/ui/InputGroup/InputGroup.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import DownloadCard from './DownloadCard.svelte';
-  import { cloneDeep, isEqual } from 'lodash-es';
+  import { cloneDeep, isEqual } from 'es-toolkit';
   import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
   import { Quaternion } from 'quaternion';
   import { toRad } from '$lib/utils/math/vectors';

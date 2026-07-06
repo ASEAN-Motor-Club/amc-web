@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
-  import Portal from 'svelte-portal';
+  import { portal } from '$lib/utils/portal';
   import type { ClassValue } from 'svelte/elements';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { modalCounter } from './modalCounter.svelte';
@@ -41,7 +41,7 @@
     open,
     children,
     onClose,
-    portal = true,
+    portal: usePortal = true,
     portalTarget = 'body',
     class: propsClass,
   }: ModalProps = $props();
@@ -97,10 +97,12 @@
   </div>
 {/snippet}
 
-{#if portal && open}
-  <Portal target={portalTarget}>
+{#if open}
+  {#if usePortal}
+    <div use:portal={portalTarget}>
+      {@render modalBase()}
+    </div>
+  {:else}
     {@render modalBase()}
-  </Portal>
-{:else if open}
-  {@render modalBase()}
+  {/if}
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
-  import Portal from 'svelte-portal';
+  import { portal } from '$lib/utils/portal';
   import type { ClassValue } from 'svelte/elements';
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';
@@ -46,7 +46,7 @@
     anchor,
     children,
     position = 'top',
-    portal = true,
+    portal: usePortal = true,
     class: propsClass,
     offset = 8,
     disabled = false,
@@ -189,10 +189,12 @@
   </div>
 {/snippet}
 
-{#if portal && show}
-  <Portal>
+{#if show}
+  {#if usePortal}
+    <div use:portal>
+      {@render tooltipBase()}
+    </div>
+  {:else}
     {@render tooltipBase()}
-  </Portal>
-{:else if show}
-  {@render tooltipBase()}
+  {/if}
 {/if}

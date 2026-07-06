@@ -9,7 +9,7 @@
   import { startDeliveryPointPolling } from '$lib/api/delivery';
   import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
   import { getAbortSignal, untrack } from 'svelte';
-  import { debounce } from 'lodash-es';
+  import { debounce } from 'es-toolkit';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
   import { rtDate } from '$lib/realtimeDate.svelte';

@@ -16,7 +16,7 @@
     type Locale,
   } from '$lib/paraglide/runtime';
   import { siteLocale } from '$lib/components/Locale/locale.svelte';
-  import { noop } from 'lodash-es';
+  import { noop } from 'es-toolkit';
 
   import { rtDate } from '$lib/realtimeDate.svelte';
 

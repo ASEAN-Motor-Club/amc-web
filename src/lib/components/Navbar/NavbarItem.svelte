@@ -4,7 +4,7 @@
   import { slide } from 'svelte/transition';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { debounce, type DebouncedFunc } from 'lodash-es';
+  import { debounce, type DebouncedFunction } from 'es-toolkit';
   import { onDestroy } from 'svelte';
   import NavbarText from './NavbarText.svelte';
 
@@ -38,7 +38,7 @@
 
   let subMenu = $state(false);
 
-  let closeSubMenu: DebouncedFunc<() => void> = debounce(() => {
+  let closeSubMenu: DebouncedFunction<() => void> = debounce(() => {
     subMenu = false;
   }, 100);
 

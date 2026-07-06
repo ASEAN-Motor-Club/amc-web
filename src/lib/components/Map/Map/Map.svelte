@@ -62,7 +62,7 @@
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
   import { LineString, Polygon } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
-  import { uniq } from 'lodash-es';
+  import { uniq } from 'es-toolkit';
   import { cargoMetadata } from '$lib/data/cargo';
   import { m } from '$messages';
   import { isMouse } from '$lib/utils/media.svelte';

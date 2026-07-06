@@ -1,6 +1,6 @@
 import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
 import type { MtNameRecord, Vector3 } from '$lib/types';
-import { uniq } from 'lodash-es';
+import { uniq } from 'es-toolkit';
 import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType } from './types';
 import { flattenCargoType } from '$lib/utils/delivery';
 

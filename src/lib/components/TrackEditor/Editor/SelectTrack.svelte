@@ -6,7 +6,7 @@
   import type { ChangeEventHandler } from 'svelte/elements';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { noop } from 'lodash-es';
+  import { noop } from 'es-toolkit';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   export interface SelectTrackProps {
