@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+import { mergeConfig } from 'vite';
 import type { StorybookConfig } from '@storybook/sveltekit';
 
 const config: StorybookConfig = {
@@ -12,7 +14,13 @@ const config: StorybookConfig = {
     if (configType === 'PRODUCTION') {
       config.base = '/storybook/';
     }
-    return config;
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          react: fileURLToPath(new URL('./react-stub.ts', import.meta.url)),
+        },
+      },
+    });
   },
   managerHead: (head, { configType }) => `
     ${configType === 'PRODUCTION' ? '<base href="/storybook/" />' : ''}
