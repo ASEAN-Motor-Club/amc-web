@@ -147,7 +147,7 @@
         }
       ],
       "privacy_note": "File Anda tidak pernah meninggalkan perangkat — semua diproses secara lokal di browser.",
-      "repak_credit": "Pak dibuka menggunakan [repak](https://github.com/trumank/repak). UAsset parsing menggunakan [unreal_asset](https://github.com/AstroTechies/unrealmodding).",
+      "repak_credit": "Pak dibuka dan UAsset di-parse menggunakan [CUE4Parse](https://github.com/FabianFG/CUE4Parse).",
       "summary": "Ringkasan",
       "details": "Rincian",
       "loaded": "(dimuat)",

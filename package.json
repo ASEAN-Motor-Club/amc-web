@@ -20,7 +20,8 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
     "paraglide:compile": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-    "proto:generate": "buf generate"
+    "proto:generate": "buf generate",
+    "build:pakop": "dotnet build wasm/pakop/Pakop.csproj -c Release"
   },
   "devDependencies": {
     "@bufbuild/buf": "1.71.0",
@@ -86,7 +87,6 @@
     "unocss": "66.7.2",
     "vite": "8.0.16",
     "vite-bundle-analyzer": "1.3.8",
-    "vite-plugin-wasm": "3.6.0",
     "zod": "4.4.3"
   },
   "engines": {

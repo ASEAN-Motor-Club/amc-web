@@ -4,14 +4,11 @@ pre-commit:
     - name: wasm
       glob: 'wasm/*'
       group:
-        parallel: true
         jobs:
-          - name: cargo fmt
-            run: cargo fmt --all -- --check
-          - name: cargo clippy
-            run: cargo clippy --target wasm32-unknown-unknown
+          - name: dotnet format
+            run: dotnet format wasm/pakop --verify-no-changes
           - name: build-pakop
-            run: cargo xtask build-pakop --dev
+            run: pnpm build:pakop
 
     - name: pre-frontend
       glob: 'src/*'

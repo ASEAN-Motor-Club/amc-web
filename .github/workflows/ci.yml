@@ -21,7 +21,8 @@ env:
 jobs:
   wasm:
     uses: ./.github/workflows/wasm.yml
+    with:
+      build: false
 
   check:
     uses: ./.github/workflows/check.yml
-    needs: wasm
