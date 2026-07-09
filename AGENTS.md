@@ -20,8 +20,7 @@ pnpm preview             # Preview built site locally
 pnpm preview:host        # Preview built site with host access
 pnpm paraglide:compile   # Regenerate i18n messages
 pnpm proto:generate      # Regenerate _pb.ts files from .proto definitions
-cargo xtask build-pakop        # Build pakop WASM module (release)
-cargo xtask build-pakop --dev  # Build pakop WASM module (dev, fast)
+pnpm build:pakop         # Build pakop WASM module (C#/CUE4Parse); run before pnpm dev/build and after C# changes
 
 # Quality Checks
 pnpm format              # Prettier formatting
@@ -41,4 +40,4 @@ pnpm build:storybook     # Build Storybook for deployment
 3. **Svelte 5**: Use runes syntax only; no legacy `$:` reactive statements or `export let`.
 4. **Context**: UI components often depend on parent context (`InputGroup`, `Select`, `Button`→`Icon`, etc.) — check the colocated `context.ts`.
 5. **Static generation**: The site must remain statically buildable (adapter-static with SPA fallback; `prerender = 'auto'`).
-6. **Generated code**: Never hand-edit `src/lib/paraglide/`, `src/lib/api/proto/generated/`, or `wasm/*/pkg/` — regenerate them instead.
+6. **Generated code**: Never hand-edit `src/lib/paraglide/`, `src/lib/api/proto/generated/`, or `wasm/pakop/bin|obj` — regenerate them instead.

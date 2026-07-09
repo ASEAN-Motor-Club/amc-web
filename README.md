@@ -23,14 +23,9 @@ Website for ASEAN Motor Club
   npm install --global corepack@latest
   corepack enable
   ```
-- **Rust**: Required for building the WASM module. Install via [rustup](https://rustup.rs/)
-- **wasm-pack**: Required for building the WASM module. Install via:
+- **.NET SDK 10.0**: Required for building the WASM module ([CUE4Parse](https://github.com/FabianFG/CUE4Parse)-based). Download [here](https://dotnet.microsoft.com/download/dotnet/10.0), then install the WebAssembly workload:
   ```bash
-  cargo install wasm-pack
-  ```
-- **Clang** (macOS): Required for building the WASM module. Apple's bundled clang strips out the WebAssembly backend, so the full LLVM from Homebrew is needed instead:
-  ```bash
-  brew install llvm
+  dotnet workload install wasm-tools
   ```
 - **VS Code Extensions** (optional, highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
@@ -66,17 +61,16 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
    corepack enable
    ```
 
-3. **Build WASM module** (required before installing dependencies)
-
-   ```bash
-   pnpm build:pakop           # Linux / Windows
-   pnpm build:pakop:mac       # macOS (requires Homebrew LLVM)
-   ```
-
-4. **Install dependencies**
+3. **Install dependencies**
 
    ```bash
    pnpm install
+   ```
+
+4. **Build WASM module** (required for the /pak tools; rerun after C# changes)
+
+   ```bash
+   pnpm build:pakop
    ```
 
 5. **Generate protobuf types**
@@ -117,8 +111,7 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
 - `pnpm format` - Format code with Prettier
 - `pnpm paraglide:compile` - Regenerate i18n messages
 - `pnpm proto:generate` - Regenerate `_pb.ts` files from `.proto` definitions
-- `pnpm build:pakop` - Build WASM module
-- `pnpm build:pakop:mac` - Build WASM module (macOS)
+- `pnpm build:pakop` - Build the pakop WASM module (required before `pnpm dev` / `pnpm build`)
 
 ## 🔧 Development Tools
 

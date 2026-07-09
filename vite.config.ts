@@ -5,7 +5,6 @@ import UnoCSS from 'unocss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest';
-import wasm from 'vite-plugin-wasm';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -13,7 +12,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      wasm(),
       UnoCSS(),
       sveltekit(),
       paraglideVitePlugin({
@@ -30,6 +28,9 @@ export default defineConfig(({ mode }) => {
       webmanifestPlugin(),
     ],
     build: {},
+    // The bundler-friendly dotnet.js statically imports its runtime assets
+    // (WebCIL assemblies etc.); treat them as asset URLs, not wasm modules.
+    assetsInclude: [/_framework\/.+\.(wasm|pdb|dat)$/],
     server: {
       fs: {
         allow: ['wasm'],

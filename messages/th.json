@@ -145,7 +145,7 @@
         }
       ],
       "privacy_note": "ไฟล์ของคุณไม่ถูกส่งออกไปนอกเครื่อง — ประมวลผลทั้งหมดทำในเบราว์เซอร์ของคุณ",
-      "repak_credit": "แตกไฟล์ pak โดย [repak](https://github.com/trumank/repak) UAsset parsing โดย [unreal_asset](https://github.com/AstroTechies/unrealmodding)",
+      "repak_credit": "แตกไฟล์ pak และ UAsset parsing โดย [CUE4Parse](https://github.com/FabianFG/CUE4Parse)",
       "summary": "สรุป",
       "details": "รายละเอียด",
       "loaded": "(โหลดแล้ว)",

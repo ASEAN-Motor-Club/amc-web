@@ -1,5 +1,7 @@
 packages:
-  - wasm/**
+  # Direct children only — the .NET build output (wasm/pakop/bin) contains a
+  # copied package.json that a deep glob would pick up as a workspace package.
+  - wasm/*
 
 allowBuilds:
   '@bufbuild/buf': true

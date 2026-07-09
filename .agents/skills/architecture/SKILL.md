@@ -36,11 +36,11 @@ Dev server proxies (targets from `VITE_*` env vars):
 - Uses the UnoCSS **Vite plugin** with `@unocss/extractor-svelte` (not svelte-scoped mode).
 - `unocss.config.ts` has a blocklist to avoid false-positive class extraction (e.g. paraglide `m.` / `m['...']` calls, bare `m2`/`w10`-style tokens).
 
-## WASM (Rust)
+## WASM (C# / .NET)
 
-- Rust crates live at the repo root: `wasm/pakop/` (plus `xtask/` for build orchestration; Cargo workspace at root `Cargo.toml`).
-- Built with `cargo xtask build-pakop` (release) or `cargo xtask build-pakop --dev` (fast dev build); extra args are forwarded to `wasm-pack build --target bundler`.
-- Output goes to `wasm/pakop/pkg/`, exposed as the pnpm workspace package `pakop` (`pnpm-workspace.yaml` includes `wasm/**`; the app depends on `pakop: workspace:*`).
+- C# .NET 10 browser-WASM project at `wasm/pakop/` (`Pakop.csproj`, CUE4Parse-based; no Blazor).
+- Built with `pnpm build:pakop` (`dotnet build -c Release`; required before `pnpm dev`/`pnpm build`); requires .NET 10 SDK + `dotnet workload install wasm-tools`. The pakop shim imports `dotnet.js` straight from the dotnet build output; the bundler-friendly `dotnet.js` statically imports all runtime assets, so Vite bundles them with hashed names into `_app/immutable/assets/`.
+- The pnpm workspace package `pakop` is the committed shim `wasm/pakop/index.js`/`index.d.ts` (`pnpm-workspace.yaml` includes `wasm/**`; the app depends on `pakop: workspace:*`).
 - Consumed via lazy dynamic import: `await import('pakop')` (see `src/routes/pak/`).
 
 ## Protobuf

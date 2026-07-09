@@ -38,8 +38,7 @@ description: Directory layout of the AMC web repo — where UI components, featu
 │   ├── hooks.ts                 # reroute → paraglide deLocalizeUrl
 │   └── app.css / app.html / app.d.ts
 ├── messages/                    # Paraglide source messages: en, id, ms, th, tl, vi
-├── wasm/pakop/                  # Rust WASM crate (output in wasm/pakop/pkg/, pnpm pkg "pakop")
-├── xtask/                       # Rust build orchestrator (cargo xtask build-pakop)
+├── wasm/pakop/                  # C# .NET WASM project (CUE4Parse) + committed npm shim (pnpm pkg "pakop")
 ├── vite-plugins/                # Custom Vite plugins (webmanifest)
 ├── static/                      # Static assets served as-is
 └── scripts/                     # Vite scripts (currently empty)
@@ -49,6 +48,6 @@ Conventions:
 
 - New UI component → `src/lib/ui/<Name>/<Name>.svelte` + `<Name>.stories.svelte`; add `context.ts` if it participates in parent/child composition.
 - New feature code → `src/lib/components/<Domain>/`.
-- Generated directories (`src/lib/paraglide/`, `src/lib/api/proto/generated/`, `wasm/*/pkg/`) must never be hand-edited — regenerate with `pnpm paraglide:compile`, `pnpm proto:generate`, or `cargo xtask build-pakop`.
+- Generated directories (`src/lib/paraglide/`, `src/lib/api/proto/generated/`, `wasm/pakop/bin|obj`) must never be hand-edited — regenerate with `pnpm paraglide:compile`, `pnpm proto:generate`, or `pnpm build:pakop`.
 
 Related: [[architecture]], [[path-aliases]], [[codebase-patterns]]

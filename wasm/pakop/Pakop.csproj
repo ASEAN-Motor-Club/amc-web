@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Pakop</AssemblyName>
+    <RootNamespace>Pakop</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WasmMainJSPath>main.js</WasmMainJSPath>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantTimezone>true</InvariantTimezone>
+    <PublishTrimmed>true</PublishTrimmed>
+    <!-- CUE4Parse's ObjectTypeRegistry maps serialized class names to types by
+         reflecting over DefinedTypes; full trimming would silently drop UDataTable. -->
+    <TrimMode>partial</TrimMode>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <RunAOTCompilation>false</RunAOTCompilation>
+    <DebuggerSupport>false</DebuggerSupport>
+    <EventSourceSupport>false</EventSourceSupport>
+    <!-- No .pdb in the wasm bundle (debugger support is disabled anyway). -->
+    <DebugType>none</DebugType>
+    <!-- Emit a boot config that imports assets statically so Vite can bundle
+         the runtime from the npm package instead of serving it as-is. -->
+    <WasmBundlerFriendlyBootConfig>true</WasmBundlerFriendlyBootConfig>
+    <!-- No precompressed twins; the host/CDN handles compression. -->
+    <CompressionEnabled>false</CompressionEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- This app only runs in the browser; informs the platform-compat
+         analyzer so browser-only APIs like [JSExport] don't raise CA1416. -->
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CUE4Parse" Version="1.2.2.202607" />
+    <!-- Override CUE4Parse's transitive 9.0.0, which has a known vulnerability (GHSA-73j8-2gch-69rq) -->
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="10.0.9" />
+    <TrimmerRootAssembly Include="CUE4Parse" />
+    <TrimmerRootAssembly Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+</Project>

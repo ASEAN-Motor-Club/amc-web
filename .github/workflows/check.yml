@@ -30,12 +30,6 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
-      - name: 📥 Download pakop artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: wasm-pkg
-          path: wasm/pakop/pkg
-
       - name: 📦 Install dependencies
         run: pnpm install
 

@@ -24,7 +24,6 @@ jobs:
 
   check:
     uses: ./.github/workflows/check.yml
-    needs: wasm
 
   build:
     name: 🏗️ Build
@@ -44,11 +43,13 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
+      # Vite resolves /assets/_framework from this prebuilt output and
+      # bundles it — no .NET SDK needed here.
       - name: 📥 Download pakop artifact
         uses: actions/download-artifact@v8
         with:
           name: wasm-pkg
-          path: wasm/pakop/pkg
+          path: wasm/pakop/bin/Release/net10.0/wwwroot
 
       - name: 📦 Install dependencies
         run: pnpm install
