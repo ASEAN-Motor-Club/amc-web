@@ -35,4 +35,4 @@ storybook-static
 **/*_pb.ts
 
 # test pak, ignored bc it not owned by the repo
-pak/
+/test_pak
