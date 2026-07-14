@@ -101,14 +101,20 @@
   {/if}
   <div class="flex-1"></div>
   <div class="-m-2 mt-0.5">
-    <Button
-      variant="text"
-      tag="a"
-      href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job?.id ?? -1)}
-      color="primary"
-      size="sm"
-    >
-      {m['championship.event.more_info']()}
-    </Button>
+    {#if job}
+      <Button
+        variant="text"
+        tag="a"
+        href={getLinkHref(fullScreen, DetailsFeatures.Jobs, job.id)}
+        color="primary"
+        size="sm"
+      >
+        {m['championship.event.more_info']()}
+      </Button>
+    {:else}
+      <Button variant="text" tag="div" color="primary" size="sm">
+        {m['championship.event.more_info']()}
+      </Button>
+    {/if}
   </div>
 </Card>
