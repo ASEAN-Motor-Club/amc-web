@@ -23,7 +23,7 @@ Do **not** import from `$lib/paraglide/messages` directly — the codebase consi
 
 ## Workspace packages
 
-- `pakop` — the Rust WASM crate at `wasm/pakop/`, published into the pnpm workspace from its `pkg/` output directory (`pakop: workspace:*` in `package.json`). Import it lazily: `const { list_hash } = await import('pakop');`
+- `pakop` — the C#/.NET (CUE4Parse-based) WASM project at `wasm/pakop/`, built via `pnpm build:pakop` (`dotnet build`), published into the pnpm workspace as a direct child (`pakop: workspace:*` in `package.json`; see [[pakop-wasm]]). Import it lazily: `const { list_hash } = await import('pakop');`
 - `amc-uno-css-config` — shared UnoCSS config, pinned to a commit of `ASEAN-Motor-Club/uno-css-config` on GitHub (not part of this repo).
 
 Related: [[architecture]], [[project-structure]]

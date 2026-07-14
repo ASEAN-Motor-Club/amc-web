@@ -40,7 +40,6 @@
     colorWhite,
     colorRed950,
     colorEmerald950,
-    colorBlue950,
     colorGray950,
     colorTextDark,
     colorViolet200,
@@ -272,20 +271,20 @@
         colorEmerald200,
         ['==', ['get', 'selected'], 1],
         colorEmerald500,
-        ['==', ['get', 'role'], PlayerRoles.Police],
-        colorBlue500,
-        ['==', ['get', 'role'], PlayerRoles.Criminal],
-        colorRed500,
+        // ['==', ['get', 'role'], PlayerRoles.Police],
+        // colorBlue500,
+        // ['==', ['get', 'role'], PlayerRoles.Criminal],
+        // colorRed500,
         colorEmerald400,
       ],
       'circle-stroke-color': [
         'case',
         ['==', ['get', 'selected'], 1],
         colorWhite,
-        ['==', ['get', 'role'], PlayerRoles.Police],
-        colorBlue950,
-        ['==', ['get', 'role'], PlayerRoles.Criminal],
-        colorRed950,
+        // ['==', ['get', 'role'], PlayerRoles.Police],
+        // colorBlue950,
+        // ['==', ['get', 'role'], PlayerRoles.Criminal],
+        // colorRed950,
         colorEmerald950,
       ],
       'circle-stroke-width': 1,
@@ -540,8 +539,8 @@
     jobOnly: false,
     houseVacantOnly: false,
     houseLabels: false,
-    playerCopsOnly: false,
-    playerCriminalOnly: false,
+    // playerCopsOnly: false,
+    // playerCriminalOnly: false,
   });
 
   const mapStateSchema = z.object({
@@ -606,8 +605,8 @@
           mapState.houseLabels = true;
           if (mapState.house) houseNameLayer.setVisible(true);
         }
-        mapState.playerCopsOnly = state.playerCopsOnly ?? false;
-        mapState.playerCriminalOnly = state.playerCriminalOnly ?? false;
+        // mapState.playerCopsOnly = state.playerCopsOnly ?? false;
+        // mapState.playerCriminalOnly = state.playerCriminalOnly ?? false;
       }
     } catch (e) {
       console.error('Failed to load map state:', e);
@@ -671,8 +670,8 @@
           jobOnly: mapState.jobOnly,
           houseVacantOnly: mapState.houseVacantOnly,
           houseLabels: mapState.houseLabels,
-          playerCopsOnly: mapState.playerCopsOnly,
-          playerCriminalOnly: mapState.playerCriminalOnly,
+          // playerCopsOnly: mapState.playerCopsOnly,
+          // playerCriminalOnly: mapState.playerCriminalOnly,
           teleport: mapState.teleport,
           teleportLabels: mapState.teleportLabels,
           shortcutZone: mapState.shortcutZone,
@@ -758,14 +757,14 @@
   let playerSelectingGuid: string | undefined = undefined;
   let initialFocus = true;
 
-  const filteredPlayerData = $derived.by(() => {
-    if (!mapState.playerCopsOnly && !mapState.playerCriminalOnly) return playerData;
-    return playerData.filter((p) => {
-      if (mapState.playerCopsOnly && hasPoliceRole(p.name)) return true;
-      if (mapState.playerCriminalOnly && hasCriminalRole(p.name)) return true;
-      return false;
-    });
-  });
+  // const filteredPlayerData = $derived.by(() => {
+  //   if (!mapState.playerCopsOnly && !mapState.playerCriminalOnly) return playerData;
+  //   return playerData.filter((p) => {
+  //     if (mapState.playerCopsOnly && hasPoliceRole(p.name)) return true;
+  //     if (mapState.playerCriminalOnly && hasCriminalRole(p.name)) return true;
+  //     return false;
+  //   });
+  // });
 
   const setPlayerPoints = (data: PlayerData[]) => {
     // Remove excess features from the end
@@ -814,7 +813,7 @@
   };
 
   $effect(() => {
-    setPlayerPoints(filteredPlayerData);
+    setPlayerPoints(playerData);
   });
 
   const clearSelection = () => {
@@ -972,7 +971,7 @@
     if (!mapState.player) {
       playerNameLayer.setVisible(false);
     } else {
-      setPlayerPoints(filteredPlayerData);
+      setPlayerPoints(playerData);
       playerNameLayer.setVisible(mapState.playerName);
     }
   };
@@ -1040,10 +1039,10 @@
         togglePlayerName();
         break;
       case PoiType.PlayerCopsOnly:
-        mapState.playerCopsOnly = !mapState.playerCopsOnly;
+        // mapState.playerCopsOnly = !mapState.playerCopsOnly;
         break;
       case PoiType.PlayerCriminalOnly:
-        mapState.playerCriminalOnly = !mapState.playerCriminalOnly;
+        // mapState.playerCriminalOnly = !mapState.playerCriminalOnly;
         break;
       case PoiType.Pins:
         togglePinsLayer();

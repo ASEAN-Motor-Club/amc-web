@@ -274,7 +274,7 @@
                         >
                       {/if}
                     </p>
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 items-center">
                       {#each conflict.entries as entry, i (entry.pak)}
                         <div class="flex flex-col font-mono text-xs">
                           <div class="flex gap-2 py-0.5">

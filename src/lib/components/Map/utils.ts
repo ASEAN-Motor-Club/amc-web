@@ -9,8 +9,8 @@ export const enum Features {
 }
 
 export const enum DetailsFeatures {
-  Delivery = 'deliveries',
-  Jobs = 'jobs',
+  Delivery,
+  Jobs,
 }
 
 export const getLinkHref = (

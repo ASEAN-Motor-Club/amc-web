@@ -42,8 +42,8 @@ export interface MapState {
   jobOnly: boolean;
   houseVacantOnly: boolean;
   houseLabels: boolean;
-  playerCopsOnly: boolean;
-  playerCriminalOnly: boolean;
+  // playerCopsOnly: boolean;
+  // playerCriminalOnly: boolean;
 }
 
 export const enum PoiType {

@@ -101,7 +101,7 @@
                 parentEnabled={mapState.player}
                 sub
               />
-              <PoiItem
+              <!-- <PoiItem
                 dotClass="border-blue-950 bg-blue-500"
                 label={m['map.poi.player_police']()}
                 desc={m['map.poi.player_police_desc']()}
@@ -118,7 +118,7 @@
                 onclick={() => onToggle(PoiType.PlayerCriminalOnly)}
                 parentEnabled={mapState.player}
                 sub
-              />
+              /> -->
 
               {#if havePins}
                 <div class="border-t border-gray-100/10"></div>

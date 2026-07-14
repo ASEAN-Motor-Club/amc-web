@@ -13,16 +13,6 @@ This is a **SvelteKit** site using **Svelte 5** with TypeScript, built for the A
 - Build outputs to `build/`. The site must remain statically buildable — no server-side runtime.
 - Prerender HTTP errors throw, except for `/stream` (explicitly ignored in `svelte.config.js`).
 
-## Build pipeline (`vite.config.ts`)
-
-Plugins, in order: `vite-plugin-wasm` → UnoCSS → SvelteKit → Paraglide → `vite-bundle-analyzer` (disabled on CI) → custom `webmanifestPlugin` (from `vite-plugins/webmanifest.ts`).
-
-Dev server proxies (targets from `VITE_*` env vars):
-
-- `/stream` → `VITE_MAIN_SITE`
-- `/icecast-status` → `VITE_ICE_CAST` (rewritten to `/status-json.xsl`)
-- `/login/token` → `VITE_API_BASE` (rewritten to `/api/login/token`)
-
 ## Internationalization (Paraglide)
 
 - Source messages live in `messages/{en,id,ms,th,tl,vi}.json`; compiled output in `src/lib/paraglide/` (generated — never edit manually).
@@ -49,7 +39,7 @@ Dev server proxies (targets from `VITE_*` env vars):
 
 ## Tooling
 
-- pnpm ≥ 11, Node ≥ 22. Lint = Prettier check + ESLint (`eslint.config.js`). Git hooks via lefthook (`lefthook.yml`).
+- pnpm ≥ 11, Node ≥ 22 (lts). Lint = Prettier check + ESLint (`eslint.config.js`). Git hooks via lefthook (`lefthook.yml`).
 - Testing: Vitest with the Playwright browser provider (`@vitest/browser-playwright`, chromium) for component tests in a real browser; plain node tests for pure TS.
 - Storybook 10 (`pnpm storybook`) for UI component development.
 
