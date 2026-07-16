@@ -15,4 +15,3 @@ project.inlang/*
 
 # Generated WASM files
 wasm/*
-
