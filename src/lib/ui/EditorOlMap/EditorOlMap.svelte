@@ -213,10 +213,6 @@
   });
 
   $effect(() => {
-    trackPointFeaturesCollection.clear();
-    lineFeaturesCollection.clear();
-    gateFeaturesCollection.clear();
-
     const pointFeatures: Feature[] = [];
     const gateFeatures: Feature[] = [];
 
@@ -270,12 +266,15 @@
 
       lineFeaturesCollection.extend([lineFeature]);
     }
+
+    return () => {
+      trackPointFeaturesCollection.clear();
+      lineFeaturesCollection.clear();
+      gateFeaturesCollection.clear();
+    };
   });
 
   $effect(() => {
-    selectedPointFeaturesCollection.clear();
-    selectedGateFeaturesCollection.clear();
-
     if (selectedPoint) {
       const selectedIndex = selectedPoint.index;
       if (selectedIndex >= 0 && selectedIndex < points.length) {
@@ -309,21 +308,21 @@
         selectedPointFeaturesCollection.extend([selectedFeature]);
       }
     }
+
+    return () => {
+      selectedPointFeaturesCollection.clear();
+      selectedGateFeaturesCollection.clear();
+    };
   });
 
   $effect(() => {
-    if (translateInteraction && map.getMap) {
-      map.getMap().removeInteraction(translateInteraction);
-      translateInteraction = null;
-    }
-
-    if (selectedPoint && onSelectedPointMove && map.getMap) {
+    if (selectedPoint && onSelectedPointMove) {
       translateInteraction = createTranslateInteraction();
       map.getMap().addInteraction(translateInteraction);
     }
 
     return () => {
-      if (translateInteraction && map.getMap) {
+      if (translateInteraction) {
         map.getMap().removeInteraction(translateInteraction);
         translateInteraction = null;
       }
