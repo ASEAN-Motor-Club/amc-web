@@ -10,21 +10,14 @@ pre-commit:
           - name: build-pakop
             run: pnpm build:pakop
 
-    - name: pre-frontend
+    - name: frontend
       glob: 'src/*'
       group:
-        parallel: true
         jobs:
           - name: paraglide compile
             run: pnpm paraglide:compile
           - name: proto generate
             run: pnpm proto:generate
-
-    - name: frontend
-      glob: 'src/*'
-      group:
-        parallel: true
-        jobs:
           - name: pnpm lint
             run: pnpm lint
           - name: pnpm check

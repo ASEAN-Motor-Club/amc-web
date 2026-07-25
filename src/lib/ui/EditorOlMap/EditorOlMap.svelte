@@ -215,9 +215,7 @@
   $effect(() => {
     trackPointFeaturesCollection.clear();
     lineFeaturesCollection.clear();
-    selectedPointFeaturesCollection.clear();
     gateFeaturesCollection.clear();
-    selectedGateFeaturesCollection.clear();
 
     const pointFeatures: Feature[] = [];
     const gateFeatures: Feature[] = [];
@@ -228,81 +226,40 @@
 
       const isSelected = selectedPoint?.index === i;
 
-      if (gateMode) {
-        const yaw = point.yaw ?? 0;
-        const scaleY = point.scaleY ?? 1;
-        const halfWidth = (scaleY * 100) / 2;
+      const yaw = point.yaw ?? 0;
+      const scaleY = point.scaleY ?? 1;
+      const halfWidth = (scaleY * 100) / 2;
 
-        const perpAngle = -(yaw + Math.PI / 2);
+      const perpAngle = -(yaw + Math.PI / 2);
 
-        const x1 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
-        const y1 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
-        const x2 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
-        const y2 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
+      const x1 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
+      const y1 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
+      const x2 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
+      const y2 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
 
-        const gateFeature = new Feature({
-          geometry: new LineString([
-            [x1, y1],
-            [x2, y2],
-          ]),
-          index: i,
-          selected: isSelected,
-        });
+      const gateFeature = new Feature({
+        geometry: new LineString([
+          [x1, y1],
+          [x2, y2],
+        ]),
+        index: i,
+        selected: isSelected,
+      });
 
-        gateFeatures.push(gateFeature);
-      } else {
-        const pointFeature = new Feature({
-          geometry: new Point(reprojectedPoint),
-          yaw: point.yaw ?? 0,
-          index: i,
-          selected: isSelected,
-        });
+      gateFeatures.push(gateFeature);
 
-        pointFeatures.push(pointFeature);
-      }
+      const pointFeature = new Feature({
+        geometry: new Point(reprojectedPoint),
+        yaw: point.yaw ?? 0,
+        index: i,
+        selected: isSelected,
+      });
+
+      pointFeatures.push(pointFeature);
     }
 
-    if (gateMode) {
-      gateFeaturesCollection.extend(gateFeatures);
-    } else {
-      trackPointFeaturesCollection.extend(pointFeatures);
-    }
-
-    if (selectedPoint) {
-      const selectedIndex = selectedPoint.index;
-      if (selectedIndex >= 0 && selectedIndex < points.length) {
-        const reprojectedPoint = reProjectPoint([selectedPoint.coord.x, selectedPoint.coord.y]);
-
-        if (gateMode) {
-          const yaw = selectedPoint.yaw ?? 0;
-          const scaleY = selectedPoint.scaleY ?? 1;
-          const halfWidth = (scaleY * 100) / 2;
-
-          const perpAngle = -(yaw + Math.PI / 2);
-
-          const x1 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
-          const y1 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
-          const x2 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
-          const y2 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
-
-          const selectedGateFeature = new Feature({
-            geometry: new LineString([
-              [x1, y1],
-              [x2, y2],
-            ]),
-          });
-
-          selectedGateFeaturesCollection.extend([selectedGateFeature]);
-        } else {
-          const selectedFeature = new Feature({
-            geometry: new Point(reprojectedPoint),
-            yaw: selectedPoint.yaw ?? 0,
-          });
-
-          selectedPointFeaturesCollection.extend([selectedFeature]);
-        }
-      }
-    }
+    gateFeaturesCollection.extend(gateFeatures);
+    trackPointFeaturesCollection.extend(pointFeatures);
 
     if (points.length >= 2) {
       const lineCoordinates = points.map((point) => reProjectPoint([point.coord.x, point.coord.y]));
@@ -312,6 +269,45 @@
       });
 
       lineFeaturesCollection.extend([lineFeature]);
+    }
+  });
+
+  $effect(() => {
+    selectedPointFeaturesCollection.clear();
+    selectedGateFeaturesCollection.clear();
+
+    if (selectedPoint) {
+      const selectedIndex = selectedPoint.index;
+      if (selectedIndex >= 0 && selectedIndex < points.length) {
+        const reprojectedPoint = reProjectPoint([selectedPoint.coord.x, selectedPoint.coord.y]);
+
+        const yaw = selectedPoint.yaw ?? 0;
+        const scaleY = selectedPoint.scaleY ?? 1;
+        const halfWidth = (scaleY * 100) / 2;
+
+        const perpAngle = -(yaw + Math.PI / 2);
+
+        const x1 = reprojectedPoint[0] - Math.cos(perpAngle) * halfWidth;
+        const y1 = reprojectedPoint[1] - Math.sin(perpAngle) * halfWidth;
+        const x2 = reprojectedPoint[0] + Math.cos(perpAngle) * halfWidth;
+        const y2 = reprojectedPoint[1] + Math.sin(perpAngle) * halfWidth;
+
+        const selectedGateFeature = new Feature({
+          geometry: new LineString([
+            [x1, y1],
+            [x2, y2],
+          ]),
+        });
+
+        selectedGateFeaturesCollection.extend([selectedGateFeature]);
+
+        const selectedFeature = new Feature({
+          geometry: new Point(reprojectedPoint),
+          yaw: selectedPoint.yaw ?? 0,
+        });
+
+        selectedPointFeaturesCollection.extend([selectedFeature]);
+      }
     }
   });
 
