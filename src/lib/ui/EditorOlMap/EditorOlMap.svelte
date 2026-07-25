@@ -464,4 +464,5 @@
   onClick={handleMapClick}
   onPointerMove={handlePointerMove}
   bind:this={map}
+  disablePip
 ></OlMap>

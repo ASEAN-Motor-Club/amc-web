@@ -58,6 +58,10 @@
      * Callback for the picture-in-picture button, shown above the zoom control while not in picture-in-picture
      */
     onEnterPip?: () => void;
+    /**
+     * Whether to disable the picture-in-picture button
+     */
+    disablePip?: boolean;
   }
 
   let target: HTMLDivElement;
@@ -71,6 +75,7 @@
     onMoveStart,
     pipActive,
     onEnterPip,
+    disablePip,
   }: OlMapProps = $props();
 
   const pipSupported = $derived(
@@ -199,7 +204,7 @@
   <div class={['bg-[lab(47.888%_-2.821_-32.915)]', propsClass]} bind:this={target}></div>
   {#if !pipActive}
     <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
-      {#if pipSupported}
+      {#if !disablePip && pipSupported}
         <Button
           class="text-text-dark pointer-events-auto rounded-sm !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
           color="custom"
