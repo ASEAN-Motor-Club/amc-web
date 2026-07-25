@@ -19,7 +19,6 @@
     pixelCoord: [number, number];
   } & (
     | {
-        jobOnly: number;
         pointType: PointType.Delivery;
         info: DeliveryPoint;
       }

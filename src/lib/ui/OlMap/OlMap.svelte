@@ -57,6 +57,10 @@
      */
     onMoveStart?: (e: MapEvent) => void;
     /**
+     * Callback for move end events
+     */
+    onMoveEnd?: (e: MapEvent) => void;
+    /**
      * Whether the map is currently detached into a picture-in-picture window
      */
     pipActive?: boolean;
@@ -84,6 +88,7 @@
     onRightClick,
     onPointerDrag,
     onMoveStart,
+    onMoveEnd,
     pipActive,
     onEnterPip,
     disablePip,
@@ -172,11 +177,18 @@
 
     map.on('movestart', handleMoveStart);
 
+    const handleMoveEnd = (e: MapEvent) => {
+      onMoveEnd?.(e);
+    };
+
+    map.on('moveend', handleMoveEnd);
+
     return () => {
       map.un('pointermove', handlePointerMove);
       map.un('click', handleClick);
       map.un('pointerdrag', handlePointerDrag);
       map.un('movestart', handleMoveStart);
+      map.un('moveend', handleMoveEnd);
       map.getViewport().removeEventListener('contextmenu', handleContextMenu);
       map.setTarget();
     };

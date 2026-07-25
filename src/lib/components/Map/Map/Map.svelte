@@ -1,80 +1,29 @@
 <script lang="ts">
-  import OlMap from '$lib/ui/OlMap/OlMap.svelte';
-  import VectorLayer from 'ol/layer/Vector';
-  import VectorSource from 'ol/source/Vector';
-  import Point from 'ol/geom/Point';
-  import Feature from 'ol/Feature';
-  import { onMount, untrack, getAbortSignal } from 'svelte';
+  import type Feature from 'ol/Feature';
+  import { onMount, getAbortSignal } from 'svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
-  import type { MapBrowserEvent } from 'ol';
-  import { Fill, Stroke, Style, Text } from 'ol/style';
-  import {
-    PlayerRoles,
-    PointType,
-    PoiType,
-    type MapState,
-    type PlayerData,
-    type TeleportPoint,
-  } from './types';
-  import {
-    getDeliveryPointStyle,
-    getHouseStyle,
-    getResidentPointStyle,
-    getStaticPoints,
-  } from './staticPoints';
+  import { PointType, PoiType, type MapState, type PlayerData, type TeleportPoint } from './types';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
-  import {
-    textXs,
-    fontSans,
-    colorEmerald200,
-    colorEmerald400,
-    colorGreen500,
-    colorBlue500,
-    adjustOpacity,
-    colorYellow500,
-    colorRed200,
-    colorRed400,
-    colorRed500,
-    colorEmerald500,
-    colorWhite,
-    colorRed950,
-    colorEmerald950,
-    colorGray950,
-    colorTextDark,
-    colorViolet200,
-    colorViolet400,
-    colorViolet950,
-  } from '$lib/tw-var';
-  import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import {
     deliveryPointsMap,
     demandKeyMapNoResident,
     supplyKeyMap,
     type DeliveryPoint,
   } from '$lib/data/deliveryPoint';
-  import { goto } from '$app/navigation';
-  import Search, { type SearchPoint } from './Search.svelte';
-  import { reProjectPoint } from '$lib/ui/OlMap/utils';
-  import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
+  import Search from './Search.svelte';
+  import type { DeliveryJob, HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
-  import { LineString, Polygon } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
-  import { uniq } from 'es-toolkit';
+  import { memoize, uniq } from 'es-toolkit';
   import { cargoMetadata } from '$lib/data/cargo';
   import { m } from '$messages';
-  import { isMouse } from '$lib/utils/media.svelte';
-  import { pinsSchema, type Pin, type Pins } from '$lib/schema/pin';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
+  import type { Pins } from '$lib/schema/pin';
   import { SvelteSet } from 'svelte/reactivity';
-  import Collection from 'ol/Collection';
   import * as z from 'zod/mini';
-  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-
-  import { getSelectionClearedParams } from '../utils';
-  import { hasPoliceRole, hasCriminalRole } from '$lib/utils/parsePlayerRole';
+  import OlMapWrapper from './OlMapWrapper.svelte';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -85,259 +34,16 @@
 
   const { jobsData, playerData, houseData, onPlayerLayerDataEnabledChange }: Props = $props();
 
-  const {
-    deliveryPointFeatures,
-    residentPointFeatures,
-    houseFeatures,
-    deliveryPointLayer,
-    residentPointLayer,
-    houseSource,
-    houseLayer,
-  } = getStaticPoints();
-
   const MAP_STATE_STORAGE_KEY = 'mapState';
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
 
-  const pinsSource = new VectorSource({
-    features: [] as Feature<Point>[],
-  });
-
-  const pinsLayer = new WebGLVectorLayer({
-    source: pinsSource,
-    style: {
-      'circle-radius': 5,
-      'circle-fill-color': [
-        'case',
-        ['==', ['get', 'hover'], 1],
-        colorRed200,
-        ['==', ['get', 'selected'], 1],
-        colorRed500,
-        colorRed400,
-      ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorRed950],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const PinLabelsStyle = new Style({
-    text: new Text({
-      font: `600 ${textXs} ${fontSans}`,
-      offsetY: -14,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const pinLabelsLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: pinsSource,
-    style: (feature) => {
-      PinLabelsStyle.getText()?.setText(feature.get('label') as string);
-      return PinLabelsStyle;
-    },
-  });
-
   let teleportData = $state<TeleportPoint[]>([]);
   const haveTeleports = $derived(teleportData.length > 0);
 
-  const houseNameStyle = new Style({
-    text: new Text({
-      font: `600 0.6rem ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const houseNameLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: houseSource,
-    visible: false,
-    style: (feature) => {
-      if (mapState.houseVacantOnly && !feature.get('vacant')) return [];
-      houseNameStyle.getText()?.setText(feature.get('label') as string);
-      return houseNameStyle;
-    },
-  });
-
-  const teleportSource = new VectorSource({
-    features: [] as Feature<Point>[],
-  });
-
-  const teleportLayer = new WebGLVectorLayer({
-    source: teleportSource,
-    style: {
-      'circle-radius': 5,
-      'circle-fill-color': ['case', ['==', ['get', 'hover'], 1], colorViolet200, colorViolet400],
-      'circle-stroke-color': colorViolet950,
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const TeleportLabelsStyle = new Style({
-    text: new Text({
-      font: `600 0.5rem ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const teleportLabelsLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: teleportSource,
-    visible: false,
-    style: (feature) => {
-      TeleportLabelsStyle.getText()?.setText(feature.get('label') as string);
-      return TeleportLabelsStyle;
-    },
-  });
-
   let shortcutZoneData = $state<ShortcutZone[]>([]);
   const haveShortcutZones = $derived(shortcutZoneData.length > 0);
-
-  const shortcutZoneSource = new VectorSource({
-    features: [] as Feature<Polygon>[],
-  });
-
-  const shortcutZoneStyle = new Style({
-    fill: new Fill({ color: adjustOpacity(colorRed500, 0.12) }),
-    stroke: new Stroke({
-      color: colorRed500,
-      width: 2,
-      lineDash: [4, 6],
-    }),
-    text: new Text({
-      font: `600 0.5rem ${fontSans}`,
-      overflow: true,
-      fill: new Fill({ color: colorTextDark }),
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const shortcutZoneLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: shortcutZoneSource,
-    style: (feature) => {
-      shortcutZoneStyle
-        .getText()
-        ?.setText(mapState.shortcutZoneLabels ? (feature.get('name') as string) : '');
-      return shortcutZoneStyle;
-    },
-  });
-
-  const playerFeaturesCollection = new Collection<Feature<Point>>();
-
-  const playerPointSource = new VectorSource({
-    features: playerFeaturesCollection,
-  });
-
-  const playerPointLayer = new WebGLVectorLayer({
-    source: playerPointSource,
-    style: {
-      'circle-radius': 4,
-      'circle-fill-color': [
-        'case',
-        ['==', ['get', 'hover'], 1],
-        colorEmerald200,
-        ['==', ['get', 'selected'], 1],
-        colorEmerald500,
-        // ['==', ['get', 'role'], PlayerRoles.Police],
-        // colorBlue500,
-        // ['==', ['get', 'role'], PlayerRoles.Criminal],
-        // colorRed500,
-        colorEmerald400,
-      ],
-      'circle-stroke-color': [
-        'case',
-        ['==', ['get', 'selected'], 1],
-        colorWhite,
-        // ['==', ['get', 'role'], PlayerRoles.Police],
-        // colorBlue950,
-        // ['==', ['get', 'role'], PlayerRoles.Criminal],
-        // colorRed950,
-        colorEmerald950,
-      ],
-      'circle-stroke-width': 1,
-      'circle-rotate-with-view': false,
-      'circle-displacement': [0, 0],
-    },
-  });
-
-  const playerNameStyle = new Style({
-    text: new Text({
-      font: `600 ${textXs} ${fontSans}`,
-      offsetY: -12,
-      fill: new Fill({
-        color: colorTextDark,
-      }),
-
-      stroke: new Stroke({
-        color: adjustOpacity(colorGray950, 0.4),
-        width: 3,
-      }),
-    }),
-  });
-
-  const playerNameLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: playerPointSource,
-    style: (feature) => {
-      playerNameStyle.getText()?.setText(feature.get('info').name as string);
-      return playerNameStyle;
-    },
-  });
-
-  const deliveryLineFeaturesCollection = new Collection<Feature<LineString>>();
-
-  const deliveryLineLayer = new WebGLVectorLayer({
-    source: new VectorSource({
-      features: deliveryLineFeaturesCollection,
-    }),
-    style: {
-      'stroke-width': 2,
-      'stroke-color': [
-        'match',
-        ['get', 'type'],
-        DeliveryLineType.Supply,
-        adjustOpacity(colorGreen500, 0.75),
-        DeliveryLineType.Demand,
-        adjustOpacity(colorBlue500, 0.75),
-        adjustOpacity(colorYellow500, 0.75),
-      ],
-      'stroke-line-cap': 'round',
-    },
-  });
 
   const getDeliveryPoint = (guid: string) => {
     const point = deliveryPointsMap.get(guid);
@@ -347,7 +53,7 @@
     return point;
   };
 
-  const updateDeliveryLine = (deliveryPoint: DeliveryPoint) => {
+  const getDeliveryLine = (deliveryPoint: DeliveryPoint) => {
     const matchSourceJob = jobsData.filter(getMatchJobSourceFn(deliveryPoint));
     const matchDestJob = jobsData.filter(getMatchJobDestFn(deliveryPoint));
 
@@ -479,53 +185,22 @@
         .filter((d) => d !== undefined),
     );
 
-    deliveryLineFeaturesCollection.extend([
-      ...allDemandDestinations.map((d) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]),
-            reProjectPoint([d.coord.x, d.coord.y]),
-          ]),
-          type: DeliveryLineType.Demand,
-        });
-      }),
-      ...allSupplyDestinations.map((d) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([deliveryPoint.coord.x, deliveryPoint.coord.y]),
-            reProjectPoint([d.coord.x, d.coord.y]),
-          ]),
-          type: DeliveryLineType.Supply,
-        });
-      }),
-      ...allDropPointLink.map(([d1, d2]) => {
-        return new Feature({
-          geometry: new LineString([
-            reProjectPoint([d1.coord.x, d1.coord.y]),
-            reProjectPoint([d2.coord.x, d2.coord.y]),
-          ]),
-          type: DeliveryLineType.Drop,
-        });
-      }),
-    ]);
+    return {
+      point: {
+        x: deliveryPoint.coord.x,
+        y: deliveryPoint.coord.y,
+      },
+      demand: allDemandDestinations,
+      supply: allSupplyDestinations,
+      dropPoint: allDropPointLink,
+    };
   };
 
-  const layers = $derived([
-    deliveryLineLayer,
-    deliveryPointLayer,
-    residentPointLayer,
-    houseLayer,
-    playerPointLayer,
-    ...(haveTeleports ? [teleportLayer] : []),
-    ...(havePins ? [pinsLayer] : []),
-    ...(haveShortcutZones ? [shortcutZoneLayer] : []),
-    houseNameLayer,
-    playerNameLayer,
-    ...(haveTeleports ? [teleportLabelsLayer] : []),
-    ...(havePins ? [pinLabelsLayer] : []),
-  ]);
+  const memoizedGetDeliveryLine = memoize(getDeliveryLine, {
+    getCacheKey: (d) => d.guid,
+  });
 
-  const mapState = $state<MapState>({
+  let mapState = $state<MapState>({
     delivery: true,
     house: true,
     player: true,
@@ -564,49 +239,7 @@
       const raw = JSON.parse(localStorage.getItem(MAP_STATE_STORAGE_KEY) ?? '');
       const result = mapStateSchema.safeParse(raw);
       if (result.success) {
-        const state = result.data;
-        if (state.delivery === false) {
-          mapState.delivery = false;
-          for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer])
-            l.setVisible(false);
-        }
-        if (state.house === false) {
-          mapState.house = false;
-          houseLayer.setVisible(false);
-        }
-        if (state.player === false) {
-          mapState.player = false;
-          playerPointLayer.setVisible(false);
-          playerNameLayer.setVisible(false);
-        }
-        if (state.playerName === false) {
-          mapState.playerName = false;
-          if (mapState.player) playerNameLayer.setVisible(false);
-        }
-        if (state.teleport === false) {
-          mapState.teleport = false;
-          teleportLayer.setVisible(false);
-          teleportLabelsLayer.setVisible(false);
-        }
-        if (state.teleportLabels === false) {
-          mapState.teleportLabels = false;
-          if (mapState.teleport) teleportLabelsLayer.setVisible(false);
-        }
-        if (state.shortcutZone === false) {
-          mapState.shortcutZone = false;
-          shortcutZoneLayer.setVisible(false);
-        }
-        if (state.shortcutZoneLabels === false) {
-          mapState.shortcutZoneLabels = false;
-        }
-        mapState.jobOnly = state.jobOnly ?? false;
-        mapState.houseVacantOnly = state.houseVacantOnly ?? false;
-        if (state.houseLabels === true) {
-          mapState.houseLabels = true;
-          if (mapState.house) houseNameLayer.setVisible(true);
-        }
-        // mapState.playerCopsOnly = state.playerCopsOnly ?? false;
-        // mapState.playerCriminalOnly = state.playerCriminalOnly ?? false;
+        mapState = { ...mapState, ...result.data };
       }
     } catch (e) {
       console.error('Failed to load map state:', e);
@@ -618,18 +251,6 @@
           name: d.name,
           coord: { x: d.x, y: d.y, z: d.z },
         }));
-        teleportSource.addFeatures(
-          points.map(
-            (p) =>
-              new Feature({
-                geometry: new Point(reProjectPoint([p.coord.x, p.coord.y])),
-                pointType: PointType.Teleport,
-                info: p,
-                label: p.name,
-                hover: 0,
-              }),
-          ),
-        );
         teleportData = points;
       })
       .catch((e: unknown) => {
@@ -638,19 +259,6 @@
 
     getShortcutZones(getAbortSignal())
       .then((data) => {
-        shortcutZoneSource.addFeatures(
-          data.map(
-            (zone) =>
-              new Feature({
-                geometry: new Polygon([
-                  zone.coordinates.map(([x, y]) => reProjectPoint([x, y] as [number, number])),
-                ]),
-                pointType: PointType.ShortcutZone,
-                name: zone.name,
-                info: zone,
-              }),
-          ),
-        );
         shortcutZoneData = data;
       })
       .catch((e: unknown) => {
@@ -670,8 +278,6 @@
           jobOnly: mapState.jobOnly,
           houseVacantOnly: mapState.houseVacantOnly,
           houseLabels: mapState.houseLabels,
-          // playerCopsOnly: mapState.playerCopsOnly,
-          // playerCriminalOnly: mapState.playerCriminalOnly,
           teleport: mapState.teleport,
           teleportLabels: mapState.teleportLabels,
           shortcutZone: mapState.shortcutZone,
@@ -681,10 +287,33 @@
     }
   });
 
-  let selectedPoint: Feature | undefined = undefined;
-  let lockPoint: Feature | undefined = undefined;
-  let hoverPoint: Feature | undefined = undefined;
-  let hoverInfo: HoverInfo | undefined = $state();
+  let selectedPoint: Feature | undefined = $state();
+  let lockPoint: Feature | undefined = $state();
+  let hoverPoint: { f: Feature; pixel: [number, number] } | undefined = $state();
+
+  const hoverInfo: HoverInfo | undefined = $derived.by(() => {
+    if (hoverPoint) {
+      return {
+        pointType: hoverPoint.f.get('pointType'),
+        pixelCoord: hoverPoint.pixel,
+        info: hoverPoint.f.get('info'),
+      };
+    }
+  });
+
+  const deliveryLineData = $derived.by(() => {
+    if (hoverInfo?.pointType === PointType.Delivery) {
+      return memoizedGetDeliveryLine(hoverInfo.info);
+    }
+  });
+
+  let handleHover = (feature: Feature | undefined, pixel: [number, number]) => {
+    if (feature) {
+      hoverPoint = { f: feature, pixel };
+    } else {
+      hoverPoint = undefined;
+    }
+  };
 
   let teleportCopyTimeout: ReturnType<typeof setTimeout> | undefined;
   let copiedTeleportName = $state<string | undefined>(undefined);
@@ -702,374 +331,51 @@
     teleportCopyTimeout = setTimeout(() => (copiedTeleportName = undefined), 2000);
   };
 
-  const handlePointerMoveOrClick = (e: MapBrowserEvent) => {
-    let currentHoverInfo: HoverInfo | undefined = undefined;
-    let currentHoverPoint = undefined as Feature | undefined;
-
-    e.map.forEachFeatureAtPixel(
-      e.pixel,
-      (feature) => {
-        const f = feature as Feature;
-        f.set('hover', true);
-        currentHoverInfo = {
-          pointType: f.get('pointType'),
-          pixelCoord: e.pixel as [number, number],
-          info: f.get('info'),
-          jobOnly: (f.get('jobOnly') ?? 0) as number,
-        };
-        currentHoverPoint = f;
-        return true;
-      },
-      {
-        layerFilter: (layer) => {
-          return (
-            layer === deliveryPointLayer ||
-            layer === residentPointLayer ||
-            layer === houseLayer ||
-            layer === teleportLayer ||
-            layer === playerPointLayer
-          );
-        },
-        hitTolerance: 10,
-      },
-    );
-
-    if (currentHoverPoint !== hoverPoint) {
-      if (!lockPoint) {
-        deliveryLineFeaturesCollection.clear();
-        if ((currentHoverInfo as unknown as HoverInfo)?.pointType === PointType.Delivery) {
-          const deliveryPoint = currentHoverInfo as unknown as Extract<
-            HoverInfo,
-            {
-              pointType: PointType.Delivery;
-            }
-          >;
-          updateDeliveryLine(deliveryPoint.info);
-        }
-      }
-      hoverPoint?.set('hover', false);
-      hoverPoint = currentHoverPoint;
-    }
-    hoverInfo = currentHoverInfo;
-  };
-
-  let playerStickyFocusGuid: string | undefined = undefined;
-  let playerSelectingGuid: string | undefined = undefined;
-  let initialFocus = true;
-
-  // const filteredPlayerData = $derived.by(() => {
-  //   if (!mapState.playerCopsOnly && !mapState.playerCriminalOnly) return playerData;
-  //   return playerData.filter((p) => {
-  //     if (mapState.playerCopsOnly && hasPoliceRole(p.name)) return true;
-  //     if (mapState.playerCriminalOnly && hasCriminalRole(p.name)) return true;
-  //     return false;
-  //   });
-  // });
-
-  const setPlayerPoints = (data: PlayerData[]) => {
-    // Remove excess features from the end
-    while (playerFeaturesCollection.getLength() > data.length) {
-      playerFeaturesCollection.pop();
-    }
-
-    // Update existing and add new features
-    for (let i = 0; i < data.length; i++) {
-      const pd = data[i];
-      const role = hasPoliceRole(pd.name)
-        ? PlayerRoles.Police
-        : hasCriminalRole(pd.name)
-          ? PlayerRoles.Criminal
-          : 'none';
-      if (i < playerFeaturesCollection.getLength()) {
-        const feature = playerFeaturesCollection.item(i);
-        feature.getGeometry()?.setCoordinates(pd.geometry);
-        feature.set('info', pd);
-        feature.set('selected', pd.guid === playerSelectingGuid);
-        feature.set('role', role);
-      } else {
-        playerFeaturesCollection.push(
-          new Feature<Point>({
-            geometry: new Point(pd.geometry),
-            pointType: PointType.Player,
-            info: pd,
-            selected: pd.guid === playerSelectingGuid,
-            role,
-          }),
-        );
-      }
-    }
-
-    if (playerStickyFocusGuid) {
-      const initialPlayer = data.find((p) => p.guid === playerStickyFocusGuid);
-      if (initialPlayer) {
-        map.centerOn(
-          reProjectPoint([initialPlayer.coord.x, initialPlayer.coord.y]),
-          0,
-          initialFocus,
-        );
-        initialFocus = false;
-      }
-    }
-  };
-
-  $effect(() => {
-    setPlayerPoints(playerData);
-  });
-
-  const clearSelection = () => {
-    selectedPoint?.set('selected', false);
-    selectedPoint = undefined;
-    playerSelectingGuid = undefined;
-    playerStickyFocusGuid = undefined;
-    deliveryLineFeaturesCollection.clear();
-    lockPoint?.set('selected', false);
-    lockPoint = undefined;
-    const newParams = getSelectionClearedParams();
-    goto(`?${newParams.toString()}`);
-  };
-
-  let dontFocus = false;
-
-  const handleMapRightClick = () => {
-    clearSelection();
-
-    if (hoverPoint?.get('pointType') === PointType.Delivery) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('delivery', hoverPoint.get('info').guid ?? '');
-      dontFocus = true;
-      goto(`?${newParams.toString()}`, {
-        noScroll: true,
-        keepFocus: true,
-      });
-    }
-  };
-
-  const handleInfoClick = () => {
-    if (!hoverInfo) {
-      return;
-    }
-    if (hoverInfo.pointType === PointType.Delivery) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('delivery', hoverInfo.info.guid);
-      goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
-    } else if (hoverInfo.pointType === PointType.House) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('house', hoverInfo.info.name);
-      newParams.set('hf', hoverInfo.info.name);
-      goto(`/housing?${newParams.toString()}`);
-    }
-    hoverPoint?.set('hover', false);
-    hoverInfo = undefined;
-  };
-
-  const handlePointerMove = (e: MapBrowserEvent) => {
-    if (isMouse.current) {
-      handlePointerMoveOrClick(e);
-    } else {
-      hoverInfo = undefined;
-    }
-  };
-
-  const handleClick = (e: MapBrowserEvent) => {
-    clearSelection();
-
-    if (isMouse.current) {
-      e.map.forEachFeatureAtPixel(
-        e.pixel,
-        (feature) => {
-          const f = feature as Feature;
-          const type = f.get('pointType') as PointType | undefined;
-          if (type === PointType.Delivery) {
-            const info = f.get('info') as DeliveryPoint;
-            const newParams = getSelectionClearedParams();
-            newParams.set('menu', `deliveries/${info.guid}`);
-            newParams.set('delivery', info.guid);
-            goto(`/map?${newParams.toString()}`);
-            return true;
-          }
-          if (type === PointType.House) {
-            const newParams = getSelectionClearedParams();
-            newParams.set('menu', 'housing');
-            newParams.set('house', f.get('info').name);
-            newParams.set('hf', f.get('info').name);
-            goto(`/map?${newParams.toString()}`);
-            return true;
-          }
-          if (type === PointType.Teleport) {
-            handleCopyTeleport();
-            return true;
-          }
-
-          return true;
-        },
-        {
-          layerFilter: (layer) => {
-            return (
-              layer === deliveryPointLayer ||
-              layer === residentPointLayer ||
-              layer === houseLayer ||
-              layer === teleportLayer
-            );
-          },
-          hitTolerance: 10,
-        },
-      );
-      return;
-    }
-    handlePointerMoveOrClick(e);
-  };
-
-  $effect(() => {
-    onPlayerLayerDataEnabledChange?.(mapState.player);
-  });
-
-  const togglePlayerName = () => {
-    mapState.playerName = !mapState.playerName;
-    playerNameLayer.setVisible(mapState.player && mapState.playerName);
-  };
-
-  const togglePinLabels = () => {
-    mapState.pinLabels = !mapState.pinLabels;
-    pinLabelsLayer.setVisible(mapState.pins && mapState.pinLabels);
-  };
-
-  const toggleDeliveryLayer = () => {
-    mapState.delivery = !mapState.delivery;
-    for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer])
-      l.setVisible(mapState.delivery);
-  };
-
-  const enableDeliveryLayer = () => {
-    mapState.delivery = true;
-    for (const l of [deliveryPointLayer, residentPointLayer, deliveryLineLayer]) l.setVisible(true);
-  };
-
-  const toggleHouseLayer = () => {
-    mapState.house = !mapState.house;
-    houseLayer.setVisible(mapState.house);
-    if (!mapState.house) {
-      houseNameLayer.setVisible(false);
-    } else {
-      houseNameLayer.setVisible(mapState.houseLabels);
-    }
-  };
-
-  const enableHouseLayer = () => {
-    mapState.house = true;
-    houseLayer.setVisible(true);
-    houseNameLayer.setVisible(mapState.houseLabels);
-  };
-
-  const toggleHouseNameLayer = () => {
-    mapState.houseLabels = !mapState.houseLabels;
-    houseNameLayer.setVisible(mapState.house && mapState.houseLabels);
-  };
-
-  const togglePlayerLayer = () => {
-    mapState.player = !mapState.player;
-    playerPointLayer.setVisible(mapState.player);
-    if (!mapState.player) {
-      playerNameLayer.setVisible(false);
-    } else {
-      setPlayerPoints(playerData);
-      playerNameLayer.setVisible(mapState.playerName);
-    }
-  };
-
-  const enablePlayerLayer = () => {
-    mapState.player = true;
-    playerPointLayer.setVisible(true);
-    playerNameLayer.setVisible(mapState.playerName);
-  };
-
-  const togglePinsLayer = () => {
-    mapState.pins = !mapState.pins;
-    pinsLayer.setVisible(mapState.pins);
-    pinLabelsLayer.setVisible(mapState.pins && mapState.pinLabels);
-  };
-
-  const enablePinsLayer = () => {
-    mapState.pins = true;
-    pinsLayer.setVisible(true);
-    pinLabelsLayer.setVisible(mapState.pinLabels);
-  };
-
-  const toggleTeleportLayer = () => {
-    mapState.teleport = !mapState.teleport;
-    teleportLayer.setVisible(mapState.teleport);
-    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
-  };
-
-  const toggleTeleportLabels = () => {
-    mapState.teleportLabels = !mapState.teleportLabels;
-    teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
-  };
-
-  const toggleShortcutZoneLayer = () => {
-    mapState.shortcutZone = !mapState.shortcutZone;
-    shortcutZoneLayer.setVisible(mapState.shortcutZone);
-  };
-
-  const toggleShortcutZoneLabels = () => {
-    mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
-    shortcutZoneLayer.changed();
-  };
-
   const handlePoiToggle = (poi: PoiType) => {
     switch (poi) {
       case PoiType.Delivery:
-        toggleDeliveryLayer();
+        mapState.delivery = !mapState.delivery;
         break;
       case PoiType.JobsOnly:
         mapState.jobOnly = !mapState.jobOnly;
         break;
       case PoiType.House:
-        toggleHouseLayer();
+        mapState.house = !mapState.house;
         break;
       case PoiType.HouseLabels:
-        toggleHouseNameLayer();
+        mapState.houseLabels = !mapState.houseLabels;
         break;
       case PoiType.HouseVacantOnly:
         mapState.houseVacantOnly = !mapState.houseVacantOnly;
         break;
       case PoiType.Player:
-        togglePlayerLayer();
+        mapState.player = !mapState.player;
         break;
       case PoiType.PlayerName:
-        togglePlayerName();
-        break;
-      case PoiType.PlayerCopsOnly:
-        // mapState.playerCopsOnly = !mapState.playerCopsOnly;
-        break;
-      case PoiType.PlayerCriminalOnly:
-        // mapState.playerCriminalOnly = !mapState.playerCriminalOnly;
+        mapState.playerName = !mapState.playerName;
         break;
       case PoiType.Pins:
-        togglePinsLayer();
+        mapState.pins = !mapState.pins;
         break;
       case PoiType.PinLabels:
-        togglePinLabels();
+        mapState.pinLabels = !mapState.pinLabels;
         break;
       case PoiType.Teleport:
-        toggleTeleportLayer();
+        mapState.teleport = !mapState.teleport;
         break;
       case PoiType.TeleportLabels:
-        toggleTeleportLabels();
+        mapState.teleportLabels = !mapState.teleportLabels;
         break;
       case PoiType.ShortcutZone:
-        toggleShortcutZoneLayer();
+        mapState.shortcutZone = !mapState.shortcutZone;
         break;
       case PoiType.ShortcutZoneLabels:
-        toggleShortcutZoneLabels();
+        mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
     }
   };
 
-  export const centerOnPoint = (point: [number, number]) => {
-    map.centerOn(reProjectPoint(point));
-  };
-
-  let map: OlMap;
+  let map: OlMapWrapper;
   let mapRootEl: HTMLDivElement;
   let pipActive = $state(false);
   let pipWindowRef: Window | null = null;
@@ -1137,168 +443,13 @@
     };
   });
 
-  const handleSearchClick = (point: SearchPoint) => {
-    if (point.pointType === PointType.Pin) {
-      enablePinsLayer();
-    }
-    map.centerOn(reProjectPoint([point.coord.x, point.coord.y]));
+  const handleSearchClick = () => {
+    // TODO
   };
 
-  const { showModal } = getMsgModalContext();
-
-  let init = true;
-
-  let selectedHouse: string | undefined = undefined;
-  let selectedDelivery: string | undefined = undefined;
-
-  $effect(() => {
-    if (lockPoint !== selectedPoint) {
-      selectedPoint?.set('selected', false);
-      selectedPoint = undefined;
-    }
-    const oldPlayerSelectingGuid = playerSelectingGuid;
-    playerSelectingGuid = undefined;
-    playerStickyFocusGuid = undefined;
-    const cacheInit = init;
-    init = false;
-    const cacheDontFocus = dontFocus;
-    dontFocus = false;
-    const cachedSelectedHouse = selectedHouse;
-    const cachedSelectedDelivery = selectedDelivery;
-    selectedHouse = undefined;
-    selectedDelivery = undefined;
-
-    const housing = clientSearchParamsGet('house');
-    if (housing) {
-      untrack(() => {
-        enableHouseLayer();
-      });
-      const house = houseFeatures.find((h) => h.get('info').name === housing);
-      if (house) {
-        selectedPoint = house;
-        house.set('selected', true);
-        if (cachedSelectedHouse !== housing && !cacheDontFocus) {
-          const coord = house.getGeometry()?.getCoordinates();
-          if (coord) map.centerOn([coord[0], coord[1]], cacheInit ? 0 : undefined, cacheInit);
-        }
-      }
-      selectedHouse = housing;
-      return;
-    }
-
-    const deliveryGuid = clientSearchParamsGet('delivery');
-    if (deliveryGuid) {
-      const deliveryPoint =
-        deliveryPointFeatures.find((d) => d.get('info').guid === deliveryGuid) ??
-        residentPointFeatures.find((d) => d.get('info').guid === deliveryGuid);
-      if (deliveryPoint) {
-        untrack(() => {
-          enableDeliveryLayer();
-        });
-        lockPoint?.set('selected', false);
-        selectedPoint = deliveryPoint;
-        lockPoint = deliveryPoint;
-        deliveryPoint.set('selected', true);
-        deliveryLineFeaturesCollection.clear();
-        const deliveryPointInfo = deliveryPoint.get('info') as DeliveryPoint;
-        updateDeliveryLine(deliveryPointInfo);
-        if (cachedSelectedDelivery !== deliveryGuid && !cacheDontFocus) {
-          const coord = deliveryPoint.getGeometry()?.getCoordinates();
-          if (coord) map.centerOn([coord[0], coord[1]], cacheInit ? 0 : undefined, cacheInit);
-        }
-      }
-      selectedDelivery = deliveryGuid;
-      return;
-    }
-
-    const playerGuid = clientSearchParamsGet('player');
-    if (playerGuid) {
-      untrack(() => {
-        enablePlayerLayer();
-      });
-      playerSelectingGuid = playerGuid;
-      if (oldPlayerSelectingGuid !== playerGuid) {
-        playerStickyFocusGuid = playerGuid;
-        initialFocus = true;
-      }
-      return;
-    }
-
-    const pins = clientSearchParamsGet('pins');
-    if (pins) {
-      try {
-        const focusIndexParams = clientSearchParamsGet('focus_index');
-        const focusIndex = focusIndexParams ? +focusIndexParams : -1;
-        const pinsJson = pinsSchema.parse(JSON.parse(pins));
-        const data = pinsJson.map((p, i) => ({
-          ...p,
-          pointType: PointType.Pin,
-          label: p.label ?? m['map.pin_no']({ index: i + 1 }),
-        }));
-        pinsSource.addFeatures(
-          data.map(
-            (p: Pin, i) =>
-              new Feature({
-                geometry: new Point(reProjectPoint([p.x, p.y])),
-                label: p.label,
-                pointType: PointType.Pin,
-                selected: focusIndex === i,
-              }),
-          ),
-        );
-
-        if (focusIndex < data.length && focusIndex >= 0) {
-          const focusPin = data[focusIndex];
-          map.centerOn(reProjectPoint([focusPin.x, focusPin.y]), cacheInit ? 0 : undefined);
-        }
-        pinsData = data;
-      } catch (e) {
-        console.error('Invalid pins data:', e);
-        showModal({
-          title: m['map.pins_invalid.title'](),
-          message: m['map.pins_invalid.desc'](),
-        });
-      }
-    }
-  });
-
-  const handlePointerDrag = () => {
-    playerStickyFocusGuid = undefined;
+  const handleInfoClick = () => {
+    // TODO
   };
-
-  const handleOnMoveStart = () => {
-    hoverPoint?.set('hover', false);
-    hoverInfo = undefined;
-  };
-
-  $effect(() => {
-    for (const d of deliveryPointFeatures) {
-      const info = d.get('info') as DeliveryPoint;
-      const matchSourceJob = jobsData.some(getMatchJobSourceFn(info));
-      const matchDestJob = jobsData.some(getMatchJobDestFn(info));
-      d.set('jobs', matchSourceJob ? 1 : matchDestJob ? 2 : 0);
-    }
-  });
-
-  $effect(() => {
-    deliveryPointLayer.setStyle(getDeliveryPointStyle(mapState.jobOnly));
-    residentPointLayer.setStyle(getResidentPointStyle(mapState.jobOnly));
-  });
-
-  $effect(() => {
-    for (const f of houseFeatures) {
-      const info = f.get('info') as { name: string };
-      const ownerName = houseData?.[info.name]?.ownerName;
-      f.set('vacant', !ownerName ? 1 : 0);
-      f.set('label', ownerName ?? m['housing.vacant']());
-    }
-    houseNameLayer.changed();
-  });
-
-  $effect(() => {
-    houseLayer.setStyle(getHouseStyle(mapState.houseVacantOnly));
-    houseNameLayer.changed();
-  });
 </script>
 
 {#if pipActive}
@@ -1312,17 +463,19 @@
   </button>
 {/if}
 <div class="relative h-full w-full" bind:this={mapRootEl}>
-  <OlMap
-    {layers}
-    class="h-full w-full"
-    onPointerMove={handlePointerMove}
-    onClick={handleClick}
-    onRightClick={handleMapRightClick}
-    bind:this={map}
-    onPointerDrag={handlePointerDrag}
-    onMoveStart={handleOnMoveStart}
+  <OlMapWrapper
     {pipActive}
-    onEnterPip={enterPip}
+    {enterPip}
+    {mapState}
+    {jobsData}
+    {playerData}
+    {houseData}
+    {pinsData}
+    {teleportData}
+    {shortcutZoneData}
+    {deliveryLineData}
+    onHover={handleHover}
+    bind:this={map}
   />
   {#if !pipActive}
     <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
