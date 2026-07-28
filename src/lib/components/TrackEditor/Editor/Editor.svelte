@@ -1,3 +1,24 @@
+<script module lang="ts">
+  import * as z from 'zod/mini';
+  import { trackSchema } from '$lib/schema/track';
+
+  const VIEW_PARAM = 'view';
+  const VIEW_CODE = 'code';
+  const VIEW_MAP = 'map';
+
+  /**
+   * JSON Schema mirror of {@link trackSchema}, for the code view's completion and inline diagnostics
+   * — Monaco's json worker cannot take a zod schema. Not a second source of truth: it is derived,
+   * and `trackSchema.safeParse` remains the authority on saving, since the translated messages only
+   * exist there. It is stricter in one way — `additionalProperties` is `false` at every level, while
+   * zod silently strips unknown keys — so that key typos surface as you type.
+   *
+   * The round-trip through JSON drops zod's non-enumerable `~standard` property, which holds
+   * functions and cannot cross the worker's `postMessage` boundary.
+   */
+  const trackJsonSchema = JSON.parse(JSON.stringify(z.toJSONSchema(trackSchema))) as object;
+</script>
+
 <script lang="ts">
   import { m } from '$messages';
   import Card from '$lib/ui/Card/Card.svelte';
@@ -6,6 +27,7 @@
   import InputGroup from '$lib/ui/InputGroup/InputGroup.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
   import DownloadCard from './DownloadCard.svelte';
+  import CodeEditor from '$lib/ui/CodeEditor/CodeEditor.svelte';
   import { cloneDeep, isEqual } from 'es-toolkit';
   import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
   import { Quaternion } from 'quaternion';
@@ -16,8 +38,13 @@
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import type { Track, WaypointEuler } from '$lib/schema/track';
   import EditorOlMap from '$lib/ui/EditorOlMap/EditorOlMap.svelte';
-  import { onMount } from 'svelte';
+  import type { MapViewState } from '$lib/ui/OlMap/OlMap.svelte';
+  import { onMount, untrack } from 'svelte';
   import type { Vector2 } from '$lib/types';
+  import { beforeNavigate, goto } from '$app/navigation';
+  import { page } from '$app/state';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
   export interface EditorProps {
     /** The track data to be edited */
@@ -25,7 +52,10 @@
   }
   const { initialTrackData }: EditorProps = $props();
 
-  let map: EditorOlMap;
+  // Only one of the map and the code editor is mounted at a time, so this is unset in code view.
+  let map = $state<EditorOlMap | undefined>(undefined);
+  /** Where the map was looking when it unmounted, handed back so the view survives a view switch. */
+  let mapView = $state<MapViewState | undefined>(undefined);
 
   const { showModal } = getMsgModalContext();
 
@@ -55,17 +85,40 @@
     scale3D: { x: 0, y: 0, z: 0 },
   });
 
-  const handlePointClick = (index: number | undefined) => {
-    selectedPointIndex = index;
+  // Undefined until a point has been selected, and the zeroed buffer must not count as an edit.
+  const localDirty = $derived(
+    initialEditingPoint !== undefined && !isEqual(initialEditingPoint, editingPoint),
+  );
 
-    if (selectedPointIndex === undefined) {
+  /** Runs `proceed`, asking first when it would throw away uncommitted waypoint edits. */
+  const confirmDiscardPointEdits = (proceed: () => void) => {
+    if (!localDirty) {
+      proceed();
       return;
     }
-    initialEditingPoint = toEulerWp(trackData.waypoints[selectedPointIndex]);
-    editingPoint = toEulerWp(trackData.waypoints[selectedPointIndex]);
+    showModal({
+      title: m['track_editor.editor.discard_point_changes.title'](),
+      message: m['track_editor.editor.discard_point_changes.desc'](),
+      confirmText: m['track_editor.editor.discard_point_changes.confirm'](),
+      cancelText: m['action.cancel'](),
+      confirmAction: proceed,
+    });
   };
 
-  let localDirty = $derived(!isEqual(initialEditingPoint, editingPoint));
+  const selectPoint = (index: number | undefined) => {
+    selectedPointIndex = index;
+
+    if (index === undefined) {
+      initialEditingPoint = undefined;
+      return;
+    }
+    initialEditingPoint = toEulerWp(trackData.waypoints[index]);
+    editingPoint = toEulerWp(trackData.waypoints[index]);
+  };
+
+  const handlePointClick = (index: number | undefined) => {
+    confirmDiscardPointEdits(() => selectPoint(index));
+  };
 
   const handleSaveChanges = () => {
     if (selectedPointIndex !== undefined) {
@@ -98,7 +151,7 @@
       cancelText: m['action.cancel'](),
       confirmAction: () => {
         trackData.waypoints = normalizedWaypoints(trackData.waypoints);
-        map.zoomFit();
+        map?.zoomFit();
       },
     });
   };
@@ -111,7 +164,7 @@
       cancelText: m['action.cancel'](),
       confirmAction: () => {
         trackData.waypoints = autoRotateAllWaypoints(trackData.waypoints);
-        map.zoomFit();
+        map?.zoomFit();
       },
     });
   };
@@ -125,7 +178,7 @@
       confirmAction: () => {
         if (selectedPointIndex !== undefined) {
           trackData.waypoints.splice(selectedPointIndex, 1);
-          selectedPointIndex = undefined;
+          selectPoint(undefined);
         }
       },
     });
@@ -139,8 +192,148 @@
     }
   };
 
+  // The view is a query param written with replaceState, so switching never grows the history stack.
+  const codeView = $derived(clientSearchParamsGet(VIEW_PARAM) === VIEW_CODE);
+
+  const setView = (view: string) => {
+    const params = new SvelteURLSearchParams(clientSearchParams());
+    params.set(VIEW_PARAM, view);
+    void goto(`?${params.toString()}`, { replaceState: true, noScroll: true });
+  };
+
+  /** The code view's own buffer, committed to `trackData` only on save. */
+  let codeText = $state('');
+  /** What `codeText` was seeded from, so the buffer knows whether it holds unsaved edits. */
+  let codeSeed = $state('');
+  const codeDirty = $derived(codeText !== codeSeed);
+
+  const codeParsed = $derived.by(() => {
+    try {
+      return { ok: true as const, value: JSON.parse(codeText) as unknown };
+    } catch {
+      return { ok: false as const };
+    }
+  });
+
+  const codeValidated = $derived(
+    codeParsed.ok ? trackSchema.safeParse(codeParsed.value) : undefined,
+  );
+
+  const codeErrors = $derived.by(() => {
+    if (!codeValidated) {
+      return [m['track_editor.code_editor.invalid_json']()];
+    }
+    return codeValidated.success ? [] : codeValidated.error.issues.map((issue) => issue.message);
+  });
+
+  const seedCodeBuffer = () => {
+    codeSeed = JSON.stringify(trackData, null, 2);
+    codeText = codeSeed;
+  };
+
+  const handleEnterCodeView = () => {
+    confirmDiscardPointEdits(() => {
+      seedCodeBuffer();
+      mapView = map?.getViewState();
+      setView(VIEW_CODE);
+    });
+  };
+
+  const handleLeaveCodeView = () => {
+    if (!codeDirty) {
+      setView(VIEW_MAP);
+      return;
+    }
+    showModal({
+      title: m['track_editor.code_editor.discard.title'](),
+      message: m['track_editor.code_editor.discard.desc'](),
+      confirmText: m['track_editor.code_editor.discard.confirm'](),
+      cancelText: m['action.cancel'](),
+      confirmAction: () => {
+        codeText = codeSeed;
+        setView(VIEW_MAP);
+      },
+    });
+  };
+
+  const handleCodeSave = () => {
+    if (!codeValidated?.success) {
+      return;
+    }
+    trackData = codeValidated.data;
+    // Waypoints can be added or removed wholesale, which invalidates the editing buffer.
+    selectPoint(undefined);
+    codeSeed = codeText;
+    // The saved viewport can no longer be meaningful, so the map refits when it comes back.
+    mapView = undefined;
+  };
+
+  // The track only lives in memory, so leaving drops every edit that has not been downloaded.
+  const unsaved = $derived(dirty || localDirty || codeDirty);
+
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    if (unsaved) {
+      event.preventDefault();
+    }
+  };
+
+  let navigationConfirmed = false;
+
+  beforeNavigate((navigation) => {
+    // Full page loads (external links, tab close) are covered by handleBeforeUnload instead.
+    if (navigation.willUnload) {
+      return;
+    }
+    if (navigationConfirmed) {
+      navigationConfirmed = false;
+      return;
+    }
+
+    const destination = navigation.to?.url;
+    if (!destination) {
+      return;
+    }
+    // Switching view only rewrites the query string; it leaves nothing behind to guard.
+    if (destination.pathname === page.url.pathname) {
+      return;
+    }
+    if (!unsaved) {
+      return;
+    }
+    navigation.cancel();
+    showModal({
+      title: m['track_editor.leave_guard.title'](),
+      message: m['track_editor.leave_guard.desc'](),
+      confirmText: m['track_editor.leave_guard.confirm'](),
+      cancelText: m['action.cancel'](),
+      confirmAction: () => {
+        navigationConfirmed = true;
+        // Replaying a confirmed Back with goto pushes rather than pops. Accepted: it lands on the
+        // right page, and reading the delta back is not worth the history bookkeeping.
+        void goto(destination);
+      },
+    });
+  });
+
+  // Runs on every map mount, not just the first — the map unmounts whenever code view takes over.
+  $effect(() => {
+    const mountedMap = map;
+    if (!mountedMap) {
+      return;
+    }
+    untrack(() => {
+      // A remount that restored a saved viewport is already where the user left it.
+      if (!mapView) {
+        mountedMap.zoomFit();
+      }
+    });
+  });
+
   onMount(() => {
-    map.zoomFit();
+    // `/track` forwards its query string on, so the page can be entered straight into code view.
+    if (codeView) {
+      seedCodeBuffer();
+    }
   });
 
   let gateMode = $state(false);
@@ -150,32 +343,67 @@
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 p-4 md:flex-row">
-  <Card class="relative flex-1 overflow-hidden p-0">
-    <EditorOlMap
-      class="h-full"
-      {points}
-      onPointClick={handlePointClick}
-      {selectedPoint}
-      bind:this={map}
-      onSelectedPointMove={handlePointMove}
-      {gateMode}
-      {showNum}
-    />
-    <div class="absolute bottom-4 left-4 flex gap-2">
-      <Button size="sm" onClick={() => map.zoomFit()} class={mapBtnClass}>
-        {m['track_editor.editor.recenter']()}
-      </Button>
-      <Button size="sm" onClick={() => (gateMode = !gateMode)} class={mapBtnClass}>
-        {gateMode ? m['track_editor.editor.hide_width']() : m['track_editor.editor.show_width']()}
-      </Button>
-      <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
-        {showNum ? m['track_editor.editor.hide_number']() : m['track_editor.editor.show_number']()}
-      </Button>
-    </div>
+  <Card class="relative flex flex-1 flex-col overflow-hidden p-0">
+    {#if codeView}
+      <CodeEditor
+        class="min-h-0 flex-1"
+        value={codeText}
+        onChange={(next) => {
+          codeText = next;
+        }}
+        schema={trackJsonSchema}
+      />
+      {#if codeErrors.length}
+        <div
+          class="text-danger-700 dark:text-danger-500 bg-danger-700/10 max-h-40 shrink-0 overflow-y-auto px-4 py-3 text-sm"
+        >
+          <div class="font-medium">{m['track_editor.code_editor.errors_title']()}</div>
+          <ul class="list-inside list-disc">
+            {#each codeErrors as error, index (index)}
+              <li>{error}</li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+    {:else}
+      <EditorOlMap
+        class="h-full"
+        {points}
+        onPointClick={handlePointClick}
+        {selectedPoint}
+        bind:this={map}
+        onSelectedPointMove={handlePointMove}
+        {gateMode}
+        {showNum}
+        initialView={mapView}
+      />
+      <div class="absolute bottom-4 left-4 flex gap-2">
+        <Button size="sm" onClick={() => map?.zoomFit()} class={mapBtnClass}>
+          {m['track_editor.editor.recenter']()}
+        </Button>
+        <Button size="sm" onClick={() => (gateMode = !gateMode)} class={mapBtnClass}>
+          {gateMode ? m['track_editor.editor.hide_width']() : m['track_editor.editor.show_width']()}
+        </Button>
+        <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
+          {showNum
+            ? m['track_editor.editor.hide_number']()
+            : m['track_editor.editor.show_number']()}
+        </Button>
+      </div>
+    {/if}
   </Card>
   <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">
-      {#if selectedPointIndex !== undefined}
+      {#if codeView}
+        <div class="text-text-600 dark:text-text-400 font-medium">
+          {m['track_editor.code_editor.editing']()}
+        </div>
+        <div class="flex flex-col gap-2">
+          <Button disabled={!codeDirty || !codeValidated?.success} onClick={handleCodeSave}>
+            {m['track_editor.editor.save_changes']()}
+          </Button>
+        </div>
+      {:else if selectedPointIndex !== undefined}
         <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
           <div class="font-medium whitespace-nowrap">
             {m['track_editor.editor.selected_point']({
@@ -190,8 +418,8 @@
             class="-mr-1.5"
           >
             {showHidden
-              ? m['track_editor.editor.hide_more']()
-              : m['track_editor.editor.show_more']()}
+              ? m['track_editor.editor.fewer_settings']()
+              : m['track_editor.editor.more_settings']()}
           </Button>
         </div>
         <div class="flex flex-col gap-2">
@@ -389,8 +617,31 @@
           >
         </div>
       {/if}
+      <Divider vertical spacing={false} class="md:hidden" />
+      <Divider spacing={false} class="hidden md:block" />
+      <div class="flex flex-col gap-2">
+        <div class="font-medium">
+          {m['track_editor.editor.view']()}
+        </div>
+        {#if codeView}
+          <Button onClick={handleLeaveCodeView}
+            >{m['track_editor.editor.switch_to_map_view']()}</Button
+          >
+        {:else if selectedPointIndex !== undefined}
+          <!-- Code view seeds from the track, so deselecting first keeps the buffer honest. -->
+          <Button onClick={() => handlePointClick(undefined)}
+            >{m['track_editor.editor.unselect']()}</Button
+          >
+        {:else}
+          <Button onClick={handleEnterCodeView}
+            >{m['track_editor.editor.switch_to_code_view']()}</Button
+          >
+        {/if}
+      </div>
     </Card>
 
     <DownloadCard edited={dirty} {initialTrackData} {trackData} />
   </div>
 </div>
+
+<svelte:window onbeforeunload={handleBeforeUnload} />

@@ -6,7 +6,6 @@ declare global {
     // interface Locals {}
     // interface PageData {}
     interface PageState {
-      msgModal?: boolean;
       navbarMenuOpen?: boolean;
       settingMenuOpen?: boolean;
     }

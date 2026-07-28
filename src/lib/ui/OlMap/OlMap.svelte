@@ -15,11 +15,17 @@
   import { defaultTransitionDurationMs } from '$lib/tw-var';
   import { prefersReducedMotion } from 'svelte/motion';
   import type { SimpleGeometry } from 'ol/geom';
+  import type { Coordinate } from 'ol/coordinate';
   import Button from '../Button/Button.svelte';
   import Icon from '../Icon/Icon.svelte';
   import { isSm } from '$lib/utils/media.svelte';
 
   let map: Map;
+
+  export interface MapViewState {
+    center: Coordinate;
+    zoom: number;
+  }
 
   export interface OlMapProps {
     /**
@@ -62,6 +68,11 @@
      * Whether to disable the picture-in-picture button
      */
     disablePip?: boolean;
+    /**
+     * Centre and zoom to open at, e.g. one captured with `getViewState` before an unmount.
+     * Defaults to the whole map.
+     */
+    initialView?: MapViewState;
   }
 
   let target: HTMLDivElement;
@@ -76,6 +87,7 @@
     pipActive,
     onEnterPip,
     disablePip,
+    initialView,
   }: OlMapProps = $props();
 
   const pipSupported = $derived(
@@ -115,8 +127,8 @@
       target: target,
       view: new View({
         projection: projection,
-        center: getCenter(projection.getExtent()),
-        zoom: 1,
+        center: initialView?.center ?? getCenter(projection.getExtent()),
+        zoom: initialView?.zoom ?? 1,
         maxZoom: 8,
         extent: [
           0 - MAP_REAL_SIZE,
@@ -194,6 +206,17 @@
   };
 
   export const getMap = () => map;
+
+  /** Snapshot of where the map is looking, to hand back as `initialView` after a remount. */
+  export const getViewState = (): MapViewState | undefined => {
+    const view = map.getView();
+    const center = view.getCenter();
+    const zoom = view.getZoom();
+    if (!center || zoom === undefined) {
+      return undefined;
+    }
+    return { center, zoom };
+  };
 
   $effect(() => {
     map.setLayers(allLayers);

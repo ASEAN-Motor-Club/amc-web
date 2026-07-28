@@ -79,6 +79,7 @@
     "gsap": "3.15.0",
     "lottie-web": "5.13.0",
     "marked": "18.0.6",
+    "monaco-editor": "0.54.0",
     "ol": "10.9.0",
     "pakop": "workspace:*",
     "quaternion": "2.2.0",

@@ -75,8 +75,8 @@
       "clipboard": "Papan Klip",
       "file": "File",
       "selected_point": "Titik terpilih: {pointNumber}",
-      "hide_more": "sembunyikan lainnya",
-      "show_more": "tampilkan lainnya",
+      "fewer_settings": "lebih sedikit pengaturan",
+      "more_settings": "lebih banyak pengaturan",
       "save_changes": "Simpan Perubahan",
       "delete": "Hapus",
       "auto_rotate": "putar otomatis",
@@ -97,7 +97,31 @@
       "hide_width": "Sembunyikan Lebar",
       "show_number": "Tampilkan Nomor",
       "hide_number": "Sembunyikan Nomor",
-      "recenter": "Pusatkan Ulang"
+      "recenter": "Pusatkan Ulang",
+      "view": "Tampilan",
+      "switch_to_code_view": "Beralih ke Tampilan Kode",
+      "switch_to_map_view": "Beralih ke Tampilan Peta",
+      "unselect": "Batalkan Pilihan Titik",
+      "discard_point_changes": {
+        "title": "Buang Perubahan",
+        "desc": "Anda memiliki perubahan pada titik ini yang belum disimpan. Yakin ingin membuangnya?",
+        "confirm": "Buang"
+      }
+    },
+    "code_editor": {
+      "editing": "Mengedit JSON lintasan",
+      "invalid_json": "Sintaks JSON tidak valid.",
+      "errors_title": "Tidak dapat menyimpan:",
+      "discard": {
+        "title": "Buang Perubahan",
+        "desc": "Anda memiliki perubahan yang belum disimpan di editor kode. Yakin ingin membuangnya?",
+        "confirm": "Buang"
+      }
+    },
+    "leave_guard": {
+      "title": "Perubahan Belum Disimpan",
+      "desc": "Lintasan Anda memiliki perubahan yang belum diunduh. Perubahan akan hilang jika Anda meninggalkan halaman ini.",
+      "confirm": "Tinggalkan"
     }
   },
   "navbar": {

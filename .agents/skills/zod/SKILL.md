@@ -15,5 +15,6 @@ import * as z from 'zod/mini';
 - zod/mini uses the functional API: `z.optional(...)`, `.check(z.minLength(1, '...'))` instead of chained `.optional()` / `.min()`.
 - User-facing validation errors must be i18n-aware: pass per-field `{ error: … }` callbacks that produce translated messages via `m['…']()` from `$messages` — see the `createWaypointError` factory in `src/lib/schema/track.ts`.
 - Derive types from schemas with `z.infer<typeof schema>`; the codebase distinguishes `Loose*` (inferred, optionals) from `Required<…>` normalized types (see `pin.ts`).
+- `z.toJSONSchema(schema)` turns a schema into editor tooling metadata (see `TrackEditor/Editor/Editor.svelte`). It drops the i18n `error` callbacks and emits `additionalProperties: false` — read [[monaco-code-editor]] before relying on it.
 
-Related: [[codebase-patterns]], [[path-aliases]]
+Related: [[codebase-patterns]], [[path-aliases]], [[monaco-code-editor]]

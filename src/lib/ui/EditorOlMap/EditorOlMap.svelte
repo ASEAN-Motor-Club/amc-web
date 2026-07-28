@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Vector2 } from '$lib/types';
   import type { ClassValue } from 'svelte/elements';
-  import OlMap from '../OlMap/OlMap.svelte';
+  import OlMap, { type MapViewState } from '../OlMap/OlMap.svelte';
   import VectorSource from 'ol/source/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import { Feature } from 'ol';
@@ -69,6 +69,10 @@
      * Callback fired when a point is moved/dragged in draggable group
      */
     onSelectedPointMove?: (newCoord: Vector2) => void;
+    /*
+     * Centre and zoom to open at, e.g. one captured with `getViewState` before an unmount
+     */
+    initialView?: MapViewState;
   }
 
   const {
@@ -79,6 +83,7 @@
     selectedPoint,
     gateMode = false,
     showNum = false,
+    initialView,
   }: EditorOlMapProps = $props();
 
   const trackPointFeaturesCollection = new Collection<Feature>();
@@ -407,6 +412,8 @@
     );
   };
 
+  export const getViewState = () => map.getViewState();
+
   export const zoomFit = () => {
     if (points.length) {
       const source = gateMode ? gateSource : trackPointSource;
@@ -463,5 +470,6 @@
   onClick={handleMapClick}
   onPointerMove={handlePointerMove}
   bind:this={map}
+  {initialView}
   disablePip
 ></OlMap>

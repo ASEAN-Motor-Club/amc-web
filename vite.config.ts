@@ -30,6 +30,14 @@ export default defineConfig(({ mode }) => {
       webmanifestPlugin(),
     ],
     build: {},
+    // Monaco's worker bootstrap expects module workers; Vite still defaults to 'iife'.
+    worker: {
+      format: 'es',
+    },
+    // Monaco ships ~1000 modules and 101 stylesheets; prebundling it fights the lazy chunk.
+    optimizeDeps: {
+      exclude: ['monaco-editor'],
+    },
     server: {
       fs: {
         allow: ['wasm'],

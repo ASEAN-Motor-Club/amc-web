@@ -75,8 +75,8 @@
       "clipboard": "Clipboard",
       "file": "File",
       "selected_point": "Selected point: {pointNumber}",
-      "hide_more": "hide others",
-      "show_more": "show others",
+      "fewer_settings": "fewer settings",
+      "more_settings": "more settings",
       "save_changes": "Save Changes",
       "delete": "Delete",
       "auto_rotate": "auto rotate",
@@ -97,7 +97,31 @@
       "hide_width": "Hide Width",
       "recenter": "Recenter",
       "show_number": "Show Number",
-      "hide_number": "Hide Number"
+      "hide_number": "Hide Number",
+      "view": "View",
+      "switch_to_code_view": "Switch to Code View",
+      "switch_to_map_view": "Switch to Map View",
+      "unselect": "Unselect Waypoint",
+      "discard_point_changes": {
+        "title": "Discard Changes",
+        "desc": "You have unsaved changes to this waypoint. Are you sure you want to discard them?",
+        "confirm": "Discard"
+      }
+    },
+    "code_editor": {
+      "editing": "Editing track JSON",
+      "invalid_json": "Invalid JSON syntax.",
+      "errors_title": "Cannot save:",
+      "discard": {
+        "title": "Discard Changes",
+        "desc": "You have unsaved changes in the code editor. Are you sure you want to discard them?",
+        "confirm": "Discard"
+      }
+    },
+    "leave_guard": {
+      "title": "Unsaved Changes",
+      "desc": "Your track has changes that have not been downloaded. They will be lost if you leave this page.",
+      "confirm": "Leave"
     }
   },
   "navbar": {
