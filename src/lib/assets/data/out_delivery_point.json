@@ -1,5 +1,485 @@
 [
   {
+    "type": "BurgerCounter_C",
+    "name": {
+      "en": "BurgerJoint Jeju",
+      "ja": "BurgerJoint チェジュ",
+      "ko": "BurgerJoint 제주",
+      "ru": "BurgerJoint Чеджу",
+      "uk": "BurgerJoint Чеджу",
+      "zh-Hans": "BurgerJoint 济州",
+      "zh-Hant": "BurgerJoint 濟州"
+    },
+    "coord": {
+      "x": -27018.621,
+      "y": -116946.43,
+      "z": -20625
+    },
+    "guid": "f07e7c4c4d231a07da4777beaa95ac32",
+    "prod": [
+      {
+        "input": {
+          "MeatBox": 1,
+          "CheeseBox": 1
+        },
+        "output": {
+          "Burger_01_Signature": 10
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "MeatBox": 30,
+      "CheeseBox": 30
+    },
+    "supplyStorage": {
+      "Burger_01_Signature": 30
+    },
+    "dropPoint": ["1de94ef442b4b0b3d9cc548396d67287"]
+  },
+  {
+    "type": "BurgerCounter_C",
+    "name": {
+      "en": "BurgerJoint Seoguipo"
+    },
+    "coord": {
+      "x": -8080.0796,
+      "y": 129306.51,
+      "z": -20018.164
+    },
+    "guid": "b74b72d14540cbf23d17468dab5f7e37",
+    "prod": [
+      {
+        "input": {
+          "MeatBox": 1,
+          "CheeseBox": 1
+        },
+        "output": {
+          "Burger_01_Signature": 10
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "MeatBox": 30,
+      "CheeseBox": 30
+    },
+    "supplyStorage": {
+      "Burger_01_Signature": 30
+    },
+    "dropPoint": ["e77cab32401e868b93379d9b16774f9f"]
+  },
+  {
+    "type": "CoalWarehouse_C",
+    "name": {
+      "en": "Gwangjin Coal Storage",
+      "cs": "Gwangjin Uhlí Storage",
+      "de": "Gwangjin Kohle Storage",
+      "es-419": "Gwangjin Carbón Storage",
+      "es-ES": "Gwangjin Carbón Storage",
+      "fi": "Gwangjin Hiili Storage",
+      "fr": "Gwangjin Charbon Storage",
+      "hu": "Gwangjin Szén Storage",
+      "it": "Gwangjin Carbone Storage",
+      "ja": "クァンジン 石炭 Storage",
+      "ko": "광진 석탄 Storage",
+      "lt": "Gwangjin Anglis Storage",
+      "nl": "Gwangjin Kolen Storage",
+      "pl": "Gwangjin Węgiel Storage",
+      "pt-BR": "Gwangjin Carvão Storage",
+      "ru": "Gwangjin Каменный уголь Storage",
+      "sv": "Gwangjin Kol Storage",
+      "tr": "Gwangjin Kömür Storage",
+      "uk": "Гванджін Вугілля Storage",
+      "zh-Hans": "广津 煤炭 Storage",
+      "zh-Hant": "廣津 煤炭 Storage"
+    },
+    "coord": {
+      "x": 244750.61,
+      "y": 631313,
+      "z": -11688.383
+    },
+    "guid": "f67670984b837e48bd80638c9802a1a9",
+    "prod": [
+      {
+        "input": {
+          "Coal": 1
+        },
+        "output": {
+          "Coal": 1
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Coal": 200
+    },
+    "supplyStorage": {
+      "Coal": 200
+    },
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory Coil Drop"
+    },
+    "coord": {
+      "x": -308758.3,
+      "y": 120368.734,
+      "z": -21245
+    },
+    "guid": "685ae04c42bf567c31d4de860d8e1fae",
+    "demand": {
+      "SteelCoil_10t": 1
+    },
+    "demandStorage": {
+      "SteelCoil_10t": 60
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory Beam Drop"
+    },
+    "coord": {
+      "x": -307507.28,
+      "y": 121244.71,
+      "z": -21245
+    },
+    "guid": "8b633ee445aace12d31ea3b1f6092571",
+    "demand": {
+      "lHBeam_6m": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 20
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Tank Factory Plastic Drop",
+      "cs": "Tank Factory Plasty Drop",
+      "de": "Tank Factory Kunststoff Drop",
+      "es-419": "Tank Factory Plástico Drop",
+      "es-ES": "Tank Factory Plástico Drop",
+      "fr": "Tank Factory Plastique Drop",
+      "hu": "Tank Factory Műanyag Drop",
+      "it": "Tank Factory Plastica Drop",
+      "ja": "Tank Factory プラスチック Drop",
+      "nl": "Tank Factory Kunststof Drop",
+      "pl": "Tank Factory Plastik Drop",
+      "pt-BR": "Tank Factory Plástico Drop",
+      "ru": "Tank Factory Пластик Drop",
+      "tr": "Tank Factory Plastik Drop",
+      "uk": "Tank Factory пластик Drop",
+      "zh-Hans": "Tank Factory 塑料 Drop",
+      "zh-Hant": "Tank Factory 塑膠 Drop"
+    },
+    "coord": {
+      "x": -304222.12,
+      "y": 118488.37,
+      "z": -21245
+    },
+    "guid": "366e02564dd09ecbac307e9945bc778b",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 20
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 20MVA Outside Drop"
+    },
+    "coord": {
+      "x": -318942.9,
+      "y": 1132639.9,
+      "z": -16395
+    },
+    "guid": "d0104ed646abaf502b12088cfa13dc80",
+    "demand": {
+      "lHBeam_6m": 1,
+      "SteelCoil_10t": 1,
+      "CopperRodCoil_2t": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA Outside Drop"
+    },
+    "coord": {
+      "x": -318474.38,
+      "y": 1132639.9,
+      "z": -16395
+    },
+    "guid": "879ede514946555f47f3b8bc8a1f9bdc",
+    "demand": {
+      "lHBeam_6m": 1,
+      "SteelCoil_10t": 1,
+      "CopperRodCoil_2t": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 20MVA Door Drop"
+    },
+    "coord": {
+      "x": -319001.4,
+      "y": 1136772.2,
+      "z": -16375.047
+    },
+    "guid": "4f4eb95748943fb26e5294b82369775b",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA Door Drop"
+    },
+    "coord": {
+      "x": -318597.94,
+      "y": 1136772.2,
+      "z": -16375.047
+    },
+    "guid": "fe6854144af31733f31ce9814d22e51e",
+    "demand": {
+      "PlasticPallete": 1,
+      "CircuitBoardPallet": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 30,
+      "CircuitBoardPallet": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Copper Refinery Drop"
+    },
+    "coord": {
+      "x": 430900.94,
+      "y": 1220442.6,
+      "z": -19439.416
+    },
+    "guid": "364f83784b99394690b7259d8834d4bc",
+    "demand": {
+      "CopperConcentrate": 1
+    },
+    "demandStorage": {
+      "CopperConcentrate": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Terra Factory H-Beam Drop",
+      "cs": "Terra Factory Nosník Drop",
+      "de": "Terra Factory H-Träger Drop",
+      "es-419": "Terra Factory Viga en H Drop",
+      "es-ES": "Terra Factory Viga en H Drop",
+      "fi": "Terra Factory H-palkki Drop",
+      "fr": "Terra Factory Poutre en H Drop",
+      "hu": "Terra Factory H-gerenda Drop",
+      "it": "Terra Factory Travi ad H Drop",
+      "ja": "テラ Factory H形鋼 Drop",
+      "lt": "Terra Factory Sijos Drop",
+      "nl": "Terra Factory H-balk Drop",
+      "pl": "Terra Factory Belka H Drop",
+      "pt-BR": "Terra Factory Viga H Drop",
+      "ru": "Terra Factory Двутавровые балки Drop",
+      "tr": "Terra Factory H-Kiriş Drop",
+      "uk": "Терра Factory Двотаврова балка Drop",
+      "zh-Hans": "泰拉 Factory H型钢 Drop",
+      "zh-Hant": "Terra Factory H 型鋼 Drop"
+    },
+    "coord": {
+      "x": -309501.1,
+      "y": 1570755.8,
+      "z": -19100
+    },
+    "guid": "42db5c674ebe486f4e2632bc303983b9",
+    "demand": {
+      "lHBeam_6m": 1
+    },
+    "demandStorage": {
+      "lHBeam_6m": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Terra Factory Steel Coil Drop",
+      "cs": "Terra Factory Ocelová cívka Drop",
+      "de": "Terra Factory Stahlspule Drop",
+      "es-419": "Terra Factory Bobina de Acero Drop",
+      "es-ES": "Terra Factory Bobina de acero Drop",
+      "fr": "Terra Factory Bobine d'acier Drop",
+      "hu": "Terra Factory Acéltekercs Drop",
+      "it": "Terra Factory Bobina di acciaio Drop",
+      "ja": "テラ Factory スチールコイル Drop",
+      "nl": "Terra Factory Stalen spoel Drop",
+      "pl": "Terra Factory Zwój stali Drop",
+      "pt-BR": "Terra Factory Bobina de Aço Drop",
+      "ru": "Terra Factory Стальная катушка Drop",
+      "tr": "Terra Factory Çelik Bobin Drop",
+      "uk": "Терра Factory Сталева котушка Drop",
+      "zh-Hans": "泰拉 Factory 钢卷 Drop",
+      "zh-Hant": "Terra Factory 鋼捲 Drop"
+    },
+    "coord": {
+      "x": -306595.34,
+      "y": 1572738.4,
+      "z": -19100
+    },
+    "guid": "3465bd58475a38706f009da36b55ec8e",
+    "demand": {
+      "SteelCoil_10t": 1
+    },
+    "demandStorage": {
+      "SteelCoil_10t": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Terra Factory Oil Drop",
+      "cs": "Terra Factory Olej Drop",
+      "de": "Terra Factory Öl Drop",
+      "es-419": "Terra Factory Petróleo Drop",
+      "es-ES": "Terra Factory Petróleo Drop",
+      "fi": "Terra Factory Öljy Drop",
+      "fr": "Terra Factory Pétrole Drop",
+      "hu": "Terra Factory Olaj Drop",
+      "it": "Terra Factory Olio Drop",
+      "ja": "テラ Factory 石油 Drop",
+      "lt": "Terra Factory Aliejus Drop",
+      "nl": "Terra Factory Olie Drop",
+      "pl": "Terra Factory Olej Drop",
+      "pt-BR": "Terra Factory Combustível Drop",
+      "ru": "Terra Factory Масло Drop",
+      "sv": "Terra Factory Olja Drop",
+      "tr": "Terra Factory Yağ Drop",
+      "uk": "Терра Factory Нафта Drop",
+      "zh-Hans": "泰拉 Factory 石油 Drop",
+      "zh-Hant": "Terra Factory 油料 Drop"
+    },
+    "coord": {
+      "x": -315320.22,
+      "y": 1570932.1,
+      "z": -19100
+    },
+    "guid": "0fbac1084a0209fdb770e7bad3e9d86c",
+    "demand": {
+      "Oil": 1,
+      "Fuel": 1
+    },
+    "demandStorage": {
+      "Oil": 30,
+      "Fuel": 20
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Terra Factory Plastic Drop",
+      "cs": "Terra Factory Plasty Drop",
+      "de": "Terra Factory Kunststoff Drop",
+      "es-419": "Terra Factory Plástico Drop",
+      "es-ES": "Terra Factory Plástico Drop",
+      "fr": "Terra Factory Plastique Drop",
+      "hu": "Terra Factory Műanyag Drop",
+      "it": "Terra Factory Plastica Drop",
+      "ja": "テラ Factory プラスチック Drop",
+      "nl": "Terra Factory Kunststof Drop",
+      "pl": "Terra Factory Plastik Drop",
+      "pt-BR": "Terra Factory Plástico Drop",
+      "ru": "Terra Factory Пластик Drop",
+      "tr": "Terra Factory Plastik Drop",
+      "uk": "Терра Factory пластик Drop",
+      "zh-Hans": "泰拉 Factory 塑料 Drop",
+      "zh-Hant": "Terra Factory 塑膠 Drop"
+    },
+    "coord": {
+      "x": -309643.75,
+      "y": 1580806.4,
+      "z": -19100
+    },
+    "guid": "878022e64aff51c3b25fc0913c92cece",
+    "demand": {
+      "PlasticPallete": 1
+    },
+    "demandStorage": {
+      "PlasticPallete": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "ComonDrop_C",
+    "name": {
+      "en": "Terra Factory Container Drop",
+      "cs": "Terra Factory Kontejner Drop",
+      "es-419": "Terra Factory Contenedor Drop",
+      "es-ES": "Terra Factory Contenedor Drop",
+      "fr": "Terra Factory Conteneur Drop",
+      "hu": "Terra Factory Konténer Drop",
+      "ja": "テラ Factory コンテナ Drop",
+      "pl": "Terra Factory Kontener Drop",
+      "pt-BR": "Terra Factory Recipiente Drop",
+      "ru": "Terra Factory Контейнер Drop",
+      "tr": "Terra Factory Konteyner Drop",
+      "uk": "Терра Factory Контейнер Drop",
+      "zh-Hans": "泰拉 Factory 集装箱 Drop",
+      "zh-Hant": "Terra Factory 貨櫃 Drop"
+    },
+    "coord": {
+      "x": -309209.25,
+      "y": 1576717.8,
+      "z": -19100
+    },
+    "guid": "52030bbd4619c71ac0d39599bde6c5a8",
+    "demand": {
+      "Container_20ft_01": 1
+    },
+    "demandStorage": {
+      "Container_20ft_01": 10
+    },
+    "supplyStorage": {}
+  },
+  {
     "type": "ConstructionSite_C",
     "name": {
       "en": "Jeju Construction Site",
@@ -1042,104 +1522,6 @@
     }
   },
   {
-    "type": "Factory_Cheese_MilkDrop_C",
-    "name": {
-      "en": "Daily Cheese Inc. Milk Drop",
-      "cs": "Daily Cheese Inc. Mléko Drop",
-      "de": "Daily Cheese Inc. Milch Drop",
-      "es-419": "Daily Cheese Inc. Leche Drop",
-      "es-ES": "Daily Cheese Inc. Leche Drop",
-      "fi": "Daily Cheese Inc. Maito Drop",
-      "fr": "Daily Cheese Inc. Lait Drop",
-      "hu": "Daily Cheese Inc. Tej Drop",
-      "it": "Daily Cheese Inc. Latte Drop",
-      "ja": "Daily Cheese Inc. 牛乳 Drop",
-      "lt": "Daily Cheese Inc. Pienas Drop",
-      "nl": "Daily Cheese Inc. Melk Drop",
-      "pl": "Daily Cheese Inc. Mleko Drop",
-      "pt-BR": "Daily Cheese Inc. Leite Drop",
-      "ru": "Daily Cheese Inc. Молоко Drop",
-      "sv": "Daily Cheese Inc. Mjölk Drop",
-      "tr": "Daily Cheese Inc. Süt Drop",
-      "uk": "Daily Cheese Inc. Молоко Drop",
-      "zh-Hans": "Daily Cheese Inc. 牛奶 Drop",
-      "zh-Hant": "Daily Cheese Inc. 牛奶 Drop"
-    },
-    "coord": {
-      "x": 226709.02,
-      "y": -195475.12,
-      "z": -21929.697
-    },
-    "guid": "2e9c137343574cefc1799d9b3cef645f",
-    "demand": {
-      "Milk": 1
-    },
-    "demandStorage": {
-      "Milk": 100
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "Factory_Concrete_C",
-    "name": {
-      "en": "Seongsan Concrete Factory",
-      "cs": "Seongsan Betonárna",
-      "de": "Seongsan Betonfabrik",
-      "es-419": "Seongsan Fábrica de Concreto",
-      "es-ES": "Seongsan Fábrica de Concreto",
-      "fi": "Seongsan Betonitehdas",
-      "fr": "Seongsan Usine à béton",
-      "hu": "Seongsan Betongyár",
-      "it": "Seongsan Fabbrica di calcestruzzo",
-      "ja": "ソンサン コンクリート工場",
-      "ko": "Seongsan 콘크리트 공장",
-      "lt": "Seongsan Betono gamykla",
-      "nl": "Seongsan Betonfabriek",
-      "pl": "Seongsan Fabryka betonu",
-      "pt-BR": "Seongsan Fábrica de Concreto",
-      "ru": "Seongsan Бетонный завод",
-      "sv": "Seongsan Betongfabrik",
-      "tr": "Seongsan Beton Fabrikası",
-      "uk": "Сонсан Бетонний завод",
-      "vi": "Seongsan Nhà máy bê tông",
-      "zh-Hans": "城山 混凝土厂",
-      "zh-Hant": "城山 混凝土工廠"
-    },
-    "coord": {
-      "x": 308261.4,
-      "y": -39875.742,
-      "z": -22000.006
-    },
-    "guid": "a24215bf42a1c9cefc2f85900084a6d6",
-    "prod": [
-      {
-        "input": {
-          "Cement": 10,
-          "Fuel": 1,
-          "_TSand": 10
-        },
-        "output": {
-          "Concrete": 10
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Cement": 100,
-      "Fuel": 100,
-      "_TSand": 100
-    },
-    "supplyStorage": {
-      "Concrete": 300
-    },
-    "dropPoint": [
-      "40d0f8e9487a886b65ec228b03c149f0",
-      "5c286ef7413ee6c125d116a47c3a6609",
-      "b5ab8e98422d4909a907599fef3e13c9"
-    ]
-  },
-  {
     "type": "CopperConcentrator_C",
     "name": {
       "en": "Gwangjin Copper Concentrator",
@@ -1173,46 +1555,6 @@
     "supplyStorage": {
       "CopperConcentrate": 100
     }
-  },
-  {
-    "type": "Factory_Concrete_SandDump_C",
-    "name": {
-      "en": "Seongsan Concrete Factory Sand Drop",
-      "cs": "Seongsan Betonárna Písek Drop",
-      "de": "Seongsan Betonfabrik Sand Drop",
-      "es-419": "Seongsan Fábrica de Concreto Arena Drop",
-      "es-ES": "Seongsan Fábrica de Concreto Arena Drop",
-      "fi": "Seongsan Betonitehdas Sand Drop",
-      "fr": "Seongsan Usine à béton Sable Drop",
-      "hu": "Seongsan Betongyár Homok Drop",
-      "it": "Seongsan Fabbrica di calcestruzzo Sabbia Drop",
-      "ja": "ソンサン コンクリート工場 砂 Drop",
-      "ko": "Seongsan 콘크리트 공장 Sand Drop",
-      "lt": "Seongsan Betono gamykla Sand Drop",
-      "nl": "Seongsan Betonfabriek Zand Drop",
-      "pl": "Seongsan Fabryka betonu Piasek Drop",
-      "pt-BR": "Seongsan Fábrica de Concreto Areia Drop",
-      "ru": "Seongsan Бетонный завод Песок Drop",
-      "sv": "Seongsan Betongfabrik Sand Drop",
-      "tr": "Seongsan Beton Fabrikası Kum Drop",
-      "uk": "Сонсан Бетонний завод Пісок Drop",
-      "vi": "Seongsan Nhà máy bê tông Sand Drop",
-      "zh-Hans": "城山 混凝土厂 沙 Drop",
-      "zh-Hant": "城山 混凝土工廠 沙 Drop"
-    },
-    "coord": {
-      "x": 307307.16,
-      "y": -38538.44,
-      "z": -21696.678
-    },
-    "guid": "40d0f8e9487a886b65ec228b03c149f0",
-    "demand": {
-      "_TSand": 1
-    },
-    "demandStorage": {
-      "_TSand": 100
-    },
-    "supplyStorage": {}
   },
   {
     "type": "CopperRefinery_C",
@@ -1409,43 +1751,6 @@
     "maxDist": 150000
   },
   {
-    "type": "Factory_Electronics_Biyang_C",
-    "name": {
-      "en": "Biyang Electronic Factory",
-      "ja": "ピヤン Electronic Factory",
-      "ko": "비양 Electronic Factory",
-      "uk": "Біянг Electronic Factory",
-      "zh-Hans": "碧阳 Electronic Factory",
-      "zh-Hant": "泌陽 Electronic Factory"
-    },
-    "coord": {
-      "x": 260585.56,
-      "y": 366122.2,
-      "z": -13775.168
-    },
-    "guid": "b5820b9e4520108e8f146f85730e1578",
-    "prod": [
-      {
-        "input": {
-          "copperRodCoil_2t": 1,
-          "plasticPallete": 5
-        },
-        "output": {
-          "circuitBoardPallet": 6
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "copperRodCoil_2t": 200,
-      "plasticPallete": 200
-    },
-    "supplyStorage": {
-      "circuitBoardPallet": 200
-    }
-  },
-  {
     "type": "CrudeOil_Refinery_Input_C",
     "name": {
       "en": "Sanho Fuel Refinery Drop Off",
@@ -1523,53 +1828,6 @@
       "CrudeOil": 300
     },
     "supplyStorage": {}
-  },
-  {
-    "type": "Factory_Food_C",
-    "name": {
-      "en": "Gu-Jwa Food Factory",
-      "ja": "クジャ Food Factory",
-      "ko": "구좌 Food Factory",
-      "ru": "Гу-Джва Food Factory",
-      "uk": "Гу-Джва Food Factory",
-      "zh-Hans": "库加 Food Factory",
-      "zh-Hant": "舊左 Food Factory"
-    },
-    "coord": {
-      "x": 207258.55,
-      "y": -189652.92,
-      "z": -21614.85
-    },
-    "guid": "b96c4d984c4c360e1c0da38c7e1bccb2",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "AirlineMealPallet": 5
-        },
-        "prodTime": 30,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "AirlineMealPallet": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 10
-    },
-    "supplyStorage": {
-      "AirlineMealPallet": 100
-    }
   },
   {
     "type": "CrudeOil_Refinery_Input_Container_C",
@@ -1821,35 +2079,35 @@
       },
       {
         "input": {
-          "steelCoil_10t": 1
+          "SteelCoil_10t": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "transformer_20MVA": 1
+          "Transformer_20MVA": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "transformer_50MVA": 1
+          "Transformer_50MVA": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "toyBoxes": 1
+          "ToyBoxes": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "circuitBoardPallet": 1
+          "CircuitBoardPallet": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 1
@@ -1857,11 +2115,11 @@
     ],
     "demandStorage": {
       "lHBeam_6m": 30,
-      "steelCoil_10t": 30,
-      "transformer_20MVA": 30,
-      "transformer_50MVA": 30,
-      "toyBoxes": 30,
-      "circuitBoardPallet": 30
+      "SteelCoil_10t": 30,
+      "Transformer_20MVA": 30,
+      "Transformer_50MVA": 30,
+      "ToyBoxes": 30,
+      "CircuitBoardPallet": 30
     },
     "supplyStorage": {}
   },
@@ -1892,35 +2150,35 @@
       },
       {
         "input": {
-          "steelCoil_10t": 1
+          "SteelCoil_10t": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "transformer_20MVA": 1
+          "Transformer_20MVA": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "transformer_50MVA": 1
+          "Transformer_50MVA": 1
         },
         "prodTime": 1200,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "toyBoxes": 1
+          "ToyBoxes": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "circuitBoardPallet": 1
+          "CircuitBoardPallet": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 1
@@ -1928,11 +2186,11 @@
     ],
     "demandStorage": {
       "lHBeam_6m": 30,
-      "steelCoil_10t": 30,
-      "transformer_20MVA": 30,
-      "transformer_50MVA": 30,
-      "toyBoxes": 30,
-      "circuitBoardPallet": 30
+      "SteelCoil_10t": 30,
+      "Transformer_20MVA": 30,
+      "Transformer_50MVA": 30,
+      "ToyBoxes": 30,
+      "CircuitBoardPallet": 30
     },
     "supplyStorage": {}
   },
@@ -2152,6 +2410,310 @@
     "dropPoint": ["1c897c1a4e056d21e854f9ba55192758"]
   },
   {
+    "type": "Factory_Cement_Drop_C",
+    "name": {
+      "en": "Seongsan Concrete Factory Cement Drop",
+      "cs": "Seongsan Betonárna Cement Drop",
+      "de": "Seongsan Betonfabrik Zement Drop",
+      "es-419": "Seongsan Fábrica de Concreto Cemento Drop",
+      "es-ES": "Seongsan Fábrica de Concreto Cemento Drop",
+      "fi": "Seongsan Betonitehdas Sementti Drop",
+      "fr": "Seongsan Usine à béton Ciment Drop",
+      "hu": "Seongsan Betongyár Cement Drop",
+      "it": "Seongsan Fabbrica di calcestruzzo Cemento Drop",
+      "ja": "ソンサン コンクリート工場 セメント Drop",
+      "ko": "Seongsan 콘크리트 공장 Cement Drop",
+      "lt": "Seongsan Betono gamykla Cementas Drop",
+      "nl": "Seongsan Betonfabriek Cement Drop",
+      "pl": "Seongsan Fabryka betonu Cement Drop",
+      "pt-BR": "Seongsan Fábrica de Concreto Cimento Drop",
+      "ru": "Seongsan Бетонный завод Цемент Drop",
+      "sv": "Seongsan Betongfabrik Cement Drop",
+      "tr": "Seongsan Beton Fabrikası Çimento Drop",
+      "uk": "Сонсан Бетонний завод Цемент Drop",
+      "vi": "Seongsan Nhà máy bê tông Cement Drop",
+      "zh-Hans": "城山 混凝土厂 水泥 Drop",
+      "zh-Hant": "城山 混凝土工廠 水泥 Drop"
+    },
+    "coord": {
+      "x": 308782.44,
+      "y": -41124.285,
+      "z": -22000.006
+    },
+    "guid": "5c286ef7413ee6c125d116a47c3a6609",
+    "demand": {
+      "Cement": 1
+    },
+    "demandStorage": {
+      "Cement": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Factory_Cheese_C",
+    "name": {
+      "en": "Daily Cheese Inc."
+    },
+    "coord": {
+      "x": 225967.44,
+      "y": -192449.92,
+      "z": -21929.697
+    },
+    "guid": "ca2bcd0e4aeab262fedb9bbb1a0b5558",
+    "prod": [
+      {
+        "input": {
+          "Milk": 1
+        },
+        "output": {
+          "CheesePallet": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Milk": 1
+        },
+        "output": {
+          "CheeseBox": 5
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Milk": 100
+    },
+    "supplyStorage": {
+      "CheesePallet": 100,
+      "CheeseBox": 100
+    },
+    "dropPoint": ["2e9c137343574cefc1799d9b3cef645f"]
+  },
+  {
+    "type": "Factory_Cheese_MilkDrop_C",
+    "name": {
+      "en": "Daily Cheese Inc. Milk Drop",
+      "cs": "Daily Cheese Inc. Mléko Drop",
+      "de": "Daily Cheese Inc. Milch Drop",
+      "es-419": "Daily Cheese Inc. Leche Drop",
+      "es-ES": "Daily Cheese Inc. Leche Drop",
+      "fi": "Daily Cheese Inc. Maito Drop",
+      "fr": "Daily Cheese Inc. Lait Drop",
+      "hu": "Daily Cheese Inc. Tej Drop",
+      "it": "Daily Cheese Inc. Latte Drop",
+      "ja": "Daily Cheese Inc. 牛乳 Drop",
+      "lt": "Daily Cheese Inc. Pienas Drop",
+      "nl": "Daily Cheese Inc. Melk Drop",
+      "pl": "Daily Cheese Inc. Mleko Drop",
+      "pt-BR": "Daily Cheese Inc. Leite Drop",
+      "ru": "Daily Cheese Inc. Молоко Drop",
+      "sv": "Daily Cheese Inc. Mjölk Drop",
+      "tr": "Daily Cheese Inc. Süt Drop",
+      "uk": "Daily Cheese Inc. Молоко Drop",
+      "zh-Hans": "Daily Cheese Inc. 牛奶 Drop",
+      "zh-Hant": "Daily Cheese Inc. 牛奶 Drop"
+    },
+    "coord": {
+      "x": 226709.02,
+      "y": -195475.12,
+      "z": -21929.697
+    },
+    "guid": "2e9c137343574cefc1799d9b3cef645f",
+    "demand": {
+      "Milk": 1
+    },
+    "demandStorage": {
+      "Milk": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Factory_Concrete_C",
+    "name": {
+      "en": "Seongsan Concrete Factory",
+      "cs": "Seongsan Betonárna",
+      "de": "Seongsan Betonfabrik",
+      "es-419": "Seongsan Fábrica de Concreto",
+      "es-ES": "Seongsan Fábrica de Concreto",
+      "fi": "Seongsan Betonitehdas",
+      "fr": "Seongsan Usine à béton",
+      "hu": "Seongsan Betongyár",
+      "it": "Seongsan Fabbrica di calcestruzzo",
+      "ja": "ソンサン コンクリート工場",
+      "ko": "Seongsan 콘크리트 공장",
+      "lt": "Seongsan Betono gamykla",
+      "nl": "Seongsan Betonfabriek",
+      "pl": "Seongsan Fabryka betonu",
+      "pt-BR": "Seongsan Fábrica de Concreto",
+      "ru": "Seongsan Бетонный завод",
+      "sv": "Seongsan Betongfabrik",
+      "tr": "Seongsan Beton Fabrikası",
+      "uk": "Сонсан Бетонний завод",
+      "vi": "Seongsan Nhà máy bê tông",
+      "zh-Hans": "城山 混凝土厂",
+      "zh-Hant": "城山 混凝土工廠"
+    },
+    "coord": {
+      "x": 308261.4,
+      "y": -39875.742,
+      "z": -22000.006
+    },
+    "guid": "a24215bf42a1c9cefc2f85900084a6d6",
+    "prod": [
+      {
+        "input": {
+          "Cement": 10,
+          "Fuel": 1,
+          "_TSand": 10
+        },
+        "output": {
+          "Concrete": 10
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Cement": 100,
+      "Fuel": 100,
+      "_TSand": 100
+    },
+    "supplyStorage": {
+      "Concrete": 300
+    },
+    "dropPoint": [
+      "40d0f8e9487a886b65ec228b03c149f0",
+      "5c286ef7413ee6c125d116a47c3a6609",
+      "b5ab8e98422d4909a907599fef3e13c9"
+    ]
+  },
+  {
+    "type": "Factory_Concrete_SandDump_C",
+    "name": {
+      "en": "Seongsan Concrete Factory Sand Drop",
+      "cs": "Seongsan Betonárna Písek Drop",
+      "de": "Seongsan Betonfabrik Sand Drop",
+      "es-419": "Seongsan Fábrica de Concreto Arena Drop",
+      "es-ES": "Seongsan Fábrica de Concreto Arena Drop",
+      "fi": "Seongsan Betonitehdas Sand Drop",
+      "fr": "Seongsan Usine à béton Sable Drop",
+      "hu": "Seongsan Betongyár Homok Drop",
+      "it": "Seongsan Fabbrica di calcestruzzo Sabbia Drop",
+      "ja": "ソンサン コンクリート工場 砂 Drop",
+      "ko": "Seongsan 콘크리트 공장 Sand Drop",
+      "lt": "Seongsan Betono gamykla Sand Drop",
+      "nl": "Seongsan Betonfabriek Zand Drop",
+      "pl": "Seongsan Fabryka betonu Piasek Drop",
+      "pt-BR": "Seongsan Fábrica de Concreto Areia Drop",
+      "ru": "Seongsan Бетонный завод Песок Drop",
+      "sv": "Seongsan Betongfabrik Sand Drop",
+      "tr": "Seongsan Beton Fabrikası Kum Drop",
+      "uk": "Сонсан Бетонний завод Пісок Drop",
+      "vi": "Seongsan Nhà máy bê tông Sand Drop",
+      "zh-Hans": "城山 混凝土厂 沙 Drop",
+      "zh-Hant": "城山 混凝土工廠 沙 Drop"
+    },
+    "coord": {
+      "x": 307307.16,
+      "y": -38538.44,
+      "z": -21696.678
+    },
+    "guid": "40d0f8e9487a886b65ec228b03c149f0",
+    "demand": {
+      "_TSand": 1
+    },
+    "demandStorage": {
+      "_TSand": 100
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Factory_Electronics_Biyang_C",
+    "name": {
+      "en": "Biyang Electronic Factory",
+      "ja": "ピヤン Electronic Factory",
+      "ko": "비양 Electronic Factory",
+      "uk": "Біянг Electronic Factory",
+      "zh-Hans": "碧阳 Electronic Factory",
+      "zh-Hant": "泌陽 Electronic Factory"
+    },
+    "coord": {
+      "x": 260585.56,
+      "y": 366122.2,
+      "z": -13775.168
+    },
+    "guid": "b5820b9e4520108e8f146f85730e1578",
+    "prod": [
+      {
+        "input": {
+          "CopperRodCoil_2t": 1,
+          "PlasticPallete": 5
+        },
+        "output": {
+          "CircuitBoardPallet": 6
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CopperRodCoil_2t": 20,
+      "PlasticPallete": 100
+    },
+    "supplyStorage": {
+      "CircuitBoardPallet": 30
+    }
+  },
+  {
+    "type": "Factory_Food_C",
+    "name": {
+      "en": "Gu-Jwa Food Factory",
+      "ja": "クジャ Food Factory",
+      "ko": "구좌 Food Factory",
+      "ru": "Гу-Джва Food Factory",
+      "uk": "Гу-Джва Food Factory",
+      "zh-Hans": "库加 Food Factory",
+      "zh-Hant": "舊左 Food Factory"
+    },
+    "coord": {
+      "x": 207258.55,
+      "y": -189652.92,
+      "z": -21614.85
+    },
+    "guid": "b96c4d984c4c360e1c0da38c7e1bccb2",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "AirlineMealPallet": 5
+        },
+        "prodTime": 30,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "AirlineMealPallet": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 10
+    },
+    "supplyStorage": {
+      "AirlineMealPallet": 100
+    }
+  },
+  {
     "type": "Factory_FormulaSCM_C",
     "name": {
       "en": "Ansan Racecar Factory"
@@ -2207,46 +2769,6 @@
     "maxReceiveDist": 0
   },
   {
-    "type": "Factory_Cement_Drop_C",
-    "name": {
-      "en": "Seongsan Concrete Factory Cement Drop",
-      "cs": "Seongsan Betonárna Cement Drop",
-      "de": "Seongsan Betonfabrik Zement Drop",
-      "es-419": "Seongsan Fábrica de Concreto Cemento Drop",
-      "es-ES": "Seongsan Fábrica de Concreto Cemento Drop",
-      "fi": "Seongsan Betonitehdas Sementti Drop",
-      "fr": "Seongsan Usine à béton Ciment Drop",
-      "hu": "Seongsan Betongyár Cement Drop",
-      "it": "Seongsan Fabbrica di calcestruzzo Cemento Drop",
-      "ja": "ソンサン コンクリート工場 セメント Drop",
-      "ko": "Seongsan 콘크리트 공장 Cement Drop",
-      "lt": "Seongsan Betono gamykla Cementas Drop",
-      "nl": "Seongsan Betonfabriek Cement Drop",
-      "pl": "Seongsan Fabryka betonu Cement Drop",
-      "pt-BR": "Seongsan Fábrica de Concreto Cimento Drop",
-      "ru": "Seongsan Бетонный завод Цемент Drop",
-      "sv": "Seongsan Betongfabrik Cement Drop",
-      "tr": "Seongsan Beton Fabrikası Çimento Drop",
-      "uk": "Сонсан Бетонний завод Цемент Drop",
-      "vi": "Seongsan Nhà máy bê tông Cement Drop",
-      "zh-Hans": "城山 混凝土厂 水泥 Drop",
-      "zh-Hant": "城山 混凝土工廠 水泥 Drop"
-    },
-    "coord": {
-      "x": 308782.44,
-      "y": -41124.285,
-      "z": -22000.006
-    },
-    "guid": "5c286ef7413ee6c125d116a47c3a6609",
-    "demand": {
-      "Cement": 1
-    },
-    "demandStorage": {
-      "Cement": 100
-    },
-    "supplyStorage": {}
-  },
-  {
     "type": "Factory_Furniture_C",
     "name": {
       "en": "Nivart Furniture Factory"
@@ -2289,93 +2811,6 @@
     "supplyStorage": {
       "_TFurniture": 30
     }
-  },
-  {
-    "type": "Factory_Toy_C",
-    "name": {
-      "en": "Toy Factory"
-    },
-    "coord": {
-      "x": 237418.11,
-      "y": -177890.06,
-      "z": -21828.293
-    },
-    "guid": "f163a8ff4d86fd149801d3b86b41d2c7",
-    "prod": [
-      {
-        "input": {
-          "PlasticPallete": 10,
-          "_TContainer": 1
-        },
-        "output": {
-          "ToyBoxes": 20
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "PlasticPallete": 3,
-          "_TLargePackage": 1
-        },
-        "output": {
-          "ToyBoxes": 6
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "PlasticPallete": 100,
-      "_TContainer": 10,
-      "_TLargePackage": 100
-    },
-    "supplyStorage": {
-      "ToyBoxes": 100
-    }
-  },
-  {
-    "type": "Factory_Cheese_C",
-    "name": {
-      "en": "Daily Cheese Inc."
-    },
-    "coord": {
-      "x": 225967.44,
-      "y": -192449.92,
-      "z": -21929.697
-    },
-    "guid": "ca2bcd0e4aeab262fedb9bbb1a0b5558",
-    "prod": [
-      {
-        "input": {
-          "milk": 1
-        },
-        "output": {
-          "cheesePallet": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "milk": 1
-        },
-        "output": {
-          "cheeseBox": 5
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "milk": 100,
-      "Milk": 100
-    },
-    "supplyStorage": {
-      "cheesePallet": 100,
-      "cheeseBox": 100
-    },
-    "dropPoint": ["2e9c137343574cefc1799d9b3cef645f"]
   },
   {
     "type": "Factory_LimestoneProcessing_C",
@@ -2426,105 +2861,6 @@
       "Limestone": 300
     },
     "dropPoint": ["c03e3600420084f54b4bb2930a50fd26"]
-  },
-  {
-    "type": "Factory_Transformer_20MVA_C",
-    "name": {
-      "en": "Transformer Factory 20MVA"
-    },
-    "coord": {
-      "x": -323700,
-      "y": 1132500,
-      "z": -16195
-    },
-    "guid": "c7a31b4d4703af9089abc2a089e0c0f6",
-    "prod": [
-      {
-        "input": {
-          "lHBeam_6m": 1,
-          "SteelCoil_10t": 3,
-          "PlasticPallete": 2,
-          "Oil": 1,
-          "CopperRodCoil_2t": 1
-        },
-        "output": {
-          "Transformer_20MVA": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30,
-      "PlasticPallete": 30,
-      "Oil": 30,
-      "CopperRodCoil_2t": 30
-    },
-    "supplyStorage": {
-      "Transformer_20MVA": 10
-    },
-    "dropPoint": [
-      "c6ac1e9448bfe0eb8eb53fb15a08a07d",
-      "d0104ed646abaf502b12088cfa13dc80",
-      "4f4eb95748943fb26e5294b82369775b"
-    ]
-  },
-  {
-    "type": "GrainExport_C",
-    "name": {
-      "en": "Dasa Grain Export"
-    },
-    "coord": {
-      "x": -815644.56,
-      "y": 1204100.2,
-      "z": -21951.936
-    },
-    "guid": "22797b7a4bfa353bfbb06a80bbc2ea9a",
-    "prod": [
-      {
-        "input": {
-          "SunflowerSeed": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "SunflowerSeed": 800
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "GrainExport_C",
-    "name": {
-      "en": "Jeju Grain Export",
-      "ja": "チェジュ Grain Export",
-      "ko": "제주 Grain Export",
-      "ru": "Чеджу Grain Export",
-      "uk": "Чеджу Grain Export",
-      "zh-Hans": "济州 Grain Export",
-      "zh-Hant": "濟州 Grain Export"
-    },
-    "coord": {
-      "x": -565.1951,
-      "y": -183205.03,
-      "z": -21951.936
-    },
-    "guid": "125e8a29474dccd0f8e7bcae4219e188",
-    "prod": [
-      {
-        "input": {
-          "SunflowerSeed": 1
-        },
-        "prodTime": 80,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "SunflowerSeed": 800
-    },
-    "supplyStorage": {}
   },
   {
     "type": "Factory_Limestone_Drop_C",
@@ -2601,56 +2937,6 @@
       "Limestone": 300
     },
     "supplyStorage": {}
-  },
-  {
-    "type": "Factory_Transformer_50MVA_C",
-    "name": {
-      "en": "Transformer Factory 50MVA"
-    },
-    "coord": {
-      "x": -327700,
-      "y": 1132500,
-      "z": -16195
-    },
-    "guid": "fee9327b4f1c20033310fa9db503f47a",
-    "prod": [
-      {
-        "input": {
-          "lHBeam_6m": 3,
-          "steelCoil_10t": 10,
-          "plasticPallete": 6,
-          "oil": 3,
-          "copperRodCoil_2t": 3,
-          "circuitBoardPallet": 1
-        },
-        "output": {
-          "transformer_50MVA": 1
-        },
-        "prodTime": 900,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "steelCoil_10t": 30,
-      "plasticPallete": 30,
-      "oil": 30,
-      "copperRodCoil_2t": 30,
-      "circuitBoardPallet": 30,
-      "Oil": 30,
-      "PlasticPallete": 30,
-      "CircuitBoardPallet": 30,
-      "SteelCoil_10t": 30,
-      "CopperRodCoil_2t": 30
-    },
-    "supplyStorage": {
-      "transformer_50MVA": 30
-    },
-    "dropPoint": [
-      "9837d4f34ce8f7af223c908adc94e5fa",
-      "fe6854144af31733f31ce9814d22e51e",
-      "879ede514946555f47f3b8bc8a1f9bdc"
-    ]
   },
   {
     "type": "Factory_Lumbermil_C",
@@ -2794,106 +3080,6 @@
     }
   },
   {
-    "type": "Import_Coal_C",
-    "name": {
-      "en": "Dasa Coal Import",
-      "cs": "Dasa Uhlí Import",
-      "de": "Dasa Kohle Import",
-      "es-419": "Dasa Carbón Import",
-      "es-ES": "Dasa Carbón Import",
-      "fi": "Dasa Hiili Import",
-      "fr": "Dasa Charbon Import",
-      "hu": "Dasa Szén Import",
-      "it": "Dasa Carbone Import",
-      "ja": "Dasa 石炭 Import",
-      "ko": "Dasa 석탄 Import",
-      "lt": "Dasa Anglis Import",
-      "nl": "Dasa Kolen Import",
-      "pl": "Dasa Węgiel Import",
-      "pt-BR": "Dasa Carvão Import",
-      "ru": "Dasa Каменный уголь Import",
-      "sv": "Dasa Kol Import",
-      "tr": "Dasa Kömür Import",
-      "uk": "Dasa Вугілля Import",
-      "zh-Hans": "Dasa 煤炭 Import",
-      "zh-Hant": "Dasa 煤炭 Import"
-    },
-    "coord": {
-      "x": -824557,
-      "y": 1198004.9,
-      "z": -22000
-    },
-    "guid": null,
-    "prod": [
-      {
-        "output": {
-          "Coal": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "Coal": 100
-    }
-  },
-  {
-    "type": "Farm_Bean_C",
-    "name": {
-      "en": "Gapa Bean Haven Farm",
-      "es-419": "Ga-Pa Bean Haven Farm",
-      "ja": "カパ Bean Haven Farm",
-      "ko": "가파 Bean Haven Farm",
-      "uk": "Гапа Bean Haven Farm",
-      "zh-Hans": "加帕 Bean Haven Farm",
-      "zh-Hant": "加帕 Bean Haven Farm"
-    },
-    "coord": {
-      "x": 92052.35,
-      "y": 633058.1,
-      "z": -8000.069
-    },
-    "guid": "41d6f93d48ec246617fe65a1549b0783",
-    "prod": [
-      {
-        "output": {
-          "BeanPallet": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "Fuel": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 2
-      },
-      {
-        "input": {
-          "QuicklimePallet": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 2
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 2
-      }
-    ],
-    "demandStorage": {
-      "Fuel": 5,
-      "QuicklimePallet": 6,
-      "_TLargePackage": 10
-    },
-    "supplyStorage": {
-      "BeanPallet": 10
-    }
-  },
-  {
     "type": "Factory_Plastic_C",
     "name": {
       "en": "Jeoji Plastic",
@@ -2964,6 +3150,363 @@
     "dropPoint": ["66548d0e48da78a9dfa5e392abb2cb8c"]
   },
   {
+    "type": "Factory_Quicklime_C",
+    "name": {
+      "en": "Nobong Quicklime Factory",
+      "ja": "ノボン Quicklime Factory",
+      "ko": "노봉 Quicklime Factory",
+      "nl": "Geen bong Quicklime Factory",
+      "uk": "Нобонг Quicklime Factory",
+      "zh-Hans": "诺峰 Quicklime Factory",
+      "zh-Hant": "諾峰 Quicklime Factory"
+    },
+    "coord": {
+      "x": -176713.78,
+      "y": 511512.16,
+      "z": -12600.144
+    },
+    "guid": "c9d3fbaa4ab074a2ae15048cbaa41c67",
+    "prod": [
+      {
+        "input": {
+          "Limestone": 1
+        },
+        "output": {
+          "QuicklimePallet": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "Limestone": 300
+    },
+    "supplyStorage": {
+      "QuicklimePallet": 300
+    },
+    "dropPoint": ["317f5597493a20d14363b7b84c6af267"]
+  },
+  {
+    "type": "Factory_Raven_C",
+    "name": {
+      "en": "Ansan Raven Factory"
+    },
+    "coord": {
+      "x": -219964.83,
+      "y": 333257.38,
+      "z": -21000.012
+    },
+    "guid": "dfbd91dd497c05f604c36a83288dafa9",
+    "prod": [
+      {
+        "input": {
+          "SteelCoil_10t": 1,
+          "BoxPallete_01": 6,
+          "Container_20ft_01": 2
+        },
+        "output": {
+          "Raven": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "BoxPallete_01": 1,
+      "Container_30ft_5t": 1,
+      "SteelCoil_10t": 1
+    },
+    "demandStorage": {
+      "SteelCoil_10t": 3,
+      "BoxPallete_01": 20,
+      "Container_20ft_01": 2,
+      "Container_30ft_5t": 5
+    },
+    "supplyStorage": {
+      "Raven": 2
+    },
+    "maxReceiveDist": 0
+  },
+  {
+    "type": "Factory_Tank_250kL_C",
+    "name": {
+      "en": "Tank Factory"
+    },
+    "coord": {
+      "x": -312500,
+      "y": 112000,
+      "z": -21045
+    },
+    "guid": "f995403a49f48d573961f0bedb112adb",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1,
+          "SteelCoil_10t": 3,
+          "PlasticPallete": 1
+        },
+        "output": {
+          "Tank_250kL": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 20,
+      "SteelCoil_10t": 60,
+      "PlasticPallete": 20
+    },
+    "supplyStorage": {
+      "Tank_250kL": 10
+    },
+    "dropPoint": [
+      "685ae04c42bf567c31d4de860d8e1fae",
+      "8b633ee445aace12d31ea3b1f6092571",
+      "366e02564dd09ecbac307e9945bc778b"
+    ]
+  },
+  {
+    "type": "Factory_Terra_C",
+    "name": {
+      "en": "Terra Factory",
+      "ja": "テラ Factory",
+      "uk": "Терра Factory",
+      "zh-Hans": "泰拉 Factory"
+    },
+    "coord": {
+      "x": -318193.56,
+      "y": 1580192.1,
+      "z": -19070
+    },
+    "guid": "98ca5a4a4d767649e3ee4c9cde9fc82a",
+    "prod": [
+      {
+        "input": {
+          "SteelCoil_10t": 3,
+          "Container_20ft_01": 2,
+          "lHBeam_6m": 2,
+          "Oil": 2,
+          "PlasticPallete": 2,
+          "Fuel": 1,
+          "CircuitBoardPallet": 1
+        },
+        "output": {
+          "Terra": 1
+        },
+        "prodTime": 600,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "SteelCoil_10t": 30,
+      "Container_20ft_01": 10,
+      "lHBeam_6m": 30,
+      "Oil": 30,
+      "PlasticPallete": 30,
+      "Fuel": 20,
+      "CircuitBoardPallet": 10
+    },
+    "supplyStorage": {
+      "Terra": 5
+    },
+    "dropPoint": [
+      "3465bd58475a38706f009da36b55ec8e",
+      "52030bbd4619c71ac0d39599bde6c5a8",
+      "42db5c674ebe486f4e2632bc303983b9",
+      "0fbac1084a0209fdb770e7bad3e9d86c",
+      "878022e64aff51c3b25fc0913c92cece"
+    ]
+  },
+  {
+    "type": "Factory_Toy_C",
+    "name": {
+      "en": "Toy Factory"
+    },
+    "coord": {
+      "x": 237418.11,
+      "y": -177890.06,
+      "z": -21828.293
+    },
+    "guid": "f163a8ff4d86fd149801d3b86b41d2c7",
+    "prod": [
+      {
+        "input": {
+          "PlasticPallete": 10,
+          "_TContainer": 1
+        },
+        "output": {
+          "ToyBoxes": 20
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "PlasticPallete": 3,
+          "_TLargePackage": 1
+        },
+        "output": {
+          "ToyBoxes": 6
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "PlasticPallete": 100,
+      "_TContainer": 10,
+      "_TLargePackage": 100
+    },
+    "supplyStorage": {
+      "ToyBoxes": 100
+    }
+  },
+  {
+    "type": "Factory_Transformer_20MVA_C",
+    "name": {
+      "en": "Transformer Factory 20MVA"
+    },
+    "coord": {
+      "x": -323700,
+      "y": 1132500,
+      "z": -16195
+    },
+    "guid": "c7a31b4d4703af9089abc2a089e0c0f6",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 1,
+          "SteelCoil_10t": 3,
+          "PlasticPallete": 2,
+          "Oil": 1,
+          "CopperRodCoil_2t": 1
+        },
+        "output": {
+          "Transformer_20MVA": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "PlasticPallete": 30,
+      "Oil": 30,
+      "CopperRodCoil_2t": 30
+    },
+    "supplyStorage": {
+      "Transformer_20MVA": 10
+    },
+    "dropPoint": [
+      "c6ac1e9448bfe0eb8eb53fb15a08a07d",
+      "d0104ed646abaf502b12088cfa13dc80",
+      "4f4eb95748943fb26e5294b82369775b"
+    ]
+  },
+  {
+    "type": "Factory_Transformer_50MVA_C",
+    "name": {
+      "en": "Transformer Factory 50MVA"
+    },
+    "coord": {
+      "x": -327700,
+      "y": 1132500,
+      "z": -16195
+    },
+    "guid": "fee9327b4f1c20033310fa9db503f47a",
+    "prod": [
+      {
+        "input": {
+          "lHBeam_6m": 3,
+          "SteelCoil_10t": 10,
+          "PlasticPallete": 6,
+          "Oil": 3,
+          "CopperRodCoil_2t": 3,
+          "CircuitBoardPallet": 1
+        },
+        "output": {
+          "Transformer_50MVA": 1
+        },
+        "prodTime": 900,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "lHBeam_6m": 30,
+      "SteelCoil_10t": 30,
+      "PlasticPallete": 30,
+      "Oil": 30,
+      "CopperRodCoil_2t": 30,
+      "CircuitBoardPallet": 30
+    },
+    "supplyStorage": {
+      "Transformer_50MVA": 5
+    },
+    "dropPoint": [
+      "9837d4f34ce8f7af223c908adc94e5fa",
+      "fe6854144af31733f31ce9814d22e51e",
+      "879ede514946555f47f3b8bc8a1f9bdc"
+    ]
+  },
+  {
+    "type": "Farm_Bean_C",
+    "name": {
+      "en": "Gapa Bean Haven Farm",
+      "es-419": "Ga-Pa Bean Haven Farm",
+      "ja": "カパ Bean Haven Farm",
+      "ko": "가파 Bean Haven Farm",
+      "uk": "Гапа Bean Haven Farm",
+      "zh-Hans": "加帕 Bean Haven Farm",
+      "zh-Hant": "加帕 Bean Haven Farm"
+    },
+    "coord": {
+      "x": 92052.35,
+      "y": 633058.1,
+      "z": -8000.069
+    },
+    "guid": "41d6f93d48ec246617fe65a1549b0783",
+    "prod": [
+      {
+        "output": {
+          "BeanPallet": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "Fuel": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 2
+      },
+      {
+        "input": {
+          "QuicklimePallet": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 2
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 2
+      }
+    ],
+    "demandStorage": {
+      "Fuel": 5,
+      "QuicklimePallet": 6,
+      "_TLargePackage": 10
+    },
+    "supplyStorage": {
+      "BeanPallet": 10
+    }
+  },
+  {
     "type": "Farm_Cabbage_C",
     "name": {
       "en": "Gapa Organic Cabbage Farm",
@@ -3018,83 +3561,6 @@
     "supplyStorage": {
       "CabbagePallet": 10
     }
-  },
-  {
-    "type": "Factory_Quicklime_C",
-    "name": {
-      "en": "Nobong Quicklime Factory",
-      "ja": "ノボン Quicklime Factory",
-      "ko": "노봉 Quicklime Factory",
-      "nl": "Geen bong Quicklime Factory",
-      "uk": "Нобонг Quicklime Factory",
-      "zh-Hans": "诺峰 Quicklime Factory",
-      "zh-Hant": "諾峰 Quicklime Factory"
-    },
-    "coord": {
-      "x": -176713.78,
-      "y": 511512.16,
-      "z": -12600.144
-    },
-    "guid": "c9d3fbaa4ab074a2ae15048cbaa41c67",
-    "prod": [
-      {
-        "input": {
-          "Limestone": 1
-        },
-        "output": {
-          "QuicklimePallet": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Limestone": 300
-    },
-    "supplyStorage": {
-      "QuicklimePallet": 300
-    },
-    "dropPoint": ["317f5597493a20d14363b7b84c6af267"]
-  },
-  {
-    "type": "Import_IronOre_C",
-    "name": {
-      "en": "Dasa Iron Ore Import",
-      "cs": "Dasa Železná ruda Import",
-      "de": "Dasa Eisenerz Import",
-      "es-419": "Dasa Mineral de hierro Import",
-      "es-ES": "Dasa Mineral de hierro Import",
-      "fi": "Dasa Rautamalmi Import",
-      "fr": "Dasa Minerai de fer Import",
-      "hu": "Dasa Vasérc Import",
-      "it": "Dasa Minerale di ferro Import",
-      "ja": "Dasa 鉄鉱石 Import",
-      "lt": "Dasa Geležies Rūda Import",
-      "nl": "Dasa Ijzererts Import",
-      "pl": "Dasa Ruda żelaza Import",
-      "pt-BR": "Dasa Minério de ferro Import",
-      "ru": "Dasa Железная руда Import",
-      "tr": "Dasa Demir Cevheri Import",
-      "uk": "Dasa Залізна руда Import",
-      "zh-Hans": "Dasa 铁矿 Import",
-      "zh-Hant": "Dasa 鐵礦 Import"
-    },
-    "coord": {
-      "x": -825550.94,
-      "y": 1197541.4,
-      "z": -22000
-    },
-    "guid": null,
-    "prod": [
-      {
-        "output": {
-          "IronOre": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {}
   },
   {
     "type": "Farm_Corn_C",
@@ -3313,94 +3779,6 @@
       "CornPallet": 10,
       "CornBox": 3
     }
-  },
-  {
-    "type": "IronOreWarehouse_C",
-    "name": {
-      "en": "Gwangjin Iron Ore Storage",
-      "cs": "Gwangjin Železná ruda Storage",
-      "de": "Gwangjin Eisenerz Storage",
-      "es-419": "Gwangjin Mineral de hierro Storage",
-      "es-ES": "Gwangjin Mineral de hierro Storage",
-      "fi": "Gwangjin Rautamalmi Storage",
-      "fr": "Gwangjin Minerai de fer Storage",
-      "hu": "Gwangjin Vasérc Storage",
-      "it": "Gwangjin Minerale di ferro Storage",
-      "ja": "クァンジン 鉄鉱石 Storage",
-      "ko": "광진 Iron Ore Storage",
-      "lt": "Gwangjin Geležies Rūda Storage",
-      "nl": "Gwangjin Ijzererts Storage",
-      "pl": "Gwangjin Ruda żelaza Storage",
-      "pt-BR": "Gwangjin Minério de ferro Storage",
-      "ru": "Gwangjin Железная руда Storage",
-      "tr": "Gwangjin Demir Cevheri Storage",
-      "uk": "Гванджін Залізна руда Storage",
-      "zh-Hans": "广津 铁矿 Storage",
-      "zh-Hant": "廣津 鐵礦 Storage"
-    },
-    "coord": {
-      "x": 242381.89,
-      "y": 633067.44,
-      "z": -11688.383
-    },
-    "guid": "a1785134414ba0bc5f435287cade90e9",
-    "prod": [
-      {
-        "input": {
-          "IronOre": 1
-        },
-        "output": {
-          "IronOre": 1
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "IronOre": 200
-    },
-    "supplyStorage": {
-      "IronOre": 200
-    },
-    "maxReceiveDist": 500000
-  },
-  {
-    "type": "LimestoneRockDrop_C",
-    "name": {
-      "en": "Dongsan Limestone Rock Drop",
-      "cs": "Dongsan Vápenec Kámen Drop",
-      "de": "Dongsan Kalkstein Brocken Drop",
-      "es-419": "Dongsan Caliza Roca Drop",
-      "es-ES": "Dongsan Piedra caliza Rocas Drop",
-      "fi": "Dongsan Kalkkikivi Rock Drop",
-      "fr": "Dongsan Calcaire Roche Drop",
-      "hu": "Dongsan Mészkő Szikla Drop",
-      "it": "Dongsan Calcare Rock Drop",
-      "ja": "ドンサン 石灰石 粗鉱 Drop",
-      "ko": "동산 석회암 Rock Drop",
-      "lt": "Dongsan Kalkakmenis Rock Drop",
-      "nl": "Dongsan Kalksteen Rock Drop",
-      "pl": "Dongsan Wapień Kamień Drop",
-      "pt-BR": "Dongsan Calcário Pedra Drop",
-      "ru": "Dongsan Известняк Камни Drop",
-      "tr": "Dongsan Kireçtaşı Taş Drop",
-      "uk": "Донгсан Вапняк Камінь Drop",
-      "zh-Hans": "东山 石灰石 岩 Drop",
-      "zh-Hant": "東山 石灰岩 石塊 Drop"
-    },
-    "coord": {
-      "x": -419889.88,
-      "y": 627256.6,
-      "z": -17464.758
-    },
-    "guid": "c03e3600420084f54b4bb2930a50fd26",
-    "demand": {
-      "LimestoneRock": 1
-    },
-    "demandStorage": {
-      "LimestoneRock": 200
-    },
-    "supplyStorage": {}
   },
   {
     "type": "Farm_Hemp_C",
@@ -3679,14 +4057,14 @@
     "prod": [
       {
         "output": {
-          "milk": 1
+          "Milk": 1
         },
         "prodTime": 120,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "fuel": 1
+          "Fuel": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -3700,11 +4078,11 @@
       }
     ],
     "demandStorage": {
-      "fuel": 10,
+      "Fuel": 10,
       "_TLargePackage": 10
     },
     "supplyStorage": {
-      "milk": 10
+      "Milk": 10
     }
   },
   {
@@ -3721,14 +4099,14 @@
     "prod": [
       {
         "output": {
-          "milk": 1
+          "Milk": 1
         },
         "prodTime": 120,
         "prodSpeedMul": 1
       },
       {
         "input": {
-          "fuel": 1
+          "Fuel": 1
         },
         "prodTime": 600,
         "prodSpeedMul": 2
@@ -3742,129 +4120,12 @@
       }
     ],
     "demandStorage": {
-      "fuel": 200,
+      "Fuel": 20,
       "_TLargePackage": 10
     },
     "supplyStorage": {
-      "milk": 200
+      "Milk": 200
     }
-  },
-  {
-    "type": "Factory_Raven_C",
-    "name": {
-      "en": "Ansan Raven Factory"
-    },
-    "coord": {
-      "x": -219964.83,
-      "y": 333257.38,
-      "z": -21000.012
-    },
-    "guid": "dfbd91dd497c05f604c36a83288dafa9",
-    "prod": [
-      {
-        "input": {
-          "SteelCoil_10t": 1,
-          "BoxPallete_01": 6,
-          "Container_20ft_01": 2
-        },
-        "output": {
-          "Raven": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "BoxPallete_01": 1,
-      "Container_30ft_5t": 1,
-      "SteelCoil_10t": 1
-    },
-    "demandStorage": {
-      "SteelCoil_10t": 3,
-      "BoxPallete_01": 20,
-      "Container_20ft_01": 2,
-      "Container_30ft_5t": 5
-    },
-    "supplyStorage": {
-      "Raven": 2
-    },
-    "maxReceiveDist": 0
-  },
-  {
-    "type": "BurgerCounter_C",
-    "name": {
-      "en": "BurgerJoint Jeju",
-      "ja": "BurgerJoint チェジュ",
-      "ko": "BurgerJoint 제주",
-      "ru": "BurgerJoint Чеджу",
-      "uk": "BurgerJoint Чеджу",
-      "zh-Hans": "BurgerJoint 济州",
-      "zh-Hant": "BurgerJoint 濟州"
-    },
-    "coord": {
-      "x": -27018.621,
-      "y": -116946.43,
-      "z": -20625
-    },
-    "guid": "f07e7c4c4d231a07da4777beaa95ac32",
-    "prod": [
-      {
-        "input": {
-          "meatBox": 1,
-          "cheeseBox": 1
-        },
-        "output": {
-          "burger_01_Signature": 10
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "meatBox": 30,
-      "cheeseBox": 30,
-      "MeatBox": 30,
-      "CheeseBox": 30
-    },
-    "supplyStorage": {
-      "burger_01_Signature": 30
-    },
-    "dropPoint": ["1de94ef442b4b0b3d9cc548396d67287"]
-  },
-  {
-    "type": "BurgerCounter_C",
-    "name": {
-      "en": "BurgerJoint Seoguipo"
-    },
-    "coord": {
-      "x": -8080.0796,
-      "y": 129306.51,
-      "z": -20018.164
-    },
-    "guid": "b74b72d14540cbf23d17468dab5f7e37",
-    "prod": [
-      {
-        "input": {
-          "meatBox": 1,
-          "cheeseBox": 1
-        },
-        "output": {
-          "burger_01_Signature": 10
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "meatBox": 30,
-      "cheeseBox": 30,
-      "MeatBox": 30,
-      "CheeseBox": 30
-    },
-    "supplyStorage": {
-      "burger_01_Signature": 30
-    },
-    "dropPoint": ["e77cab32401e868b93379d9b16774f9f"]
   },
   {
     "type": "Farm_Rice_C",
@@ -3943,96 +4204,6 @@
     }
   },
   {
-    "type": "Factory_Tank_250kL_C",
-    "name": {
-      "en": "Tank Factory"
-    },
-    "coord": {
-      "x": -312500,
-      "y": 112000,
-      "z": -21045
-    },
-    "guid": "f995403a49f48d573961f0bedb112adb",
-    "prod": [
-      {
-        "input": {
-          "lHBeam_6m": 1,
-          "SteelCoil_10t": 3,
-          "PlasticPallete": 1
-        },
-        "output": {
-          "Tank_250kL": 1
-        },
-        "prodTime": 300,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "lHBeam_6m": 20,
-      "SteelCoil_10t": 60,
-      "PlasticPallete": 20
-    },
-    "supplyStorage": {
-      "Tank_250kL": 10
-    },
-    "dropPoint": [
-      "685ae04c42bf567c31d4de860d8e1fae",
-      "8b633ee445aace12d31ea3b1f6092571",
-      "366e02564dd09ecbac307e9945bc778b"
-    ]
-  },
-  {
-    "type": "CoalWarehouse_C",
-    "name": {
-      "en": "Gwangjin Coal Storage",
-      "cs": "Gwangjin Uhlí Storage",
-      "de": "Gwangjin Kohle Storage",
-      "es-419": "Gwangjin Carbón Storage",
-      "es-ES": "Gwangjin Carbón Storage",
-      "fi": "Gwangjin Hiili Storage",
-      "fr": "Gwangjin Charbon Storage",
-      "hu": "Gwangjin Szén Storage",
-      "it": "Gwangjin Carbone Storage",
-      "ja": "クァンジン 石炭 Storage",
-      "ko": "광진 석탄 Storage",
-      "lt": "Gwangjin Anglis Storage",
-      "nl": "Gwangjin Kolen Storage",
-      "pl": "Gwangjin Węgiel Storage",
-      "pt-BR": "Gwangjin Carvão Storage",
-      "ru": "Gwangjin Каменный уголь Storage",
-      "sv": "Gwangjin Kol Storage",
-      "tr": "Gwangjin Kömür Storage",
-      "uk": "Гванджін Вугілля Storage",
-      "zh-Hans": "广津 煤炭 Storage",
-      "zh-Hant": "廣津 煤炭 Storage"
-    },
-    "coord": {
-      "x": 244750.61,
-      "y": 631313,
-      "z": -11688.383
-    },
-    "guid": "f67670984b837e48bd80638c9802a1a9",
-    "prod": [
-      {
-        "input": {
-          "Coal": 1
-        },
-        "output": {
-          "Coal": 1
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "Coal": 200
-    },
-    "supplyStorage": {
-      "Coal": 200
-    },
-    "maxReceiveDist": 500000
-  },
-  {
     "type": "Farm_Sunflower_C",
     "name": {
       "en": "Sunflower Farm",
@@ -4097,363 +4268,6 @@
     "supplyStorage": {
       "SunflowerSeed": 500
     }
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Tank Factory Coil Drop"
-    },
-    "coord": {
-      "x": -308758.3,
-      "y": 120368.734,
-      "z": -21245
-    },
-    "guid": "685ae04c42bf567c31d4de860d8e1fae",
-    "demand": {
-      "SteelCoil_10t": 1
-    },
-    "demandStorage": {
-      "SteelCoil_10t": 60
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Tank Factory Beam Drop"
-    },
-    "coord": {
-      "x": -307507.28,
-      "y": 121244.71,
-      "z": -21245
-    },
-    "guid": "8b633ee445aace12d31ea3b1f6092571",
-    "demand": {
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "lHBeam_6m": 20
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Tank Factory Plastic Drop",
-      "cs": "Tank Factory Plasty Drop",
-      "de": "Tank Factory Kunststoff Drop",
-      "es-419": "Tank Factory Plástico Drop",
-      "es-ES": "Tank Factory Plástico Drop",
-      "fr": "Tank Factory Plastique Drop",
-      "hu": "Tank Factory Műanyag Drop",
-      "it": "Tank Factory Plastica Drop",
-      "ja": "Tank Factory プラスチック Drop",
-      "nl": "Tank Factory Kunststof Drop",
-      "pl": "Tank Factory Plastik Drop",
-      "pt-BR": "Tank Factory Plástico Drop",
-      "ru": "Tank Factory Пластик Drop",
-      "tr": "Tank Factory Plastik Drop",
-      "uk": "Tank Factory пластик Drop",
-      "zh-Hans": "Tank Factory 塑料 Drop",
-      "zh-Hant": "Tank Factory 塑膠 Drop"
-    },
-    "coord": {
-      "x": -304222.12,
-      "y": 118488.37,
-      "z": -21245
-    },
-    "guid": "366e02564dd09ecbac307e9945bc778b",
-    "demand": {
-      "PlasticPallete": 1
-    },
-    "demandStorage": {
-      "PlasticPallete": 20
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Transformer Factory 20MVA Outside Drop"
-    },
-    "coord": {
-      "x": -318942.9,
-      "y": 1132639.9,
-      "z": -16395
-    },
-    "guid": "d0104ed646abaf502b12088cfa13dc80",
-    "demand": {
-      "lHBeam_6m": 1,
-      "SteelCoil_10t": 1,
-      "CopperRodCoil_2t": 1
-    },
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30,
-      "CopperRodCoil_2t": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Transformer Factory 50MVA Outside Drop"
-    },
-    "coord": {
-      "x": -318474.38,
-      "y": 1132639.9,
-      "z": -16395
-    },
-    "guid": "879ede514946555f47f3b8bc8a1f9bdc",
-    "demand": {
-      "lHBeam_6m": 1,
-      "SteelCoil_10t": 1,
-      "CopperRodCoil_2t": 1
-    },
-    "demandStorage": {
-      "lHBeam_6m": 30,
-      "SteelCoil_10t": 30,
-      "CopperRodCoil_2t": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Transformer Factory 20MVA Door Drop"
-    },
-    "coord": {
-      "x": -319001.4,
-      "y": 1136772.2,
-      "z": -16375.047
-    },
-    "guid": "4f4eb95748943fb26e5294b82369775b",
-    "demand": {
-      "PlasticPallete": 1
-    },
-    "demandStorage": {
-      "PlasticPallete": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Transformer Factory 50MVA Door Drop"
-    },
-    "coord": {
-      "x": -318597.94,
-      "y": 1136772.2,
-      "z": -16375.047
-    },
-    "guid": "fe6854144af31733f31ce9814d22e51e",
-    "demand": {
-      "PlasticPallete": 1,
-      "CircuitBoardPallet": 1
-    },
-    "demandStorage": {
-      "PlasticPallete": 30,
-      "CircuitBoardPallet": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Copper Refinery Drop"
-    },
-    "coord": {
-      "x": 430900.94,
-      "y": 1220442.6,
-      "z": -19439.416
-    },
-    "guid": "364f83784b99394690b7259d8834d4bc",
-    "demand": {
-      "CopperConcentrate": 1
-    },
-    "demandStorage": {
-      "CopperConcentrate": 100
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Terra Factory H-Beam Drop",
-      "cs": "Terra Factory Nosník Drop",
-      "de": "Terra Factory H-Träger Drop",
-      "es-419": "Terra Factory Viga en H Drop",
-      "es-ES": "Terra Factory Viga en H Drop",
-      "fi": "Terra Factory H-palkki Drop",
-      "fr": "Terra Factory Poutre en H Drop",
-      "hu": "Terra Factory H-gerenda Drop",
-      "it": "Terra Factory Travi ad H Drop",
-      "ja": "テラ Factory H形鋼 Drop",
-      "lt": "Terra Factory Sijos Drop",
-      "nl": "Terra Factory H-balk Drop",
-      "pl": "Terra Factory Belka H Drop",
-      "pt-BR": "Terra Factory Viga H Drop",
-      "ru": "Terra Factory Двутавровые балки Drop",
-      "tr": "Terra Factory H-Kiriş Drop",
-      "uk": "Терра Factory Двотаврова балка Drop",
-      "zh-Hans": "泰拉 Factory H型钢 Drop",
-      "zh-Hant": "Terra Factory H 型鋼 Drop"
-    },
-    "coord": {
-      "x": -309501.1,
-      "y": 1570755.8,
-      "z": -19100
-    },
-    "guid": "42db5c674ebe486f4e2632bc303983b9",
-    "demand": {
-      "lHBeam_6m": 1
-    },
-    "demandStorage": {
-      "lHBeam_6m": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Terra Factory Steel Coil Drop",
-      "cs": "Terra Factory Ocelová cívka Drop",
-      "de": "Terra Factory Stahlspule Drop",
-      "es-419": "Terra Factory Bobina de Acero Drop",
-      "es-ES": "Terra Factory Bobina de acero Drop",
-      "fr": "Terra Factory Bobine d'acier Drop",
-      "hu": "Terra Factory Acéltekercs Drop",
-      "it": "Terra Factory Bobina di acciaio Drop",
-      "ja": "テラ Factory スチールコイル Drop",
-      "nl": "Terra Factory Stalen spoel Drop",
-      "pl": "Terra Factory Zwój stali Drop",
-      "pt-BR": "Terra Factory Bobina de Aço Drop",
-      "ru": "Terra Factory Стальная катушка Drop",
-      "tr": "Terra Factory Çelik Bobin Drop",
-      "uk": "Терра Factory Сталева котушка Drop",
-      "zh-Hans": "泰拉 Factory 钢卷 Drop",
-      "zh-Hant": "Terra Factory 鋼捲 Drop"
-    },
-    "coord": {
-      "x": -306595.34,
-      "y": 1572738.4,
-      "z": -19100
-    },
-    "guid": "3465bd58475a38706f009da36b55ec8e",
-    "demand": {
-      "SteelCoil_10t": 1
-    },
-    "demandStorage": {
-      "SteelCoil_10t": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Terra Factory Oil Drop",
-      "cs": "Terra Factory Olej Drop",
-      "de": "Terra Factory Öl Drop",
-      "es-419": "Terra Factory Petróleo Drop",
-      "es-ES": "Terra Factory Petróleo Drop",
-      "fi": "Terra Factory Öljy Drop",
-      "fr": "Terra Factory Pétrole Drop",
-      "hu": "Terra Factory Olaj Drop",
-      "it": "Terra Factory Olio Drop",
-      "ja": "テラ Factory 石油 Drop",
-      "lt": "Terra Factory Aliejus Drop",
-      "nl": "Terra Factory Olie Drop",
-      "pl": "Terra Factory Olej Drop",
-      "pt-BR": "Terra Factory Combustível Drop",
-      "ru": "Terra Factory Масло Drop",
-      "sv": "Terra Factory Olja Drop",
-      "tr": "Terra Factory Yağ Drop",
-      "uk": "Терра Factory Нафта Drop",
-      "zh-Hans": "泰拉 Factory 石油 Drop",
-      "zh-Hant": "Terra Factory 油料 Drop"
-    },
-    "coord": {
-      "x": -315320.22,
-      "y": 1570932.1,
-      "z": -19100
-    },
-    "guid": "0fbac1084a0209fdb770e7bad3e9d86c",
-    "demand": {
-      "Oil": 1,
-      "Fuel": 1
-    },
-    "demandStorage": {
-      "Oil": 30,
-      "Fuel": 20
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Terra Factory Plastic Drop",
-      "cs": "Terra Factory Plasty Drop",
-      "de": "Terra Factory Kunststoff Drop",
-      "es-419": "Terra Factory Plástico Drop",
-      "es-ES": "Terra Factory Plástico Drop",
-      "fr": "Terra Factory Plastique Drop",
-      "hu": "Terra Factory Műanyag Drop",
-      "it": "Terra Factory Plastica Drop",
-      "ja": "テラ Factory プラスチック Drop",
-      "nl": "Terra Factory Kunststof Drop",
-      "pl": "Terra Factory Plastik Drop",
-      "pt-BR": "Terra Factory Plástico Drop",
-      "ru": "Terra Factory Пластик Drop",
-      "tr": "Terra Factory Plastik Drop",
-      "uk": "Терра Factory пластик Drop",
-      "zh-Hans": "泰拉 Factory 塑料 Drop",
-      "zh-Hant": "Terra Factory 塑膠 Drop"
-    },
-    "coord": {
-      "x": -309643.75,
-      "y": 1580806.4,
-      "z": -19100
-    },
-    "guid": "878022e64aff51c3b25fc0913c92cece",
-    "demand": {
-      "PlasticPallete": 1
-    },
-    "demandStorage": {
-      "PlasticPallete": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "ComonDrop_C",
-    "name": {
-      "en": "Terra Factory Container Drop",
-      "cs": "Terra Factory Kontejner Drop",
-      "es-419": "Terra Factory Contenedor Drop",
-      "es-ES": "Terra Factory Contenedor Drop",
-      "fr": "Terra Factory Conteneur Drop",
-      "hu": "Terra Factory Konténer Drop",
-      "ja": "テラ Factory コンテナ Drop",
-      "pl": "Terra Factory Kontener Drop",
-      "pt-BR": "Terra Factory Recipiente Drop",
-      "ru": "Terra Factory Контейнер Drop",
-      "tr": "Terra Factory Konteyner Drop",
-      "uk": "Терра Factory Контейнер Drop",
-      "zh-Hans": "泰拉 Factory 集装箱 Drop",
-      "zh-Hant": "Terra Factory 貨櫃 Drop"
-    },
-    "coord": {
-      "x": -309209.25,
-      "y": 1576717.8,
-      "z": -19100
-    },
-    "guid": "52030bbd4619c71ac0d39599bde6c5a8",
-    "demand": {
-      "Container_20ft_01": 1
-    },
-    "demandStorage": {
-      "Container_20ft_01": 10
-    },
-    "supplyStorage": {}
   },
   {
     "type": "FastFood_Storage_C",
@@ -4552,121 +4366,6 @@
     "supplyStorage": {}
   },
   {
-    "type": "Factory_Terra_C",
-    "name": {
-      "en": "Terra Factory",
-      "ja": "テラ Factory",
-      "uk": "Терра Factory",
-      "zh-Hans": "泰拉 Factory"
-    },
-    "coord": {
-      "x": -318193.56,
-      "y": 1580192.1,
-      "z": -19070
-    },
-    "guid": "98ca5a4a4d767649e3ee4c9cde9fc82a",
-    "prod": [
-      {
-        "input": {
-          "steelCoil_10t": 3,
-          "container_20ft_01": 2,
-          "lHBeam_6m": 2,
-          "oil": 2,
-          "plasticPallete": 2,
-          "fuel": 1,
-          "circuitBoardPallet": 1
-        },
-        "output": {
-          "terra": 1
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "steelCoil_10t": 10,
-      "container_20ft_01": 10,
-      "lHBeam_6m": 30,
-      "oil": 10,
-      "plasticPallete": 10,
-      "fuel": 10,
-      "circuitBoardPallet": 10,
-      "SteelCoil_10t": 30,
-      "Container_20ft_01": 10,
-      "Oil": 30,
-      "Fuel": 20,
-      "PlasticPallete": 30
-    },
-    "supplyStorage": {
-      "terra": 10
-    },
-    "dropPoint": [
-      "3465bd58475a38706f009da36b55ec8e",
-      "52030bbd4619c71ac0d39599bde6c5a8",
-      "42db5c674ebe486f4e2632bc303983b9",
-      "0fbac1084a0209fdb770e7bad3e9d86c",
-      "878022e64aff51c3b25fc0913c92cece"
-    ]
-  },
-  {
-    "type": "LiquidSupplier_C",
-    "name": {
-      "en": "Jeju Oil Fuel Terminal",
-      "cs": "Jeju Olej Palivo Terminal",
-      "de": "Jeju Öl Treibstoff Terminal",
-      "es-419": "Jeju Petróleo Combustible Terminal",
-      "es-ES": "Jeju Petróleo Combustible Terminal",
-      "fi": "Jeju Öljy Polttoaine Terminal",
-      "fr": "Jeju Pétrole Carburant Terminal",
-      "hu": "Jeju Olaj Üzemanyag Terminal",
-      "it": "Jeju Olio Carburante Terminal",
-      "ja": "チェジュ 石油 燃料 Terminal",
-      "ko": "제주 Oil 연료 Terminal",
-      "lt": "Jeju Aliejus Kuras Terminal",
-      "nl": "Jeju Olie Brandstof Terminal",
-      "pl": "Jeju Olej Paliwo Terminal",
-      "pt-BR": "Jeju Combustível Combustível Terminal",
-      "ru": "Чеджу Масло Топливо Terminal",
-      "sv": "Jeju Olja Bränsle Terminal",
-      "tr": "Jeju Yağ Benzin Terminal",
-      "uk": "Чеджу Нафта Паливо Terminal",
-      "vi": "Jeju Oil Nhiên liệu Terminal",
-      "zh-Hans": "济州 石油 汽油 Terminal",
-      "zh-Hant": "濟州 油料 燃料 Terminal"
-    },
-    "coord": {
-      "x": -9388.0205,
-      "y": -181357.66,
-      "z": -22000
-    },
-    "guid": "aa0f7fea4b56d63cb014e888413c78b6",
-    "prod": [
-      {
-        "input": {
-          "CrudeOil": 1
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "output": {
-          "Fuel": 1
-        },
-        "prodTime": 180,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "CrudeOil": 1
-    },
-    "demandStorage": {
-      "CrudeOil": 100
-    },
-    "supplyStorage": {
-      "Fuel": 50
-    }
-  },
-  {
     "type": "FuelDemand_C",
     "name": {
       "en": "Seongsan Concrete Factory Fuel Drop",
@@ -4711,1235 +4410,6 @@
       "Fuel": 100
     },
     "supplyStorage": {}
-  },
-  {
-    "type": "Mine_LimestoneRockQuarry_C",
-    "name": {
-      "en": "Dongsan Quarry #5",
-      "ja": "ドンサン Quarry #5",
-      "ko": "동산 Quarry #5",
-      "uk": "Донгсан Quarry #5",
-      "zh-Hans": "东山 Quarry #5",
-      "zh-Hant": "東山 Quarry #5"
-    },
-    "coord": {
-      "x": -442193.06,
-      "y": 677014.9,
-      "z": -8346.266
-    },
-    "guid": "29f2122a45a21ec2994c1a974671456e",
-    "prod": [
-      {
-        "output": {
-          "LimestoneRock": 1
-        },
-        "prodTime": 120,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LimestoneRock": 120
-    }
-  },
-  {
-    "type": "Mine_LimestoneRockQuarry_C",
-    "name": {
-      "en": "Dongsan Quarry #4",
-      "ja": "ドンサン Quarry #4",
-      "ko": "동산 Quarry #4",
-      "uk": "Донгсан Quarry #4",
-      "zh-Hans": "东山 Quarry #4",
-      "zh-Hant": "東山 Quarry #4"
-    },
-    "coord": {
-      "x": -390140.53,
-      "y": 656273.4,
-      "z": -13029.06
-    },
-    "guid": "15049ee14bd35fa453f69285c04bd433",
-    "prod": [
-      {
-        "output": {
-          "LimestoneRock": 1
-        },
-        "prodTime": 240,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LimestoneRock": 60
-    }
-  },
-  {
-    "type": "Mine_LimestoneRockQuarry_C",
-    "name": {
-      "en": "Dongsan Quarry #1",
-      "ja": "ドンサン Quarry #1",
-      "ko": "동산 Quarry #1",
-      "uk": "Донгсан Quarry #1",
-      "zh-Hans": "东山 Quarry #1",
-      "zh-Hant": "東山 Quarry #1"
-    },
-    "coord": {
-      "x": -460863.12,
-      "y": 637875.8,
-      "z": -15049.03
-    },
-    "guid": "de97f07947d74f39e8a5e68e319d82c7",
-    "prod": [
-      {
-        "output": {
-          "LimestoneRock": 1
-        },
-        "prodTime": 240,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LimestoneRock": 40
-    }
-  },
-  {
-    "type": "Mine_LimestoneRockQuarry_C",
-    "name": {
-      "en": "Dongsan Quarry #2",
-      "ja": "ドンサン Quarry #2",
-      "ko": "동산 Quarry #2",
-      "uk": "Донгсан Quarry #2",
-      "zh-Hans": "东山 Quarry #2",
-      "zh-Hant": "東山 Quarry #2"
-    },
-    "coord": {
-      "x": -455212.5,
-      "y": 656942.9,
-      "z": -13131.324
-    },
-    "guid": "137517ec47c87cfca651aba87fb930fc",
-    "prod": [
-      {
-        "output": {
-          "LimestoneRock": 1
-        },
-        "prodTime": 240,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LimestoneRock": 60
-    }
-  },
-  {
-    "type": "Mine_LimestoneRockQuarry_C",
-    "name": {
-      "en": "Dongsan Quarry #3",
-      "ja": "ドンサン Quarry #3",
-      "ko": "동산 Quarry #3",
-      "uk": "Донгсан Quarry #3",
-      "zh-Hans": "东山 Quarry #3",
-      "zh-Hant": "東山 Quarry #3"
-    },
-    "coord": {
-      "x": -471690.44,
-      "y": 586539,
-      "z": -13011.56
-    },
-    "guid": "d28cd57c46de768e9389bda6671d8766",
-    "prod": [
-      {
-        "output": {
-          "LimestoneRock": 1
-        },
-        "prodTime": 240,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LimestoneRock": 60
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Jeju Supermarket",
-      "ja": "チェジュ Supermarket",
-      "ko": "제주 Supermarket",
-      "ru": "Чеджу Supermarket",
-      "uk": "Чеджу Supermarket",
-      "zh-Hans": "济州 Supermarket",
-      "zh-Hant": "濟州 Supermarket"
-    },
-    "coord": {
-      "x": -32162.78,
-      "y": -118437.66,
-      "z": -20631.516
-    },
-    "guid": "81d4dc134112efc37da54ca336e45ade",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Gapa Supermarket",
-      "es-419": "Ga-Pa Supermarket",
-      "ja": "カパ Supermarket",
-      "ko": "가파 Supermarket",
-      "uk": "Гапа Supermarket",
-      "zh-Hans": "加帕 Supermarket",
-      "zh-Hant": "加帕 Supermarket"
-    },
-    "coord": {
-      "x": 74841.78,
-      "y": 661778.9,
-      "z": -9093.565
-    },
-    "guid": "3bd0d9de4f98326bd087adaa1a787e45",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Gangjung Supermarket",
-      "cs": "Gang-Jung Supermarket",
-      "de": "Gang-Jung Supermarket",
-      "es-419": "Gang-Jung Supermarket",
-      "es-ES": "Gang-Jung Supermarket",
-      "fi": "Gang-Jung Supermarket",
-      "fr": "Gang-Jung Supermarket",
-      "hu": "Gang-Jung Supermarket",
-      "it": "Gang-Jung Supermarket",
-      "ja": "カンジョン Supermarket",
-      "ko": "강정 Supermarket",
-      "lt": "Gang-Jung Supermarket",
-      "nl": "Gang-Jung Supermarket",
-      "pl": "Gang-Jung Supermarket",
-      "pt-BR": "Gang-Jung Supermarket",
-      "ru": "Гэнг-Джанг Supermarket",
-      "sv": "Gang-Jung Supermarket",
-      "tr": "Gang-Jung Supermarket",
-      "uk": "Ган-Юнг Supermarket",
-      "zh-Hans": "江正 Supermarket",
-      "zh-Hant": "江汀 Supermarket"
-    },
-    "coord": {
-      "x": -76324.03,
-      "y": 155706.88,
-      "z": -20860
-    },
-    "guid": "34933fc541ee793e998c1abf8bb59bd9",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Seongsan Supermarket",
-      "cs": "Seong-San Supermarket",
-      "de": "Seong-San Supermarket",
-      "es-419": "Seong-San Supermarket",
-      "es-ES": "Seong-San Supermarket",
-      "fi": "Seong-San Supermarket",
-      "fr": "Seong-San Supermarket",
-      "hu": "Seong-San Supermarket",
-      "it": "Seong-San Supermarket",
-      "ja": "ソンサン Supermarket",
-      "ko": "성산 Supermarket",
-      "lt": "Seong-San Supermarket",
-      "nl": "Seong-San Supermarket",
-      "pl": "Seong-San Supermarket",
-      "pt-BR": "Seong-San Supermarket",
-      "ru": "Сеонг-Сан Supermarket",
-      "sv": "Seong-San Supermarket",
-      "tr": "Seong-San Supermarket",
-      "uk": "Сіон-Сан Supermarket",
-      "zh-Hans": "成山 Supermarket",
-      "zh-Hant": "城山 Supermarket"
-    },
-    "coord": {
-      "x": 314089.16,
-      "y": -109654.44,
-      "z": -22075
-    },
-    "guid": "0401f07d437afd2c8818c0a6bda12d86",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Hallim Supermarket",
-      "ja": "ハリム Supermarket",
-      "ko": "한림 Supermarket",
-      "uk": "Халлім Supermarket",
-      "zh-Hans": "翰林 Supermarket",
-      "zh-Hant": "翰林 Supermarket"
-    },
-    "coord": {
-      "x": -331939.22,
-      "y": -6331.1353,
-      "z": -22275.422
-    },
-    "guid": "4a91a84b4a06113e65a3db94c527ec51",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Gwangjin Supermarket",
-      "ja": "クァンジン Supermarket",
-      "ko": "광진 Supermarket",
-      "uk": "Гванджін Supermarket",
-      "zh-Hans": "广津 Supermarket",
-      "zh-Hant": "廣津 Supermarket"
-    },
-    "coord": {
-      "x": 288311.34,
-      "y": 864023.25,
-      "z": -8505.624
-    },
-    "guid": "3ad670b5452bbad1747c96af8c175884",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "Supermarket_C",
-    "name": {
-      "en": "Ara Supermarket",
-      "ja": "アラ Supermarket",
-      "ko": "아라 Supermarket",
-      "uk": "Ара Supermarket",
-      "zh-Hans": "阿拉伯 Supermarket",
-      "zh-Hant": "雅羅 Supermarket"
-    },
-    "coord": {
-      "x": 283574.22,
-      "y": 1355644.6,
-      "z": -20998.566
-    },
-    "guid": "8b4aad7c41ec9a5e0f3195adcc2f8f19",
-    "prod": [
-      {
-        "input": {
-          "BottlePallete": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "RicePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PumpkinPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CabbagePallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "PotatoPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CornPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "OrangeBoxes": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "BeanPallet": 1
-        },
-        "prodTime": 1800,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.1
-      },
-      {
-        "input": {
-          "CheesePallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "BreadPallet": 1
-        },
-        "prodTime": 2400,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.2
-      },
-      {
-        "input": {
-          "MeatBox": 1
-        },
-        "prodTime": 720,
-        "prodSpeedMul": 1,
-        "foodSupply": 0.3
-      },
-      {
-        "input": {
-          "ToyBoxes": 1
-        },
-        "prodTime": 1200,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "output": {
-          "GroceryBag": 20
-        },
-        "prodTime": 1,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "BottlePallete": 5,
-      "RicePallet": 3,
-      "PumpkinPallet": 3,
-      "CabbagePallet": 3,
-      "PotatoPallet": 3,
-      "CornPallet": 3,
-      "OrangeBoxes": 3,
-      "BeanPallet": 3,
-      "CheesePallet": 3,
-      "BreadPallet": 3,
-      "MeatBox": 5,
-      "ToyBoxes": 3,
-      "_TLargePackage": 3
-    },
-    "supplyStorage": {
-      "GroceryBag": 30
-    }
-  },
-  {
-    "type": "LiveFishSupplier_C",
-    "name": {
-      "en": "Hallim Fish Market",
-      "ja": "ハリム Fish Market",
-      "ko": "한림 Fish Market",
-      "uk": "Халлім Fish Market",
-      "zh-Hans": "翰林 Fish Market",
-      "zh-Hant": "翰林 Fish Market"
-    },
-    "coord": {
-      "x": -335454.78,
-      "y": -8755.868,
-      "z": -22295
-    },
-    "guid": "03fcf9b0448c82289b84cf97d5514f24",
-    "prod": [
-      {
-        "output": {
-          "LiveFish_01": 5
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LiveFish_01": 50
-    }
-  },
-  {
-    "type": "LiveFishSupplier_C",
-    "name": {
-      "en": "Gwangjin Fish Market",
-      "ja": "クァンジン Fish Market",
-      "ko": "광진 Fish Market",
-      "uk": "Гванджін Fish Market",
-      "zh-Hans": "广津 Fish Market",
-      "zh-Hant": "廣津 Fish Market"
-    },
-    "coord": {
-      "x": 292105,
-      "y": 876903.6,
-      "z": -10872.011
-    },
-    "guid": "b194b174460d75989eb40bb5aaa72472",
-    "prod": [
-      {
-        "output": {
-          "LiveFish_01": 5
-        },
-        "prodTime": 600,
-        "prodSpeedMul": 1
-      }
-    ],
-    "supplyStorage": {
-      "LiveFish_01": 50
-    }
   },
   {
     "type": "GasStation_C",
@@ -6452,568 +4922,347 @@
     "supplyStorage": {}
   },
   {
-    "type": "Warehouse_C",
+    "type": "GrainExport_C",
     "name": {
-      "en": "1100 Rest Area"
+      "en": "Dasa Grain Export"
     },
     "coord": {
-      "x": -111217.95,
-      "y": 28257.363,
-      "z": -4538.3584
+      "x": -815644.56,
+      "y": 1204100.2,
+      "z": -21951.936
     },
-    "guid": "47152d314ae8abef9db76ca1e3b3c649",
+    "guid": "22797b7a4bfa353bfbb06a80bbc2ea9a",
     "prod": [
       {
         "input": {
-          "_TContainer": 1
+          "SunflowerSeed": 1
         },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
+        "prodTime": 120,
         "prodSpeedMul": 1
       }
     ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
     "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
+      "SunflowerSeed": 800
     },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
+    "supplyStorage": {}
   },
   {
-    "type": "Warehouse_C",
+    "type": "GrainExport_C",
     "name": {
-      "en": "Gwangjin Warehouse",
-      "ja": "クァンジン Warehouse",
-      "ko": "광진 Warehouse",
-      "uk": "Гванджін Warehouse",
-      "zh-Hans": "广津 Warehouse",
-      "zh-Hant": "廣津 Warehouse"
+      "en": "Jeju Grain Export",
+      "ja": "チェジュ Grain Export",
+      "ko": "제주 Grain Export",
+      "ru": "Чеджу Grain Export",
+      "uk": "Чеджу Grain Export",
+      "zh-Hans": "济州 Grain Export",
+      "zh-Hant": "濟州 Grain Export"
     },
     "coord": {
-      "x": 288509.22,
-      "y": 648599.9,
-      "z": -10850.185
+      "x": -565.1951,
+      "y": -183205.03,
+      "z": -21951.936
     },
-    "guid": "dcd4ee4d428503ffcb3b2186267f6e3a",
+    "guid": "125e8a29474dccd0f8e7bcae4219e188",
     "prod": [
       {
         "input": {
-          "_TContainer": 1
+          "SunflowerSeed": 1
         },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
+        "prodTime": 80,
         "prodSpeedMul": 1
       }
     ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
     "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
+      "SunflowerSeed": 800
     },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
+    "supplyStorage": {}
   },
   {
-    "type": "Warehouse_C",
+    "type": "Import_Coal_C",
     "name": {
-      "en": "Gangjung Warehouse",
-      "cs": "Gang-Jung Warehouse",
-      "de": "Gang-Jung Warehouse",
-      "es-419": "Gang-Jung Warehouse",
-      "es-ES": "Gang-Jung Warehouse",
-      "fi": "Gang-Jung Warehouse",
-      "fr": "Gang-Jung Warehouse",
-      "hu": "Gang-Jung Warehouse",
-      "it": "Gang-Jung Warehouse",
-      "ja": "カンジョン Warehouse",
-      "ko": "강정 Warehouse",
-      "lt": "Gang-Jung Warehouse",
-      "nl": "Gang-Jung Warehouse",
-      "pl": "Gang-Jung Warehouse",
-      "pt-BR": "Gang-Jung Warehouse",
-      "ru": "Гэнг-Джанг Warehouse",
-      "sv": "Gang-Jung Warehouse",
-      "tr": "Gang-Jung Warehouse",
-      "uk": "Ган-Юнг Warehouse",
-      "zh-Hans": "江正 Warehouse",
-      "zh-Hant": "江汀 Warehouse"
+      "en": "Dasa Coal Import",
+      "cs": "Dasa Uhlí Import",
+      "de": "Dasa Kohle Import",
+      "es-419": "Dasa Carbón Import",
+      "es-ES": "Dasa Carbón Import",
+      "fi": "Dasa Hiili Import",
+      "fr": "Dasa Charbon Import",
+      "hu": "Dasa Szén Import",
+      "it": "Dasa Carbone Import",
+      "ja": "Dasa 石炭 Import",
+      "ko": "Dasa 석탄 Import",
+      "lt": "Dasa Anglis Import",
+      "nl": "Dasa Kolen Import",
+      "pl": "Dasa Węgiel Import",
+      "pt-BR": "Dasa Carvão Import",
+      "ru": "Dasa Каменный уголь Import",
+      "sv": "Dasa Kol Import",
+      "tr": "Dasa Kömür Import",
+      "uk": "Dasa Вугілля Import",
+      "zh-Hans": "Dasa 煤炭 Import",
+      "zh-Hant": "Dasa 煤炭 Import"
     },
     "coord": {
-      "x": -45052.094,
-      "y": 160108.73,
-      "z": -21028.914
-    },
-    "guid": "0aaa0a5d48ba51047ef2768c222d0791",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
-  },
-  {
-    "type": "Warehouse_C",
-    "name": {
-      "en": "Jeju Harbor Warehouse",
-      "ja": "チェジュ Harbor Warehouse",
-      "ko": "제주 Harbor Warehouse",
-      "ru": "Чеджу Harbor Warehouse",
-      "uk": "Чеджу Harbor Warehouse",
-      "zh-Hans": "济州 Harbor Warehouse",
-      "zh-Hant": "濟州 Harbor Warehouse"
-    },
-    "coord": {
-      "x": 18412.008,
-      "y": -198294.58,
+      "x": -824557,
+      "y": 1198004.9,
       "z": -22000
     },
-    "guid": "c243ae364fa7c1e20248c492e7ca51cf",
+    "guid": null,
     "prod": [
       {
-        "input": {
-          "_TContainer": 1
-        },
         "output": {
-          "_TLargePackage": 4
+          "Coal": 1
         },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
+        "prodTime": 300,
         "prodSpeedMul": 1
       }
     ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
     "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
+      "Coal": 100
     }
   },
   {
-    "type": "Warehouse_C",
+    "type": "Import_IronOre_C",
     "name": {
-      "en": "Oedo Warehouse",
-      "ja": "ウェド Warehouse",
-      "ko": "외도 Warehouse",
-      "ru": "Эдо Warehouse",
-      "uk": "Едо Warehouse",
-      "zh-Hans": "大江户 Warehouse",
-      "zh-Hant": "外都 Warehouse"
+      "en": "Dasa Iron Ore Import",
+      "cs": "Dasa Železná ruda Import",
+      "de": "Dasa Eisenerz Import",
+      "es-419": "Dasa Mineral de hierro Import",
+      "es-ES": "Dasa Mineral de hierro Import",
+      "fi": "Dasa Rautamalmi Import",
+      "fr": "Dasa Minerai de fer Import",
+      "hu": "Dasa Vasérc Import",
+      "it": "Dasa Minerale di ferro Import",
+      "ja": "Dasa 鉄鉱石 Import",
+      "lt": "Dasa Geležies Rūda Import",
+      "nl": "Dasa Ijzererts Import",
+      "pl": "Dasa Ruda żelaza Import",
+      "pt-BR": "Dasa Minério de ferro Import",
+      "ru": "Dasa Железная руда Import",
+      "tr": "Dasa Demir Cevheri Import",
+      "uk": "Dasa Залізна руда Import",
+      "zh-Hans": "Dasa 铁矿 Import",
+      "zh-Hant": "Dasa 鐵礦 Import"
     },
     "coord": {
-      "x": -153476.22,
-      "y": -113803.75,
-      "z": -22083.623
+      "x": -825550.94,
+      "y": 1197541.4,
+      "z": -22000
     },
-    "guid": "3073d7334f0b5f20d9d7a69f02bdfbbe",
+    "guid": null,
+    "prod": [
+      {
+        "output": {
+          "IronOre": 1
+        },
+        "prodTime": 300,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {}
+  },
+  {
+    "type": "IronOreWarehouse_C",
+    "name": {
+      "en": "Gwangjin Iron Ore Storage",
+      "cs": "Gwangjin Železná ruda Storage",
+      "de": "Gwangjin Eisenerz Storage",
+      "es-419": "Gwangjin Mineral de hierro Storage",
+      "es-ES": "Gwangjin Mineral de hierro Storage",
+      "fi": "Gwangjin Rautamalmi Storage",
+      "fr": "Gwangjin Minerai de fer Storage",
+      "hu": "Gwangjin Vasérc Storage",
+      "it": "Gwangjin Minerale di ferro Storage",
+      "ja": "クァンジン 鉄鉱石 Storage",
+      "ko": "광진 Iron Ore Storage",
+      "lt": "Gwangjin Geležies Rūda Storage",
+      "nl": "Gwangjin Ijzererts Storage",
+      "pl": "Gwangjin Ruda żelaza Storage",
+      "pt-BR": "Gwangjin Minério de ferro Storage",
+      "ru": "Gwangjin Железная руда Storage",
+      "tr": "Gwangjin Demir Cevheri Storage",
+      "uk": "Гванджін Залізна руда Storage",
+      "zh-Hans": "广津 铁矿 Storage",
+      "zh-Hant": "廣津 鐵礦 Storage"
+    },
+    "coord": {
+      "x": 242381.89,
+      "y": 633067.44,
+      "z": -11688.383
+    },
+    "guid": "a1785134414ba0bc5f435287cade90e9",
     "prod": [
       {
         "input": {
-          "_TContainer": 1
+          "IronOre": 1
         },
         "output": {
-          "_TLargePackage": 4
+          "IronOre": 1
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "IronOre": 200
+    },
+    "supplyStorage": {
+      "IronOre": 200
+    },
+    "maxReceiveDist": 500000
+  },
+  {
+    "type": "LimestoneRockDrop_C",
+    "name": {
+      "en": "Dongsan Limestone Rock Drop",
+      "cs": "Dongsan Vápenec Kámen Drop",
+      "de": "Dongsan Kalkstein Brocken Drop",
+      "es-419": "Dongsan Caliza Roca Drop",
+      "es-ES": "Dongsan Piedra caliza Rocas Drop",
+      "fi": "Dongsan Kalkkikivi Rock Drop",
+      "fr": "Dongsan Calcaire Roche Drop",
+      "hu": "Dongsan Mészkő Szikla Drop",
+      "it": "Dongsan Calcare Rock Drop",
+      "ja": "ドンサン 石灰石 粗鉱 Drop",
+      "ko": "동산 석회암 Rock Drop",
+      "lt": "Dongsan Kalkakmenis Rock Drop",
+      "nl": "Dongsan Kalksteen Rock Drop",
+      "pl": "Dongsan Wapień Kamień Drop",
+      "pt-BR": "Dongsan Calcário Pedra Drop",
+      "ru": "Dongsan Известняк Камни Drop",
+      "tr": "Dongsan Kireçtaşı Taş Drop",
+      "uk": "Донгсан Вапняк Камінь Drop",
+      "zh-Hans": "东山 石灰石 岩 Drop",
+      "zh-Hant": "東山 石灰岩 石塊 Drop"
+    },
+    "coord": {
+      "x": -419889.88,
+      "y": 627256.6,
+      "z": -17464.758
+    },
+    "guid": "c03e3600420084f54b4bb2930a50fd26",
+    "demand": {
+      "LimestoneRock": 1
+    },
+    "demandStorage": {
+      "LimestoneRock": 200
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "LiquidSupplier_C",
+    "name": {
+      "en": "Jeju Oil Fuel Terminal",
+      "cs": "Jeju Olej Palivo Terminal",
+      "de": "Jeju Öl Treibstoff Terminal",
+      "es-419": "Jeju Petróleo Combustible Terminal",
+      "es-ES": "Jeju Petróleo Combustible Terminal",
+      "fi": "Jeju Öljy Polttoaine Terminal",
+      "fr": "Jeju Pétrole Carburant Terminal",
+      "hu": "Jeju Olaj Üzemanyag Terminal",
+      "it": "Jeju Olio Carburante Terminal",
+      "ja": "チェジュ 石油 燃料 Terminal",
+      "ko": "제주 Oil 연료 Terminal",
+      "lt": "Jeju Aliejus Kuras Terminal",
+      "nl": "Jeju Olie Brandstof Terminal",
+      "pl": "Jeju Olej Paliwo Terminal",
+      "pt-BR": "Jeju Combustível Combustível Terminal",
+      "ru": "Чеджу Масло Топливо Terminal",
+      "sv": "Jeju Olja Bränsle Terminal",
+      "tr": "Jeju Yağ Benzin Terminal",
+      "uk": "Чеджу Нафта Паливо Terminal",
+      "vi": "Jeju Oil Nhiên liệu Terminal",
+      "zh-Hans": "济州 石油 汽油 Terminal",
+      "zh-Hant": "濟州 油料 燃料 Terminal"
+    },
+    "coord": {
+      "x": -9388.0205,
+      "y": -181357.66,
+      "z": -22000
+    },
+    "guid": "aa0f7fea4b56d63cb014e888413c78b6",
+    "prod": [
+      {
+        "input": {
+          "CrudeOil": 1
         },
         "prodTime": 60,
         "prodSpeedMul": 1
       },
       {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
         "output": {
-          "MilitarySupplyBox_01": 1
+          "Fuel": 1
         },
-        "prodTime": 10,
+        "prodTime": 180,
         "prodSpeedMul": 1
       }
     ],
     "demand": {
-      "MilitarySupplyBox_01_Empty": 1
+      "CrudeOil": 1
     },
     "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
+      "CrudeOil": 100
     },
     "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
+      "Fuel": 50
     }
   },
   {
-    "type": "Warehouse_C",
+    "type": "LiveFishSupplier_C",
     "name": {
-      "en": "Seongsan Warehouse",
-      "cs": "Seong-San Warehouse",
-      "de": "Seong-San Warehouse",
-      "es-419": "Seong-San Warehouse",
-      "es-ES": "Seong-San Warehouse",
-      "fi": "Seong-San Warehouse",
-      "fr": "Seong-San Warehouse",
-      "hu": "Seong-San Warehouse",
-      "it": "Seong-San Warehouse",
-      "ja": "ソンサン Warehouse",
-      "ko": "성산 Warehouse",
-      "lt": "Seong-San Warehouse",
-      "nl": "Seong-San Warehouse",
-      "pl": "Seong-San Warehouse",
-      "pt-BR": "Seong-San Warehouse",
-      "ru": "Сеонг-Сан Warehouse",
-      "sv": "Seong-San Warehouse",
-      "tr": "Seong-San Warehouse",
-      "uk": "Сіон-Сан Warehouse",
-      "zh-Hans": "成山 Warehouse",
-      "zh-Hant": "城山 Warehouse"
+      "en": "Hallim Fish Market",
+      "ja": "ハリム Fish Market",
+      "ko": "한림 Fish Market",
+      "uk": "Халлім Fish Market",
+      "zh-Hans": "翰林 Fish Market",
+      "zh-Hant": "翰林 Fish Market"
     },
     "coord": {
-      "x": 306408.12,
-      "y": -14625.671,
-      "z": -21796.758
+      "x": -335454.78,
+      "y": -8755.868,
+      "z": -22295
     },
-    "guid": "2176f34a49276e5d67fe88905107eae0",
+    "guid": "03fcf9b0448c82289b84cf97d5514f24",
     "prod": [
       {
-        "input": {
-          "_TContainer": 1
-        },
         "output": {
-          "_TLargePackage": 4
+          "LiveFish_01": 5
         },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
+        "prodTime": 600,
         "prodSpeedMul": 1
       }
     ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
     "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
+      "LiveFish_01": 50
     }
   },
   {
-    "type": "Warehouse_C",
+    "type": "LiveFishSupplier_C",
     "name": {
-      "en": "Sinchang Warehouse",
-      "cs": "Sin-Chang Warehouse",
-      "de": "Sin-Chang Warehouse",
-      "es-419": "Sin-Chang Warehouse",
-      "es-ES": "Sin-Chang Warehouse",
-      "fi": "Sin-Chang Warehouse",
-      "fr": "Sin-Chang Warehouse",
-      "hu": "Sin-Chang Warehouse",
-      "it": "Sin-Chang Warehouse",
-      "ja": "シンチャン Warehouse",
-      "ko": "신창 Warehouse",
-      "lt": "Sin-Chang Warehouse",
-      "nl": "Sin-Chang Warehouse",
-      "pl": "Sin-Chang Warehouse",
-      "pt-BR": "Sin-Chang Warehouse",
-      "ru": "Син-Чанг Warehouse",
-      "sv": "Sin-Chang Warehouse",
-      "tr": "Sin-Chang Warehouse",
-      "uk": "Сін-Чанг Warehouse",
-      "zh-Hans": "新昌 Warehouse",
-      "zh-Hant": "新昌 Warehouse"
+      "en": "Gwangjin Fish Market",
+      "ja": "クァンジン Fish Market",
+      "ko": "광진 Fish Market",
+      "uk": "Гванджін Fish Market",
+      "zh-Hans": "广津 Fish Market",
+      "zh-Hant": "廣津 Fish Market"
     },
     "coord": {
-      "x": -388968.1,
-      "y": 77941.195,
-      "z": -22043.658
+      "x": 292105,
+      "y": 876903.6,
+      "z": -10872.011
     },
-    "guid": "a558dff046f125718f6de595f3774402",
+    "guid": "b194b174460d75989eb40bb5aaa72472",
     "prod": [
       {
-        "input": {
-          "_TContainer": 1
-        },
         "output": {
-          "_TLargePackage": 4
+          "LiveFish_01": 5
         },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
+        "prodTime": 600,
         "prodSpeedMul": 1
       }
     ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
     "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
-  },
-  {
-    "type": "Warehouse_C",
-    "name": {
-      "en": "Oji Gate Warehouse"
-    },
-    "coord": {
-      "x": 128449.49,
-      "y": 343936.88,
-      "z": -15995
-    },
-    "guid": "23a59a364477855e1df816b672278de6",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
+      "LiveFish_01": 50
     }
   },
   {
@@ -7115,117 +5364,6 @@
     "demandStorage": {
       "Log_20ft": 50,
       "Log_Oak_12ft": 50
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "Oil_Drop_C",
-    "name": {
-      "en": "Transformer Factory 20MVA Oil Drop",
-      "cs": "Transformer Factory 20MVA Olej Drop",
-      "de": "Transformer Factory 20MVA Öl Drop",
-      "es-419": "Transformer Factory 20MVA Petróleo Drop",
-      "es-ES": "Transformer Factory 20MVA Petróleo Drop",
-      "fi": "Transformer Factory 20MVA Öljy Drop",
-      "fr": "Transformer Factory 20MVA Pétrole Drop",
-      "hu": "Transformer Factory 20MVA Olaj Drop",
-      "it": "Transformer Factory 20MVA Olio Drop",
-      "ja": "Transformer Factory 20MVA 石油 Drop",
-      "lt": "Transformer Factory 20MVA Aliejus Drop",
-      "nl": "Transformer Factory 20MVA Olie Drop",
-      "pl": "Transformer Factory 20MVA Olej Drop",
-      "pt-BR": "Transformer Factory 20MVA Combustível Drop",
-      "ru": "Transformer Factory 20MVA Масло Drop",
-      "sv": "Transformer Factory 20MVA Olja Drop",
-      "tr": "Transformer Factory 20MVA Yağ Drop",
-      "uk": "Transformer Factory 20MVA Нафта Drop",
-      "zh-Hans": "Transformer Factory 20MVA 石油 Drop",
-      "zh-Hant": "Transformer Factory 20MVA 油料 Drop"
-    },
-    "coord": {
-      "x": -312640.88,
-      "y": 1139108.5,
-      "z": -16395
-    },
-    "guid": "c6ac1e9448bfe0eb8eb53fb15a08a07d",
-    "demand": {
-      "Oil": 1
-    },
-    "demandStorage": {
-      "Oil": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "Oil_Drop_C",
-    "name": {
-      "en": "Transformer Factory 50MVA Oil Drop",
-      "cs": "Transformer Factory 50MVA Olej Drop",
-      "de": "Transformer Factory 50MVA Öl Drop",
-      "es-419": "Transformer Factory 50MVA Petróleo Drop",
-      "es-ES": "Transformer Factory 50MVA Petróleo Drop",
-      "fi": "Transformer Factory 50MVA Öljy Drop",
-      "fr": "Transformer Factory 50MVA Pétrole Drop",
-      "hu": "Transformer Factory 50MVA Olaj Drop",
-      "it": "Transformer Factory 50MVA Olio Drop",
-      "ja": "Transformer Factory 50MVA 石油 Drop",
-      "lt": "Transformer Factory 50MVA Aliejus Drop",
-      "nl": "Transformer Factory 50MVA Olie Drop",
-      "pl": "Transformer Factory 50MVA Olej Drop",
-      "pt-BR": "Transformer Factory 50MVA Combustível Drop",
-      "ru": "Transformer Factory 50MVA Масло Drop",
-      "sv": "Transformer Factory 50MVA Olja Drop",
-      "tr": "Transformer Factory 50MVA Yağ Drop",
-      "uk": "Transformer Factory 50MVA Нафта Drop",
-      "zh-Hans": "Transformer Factory 50MVA 石油 Drop",
-      "zh-Hant": "Transformer Factory 50MVA 油料 Drop"
-    },
-    "coord": {
-      "x": -312640.88,
-      "y": 1140914.4,
-      "z": -16395
-    },
-    "guid": "9837d4f34ce8f7af223c908adc94e5fa",
-    "demand": {
-      "Oil": 1
-    },
-    "demandStorage": {
-      "Oil": 30
-    },
-    "supplyStorage": {}
-  },
-  {
-    "type": "Oil_Drop_C",
-    "name": {
-      "en": "Jeoji Plastic",
-      "cs": "Jeoji Plasty",
-      "de": "Jeoji Kunststoff",
-      "es-419": "Jeoji Plástico",
-      "es-ES": "Jeoji Plástico",
-      "fr": "Jeoji Plastique",
-      "hu": "Jeoji Műanyag",
-      "it": "Jeoji Plastica",
-      "ja": "Jeoji プラスチック",
-      "nl": "Jeoji Kunststof",
-      "pl": "Jeoji Plastik",
-      "pt-BR": "Jeoji Plástico",
-      "ru": "Jeoji Пластик",
-      "tr": "Jeoji Plastik",
-      "uk": "Jeoji пластик",
-      "zh-Hans": "Jeoji 塑料",
-      "zh-Hant": "Jeoji 塑膠"
-    },
-    "coord": {
-      "x": -283597.1,
-      "y": 81594.87,
-      "z": -19830
-    },
-    "guid": "66548d0e48da78a9dfa5e392abb2cb8c",
-    "demand": {
-      "Oil": 1
-    },
-    "demandStorage": {
-      "Oil": 200
     },
     "supplyStorage": {}
   },
@@ -7554,205 +5692,6 @@
     "maxDist": 200000
   },
   {
-    "type": "WarehouseDoor_C",
-    "name": {
-      "en": "Jeju Airport",
-      "ja": "チェジュ Airport",
-      "ko": "제주 Airport",
-      "ru": "Чеджу Airport",
-      "uk": "Чеджу Airport",
-      "zh-Hans": "济州 Airport",
-      "zh-Hant": "濟州 Airport"
-    },
-    "coord": {
-      "x": -93411.74,
-      "y": -132371.5,
-      "z": -21513.17
-    },
-    "guid": "054d65374c7bb15040b0aaad070c6915",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "_TLargePackage": 1,
-      "_TFinalProduct": 1,
-      "AirlineMealPallet": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 50,
-      "AirlineMealPallet": 50
-    },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
-  },
-  {
-    "type": "WarehouseDoor_C",
-    "name": {
-      "en": "Kupa",
-      "es-419": "Depósito Kupa",
-      "ja": "クパ倉庫",
-      "ko": "쿠파",
-      "ru": "Купа",
-      "uk": "Купа",
-      "zh-Hans": "库帕",
-      "zh-Hant": "庫帕"
-    },
-    "coord": {
-      "x": -44886.7,
-      "y": -96247.695,
-      "z": -18845.7
-    },
-    "guid": "7e27fd7746eb9b8bf3c2cc983ea15047",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
-  },
-  {
-    "type": "WarehouseDoor_C",
-    "name": {
-      "en": "Overseas Imports Company"
-    },
-    "coord": {
-      "x": -352918.44,
-      "y": 130153.23,
-      "z": -21803.291
-    },
-    "guid": "fd89d2734444728b4ad438b8ea0e3c3a",
-    "prod": [
-      {
-        "input": {
-          "_TContainer": 1
-        },
-        "output": {
-          "_TLargePackage": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TLargePackage": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "_TFinalProduct": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "MilitarySupplyBox_01_Empty": 1
-        },
-        "output": {
-          "MilitarySupplyBox_01": 1
-        },
-        "prodTime": 10,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demand": {
-      "MilitarySupplyBox_01_Empty": 1
-    },
-    "demandStorage": {
-      "_TContainer": 10,
-      "_TLargePackage": 50,
-      "_TFinalProduct": 50,
-      "MilitarySupplyBox_01_Empty": 10
-    },
-    "supplyStorage": {
-      "_TLargePackage": 50,
-      "MilitarySupplyBox_01": 50
-    }
-  },
-  {
     "type": "LogWarehouse_C",
     "name": {
       "en": "Migeum Log Warehouse"
@@ -7793,78 +5732,6 @@
       "Log_20ft": 100,
       "Log_Oak_12ft": 100
     }
-  },
-  {
-    "type": "PizzaCounter_C",
-    "name": {
-      "en": "Pizza Jeju",
-      "ja": "Pizza チェジュ",
-      "ko": "Pizza 제주",
-      "ru": "Pizza Чеджу",
-      "uk": "Pizza Чеджу",
-      "zh-Hans": "Pizza 济州",
-      "zh-Hant": "Pizza 濟州"
-    },
-    "coord": {
-      "x": -29054.621,
-      "y": -111579.26,
-      "z": -19810.162
-    },
-    "guid": "067dfcc84b1c8d6622a6ed9155a712db",
-    "prod": [
-      {
-        "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
-        },
-        "output": {
-          "Pizza_01_Premium": 20
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "MeatBox": 30,
-      "CheeseBox": 30
-    },
-    "supplyStorage": {
-      "Pizza_01_Premium": 30
-    },
-    "dropPoint": ["453bb67e4807743be1bceda3354d5a81"]
-  },
-  {
-    "type": "PizzaCounter_C",
-    "name": {
-      "en": "Pizza Seoguipo"
-    },
-    "coord": {
-      "x": -4864.749,
-      "y": 155327.58,
-      "z": -21311.936
-    },
-    "guid": "462faf914e3ce1e357d9188fb1565b3c",
-    "prod": [
-      {
-        "input": {
-          "MeatBox": 1,
-          "CheeseBox": 1
-        },
-        "output": {
-          "Pizza_01_Premium": 20
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "MeatBox": 30,
-      "CheeseBox": 30
-    },
-    "supplyStorage": {
-      "Pizza_01_Premium": 30
-    },
-    "dropPoint": ["b30d9a6a480fe326011b069b78ecf229"]
   },
   {
     "type": "MilitaryBase_C",
@@ -7947,137 +5814,6 @@
     "supplyStorage": {
       "Coal": 200
     }
-  },
-  {
-    "type": "Refinery_Fuel_C",
-    "name": {
-      "en": "Sanho Fuel Refinery",
-      "cs": "Sanho Palivo Refinery",
-      "de": "Sanho Treibstoff Refinery",
-      "es-419": "Sanho Combustible Refinery",
-      "es-ES": "Sanho Combustible Refinery",
-      "fi": "Sanho Polttoaine Refinery",
-      "fr": "Sanho Carburant Refinery",
-      "hu": "Sanho Üzemanyag Refinery",
-      "it": "Sanho Carburante Refinery",
-      "ja": "サンホ 燃料 Refinery",
-      "ko": "산호 연료 Refinery",
-      "lt": "Sanho Kuras Refinery",
-      "nl": "Sanho Brandstof Refinery",
-      "pl": "Sanho Paliwo Refinery",
-      "pt-BR": "Sanho Combustível Refinery",
-      "ru": "Sanho Топливо Refinery",
-      "sv": "Sanho Bränsle Refinery",
-      "tr": "Sanho Benzin Refinery",
-      "uk": "Санхо Паливо Refinery",
-      "vi": "Sanho Nhiên liệu Refinery",
-      "zh-Hans": "三湖 汽油 Refinery",
-      "zh-Hant": "三和 燃料 Refinery"
-    },
-    "coord": {
-      "x": -738385.7,
-      "y": 1465264.9,
-      "z": -19795
-    },
-    "guid": "5c6a24444e199bd34da3d3aee97b022a",
-    "prod": [
-      {
-        "input": {
-          "CrudeOil": 5
-        },
-        "output": {
-          "Fuel": 10
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "CrudeOil": 10,
-          "_TContainer": 1
-        },
-        "output": {
-          "Fuel": 30
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "CrudeOil": 300,
-      "_TContainer": 20,
-      "Container_40ft_01": 20,
-      "Container_20ft_01": 20
-    },
-    "supplyStorage": {
-      "Fuel": 500
-    },
-    "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
-  },
-  {
-    "type": "Refinery_Oil_C",
-    "name": {
-      "en": "Sanho Oil Refinery",
-      "cs": "Sanho Olej Refinery",
-      "de": "Sanho Öl Refinery",
-      "es-419": "Sanho Petróleo Refinery",
-      "es-ES": "Sanho Petróleo Refinery",
-      "fi": "Sanho Öljy Refinery",
-      "fr": "Sanho Pétrole Refinery",
-      "hu": "Sanho Olaj Refinery",
-      "it": "Sanho Olio Refinery",
-      "ja": "サンホ 石油 Refinery",
-      "ko": "산호 Oil Refinery",
-      "lt": "Sanho Aliejus Refinery",
-      "nl": "Sanho Olie Refinery",
-      "pl": "Sanho Olej Refinery",
-      "pt-BR": "Sanho Combustível Refinery",
-      "ru": "Sanho Масло Refinery",
-      "sv": "Sanho Olja Refinery",
-      "tr": "Sanho Yağ Refinery",
-      "uk": "Санхо Нафта Refinery",
-      "zh-Hans": "三湖 石油 Refinery",
-      "zh-Hant": "三和 油料 Refinery"
-    },
-    "coord": {
-      "x": -738385.7,
-      "y": 1466014.5,
-      "z": -19795
-    },
-    "guid": "e01d6ebb4f6898ece172fdbff6349c82",
-    "prod": [
-      {
-        "input": {
-          "CrudeOil": 2
-        },
-        "output": {
-          "Oil": 4
-        },
-        "prodTime": 60,
-        "prodSpeedMul": 1
-      },
-      {
-        "input": {
-          "CrudeOil": 10,
-          "_TContainer": 1
-        },
-        "output": {
-          "Oil": 30
-        },
-        "prodTime": 180,
-        "prodSpeedMul": 1
-      }
-    ],
-    "demandStorage": {
-      "CrudeOil": 300,
-      "_TContainer": 20,
-      "Container_40ft_01": 20,
-      "Container_20ft_01": 20
-    },
-    "supplyStorage": {
-      "Oil": 500
-    },
-    "dropPoint": ["6f6eeb7b4bf0fc6ec82cac989a19d67d", "05abbab9444e087e51bb08bc75d2eabf"]
   },
   {
     "type": "Mine_CopperOre_C",
@@ -8312,6 +6048,465 @@
     "supplyStorage": {
       "IronOre": 100
     }
+  },
+  {
+    "type": "Mine_LimestoneRockQuarry_C",
+    "name": {
+      "en": "Dongsan Quarry #5",
+      "ja": "ドンサン Quarry #5",
+      "ko": "동산 Quarry #5",
+      "uk": "Донгсан Quarry #5",
+      "zh-Hans": "东山 Quarry #5",
+      "zh-Hant": "東山 Quarry #5"
+    },
+    "coord": {
+      "x": -442193.06,
+      "y": 677014.9,
+      "z": -8346.266
+    },
+    "guid": "29f2122a45a21ec2994c1a974671456e",
+    "prod": [
+      {
+        "output": {
+          "LimestoneRock": 1
+        },
+        "prodTime": 120,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {
+      "LimestoneRock": 120
+    }
+  },
+  {
+    "type": "Mine_LimestoneRockQuarry_C",
+    "name": {
+      "en": "Dongsan Quarry #4",
+      "ja": "ドンサン Quarry #4",
+      "ko": "동산 Quarry #4",
+      "uk": "Донгсан Quarry #4",
+      "zh-Hans": "东山 Quarry #4",
+      "zh-Hant": "東山 Quarry #4"
+    },
+    "coord": {
+      "x": -390140.53,
+      "y": 656273.4,
+      "z": -13029.06
+    },
+    "guid": "15049ee14bd35fa453f69285c04bd433",
+    "prod": [
+      {
+        "output": {
+          "LimestoneRock": 1
+        },
+        "prodTime": 240,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {
+      "LimestoneRock": 60
+    }
+  },
+  {
+    "type": "Mine_LimestoneRockQuarry_C",
+    "name": {
+      "en": "Dongsan Quarry #1",
+      "ja": "ドンサン Quarry #1",
+      "ko": "동산 Quarry #1",
+      "uk": "Донгсан Quarry #1",
+      "zh-Hans": "东山 Quarry #1",
+      "zh-Hant": "東山 Quarry #1"
+    },
+    "coord": {
+      "x": -460863.12,
+      "y": 637875.8,
+      "z": -15049.03
+    },
+    "guid": "de97f07947d74f39e8a5e68e319d82c7",
+    "prod": [
+      {
+        "output": {
+          "LimestoneRock": 1
+        },
+        "prodTime": 240,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {
+      "LimestoneRock": 40
+    }
+  },
+  {
+    "type": "Mine_LimestoneRockQuarry_C",
+    "name": {
+      "en": "Dongsan Quarry #2",
+      "ja": "ドンサン Quarry #2",
+      "ko": "동산 Quarry #2",
+      "uk": "Донгсан Quarry #2",
+      "zh-Hans": "东山 Quarry #2",
+      "zh-Hant": "東山 Quarry #2"
+    },
+    "coord": {
+      "x": -455212.5,
+      "y": 656942.9,
+      "z": -13131.324
+    },
+    "guid": "137517ec47c87cfca651aba87fb930fc",
+    "prod": [
+      {
+        "output": {
+          "LimestoneRock": 1
+        },
+        "prodTime": 240,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {
+      "LimestoneRock": 60
+    }
+  },
+  {
+    "type": "Mine_LimestoneRockQuarry_C",
+    "name": {
+      "en": "Dongsan Quarry #3",
+      "ja": "ドンサン Quarry #3",
+      "ko": "동산 Quarry #3",
+      "uk": "Донгсан Quarry #3",
+      "zh-Hans": "东山 Quarry #3",
+      "zh-Hant": "東山 Quarry #3"
+    },
+    "coord": {
+      "x": -471690.44,
+      "y": 586539,
+      "z": -13011.56
+    },
+    "guid": "d28cd57c46de768e9389bda6671d8766",
+    "prod": [
+      {
+        "output": {
+          "LimestoneRock": 1
+        },
+        "prodTime": 240,
+        "prodSpeedMul": 1
+      }
+    ],
+    "supplyStorage": {
+      "LimestoneRock": 60
+    }
+  },
+  {
+    "type": "Oil_Drop_C",
+    "name": {
+      "en": "Transformer Factory 20MVA Oil Drop",
+      "cs": "Transformer Factory 20MVA Olej Drop",
+      "de": "Transformer Factory 20MVA Öl Drop",
+      "es-419": "Transformer Factory 20MVA Petróleo Drop",
+      "es-ES": "Transformer Factory 20MVA Petróleo Drop",
+      "fi": "Transformer Factory 20MVA Öljy Drop",
+      "fr": "Transformer Factory 20MVA Pétrole Drop",
+      "hu": "Transformer Factory 20MVA Olaj Drop",
+      "it": "Transformer Factory 20MVA Olio Drop",
+      "ja": "Transformer Factory 20MVA 石油 Drop",
+      "lt": "Transformer Factory 20MVA Aliejus Drop",
+      "nl": "Transformer Factory 20MVA Olie Drop",
+      "pl": "Transformer Factory 20MVA Olej Drop",
+      "pt-BR": "Transformer Factory 20MVA Combustível Drop",
+      "ru": "Transformer Factory 20MVA Масло Drop",
+      "sv": "Transformer Factory 20MVA Olja Drop",
+      "tr": "Transformer Factory 20MVA Yağ Drop",
+      "uk": "Transformer Factory 20MVA Нафта Drop",
+      "zh-Hans": "Transformer Factory 20MVA 石油 Drop",
+      "zh-Hant": "Transformer Factory 20MVA 油料 Drop"
+    },
+    "coord": {
+      "x": -312640.88,
+      "y": 1139108.5,
+      "z": -16395
+    },
+    "guid": "c6ac1e9448bfe0eb8eb53fb15a08a07d",
+    "demand": {
+      "Oil": 1
+    },
+    "demandStorage": {
+      "Oil": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Oil_Drop_C",
+    "name": {
+      "en": "Transformer Factory 50MVA Oil Drop",
+      "cs": "Transformer Factory 50MVA Olej Drop",
+      "de": "Transformer Factory 50MVA Öl Drop",
+      "es-419": "Transformer Factory 50MVA Petróleo Drop",
+      "es-ES": "Transformer Factory 50MVA Petróleo Drop",
+      "fi": "Transformer Factory 50MVA Öljy Drop",
+      "fr": "Transformer Factory 50MVA Pétrole Drop",
+      "hu": "Transformer Factory 50MVA Olaj Drop",
+      "it": "Transformer Factory 50MVA Olio Drop",
+      "ja": "Transformer Factory 50MVA 石油 Drop",
+      "lt": "Transformer Factory 50MVA Aliejus Drop",
+      "nl": "Transformer Factory 50MVA Olie Drop",
+      "pl": "Transformer Factory 50MVA Olej Drop",
+      "pt-BR": "Transformer Factory 50MVA Combustível Drop",
+      "ru": "Transformer Factory 50MVA Масло Drop",
+      "sv": "Transformer Factory 50MVA Olja Drop",
+      "tr": "Transformer Factory 50MVA Yağ Drop",
+      "uk": "Transformer Factory 50MVA Нафта Drop",
+      "zh-Hans": "Transformer Factory 50MVA 石油 Drop",
+      "zh-Hant": "Transformer Factory 50MVA 油料 Drop"
+    },
+    "coord": {
+      "x": -312640.88,
+      "y": 1140914.4,
+      "z": -16395
+    },
+    "guid": "9837d4f34ce8f7af223c908adc94e5fa",
+    "demand": {
+      "Oil": 1
+    },
+    "demandStorage": {
+      "Oil": 30
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "Oil_Drop_C",
+    "name": {
+      "en": "Jeoji Plastic",
+      "cs": "Jeoji Plasty",
+      "de": "Jeoji Kunststoff",
+      "es-419": "Jeoji Plástico",
+      "es-ES": "Jeoji Plástico",
+      "fr": "Jeoji Plastique",
+      "hu": "Jeoji Műanyag",
+      "it": "Jeoji Plastica",
+      "ja": "Jeoji プラスチック",
+      "nl": "Jeoji Kunststof",
+      "pl": "Jeoji Plastik",
+      "pt-BR": "Jeoji Plástico",
+      "ru": "Jeoji Пластик",
+      "tr": "Jeoji Plastik",
+      "uk": "Jeoji пластик",
+      "zh-Hans": "Jeoji 塑料",
+      "zh-Hant": "Jeoji 塑膠"
+    },
+    "coord": {
+      "x": -283597.1,
+      "y": 81594.87,
+      "z": -19830
+    },
+    "guid": "66548d0e48da78a9dfa5e392abb2cb8c",
+    "demand": {
+      "Oil": 1
+    },
+    "demandStorage": {
+      "Oil": 200
+    },
+    "supplyStorage": {}
+  },
+  {
+    "type": "PizzaCounter_C",
+    "name": {
+      "en": "Pizza Jeju",
+      "ja": "Pizza チェジュ",
+      "ko": "Pizza 제주",
+      "ru": "Pizza Чеджу",
+      "uk": "Pizza Чеджу",
+      "zh-Hans": "Pizza 济州",
+      "zh-Hant": "Pizza 濟州"
+    },
+    "coord": {
+      "x": -29054.621,
+      "y": -111579.26,
+      "z": -19810.162
+    },
+    "guid": "067dfcc84b1c8d6622a6ed9155a712db",
+    "prod": [
+      {
+        "input": {
+          "MeatBox": 1,
+          "CheeseBox": 1
+        },
+        "output": {
+          "Pizza_01_Premium": 20
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "MeatBox": 30,
+      "CheeseBox": 30
+    },
+    "supplyStorage": {
+      "Pizza_01_Premium": 30
+    },
+    "dropPoint": ["453bb67e4807743be1bceda3354d5a81"]
+  },
+  {
+    "type": "PizzaCounter_C",
+    "name": {
+      "en": "Pizza Seoguipo"
+    },
+    "coord": {
+      "x": -4864.749,
+      "y": 155327.58,
+      "z": -21311.936
+    },
+    "guid": "462faf914e3ce1e357d9188fb1565b3c",
+    "prod": [
+      {
+        "input": {
+          "MeatBox": 1,
+          "CheeseBox": 1
+        },
+        "output": {
+          "Pizza_01_Premium": 20
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "MeatBox": 30,
+      "CheeseBox": 30
+    },
+    "supplyStorage": {
+      "Pizza_01_Premium": 30
+    },
+    "dropPoint": ["b30d9a6a480fe326011b069b78ecf229"]
+  },
+  {
+    "type": "Refinery_Fuel_C",
+    "name": {
+      "en": "Sanho Fuel Refinery",
+      "cs": "Sanho Palivo Refinery",
+      "de": "Sanho Treibstoff Refinery",
+      "es-419": "Sanho Combustible Refinery",
+      "es-ES": "Sanho Combustible Refinery",
+      "fi": "Sanho Polttoaine Refinery",
+      "fr": "Sanho Carburant Refinery",
+      "hu": "Sanho Üzemanyag Refinery",
+      "it": "Sanho Carburante Refinery",
+      "ja": "サンホ 燃料 Refinery",
+      "ko": "산호 연료 Refinery",
+      "lt": "Sanho Kuras Refinery",
+      "nl": "Sanho Brandstof Refinery",
+      "pl": "Sanho Paliwo Refinery",
+      "pt-BR": "Sanho Combustível Refinery",
+      "ru": "Sanho Топливо Refinery",
+      "sv": "Sanho Bränsle Refinery",
+      "tr": "Sanho Benzin Refinery",
+      "uk": "Санхо Паливо Refinery",
+      "vi": "Sanho Nhiên liệu Refinery",
+      "zh-Hans": "三湖 汽油 Refinery",
+      "zh-Hant": "三和 燃料 Refinery"
+    },
+    "coord": {
+      "x": -738385.7,
+      "y": 1465264.9,
+      "z": -19795
+    },
+    "guid": "5c6a24444e199bd34da3d3aee97b022a",
+    "prod": [
+      {
+        "input": {
+          "CrudeOil": 5
+        },
+        "output": {
+          "Fuel": 10
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "CrudeOil": 10,
+          "_TContainer": 1
+        },
+        "output": {
+          "Fuel": 30
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CrudeOil": 300,
+      "_TContainer": 20,
+      "Container_40ft_01": 20,
+      "Container_20ft_01": 20
+    },
+    "supplyStorage": {
+      "Fuel": 500
+    },
+    "dropPoint": ["b7181c824de20853ed5aeca4664543df", "fa89df514b876032f2161690911f3504"]
+  },
+  {
+    "type": "Refinery_Oil_C",
+    "name": {
+      "en": "Sanho Oil Refinery",
+      "cs": "Sanho Olej Refinery",
+      "de": "Sanho Öl Refinery",
+      "es-419": "Sanho Petróleo Refinery",
+      "es-ES": "Sanho Petróleo Refinery",
+      "fi": "Sanho Öljy Refinery",
+      "fr": "Sanho Pétrole Refinery",
+      "hu": "Sanho Olaj Refinery",
+      "it": "Sanho Olio Refinery",
+      "ja": "サンホ 石油 Refinery",
+      "ko": "산호 Oil Refinery",
+      "lt": "Sanho Aliejus Refinery",
+      "nl": "Sanho Olie Refinery",
+      "pl": "Sanho Olej Refinery",
+      "pt-BR": "Sanho Combustível Refinery",
+      "ru": "Sanho Масло Refinery",
+      "sv": "Sanho Olja Refinery",
+      "tr": "Sanho Yağ Refinery",
+      "uk": "Санхо Нафта Refinery",
+      "zh-Hans": "三湖 石油 Refinery",
+      "zh-Hant": "三和 油料 Refinery"
+    },
+    "coord": {
+      "x": -738385.7,
+      "y": 1466014.5,
+      "z": -19795
+    },
+    "guid": "e01d6ebb4f6898ece172fdbff6349c82",
+    "prod": [
+      {
+        "input": {
+          "CrudeOil": 2
+        },
+        "output": {
+          "Oil": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "CrudeOil": 10,
+          "_TContainer": 1
+        },
+        "output": {
+          "Oil": 30
+        },
+        "prodTime": 180,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "CrudeOil": 300,
+      "_TContainer": 20,
+      "Container_40ft_01": 20,
+      "Container_20ft_01": 20
+    },
+    "supplyStorage": {
+      "Oil": 500
+    },
+    "dropPoint": ["6f6eeb7b4bf0fc6ec82cac989a19d67d", "05abbab9444e087e51bb08bc75d2eabf"]
   },
   {
     "type": "Resident_C",
@@ -16243,5 +14438,1795 @@
       "LiveFish_01": 30
     },
     "supplyStorage": {}
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Jeju Supermarket",
+      "ja": "チェジュ Supermarket",
+      "ko": "제주 Supermarket",
+      "ru": "Чеджу Supermarket",
+      "uk": "Чеджу Supermarket",
+      "zh-Hans": "济州 Supermarket",
+      "zh-Hant": "濟州 Supermarket"
+    },
+    "coord": {
+      "x": -32162.78,
+      "y": -118437.66,
+      "z": -20631.516
+    },
+    "guid": "81d4dc134112efc37da54ca336e45ade",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Gapa Supermarket",
+      "es-419": "Ga-Pa Supermarket",
+      "ja": "カパ Supermarket",
+      "ko": "가파 Supermarket",
+      "uk": "Гапа Supermarket",
+      "zh-Hans": "加帕 Supermarket",
+      "zh-Hant": "加帕 Supermarket"
+    },
+    "coord": {
+      "x": 74841.78,
+      "y": 661778.9,
+      "z": -9093.565
+    },
+    "guid": "3bd0d9de4f98326bd087adaa1a787e45",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Gangjung Supermarket",
+      "cs": "Gang-Jung Supermarket",
+      "de": "Gang-Jung Supermarket",
+      "es-419": "Gang-Jung Supermarket",
+      "es-ES": "Gang-Jung Supermarket",
+      "fi": "Gang-Jung Supermarket",
+      "fr": "Gang-Jung Supermarket",
+      "hu": "Gang-Jung Supermarket",
+      "it": "Gang-Jung Supermarket",
+      "ja": "カンジョン Supermarket",
+      "ko": "강정 Supermarket",
+      "lt": "Gang-Jung Supermarket",
+      "nl": "Gang-Jung Supermarket",
+      "pl": "Gang-Jung Supermarket",
+      "pt-BR": "Gang-Jung Supermarket",
+      "ru": "Гэнг-Джанг Supermarket",
+      "sv": "Gang-Jung Supermarket",
+      "tr": "Gang-Jung Supermarket",
+      "uk": "Ган-Юнг Supermarket",
+      "zh-Hans": "江正 Supermarket",
+      "zh-Hant": "江汀 Supermarket"
+    },
+    "coord": {
+      "x": -76324.03,
+      "y": 155706.88,
+      "z": -20860
+    },
+    "guid": "34933fc541ee793e998c1abf8bb59bd9",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Seongsan Supermarket",
+      "cs": "Seong-San Supermarket",
+      "de": "Seong-San Supermarket",
+      "es-419": "Seong-San Supermarket",
+      "es-ES": "Seong-San Supermarket",
+      "fi": "Seong-San Supermarket",
+      "fr": "Seong-San Supermarket",
+      "hu": "Seong-San Supermarket",
+      "it": "Seong-San Supermarket",
+      "ja": "ソンサン Supermarket",
+      "ko": "성산 Supermarket",
+      "lt": "Seong-San Supermarket",
+      "nl": "Seong-San Supermarket",
+      "pl": "Seong-San Supermarket",
+      "pt-BR": "Seong-San Supermarket",
+      "ru": "Сеонг-Сан Supermarket",
+      "sv": "Seong-San Supermarket",
+      "tr": "Seong-San Supermarket",
+      "uk": "Сіон-Сан Supermarket",
+      "zh-Hans": "成山 Supermarket",
+      "zh-Hant": "城山 Supermarket"
+    },
+    "coord": {
+      "x": 314089.16,
+      "y": -109654.44,
+      "z": -22075
+    },
+    "guid": "0401f07d437afd2c8818c0a6bda12d86",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Hallim Supermarket",
+      "ja": "ハリム Supermarket",
+      "ko": "한림 Supermarket",
+      "uk": "Халлім Supermarket",
+      "zh-Hans": "翰林 Supermarket",
+      "zh-Hant": "翰林 Supermarket"
+    },
+    "coord": {
+      "x": -331939.22,
+      "y": -6331.1353,
+      "z": -22275.422
+    },
+    "guid": "4a91a84b4a06113e65a3db94c527ec51",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Gwangjin Supermarket",
+      "ja": "クァンジン Supermarket",
+      "ko": "광진 Supermarket",
+      "uk": "Гванджін Supermarket",
+      "zh-Hans": "广津 Supermarket",
+      "zh-Hant": "廣津 Supermarket"
+    },
+    "coord": {
+      "x": 288311.34,
+      "y": 864023.25,
+      "z": -8505.624
+    },
+    "guid": "3ad670b5452bbad1747c96af8c175884",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Supermarket_C",
+    "name": {
+      "en": "Ara Supermarket",
+      "ja": "アラ Supermarket",
+      "ko": "아라 Supermarket",
+      "uk": "Ара Supermarket",
+      "zh-Hans": "阿拉伯 Supermarket",
+      "zh-Hant": "雅羅 Supermarket"
+    },
+    "coord": {
+      "x": 283574.22,
+      "y": 1355644.6,
+      "z": -20998.566
+    },
+    "guid": "8b4aad7c41ec9a5e0f3195adcc2f8f19",
+    "prod": [
+      {
+        "input": {
+          "BottlePallete": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "RicePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PumpkinPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CabbagePallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "PotatoPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CornPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "OrangeBoxes": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "BeanPallet": 1
+        },
+        "prodTime": 1800,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.1
+      },
+      {
+        "input": {
+          "CheesePallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "BreadPallet": 1
+        },
+        "prodTime": 2400,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.2
+      },
+      {
+        "input": {
+          "MeatBox": 1
+        },
+        "prodTime": 720,
+        "prodSpeedMul": 1,
+        "foodSupply": 0.3
+      },
+      {
+        "input": {
+          "ToyBoxes": 1
+        },
+        "prodTime": 1200,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "output": {
+          "GroceryBag": 20
+        },
+        "prodTime": 1,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demandStorage": {
+      "BottlePallete": 5,
+      "RicePallet": 3,
+      "PumpkinPallet": 3,
+      "CabbagePallet": 3,
+      "PotatoPallet": 3,
+      "CornPallet": 3,
+      "OrangeBoxes": 3,
+      "BeanPallet": 3,
+      "CheesePallet": 3,
+      "BreadPallet": 3,
+      "MeatBox": 5,
+      "ToyBoxes": 3,
+      "_TLargePackage": 3
+    },
+    "supplyStorage": {
+      "GroceryBag": 30
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "1100 Rest Area"
+    },
+    "coord": {
+      "x": -111217.95,
+      "y": 28257.363,
+      "z": -4538.3584
+    },
+    "guid": "47152d314ae8abef9db76ca1e3b3c649",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Gwangjin Warehouse",
+      "ja": "クァンジン Warehouse",
+      "ko": "광진 Warehouse",
+      "uk": "Гванджін Warehouse",
+      "zh-Hans": "广津 Warehouse",
+      "zh-Hant": "廣津 Warehouse"
+    },
+    "coord": {
+      "x": 288509.22,
+      "y": 648599.9,
+      "z": -10850.185
+    },
+    "guid": "dcd4ee4d428503ffcb3b2186267f6e3a",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Gangjung Warehouse",
+      "cs": "Gang-Jung Warehouse",
+      "de": "Gang-Jung Warehouse",
+      "es-419": "Gang-Jung Warehouse",
+      "es-ES": "Gang-Jung Warehouse",
+      "fi": "Gang-Jung Warehouse",
+      "fr": "Gang-Jung Warehouse",
+      "hu": "Gang-Jung Warehouse",
+      "it": "Gang-Jung Warehouse",
+      "ja": "カンジョン Warehouse",
+      "ko": "강정 Warehouse",
+      "lt": "Gang-Jung Warehouse",
+      "nl": "Gang-Jung Warehouse",
+      "pl": "Gang-Jung Warehouse",
+      "pt-BR": "Gang-Jung Warehouse",
+      "ru": "Гэнг-Джанг Warehouse",
+      "sv": "Gang-Jung Warehouse",
+      "tr": "Gang-Jung Warehouse",
+      "uk": "Ган-Юнг Warehouse",
+      "zh-Hans": "江正 Warehouse",
+      "zh-Hant": "江汀 Warehouse"
+    },
+    "coord": {
+      "x": -45052.094,
+      "y": 160108.73,
+      "z": -21028.914
+    },
+    "guid": "0aaa0a5d48ba51047ef2768c222d0791",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Jeju Harbor Warehouse",
+      "ja": "チェジュ Harbor Warehouse",
+      "ko": "제주 Harbor Warehouse",
+      "ru": "Чеджу Harbor Warehouse",
+      "uk": "Чеджу Harbor Warehouse",
+      "zh-Hans": "济州 Harbor Warehouse",
+      "zh-Hant": "濟州 Harbor Warehouse"
+    },
+    "coord": {
+      "x": 18412.008,
+      "y": -198294.58,
+      "z": -22000
+    },
+    "guid": "c243ae364fa7c1e20248c492e7ca51cf",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Oedo Warehouse",
+      "ja": "ウェド Warehouse",
+      "ko": "외도 Warehouse",
+      "ru": "Эдо Warehouse",
+      "uk": "Едо Warehouse",
+      "zh-Hans": "大江户 Warehouse",
+      "zh-Hant": "外都 Warehouse"
+    },
+    "coord": {
+      "x": -153476.22,
+      "y": -113803.75,
+      "z": -22083.623
+    },
+    "guid": "3073d7334f0b5f20d9d7a69f02bdfbbe",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Seongsan Warehouse",
+      "cs": "Seong-San Warehouse",
+      "de": "Seong-San Warehouse",
+      "es-419": "Seong-San Warehouse",
+      "es-ES": "Seong-San Warehouse",
+      "fi": "Seong-San Warehouse",
+      "fr": "Seong-San Warehouse",
+      "hu": "Seong-San Warehouse",
+      "it": "Seong-San Warehouse",
+      "ja": "ソンサン Warehouse",
+      "ko": "성산 Warehouse",
+      "lt": "Seong-San Warehouse",
+      "nl": "Seong-San Warehouse",
+      "pl": "Seong-San Warehouse",
+      "pt-BR": "Seong-San Warehouse",
+      "ru": "Сеонг-Сан Warehouse",
+      "sv": "Seong-San Warehouse",
+      "tr": "Seong-San Warehouse",
+      "uk": "Сіон-Сан Warehouse",
+      "zh-Hans": "成山 Warehouse",
+      "zh-Hant": "城山 Warehouse"
+    },
+    "coord": {
+      "x": 306408.12,
+      "y": -14625.671,
+      "z": -21796.758
+    },
+    "guid": "2176f34a49276e5d67fe88905107eae0",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Sinchang Warehouse",
+      "cs": "Sin-Chang Warehouse",
+      "de": "Sin-Chang Warehouse",
+      "es-419": "Sin-Chang Warehouse",
+      "es-ES": "Sin-Chang Warehouse",
+      "fi": "Sin-Chang Warehouse",
+      "fr": "Sin-Chang Warehouse",
+      "hu": "Sin-Chang Warehouse",
+      "it": "Sin-Chang Warehouse",
+      "ja": "シンチャン Warehouse",
+      "ko": "신창 Warehouse",
+      "lt": "Sin-Chang Warehouse",
+      "nl": "Sin-Chang Warehouse",
+      "pl": "Sin-Chang Warehouse",
+      "pt-BR": "Sin-Chang Warehouse",
+      "ru": "Син-Чанг Warehouse",
+      "sv": "Sin-Chang Warehouse",
+      "tr": "Sin-Chang Warehouse",
+      "uk": "Сін-Чанг Warehouse",
+      "zh-Hans": "新昌 Warehouse",
+      "zh-Hant": "新昌 Warehouse"
+    },
+    "coord": {
+      "x": -388968.1,
+      "y": 77941.195,
+      "z": -22043.658
+    },
+    "guid": "a558dff046f125718f6de595f3774402",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "Warehouse_C",
+    "name": {
+      "en": "Oji Gate Warehouse"
+    },
+    "coord": {
+      "x": 128449.49,
+      "y": 343936.88,
+      "z": -15995
+    },
+    "guid": "23a59a364477855e1df816b672278de6",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "WarehouseDoor_C",
+    "name": {
+      "en": "Jeju Airport",
+      "ja": "チェジュ Airport",
+      "ko": "제주 Airport",
+      "ru": "Чеджу Airport",
+      "uk": "Чеджу Airport",
+      "zh-Hans": "济州 Airport",
+      "zh-Hant": "濟州 Airport"
+    },
+    "coord": {
+      "x": -93411.74,
+      "y": -132371.5,
+      "z": -21513.17
+    },
+    "guid": "054d65374c7bb15040b0aaad070c6915",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "_TLargePackage": 1,
+      "_TFinalProduct": 1,
+      "AirlineMealPallet": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 50,
+      "AirlineMealPallet": 50
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "WarehouseDoor_C",
+    "name": {
+      "en": "Kupa",
+      "es-419": "Depósito Kupa",
+      "ja": "クパ倉庫",
+      "ko": "쿠파",
+      "ru": "Купа",
+      "uk": "Купа",
+      "zh-Hans": "库帕",
+      "zh-Hant": "庫帕"
+    },
+    "coord": {
+      "x": -44886.7,
+      "y": -96247.695,
+      "z": -18845.7
+    },
+    "guid": "7e27fd7746eb9b8bf3c2cc983ea15047",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
+  },
+  {
+    "type": "WarehouseDoor_C",
+    "name": {
+      "en": "Overseas Imports Company"
+    },
+    "coord": {
+      "x": -352918.44,
+      "y": 130153.23,
+      "z": -21803.291
+    },
+    "guid": "fd89d2734444728b4ad438b8ea0e3c3a",
+    "prod": [
+      {
+        "input": {
+          "_TContainer": 1
+        },
+        "output": {
+          "_TLargePackage": 4
+        },
+        "prodTime": 60,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TLargePackage": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "_TFinalProduct": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      },
+      {
+        "input": {
+          "MilitarySupplyBox_01_Empty": 1
+        },
+        "output": {
+          "MilitarySupplyBox_01": 1
+        },
+        "prodTime": 10,
+        "prodSpeedMul": 1
+      }
+    ],
+    "demand": {
+      "MilitarySupplyBox_01_Empty": 1
+    },
+    "demandStorage": {
+      "_TContainer": 10,
+      "_TLargePackage": 50,
+      "_TFinalProduct": 50,
+      "MilitarySupplyBox_01_Empty": 10
+    },
+    "supplyStorage": {
+      "_TLargePackage": 50,
+      "MilitarySupplyBox_01": 50
+    }
   }
 ]

@@ -1,9 +1,10 @@
 {
-  "1": {
-    "en": "Hana",
-    "ja": "ハナ",
-    "ko": "하나",
-    "zh-Hans": "工作"
+  "Tuscan": {
+    "en": "Tuscan",
+    "ja": "トスカーナ",
+    "ko": "투스칸",
+    "lt": "Toskana",
+    "zh-Hans": "托斯卡纳"
   },
   "2": {
     "en": "Stinger",
@@ -12,31 +13,6 @@
     "lt": "Stingeris",
     "ru": "Стингер",
     "zh-Hans": "毒刺"
-  },
-  "3": {
-    "en": "Maity",
-    "it": "Potente",
-    "ja": "マイティー",
-    "ko": "메이티",
-    "zh-Hans": "梅蒂"
-  },
-  "4": {
-    "en": "Spider",
-    "fi": "Hämähäkki",
-    "ja": "スパイダー",
-    "ko": "스파이더",
-    "lt": "Voras",
-    "pt-BR": "Aranha",
-    "ru": "Паук",
-    "tr": "Örümcek",
-    "zh-Hans": "蜘蛛"
-  },
-  "Tuscan": {
-    "en": "Tuscan",
-    "ja": "トスカーナ",
-    "ko": "투스칸",
-    "lt": "Toskana",
-    "zh-Hans": "托斯卡纳"
   },
   "Kart_01": {
     "en": "Kart",
@@ -192,6 +168,17 @@
     "ja": "ビスタ",
     "ko": "비스타",
     "zh-Hans": "维斯塔"
+  },
+  "4": {
+    "en": "Spider",
+    "fi": "Hämähäkki",
+    "ja": "スパイダー",
+    "ko": "스파이더",
+    "lt": "Voras",
+    "pt-BR": "Aranha",
+    "ru": "Паук",
+    "tr": "Örümcek",
+    "zh-Hans": "蜘蛛"
   },
   "Zino": {
     "en": "Zino",
@@ -445,6 +432,12 @@
     "uk": "Гепард Mk1",
     "zh-Hans": "猎豹 Mk1"
   },
+  "1": {
+    "en": "Hana",
+    "ja": "ハナ",
+    "ko": "하나",
+    "zh-Hans": "工作"
+  },
   "Pickup_02": {
     "en": "Ranchy",
     "ja": "ランチー",
@@ -522,6 +515,13 @@
     "uk": "Kira цистерна",
     "zh-Hans": "喀拉罐车",
     "zh-Hant": "Kira 罐車"
+  },
+  "3": {
+    "en": "Maity",
+    "it": "Potente",
+    "ja": "マイティー",
+    "ko": "메이티",
+    "zh-Hans": "梅蒂"
   },
   "Tronko": {
     "en": "Tronko",
