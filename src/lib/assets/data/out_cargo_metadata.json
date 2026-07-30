@@ -38,10 +38,12 @@
     "type": "_TLargePackage"
   },
   "ToyBoxes": {
-    "type": "_TFinalProduct"
+    "type": "_TFinalProduct",
+    "minDist": 5000
   },
   "BottlePallete": {
-    "type": "_TFinalProduct"
+    "type": "_TFinalProduct",
+    "minDist": 5000
   },
   "WoodPlank_14ft_5t": {
     "type": "_TWood"
@@ -300,6 +302,9 @@
   "CopperRodCoil_2t": {
     "type": "_TNone"
   },
+  "CircuitBoardPallet": {
+    "type": "_TLargePackage"
+  },
   "Cement": {
     "type": "_TNone"
   },
@@ -319,15 +324,6 @@
     "type": "_TNone"
   },
   "Transformer_5MVA": {
-    "type": "_TNone"
-  },
-  "Money": {
-    "type": "_TNone"
-  },
-  "MoneyPallet": {
-    "type": "_TNone"
-  },
-  "Moonshine": {
     "type": "_TNone"
   }
 }

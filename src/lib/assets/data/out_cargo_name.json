@@ -1681,9 +1681,7 @@
     "sv": "Formel SCM",
     "zh-Hans": "方程式SCM"
   },
-  "Raven": {
-    "en": "Raven"
-  },
+  "Raven": {},
   "PlasticPipes_6m": {
     "en": "Plastic Pipes 6m",
     "cs": "Plastové trubky 6m",
@@ -1747,6 +1745,24 @@
   "CopperRodCoil_2t": {
     "en": "Copper Rod Coil"
   },
+  "CircuitBoardPallet": {
+    "en": "Circuit Board Pallet",
+    "cs": "Circuit Board Paleta",
+    "de": "Circuit Board Palette",
+    "es-419": "Circuit Board Palé",
+    "es-ES": "Circuit Board Paleta",
+    "fi": "Circuit Board Kuormalava",
+    "fr": "Circuit Board Palette",
+    "hu": "Circuit Board Raklap",
+    "ja": "Circuit Board パレット",
+    "pl": "Circuit Board Paleta",
+    "pt-BR": "Circuit Board Palete",
+    "ru": "Circuit Board Поддон",
+    "tr": "Circuit Board Palet",
+    "uk": "Circuit Board Піддон",
+    "zh-Hans": "Circuit Board 货盘",
+    "zh-Hant": "Circuit Board 棧板"
+  },
   "Cement": {
     "en": "Cement",
     "de": "Zement",
@@ -1800,14 +1816,5 @@
   },
   "Transformer_5MVA": {
     "en": "Transformer 5MVA (Deprecated)"
-  },
-  "Money": {
-    "en": "Money Stack"
-  },
-  "MoneyPallet": {
-    "en": "Money Pallet"
-  },
-  "Moonshine": {
-    "en": "Moonshine Keg"
   }
 }

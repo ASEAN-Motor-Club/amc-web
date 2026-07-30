@@ -1079,8 +1079,8 @@
     "type": "BusStop_02_C",
     "name": "Ara Town East",
     "coord": {
-      "x": 334926.75,
-      "y": 1372770.5,
+      "x": 334891.56,
+      "y": 1372781.0,
       "z": -22000.068
     },
     "guid": "9ce73f904668b491f568cfa8c9110993"
@@ -1099,9 +1099,9 @@
     "type": "BusStop_02_C",
     "name": "Dasa Harbor",
     "coord": {
-      "x": -776936.1,
-      "y": 1215847.6,
-      "z": -21663.482
+      "x": -773858.7,
+      "y": 1211891.6,
+      "z": -21732.496
     },
     "guid": "b2bf65c543de6bcd47a4409590a3c809"
   },
@@ -1109,9 +1109,9 @@
     "type": "BusStop_02_C",
     "name": "Dasa Harbor",
     "coord": {
-      "x": -777268.0,
-      "y": 1222591.0,
-      "z": -21634.12
+      "x": -777344.44,
+      "y": 1230015.0,
+      "z": -21585.07
     },
     "guid": "c36c9f7547ad526eed7ce2b8da6043ab"
   },
@@ -1217,6 +1217,16 @@
   },
   {
     "type": "BusStop_02_C",
+    "name": "Ara Seafood Restaurant",
+    "coord": {
+      "x": 394275.88,
+      "y": 1431571.8,
+      "z": -22000.0
+    },
+    "guid": "bb19d28942a8b44220ff52aae7252ac3"
+  },
+  {
+    "type": "BusStop_02_C",
     "name": "Ara Supermarket",
     "coord": {
       "x": 285313.28,
@@ -1229,8 +1239,8 @@
     "type": "BusStop_02_C",
     "name": "Ara Town East",
     "coord": {
-      "x": 336341.84,
-      "y": 1371775.8,
+      "x": 336363.9,
+      "y": 1371769.2,
       "z": -22000.068
     },
     "guid": "965d353b45eb9dc77eb0c695a605dada"
@@ -1707,7 +1717,7 @@
   },
   {
     "type": "BusStop_03_C",
-    "name": "Seongsan High School",
+    "name": "Seongsan Highschool",
     "coord": {
       "x": 327059.38,
       "y": -99653.77,
