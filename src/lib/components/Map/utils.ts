@@ -19,21 +19,24 @@ export const getLinkHref = (
   id: string | number,
 ): string => {
   const newParams = new SvelteURLSearchParams(clientSearchParams());
+  let menu: 'deliveries' | 'jobs';
   switch (feature) {
     case DetailsFeatures.Delivery: {
       newParams.delete('player');
       newParams.delete('house');
       newParams.set('delivery', id.toString());
+      menu = 'deliveries';
       break;
     }
     case DetailsFeatures.Jobs:
+      menu = 'jobs';
       break;
   }
   if (showFull) {
     newParams.delete('menu');
-    return `/${feature}/${id}`;
+    return `/${menu}/${id}`;
   }
-  newParams.set('menu', `${feature}/${id}`);
+  newParams.set('menu', `${menu}/${id}`);
   return `/map?${newParams.toString()}`;
 };
 
