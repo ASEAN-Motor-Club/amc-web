@@ -222,6 +222,8 @@
     "teleport_copy": "คัดลอกคำสั่ง /tp",
     "teleport_copy_hint": "คลิกซ้ายเพื่อคัดลอกคำสั่ง /tp",
     "teleport_copied": "คัดลอกแล้ว!",
+    "teleport_coord": "พิกัด",
+    "teleport_alias": "ชื่ออื่น",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",
     "more_results": [

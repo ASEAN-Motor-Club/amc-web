@@ -226,6 +226,8 @@
     "teleport_copy": "Salin perintah /tp",
     "teleport_copy_hint": "Klik kiri untuk menyalin perintah /tp",
     "teleport_copied": "Disalin!",
+    "teleport_coord": "Koordinat",
+    "teleport_alias": "Alias",
     "player_name": "Nama Pemain",
     "search_placeholder": "Cari lokasi",
     "more_results": [

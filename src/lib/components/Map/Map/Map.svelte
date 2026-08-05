@@ -58,6 +58,7 @@
   import { reProjectPoint } from '$lib/ui/OlMap/utils';
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
+  import { mergeTeleportPoints } from './teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
   import { LineString, Polygon } from 'ol/geom';
   import type { DeliveryCargo } from '$lib/data/types';
@@ -586,12 +587,9 @@
         if (state.teleport === false) {
           mapState.teleport = false;
           teleportLayer.setVisible(false);
-          teleportLabelsLayer.setVisible(false);
         }
-        if (state.teleportLabels === false) {
-          mapState.teleportLabels = false;
-          if (mapState.teleport) teleportLabelsLayer.setVisible(false);
-        }
+        mapState.teleportLabels = state.teleportLabels ?? false;
+        teleportLabelsLayer.setVisible(mapState.teleport && mapState.teleportLabels);
         if (state.shortcutZone === false) {
           mapState.shortcutZone = false;
           shortcutZoneLayer.setVisible(false);
@@ -614,10 +612,7 @@
 
     getTeleports(getAbortSignal())
       .then((data) => {
-        const points: TeleportPoint[] = data.map((d) => ({
-          name: d.name,
-          coord: { x: d.x, y: d.y, z: d.z },
-        }));
+        const points = mergeTeleportPoints(data);
         teleportSource.addFeatures(
           points.map(
             (p) =>
