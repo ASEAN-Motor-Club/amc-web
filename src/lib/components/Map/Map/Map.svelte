@@ -14,6 +14,7 @@
   import Search from './Search.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
+  import { mergeTeleportPoints } from './teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
   import type { DeliveryCargo } from '$lib/data/types';
   import { memoize, uniq } from 'es-toolkit';
@@ -247,11 +248,7 @@
 
     getTeleports(getAbortSignal())
       .then((data) => {
-        const points: TeleportPoint[] = data.map((d) => ({
-          name: d.name,
-          coord: { x: d.x, y: d.y, z: d.z },
-        }));
-        teleportData = points;
+        teleportData = mergeTeleportPoints(data);
       })
       .catch((e: unknown) => {
         console.error('Failed to load teleport data:', e);

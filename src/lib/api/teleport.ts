@@ -1,7 +1,7 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
 import { apiClient } from './_api';
 
-type TeleportResponse = {
+export type TeleportResponse = {
   name: string;
   x: number;
   y: number;

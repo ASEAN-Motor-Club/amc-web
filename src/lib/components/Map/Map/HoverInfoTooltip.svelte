@@ -11,6 +11,7 @@
   import type { HouseData } from '$lib/api/types';
   import { m } from '$messages';
   import PlayerInfo from './PlayerInfo.svelte';
+  import TeleportInfo from './TeleportInfo.svelte';
   import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { stripPlayerRoleTag } from '$lib/utils/parsePlayerRole';
@@ -140,11 +141,7 @@
         {:else if hoverInfo.pointType === PointType.Player}
           <PlayerInfo {hoverInfo} />
         {:else if hoverInfo.pointType === PointType.Teleport}
-          <div class="text-text-300 text-xs">
-            {Math.round(hoverInfo.info.coord.x)},
-            {Math.round(hoverInfo.info.coord.y)},
-            {Math.round(hoverInfo.info.coord.z)}
-          </div>
+          <TeleportInfo {hoverInfo} />
         {/if}
       {/if}
       <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>

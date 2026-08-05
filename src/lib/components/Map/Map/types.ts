@@ -11,6 +11,8 @@ export const enum PointType {
 
 export interface TeleportPoint {
   name: string;
+  /** Names of other teleport points sharing the exact same coordinate */
+  aliases?: string[];
   coord: Vector3;
 }
 

@@ -226,6 +226,8 @@
     "teleport_copy": "Copy /tp command",
     "teleport_copy_hint": "Left click to copy /tp command",
     "teleport_copied": "Copied!",
+    "teleport_coord": "Coordinate",
+    "teleport_alias": "Alias",
     "player_name": "Player Name",
     "search_placeholder": "Search for a location",
     "more_results": [
