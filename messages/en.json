@@ -223,7 +223,7 @@
     "house": "House",
     "player": "Player",
     "teleport_point": "Teleport",
-    "teleport_copy": "Copy /tp command",
+    "teleport_copy": "Click here to copy /tp command",
     "teleport_copy_hint": "Left click to copy /tp command",
     "teleport_copied": "Copied!",
     "teleport_coord": "Coordinate",
@@ -240,7 +240,6 @@
         }
       }
     ],
-    "click_lock": "Right click to lock supply line",
     "click_info": "Left click for more info",
     "click_here_info": "Click here for more info",
     "pip_exit": "Map is in picture-in-picture. Click to return.",

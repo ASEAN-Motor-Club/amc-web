@@ -34,7 +34,7 @@
   import OlMapWrapper from './OlMapWrapper.svelte';
   import { goto } from '$app/navigation';
   import { getSelectionClearedParams } from '../utils';
-  import { isMouse } from '$lib/utils/media.svelte';
+  import { isMouse, isSm } from '$lib/utils/media.svelte';
   import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
 
@@ -515,13 +515,20 @@
   };
 
   const handleMapClick = (feature: Feature | undefined) => {
-    if (!isMouse.current) return;
+    if (!isMouse.current) {
+      // Touch only opens the tooltip, its buttons carry the point actions.
+      if (!feature) clearSelection();
+      return;
+    }
 
     const pointType = feature?.get('pointType') as PointType | undefined;
     if (feature && pointType === PointType.Delivery) {
       const { guid } = feature.get('info') as DeliveryPoint;
       const newParams = getSelectionClearedParams();
-      newParams.set('menu', `deliveries/${guid}`);
+      // The menu covers the map on mobile, only wider layouts open it alongside.
+      if (isSm.current) {
+        newParams.set('menu', `deliveries/${guid}`);
+      }
       newParams.set('delivery', guid);
       goto(`/map?${newParams.toString()}`);
       return;
@@ -529,7 +536,9 @@
     if (feature && pointType === PointType.House) {
       const { name } = feature.get('info') as { name: string };
       const newParams = getSelectionClearedParams();
-      newParams.set('menu', 'housing');
+      if (isSm.current) {
+        newParams.set('menu', 'housing');
+      }
       newParams.set('house', name);
       newParams.set('hf', name);
       goto(`/map?${newParams.toString()}`);
@@ -542,14 +551,7 @@
     clearSelection();
   };
 
-  const handleMapRightClick = (feature: Feature | undefined) => {
-    if (feature && (feature.get('pointType') as PointType) === PointType.Delivery) {
-      const { guid } = feature.get('info') as DeliveryPoint;
-      const newParams = getSelectionClearedParams();
-      newParams.set('delivery', guid);
-      goto(`?${newParams.toString()}`, { noScroll: true, keepFocus: true });
-      return;
-    }
+  const handleMapRightClick = () => {
     clearSelection();
   };
 

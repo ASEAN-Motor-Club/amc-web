@@ -223,7 +223,7 @@
     "house": "Rumah",
     "player": "Pemain",
     "teleport_point": "Teleport",
-    "teleport_copy": "Salin perintah /tp",
+    "teleport_copy": "Klik di sini untuk menyalin perintah /tp",
     "teleport_copy_hint": "Klik kiri untuk menyalin perintah /tp",
     "teleport_copied": "Disalin!",
     "teleport_coord": "Koordinat",
@@ -240,7 +240,6 @@
         }
       }
     ],
-    "click_lock": "Klik kanan untuk mengunci jalur pasokan",
     "click_info": "Klik kiri untuk info lebih lanjut",
     "click_here_info": "Klik di sini untuk info lebih lanjut",
     "player_info": {

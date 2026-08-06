@@ -39,6 +39,8 @@
   } from '$lib/tw-var';
   import OlMap from '$lib/ui/OlMap/OlMap.svelte';
   import { Collection, Feature, type MapBrowserEvent, type MapEvent } from 'ol';
+  import type OlMapType from 'ol/Map';
+  import { isMouse } from '$lib/utils/media.svelte';
   import { LineString, Point, Polygon } from 'ol/geom';
   import VectorLayer from 'ol/layer/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
@@ -715,8 +717,11 @@
   /** Panning the map breaks the lock until something else is selected */
   let lockBroken = false;
 
-  const handlePointerDrag = () => {
+  const handlePointerDrag = (e: MapBrowserEvent) => {
     lockBroken = true;
+    if (!isMouse.current) {
+      followHoverFeature(e.map);
+    }
   };
 
   $effect(() => {
@@ -754,15 +759,16 @@
   let lastPixel: Pixel | undefined;
   let hoverFeature = $state<Feature | undefined>();
 
-  const handlePointerMove = (e: MapBrowserEvent) => {
+  /** Hit test at a pixel, updating the hovered feature and notifying the parent. */
+  const updateHoverAt = (map: OlMapType, pixel: Pixel) => {
     hoverFeature?.set('hover', false);
     hoverFeature = undefined;
 
-    lastPixel = e.pixel;
-    e.map.forEachFeatureAtPixel(
-      e.pixel,
+    lastPixel = pixel;
+    map.forEachFeatureAtPixel(
+      pixel,
       (feature) => {
-        onHover?.(feature as Feature, e.pixel as [number, number]);
+        onHover?.(feature as Feature, pixel as [number, number]);
         hoverFeature = feature as Feature;
         hoverFeature.set('hover', true);
         return true;
@@ -787,41 +793,52 @@
     }
   };
 
+  /**
+   * Touch has no hover, so the tapped feature stays picked while the map moves,
+   * its tooltip anchor follows the feature instead of the stale tap pixel.
+   */
+  const followHoverFeature = (map: OlMapType) => {
+    const geometry = hoverFeature?.getGeometry();
+    if (!geometry || !(geometry instanceof Point)) return;
+
+    const pixel = map.getPixelFromCoordinate(geometry.getCoordinates());
+    const size = map.getSize();
+    if (!size || pixel[0] < 0 || pixel[1] < 0 || pixel[0] > size[0] || pixel[1] > size[1]) {
+      // Panned out of view, drop the pick rather than leave a tooltip floating.
+      hoverFeature?.set('hover', false);
+      hoverFeature = undefined;
+      onHover?.(undefined, [-1, -1]);
+      return;
+    }
+
+    lastPixel = pixel;
+    onHover?.(hoverFeature, pixel as [number, number]);
+  };
+
+  const handlePointerMove = (e: MapBrowserEvent) => {
+    if (!isMouse.current) return;
+    updateHoverAt(e.map, e.pixel);
+  };
+
   const handleMoveStart = () => {
+    if (!isMouse.current) return;
     hoverFeature?.set('hover', false);
     hoverFeature = undefined;
   };
 
   const handleMoveEnd = (e: MapEvent) => {
+    if (!isMouse.current) {
+      followHoverFeature(e.map);
+      return;
+    }
     if (lastPixel) {
-      e.map.forEachFeatureAtPixel(
-        lastPixel,
-        (feature) => {
-          onHover?.(feature as Feature, lastPixel as [number, number]);
-          hoverFeature = feature as Feature;
-          hoverFeature.set('hover', true);
-          return true;
-        },
-        {
-          layerFilter: (layer) => {
-            return (
-              layer === deliveryPointLayer ||
-              layer === residentPointLayer ||
-              layer === houseLayer ||
-              layer === teleportLayer ||
-              layer === playerPointLayer
-            );
-          },
-          hitTolerance: 50,
-        },
-      );
-      if (!hoverFeature) {
-        onHover?.(undefined, [-1, -1]);
-      }
+      updateHoverAt(e.map, lastPixel);
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (e: MapBrowserEvent) => {
+    // Touch never fires a pointermove, so the hover state is only resolved here.
+    updateHoverAt(e.map, e.pixel);
     onClick?.(hoverFeature);
   };
 

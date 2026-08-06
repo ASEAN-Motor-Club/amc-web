@@ -148,11 +148,6 @@
       <div class="text-text-400 mb-0.5 text-xs font-semibold">
         {getLocationAtPoint(hoverInfo.info.coord)}
       </div>
-      {#if hoverInfo.pointType === PointType.Delivery}
-        <Button size="xs" class="media-not-mouse:hidden text-text-300 mb-0.5 bg-white/10 px-2">
-          {m['map.click_lock']()}
-        </Button>
-      {/if}
       {#if hoverInfo.pointType === PointType.Teleport}
         <Button
           size="xs"
