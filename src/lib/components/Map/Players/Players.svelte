@@ -10,10 +10,9 @@
     playerData: PlayerData[];
     playerDataLoading: boolean;
     fullScreen: boolean;
-    onCenter: (point: [number, number]) => void;
   }
 
-  const { playerData, playerDataLoading, fullScreen, onCenter }: Props = $props();
+  const { playerData, playerDataLoading, fullScreen }: Props = $props();
 
   let searchValue = $state('');
 
@@ -54,11 +53,11 @@
       >
         {#if playerDataLoading}
           {#each Array(50) as _, i (i)}
-            <PlayerCard highlight={searchValue} {onCenter} loading />
+            <PlayerCard highlight={searchValue} loading />
           {/each}
         {:else}
           {#each filteredPlayers as player (player.name)}
-            <PlayerCard {player} highlight={searchValue} {onCenter} />
+            <PlayerCard {player} highlight={searchValue} />
           {/each}
         {/if}
       </div>

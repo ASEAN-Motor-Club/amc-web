@@ -3,7 +3,14 @@
   import { onMount, getAbortSignal } from 'svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
-  import { PointType, PoiType, type MapState, type PlayerData, type TeleportPoint } from './types';
+  import {
+    PointType,
+    PoiType,
+    type MapSelection,
+    type MapState,
+    type PlayerData,
+    type TeleportPoint,
+  } from './types';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import {
     deliveryPointsMap,
@@ -20,11 +27,16 @@
   import { memoize, uniq } from 'es-toolkit';
   import { cargoMetadata } from '$lib/data/cargo';
   import { m } from '$messages';
-  import type { Pins } from '$lib/schema/pin';
+  import { pinsSchema, type Pins } from '$lib/schema/pin';
   import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import OlMapWrapper from './OlMapWrapper.svelte';
+  import { goto } from '$app/navigation';
+  import { getSelectionClearedParams } from '../utils';
+  import { isMouse } from '$lib/utils/media.svelte';
+  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { getMsgModalContext } from '$lib/components/MsgModal/context';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -263,6 +275,28 @@
       });
   });
 
+  const { showModal } = getMsgModalContext();
+
+  $effect(() => {
+    const pins = clientSearchParamsGet('pins');
+    if (!pins) {
+      pinsData = [];
+      return;
+    }
+    try {
+      pinsData = pinsSchema.parse(JSON.parse(pins)).map((p, i) => ({
+        ...p,
+        label: p.label ?? m['map.pin_no']({ index: i + 1 }),
+      }));
+    } catch (e) {
+      console.error('Invalid pins data:', e);
+      showModal({
+        title: m['map.pins_invalid.title'](),
+        message: m['map.pins_invalid.desc'](),
+      });
+    }
+  });
+
   $effect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(
@@ -284,8 +318,10 @@
     }
   });
 
-  let selectedPoint: Feature | undefined = $state();
-  let lockPoint: Feature | undefined = $state();
+  $effect(() => {
+    onPlayerLayerDataEnabledChange?.(mapState.player);
+  });
+
   let hoverPoint: { f: Feature; pixel: [number, number] } | undefined = $state();
 
   const hoverInfo: HoverInfo | undefined = $derived.by(() => {
@@ -298,7 +334,44 @@
     }
   });
 
+  const selection = $derived.by<MapSelection | undefined>(() => {
+    const house = clientSearchParamsGet('house');
+    if (house) return { pointType: PointType.House, id: house };
+
+    const delivery = clientSearchParamsGet('delivery');
+    if (delivery) return { pointType: PointType.Delivery, id: delivery };
+
+    const player = clientSearchParamsGet('player');
+    if (player) return { pointType: PointType.Player, id: player };
+
+    const pinIndex = clientSearchParamsGet('focus_index');
+    if (pinIndex) return { pointType: PointType.Pin, id: pinIndex };
+  });
+
+  $effect(() => {
+    // Keep the locked point's layer visible, locking onto an invisible point is pointless.
+    switch (selection?.pointType) {
+      case PointType.House:
+        mapState.house = true;
+        break;
+      case PointType.Delivery:
+        mapState.delivery = true;
+        break;
+      case PointType.Player:
+        mapState.player = true;
+        break;
+      case PointType.Pin:
+        mapState.pins = true;
+        break;
+    }
+  });
+
   const deliveryLineData = $derived.by(() => {
+    // A locked delivery point keeps its lines, hovering another one only previews.
+    if (selection?.pointType === PointType.Delivery) {
+      const point = deliveryPointsMap.get(selection.id);
+      if (point) return memoizedGetDeliveryLine(point);
+    }
     if (hoverInfo?.pointType === PointType.Delivery) {
       return memoizedGetDeliveryLine(hoverInfo.info);
     }
@@ -372,7 +445,6 @@
     }
   };
 
-  let map: OlMapWrapper;
   let mapRootEl: HTMLDivElement;
   let pipActive = $state(false);
   let pipWindowRef: Window | null = null;
@@ -407,7 +479,6 @@
     pipOriginalParent = null;
     pipOriginalNextSibling = null;
     win?.close();
-    requestAnimationFrame(() => map.getMap().updateSize());
   };
 
   const enterPip = async () => {
@@ -427,7 +498,6 @@
       pipActive = true;
       pipWindow.document.body.append(mapRootEl);
       pipWindow.addEventListener('pagehide', () => exitPip(), { once: true });
-      requestAnimationFrame(() => map.getMap().updateSize());
     } catch (e) {
       console.error('Failed to open picture-in-picture window:', e);
     }
@@ -440,12 +510,64 @@
     };
   });
 
-  const handleSearchClick = () => {
-    // TODO
+  const clearSelection = () => {
+    goto(`?${getSelectionClearedParams().toString()}`);
+  };
+
+  const handleMapClick = (feature: Feature | undefined) => {
+    if (!isMouse.current) return;
+
+    const pointType = feature?.get('pointType') as PointType | undefined;
+    if (feature && pointType === PointType.Delivery) {
+      const { guid } = feature.get('info') as DeliveryPoint;
+      const newParams = getSelectionClearedParams();
+      newParams.set('menu', `deliveries/${guid}`);
+      newParams.set('delivery', guid);
+      goto(`/map?${newParams.toString()}`);
+      return;
+    }
+    if (feature && pointType === PointType.House) {
+      const { name } = feature.get('info') as { name: string };
+      const newParams = getSelectionClearedParams();
+      newParams.set('menu', 'housing');
+      newParams.set('house', name);
+      newParams.set('hf', name);
+      goto(`/map?${newParams.toString()}`);
+      return;
+    }
+    if (pointType === PointType.Teleport) {
+      handleCopyTeleport();
+      return;
+    }
+    clearSelection();
+  };
+
+  const handleMapRightClick = (feature: Feature | undefined) => {
+    if (feature && (feature.get('pointType') as PointType) === PointType.Delivery) {
+      const { guid } = feature.get('info') as DeliveryPoint;
+      const newParams = getSelectionClearedParams();
+      newParams.set('delivery', guid);
+      goto(`?${newParams.toString()}`, { noScroll: true, keepFocus: true });
+      return;
+    }
+    clearSelection();
   };
 
   const handleInfoClick = () => {
-    // TODO
+    if (!hoverInfo) return;
+
+    if (hoverInfo.pointType === PointType.Delivery) {
+      const newParams = getSelectionClearedParams();
+      newParams.set('delivery', hoverInfo.info.guid);
+      goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
+    } else if (hoverInfo.pointType === PointType.House) {
+      const newParams = getSelectionClearedParams();
+      newParams.set('house', hoverInfo.info.name);
+      newParams.set('hf', hoverInfo.info.name);
+      goto(`/housing?${newParams.toString()}`);
+    }
+    hoverPoint?.f.set('hover', false);
+    hoverPoint = undefined;
   };
 </script>
 
@@ -471,15 +593,17 @@
     {teleportData}
     {shortcutZoneData}
     {deliveryLineData}
+    {selection}
     onHover={handleHover}
-    bind:this={map}
+    onClick={handleMapClick}
+    onRightClick={handleMapRightClick}
   />
   {#if !pipActive}
     <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
     <div
       class="pointer-events-none absolute top-0 right-0 left-0 flex h-full flex-col overflow-hidden p-4 pb-15"
     >
-      <Search {pinsData} {playerData} {houseData} onPointClick={handleSearchClick} />
+      <Search {pinsData} {playerData} {houseData} />
     </div>
 
     <PoiPanel

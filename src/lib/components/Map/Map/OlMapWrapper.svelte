@@ -38,13 +38,19 @@
     colorCyan950,
   } from '$lib/tw-var';
   import OlMap from '$lib/ui/OlMap/OlMap.svelte';
-  import { Collection, Feature, MapEvent, type MapBrowserEvent } from 'ol';
+  import { Collection, Feature, type MapBrowserEvent, type MapEvent } from 'ol';
   import { LineString, Point, Polygon } from 'ol/geom';
   import VectorLayer from 'ol/layer/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import VectorSource from 'ol/source/Vector';
   import { Fill, Stroke, Style, Text } from 'ol/style';
-  import { PointType, type MapState, type PlayerData, type TeleportPoint } from './types';
+  import {
+    PointType,
+    type MapSelection,
+    type MapState,
+    type PlayerData,
+    type TeleportPoint,
+  } from './types';
   import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
   import type { ShortcutZone } from '$lib/api/shortcutZone';
   import { deliveryPoints, type DeliveryPoint } from '$lib/data/deliveryPoint';
@@ -72,9 +78,11 @@
       supply: DeliveryPoint[];
       dropPoint: [DeliveryPoint, DeliveryPoint][];
     };
+    /** Point to highlight and lock the map onto, driven by the URL */
+    selection?: MapSelection;
     onHover?: (feature: Feature | undefined, pixel: [number, number]) => void;
-    onClick?: (feature: Feature) => void;
-    onRightClick?: (feature: Feature) => void;
+    onClick?: (feature: Feature | undefined) => void;
+    onRightClick?: (feature: Feature | undefined) => void;
   }
 
   const {
@@ -88,16 +96,13 @@
     teleportData,
     shortcutZoneData,
     deliveryLineData,
+    selection,
     onHover,
     onClick,
     onRightClick,
   }: Props = $props();
 
   let map: OlMap;
-
-  export const getMap = () => {
-    return map.getMap();
-  };
 
   const havePins = $derived(pinsData.length > 0);
   const haveTeleports = $derived(teleportData.length > 0);
@@ -659,6 +664,10 @@
           }),
       ),
     );
+
+    return () => {
+      teleportSource.clear();
+    };
   });
 
   $effect(() => {
@@ -675,6 +684,87 @@
           }),
       ),
     );
+
+    return () => {
+      shortcutZoneSource.clear();
+    };
+  });
+
+  $effect(() => {
+    pinsSource.addFeatures(
+      pinsData.map(
+        (p) =>
+          new Feature({
+            geometry: new Point(reProjectPoint([p.x, p.y])),
+            pointType: PointType.Pin,
+            label: p.label,
+            selected: 0,
+            hover: 0,
+          }),
+      ),
+    );
+
+    return () => {
+      pinsSource.clear();
+    };
+  });
+
+  const getLockedFeature = (locked: MapSelection) => {
+    switch (locked.pointType) {
+      case PointType.House:
+        return houseFeatures.find((h) => (h.get('info') as { name: string }).name === locked.id);
+      case PointType.Delivery:
+        return (
+          deliveryPointFeatures.find((d) => (d.get('info') as DeliveryPoint).guid === locked.id) ??
+          residentPointFeatures.find((d) => (d.get('info') as DeliveryPoint).guid === locked.id)
+        );
+      case PointType.Player:
+        return playerCollection
+          .getArray()
+          .find((p) => (p.get('info') as PlayerData).guid === locked.id);
+      case PointType.Pin:
+        return pinsSource.getFeatures()[+locked.id];
+    }
+  };
+
+  let lockedId: string | undefined;
+  /** Panning the map breaks the lock until something else is selected */
+  let lockBroken = false;
+
+  const handlePointerDrag = () => {
+    lockBroken = true;
+  };
+
+  $effect(() => {
+    // Player and pin features are rebuilt as data streams in, so re-resolve on every update.
+    void playerData;
+    void pinsData;
+
+    if (!selection) {
+      lockedId = undefined;
+      lockBroken = false;
+      return;
+    }
+
+    // The feature may not exist yet while its data is still streaming in.
+    const locked = getLockedFeature(selection);
+    const coord = locked?.getGeometry()?.getCoordinates();
+    if (!locked || !coord) return;
+
+    locked.set('selected', 1);
+
+    const isNewLock = selection.id !== lockedId;
+    if (isNewLock) {
+      lockedId = selection.id;
+      lockBroken = false;
+    }
+    if (!lockBroken) {
+      map.centerOn([coord[0], coord[1]], isNewLock ? undefined : 0, isNewLock);
+    }
+
+    return () => {
+      locked.set('selected', 0);
+    };
   });
 
   let lastPixel: Pixel | undefined;
@@ -709,7 +799,7 @@
     // false positive
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!hoverFeature) {
-      onHover?.(undefined, [-1,-1]);
+      onHover?.(undefined, [-1, -1]);
     }
   };
 
@@ -742,21 +832,17 @@
         },
       );
       if (!hoverFeature) {
-        onHover?.(undefined, [-1,-1]);
+        onHover?.(undefined, [-1, -1]);
       }
     }
   };
 
   const handleClick = () => {
-    if (hoverFeature) {
-      onClick?.(hoverFeature);
-    }
+    onClick?.(hoverFeature);
   };
 
   const handleRightClick = () => {
-    if (hoverFeature) {
-      onRightClick?.(hoverFeature);
-    }
+    onRightClick?.(hoverFeature);
   };
 </script>
 
@@ -766,6 +852,7 @@
   onPointerMove={handlePointerMove}
   onClick={handleClick}
   onRightClick={handleRightClick}
+  onPointerDrag={handlePointerDrag}
   onMoveStart={handleMoveStart}
   onMoveEnd={handleMoveEnd}
   {pipActive}

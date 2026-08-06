@@ -18,7 +18,6 @@
   import { isSm } from '$lib/utils/media.svelte';
   import { getAbortSignal, onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
-  import type Map from '$lib/components/Map/Map/Map.svelte';
 
   const { children } = $props();
 
@@ -91,12 +90,6 @@
     }
   });
 
-  let map: Map | undefined = $state(undefined);
-
-  const handleCenter = (point: [number, number]) => {
-    map?.centerOnPoint(point);
-  };
-
   let houseData: HouseData | undefined = $state(undefined);
   let houseDataLoading = $state(true);
 
@@ -158,7 +151,6 @@
               {houseData}
               {playerData}
               onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-              bind:this={map}
             />
           {:catch _}
             <div
@@ -184,7 +176,6 @@
     {jobsData}
     {jobsDataLoading}
     {jobsCache}
-    onCenter={handleCenter}
   />
 </div>
 

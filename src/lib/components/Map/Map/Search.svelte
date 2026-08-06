@@ -42,12 +42,11 @@
 
   export interface SearchProps {
     playerData: PlayerData[];
-    onPointClick?: (point: SearchPoint) => void;
     houseData: HouseData | undefined;
     pinsData: Pins;
   }
 
-  const { playerData, onPointClick, houseData, pinsData: pinsDataProps }: SearchProps = $props();
+  const { playerData, houseData, pinsData: pinsDataProps }: SearchProps = $props();
 
   const deliveryPoints = $derived(
     unmappedDeliveryPoints
@@ -70,10 +69,11 @@
   );
 
   const pinsData = $derived.by(() => {
-    return pinsDataProps.map((pin) => ({
+    return pinsDataProps.map((pin, i) => ({
       ...pin,
       pointType: PointType.Pin,
       name: pin.label,
+      guid: i.toString(),
       coord: {
         x: pin.x,
         y: pin.y,
@@ -134,6 +134,9 @@
       case PointType.Player:
         newParams.set('player', point.guid ?? '');
         break;
+      case PointType.Pin:
+        newParams.set('focus_index', point.guid ?? '');
+        break;
     }
     return `/map?${newParams.toString()}`;
   };
@@ -141,10 +144,7 @@
   const handleLinkClick = (event: Event, point: SearchPoint) => {
     focus = false;
     event.preventDefault();
-    if (point.pointType !== PointType.Pin) {
-      goto(getHref(point), { noScroll: true, keepFocus: true });
-    }
-    onPointClick?.(point);
+    goto(getHref(point), { noScroll: true, keepFocus: true });
   };
 
   const maxShow = 50;

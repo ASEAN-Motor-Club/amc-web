@@ -16,6 +16,13 @@ export interface TeleportPoint {
   coord: Vector3;
 }
 
+/** Point the map locks onto, driven by the URL: "view on map", search, or a map click */
+export interface MapSelection {
+  pointType: PointType.House | PointType.Delivery | PointType.Player | PointType.Pin;
+  /** House name, delivery point guid, player guid, or pin index */
+  id: string;
+}
+
 export interface PlayerData {
   geometry: [number, number];
   name: string;

@@ -32,7 +32,6 @@
     jobsData: DeliveryJob[];
     jobsDataLoading: boolean;
     jobsCache: SvelteMap<number, DeliveryJob>;
-    onCenter: (point: [number, number]) => void;
   }
 
   const {
@@ -47,7 +46,6 @@
     jobsData,
     jobsDataLoading,
     jobsCache,
-    onCenter,
   }: Props = $props();
 
   const getCollapsibleHref = (collapsible: CollapsibleType | CollapsibleTypeWithId) => {
@@ -233,7 +231,7 @@
       </CollapsibleContentWrapper>
     {:else if openCollapsible === 'players'}
       <CollapsibleContentWrapper>
-        <Players {playerData} {playerDataLoading} fullScreen={showFull} {onCenter} />
+        <Players {playerData} {playerDataLoading} fullScreen={showFull} />
       </CollapsibleContentWrapper>
     {:else if openCollapsible === 'jobs'}
       {#if openCollapsibleId}

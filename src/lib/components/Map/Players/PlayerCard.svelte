@@ -14,11 +14,10 @@
   export interface Props {
     player?: PlayerData;
     highlight: string;
-    onCenter: (point: [number, number]) => void;
     loading?: boolean;
   }
 
-  const { player, highlight, onCenter, loading }: Props = $props();
+  const { player, highlight, loading }: Props = $props();
 
   const vehicleKey = $derived(player?.vehicleKey ?? 'None');
 
@@ -47,7 +46,6 @@
       href={getViewHref(Features.Player, player?.guid ?? '')}
       class="-mr-1.5"
       color="primary"
-      onClick={() => onCenter([player?.coord.x ?? 0, player?.coord.y ?? 0])}
     >
       {m.view_on_map()}
     </Button>

@@ -45,6 +45,7 @@ export const getSelectionClearedParams = (): SvelteURLSearchParams => {
   newParams.delete('delivery');
   newParams.delete('player');
   newParams.delete('house');
+  newParams.delete('focus_index');
   return newParams;
 };
 
