@@ -717,10 +717,11 @@
   /** Panning the map breaks the lock until something else is selected */
   let lockBroken = false;
 
-  const handlePointerDrag = (e: MapBrowserEvent) => {
+  const handlePointerDrag = () => {
     lockBroken = true;
     if (!isMouse.current) {
-      followHoverFeature(e.map);
+      // Panning hides the tooltip, the pick is kept so moveend can put it back.
+      onHover?.(undefined, [-1, -1]);
     }
   };
 
@@ -793,6 +794,13 @@
     }
   };
 
+  /** Drop the picked feature, closing its tooltip. */
+  const clearHoverFeature = () => {
+    hoverFeature?.set('hover', false);
+    hoverFeature = undefined;
+    onHover?.(undefined, [-1, -1]);
+  };
+
   /**
    * Touch has no hover, so the tapped feature stays picked while the map moves,
    * its tooltip anchor follows the feature instead of the stale tap pixel.
@@ -804,10 +812,8 @@
     const pixel = map.getPixelFromCoordinate(geometry.getCoordinates());
     const size = map.getSize();
     if (!size || pixel[0] < 0 || pixel[1] < 0 || pixel[0] > size[0] || pixel[1] > size[1]) {
-      // Panned out of view, drop the pick rather than leave a tooltip floating.
-      hoverFeature?.set('hover', false);
-      hoverFeature = undefined;
-      onHover?.(undefined, [-1, -1]);
+      // Moved out of view, drop the pick rather than leave a tooltip floating.
+      clearHoverFeature();
       return;
     }
 
@@ -838,7 +844,9 @@
 
   const handleClick = (e: MapBrowserEvent) => {
     // Touch never fires a pointermove, so the hover state is only resolved here.
-    updateHoverAt(e.map, e.pixel);
+    if (!isMouse.current) {
+      updateHoverAt(e.map, e.pixel);
+    }
     onClick?.(hoverFeature);
   };
 

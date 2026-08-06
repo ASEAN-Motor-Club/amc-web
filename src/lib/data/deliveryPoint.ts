@@ -1,12 +1,17 @@
 import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
+import residentNameJson from '$lib/assets/data/resident_name.json';
 import type { MtNameRecord, Vector3 } from '$lib/types';
 import { uniq } from 'es-toolkit';
 import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType } from './types';
 import { flattenCargoType } from '$lib/utils/delivery';
 
+/** Resident points share one name, the export ships it on its own. */
+export const residentName = residentNameJson as MtNameRecord;
+
 export interface DeliveryPointJson {
   type: DeliveryPointType;
-  name: MtNameRecord;
+  /** Missing on resident points, {@link DeliveryPoint} fills it with {@link residentName} */
+  name?: MtNameRecord;
   coord: Vector3;
   guid: string;
   prod?: ProductionConfig[];
@@ -29,6 +34,7 @@ export interface ProductionConfig {
 }
 
 export interface DeliveryPoint extends DeliveryPointJson {
+  name: MtNameRecord;
   allSupply: DeliveryCargo[];
   allDemand: DeliveryCargo[];
   allSupplyKey: DeliveryCargoKey[];
@@ -102,6 +108,7 @@ const deliveryPoints = (deliveryPointJson as unknown as DeliveryPointJson[]).map
 
   const point = {
     ...dp,
+    name: dp.name ?? residentName,
     allSupply,
     allDemand,
     allSupplyKey,

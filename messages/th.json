@@ -219,7 +219,7 @@
     "house": "บ้าน",
     "player": "ผู้เล่น",
     "teleport_point": "เทเลพอร์ต",
-    "teleport_copy": "คลิกที่นี่เพื่อคัดลอกคำสั่ง /tp",
+    "teleport_copy": "แตะที่นี่เพื่อคัดลอกคำสั่ง /tp",
     "teleport_copy_hint": "คลิกซ้ายเพื่อคัดลอกคำสั่ง /tp",
     "teleport_copied": "คัดลอกแล้ว!",
     "teleport_coord": "พิกัด",
@@ -236,7 +236,7 @@
       }
     ],
     "click_info": "คลิกซ้ายเพื่อดูข้อมูลเพิ่มเติม",
-    "click_here_info": "คลิกที่นี่เพื่อดูข้อมูลเพิ่มเติม",
+    "click_here_info": "แตะที่นี่เพื่อดูข้อมูลเพิ่มเติม",
     "player_info": {
       "driving": "กำลังขับ {vehicle}",
       "on_foot": "เดินเท้า/ผู้โดยสาร",
