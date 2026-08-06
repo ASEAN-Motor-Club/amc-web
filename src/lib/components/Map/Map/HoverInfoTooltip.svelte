@@ -74,11 +74,11 @@
 
   let tooltip: HTMLDivElement | undefined = $state();
 
-  const tooltipPosition = $derived.by(() => {
+  const [ttLeft, ttTop] = $derived.by(() => {
     if (!hoverInfo) {
       return [];
     }
-    const position = [hoverInfo.pixelCoord[0], hoverInfo.pixelCoord[1]];
+    let [left, top] = hoverInfo.pixelCoord;
 
     const parentBounding = tooltip?.parentElement?.getBoundingClientRect();
     const parentWidth = parentBounding?.width ?? 0;
@@ -88,18 +88,18 @@
     const tooltipWidth = tooltipBounding?.width ?? 0;
     const tooltipHeight = tooltipBounding?.height ?? 0;
 
-    const widthOverFlow = position[0] + tooltipWidth > parentWidth;
-    const heightOverFlow = position[1] + tooltipHeight > parentHeight;
+    const widthOverFlow = left + tooltipWidth > parentWidth;
+    const heightOverFlow = top + tooltipHeight > parentHeight;
 
     if (heightOverFlow) {
-      position[1] -= tooltipHeight;
+      top -= tooltipHeight;
     }
 
     if (widthOverFlow) {
-      position[0] -= tooltipWidth;
+      left -= tooltipWidth;
     }
 
-    return position;
+    return [left, top];
   });
 </script>
 
@@ -107,8 +107,8 @@
   <div
     transition:fade={{ duration: defaultTransitionDurationMs }}
     class="pointer-events-none absolute"
-    style:left="{tooltipPosition[0]}px"
-    style:top="{tooltipPosition[1]}px"
+    style:left="{ttLeft}px"
+    style:top="{ttTop}px"
     bind:this={tooltip}
   >
     <Card

@@ -25,7 +25,7 @@
     colorTextDark,
   } from '$lib/tw-var';
   import type { MapBrowserEvent } from 'ol';
-  import { reProjectPoint, reProjectPointInverse } from '../OlMap/utils';
+  import { reProjectPointInverse, reProjectVec2 } from '../OlMap/utils';
   import Translate from 'ol/interaction/Translate';
   import VectorLayer from 'ol/layer/Vector';
   import { Fill, Stroke, Style, Text } from 'ol/style';
@@ -223,7 +223,7 @@
 
     for (let i = 0; i < points.length; i++) {
       const point = points[i];
-      const reprojectedPoint = reProjectPoint([point.coord.x, point.coord.y]);
+      const reprojectedPoint = reProjectVec2(point.coord);
 
       const isSelected = selectedPoint?.index === i;
 
@@ -263,7 +263,7 @@
     trackPointFeaturesCollection.extend(pointFeatures);
 
     if (points.length >= 2) {
-      const lineCoordinates = points.map((point) => reProjectPoint([point.coord.x, point.coord.y]));
+      const lineCoordinates = points.map((point) => reProjectVec2(point.coord));
 
       const lineFeature = new Feature({
         geometry: new LineString(lineCoordinates),
@@ -283,7 +283,7 @@
     if (selectedPoint) {
       const selectedIndex = selectedPoint.index;
       if (selectedIndex >= 0 && selectedIndex < points.length) {
-        const reprojectedPoint = reProjectPoint([selectedPoint.coord.x, selectedPoint.coord.y]);
+        const reprojectedPoint = reProjectVec2(selectedPoint.coord);
 
         const yaw = selectedPoint.yaw ?? 0;
         const scaleY = selectedPoint.scaleY ?? 1;
@@ -365,9 +365,7 @@
           newCoordinates = pointGeometry.getCoordinates() as [number, number];
         }
 
-        const originalCoord = reProjectPointInverse(newCoordinates);
-
-        onSelectedPointMove({ x: originalCoord[0], y: originalCoord[1] });
+        onSelectedPointMove(reProjectPointInverse(newCoordinates));
       }
     });
 

@@ -195,13 +195,13 @@
   });
 
   export const centerOn = (
-    [x, y]: [number, number],
+    coord: Coordinate,
     duration = defaultTransitionDurationMs * 4,
     zoom = true,
   ) => {
     map.getView().animate({
       zoom: zoom ? 5 : undefined,
-      center: [x, y],
+      center: coord,
       duration: prefersReducedMotion.current ? 0 : duration,
     });
   };

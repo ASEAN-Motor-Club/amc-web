@@ -13,7 +13,7 @@
   import { m } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { vehicleKeyToString } from '$lib/api/proto/vehicleKeyUtils';
-  import { reProjectPoint } from '$lib/ui/OlMap/utils';
+  import { reProjectVec2 } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
   import { getAbortSignal, onMount } from 'svelte';
@@ -71,17 +71,20 @@
   $effect(() => {
     if ((showMap && playerLayerDataEnabled) || openCollapsible === 'players') {
       getPlayerRealtimePositionV2((data) => {
-        const result = data.players.map((item) => ({
-          geometry: reProjectPoint([item.x, item.y]),
-          name: item.playerName,
-          coord: { x: item.x, y: item.y },
-          pointType: PointType.Player as const,
-          vehicleKey:
-            item.vehicleKey.case === 'vehicleKeyEnum'
-              ? vehicleKeyToString(item.vehicleKey.value)
-              : (item.vehicleKey.value ?? 'None'),
-          guid: item.uniqueId,
-        }));
+        const result = data.players.map((item) => {
+          const coord = { x: item.x, y: item.y };
+          return {
+            geometry: reProjectVec2(coord),
+            name: item.playerName,
+            coord,
+            pointType: PointType.Player as const,
+            vehicleKey:
+              item.vehicleKey.case === 'vehicleKeyEnum'
+                ? vehicleKeyToString(item.vehicleKey.value)
+                : (item.vehicleKey.value ?? 'None'),
+            guid: item.uniqueId,
+          };
+        });
         playerData = result;
         playerDataLoading = false;
       }, getAbortSignal());

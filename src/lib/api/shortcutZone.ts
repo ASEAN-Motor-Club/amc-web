@@ -5,7 +5,7 @@ export interface ShortcutZone {
   id: number;
   name: string;
   description: string;
-  coordinates: number[][];
+  coordinates: [number, number][];
 }
 
 export const getShortcutZones = (signal: AbortSignal): Promise<ShortcutZone[]> =>

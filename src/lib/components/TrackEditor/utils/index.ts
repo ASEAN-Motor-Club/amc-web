@@ -50,11 +50,7 @@ export const fromEulerWp = (euWp: WaypointEuler, deg = true): Waypoint => {
  */
 export const toEulerWp = (wp: Waypoint, deg = true): WaypointEuler => {
   const quat = new Quaternion(wp.rotation);
-  const euler = quat.toEuler(WP_EULER_ORDER);
-
-  let rotationX = euler[0];
-  let rotationY = euler[1];
-  let rotationZ = euler[2];
+  let [rotationX, rotationY, rotationZ] = quat.toEuler(WP_EULER_ORDER);
 
   if (deg) {
     rotationX = toDeg(rotationX);

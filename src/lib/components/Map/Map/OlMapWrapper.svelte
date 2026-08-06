@@ -57,7 +57,7 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { m } from '$messages';
   import type { Vector2 } from '$lib/types';
-  import { reProjectPoint } from '$lib/ui/OlMap/utils';
+  import { reProjectPoint, reProjectVec2 } from '$lib/ui/OlMap/utils';
   import type { Pins } from '$lib/schema/pin';
   import { houses } from '$lib/data/house';
   import type { Pixel } from 'ol/pixel';
@@ -123,7 +123,7 @@
   const deliveryPointFeatures = deliPoint.map(
     (point) =>
       new Feature({
-        geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
+        geometry: new Point(reProjectVec2(point.coord)),
         pointType: PointType.Delivery,
         info: point,
       }),
@@ -170,7 +170,7 @@
   const residentPointFeatures = residentPoint.map(
     (point) =>
       new Feature({
-        geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
+        geometry: new Point(reProjectVec2(point.coord)),
         pointType: PointType.Delivery,
         info: point,
       }),
@@ -218,7 +218,7 @@
   const houseFeatures = houses.map(
     (point) =>
       new Feature({
-        geometry: new Point(reProjectPoint([point.coord.x, point.coord.y])),
+        geometry: new Point(reProjectVec2(point.coord)),
         pointType: PointType.House,
         info: point,
       }),
@@ -506,38 +506,24 @@
 
   $effect(() => {
     if (deliveryLineData) {
-      const {
-        point: { x, y },
-        demand,
-        supply,
-        dropPoint,
-      } = deliveryLineData;
+      const { point, demand, supply, dropPoint } = deliveryLineData;
 
       deliveryLineFeaturesCollection.extend([
         ...demand.map((d) => {
           return new Feature({
-            geometry: new LineString([
-              reProjectPoint([x, y]),
-              reProjectPoint([d.coord.x, d.coord.y]),
-            ]),
+            geometry: new LineString([reProjectVec2(point), reProjectVec2(d.coord)]),
             type: DeliveryLineType.Demand,
           });
         }),
         ...supply.map((d) => {
           return new Feature({
-            geometry: new LineString([
-              reProjectPoint([x, y]),
-              reProjectPoint([d.coord.x, d.coord.y]),
-            ]),
+            geometry: new LineString([reProjectVec2(point), reProjectVec2(d.coord)]),
             type: DeliveryLineType.Supply,
           });
         }),
         ...dropPoint.map(([d1, d2]) => {
           return new Feature({
-            geometry: new LineString([
-              reProjectPoint([d1.coord.x, d1.coord.y]),
-              reProjectPoint([d2.coord.x, d2.coord.y]),
-            ]),
+            geometry: new LineString([reProjectVec2(d1.coord), reProjectVec2(d2.coord)]),
             type: DeliveryLineType.Drop,
           });
         }),
@@ -656,7 +642,7 @@
       teleportData.map(
         (p) =>
           new Feature({
-            geometry: new Point(reProjectPoint([p.coord.x, p.coord.y])),
+            geometry: new Point(reProjectVec2(p.coord)),
             pointType: PointType.Teleport,
             info: p,
             label: p.name,
@@ -675,9 +661,7 @@
       shortcutZoneData.map(
         (zone) =>
           new Feature({
-            geometry: new Polygon([
-              zone.coordinates.map(([x, y]) => reProjectPoint([x, y] as [number, number])),
-            ]),
+            geometry: new Polygon([zone.coordinates.map(reProjectPoint)]),
             pointType: PointType.ShortcutZone,
             name: zone.name,
             info: zone,
@@ -695,7 +679,7 @@
       pinsData.map(
         (p) =>
           new Feature({
-            geometry: new Point(reProjectPoint([p.x, p.y])),
+            geometry: new Point(reProjectVec2(p)),
             pointType: PointType.Pin,
             label: p.label,
             selected: 0,
@@ -759,7 +743,7 @@
       lockBroken = false;
     }
     if (!lockBroken) {
-      map.centerOn([coord[0], coord[1]], isNewLock ? undefined : 0, isNewLock);
+      map.centerOn(coord, isNewLock ? undefined : 0, isNewLock);
     }
 
     return () => {
