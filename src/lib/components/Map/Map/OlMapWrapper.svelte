@@ -409,26 +409,14 @@
     },
   });
 
-  /** Debug-only: pick a random color per area so boundaries are easy to tell apart */
-  const randomBoundColor = () =>
-    `oklch(${0.55 + Math.random() * 0.3} ${0.14 + Math.random() * 0.12} ${Math.random() * 360})`;
-  const AREA_BOUND_FILL_OPACITY = 0.15;
-
-  const areaFeatures = areaBoundaries.map((area) => {
-    const boundColor = randomBoundColor();
-    return new Feature({
-      geometry: new Polygon([area.ring.map(reProjectPoint)]),
-      flag: area.flag,
-      name: area.name,
-      boundStyle: new Style({
-        fill: new Fill({ color: adjustOpacity(boundColor, AREA_BOUND_FILL_OPACITY) }),
-        stroke: new Stroke({
-          color: boundColor,
-          width: 1,
-        }),
+  const areaFeatures = areaBoundaries.map(
+    (area) =>
+      new Feature({
+        geometry: new Polygon([area.ring.map(reProjectPoint)]),
+        flag: area.flag,
+        name: area.name,
       }),
-    });
-  });
+  );
 
   /** All areas, shared by the label effect and the debug bound layer */
   const areaSource = new VectorSource({
@@ -484,12 +472,39 @@
       }),
   );
 
-  const areaBoundLayer = new VectorLayer({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    renderOrder: null as any,
-    source: areaSource,
-    style: (feature) => feature.get('boundStyle') as Style,
-  });
+  /**
+   * Debug-only boundary overlay (random colors + fill). Built behind the dev guard so the whole
+   * block is dropped from production bundles.
+   */
+  const AREA_BOUND_FILL_OPACITY = 0.15;
+  const areaBoundLayer = dev
+    ? (() => {
+        return new VectorLayer({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          renderOrder: null as any,
+          source: new VectorSource({
+            features: areaFeatures.map((f) => {
+              // Debug-only: pick a random color per area so boundaries are easy to tell apart
+              const boundColor = `oklch(${0.55 + Math.random() * 0.3} ${
+                0.14 + Math.random() * 0.12
+              } ${Math.random() * 360})`;
+              f.set(
+                'boundStyle',
+                new Style({
+                  fill: new Fill({ color: adjustOpacity(boundColor, AREA_BOUND_FILL_OPACITY) }),
+                  stroke: new Stroke({
+                    color: boundColor,
+                    width: 1,
+                  }),
+                }),
+              );
+              return f;
+            }),
+          }),
+          style: (feature) => feature.get('boundStyle') as Style,
+        });
+      })()
+    : null;
 
   const playerCollection = new Collection<Feature<Point>>();
 
@@ -608,7 +623,7 @@
     playerNameLayer,
     ...(haveTeleports ? [teleportLabelsLayer] : []),
     ...(havePins ? [pinLabelsLayer] : []),
-    ...(dev ? [areaBoundLayer] : []),
+    ...(dev && areaBoundLayer ? [areaBoundLayer] : []),
     ...areaNameLayers,
   ]);
 
@@ -706,7 +721,7 @@
   });
 
   $effect(() => {
-    areaBoundLayer.setVisible(mapState.areaBound);
+    areaBoundLayer?.setVisible(mapState.areaBound);
   });
 
   $effect(() => {
