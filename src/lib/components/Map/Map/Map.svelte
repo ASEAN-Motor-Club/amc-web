@@ -12,25 +12,17 @@
     type TeleportPoint,
   } from './types';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
-  import {
-    deliveryPointsMap,
-    demandKeyMapNoResident,
-    supplyKeyMap,
-    type DeliveryPoint,
-  } from '$lib/data/deliveryPoint';
+  import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
+  import { getDeliveryLine } from './deliveryLine';
   import Search from './Search.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
   import { getTeleports } from '$lib/api/teleport';
   import { mergeTeleportPoints } from './teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
-  import type { DeliveryCargo } from '$lib/data/types';
-  import { memoize, uniq } from 'es-toolkit';
-  import { cargoMetadata } from '$lib/data/cargo';
+  import { memoize } from 'es-toolkit';
   import { m } from '$messages';
   import { pinsSchema, type Pins } from '$lib/schema/pin';
-  import { SvelteSet } from 'svelte/reactivity';
   import * as z from 'zod/mini';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import OlMapWrapper from './OlMapWrapper.svelte';
   import { goto } from '$app/navigation';
   import { getSelectionClearedParams } from '../utils';
@@ -58,159 +50,17 @@
   let shortcutZoneData = $state<ShortcutZone[]>([]);
   const haveShortcutZones = $derived(shortcutZoneData.length > 0);
 
-  const getDeliveryPoint = (guid: string) => {
-    const point = deliveryPointsMap.get(guid);
-    if (!point) {
-      throw new Error(`Delivery point not found: ${guid}`);
-    }
-    return point;
-  };
-
-  const getDeliveryLine = (deliveryPoint: DeliveryPoint) => {
-    const matchSourceJob = jobsData.filter(getMatchJobSourceFn(deliveryPoint));
-    const matchDestJob = jobsData.filter(getMatchJobDestFn(deliveryPoint));
-
-    if (mapState.jobOnly && matchSourceJob.length === 0 && matchDestJob.length === 0) {
-      return;
-    }
-
-    const allDropPointLink: [DeliveryPoint, DeliveryPoint][] = [];
-
-    if (deliveryPoint.parent) {
-      allDropPointLink.push([deliveryPoint, getDeliveryPoint(deliveryPoint.parent)]);
-    }
-
-    const connectedDrop = new SvelteSet<DeliveryCargo>();
-
-    if (deliveryPoint.dropPoint) {
-      for (const dropPointGuid of deliveryPoint.dropPoint) {
-        const dropPoint = getDeliveryPoint(dropPointGuid);
-        for (const cargoType of dropPoint.allDemand) {
-          connectedDrop.add(cargoType);
-        }
-        allDropPointLink.push([deliveryPoint, dropPoint]);
-      }
-    }
-
-    const allSupplyDestinations = uniq(
-      deliveryPoint.allSupplyKey
-        .map((d) => [d, cargoMetadata[d], demandKeyMapNoResident.get(d) ?? []] as const)
-        .flatMap(([d, cd, dps]) =>
-          dps.map((dp) => {
-            const point = getDeliveryPoint(dp);
-            if (mapState.jobOnly) {
-              const hasDestJob = matchSourceJob.some(getMatchJobDestFn(point));
-              if (!hasDestJob) {
-                return undefined;
-              }
-            }
-            if (point.dropPoint) {
-              const hasConnectedDrop = point.dropPoint.some((dropPointGuid) =>
-                deliveryPointsMap.get(dropPointGuid)?.allDemandKey.includes(d),
-              );
-              if (hasConnectedDrop) {
-                return undefined;
-              }
-            }
-            if (cd.minDist || cd.maxDist || deliveryPoint.maxDist || point.maxReceiveDist) {
-              const dist = Math.hypot(
-                point.coord.x - deliveryPoint.coord.x,
-                point.coord.y - deliveryPoint.coord.y,
-              );
-              if (cd.minDist) {
-                if (dist < cd.minDist) {
-                  return undefined;
-                }
-              }
-              if (cd.maxDist) {
-                if (dist > cd.maxDist) {
-                  return undefined;
-                }
-              }
-              if (deliveryPoint.maxDist) {
-                if (dist > deliveryPoint.maxDist) {
-                  return undefined;
-                }
-              }
-              if (point.maxReceiveDist) {
-                if (dist > point.maxReceiveDist) {
-                  return undefined;
-                }
-              }
-            }
-            if (point.parent) {
-              allDropPointLink.push([point, getDeliveryPoint(point.parent)]);
-            }
-            return point;
-          }),
-        )
-        .filter((d) => d !== undefined),
-    );
-
-    const allDemandDestinations = uniq(
-      deliveryPoint.allDemandKey
-        .filter((d) => !connectedDrop.has(d))
-        .map((d) => [cargoMetadata[d], supplyKeyMap.get(d) ?? []] as const)
-        .flatMap(([cd, dps]) =>
-          dps.map((dp) => {
-            const point = getDeliveryPoint(dp);
-            if (mapState.jobOnly) {
-              const hasSourceJob = matchDestJob.some(getMatchJobSourceFn(point));
-              if (!hasSourceJob) {
-                return undefined;
-              }
-            }
-            if (cd.minDist || cd.maxDist || deliveryPoint.maxReceiveDist || point.maxDist) {
-              const dist = Math.hypot(
-                point.coord.x - deliveryPoint.coord.x,
-                point.coord.y - deliveryPoint.coord.y,
-              );
-              if (cd.minDist) {
-                if (dist < cd.minDist) {
-                  return undefined;
-                }
-              }
-              if (cd.maxDist) {
-                if (dist > cd.maxDist) {
-                  return undefined;
-                }
-              }
-              if (deliveryPoint.maxReceiveDist) {
-                if (dist > deliveryPoint.maxReceiveDist) {
-                  return undefined;
-                }
-              }
-              if (point.maxDist) {
-                if (dist > point.maxDist) {
-                  return undefined;
-                }
-              }
-            }
-            if (point.dropPoint) {
-              for (const dropPointGuid of point.dropPoint) {
-                const dropPoint = getDeliveryPoint(dropPointGuid);
-                allDropPointLink.push([point, dropPoint]);
-              }
-            }
-            return point;
-          }),
-        )
-        .filter((d) => d !== undefined),
-    );
-
-    return {
-      point: {
-        x: deliveryPoint.coord.x,
-        y: deliveryPoint.coord.y,
+  // The line set is derived from the job list and the job filter as well as the point, so the
+  // cache has to be thrown away whenever either of those changes.
+  const memoizedGetDeliveryLine = $derived.by(() => {
+    const jobs = jobsData;
+    const jobOnly = mapState.jobOnly;
+    return memoize(
+      (deliveryPoint: DeliveryPoint) => getDeliveryLine(deliveryPoint, jobs, jobOnly),
+      {
+        getCacheKey: (d: DeliveryPoint) => d.guid,
       },
-      demand: allDemandDestinations,
-      supply: allSupplyDestinations,
-      dropPoint: allDropPointLink,
-    };
-  };
-
-  const memoizedGetDeliveryLine = memoize(getDeliveryLine, {
-    getCacheKey: (d) => d.guid,
+    );
   });
 
   let mapState = $state<MapState>({
@@ -322,7 +172,7 @@
     onPlayerLayerDataEnabledChange?.(mapState.player);
   });
 
-  let hoverPoint: { f: Feature; pixel: [number, number] } | undefined = $state();
+  let hoverPoint: { f: Feature; pixel: [x: number, y: number] } | undefined = $state();
 
   const hoverInfo: HoverInfo | undefined = $derived.by(() => {
     if (hoverPoint) {
@@ -377,7 +227,7 @@
     }
   });
 
-  let handleHover = (feature: Feature | undefined, pixel: [number, number]) => {
+  let handleHover = (feature: Feature | undefined, pixel: [x: number, y: number]) => {
     if (feature) {
       hoverPoint = { f: feature, pixel };
     } else {

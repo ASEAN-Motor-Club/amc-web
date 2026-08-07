@@ -59,7 +59,7 @@
   import { deliveryPoints, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { m } from '$messages';
-  import type { Vector2 } from '$lib/types';
+  import type { DeliveryLineData } from './deliveryLine';
   import { reProjectPoint, reProjectVec2 } from '$lib/ui/OlMap/utils';
   import type { Pins } from '$lib/schema/pin';
   import { houses } from '$lib/data/house';
@@ -75,15 +75,11 @@
     pinsData: Pins;
     teleportData: TeleportPoint[];
     shortcutZoneData: ShortcutZone[];
-    deliveryLineData?: {
-      point: Vector2;
-      demand: DeliveryPoint[];
-      supply: DeliveryPoint[];
-      dropPoint: [DeliveryPoint, DeliveryPoint][];
-    };
+    /** Lines to draw around the hovered or locked delivery point */
+    deliveryLineData?: DeliveryLineData;
     /** Point to highlight and lock the map onto, driven by the URL */
     selection?: MapSelection;
-    onHover?: (feature: Feature | undefined, pixel: [number, number]) => void;
+    onHover?: (feature: Feature | undefined, pixel: [x: number, y: number]) => void;
     onClick?: (feature: Feature | undefined) => void;
     onRightClick?: (feature: Feature | undefined) => void;
   }
@@ -814,7 +810,7 @@
     map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
-        onHover?.(feature as Feature, pixel as [number, number]);
+        onHover?.(feature as Feature, pixel as [x: number, y: number]);
         hoverFeature = feature as Feature;
         hoverFeature.set('hover', true);
         return true;
@@ -863,7 +859,7 @@
     }
 
     lastPixel = pixel;
-    onHover?.(hoverFeature, pixel as [number, number]);
+    onHover?.(hoverFeature, pixel as [x: number, y: number]);
   };
 
   const handlePointerMove = (e: MapBrowserEvent) => {
