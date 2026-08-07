@@ -19,7 +19,6 @@
   import { getTeleports } from '$lib/api/teleport';
   import { mergeTeleportPoints } from './teleport';
   import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
-  import { memoize } from 'es-toolkit';
   import { m } from '$messages';
   import { pinsSchema, type Pins } from '$lib/schema/pin';
   import * as z from 'zod/mini';
@@ -49,19 +48,6 @@
 
   let shortcutZoneData = $state<ShortcutZone[]>([]);
   const haveShortcutZones = $derived(shortcutZoneData.length > 0);
-
-  // The line set is derived from the job list and the job filter as well as the point, so the
-  // cache has to be thrown away whenever either of those changes.
-  const memoizedGetDeliveryLine = $derived.by(() => {
-    const jobs = jobsData;
-    const jobOnly = mapState.jobOnly;
-    return memoize(
-      (deliveryPoint: DeliveryPoint) => getDeliveryLine(deliveryPoint, jobs, jobOnly),
-      {
-        getCacheKey: (d: DeliveryPoint) => d.guid,
-      },
-    );
-  });
 
   let mapState = $state<MapState>({
     delivery: true,
@@ -220,10 +206,10 @@
     // A locked delivery point keeps its lines, hovering another one only previews.
     if (selection?.pointType === PointType.Delivery) {
       const point = deliveryPointsMap.get(selection.id);
-      if (point) return memoizedGetDeliveryLine(point);
+      if (point) return getDeliveryLine(point, jobsData, mapState.jobOnly);
     }
     if (hoverInfo?.pointType === PointType.Delivery) {
-      return memoizedGetDeliveryLine(hoverInfo.info);
+      return getDeliveryLine(hoverInfo.info, jobsData, mapState.jobOnly);
     }
   });
 
