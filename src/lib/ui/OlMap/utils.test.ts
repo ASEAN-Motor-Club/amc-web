@@ -14,7 +14,7 @@ describe('reProjectPoint', () => {
   });
 
   it('inverts through reProjectPointInverse', () => {
-    const point: [number, number] = [500000, -100000];
+    const point: [x: number, y: number] = [500000, -100000];
     expect(reProjectPointInverse(reProjectPoint(point))).toEqual({ x: point[0], y: point[1] });
   });
 });

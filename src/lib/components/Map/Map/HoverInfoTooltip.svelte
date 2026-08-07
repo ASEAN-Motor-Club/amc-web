@@ -17,7 +17,7 @@
   import { stripPlayerRoleTag } from '$lib/utils/parsePlayerRole';
 
   export type HoverInfo = {
-    pixelCoord: [number, number];
+    pixelCoord: [x: number, y: number];
   } & (
     | {
         pointType: PointType.Delivery;

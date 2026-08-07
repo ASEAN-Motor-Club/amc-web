@@ -24,7 +24,7 @@ export interface MapSelection {
 }
 
 export interface PlayerData {
-  geometry: [number, number];
+  geometry: [x: number, y: number];
   name: string;
   pointType: PointType.Player;
   coord: Vector2;

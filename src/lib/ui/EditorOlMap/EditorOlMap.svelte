@@ -350,7 +350,7 @@
       if (features.length > 0) {
         const feature = features[0];
         const geometry = feature.getGeometry();
-        let newCoordinates: [number, number];
+        let newCoordinates: [x: number, y: number];
 
         if (gateMode) {
           const lineGeometry = geometry as LineString;
@@ -359,10 +359,10 @@
             (coordinates[0][0] + coordinates[1][0]) / 2,
             (coordinates[0][1] + coordinates[1][1]) / 2,
           ];
-          newCoordinates = center as [number, number];
+          newCoordinates = center as [x: number, y: number];
         } else {
           const pointGeometry = geometry as Point;
-          newCoordinates = pointGeometry.getCoordinates() as [number, number];
+          newCoordinates = pointGeometry.getCoordinates() as [x: number, y: number];
         }
 
         onSelectedPointMove(reProjectPointInverse(newCoordinates));

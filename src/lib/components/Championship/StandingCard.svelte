@@ -7,7 +7,7 @@
   interface StandingCardProps {
     title: string;
     loading: boolean;
-    children: Snippet<[{ getStandingRowClass: (index: number) => ClassValue }]>;
+    children: Snippet<[getStandingRowClass: (index: number) => ClassValue]>;
     empty: boolean;
     emptyState: Snippet;
   }
@@ -35,6 +35,6 @@
     {empty}
     {emptyState}
   >
-    {@render children({ getStandingRowClass })}
+    {@render children(getStandingRowClass)}
   </Table>
 </Card>

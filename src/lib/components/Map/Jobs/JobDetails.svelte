@@ -72,7 +72,7 @@
     }
 
     // eslint-disable-next-line svelte/prefer-svelte-reactivity
-    const contribMap = new Map<string, [string, number]>();
+    const contribMap = new Map<string, [name: string, quantity: number]>();
     for (const delivery of job.deliveries) {
       const [currentName, currentQuantity] = contribMap.get(delivery.character.player_id) ?? [
         delivery.character.name,

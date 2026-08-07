@@ -21,7 +21,7 @@
 
   const { children } = $props();
 
-  type OpenCollapsible = [CollapsibleType, string];
+  type OpenCollapsible = [type: CollapsibleType, id: string];
 
   const [openCollapsible, openCollapsibleId]: OpenCollapsible = $derived.by(() => {
     switch (page.url.pathname.split('/')[1]) {

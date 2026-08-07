@@ -38,7 +38,7 @@
         {m['championship.no_standing']()}
       </TableEmptyState>
     {/snippet}
-    {#snippet children({ getStandingRowClass })}
+    {#snippet children(getStandingRowClass)}
       {#each teamStandings as standing, index (standing.team_id)}
         <TableRow class={getStandingRowClass(index)}>
           <div>{index + 1}</div>
@@ -62,7 +62,7 @@
         {m['championship.no_standing']()}
       </TableEmptyState>
     {/snippet}
-    {#snippet children({ getStandingRowClass })}
+    {#snippet children(getStandingRowClass)}
       {#each personalStandings as standing, index (`${standing.player_id}-${standing.character_name}`)}
         <TableRow class={getStandingRowClass(index)}>
           <div>{index + 1}</div>

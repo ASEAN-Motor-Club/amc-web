@@ -4,7 +4,7 @@ import type { ClassValue } from 'svelte/elements';
 export interface NavbarItem {
   href?: string;
   label: string;
-  icon: Snippet<[boolean]>;
+  icon: Snippet<[pathMatch: boolean]>;
   exact?: boolean;
   external?: boolean;
   onMouseEnter?: () => void;
