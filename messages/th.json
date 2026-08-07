@@ -269,6 +269,7 @@
       "jobs_only": "เฉพาะงาน",
       "jobs_only_c": "เฉพาะง*น",
       "jobs_only_desc": "แสดงเฉพาะจุดที่มีงานที่เปิดรับอยู่",
+      "filter_desc": "กรองรายการบนแผนที่",
       "house": "บ้าน",
       "house_desc": "บ้านของผู้เล่นและบ้านที่ว่าง",
       "house_vacant_only": "Vacant only",

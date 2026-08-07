@@ -274,6 +274,7 @@
       "jobs_only": "Hanya pekerjaan",
       "jobs_only_c": "Hanya p*kerjaan",
       "jobs_only_desc": "Tampilkan hanya titik dengan pekerjaan aktif",
+      "filter_desc": "Menyaring item dari peta",
       "house": "Rumah-rumah",
       "house_desc": "Rumah milik pemain & yang tersedia",
       "house_vacant_only": "Hanya kosong",

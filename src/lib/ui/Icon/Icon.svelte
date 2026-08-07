@@ -14,9 +14,11 @@
      * @default 'md'
      */
     size?: 'xs' | 'sm' | 'md' | 'lg' | `!text-${string}`;
+    /** Native tooltip shown on hover; also exposed to assistive tech as an image label */
+    title?: string;
   }
 
-  const { size = 'md', class: propsClass }: IconProps = $props();
+  const { size = 'md', class: propsClass, title }: IconProps = $props();
 
   const sizeContext = getBtnIconSizeContext();
 
@@ -38,4 +40,9 @@
   });
 </script>
 
-<div class={twMerge(sizeClass, clsx(propsClass))}></div>
+<div
+  {title}
+  role={title ? 'img' : undefined}
+  aria-label={title}
+  class={twMerge(sizeClass, clsx(propsClass))}
+></div>

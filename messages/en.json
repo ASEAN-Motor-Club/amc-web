@@ -281,6 +281,7 @@
       "jobs_only": "Jobs only",
       "jobs_only_c": "J*bs only",
       "jobs_only_desc": "Only show points with active job postings",
+      "filter_desc": "Filters out items on the map",
       "house": "Houses",
       "house_desc": "Player-owned and available houses",
       "house_vacant_only": "Vacant only",

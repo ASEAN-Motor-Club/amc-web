@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { m } from '$messages';
+
   export interface PoiItemProps {
     /** Tailwind border + bg color classes for the dot, e.g. 'border-yellow-950 bg-yellow-500' */
     dotClass: string;
@@ -14,6 +17,8 @@
     sub?: boolean;
     /** Whether the parent/main category is enabled (affects sub-item opacity) */
     parentEnabled?: boolean;
+    /** Whether enabling this option filters out items from the map */
+    filter?: boolean;
   }
 
   const {
@@ -24,6 +29,7 @@
     onclick,
     sub = false,
     parentEnabled = true,
+    filter = false,
   }: PoiItemProps = $props();
 
   // main:on  sub:on  → opacity 100 (no class)
@@ -47,7 +53,16 @@
   <div class={['flex gap-2 transition-opacity', opacityClass]}>
     <div class={['mt-1.25 size-3 shrink-0 rounded-full border', dotClass]}></div>
     <div class="flex flex-col">
-      <span class="text-text-dark text-sm font-semibold">{label}</span>
+      <div class="flex items-center gap-1">
+        {#if filter}
+          <Icon
+            class="i-material-symbols:filter-alt text-text-300"
+            size="sm"
+            title={m['map.poi.filter_desc']()}
+          />
+        {/if}
+        <span class="text-text-dark text-sm font-semibold">{label}</span>
+      </div>
       <span class="text-text-300 text-xs">{desc}</span>
     </div>
   </div>

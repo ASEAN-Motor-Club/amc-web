@@ -51,6 +51,7 @@
                 enabled={mapState.jobOnly}
                 onclick={() => onToggle(PoiType.JobsOnly)}
                 parentEnabled={mapState.delivery}
+                filter
                 sub
               />
 
@@ -80,6 +81,7 @@
                 enabled={mapState.houseVacantOnly}
                 onclick={() => onToggle(PoiType.HouseVacantOnly)}
                 parentEnabled={mapState.house}
+                filter
                 sub
               />
 
