@@ -48,6 +48,9 @@ export interface MapState {
   teleportLabels: boolean;
   shortcutZone: boolean;
   shortcutZoneLabels: boolean;
+  areaName: boolean;
+  /** Debug-only: draw area boundary outlines, only toggleable in dev builds */
+  areaBound: boolean;
   jobOnly: boolean;
   houseVacantOnly: boolean;
   houseLabels: boolean;
@@ -71,4 +74,6 @@ export const enum PoiType {
   TeleportLabels,
   ShortcutZone,
   ShortcutZoneLabels,
+  AreaName,
+  AreaBound,
 }

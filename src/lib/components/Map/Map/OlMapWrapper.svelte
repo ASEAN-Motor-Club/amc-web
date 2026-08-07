@@ -5,6 +5,7 @@
     colorEmerald200,
     colorEmerald400,
     colorGreen500,
+    colorBlue300,
     colorBlue500,
     adjustOpacity,
     colorYellow500,
@@ -61,8 +62,12 @@
   import { m } from '$messages';
   import type { DeliveryLineData } from './deliveryLine';
   import { reProjectPoint, reProjectVec2 } from '$lib/ui/OlMap/utils';
+  import { dev } from '$app/environment';
   import type { Pins } from '$lib/schema/pin';
   import { houses } from '$lib/data/house';
+  import { areaBoundaries, areaNameFontSize } from '$lib/data/area';
+  import { getMtLocale } from '$lib/utils/getMtLocale';
+  import type { MtNameRecord } from '$lib/types';
   import type { Pixel } from 'ol/pixel';
 
   interface Props {
@@ -404,6 +409,88 @@
     },
   });
 
+  /** Debug-only: pick a random color per area so boundaries are easy to tell apart */
+  const randomBoundColor = () =>
+    `oklch(${0.55 + Math.random() * 0.3} ${0.14 + Math.random() * 0.12} ${Math.random() * 360})`;
+  const AREA_BOUND_FILL_OPACITY = 0.15;
+
+  const areaFeatures = areaBoundaries.map((area) => {
+    const boundColor = randomBoundColor();
+    return new Feature({
+      geometry: new Polygon([area.ring.map(reProjectPoint)]),
+      flag: area.flag,
+      name: area.name,
+      boundStyle: new Style({
+        fill: new Fill({ color: adjustOpacity(boundColor, AREA_BOUND_FILL_OPACITY) }),
+        stroke: new Stroke({
+          color: boundColor,
+          width: 1,
+        }),
+      }),
+    });
+  });
+
+  /** All areas, shared by the label effect and the debug bound layer */
+  const areaSource = new VectorSource({
+    features: areaFeatures,
+  });
+
+  // Faint on purpose: the names cover most of the map, they should not compete with the POIs.
+  const AREA_NAME_TEXT_OPACITY = 0.6;
+  const AREA_NAME_STROKE_OPACITY = 0.4;
+
+  const areaNameTextFill = new Fill({
+    color: adjustOpacity(colorTextDark, AREA_NAME_TEXT_OPACITY),
+  });
+  const areaRaceTextFill = new Fill({ color: adjustOpacity(colorBlue300, AREA_NAME_TEXT_OPACITY) });
+
+  const areaNameStyle = new Style({
+    text: new Text({
+      overflow: true,
+      fill: areaNameTextFill,
+      stroke: new Stroke({
+        color: adjustOpacity(colorGray950, AREA_NAME_STROKE_OPACITY),
+        width: 2,
+      }),
+    }),
+  });
+
+  /** Area names appear by hierarchy as the map zooms in: zones always, LargeArea/RaceTrack from a smaller zoom, SmallArea/undefined only from the largest zoom */
+  const areaNameTiers: { minZoom: number; flags: Record<string, boolean> }[] = [
+    { minZoom: 0, flags: { Zone: true } },
+    { minZoom: 3, flags: { LargeArea: true, RaceTrack: true } },
+    { minZoom: 4, flags: { SmallArea: true, '': true } },
+  ];
+
+  const areaNameLayers = areaNameTiers.map(
+    (tier) =>
+      new VectorLayer({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        renderOrder: null as any,
+        source: new VectorSource({
+          features: areaFeatures.filter((f) => tier.flags[f.get('flag') as string]),
+        }),
+        minZoom: tier.minZoom,
+        style: (feature) => {
+          const flag = feature.get('flag') as string;
+          const text = areaNameStyle.getText();
+          text?.setText(feature.get('label') as string);
+          text?.setFont(
+            `${flag === 'Zone' ? 700 : 600} ${areaNameFontSize[flag] ?? areaNameFontSize['']} ${fontSans}`,
+          );
+          text?.setFill(flag === 'RaceTrack' ? areaRaceTextFill : areaNameTextFill);
+          return areaNameStyle;
+        },
+      }),
+  );
+
+  const areaBoundLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: areaSource,
+    style: (feature) => feature.get('boundStyle') as Style,
+  });
+
   const playerCollection = new Collection<Feature<Point>>();
 
   const playerPointSource = new VectorSource({
@@ -521,6 +608,8 @@
     playerNameLayer,
     ...(haveTeleports ? [teleportLabelsLayer] : []),
     ...(havePins ? [pinLabelsLayer] : []),
+    ...(dev ? [areaBoundLayer] : []),
+    ...areaNameLayers,
   ]);
 
   $effect(() => {
@@ -608,6 +697,25 @@
 
   $effect(() => {
     shortcutZoneLayer.setVisible(mapState.shortcutZone);
+  });
+
+  $effect(() => {
+    for (const layer of areaNameLayers) {
+      layer.setVisible(mapState.areaName);
+    }
+  });
+
+  $effect(() => {
+    areaBoundLayer.setVisible(mapState.areaBound);
+  });
+
+  $effect(() => {
+    for (const f of areaSource.getFeatures()) {
+      f.set('label', getMtLocale(f.get('name') as MtNameRecord));
+    }
+    for (const layer of areaNameLayers) {
+      layer.changed();
+    }
   });
 
   $effect(() => {

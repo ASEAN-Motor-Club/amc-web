@@ -5,6 +5,7 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import Button from '$lib/ui/Button/Button.svelte';
   import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { dev } from '$app/environment';
   import { m } from '$messages';
   import PoiItem from './PoiItem.svelte';
   import { PoiType, type MapState } from './types';
@@ -182,6 +183,28 @@
                   enabled={mapState.shortcutZoneLabels}
                   onclick={() => onToggle(PoiType.ShortcutZoneLabels)}
                   parentEnabled={mapState.shortcutZone}
+                  sub
+                />
+              {/if}
+
+              <div class="border-t border-gray-100/10"></div>
+
+              <!-- Area names -->
+              <PoiItem
+                dotClass="border-gray-600 bg-gray-300"
+                label={m['map.poi.area']()}
+                desc={m['map.poi.area_desc']()}
+                enabled={mapState.areaName}
+                onclick={() => onToggle(PoiType.AreaName)}
+              />
+              {#if dev}
+                <PoiItem
+                  dotClass="border-yellow-500 bg-yellow-500"
+                  label={m['map.poi.area_bound']()}
+                  desc={m['map.poi.area_bound_desc']()}
+                  enabled={mapState.areaBound}
+                  onclick={() => onToggle(PoiType.AreaBound)}
+                  parentEnabled={mapState.areaName}
                   sub
                 />
               {/if}

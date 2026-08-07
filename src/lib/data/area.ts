@@ -1,4 +1,4 @@
-import type { Vector2 } from '$lib/types';
+import type { MtNameRecord, Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
 import { getMtLocale } from '$lib/utils/getMtLocale';
 import { m } from '$messages';
@@ -60,3 +60,55 @@ export const getLocationAtPoint = (point: Vector2) => {
   matchArea.sort((a, b) => a.order - b.order);
   return matchArea.map((area) => getMtLocale(area.name)).join(', ') || m.unknown_location();
 };
+
+/** Font size for area name labels per flag: Zone is the biggest, unspecified and RaceTrack the smallest */
+export const areaNameFontSize: Record<string, string> = {
+  Zone: '1rem',
+  LargeArea: '0.75rem',
+  SmallArea: '0.75rem',
+  '': '0.6rem',
+  RaceTrack: '0.6rem',
+};
+
+export interface AreaBoundary {
+  name: MtNameRecord;
+  flag: string;
+  /** Closed polygon ring in game coordinates (first point repeated at the end) */
+  ring: [x: number, y: number][];
+}
+
+/**
+ * The vertex data is a shuffled list of 2-point segments. Chain the segments
+ * by their shared endpoints back into one closed ring.
+ */
+const buildRing = (vertex: Vector2[]): [x: number, y: number][] => {
+  const next = new Map<string, Vector2>();
+  for (let i = 0; i < vertex.length; i += 2) {
+    const a = vertex[i];
+    const b = vertex[i + 1];
+    if (a.x === b.x && a.y === b.y) continue;
+    next.set(`${a.x},${a.y}`, b);
+  }
+
+  const start = next.keys().next().value;
+  if (start === undefined) return [];
+
+  const ring: [x: number, y: number][] = [];
+  const [sx, sy] = start.split(',').map(Number);
+  ring.push([sx, sy]);
+  let cur = start;
+  do {
+    const p = next.get(cur);
+    // Malformed data: stop instead of looping forever
+    if (!p) break;
+    ring.push([p.x, p.y]);
+    cur = `${p.x},${p.y}`;
+  } while (cur !== start);
+  return ring;
+};
+
+export const areaBoundaries: AreaBoundary[] = areaVolume.map((area) => ({
+  name: area.name,
+  flag: area.flag,
+  ring: buildRing(area.vertex),
+}));

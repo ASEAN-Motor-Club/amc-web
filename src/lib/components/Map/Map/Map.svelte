@@ -55,6 +55,8 @@
     teleportLabels: false,
     shortcutZone: true,
     shortcutZoneLabels: true,
+    areaName: true,
+    areaBound: false,
     jobOnly: false,
     houseVacantOnly: false,
     houseLabels: false,
@@ -76,6 +78,7 @@
     teleportLabels: z.optional(z.boolean()),
     shortcutZone: z.optional(z.boolean()),
     shortcutZoneLabels: z.optional(z.boolean()),
+    areaName: z.optional(z.boolean()),
   });
 
   onMount(() => {
@@ -128,6 +131,7 @@
           teleportLabels: mapState.teleportLabels,
           shortcutZone: mapState.shortcutZone,
           shortcutZoneLabels: mapState.shortcutZoneLabels,
+          areaName: mapState.areaName,
         }),
       );
     }
@@ -256,6 +260,12 @@
         break;
       case PoiType.ShortcutZoneLabels:
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
+        break;
+      case PoiType.AreaName:
+        mapState.areaName = !mapState.areaName;
+        break;
+      case PoiType.AreaBound:
+        mapState.areaBound = !mapState.areaBound;
         break;
     }
   };

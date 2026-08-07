@@ -299,7 +299,11 @@
       "shortcut_zone": "Zona Shortcut",
       "shortcut_zone_desc": "Zona terlarang untuk subsidi pemerintah",
       "shortcut_zone_labels": "Tampilkan label",
-      "shortcut_zone_labels_desc": "Tampilkan label nama di setiap zona shortcut"
+      "shortcut_zone_labels_desc": "Tampilkan label nama di setiap zona shortcut",
+      "area": "Nama area",
+      "area_desc": "Tampilkan nama area di peta",
+      "area_bound": "Tampilkan batas",
+      "area_bound_desc": "Gambar garis batas area (debug)"
     }
   },
   "home": {

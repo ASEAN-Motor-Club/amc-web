@@ -294,7 +294,11 @@
       "shortcut_zone": "โซนทางลัด",
       "shortcut_zone_desc": "โซนต้องห้ามสำหรับเงินอุดหนุนจากภาครัฐ",
       "shortcut_zone_labels": "แสดงป้าย",
-      "shortcut_zone_labels_desc": "แสดงป้ายชื่อบนแต่ละโซนทางลัด"
+      "shortcut_zone_labels_desc": "แสดงป้ายชื่อบนแต่ละโซนทางลัด",
+      "area": "ชื่อพื้นที่",
+      "area_desc": "แสดงชื่อพื้นที่บนแผนที่",
+      "area_bound": "แสดงขอบเขต",
+      "area_bound_desc": "วาดเส้นขอบเขตพื้นที่ (ดีบัก)"
     }
   },
   "home": {

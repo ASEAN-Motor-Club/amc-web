@@ -306,7 +306,11 @@
       "shortcut_zone": "Shortcut Zones",
       "shortcut_zone_desc": "Prohibited zones for government subsidies",
       "shortcut_zone_labels": "Show labels",
-      "shortcut_zone_labels_desc": "Display name labels on each shortcut zone"
+      "shortcut_zone_labels_desc": "Display name labels on each shortcut zone",
+      "area": "Area names",
+      "area_desc": "Display area names across the map",
+      "area_bound": "Show boundaries",
+      "area_bound_desc": "Draw area boundary outlines (debug)"
     }
   },
   "home": {
