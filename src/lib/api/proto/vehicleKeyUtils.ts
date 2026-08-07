@@ -339,7 +339,6 @@ export function vehicleKeyToString(key: VehicleKey): keyof typeof vehiclesName |
       return 'Goliath10';
     case VehicleKey.VEHICLE_KEY_NONE:
     case VehicleKey.VEHICLE_KEY_UNSPECIFIED:
-    default:
       return 'None';
   }
 }

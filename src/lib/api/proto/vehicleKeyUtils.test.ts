@@ -4,8 +4,6 @@ import { VehicleKey } from './generated/player_positions_pb';
 import { vehicleKeyToString } from './vehicleKeyUtils';
 
 const NONE_KEY = 'None';
-const OUT_OF_RANGE_KEY = 9999 as VehicleKey;
-const NEGATIVE_KEY = -1 as VehicleKey;
 
 const absentVehicleKeys: VehicleKey[] = [
   VehicleKey.VEHICLE_KEY_UNSPECIFIED,
@@ -47,11 +45,4 @@ describe('vehicleKeyToString', () => {
 
     expect(new Set(names).size).toBe(names.length);
   });
-
-  it.each([OUT_OF_RANGE_KEY, NEGATIVE_KEY])(
-    'falls back to the None sentinel for the unknown key %i',
-    (key) => {
-      expect(vehicleKeyToString(key)).toBe(NONE_KEY);
-    },
-  );
 });
