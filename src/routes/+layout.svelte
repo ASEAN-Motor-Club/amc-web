@@ -19,6 +19,10 @@
   import { noop } from 'es-toolkit';
 
   import { rtDate } from '$lib/realtimeDate.svelte';
+  import { QueryClientProvider } from '@tanstack/svelte-query';
+  import { createQueryClient } from '$lib/api/queryClient';
+
+  const queryClient = createQueryClient();
 
   $effect(() => {
     let animationId: number;
@@ -55,13 +59,18 @@
   const id = $derived(page.route.id?.startsWith('/(map)') ? '/(map)' : page.route.id);
 </script>
 
-<GlobalPlayer>
-  <MsgModal>
-    <Navbar />
-    {#key id}
-      <main class="h-full min-h-dvh pt-16" in:fade={{ duration: defaultTransitionDurationMs * 3 }}>
-        {@render children()}
-      </main>
-    {/key}
-  </MsgModal>
-</GlobalPlayer>
+<QueryClientProvider client={queryClient}>
+  <GlobalPlayer>
+    <MsgModal>
+      <Navbar />
+      {#key id}
+        <main
+          class="h-full min-h-dvh pt-16"
+          in:fade={{ duration: defaultTransitionDurationMs * 3 }}
+        >
+          {@render children()}
+        </main>
+      {/key}
+    </MsgModal>
+  </GlobalPlayer>
+</QueryClientProvider>

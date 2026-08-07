@@ -1,54 +1,78 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
+import { createQuery, queryOptions } from '@tanstack/svelte-query';
+import type { DeliveryCargo } from '$lib/data/types';
 import type { DeliveryJob, DeliveryPointInfo } from './types';
-import { apiClient, startVisibilityAwarePolling } from './_api';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api';
 
-export const getDeliveryPointInfos = async (signal: AbortSignal): Promise<DeliveryPointInfo[]> => {
-  return apiClient(`${PUBLIC_API_BASE}/api/deliverypoints/`, signal, [], 'delivery points');
+/**
+ * Server-side delivery state refreshes roughly this often, so both the poll cadence and the
+ * freshness window are derived from it — a remount inside the window reuses the cache.
+ */
+const DELIVERY_POLL_INTERVAL_MS = 10_000;
+
+export interface DeliveryPointsQueryInput {
+  /** Overrides spread over the endpoint's defaults. */
+  options?: QueryOverrides<DeliveryPointInfo[]>;
+}
+
+export const deliveryPointsQueryOptions = (input?: QueryParam<DeliveryPointsQueryInput>) => () =>
+  queryOptions({
+    queryKey: ['delivery', 'points'],
+    queryFn: ({ signal }) =>
+      apiClient<DeliveryPointInfo[]>(`${PUBLIC_API_BASE}/api/deliverypoints/`, signal),
+    refetchInterval: DELIVERY_POLL_INTERVAL_MS,
+    staleTime: DELIVERY_POLL_INTERVAL_MS,
+    ...input?.().options,
+  });
+
+export const createDeliveryPointsQuery = (input?: QueryParam<DeliveryPointsQueryInput>) =>
+  createQuery(deliveryPointsQueryOptions(input));
+
+export interface DeliveryPointQueryInput {
+  /** Guid of the delivery point to read. */
+  id: string;
+  /** Overrides spread over the endpoint's defaults. */
+  options?: QueryOverrides<DeliveryPointInfo>;
+}
+
+export const deliveryPointQueryOptions = (input: QueryParam<DeliveryPointQueryInput>) => () => {
+  const { id, options } = input();
+
+  return queryOptions({
+    queryKey: ['delivery', 'point', id],
+    queryFn: ({ signal }) =>
+      apiClient<DeliveryPointInfo>(`${PUBLIC_API_BASE}/api/deliverypoints/${id}/`, signal),
+    refetchInterval: DELIVERY_POLL_INTERVAL_MS,
+    staleTime: DELIVERY_POLL_INTERVAL_MS,
+    ...options,
+  });
 };
 
-export const getDeliveryPointInfo = async (
-  id: string,
-  signal: AbortSignal,
-): Promise<DeliveryPointInfo | undefined> => {
-  return apiClient(
-    `${PUBLIC_API_BASE}/api/deliverypoints/${id}`,
-    signal,
-    undefined,
-    'delivery point',
-  );
-};
+export const createDeliveryPointQuery = (input: QueryParam<DeliveryPointQueryInput>) =>
+  createQuery(deliveryPointQueryOptions(input));
 
-export const startDeliveryPointPolling = (
-  id: string,
-  callback: (deliveryPoint: DeliveryPointInfo | undefined) => void,
-  abortSignal: AbortSignal,
-  interval = 10000, // 10 seconds
-) => {
-  startVisibilityAwarePolling(
-    'Delivery point',
-    (signal) => getDeliveryPointInfo(id, signal),
-    callback,
-    () => undefined,
-    interval,
-    abortSignal,
-  );
-};
+export interface DeliveryJobsQueryInput {
+  /** Overrides spread over the endpoint's defaults. */
+  options?: QueryOverrides<DeliveryJob[]>;
+}
 
-export const getDeliveryJobs = async (signal: AbortSignal): Promise<DeliveryJob[]> => {
-  return apiClient(`${PUBLIC_API_BASE}/api/webui/deliveryjobs/`, signal, [], 'delivery jobs');
-};
+export const deliveryJobsQueryOptions = (input?: QueryParam<DeliveryJobsQueryInput>) => () =>
+  queryOptions({
+    queryKey: ['delivery', 'jobs'],
+    queryFn: async ({ signal }) => {
+      const jobs = await apiClient<DeliveryJob[]>(
+        `${PUBLIC_API_BASE}/api/webui/deliveryjobs/`,
+        signal,
+      );
+      return jobs.map((job) => ({
+        ...job,
+        cargos: job.cargos.map((cargo) => cargo.replace('T::', '_T') as DeliveryCargo),
+      }));
+    },
+    refetchInterval: DELIVERY_POLL_INTERVAL_MS,
+    staleTime: DELIVERY_POLL_INTERVAL_MS,
+    ...input?.().options,
+  });
 
-export const startDeliveryJobsPolling = (
-  callback: (deliveryJobs: DeliveryJob[]) => void,
-  abortSignal: AbortSignal,
-  interval = 10000, // 10 seconds
-) => {
-  startVisibilityAwarePolling(
-    'Delivery jobs',
-    (signal) => getDeliveryJobs(signal),
-    callback,
-    () => [],
-    interval,
-    abortSignal,
-  );
-};
+export const createDeliveryJobsQuery = (input?: QueryParam<DeliveryJobsQueryInput>) =>
+  createQuery(deliveryJobsQueryOptions(input));

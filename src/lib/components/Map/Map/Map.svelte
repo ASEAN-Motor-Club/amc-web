@@ -1,24 +1,17 @@
 <script lang="ts">
   import type Feature from 'ol/Feature';
-  import { onMount, getAbortSignal } from 'svelte';
+  import { onMount } from 'svelte';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
-  import {
-    PointType,
-    PoiType,
-    type MapSelection,
-    type MapState,
-    type PlayerData,
-    type TeleportPoint,
-  } from './types';
+  import { PointType, PoiType, type MapSelection, type MapState, type PlayerData } from './types';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
   import { getDeliveryLine } from './deliveryLine';
   import Search from './Search.svelte';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
-  import { getTeleports } from '$lib/api/teleport';
+  import { createTeleportsQuery } from '$lib/api/teleport';
   import { mergeTeleportPoints } from './teleport';
-  import { getShortcutZones, type ShortcutZone } from '$lib/api/shortcutZone';
+  import { createShortcutZonesQuery } from '$lib/api/shortcutZone';
   import { m } from '$messages';
   import { pinsSchema, type Pins } from '$lib/schema/pin';
   import * as z from 'zod/mini';
@@ -43,10 +36,12 @@
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
 
-  let teleportData = $state<TeleportPoint[]>([]);
+  const teleportsQuery = createTeleportsQuery();
+  const teleportData = $derived(mergeTeleportPoints(teleportsQuery.data ?? []));
   const haveTeleports = $derived(teleportData.length > 0);
 
-  let shortcutZoneData = $state<ShortcutZone[]>([]);
+  const shortcutZonesQuery = createShortcutZonesQuery();
+  const shortcutZoneData = $derived(shortcutZonesQuery.data ?? []);
   const haveShortcutZones = $derived(shortcutZoneData.length > 0);
 
   let mapState = $state<MapState>({
@@ -93,22 +88,6 @@
     } catch (e) {
       console.error('Failed to load map state:', e);
     }
-
-    getTeleports(getAbortSignal())
-      .then((data) => {
-        teleportData = mergeTeleportPoints(data);
-      })
-      .catch((e: unknown) => {
-        console.error('Failed to load teleport data:', e);
-      });
-
-    getShortcutZones(getAbortSignal())
-      .then((data) => {
-        shortcutZoneData = data;
-      })
-      .catch((e: unknown) => {
-        console.error('Failed to load shortcut zone data:', e);
-      });
   });
 
   const { showModal } = getMsgModalContext();

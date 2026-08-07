@@ -7,11 +7,10 @@
   import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
   import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
   import { m } from '$messages';
-  import { onMount, onDestroy, tick, getAbortSignal, settled } from 'svelte';
+  import { onMount, onDestroy, tick, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { getTeams } from '$lib/api/teams';
-  import type { Team } from '$lib/api/types';
+  import { createTeamsQuery } from '$lib/api/teams';
   import { format } from '$lib/date';
   import { page } from '$app/state';
   import { replaceState } from '$app/navigation';
@@ -28,16 +27,17 @@
   let teamText: HTMLDivElement[] = $state([]);
 
   let scrollContext: gsap.MatchMedia | undefined;
+  let scrollAnimationsStarted = false;
 
-  let teams = $state<Team[]>([]);
+  const teamsQuery = createTeamsQuery();
+  const teams = $derived(teamsQuery.data ?? []);
+  const loading = $derived(teamsQuery.isPending);
 
-  let loading = $state(true);
-
-  onMount(async () => {
+  onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
+  });
 
-    teams = await getTeams(getAbortSignal());
-    loading = false;
+  const setupScrollAnimations = async (initialHash: string) => {
     await tick();
 
     scrollContext = gsap.matchMedia();
@@ -135,8 +135,6 @@
       },
     );
 
-    const initialHash = page.url.hash;
-
     await settled();
 
     if (initialHash.startsWith('#team-')) {
@@ -150,6 +148,15 @@
         });
       }
     }
+  };
+
+  $effect(() => {
+    if (loading || scrollAnimationsStarted) {
+      return;
+    }
+
+    scrollAnimationsStarted = true;
+    void setupScrollAnimations(page.url.hash);
   });
 
   const onTeamClick = () => {

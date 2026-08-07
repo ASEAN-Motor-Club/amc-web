@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { startDeliveryPointPolling } from '$lib/api/delivery';
-  import type { DeliveryJob, DeliveryPointInfo } from '$lib/api/types';
+  import { createDeliveryPointQuery } from '$lib/api/delivery';
+  import type { DeliveryJob } from '$lib/api/types';
   import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
   import { cargoName } from '$lib/data/cargo';
   import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
@@ -22,7 +22,6 @@
   import { Features, getViewHref } from '../utils';
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
-  import { getAbortSignal } from 'svelte';
   import Table from '$lib/ui/Table/Table.svelte';
   import TableRow from '$lib/ui/Table/TableRow.svelte';
 
@@ -34,19 +33,10 @@
 
   const { id, fullScreen, jobsData }: Props = $props();
 
-  let deliveryPointInfoLoading: boolean = $state(true);
-  let deliveryPointInfo = $state<DeliveryPointInfo | undefined>(undefined);
+  const deliveryPointQuery = createDeliveryPointQuery(() => ({ id }));
 
-  $effect(() => {
-    startDeliveryPointPolling(
-      id,
-      (data) => {
-        deliveryPointInfo = data;
-        deliveryPointInfoLoading = false;
-      },
-      getAbortSignal(),
-    );
-  });
+  const deliveryPointInfo = $derived(deliveryPointQuery.data);
+  const deliveryPointInfoLoading = $derived(deliveryPointQuery.isPending);
 
   const deliveryPoint = $derived(deliveryPointsMap.get(id));
 

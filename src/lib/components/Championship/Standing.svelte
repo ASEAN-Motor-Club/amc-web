@@ -1,28 +1,20 @@
 <script lang="ts">
   import { m } from '$messages';
-  import { getAbortSignal, onMount } from 'svelte';
-  import { getPersonalStandings, getTeamStandings } from '$lib/api/championship';
-  import type { TeamStanding, PersonalStanding } from '$lib/api/types';
+  import { createPersonalStandingsQuery, createTeamStandingsQuery } from '$lib/api/championship';
   import { PUBLIC_SEASON_NO } from '$env/static/public';
   import StandingCard from './StandingCard.svelte';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
   import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
   import TableRow from '$lib/ui/Table/TableRow.svelte';
 
-  let loading = $state(true);
-  let teamStandings: TeamStanding[] = $state([]);
-  let personalStandings: PersonalStanding[] = $state([]);
+  const season = Number(PUBLIC_SEASON_NO);
 
-  onMount(async () => {
-    const [teamStandingsResponse, personalStandingsResponse] = await Promise.all([
-      getTeamStandings(+PUBLIC_SEASON_NO, getAbortSignal()),
-      getPersonalStandings(+PUBLIC_SEASON_NO, getAbortSignal()),
-    ]);
+  const teamStandingsQuery = createTeamStandingsQuery(() => ({ season }));
+  const personalStandingsQuery = createPersonalStandingsQuery(() => ({ season }));
 
-    teamStandings = teamStandingsResponse;
-    personalStandings = personalStandingsResponse;
-    loading = false;
-  });
+  const loading = $derived(teamStandingsQuery.isPending || personalStandingsQuery.isPending);
+  const teamStandings = $derived(teamStandingsQuery.data ?? []);
+  const personalStandings = $derived(personalStandingsQuery.data ?? []);
 </script>
 
 <div

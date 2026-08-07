@@ -4,11 +4,8 @@
   import type { DeliveryCargo } from '$lib/data/types';
   import { m } from '$messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
-  import type { DeliveryPointInfo } from '$lib/api/types';
   import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
-  import { startDeliveryPointPolling } from '$lib/api/delivery';
-  import { deliveryInfoCaches } from './deliveryInfoCaches.svelte';
-  import { getAbortSignal, untrack } from 'svelte';
+  import { createDeliveryPointQuery } from '$lib/api/delivery';
   import { debounce } from 'es-toolkit';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
@@ -31,53 +28,40 @@
     );
   };
 
-  let deliveryPointInfo = $state<DeliveryPointInfo | undefined>(undefined);
+  const guid = $derived(hoverInfo.info.guid);
 
-  const getInventoryAmount = (cargoKey: DeliveryCargo, isInput: boolean) =>
-    utilGetInventoryAmount(deliveryPointInfo, cargoKey, isInput);
+  /** Sweeping the pointer over points must not fire one request per point passed over. */
+  const HOVER_FETCH_DEBOUNCE_MS = 200;
 
-  let deliveryPointInfoLoading: boolean = $state(true);
+  let fetchEnabled = $state(false);
 
-  let guid = $derived(hoverInfo.info.guid);
-
-  const debouncedGetInfo = debounce((guid: string, signal: AbortSignal) => {
-    startDeliveryPointPolling(
-      guid,
-      (info) => {
-        if (info) {
-          deliveryInfoCaches.set(guid, info);
-        }
-        deliveryPointInfo = info;
-        deliveryPointInfoLoading = false;
-      },
-      signal,
-    );
-  }, 200);
+  const enableFetch = debounce(() => {
+    fetchEnabled = true;
+  }, HOVER_FETCH_DEBOUNCE_MS);
 
   $effect(() => {
     if (!guid) {
       return;
     }
 
-    const cache = untrack(() => deliveryInfoCaches.get(guid));
-    if (cache) {
-      const deliveryPointInfoCache = cache;
-      if (differenceInSeconds(new Date(), deliveryPointInfoCache.last_updated) <= 5) {
-        deliveryPointInfo = deliveryPointInfoCache;
-        deliveryPointInfoLoading = false;
-        return;
-      }
-    }
-
-    deliveryPointInfoLoading = true;
-    deliveryPointInfo = undefined;
-
-    debouncedGetInfo(guid, getAbortSignal());
+    fetchEnabled = false;
+    enableFetch();
 
     return () => {
-      debouncedGetInfo.cancel();
+      enableFetch.cancel();
     };
   });
+
+  const deliveryPointQuery = createDeliveryPointQuery(() => ({
+    id: guid,
+    options: { enabled: fetchEnabled },
+  }));
+
+  const deliveryPointInfo = $derived(deliveryPointQuery.data);
+  const deliveryPointInfoLoading = $derived(deliveryPointQuery.isPending);
+
+  const getInventoryAmount = (cargoKey: DeliveryCargo, isInput: boolean) =>
+    utilGetInventoryAmount(deliveryPointInfo, cargoKey, isInput);
 
   const lastUpdated = $derived.by(() => {
     const curr = new Date();

@@ -2,51 +2,29 @@ import { PUBLIC_API_BASE } from '$env/static/public';
 import { fromBinary } from '@bufbuild/protobuf';
 import { PlayerPositionsSchema, type PlayerPositions } from './proto/generated/player_positions_pb';
 import type { PlayerEventData } from './types';
-import { startVisibilityAwareEventSource, startVisibilityAwareWebSocket } from './_api';
+import type { QueryParam } from './_api';
+import { createEventSourceStream, createWebSocketStream } from './_stream.svelte';
 
-export const getPlayerRealtimePosition = (
-  callback: (data: PlayerEventData) => void,
-  abortSignal: AbortSignal,
-) => {
-  startVisibilityAwareEventSource(
-    'Player position',
-    `${PUBLIC_API_BASE}/api/player_positions/`,
-    (data: unknown) => {
-      const typedData = data as PlayerEventData;
-      callback(typedData);
-    },
-    undefined,
-    abortSignal,
-  );
-};
+export interface PlayerStreamInput {
+  /** Gate for the connection; defaults to open. */
+  enabled?: boolean;
+}
 
-export const getPlayerCount = (callback: (count: number) => void, abortSignal: AbortSignal) => {
-  startVisibilityAwareEventSource(
-    'Player count',
-    `${PUBLIC_API_BASE}/api/player_count/`,
-    (data: number) => {
-      callback(data);
-    },
-    undefined,
-    abortSignal,
-  );
-};
+export const createPlayerCountStream = (input?: QueryParam<PlayerStreamInput>) =>
+  createEventSourceStream<number>(() => ({
+    url: `${PUBLIC_API_BASE}/api/player_count/`,
+    enabled: input?.().enabled,
+  }));
 
-export const getPlayerRealtimePositionV2 = (
-  callback: (data: PlayerPositions) => void,
-  abortSignal: AbortSignal,
-) => {
-  startVisibilityAwareWebSocket(
-    'Player position V2',
-    `${PUBLIC_API_BASE}/api/player_positions_b/`,
-    (data: ArrayBuffer) => {
-      try {
-        callback(fromBinary(PlayerPositionsSchema, new Uint8Array(data)));
-      } catch (error) {
-        console.error('Player position V2 decoding error:', error);
-      }
-    },
-    undefined,
-    abortSignal,
-  );
-};
+export const createPlayerPositionsStream = (input?: QueryParam<PlayerStreamInput>) =>
+  createEventSourceStream<PlayerEventData>(() => ({
+    url: `${PUBLIC_API_BASE}/api/player_positions/`,
+    enabled: input?.().enabled,
+  }));
+
+export const createPlayerPositionsV2Stream = (input?: QueryParam<PlayerStreamInput>) =>
+  createWebSocketStream<PlayerPositions>(() => ({
+    url: `${PUBLIC_API_BASE}/api/player_positions_b/`,
+    decode: (frame) => fromBinary(PlayerPositionsSchema, new Uint8Array(frame)),
+    enabled: input?.().enabled,
+  }));

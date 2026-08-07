@@ -1,55 +1,40 @@
 <script lang="ts">
   import '$lib/font-sans-em';
-  import { getAbortSignal, onMount } from 'svelte';
   import { page } from '$app/state';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import type { EventResult, ScheduledEvent } from '$lib/api/types';
   import Button from '$lib/ui/Button/Button.svelte';
   import { m } from '$messages';
   import EventCard from '$lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
-  import { getEvent, getEventResult } from '$lib/api/championship';
+  import { createEventQuery, createEventResultsQuery } from '$lib/api/championship';
   import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
   import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
 
   const { showModal } = getMsgModalContext();
 
-  let eventData: ScheduledEvent | undefined = $state();
-  let eventResults: EventResult[] = $state([]);
-  // records/b8724385ffc98c9a5ea86fb12771d8666db39c2469bdc9602336fae6b97c8cd4/laps/0
-  let loading = $state(true);
+  const eventId = $derived(page.params.id);
 
-  onMount(async () => {
-    if (!page.params.id) {
-      showModal({
-        title: m['championship.results.cannot_load.title'](),
-        message: m['championship.results.cannot_load.desc'](),
-        cancelAction: () => {
-          goto('/');
-        },
-      });
+  const eventQuery = createEventQuery(() => ({ id: eventId }));
+  const eventResultsQuery = createEventResultsQuery(() => ({ id: eventId }));
+
+  const eventData = $derived(eventQuery.data);
+  const eventResults = $derived(
+    (eventResultsQuery.data ?? []).filter((result) => result.section_index !== -1),
+  );
+  const loading = $derived(eventQuery.isPending || eventResultsQuery.isPending);
+
+  $effect(() => {
+    if (eventId && !eventQuery.isError && !eventResultsQuery.isError) {
       return;
     }
 
-    try {
-      const [eventDataRes, eventResultsRes] = await Promise.all([
-        getEvent(page.params.id, getAbortSignal()),
-        getEventResult(page.params.id, getAbortSignal()),
-      ]);
-
-      eventData = eventDataRes;
-      eventResults = eventResultsRes.filter((result) => result.section_index !== -1);
-      loading = false;
-    } catch (error: unknown) {
-      console.error('Error fetching event data:', error);
-      showModal({
-        title: m['championship.results.cannot_load.title'](),
-        message: m['championship.results.cannot_load.desc'](),
-        cancelAction: () => {
-          goto('/championship');
-        },
-      });
-    }
+    showModal({
+      title: m['championship.results.cannot_load.title'](),
+      message: m['championship.results.cannot_load.desc'](),
+      cancelAction: () => {
+        goto(eventId ? '/championship' : '/');
+      },
+    });
   });
 
   const loadingOrNoData = $derived(loading || !eventData);

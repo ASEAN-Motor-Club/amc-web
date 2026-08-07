@@ -1,6 +1,7 @@
 import type { HouseData } from '$lib/api/types';
 import { PUBLIC_API_BASE } from '$env/static/public';
-import { apiClient } from './_api';
+import { createQuery, queryOptions } from '@tanstack/svelte-query';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api';
 
 type GetHousingDataResponse = Record<
   string,
@@ -14,22 +15,31 @@ type GetHousingDataResponse = Record<
   }
 >;
 
-export const getHousingData = async (signal: AbortSignal): Promise<HouseData> => {
-  const data = await apiClient<GetHousingDataResponse>(
-    `${PUBLIC_API_BASE}/api/housing/`,
-    signal,
-    {},
-    'housing data',
-  );
+export interface HousingQueryInput {
+  /** Overrides spread over the endpoint's defaults. */
+  options?: QueryOverrides<HouseData>;
+}
 
-  const houseData: HouseData = Object.values(data).reduce<HouseData>((acc, value) => {
-    acc[value.housingKey] = {
-      housingKey: value.housingKey,
-      ownerName: value.ownerName,
-      rentLeft: new Date(Date.now() + value.rentLeftTimeSeconds * 1000),
-    };
-    return acc;
-  }, {});
+export const housingQueryOptions = (input?: QueryParam<HousingQueryInput>) => () =>
+  queryOptions({
+    queryKey: ['housing'],
+    queryFn: async ({ signal }): Promise<HouseData> => {
+      const data = await apiClient<GetHousingDataResponse>(
+        `${PUBLIC_API_BASE}/api/housing/`,
+        signal,
+      );
 
-  return houseData;
-};
+      return Object.values(data).reduce<HouseData>((acc, value) => {
+        acc[value.housingKey] = {
+          housingKey: value.housingKey,
+          ownerName: value.ownerName,
+          rentLeft: new Date(Date.now() + value.rentLeftTimeSeconds * 1000),
+        };
+        return acc;
+      }, {});
+    },
+    ...input?.().options,
+  });
+
+export const createHousingQuery = (input?: QueryParam<HousingQueryInput>) =>
+  createQuery(housingQueryOptions(input));

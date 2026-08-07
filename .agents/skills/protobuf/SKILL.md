@@ -16,7 +16,7 @@ import { PlayerPositionsSchema } from '$lib/api/proto/generated/player_positions
 const msg = fromBinary(PlayerPositionsSchema, new Uint8Array(arrayBuffer));
 ```
 
-- Binary streams arrive over the visibility-aware WebSocket helper (`startVisibilityAwareWebSocket` in `src/lib/api/_api.ts`, subprotocol `['protobuf']`) — see [[api-layer]].
+- Binary streams arrive over the reactive WebSocket helper (`createWebSocketStream` in `src/lib/api/_stream.svelte.ts`, subprotocol `['protobuf']`), which takes a `decode` callback and exposes the decoded frame as `data` — see [[api-layer]].
 - Helper utilities alongside protos (e.g. `vehicleKeyUtils.ts`) are hand-written and live in `src/lib/api/proto/`, not `generated/`.
 
 Related: [[api-layer]], [[git-hooks]]

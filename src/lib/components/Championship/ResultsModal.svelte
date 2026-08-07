@@ -1,13 +1,12 @@
 <script lang="ts">
   import type { EventResult, ScheduledEvent } from '$lib/api/types';
-  import { getEventResult } from '$lib/api/championship';
+  import { createEventResultsQuery } from '$lib/api/championship';
   import { m } from '$messages';
   import Button from '$lib/ui/Button/Button.svelte';
   import Card from '$lib/ui/Card/Card.svelte';
   import Modal from '$lib/ui/Modal/Modal.svelte';
   import { formatTime } from '$lib/utils/formatTime';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
-  import { getAbortSignal } from 'svelte';
   import { page } from '$app/state';
   import Table from '$lib/ui/Table/Table.svelte';
   import TableRow from '$lib/ui/Table/TableRow.svelte';
@@ -21,22 +20,12 @@
 
   const { event, onClose, openEvent }: ResultsModalProps = $props();
 
-  let loading = $state(true);
-  let results: EventResult[] = $state([]);
+  const resultsQuery = createEventResultsQuery(() => ({ id: event?.id }));
 
-  $effect(() => {
-    if (!event?.id) return;
-
-    getEventResult(event.id, getAbortSignal()).then((eventResults) => {
-      results = eventResults.filter((result) => result.section_index !== -1);
-      loading = false;
-    });
-
-    return () => {
-      results = [];
-      loading = true;
-    };
-  });
+  const loading = $derived(resultsQuery.isPending);
+  const results = $derived(
+    (resultsQuery.data ?? []).filter((result) => result.section_index !== -1),
+  );
 
   const getTeamTag = (result: EventResult) => {
     const tag = result.championship_point?.team?.tag;

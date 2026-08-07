@@ -1,16 +1,16 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { getEvents } from '$lib/api/championship';
+  import { createEventsQuery } from '$lib/api/championship';
   import type { ScheduledEvent } from '$lib/api/types';
   import EventModal from '$lib/components/Championship/EventModal.svelte';
   import ResultsModal from '$lib/components/Championship/ResultsModal.svelte';
   import { setChampionshipContext } from '$lib/components/Championship/context';
-  import { getAbortSignal, onMount } from 'svelte';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { isValid } from '$lib/date';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
 
-  let events = $state<ScheduledEvent[]>([]);
+  const eventsQuery = createEventsQuery();
+  const events = $derived(eventsQuery.data ?? []);
 
   const openEvent = (day: number, month: number, year: number) => {
     const newUrl = `?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -34,10 +34,6 @@
     newParams.delete('event');
     goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
   };
-
-  onMount(async () => {
-    events = await getEvents(getAbortSignal());
-  });
 
   const { children } = $props();
 

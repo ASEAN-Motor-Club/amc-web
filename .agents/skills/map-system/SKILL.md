@@ -78,7 +78,7 @@ The wrapper hit-tests on pointer move and reports the feature (or `undefined`) t
 
 ## Realtime data
 
-Player positions stream via the API layer (`getPlayerRealtimePositionV2` — protobuf WebSocket; see [[api-layer]]) with `getAbortSignal()` for cleanup. Delivery info is cached in `deliveryInfoCaches.svelte.ts` (reactive rune module).
+Player positions stream via the API layer (`createPlayerPositionsV2Stream` — protobuf WebSocket exposed as reactive `data` / `isPending`; see [[api-layer]]), gated with `enabled` and torn down by its own `$effect`. Everything else on the map (delivery points, delivery jobs, housing, teleports, shortcut zones) is a TanStack Query: shared query keys mean a hovered delivery point and its open detail panel poll once between them, and `DeliveryInfo` only debounces _enabling_ its query, so re-hovering a point still hits the cache instantly.
 
 ## UI overlays
 

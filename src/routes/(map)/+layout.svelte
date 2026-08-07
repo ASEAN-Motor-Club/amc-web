@@ -1,22 +1,21 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { startDeliveryJobsPolling } from '$lib/api/delivery';
-  import { getHousingData } from '$lib/api/housing';
-  import { getPlayerRealtimePositionV2 } from '$lib/api/player';
-  import type { DeliveryJob, HouseData } from '$lib/api/types';
+  import { createDeliveryJobsQuery } from '$lib/api/delivery';
+  import { createHousingQuery } from '$lib/api/housing';
+  import { createPlayerPositionsV2Stream } from '$lib/api/player';
+  import type { DeliveryJob } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
   import type { CollapsibleType } from '$lib/components/Map/types';
-  import type { DeliveryCargo } from '$lib/data/types';
   import { m } from '$lib/paraglide/messages';
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import { vehicleKeyToString } from '$lib/api/proto/vehicleKeyUtils';
   import { reProjectVec2 } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
   import { isSm } from '$lib/utils/media.svelte';
-  import { getAbortSignal, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
 
   const { children } = $props();
@@ -62,69 +61,52 @@
 
   const validOpenCollapsible = $derived(ALL_MENU.includes(openCollapsible));
 
-  let playerData: PlayerData[] = $state.raw([]);
-  let playerDataLoading = $state(true);
   let playerLayerDataEnabled = $state(true);
 
   const showMap = $derived(!(showFull || (!isSm.current && validOpenCollapsible)));
 
-  $effect(() => {
-    if ((showMap && playerLayerDataEnabled) || openCollapsible === 'players') {
-      getPlayerRealtimePositionV2((data) => {
-        const result = data.players.map((item) => {
-          const coord = { x: item.x, y: item.y };
-          return {
-            geometry: reProjectVec2(coord),
-            name: item.playerName,
-            coord,
-            pointType: PointType.Player as const,
-            vehicleKey:
-              item.vehicleKey.case === 'vehicleKeyEnum'
-                ? vehicleKeyToString(item.vehicleKey.value)
-                : (item.vehicleKey.value ?? 'None'),
-            guid: item.uniqueId,
-          };
-        });
-        playerData = result;
-        playerDataLoading = false;
-      }, getAbortSignal());
-    } else {
-      playerData = [];
-    }
-  });
+  const playerPositionsStream = createPlayerPositionsV2Stream(() => ({
+    enabled: (showMap && playerLayerDataEnabled) || openCollapsible === 'players',
+  }));
 
-  let houseData: HouseData | undefined = $state(undefined);
-  let houseDataLoading = $state(true);
+  const playerData: PlayerData[] = $derived(
+    playerPositionsStream.data?.players.map((item) => {
+      const coord = { x: item.x, y: item.y };
+      return {
+        geometry: reProjectVec2(coord),
+        name: item.playerName,
+        coord,
+        pointType: PointType.Player as const,
+        vehicleKey:
+          item.vehicleKey.case === 'vehicleKeyEnum'
+            ? vehicleKeyToString(item.vehicleKey.value)
+            : (item.vehicleKey.value ?? 'None'),
+        guid: item.uniqueId,
+      };
+    }) ?? [],
+  );
 
-  $effect(() => {
-    if (!houseData && (showMap || openCollapsible === 'housing')) {
-      getHousingData(getAbortSignal())
-        .then((data) => {
-          houseData = data;
-          houseDataLoading = false;
-        })
-        .catch((error: unknown) => {
-          console.error('Error fetching housing data:', error);
-        });
-    }
-  });
+  const playerDataLoading = $derived(playerPositionsStream.isPending);
 
-  let jobsData: DeliveryJob[] = $state([]);
-  let jobsCache: SvelteMap<number, DeliveryJob> = new SvelteMap<number, DeliveryJob>();
-  let jobsDataLoading = $state(true);
+  const housingQuery = createHousingQuery(() => ({
+    options: { enabled: showMap || openCollapsible === 'housing' },
+  }));
+
+  const houseData = $derived(housingQuery.data);
+  const houseDataLoading = $derived(housingQuery.isPending);
+
+  const jobsQuery = createDeliveryJobsQuery(() => ({
+    options: { enabled: showMap || openCollapsible === 'jobs' },
+  }));
+
+  const jobsData = $derived(jobsQuery.data ?? []);
+  const jobsDataLoading = $derived(jobsQuery.isPending);
+
+  const jobsCache = new SvelteMap<number, DeliveryJob>();
 
   $effect(() => {
-    if (showMap || openCollapsible === 'jobs') {
-      startDeliveryJobsPolling((jobs) => {
-        jobsData = jobs.map((job) => ({
-          ...job,
-          cargos: job.cargos.map((cargo) => cargo.replace('T::', '_T') as DeliveryCargo),
-        }));
-        for (const job of jobsData) {
-          jobsCache.set(job.id, job);
-        }
-        jobsDataLoading = false;
-      }, getAbortSignal());
+    for (const job of jobsData) {
+      jobsCache.set(job.id, job);
     }
   });
 </script>
