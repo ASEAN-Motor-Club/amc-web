@@ -41,6 +41,7 @@
   import { Collection, Feature, type MapBrowserEvent, type MapEvent } from 'ol';
   import type OlMapType from 'ol/Map';
   import { isMouse } from '$lib/utils/media.svelte';
+  import { prefersReducedMotion } from 'svelte/motion';
   import { LineString, Point, Polygon } from 'ol/geom';
   import VectorLayer from 'ol/layer/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
@@ -472,22 +473,42 @@
 
   const deliveryLineFeaturesCollection = new Collection<Feature<LineString>>();
 
+  /** Dash geometry and travel speed are screen pixels, so the flow reads identically at any zoom. */
+  const DELIVERY_FLOW_DASH_WIDTH = 2;
+  const DELIVERY_FLOW_DASH_LENGTH = 6;
+  const DELIVERY_FLOW_DASH_GAP = 4;
+  const DELIVERY_FLOW_DASH_SPEED = 6;
+  const DELIVERY_FLOW_DASH_CYCLE = DELIVERY_FLOW_DASH_LENGTH + DELIVERY_FLOW_DASH_GAP;
+  const DELIVERY_LINE_OPACITY = 0.75;
+
   const deliveryLineLayer = new WebGLVectorLayer({
     source: new VectorSource({
       features: deliveryLineFeaturesCollection,
     }),
+    variables: {
+      flowSpeed: DELIVERY_FLOW_DASH_SPEED,
+    },
     style: {
-      'stroke-width': 2,
+      'stroke-width': DELIVERY_FLOW_DASH_WIDTH,
       'stroke-color': [
         'match',
         ['get', 'type'],
         DeliveryLineType.Supply,
-        adjustOpacity(colorGreen500, 0.75),
+        adjustOpacity(colorGreen500, DELIVERY_LINE_OPACITY),
         DeliveryLineType.Demand,
-        adjustOpacity(colorBlue500, 0.75),
-        adjustOpacity(colorYellow500, 0.75),
+        adjustOpacity(colorBlue500, DELIVERY_LINE_OPACITY),
+        adjustOpacity(colorYellow500, DELIVERY_LINE_OPACITY),
       ],
       'stroke-line-cap': 'round',
+      'stroke-line-dash': [DELIVERY_FLOW_DASH_LENGTH, DELIVERY_FLOW_DASH_GAP],
+      // Every line runs origin -> destination, and the dash offset shifts the pattern towards the
+      // line start, so a shrinking offset walks the gaps downstream. Wrapping it at one dash cycle
+      // keeps the loop seamless and the value small enough to stay float-precise.
+      'stroke-line-dash-offset': [
+        '-',
+        0,
+        ['%', ['*', ['time'], ['var', 'flowSpeed']], DELIVERY_FLOW_DASH_CYCLE],
+      ],
     },
   });
 
@@ -513,7 +534,8 @@
       deliveryLineFeaturesCollection.extend([
         ...demand.map((d) => {
           return new Feature({
-            geometry: new LineString([reProjectVec2(point), reProjectVec2(d.coord)]),
+            // Cargo flows from the matched source into the selected point.
+            geometry: new LineString([reProjectVec2(d.coord), reProjectVec2(point)]),
             type: DeliveryLineType.Demand,
           });
         }),
@@ -534,6 +556,29 @@
 
     return () => {
       deliveryLineFeaturesCollection.clear();
+    };
+  });
+
+  $effect(() => {
+    deliveryLineLayer.updateStyleVariables({
+      flowSpeed: prefersReducedMotion.current ? 0 : DELIVERY_FLOW_DASH_SPEED,
+    });
+  });
+
+  $effect(() => {
+    // `time` only advances when the map draws a frame, so the flow needs a render loop while
+    // lines are on screen. Nothing else animates, so the loop stops as soon as they are gone.
+    if (!deliveryLineData || !mapState.delivery || prefersReducedMotion.current) return;
+
+    const olMap = map.getMap();
+    const scheduleFrame = () => {
+      olMap.render();
+    };
+    olMap.on('postrender', scheduleFrame);
+    olMap.render();
+
+    return () => {
+      olMap.un('postrender', scheduleFrame);
     };
   });
 
