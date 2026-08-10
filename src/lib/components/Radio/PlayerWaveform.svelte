@@ -65,8 +65,6 @@
       }
 
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, width, height);
 
       ctx.lineWidth = 3;
       ctx.lineJoin = 'round';

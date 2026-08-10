@@ -40,7 +40,7 @@
 
     <div class="flex flex-1 flex-col p-4">
       <div
-        class="mb-4 flex min-h-25 flex-grow-1 overflow-hidden rounded-md border-2 border-[#5a2c00] shadow-sm shadow-gray-950/50"
+        class="mb-4 flex min-h-25 flex-grow-1 overflow-hidden rounded-md border-2 border-[#5a2c00] bg-black shadow-sm shadow-gray-950/50"
       >
         {#if playerContext.analyser}
           <PlayerWaveform analyser={playerContext.analyser} />
