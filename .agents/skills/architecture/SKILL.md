@@ -11,7 +11,6 @@ This is a **SvelteKit** site using **Svelte 5** with TypeScript, built for the A
 
 - Uses `@sveltejs/adapter-static` with `fallback: 'fallback.html'` — a **hybrid**: pages are prerendered where possible (`export const prerender = 'auto'` in `src/routes/+layout.ts`), and everything else runs as an SPA via the fallback page.
 - Build outputs to `build/`. The site must remain statically buildable — no server-side runtime.
-- Prerender HTTP errors throw, except for `/stream` (explicitly ignored in `svelte.config.js`).
 
 ## Internationalization (Paraglide)
 

@@ -132,6 +132,6 @@ Schemas are generated from `src/lib/api/proto/*.proto` via `pnpm proto:generate`
 
 ## Dev-time proxies
 
-In dev, `/stream`, `/icecast-status`, and `/login/token` are proxied by Vite (see `vite.config.ts`) using `VITE_MAIN_SITE`, `VITE_ICE_CAST`, `VITE_API_BASE` — see [[env-config]].
+In dev, `/icecast-status` and `/login/token` are proxied by Vite (see `vite.config.ts`) using `VITE_ICE_CAST`, `VITE_API_BASE` — see [[env-config]].
 
 Related: [[env-config]], [[architecture]]

@@ -43,11 +43,6 @@ export default defineConfig(({ mode }) => {
         allow: ['wasm'],
       },
       proxy: {
-        '/stream': {
-          target: env.VITE_MAIN_SITE,
-          changeOrigin: true,
-          secure: true,
-        },
         '/icecast-status': {
           target: env.VITE_ICE_CAST,
           changeOrigin: true,

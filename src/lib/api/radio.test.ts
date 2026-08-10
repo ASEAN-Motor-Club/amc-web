@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { PUBLIC_RADIO_STREAM_URL } from '$env/static/public';
 import { getStreamUrl } from './radio';
 
-/** Only needed because `getStreamUrl` returns a root-relative url. */
-const URL_BASE = 'https://example.invalid';
 const FROZEN_TIME = new Date('2026-08-07T12:00:00.000Z');
 const CLOCK_STEP_MS = 1_000;
 
@@ -16,12 +15,16 @@ describe('getStreamUrl', () => {
     vi.useRealTimers();
   });
 
-  it('points at the stream endpoint', () => {
-    expect(new URL(getStreamUrl(), URL_BASE).pathname).toBe('/stream');
+  it('points at the configured stream url', () => {
+    const configured = new URL(PUBLIC_RADIO_STREAM_URL);
+    const { origin, pathname } = new URL(getStreamUrl());
+
+    expect(origin).toBe(configured.origin);
+    expect(pathname).toBe(configured.pathname);
   });
 
   it('carries the current clock in the cache-busting t parameter', () => {
-    const { searchParams } = new URL(getStreamUrl(), URL_BASE);
+    const { searchParams } = new URL(getStreamUrl());
 
     expect(searchParams.get('t')).toBe(String(FROZEN_TIME.getTime()));
   });
@@ -37,7 +40,7 @@ describe('getStreamUrl', () => {
     const after = getStreamUrl();
 
     expect(after).not.toBe(before);
-    expect(new URL(after, URL_BASE).searchParams.get('t')).toBe(
+    expect(new URL(after).searchParams.get('t')).toBe(
       String(FROZEN_TIME.getTime() + CLOCK_STEP_MS),
     );
   });

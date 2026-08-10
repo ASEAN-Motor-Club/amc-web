@@ -11,14 +11,6 @@ const config = {
     alias: {
       $messages: './src/lib/paraglide/messages',
     },
-    prerender: {
-      handleHttpError: ({ path, _, message }) => {
-        if (path === '/stream') {
-          return;
-        }
-        throw new Error(message);
-      },
-    },
   },
 };
 

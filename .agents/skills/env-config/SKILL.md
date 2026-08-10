@@ -20,16 +20,16 @@ Consumed in app code with `import { PUBLIC_API_BASE } from '$env/static/public';
 | `PUBLIC_SEASON_START_DATE`      | Season start (ISO datetime with offset) |
 | `PUBLIC_PATREON_LINK`           | Patreon URL                             |
 | `PUBLIC_HOUSE_PRICE_MULTIPLIER` | Housing price multiplier                |
+| `PUBLIC_RADIO_STREAM_URL`       | Icecast radio stream URL                |
 
 ## `VITE_*` — dev-server proxy targets only (via `loadEnv` in `vite.config.ts`)
 
 Not imported by app code; they configure the Vite dev proxy:
 
-| Variable         | Proxy route                            |
-| ---------------- | -------------------------------------- |
-| `VITE_MAIN_SITE` | `/stream`                              |
-| `VITE_ICE_CAST`  | `/icecast-status` → `/status-json.xsl` |
-| `VITE_API_BASE`  | `/login/token` → `/api/login/token`    |
+| Variable        | Proxy route                            |
+| --------------- | -------------------------------------- |
+| `VITE_ICE_CAST` | `/icecast-status` → `/status-json.xsl` |
+| `VITE_API_BASE` | `/login/token` → `/api/login/token`    |
 
 ## Rules
 
