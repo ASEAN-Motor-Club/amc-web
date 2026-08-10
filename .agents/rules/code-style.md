@@ -45,9 +45,3 @@ globs:
 
 - `<Icon class="i-material-symbols:…-rounded" size="sm" />` — `class` is required; inside a `Button` the button context **overrides** `size`.
 - UnoCSS Wind4 utilities; a class with no effect usually doesn't exist in the preset. Values needed from TS come from `$lib/tw-var`.
-
-## Where new files go
-
-- UI component → `src/lib/ui/<Name>/<Name>.svelte`, plus `<Name>.stories.svelte` and a `context.ts` if it composes with children.
-- Feature code → `src/lib/components/<Domain>/`.
-- Shared helper → `src/lib/utils/<name>.ts` with a colocated test.
