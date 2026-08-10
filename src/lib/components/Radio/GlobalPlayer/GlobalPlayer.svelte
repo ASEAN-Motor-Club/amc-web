@@ -12,15 +12,20 @@
 
   const VOLUME_STORAGE_KEY = 'radioVolume';
   const RECONNECT_DELAY_MS = 1_000;
+  const MAX_RECONNECT_ATTEMPTS = 5;
   const FFT_SIZE = 128;
 
   let audio: HTMLAudioElement;
+  /** Listener intent, not element state — it stays true across a reconnect. */
   let isPlaying = $state(false);
   let volume = $state(1);
   let analyser: AnalyserNode | null = $state(null);
 
   let audioCtx: AudioContext | undefined;
   let reconnectTimeout: ReturnType<typeof setTimeout> | undefined;
+  let failures = 0;
+  /** Set once the stream proves unreadable cross-origin; audio still plays, visualizers don't. */
+  let corsBlocked = false;
 
   onMount(() => {
     const stored = Number(localStorage.getItem(VOLUME_STORAGE_KEY));
@@ -34,12 +39,12 @@
   });
 
   /**
-   * Built on the first play so the context starts running instead of suspended. The element is
-   * routed through the graph, which is why the stream must be CORS-readable — a tainted source
-   * feeds silence to the destination.
+   * Routing the element through an analyser requires a CORS-readable stream — a tainted source
+   * feeds silence to the destination — so the graph is only built once playback has proven the
+   * stream readable. Doing it on the first play also starts the context running, never suspended.
    */
   function connectAudioGraph() {
-    if (audioCtx) {
+    if (audioCtx || corsBlocked) {
       return;
     }
     audioCtx = new AudioContext();
@@ -51,10 +56,19 @@
   }
 
   function start() {
+    if (corsBlocked) {
+      audio.removeAttribute('crossorigin');
+    } else {
+      audio.crossOrigin = 'anonymous';
+    }
     audio.src = PUBLIC_RADIO_STREAM_URL;
     audio.play().catch((error: unknown) => {
-      console.warn('Radio stream failed to start', error);
-      stop();
+      // A failed load already arrives through the element's error event, and reporting it twice
+      // makes the retry timer abort the load it just started. Only a refused gesture is ours.
+      if (error instanceof DOMException && error.name === 'NotAllowedError') {
+        console.warn('Radio playback was blocked by the browser', error);
+        stop();
+      }
     });
   }
 
@@ -62,18 +76,38 @@
   function stop() {
     clearTimeout(reconnectTimeout);
     isPlaying = false;
+    failures = 0;
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
   }
 
-  /** `stalled` and `error` mean the connection died mid-listen; refetch the same url. */
-  function reconnect() {
+  function handleFailure() {
     if (!isPlaying) {
       return;
     }
+
+    // A stream that serves no CORS headers cannot feed the analyser; retry it as a plain source.
+    if (!corsBlocked && !audioCtx) {
+      corsBlocked = true;
+      start();
+      return;
+    }
+
+    failures += 1;
+    if (failures > MAX_RECONNECT_ATTEMPTS) {
+      console.warn(`Radio stream unreachable after ${MAX_RECONNECT_ATTEMPTS} attempts`);
+      stop();
+      return;
+    }
+
     clearTimeout(reconnectTimeout);
     reconnectTimeout = setTimeout(start, RECONNECT_DELAY_MS);
+  }
+
+  function handlePlaying() {
+    failures = 0;
+    connectAudioGraph();
   }
 
   function togglePlay() {
@@ -81,7 +115,8 @@
       stop();
       return;
     }
-    connectAudioGraph();
+    isPlaying = true;
+    failures = 0;
     start();
   }
 
@@ -119,9 +154,7 @@
 <audio
   bind:this={audio}
   preload="none"
-  crossorigin="anonymous"
-  onplay={() => (isPlaying = true)}
-  onpause={() => (isPlaying = false)}
-  onstalled={reconnect}
-  onerror={reconnect}
+  onplaying={handlePlaying}
+  onstalled={handleFailure}
+  onerror={handleFailure}
 ></audio>
