@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type Snippet, onMount } from 'svelte';
+  import { PUBLIC_RADIO_STREAM_URL } from '$env/static/public';
   import { m } from '$messages';
-  import { getStreamUrl } from '$lib/api/radio';
   import { setGlobalPlayerContext } from './context';
 
   interface Props {
@@ -11,52 +11,84 @@
   const { children }: Props = $props();
 
   const VOLUME_STORAGE_KEY = 'radioVolume';
+  const RECONNECT_DELAY_MS = 1_000;
+  const FFT_SIZE = 128;
 
   let audio: HTMLAudioElement;
   let isPlaying = $state(false);
-
   let volume = $state(1);
-
-  onMount(() => {
-    let vol = +(localStorage.getItem(VOLUME_STORAGE_KEY) ?? 1);
-    if (Number.isNaN(vol)) {
-      vol = 1;
-    }
-    vol = Math.min(Math.max(vol, 0), 1);
-    localStorage.setItem(VOLUME_STORAGE_KEY, vol.toString());
-    volume = vol;
-  });
-
-  let audioCtx: AudioContext;
   let analyser: AnalyserNode | null = $state(null);
 
-  // let currentTrack = $state<string>('Loading...');
+  let audioCtx: AudioContext | undefined;
+  let reconnectTimeout: ReturnType<typeof setTimeout> | undefined;
 
-  let restartTimeout: ReturnType<typeof setTimeout> | undefined;
+  onMount(() => {
+    const stored = Number(localStorage.getItem(VOLUME_STORAGE_KEY));
+    volume = Number.isFinite(stored) ? Math.min(Math.max(stored, 0), 1) : 1;
+    audio.volume = volume;
 
-  let streamUrl = $state(getStreamUrl());
+    return () => {
+      clearTimeout(reconnectTimeout);
+      void audioCtx?.close();
+    };
+  });
 
-  function handleAudioStall() {
-    if (isPlaying) {
-      console.warn(`Audio stalled. Attempting restart`);
-      restartAudio();
+  /**
+   * Built on the first play so the context starts running instead of suspended. The element is
+   * routed through the graph, which is why the stream must be CORS-readable — a tainted source
+   * feeds silence to the destination.
+   */
+  function connectAudioGraph() {
+    if (audioCtx) {
+      return;
     }
+    audioCtx = new AudioContext();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = FFT_SIZE;
+    analyser.smoothingTimeConstant = 0;
+    audioCtx.createMediaElementSource(audio).connect(analyser);
+    analyser.connect(audioCtx.destination);
   }
 
-  function handleAudioError(event: Event) {
-    if (isPlaying) {
-      console.warn(`Audio error occurred. Attempting restart`, event);
-      restartAudio();
-    }
+  function start() {
+    audio.src = PUBLIC_RADIO_STREAM_URL;
+    audio.play().catch((error: unknown) => {
+      console.warn('Radio stream failed to start', error);
+      stop();
+    });
   }
 
-  function handlePlay() {
-    isPlaying = true;
-  }
-
-  function handleAbort() {
+  /** A live stream has no past to resume, so stopping drops the connection instead of buffering. */
+  function stop() {
+    clearTimeout(reconnectTimeout);
     isPlaying = false;
-    streamUrl = getStreamUrl();
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+  }
+
+  /** `stalled` and `error` mean the connection died mid-listen; refetch the same url. */
+  function reconnect() {
+    if (!isPlaying) {
+      return;
+    }
+    clearTimeout(reconnectTimeout);
+    reconnectTimeout = setTimeout(start, RECONNECT_DELAY_MS);
+  }
+
+  function togglePlay() {
+    if (isPlaying) {
+      stop();
+      return;
+    }
+    connectAudioGraph();
+    start();
+  }
+
+  function changeVolume(value: number) {
+    audio.volume = value;
+    volume = value;
+    localStorage.setItem(VOLUME_STORAGE_KEY, value.toString());
   }
 
   function handleBeforeUnload(event: BeforeUnloadEvent) {
@@ -66,61 +98,9 @@
     }
   }
 
-  function restartAudio() {
-    clearTimeout(restartTimeout);
-    restartTimeout = setTimeout(() => {
-      if (isPlaying) {
-        audio.pause();
-        streamUrl = getStreamUrl();
-        audio.play();
-      }
-    }, 1000);
-  }
-
-  onMount(() => {
-    audio.volume = volume;
-    audioCtx = new AudioContext();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 128;
-    analyser.smoothingTimeConstant = 0;
-
-    const source = audioCtx.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-
-    // const stopPolling = startNowPlayingPolling((track) => {
-    //   currentTrack = track;
-    // });
-
-    return () => {
-      // stopPolling();
-      audioCtx.close();
-      if (restartTimeout) {
-        clearTimeout(restartTimeout);
-      }
-    };
-  });
-
-  function togglePlay() {
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    if (!isPlaying) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-  }
-
-  function changeVolume(value: number) {
-    audio.volume = value;
-    localStorage.setItem(VOLUME_STORAGE_KEY, value.toString());
-    volume = value;
-  }
-
   setGlobalPlayerContext({
-    changeVolume,
     togglePlay,
+    changeVolume,
     get isPlaying() {
       return isPlaying;
     },
@@ -130,25 +110,18 @@
     get analyser() {
       return analyser;
     },
-    get audioContext() {
-      return audioCtx;
-    },
   });
 </script>
 
 <svelte:window onbeforeunload={handleBeforeUnload} />
 
 {@render children()}
-<!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-<!-- svelte-ignore hydration_attribute_changed -->
 <audio
   bind:this={audio}
-  src={streamUrl}
   preload="none"
   crossorigin="anonymous"
-  onstalled={handleAudioStall}
-  onerror={handleAudioError}
-  onplay={handlePlay}
-  onabort={handleAbort}
-  onpause={handleAbort}
+  onplay={() => (isPlaying = true)}
+  onpause={() => (isPlaying = false)}
+  onstalled={reconnect}
+  onerror={reconnect}
 ></audio>

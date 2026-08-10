@@ -92,7 +92,7 @@
     }
 
     if (!prefersReducedMotion.current) {
-      requestAnimationFrame(draw);
+      animationId = requestAnimationFrame(draw);
     }
 
     return () => {

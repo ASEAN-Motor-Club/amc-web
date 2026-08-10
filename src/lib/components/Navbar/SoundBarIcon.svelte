@@ -1,57 +1,18 @@
 <script lang="ts">
   import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
+  import { createFrequencyBands } from '../Radio/GlobalPlayer/frequency.svelte';
+
+  const BAR_COUNT = 3;
+  const PERCENT = 100;
 
   const playerContext = getGlobalPlayerContext();
-
-  let animationId: number;
-  let barHeights = $state([0, 0, 0]);
-
-  $effect(() => {
-    if (playerContext.audioContext && playerContext.analyser) {
-      const freqData = new Uint8Array(playerContext.analyser.frequencyBinCount);
-
-      // outside of bar 44 (at 64 frequencyBinCount and 48khz equal 33khz) usually contains nothing
-      const binsCount = 44;
-      const binsPerBar = Math.floor(binsCount / 3);
-
-      function draw() {
-        animationId = requestAnimationFrame(draw);
-
-        if (playerContext.analyser) {
-          playerContext.analyser.getByteFrequencyData(freqData);
-          for (let i = 0; i < 3; i++) {
-            const startBin = i * binsPerBar;
-            const endBin = i === 2 ? binsCount : (i + 1) * binsPerBar;
-
-            let sum = 0;
-            const binCount = endBin - startBin;
-
-            for (let j = startBin; j < endBin; j++) {
-              sum += freqData[j];
-            }
-            const average = sum / binCount;
-
-            const heightPercent = (average / 255) * 100;
-            barHeights[i] = heightPercent;
-          }
-        }
-      }
-
-      animationId = requestAnimationFrame(draw);
-    }
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  });
+  const spectrum = createFrequencyBands(() => playerContext.analyser, BAR_COUNT);
 </script>
 
 <div class="flex h-6 w-6 items-center justify-center">
   <div class="flex h-5 w-4 items-center justify-between">
-    {#each barHeights as height, i (i)}
-      <div class="min-h-1 w-1 rounded-sm bg-orange-500" style:height="{height}%"></div>
+    {#each spectrum.bands as level, i (i)}
+      <div class="min-h-1 w-1 rounded-sm bg-orange-500" style:height="{level * PERCENT}%"></div>
     {/each}
   </div>
 </div>

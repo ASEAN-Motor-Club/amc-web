@@ -6,46 +6,17 @@
   import Icon from '$lib/ui/Icon/Icon.svelte';
   import PlayerWaveform from './PlayerWaveform.svelte';
   import { getGlobalPlayerContext } from './GlobalPlayer/context';
-  import { prefersReducedMotion } from 'svelte/motion';
+  import { createFrequencyBands } from './GlobalPlayer/frequency.svelte';
+
+  /** Loudness is 0–1; these turn it into a subtle bulge and wobble of the speaker grill. */
+  const MAX_GRILL_GROWTH = 0.42;
+  const MAX_GRILL_WOBBLE_DEG = 17;
 
   const playerContext = getGlobalPlayerContext();
-  let grillRotate = $state(0);
-  let grillScale = $state(1);
+  const spectrum = createFrequencyBands(() => playerContext.analyser, 1);
 
-  let animationId: number;
-
-  const freqData = new Uint8Array(playerContext.analyser?.frequencyBinCount ?? 0);
-
-  function draw() {
-    animationId = requestAnimationFrame(draw);
-
-    if (playerContext.analyser) {
-      playerContext.analyser.getByteFrequencyData(freqData);
-
-      let sum = 0;
-      for (const value of freqData) {
-        sum += value;
-      }
-      const avg = sum / freqData.length;
-
-      grillScale = 1 + avg / 600;
-      grillRotate = ((Math.random() - 0.5) * avg) / 15;
-    }
-  }
-
-  $effect(() => {
-    if (!prefersReducedMotion.current && playerContext.analyser) {
-      animationId = requestAnimationFrame(draw);
-    }
-
-    return () => {
-      grillScale = 1;
-      grillRotate = 0;
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  });
+  const grillScale = $derived(1 + spectrum.average * MAX_GRILL_GROWTH);
+  const grillRotate = $derived((Math.random() - 0.5) * spectrum.average * MAX_GRILL_WOBBLE_DEG);
 </script>
 
 <div
@@ -75,11 +46,6 @@
           <PlayerWaveform analyser={playerContext.analyser} />
         {/if}
       </div>
-      <!-- <div
-          class="mb-2.5 text-center font-mono text-sm text-[#aaffaa] [text-shadow:0_0_5px_rgba(170,255,170,0.7)]"
-        >
-          {currentTrack}
-        </div> -->
       <Button
         onClick={playerContext.togglePlay}
         class="mb-4 bg-[#5a2c00] hover:bg-[color-mix(in_oklab,#5a2c00_90%,white)] active:bg-[color-mix(in_oklab,#5a2c00_95%,black)]"
