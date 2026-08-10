@@ -337,6 +337,14 @@ export function vehicleKeyToString(key: VehicleKey): keyof typeof vehiclesName |
       return 'Goliath6';
     case VehicleKey.VEHICLE_KEY_GOLIATH10:
       return 'Goliath10';
+    case VehicleKey.VEHICLE_KEY_CIVO:
+      return 'Civo';
+    case VehicleKey.VEHICLE_KEY_ELISA2:
+      return 'Elisa2';
+    case VehicleKey.VEHICLE_KEY_ELISA2_POLICE:
+      return 'Elisa2_Police';
+    case VehicleKey.VEHICLE_KEY_LONGHORN_SEMI_4X2:
+      return 'Longhorn_Semi_4x2';
     case VehicleKey.VEHICLE_KEY_NONE:
     case VehicleKey.VEHICLE_KEY_UNSPECIFIED:
       return 'None';
