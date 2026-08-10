@@ -4,7 +4,7 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 ## Where the guidance lives
 
-`.agents/rules/*.md` — one rule per area, most scoped by globs. Read the ones matching the files you are about to touch; `architecture` (build/deploy model, Vite pipeline, codegen, tooling) and `project-structure` (directory map, where new files go) are worth reading first in an unfamiliar corner. Current set: `architecture`, `project-structure`, `code-style`, `i18n`, `libraries`, `api-layer`, `map`, `track-editor`, `schemas`, `testing`, `env-config`, `app-shell`, `pakop-wasm`, `git-hooks`.
+`.agents/rules/*.md` — one rule per area, listed with their globs in your prompt. Read the ones matching the files you are about to touch, and `rule://architecture` before anything structural. Prefer `glob`/`read` over any doc for what currently exists on disk.
 
 ## Essential commands
 

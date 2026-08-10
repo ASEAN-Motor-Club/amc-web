@@ -1,5 +1,5 @@
 ---
-description: Validation schemas — zod/mini only (eslint-enforced), schemas in src/lib/schema, i18n-aware error factories, derived types.
+description: Validation schemas — zod/mini only (eslint-enforced), the functional API, i18n-aware error factories, derived types.
 globs:
   - src/lib/schema/**
 ---
@@ -10,10 +10,9 @@ globs:
 import * as z from 'zod/mini';
 ```
 
-Importing plain `zod` is an eslint error (`Use zod/mini instead for smaller bundle size`; type imports allowed).
+Importing plain `zod` is an eslint error. Schemas live in `src/lib/schema/` with colocated tests.
 
-- `src/lib/schema/` holds `track.ts` (with `track.test.ts`) and `pin.ts`.
 - The mini build is functional: `z.optional(x)`, `.check(z.minLength(1, '…'))` — not chained `.optional()` / `.min()`.
-- User-facing validation errors must be translated: pass `{ error: … }` callbacks that call `m['…']()`, as `createWaypointError` does in `track.ts`. `pin.ts` still carries hardcoded English strings and is not a model to copy.
-- Derive types with `z.infer`; the codebase distinguishes inferred `Loose*` types from normalized `Required<…>` ones (`pin.ts`).
-- `z.toJSONSchema(schema)` feeds editor tooling. It drops the `error` callbacks and emits `additionalProperties: false` — see the track-editor rule before relying on it.
+- Errors shown to users must be translated: pass `{ error: … }` callbacks that resolve `m['…']()`, following the waypoint error factory in `track.ts`. Hardcoded English strings elsewhere in the directory are debt, not a pattern.
+- Derive types with `z.infer`, keeping the loose inferred shape separate from the normalized required one.
+- `z.toJSONSchema()` drops the `error` callbacks and emits `additionalProperties: false` — read the track-editor rule before feeding it to editor tooling.
