@@ -1,53 +1,44 @@
 ---
 name: project-structure
-description: Directory layout of the AMC web repo — where UI components, feature components, routes, data, schemas, WASM crates, and generated code live. Read before adding new files or searching for existing code.
+description: Where everything lives in the AMC web repo — UI vs feature components, routes, data, schemas, WASM, generated output — and where new files go. Read before adding files or hunting for existing code.
 ---
 
-# Project Structure
+# Project structure
 
 ```
-.
-├── src/
-│   ├── lib/
-│   │   ├── ui/                  # Reusable UI components (Button, Card, Icon, Modal, Select,
-│   │   │                        #   OlMap, EditorOlMap, Table, Tooltip, …) — one folder per
-│   │   │                        #   component with colocated .stories.svelte and context.ts
-│   │   ├── components/          # Feature components by domain (Map, Navbar, Championship,
-│   │   │                        #   Radio, TrackEditor, Home, EventCard, Locale, …)
-│   │   ├── data/                # Static game data (deliveryPoint, house, area, cargo, types)
-│   │   ├── api/                 # API client modules (_api.ts base + per-domain files)
-│   │   │   └── proto/           # .proto definitions + generated/ _pb.ts files
-│   │   ├── assets/              # data JSONs, images, lottie, mappings, teams, videos
-│   │   ├── paraglide/           # Generated i18n runtime + messages (do NOT edit)
-│   │   ├── schema/              # Zod schemas (track, pin) — uses zod/mini
-│   │   ├── types/               # Shared TypeScript types
-│   │   ├── utils/               # Utility functions, mostly with colocated .test.ts
-│   │   ├── tw-var.ts            # Exported Tailwind color variables (oklch) for JS use
-│   │   ├── date.ts              # Date utilities
-│   │   ├── font-sans-em.ts      # Font metrics helpers
-│   │   └── realtimeDate.svelte.ts  # Reactive current-time rune helper
-│   ├── routes/
-│   │   ├── (map)/               # Map layout group: map, deliveries, housing, jobs, players
-│   │   ├── championship/        # Championship results and details
-│   │   ├── pak/                 # Pak file inspector + conflict checker (uses pakop WASM)
-│   │   ├── track/               # Track editor
-│   │   ├── radio/               # Radio page
-│   │   └── ankhr/, colors/      # Misc pages
-│   ├── stories/                 # Storybook reference stories only (e.g. color palette);
-│   │                            #   component stories are colocated in src/lib/ui/*
-│   ├── hooks.ts                 # reroute → paraglide deLocalizeUrl
-│   └── app.css / app.html / app.d.ts
-├── messages/                    # Paraglide source messages: en, id, ms, th, tl, vi
-├── wasm/pakop/                  # C# .NET WASM project (CUE4Parse) + committed npm shim (pnpm pkg "pakop")
-├── vite-plugins/                # Custom Vite plugins (webmanifest)
-├── static/                      # Static assets served as-is
-└── scripts/                     # Vite scripts (currently empty)
+src/
+  lib/
+    ui/           reusable components, one dir each (Button, Card, Icon, Modal, Select, Table,
+                  Tooltip, OlMap, EditorOlMap, CodeEditor, MarkdownText, Lottie, …) with
+                  colocated .stories.svelte and, where they compose, context.ts
+    components/   feature components by domain (Map, Navbar, TrackEditor, Championship, Radio,
+                  Home, EventCard, Locale, CommonHead, …)
+    api/          _api.ts + _stream.svelte.ts + queryClient.ts + per-domain modules
+      proto/      .proto sources, hand-written vehicleKeyUtils.ts, generated/ (gitignored)
+    data/         static game data (deliveryPoint, house, area, cargo, types)
+    schema/       zod/mini schemas (track, pin)
+    assets/       data JSONs, images, lottie, mappings, teams, videos
+    utils/        helpers, mostly with colocated .test.ts
+    types/        shared TypeScript types
+    paraglide/    generated i18n runtime (never edit)
+    tw-var.ts     oklch colors and metrics for use from TS
+    date.ts       the only allowed date-fns entry point
+    realtimeDate.svelte.ts, font-sans-em.ts
+  routes/
+    (map)/        map layout group: map, deliveries, housing, jobs, players
+    championship/ track/ pak/ radio/ ankhr/ colors/
+  hooks.ts, hooks.server.ts, app.html, app.css, app.d.ts, globals.d.ts
+  stories/        Storybook reference stories only (component stories are colocated)
+messages/         paraglide sources (en, th, id active; ms, tl, vi are parked stubs)
+project.inlang/   paraglide project config (hand-edited)
+wasm/pakop/       C# .NET WASM project + committed npm shim (workspace package "pakop")
+vite-plugins/     webmanifest.ts, dotnet-wasm-asset.ts
+static/  test_pak/  .storybook/  .github/workflows/
 ```
 
-Conventions:
+Placement:
 
-- New UI component → `src/lib/ui/<Name>/<Name>.svelte` + `<Name>.stories.svelte`; add `context.ts` if it participates in parent/child composition.
+- New UI component → `src/lib/ui/<Name>/<Name>.svelte` (+ `<Name>.stories.svelte`, plus `context.ts` if it composes with children). Import it by full path; only `MarkdownText` has a barrel.
 - New feature code → `src/lib/components/<Domain>/`.
-- Generated directories (`src/lib/paraglide/`, `src/lib/api/proto/generated/`, `wasm/pakop/bin|obj`) must never be hand-edited — regenerate with `pnpm paraglide:compile`, `pnpm proto:generate`, or `pnpm build:pakop`.
-
-Related: [[architecture]], [[path-aliases]], [[codebase-patterns]]
+- New shared helper → `src/lib/utils/<name>.ts` with a colocated test.
+- Generated trees (`src/lib/paraglide/`, `src/lib/api/proto/generated/`, `wasm/pakop/bin|obj`) are regenerated, never edited.

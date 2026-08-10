@@ -2,42 +2,31 @@
 
 A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScript, UnoCSS (Wind4 preset), and Paraglide i18n, built for the ASEAN Motor Club community.
 
-## Agent Skills
+## Where the guidance lives
 
-Detailed guidance has been split into skills under `.agents/skills/`. Read the relevant skill before working in its area
+- `.agents/rules/*.md` — the conventions for a given area (`code-style`, `i18n`, `api-layer`, `map`, `track-editor`, `schemas`, `libraries`, `testing`, `env-config`, `app-shell`, `pakop-wasm`, `git-hooks`). Read the ones matching the files you are about to touch.
+- `.agents/skills/` — `architecture` (build/deploy model, Vite pipeline, codegen, tooling) and `project-structure` (directory map, where new files go).
 
-## Essential Commands
+## Essential commands
 
 ```bash
-# Development
-pnpm dev                 # Start dev server
-pnpm dev:host            # Start dev server with host access
-pnpm storybook           # Component development
+pnpm dev                 # dev server (dev:host to expose)
+pnpm build               # static build → build/ (preview / preview:host to serve)
+pnpm storybook           # component development (build:storybook to deploy)
 
-# Build & Deploy
-pnpm build               # Build the static site (outputs to build/)
-pnpm preview             # Preview built site locally
-pnpm preview:host        # Preview built site with host access
-pnpm paraglide:compile   # Regenerate i18n messages
-pnpm proto:generate      # Regenerate _pb.ts files from .proto definitions
-pnpm build:pakop         # Build pakop WASM module (C#/CUE4Parse); run before pnpm dev/build and after C# changes
+pnpm paraglide:compile   # regenerate i18n messages
+pnpm proto:generate      # regenerate _pb.ts from .proto
+pnpm build:pakop         # build the pakop WASM module; run before dev/build and after C# changes
 
-# Quality Checks
-pnpm format              # Prettier formatting
-pnpm lint                # Prettier check + ESLint
-pnpm lint:fix            # Auto-fix ESLint issues
-pnpm check               # TypeScript + Svelte check
-pnpm check:watch         # TypeScript + Svelte check in watch mode
-pnpm test                # Run all tests once. Prefer this — no watcher to terminate
-pnpm test:unit           # Run tests in watch mode
-pnpm build:storybook     # Build Storybook for deployment
+pnpm format              # write formatting
+pnpm lint                # prettier check + eslint (lint:fix to autofix)
+pnpm check               # svelte-check (check:watch for watch mode)
+pnpm test                # single run — prefer over test:unit, which watches
 ```
 
-## Common Gotchas
+## Non-negotiables
 
-1. **UnoCSS compatibility**: Some Tailwind classes don't exist in UnoCSS — refer to the Wind4 preset documentation. The Uno config also blocklists patterns that collide with paraglide message calls.
-2. **i18n**: Never hardcode user-facing strings — always use `m['key']()` imported from `$messages`.
-3. **Svelte 5**: Use runes syntax only; no legacy `$:` reactive statements or `export let`.
-4. **Context**: UI components often depend on parent context (`InputGroup`, `Select`, `Button`→`Icon`, etc.) — check the colocated `context.ts`.
-5. **Static generation**: The site must remain statically buildable (adapter-static with SPA fallback; `prerender = 'auto'`).
-6. **Generated code**: Never hand-edit `src/lib/paraglide/`, `src/lib/api/proto/generated/`, or `wasm/pakop/bin|obj` — regenerate them instead.
+- The site must stay statically buildable: adapter-static with SPA fallback, `prerender = 'auto'`.
+- Never hand-edit `src/lib/paraglide/`, `src/lib/api/proto/generated/` or `wasm/pakop/bin|obj` — regenerate them.
+- Never hardcode user-facing strings; they come from `$messages`.
+- Runes only — no `$:`, no `export let`.

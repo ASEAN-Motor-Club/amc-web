@@ -1,45 +1,44 @@
 ---
 name: architecture
-description: High-level architecture of the AMC web app — SvelteKit static/SPA hybrid, Vite plugin pipeline, i18n strategy, WASM modules, dev-server proxies. Read before making structural or build-related changes.
+description: How the AMC web app is built — SvelteKit static/SPA hybrid, the Vite plugin pipeline, codegen, WASM, tooling and the commands that drive them. Read before structural or build-related changes.
 ---
 
 # Architecture
 
-This is a **SvelteKit** site using **Svelte 5** with TypeScript, built for the ASEAN Motor Club community.
+SvelteKit + Svelte 5 + TypeScript, statically built for the ASEAN Motor Club community.
 
-## Rendering & deployment model
+## Rendering & deployment
 
-- Uses `@sveltejs/adapter-static` with `fallback: 'fallback.html'` — a **hybrid**: pages are prerendered where possible (`export const prerender = 'auto'` in `src/routes/+layout.ts`), and everything else runs as an SPA via the fallback page.
-- Build outputs to `build/`. The site must remain statically buildable — no server-side runtime.
+- `@sveltejs/adapter-static` with `fallback: 'fallback.html'`: pages prerender where they can (`export const prerender = 'auto'` in `src/routes/+layout.ts`), everything else runs as an SPA off the fallback.
+- Output goes to `build/`. The site must stay statically buildable — no server runtime.
 
-## Internationalization (Paraglide)
+## Vite pipeline
 
-- Source messages live in `messages/{en,id,ms,th,tl,vi}.json`; compiled output in `src/lib/paraglide/` (generated — never edit manually).
-- Compiled by the Paraglide Vite plugin during dev/build, or manually with `pnpm paraglide:compile`.
-- Locale strategy: `['custom-svelteReactiveLocale', 'baseLocale']`, persisted in localStorage key `siteLocale`.
-- URL delocalization happens in `src/hooks.ts` via `reroute` + `deLocalizeUrl`.
+`vite.config.ts` registers, in order: `dotnetWasmAssetPlugin()`, `UnoCSS()`, `sveltekit()`, `paraglideVitePlugin()`, `analyzer()` (vite-bundle-analyzer, off in CI via `env-ci`), `webmanifestPlugin()`. It also sets `worker.format: 'es'` and `optimizeDeps.exclude: ['monaco-editor']` for Monaco's workers, `server.fs.allow: ['wasm']` for the pakop shim, and dev proxies read from `VITE_*`.
 
-## Styling (UnoCSS)
+Styling is UnoCSS via the Vite plugin with `@unocss/extractor-svelte`; presets (`presetIcons`, `presetWind4`, `presetTypography`) come from the `amc-uno-css-config` GitHub dependency and `unocss.config.ts` adds `transformerDirectives()`, a `cursive` font token, and a blocklist that stops paraglide `m.…` calls being extracted as classes.
 
-- UnoCSS with the **Wind4 preset** (Tailwind v4-style syntax), configured via the shared `amc-uno-css-config` package (a GitHub dependency) and extended in `unocss.config.ts`.
-- Uses the UnoCSS **Vite plugin** with `@unocss/extractor-svelte` (not svelte-scoped mode).
-- `unocss.config.ts` has a blocklist to avoid false-positive class extraction (e.g. paraglide `m.` / `m['...']` calls, bare `m2`/`w10`-style tokens).
+## Generated code — never hand-edit
 
-## WASM (C# / .NET)
+| Output                         | Command                  | Notes                            |
+| ------------------------------ | ------------------------ | -------------------------------- |
+| `src/lib/paraglide/`           | `pnpm paraglide:compile` | also runs on dev/build           |
+| `src/lib/api/proto/generated/` | `pnpm proto:generate`    | buf + `buf.gen.yaml`; gitignored |
+| `wasm/pakop/bin`, `obj`        | `pnpm build:pakop`       | needs .NET 10 SDK + `wasm-tools` |
 
-- C# .NET 10 browser-WASM project at `wasm/pakop/` (`Pakop.csproj`, CUE4Parse-based; no Blazor).
-- Built with `pnpm build:pakop` (`dotnet build -c Release`; required before `pnpm dev`/`pnpm build`); requires .NET 10 SDK + `dotnet workload install wasm-tools`. The pakop shim imports `dotnet.js` straight from the dotnet build output; the bundler-friendly `dotnet.js` statically imports all runtime assets, so Vite bundles them with hashed names into `_app/immutable/assets/`.
-- The pnpm workspace package `pakop` is the committed shim `wasm/pakop/index.js`/`index.d.ts` (`pnpm-workspace.yaml` includes `wasm/**`; the app depends on `pakop: workspace:*`).
-- Consumed via lazy dynamic import: `await import('pakop')` (see `src/routes/pak/`).
-
-## Protobuf
-
-- `.proto` definitions in `src/lib/api/proto/`; generated `_pb.ts` files in `src/lib/api/proto/generated/` via `pnpm proto:generate` (buf, config in `buf.gen.yaml`). Runtime is `@bufbuild/protobuf`.
+i18n sources are `messages/*.json`; only `en`, `th`, `id` are compiled (`project.inlang/settings.json`). Protobuf runtime is `@bufbuild/protobuf`. The C#/CUE4Parse WASM module at `wasm/pakop/` is a workspace package (`wasm/*` glob) consumed by lazy `await import('pakop')`.
 
 ## Tooling
 
-- pnpm ≥ 11, Node ≥ 22 (lts). Lint = Prettier check + ESLint (`eslint.config.js`). Git hooks via lefthook (`lefthook.yml`).
-- Testing: Vitest with the Playwright browser provider (`@vitest/browser-playwright`, chromium) for component tests in a real browser; plain node tests for pure TS.
-- Storybook 10 (`pnpm storybook`) for UI component development.
+- Node ≥ 22 (`.nvmrc` is `lts/*`), pnpm ≥ 11 with `engineStrict: true` — a mismatch fails install.
+- Lint = Prettier check + ESLint (`eslint.config.js`, which also bans `zod`, `date-fns/*` and `react` imports). Types = `svelte-check`. Tests = Vitest, browser project on Playwright Chromium. Hooks = lefthook.
+- Storybook 10: `pnpm storybook`, `pnpm build:storybook`.
 
-Related: [[project-structure]], [[path-aliases]], [[app-shell]], [[env-config]], [[pakop-wasm]]
+```bash
+pnpm dev            # dev server (dev:host to expose)
+pnpm build          # static build → build/   (pnpm preview to serve it)
+pnpm format         # write formatting
+pnpm lint           # prettier --check + eslint
+pnpm check          # svelte-check
+pnpm test           # vitest run, both projects
+```
