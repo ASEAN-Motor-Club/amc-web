@@ -1,6 +1,12 @@
 ---
-name: architecture
-description: How the AMC web app is built — SvelteKit static/SPA hybrid, the Vite plugin pipeline, codegen, WASM, tooling and the commands that drive them. Read before structural or build-related changes.
+description: How the app is built — SvelteKit static/SPA hybrid, the Vite plugin pipeline, codegen outputs, WASM, tooling and the commands that drive them.
+globs:
+  - package.json
+  - vite.config.ts
+  - svelte.config.js
+  - unocss.config.ts
+  - buf.gen.yaml
+  - pnpm-workspace.yaml
 ---
 
 # Architecture

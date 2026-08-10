@@ -1,6 +1,5 @@
 ---
-name: project-structure
-description: Where everything lives in the AMC web repo — UI vs feature components, routes, data, schemas, WASM, generated output — and where new files go. Read before adding files or hunting for existing code.
+description: Where everything lives — UI vs feature components, routes, data, schemas, WASM, generated output — and where new files go.
 ---
 
 # Project structure
