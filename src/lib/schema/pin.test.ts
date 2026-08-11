@@ -16,7 +16,11 @@ describe('pinSchema', () => {
     const result = pinSchema.safeParse({ y: 1 });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('Pin x must be a number');
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'invalid_type',
+        expected: 'number',
+        path: ['x'],
+      });
     }
   });
 
@@ -24,7 +28,11 @@ describe('pinSchema', () => {
     const result = pinSchema.safeParse({ x: 1 });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('Pin y must be a number');
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'invalid_type',
+        expected: 'number',
+        path: ['y'],
+      });
     }
   });
 
@@ -32,6 +40,13 @@ describe('pinSchema', () => {
     for (const bad of ['1', null, undefined, {}, NaN]) {
       const result = pinSchema.safeParse({ x: bad, y: 1 });
       expect(result.success, String(bad)).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'invalid_type',
+          expected: 'number',
+          path: ['x'],
+        });
+      }
     }
   });
 
@@ -39,7 +54,11 @@ describe('pinSchema', () => {
     const result = pinSchema.safeParse({ x: 1, y: 1, label: '' });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('Pin label cannot be empty');
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'too_small',
+        minimum: 1,
+        path: ['label'],
+      });
     }
   });
 
@@ -47,7 +66,11 @@ describe('pinSchema', () => {
     const result = pinSchema.safeParse({ x: 1, y: 1, label: 42 });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('Pin label must be a string');
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'invalid_type',
+        expected: 'string',
+        path: ['label'],
+      });
     }
   });
 });
@@ -65,12 +88,22 @@ describe('pinsSchema', () => {
     const result = pinsSchema.safeParse([]);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('At least one pin is required');
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'too_small',
+        minimum: 1,
+      });
     }
   });
 
   it('rejects an array containing an invalid pin', () => {
     const result = pinsSchema.safeParse([{ x: 1, y: 1 }, { y: 2 }]);
     expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0]).toMatchObject({
+        code: 'invalid_type',
+        expected: 'number',
+        path: [1, 'x'],
+      });
+    }
   });
 });
