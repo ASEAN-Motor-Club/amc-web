@@ -19,7 +19,7 @@
   import { getMatchJobSourceFn } from '$lib/utils/delivery';
 
   import { isCargoType } from '$lib/utils/delivery';
-  import { Features, getViewHref } from '../utils';
+  import { DELIVERY_STALE_WARN_SECONDS, Features, getViewHref } from '../utils';
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
   import Table from '$lib/ui/Table/Table.svelte';
@@ -108,7 +108,7 @@
       Drop point of <DeliveryLink {fullScreen} guid={deliveryPoint.parent} />
     </div>
   {/if}
-  {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
+  {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > DELIVERY_STALE_WARN_SECONDS}
     <div class="px-8 pb-8 text-xs font-semibold text-red-500">
       {m['delivery.last_updated']({
         time: formatDistanceStrict(lastUpdated, rtDate.d.getTime(), {

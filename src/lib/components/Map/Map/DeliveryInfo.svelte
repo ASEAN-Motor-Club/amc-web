@@ -11,6 +11,7 @@
   import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
   import { rtDate } from '$lib/realtimeDate.svelte';
   import { isCargoType } from '$lib/utils/delivery';
+  import { DELIVERY_STALE_WARN_SECONDS } from '../utils';
 
   export interface HoverInfo {
     info: DeliveryPoint;
@@ -124,7 +125,7 @@
     {/each}
   </div>
 {/if}
-{#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > 30}
+{#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > DELIVERY_STALE_WARN_SECONDS}
   <div class="text-text-300 text-xs">
     <span class="text-text-dark font-semibold">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
