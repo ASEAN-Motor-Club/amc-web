@@ -212,7 +212,6 @@
         </Card>
       {/if}
     </div>
-    <div class="px-8 pb-8 text-center italic opacity-50">Delivery data coming soon!</div>
     <!-- {#if deliveryPoint.allSupply.length > 0}
       <div class="mx-8 -mt-8 h-full flex-none py-8">
         <Card class="h-full p-0">
