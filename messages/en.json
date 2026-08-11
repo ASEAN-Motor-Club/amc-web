@@ -441,10 +441,7 @@
     "expired": "Expired",
     "completion_bonus": "Completion Bonus",
     "bonus_multiplier": "Bonus Multiplier",
-    "constrains": "Constrains",
-    "constrains_cargo": "Cargo",
-    "constrains_source_points": "From",
-    "constrains_destination_points": "To",
+    "constrains_cargo": "Accepted Cargo",
     "contributors": "Contributors",
     "no_contributors": "No contributors yet. Be the first to take this job!",
     "no_contributors_c": "No contributors yet. Be the first to take this j*b!",
@@ -455,8 +452,8 @@
       "amount": "Amount",
       "reward_cut": "Reward Cut"
     },
-    "job_supply": "Valid Pickup Point",
-    "job_demand": "Valid Dropoff Point"
+    "job_supply": "Valid Pickup Points",
+    "job_demand": "Valid Dropoff Points"
   },
   "players": {
     "head": "{siteName} | Players",

@@ -428,10 +428,7 @@
     "expired": "หมดอายุ",
     "completion_bonus": "โบนัสเมื่อเสร็จสิ้น",
     "bonus_multiplier": "ตัวคูณโบนัส",
-    "constrains": "เงื่อนไข",
-    "constrains_cargo": "สินค้า",
-    "constrains_source_points": "จาก",
-    "constrains_destination_points": "ไปยัง",
+    "constrains_cargo": "สินค้าที่รับได้",
     "contributors": "ผู้มีส่วนร่วม",
     "no_contributors": "ยังไม่มีผู้มีส่วนร่วม มาเป็นคนแรกที่รับงานนี้!",
     "no_contributors_c": "ยังไม่มีผู้มีส่วนร่วม มาเป็นคนแรกที่รับง*นนี้!",
@@ -442,8 +439,8 @@
       "amount": "จำนวน",
       "reward_cut": "ส่วนแบ่งรางวัล"
     },
-    "job_supply": "จุดรับงานที่เข้าร่วม",
-    "job_demand": "จุดส่งงานที่เข้าร่วม"
+    "job_supply": "จุดรับสินค้าที่ใช้ได้",
+    "job_demand": "จุดส่งสินค้าที่ใช้ได้"
   },
   "players": {
     "head": "{siteName} | ผู้เล่น",

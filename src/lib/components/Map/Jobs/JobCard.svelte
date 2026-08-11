@@ -10,6 +10,7 @@
   import { DetailsFeatures, getLinkHref } from '../utils';
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import { getJobValidPoints } from './validPoints';
 
   export interface Props {
     job?: DeliveryJob;
@@ -41,6 +42,21 @@
     return formatDistanceStrict(job.expired_at, time, {
       roundingMethod: 'floor',
     });
+  });
+
+  /**
+   * An unconstrained side matches hundreds of points, far too many for a card, so a side is listed
+   * only where the job restricts it; the details view carries the full picture either way.
+   */
+  const cardPoints = $derived.by(() => {
+    if (!job || (job.source_points.length === 0 && job.destination_points.length === 0)) {
+      return { supply: [], demand: [] };
+    }
+    const { supply, demand } = getJobValidPoints(job);
+    return {
+      supply: job.source_points.length > 0 ? supply : [],
+      demand: job.destination_points.length > 0 ? demand : [],
+    };
   });
 </script>
 
@@ -75,19 +91,21 @@
     <div class="mb-2">
       {job?.cargos.map((point) => getMtLocale(cargoName[point])).join(', ')}
     </div>
-    {#if job?.source_points && job.source_points.length > 0}
-      <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_source_points']()}</div>
+    {#if cardPoints.supply.length > 0}
+      <div class="text-text-500 text-xs font-bold">{m['jobs.job_supply']()}</div>
       <div class="mb-2">
-        {#each job.source_points as point, i (point)}
-          <DeliveryLink {fullScreen} guid={point} />{i < job.source_points.length - 1 ? ', ' : ''}
+        {#each cardPoints.supply as point, i (point.guid)}
+          <DeliveryLink {fullScreen} guid={point.guid} />{i < cardPoints.supply.length - 1
+            ? ', '
+            : ''}
         {/each}
       </div>
     {/if}
-    {#if job?.destination_points && job.destination_points.length > 0}
-      <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_destination_points']()}</div>
+    {#if cardPoints.demand.length > 0}
+      <div class="text-text-500 text-xs font-bold">{m['jobs.job_demand']()}</div>
       <div class="mb-2">
-        {#each job.destination_points as point, i (point)}
-          <DeliveryLink {fullScreen} guid={point} />{i < job.destination_points.length - 1
+        {#each cardPoints.demand as point, i (point.guid)}
+          <DeliveryLink {fullScreen} guid={point.guid} />{i < cardPoints.demand.length - 1
             ? ', '
             : ''}
         {/each}

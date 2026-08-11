@@ -12,8 +12,7 @@
 
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
   import Divider from '$lib/ui/Divider/Divider.svelte';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-  import { deliveryPoints } from '$lib/data/deliveryPoint';
+  import { getJobValidPoints } from './validPoints';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
   import Table from '$lib/ui/Table/Table.svelte';
   import TableHead from '$lib/ui/Table/TableHead.svelte';
@@ -98,19 +97,7 @@
     return job.completion_bonus / job.quantity_requested;
   });
 
-  const validSupply = $derived.by(() => {
-    if (!job) {
-      return [];
-    }
-    return deliveryPoints.filter((point) => getMatchJobSourceFn(point)(job));
-  });
-
-  const validDemand = $derived.by(() => {
-    if (!job) {
-      return [];
-    }
-    return deliveryPoints.filter((point) => getMatchJobDestFn(point)(job));
-  });
+  const validPoints = $derived(job ? getJobValidPoints(job) : { supply: [], demand: [] });
 </script>
 
 {#if job || loading}
@@ -185,7 +172,7 @@
         {#if loading}
           <TextSkeleton class="mt-2 w-full" lines={8} />
         {:else}
-          <div class="mb-2">
+          <div class="mb-4">
             <div class="text-text-600 dark:text-text-400 font-semibold">
               {m['jobs.constrains_cargo']()}
             </div>
@@ -197,52 +184,7 @@
               {/each}
             </ul>
           </div>
-          {#if job?.source_points && job.source_points.length > 0}
-            <div class="mb-2">
-              <div class="text-text-600 dark:text-text-400 font-semibold">
-                {m['jobs.constrains_source_points']()}
-              </div>
-              <ul
-                class={[
-                  'marker:text-text-500 list-disc',
-                  fullScreen && 'lg:columns-2 2xl:columns-3',
-                ]}
-              >
-                {#each job.source_points as point (point)}
-                  <li class="ml-8">
-                    <DeliveryLink {fullScreen} guid={point} truncate wrapperClass="w-full" />
-                  </li>
-                {/each}
-              </ul>
-            </div>
-          {/if}
-          {#if job?.destination_points && job.destination_points.length > 0}
-            <div>
-              <div class="text-text-600 dark:text-text-400 font-semibold">
-                {m['jobs.constrains_destination_points']()}
-              </div>
-              <ul
-                class={[
-                  'marker:text-text-500 list-disc',
-                  fullScreen && 'lg:columns-2 2xl:columns-3',
-                ]}
-              >
-                {#each job.destination_points as point (point)}
-                  <li class="ml-8">
-                    <DeliveryLink {fullScreen} guid={point} truncate wrapperClass="w-full" />
-                  </li>
-                {/each}
-              </ul>
-            </div>
-          {/if}
-        {/if}
-      </div>
-      <Divider spacing="lg" />
-      <div>
-        {#if loading}
-          <TextSkeleton class="mt-2 w-full" lines={8} />
-        {:else}
-          {#if validSupply.length > 0}
+          {#if validPoints.supply.length > 0}
             <div class="mb-4">
               <div class="text-text-600 dark:text-text-400 font-semibold">
                 {m['jobs.job_supply']()}
@@ -253,7 +195,7 @@
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
-                {#each validSupply as point (point.guid)}
+                {#each validPoints.supply as point (point.guid)}
                   <li class="ml-8">
                     <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
                   </li>
@@ -261,7 +203,7 @@
               </ul>
             </div>
           {/if}
-          {#if validDemand.length > 0}
+          {#if validPoints.demand.length > 0}
             <div>
               <div class="text-text-600 dark:text-text-400 font-semibold">
                 {m['jobs.job_demand']()}
@@ -272,7 +214,7 @@
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
-                {#each validDemand as point (point.guid)}
+                {#each validPoints.demand as point (point.guid)}
                   <li class="ml-8">
                     <DeliveryLink {fullScreen} guid={point.guid} truncate wrapperClass="w-full" />
                   </li>
