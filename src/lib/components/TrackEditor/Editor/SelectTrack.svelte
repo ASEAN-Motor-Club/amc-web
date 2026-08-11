@@ -3,6 +3,7 @@
   import Button from '$lib/ui/Button/Button.svelte';
   import { getAbortSignal, onMount } from 'svelte';
   import { trackSchema, type Track } from '$lib/schema/track';
+  import { formatTrackError } from '../utils/formatError';
   import type { ChangeEventHandler } from 'svelte/elements';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
   import Modal from '$lib/ui/Modal/Modal.svelte';
@@ -26,7 +27,7 @@
           title: m['track_editor.select_track.error.title'](),
           message:
             m['track_editor.select_track.error.invalid_track']() +
-            `\n${validate.error.issues.map((issue) => issue.message).join('\n')}`,
+            `\n${validate.error.issues.map((issue) => formatTrackError(issue)).join('\n')}`,
         });
       } else {
         onSelect(validate.data);

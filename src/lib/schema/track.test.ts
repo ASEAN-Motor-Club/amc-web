@@ -1,26 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { trackSchema } from './track';
-
-// Mock the paraglide messages
-vi.mock('$lib/paraglide/messages', () => ({
-  m: {
-    'track_editor.validate.name_must_be_string': vi.fn(() => 'Route name must be a string'),
-    'track_editor.validate.name_empty': vi.fn(() => 'Route name cannot be empty'),
-    'track_editor.validate.name_too_long': vi.fn(
-      ({ maxLength }) => `Route name cannot exceed ${maxLength} characters`,
-    ),
-    'track_editor.validate.waypoint_invalid': vi.fn(
-      ({ index, key, type }) => `Waypoint ${index}: ${key} must be ${type}`,
-    ),
-    'track_editor.validate.waypoints_min_length': vi.fn(
-      ({ minLength }) => `Track must have at least ${minLength} waypoints`,
-    ),
-    'track_editor.validate.waypoints_max_length': vi.fn(
-      ({ maxLength }) => `Track must not exceed ${maxLength} waypoints`,
-    ),
-    unknown: vi.fn(() => 'unknown'),
-  },
-}));
 
 describe('trackSchema', () => {
   const validWaypoint = {
@@ -68,7 +47,11 @@ describe('trackSchema', () => {
       const result = trackSchema.safeParse(trackWithEmptyName);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Route name cannot be empty');
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'too_small',
+          minimum: 1,
+          path: ['routeName'],
+        });
       }
     });
 
@@ -80,7 +63,11 @@ describe('trackSchema', () => {
       const result = trackSchema.safeParse(trackWithInvalidName);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Route name must be a string');
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'invalid_type',
+          expected: 'string',
+          path: ['routeName'],
+        });
       }
     });
   });
@@ -94,7 +81,11 @@ describe('trackSchema', () => {
       const result = trackSchema.safeParse(trackWithNoWaypoints);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Track must have at least 2 waypoints');
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'too_small',
+          minimum: 2,
+          path: ['waypoints'],
+        });
       }
     });
 
@@ -106,7 +97,11 @@ describe('trackSchema', () => {
       const result = trackSchema.safeParse(trackWithOneWaypoint);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Track must have at least 2 waypoints');
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'too_small',
+          minimum: 2,
+          path: ['waypoints'],
+        });
       }
     });
 
@@ -118,7 +113,27 @@ describe('trackSchema', () => {
       const result = trackSchema.safeParse(trackWithTooManyWaypoints);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Track must not exceed 50 waypoints');
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'too_big',
+          maximum: 50,
+          path: ['waypoints'],
+        });
+      }
+    });
+
+    it('should reject non-array waypoints', () => {
+      const trackWithNonArrayWaypoints = {
+        ...validTrack,
+        waypoints: 'not an array',
+      };
+      const result = trackSchema.safeParse(trackWithNonArrayWaypoints);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0]).toMatchObject({
+          code: 'invalid_type',
+          expected: 'array',
+          path: ['waypoints'],
+        });
       }
     });
   });
@@ -139,7 +154,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: translation must be object');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'object',
+            path: ['waypoints', 0, 'translation'],
+          });
         }
       });
 
@@ -157,7 +176,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: translation.x must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'translation', 'x'],
+          });
         }
       });
 
@@ -175,7 +198,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: translation.x must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'translation', 'x'],
+          });
         }
       });
     });
@@ -195,7 +222,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: scale3D must be object');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'object',
+            path: ['waypoints', 0, 'scale3D'],
+          });
         }
       });
       it('should reject waypoint with missing scale3D.y', () => {
@@ -212,7 +243,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: scale3D.y must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'scale3D', 'y'],
+          });
         }
       });
 
@@ -230,7 +265,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: scale3D.y must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'scale3D', 'y'],
+          });
         }
       });
     });
@@ -250,7 +289,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: rotation must be object');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'object',
+            path: ['waypoints', 0, 'rotation'],
+          });
         }
       });
 
@@ -268,7 +311,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: rotation.w must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'rotation', 'w'],
+          });
         }
       });
 
@@ -286,7 +333,11 @@ describe('trackSchema', () => {
         const result = trackSchema.safeParse(trackWithInvalidWaypoint);
         expect(result.success).toBe(false);
         if (!result.success) {
-          expect(result.error.issues[0].message).toBe('Waypoint 1: rotation.w must be number');
+          expect(result.error.issues[0]).toMatchObject({
+            code: 'invalid_type',
+            expected: 'number',
+            path: ['waypoints', 0, 'rotation', 'w'],
+          });
         }
       });
     });

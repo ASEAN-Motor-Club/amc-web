@@ -9,9 +9,9 @@
   /**
    * JSON Schema mirror of {@link trackSchema}, for the code view's completion and inline diagnostics
    * — Monaco's json worker cannot take a zod schema. Not a second source of truth: it is derived,
-   * and `trackSchema.safeParse` remains the authority on saving, since the translated messages only
-   * exist there. It is stricter in one way — `additionalProperties` is `false` at every level, while
-   * zod silently strips unknown keys — so that key typos surface as you type.
+   * and `trackSchema.safeParse` remains the authority on saving. Zod's raw issues are localized
+   * through `formatTrackError`. It is stricter in one way — `additionalProperties` is `false` at
+   * every level, while zod silently strips unknown keys — so that key typos surface as you type.
    *
    * The round-trip through JSON drops zod's non-enumerable `~standard` property, which holds
    * functions and cannot cross the worker's `postMessage` boundary.
@@ -30,6 +30,7 @@
   import CodeEditor from '$lib/ui/CodeEditor/CodeEditor.svelte';
   import { cloneDeep, isEqual } from 'es-toolkit';
   import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
+  import { formatTrackError } from '../utils/formatError';
   import { Quaternion } from 'quaternion';
   import { toRad } from '$lib/utils/math/vectors';
   import { normalizedWaypoints } from '../utils/normalized';
@@ -223,7 +224,9 @@
     if (!codeValidated) {
       return [m['track_editor.code_editor.invalid_json']()];
     }
-    return codeValidated.success ? [] : codeValidated.error.issues.map((issue) => issue.message);
+    return codeValidated.success
+      ? []
+      : codeValidated.error.issues.map((issue) => formatTrackError(issue));
   });
 
   const seedCodeBuffer = () => {
