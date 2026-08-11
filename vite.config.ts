@@ -4,8 +4,8 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import UnoCSS from 'unocss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
-import { webmanifestPlugin } from './vite-plugins/webmanifest';
-import { dotnetWasmAssetPlugin } from './vite-plugins/dotnet-wasm-asset';
+import { webmanifestPlugin } from './vite-plugins/webmanifest.ts';
+import { dotnetWasmAssetPlugin } from './vite-plugins/dotnet-wasm-asset.ts';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());

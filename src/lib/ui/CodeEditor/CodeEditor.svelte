@@ -4,7 +4,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
   import type * as Monaco from 'monaco-editor';
-  import { monaco, LIGHT_THEME, DARK_THEME } from './monaco';
+  import { monaco, jsonDefaults, LIGHT_THEME, DARK_THEME } from './monaco';
 
   export interface CodeEditorProps {
     /**
@@ -41,7 +41,7 @@
   onMount(() => {
     // Diagnostics options are global, so the schema is bound to this instance's model by uri.
     const modelUri = monaco.Uri.parse(`inmemory://code-editor/${crypto.randomUUID()}.json`);
-    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    jsonDefaults.setDiagnosticsOptions({
       validate: true,
       allowComments: false,
       enableSchemaRequest: false,
