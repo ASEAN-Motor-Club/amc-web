@@ -24,6 +24,10 @@ describe('vehicleKeyToString', () => {
     [VehicleKey.VEHICLE_KEY_TRAILER_DINY_FLATBED, 'Trailer_Dinky_Flatbed'],
     [VehicleKey.VEHICLE_KEY_GUNTHOO_POLICE, 'Gunthoo_Police'],
     [VehicleKey.VEHICLE_KEY_GOLIATH10, 'Goliath10'],
+    [VehicleKey.VEHICLE_KEY_CIVO, 'Civo'],
+    [VehicleKey.VEHICLE_KEY_ELISA2, 'Elisa2'],
+    [VehicleKey.VEHICLE_KEY_ELISA2_POLICE, 'Elisa2_Police'],
+    [VehicleKey.VEHICLE_KEY_LONGHORN_SEMI_4X2, 'Longhorn_Semi_4x2'],
   ])('maps %i to its vehicle name key', (key, expected) => {
     expect(vehicleKeyToString(key)).toBe(expected);
   });
