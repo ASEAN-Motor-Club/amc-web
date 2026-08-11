@@ -1,6 +1,7 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
 import { createQuery, queryOptions } from '@tanstack/svelte-query';
 import type { DeliveryCargo } from '$lib/data/types';
+import { deliveryPointsMap } from '$lib/data/deliveryPoint';
 import type { DeliveryJob, DeliveryPointInfo } from './types';
 import { apiClient, type QueryOverrides, type QueryParam } from './_api';
 
@@ -64,10 +65,29 @@ export const deliveryJobsQueryOptions = (input?: QueryParam<DeliveryJobsQueryInp
         `${PUBLIC_API_BASE}/api/webui/deliveryjobs/`,
         signal,
       );
-      return jobs.map((job) => ({
-        ...job,
-        cargos: job.cargos.map((cargo) => cargo.replace('T::', '_T') as DeliveryCargo),
-      }));
+      const normalized: DeliveryJob[] = [];
+      for (const job of jobs) {
+        // Jobs outlive the bundled map export: one created on an earlier game version can
+        // constrain delivery points that no longer exist, and those guids resolve to a blank link.
+        const source_points = job.source_points.filter((guid) => deliveryPointsMap.has(guid));
+        const destination_points = job.destination_points.filter((guid) =>
+          deliveryPointsMap.has(guid),
+        );
+        // An emptied constraint would read as "any point", so such a job is dropped instead.
+        if (
+          (job.source_points.length > 0 && source_points.length === 0) ||
+          (job.destination_points.length > 0 && destination_points.length === 0)
+        ) {
+          continue;
+        }
+        normalized.push({
+          ...job,
+          cargos: job.cargos.map((cargo) => cargo.replace('T::', '_T') as DeliveryCargo),
+          source_points,
+          destination_points,
+        });
+      }
+      return normalized;
     },
     refetchInterval: DELIVERY_POLL_INTERVAL_MS,
     staleTime: DELIVERY_POLL_INTERVAL_MS,

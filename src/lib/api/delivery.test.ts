@@ -5,6 +5,7 @@ import {
   deliveryPointQueryOptions,
   type DeliveryPointQueryInput,
 } from './delivery';
+import { deliveryPointsMap } from '$lib/data/deliveryPoint';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,
@@ -99,11 +100,44 @@ describe('delivery query options', () => {
 
   it('normalizes delivery job cargo keys', async () => {
     mockFetch.mockResolvedValue(
-      jsonResponse([{ id: 1, cargos: ['CargoT::Crate', 'CargoT::Pallet'] }]),
+      jsonResponse([
+        {
+          id: 1,
+          cargos: ['CargoT::Crate', 'CargoT::Pallet'],
+          source_points: [],
+          destination_points: [],
+        },
+      ]),
     );
 
     const jobs = await queryClient.fetchQuery(jobsOptions());
 
     expect(jobs[0].cargos).toEqual(['Cargo_TCrate', 'Cargo_TPallet']);
+  });
+
+  it('drops job constraint points missing from the current map data', async () => {
+    const [knownGuid] = deliveryPointsMap.keys();
+    mockFetch.mockResolvedValue(
+      jsonResponse([
+        { id: 1, cargos: [], source_points: [knownGuid, 'removed'], destination_points: [] },
+      ]),
+    );
+
+    const jobs = await queryClient.fetchQuery(jobsOptions());
+
+    expect(jobs[0].source_points).toEqual([knownGuid]);
+  });
+
+  it('drops a job whose constraint holds only points missing from the current map data', async () => {
+    mockFetch.mockResolvedValue(
+      jsonResponse([
+        { id: 1, cargos: [], source_points: [], destination_points: ['removed'] },
+        { id: 2, cargos: [], source_points: [], destination_points: [] },
+      ]),
+    );
+
+    const jobs = await queryClient.fetchQuery(jobsOptions());
+
+    expect(jobs.map((job) => job.id)).toEqual([2]);
   });
 });
