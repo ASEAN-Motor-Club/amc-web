@@ -26,6 +26,23 @@ await tick();
 
 Add a harness only when the subject reads context it cannot be handed (e.g. a `QueryClient` from its provider). Name it `<Name>.test.svelte`; Vitest collects only `.ts`/`.js`, so it is never treated as a test itself.
 
+## Component tests (comp project)
+
+Tests run inside a real Chromium iframe: `document`, `window` and `localStorage` are directly accessible, and `locator.element()` / `locator.query()` return the `HTMLElement` synchronously.
+
+```ts
+import { render } from 'vitest-browser-svelte';
+import { page } from 'vitest/browser'; // NOT '@vitest/browser/context' — deprecated
+import { createRawSnippet } from 'svelte';
+```
+
+- `render` is async — always `await` it; `output.rerender({ ... })` swaps props, `output.container` is the mount point.
+- **Snippet props cannot be plain arrow functions** — `mount()` never converts them, so `children: () => 'Save'` silently renders empty. Pass text snippets via `createRawSnippet(() => ({ render: () => 'Save' }))`; pass real child components via a `<Name>.test.svelte` harness.
+- Interact through roles (`await page.getByRole('button').click()`, `await locator.fill('text')`) or deterministic DOM events: `el.dispatchEvent(new MouseEvent('mousedown', { clientX: 50, bubbles: true }))` — `bubbles: true` is required for Svelte 5 delegation.
+- Assert with `await expect.element(locator).toHaveTextContent(...)` / `.toBeVisible()` / `.toHaveAttribute(name, value)` / `.toHaveValue(...)`; absence via `locator.all()` or `locator.query()`.
+- Fake `requestAnimationFrame`/`ResizeObserver`/`matchMedia` via `vi.stubGlobal`; restore with `vi.unstubAllGlobals()` in `afterEach`.
+- Test observable behavior (roles, attributes, callbacks, DOM state), never tailwind class strings.
+
 ## Running
 
 ```bash
