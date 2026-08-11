@@ -1,7 +1,6 @@
 import type { MtNameRecord, Vector2 } from '$lib/types';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
-import { getMtLocale } from '$lib/utils/getMtLocale';
-import { m } from '$messages';
+import { MAP_REAL_SIZE, MAP_REAL_X_LEFT, MAP_REAL_Y_TOP } from '$lib/ui/OlMap/utils';
 
 const flagOrder = {
   '': 0,
@@ -26,7 +25,35 @@ const areaVolumeWithBBox = areaVolume.map((area) => {
   return { ...area, order: flagOrder[area.flag], box: { minX, minY, maxX, maxY } };
 });
 
-export const getLocationAtPoint = (point: Vector2) => {
+// Playable world bounds in game coordinates (the map extent in $lib/ui/OlMap/utils)
+const mapBounds = {
+  minX: MAP_REAL_X_LEFT,
+  minY: MAP_REAL_Y_TOP,
+  maxX: MAP_REAL_X_LEFT + MAP_REAL_SIZE,
+  maxY: MAP_REAL_Y_TOP + MAP_REAL_SIZE,
+};
+
+const distanceToSegment = (point: Vector2, a: Vector2, b: Vector2) => {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const lengthSq = dx * dx + dy * dy;
+  if (lengthSq === 0) return Math.hypot(point.x - a.x, point.y - a.y);
+  const t = Math.max(0, Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / lengthSq));
+  return Math.hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy));
+};
+
+/** Whether the point lies inside the playable world extent. */
+export const isInMapBound = (point: Vector2): boolean =>
+  point.x >= mapBounds.minX &&
+  point.x <= mapBounds.maxX &&
+  point.y >= mapBounds.minY &&
+  point.y <= mapBounds.maxY;
+
+/**
+ * Name records of every area containing the point, in display order (zones first),
+ * or null when no area contains it.
+ */
+export const getLocationAtPoint = (point: Vector2): MtNameRecord[] | null => {
   const matchArea: typeof areaVolumeWithBBox = [];
 
   for (const area of areaVolumeWithBBox) {
@@ -57,8 +84,30 @@ export const getLocationAtPoint = (point: Vector2) => {
     }
   }
 
+  if (matchArea.length === 0) return null;
   matchArea.sort((a, b) => a.order - b.order);
-  return matchArea.map((area) => getMtLocale(area.name)).join(', ') || m.unknown_location();
+  return matchArea.map((area) => area.name);
+};
+
+/** Name record of the zone closest to a point that sits inside no area. */
+export const getLocationNearPoint = (point: Vector2): MtNameRecord => {
+  let closestZone: (typeof areaVolumeWithBBox)[number] | undefined;
+  let closestDist = Infinity;
+  for (const area of areaVolumeWithBBox) {
+    if (area.flag !== 'Zone') continue;
+    let dist = Infinity;
+    for (let i = 0; i < area.vertex.length; i += 2) {
+      const d = distanceToSegment(point, area.vertex[i], area.vertex[i + 1]);
+      if (d < dist) dist = d;
+    }
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestZone = area;
+    }
+  }
+  // The map data always contains zones, and callers only reach here inside the map.
+  if (closestZone === undefined) throw new Error('Area data contains no zones');
+  return closestZone.name;
 };
 
 /** Font size for area name labels per flag: Zone is the biggest, unspecified and RaceTrack the smallest */

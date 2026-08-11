@@ -6,8 +6,7 @@
   import type { PlayerData } from '../Map/types';
   import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
   import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { getLocationAtPoint } from '$lib/data/area';
-  import { Features, getViewHref } from '../utils';
+  import { Features, formatLocationAtPoint, getViewHref } from '../utils';
   import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
   import type { MtNameRecord } from '$lib/types';
 
@@ -65,7 +64,7 @@
     <div class="text-right">
       <div class="text-text-500 text-xs font-semibold">{m['map.player_info.location']()}</div>
       <div>
-        {player ? getLocationAtPoint(player.coord) : '.'}
+        {player ? formatLocationAtPoint(player.coord) : '.'}
       </div>
     </div>
   </div>

@@ -457,6 +457,7 @@
     "no_players": "Tidak ada pemain online.",
     "no_results": "Tidak ada pemain ditemukan."
   },
-  "unknown_location": "lokasi tidak diketahui",
+  "out_of_map": "Di luar peta",
+  "somewhere_close_to": "Di suatu tempat dekat {zone}",
   "go_back": "Kembali"
 }

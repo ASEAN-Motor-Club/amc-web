@@ -1,6 +1,10 @@
 import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
 import { isSm } from '$lib/utils/media.svelte';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
+import { getLocationAtPoint, getLocationNearPoint, isInMapBound } from '$lib/data/area';
+import { getMtLocale } from '$lib/utils/getMtLocale';
+import { m } from '$messages';
+import type { Vector2 } from '$lib/types';
 
 /** Age at which delivery point data is flagged as stale to the user. */
 export const DELIVERY_STALE_WARN_SECONDS = 60;
@@ -80,4 +84,15 @@ export const getViewHref = (feature: Features, id: string, keepMenu = false): st
   }
 
   return `/map?${newParams.toString()}`;
+};
+
+/**
+ * Localized label for a map coordinate: the areas it sits in (zones first),
+ * "Somewhere close to <zone>" when it is inside the map but no area, or "Out of map".
+ */
+export const formatLocationAtPoint = (point: Vector2): string => {
+  if (!isInMapBound(point)) return m.out_of_map();
+  const names = getLocationAtPoint(point);
+  if (names) return names.map((name) => getMtLocale(name)).join(', ');
+  return m.somewhere_close_to({ zone: getMtLocale(getLocationNearPoint(point)) });
 };

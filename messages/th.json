@@ -451,6 +451,7 @@
     "no_players": "ไม่มีผู้เล่นออนไลน์",
     "no_results": "ไม่พบผู้เล่น"
   },
-  "unknown_location": "ไม่ทราบสถานที่",
+  "out_of_map": "นอกแผนที่",
+  "somewhere_close_to": "ที่ไหนสักแห่งใกล้ {zone}",
   "go_back": "ย้อนกลับ"
 }

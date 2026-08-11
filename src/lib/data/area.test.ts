@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { areaBoundaries, areaNameFontSize } from './area';
+import {
+  areaBoundaries,
+  areaNameFontSize,
+  getLocationAtPoint,
+  getLocationNearPoint,
+  isInMapBound,
+} from './area';
 import areaVolume from '$lib/assets/data/out_area_volume.json';
 
 const vertexKey = (p: { x: number; y: number }) => `${p.x},${p.y}`;
@@ -36,6 +42,30 @@ describe('areaBoundaries', () => {
         expect(edgeKeys.has(`${a}->${b}`), `${boundary.name.en} edge ${i}`).toBe(true);
       }
     });
+  });
+});
+
+describe('location helpers', () => {
+  it('isInMapBound accepts points inside the world extent and rejects outside', () => {
+    expect(isInMapBound({ x: 0, y: 900000 })).toBe(true);
+    expect(isInMapBound({ x: 1000000, y: 0 })).toBe(false);
+    expect(isInMapBound({ x: 0, y: -400000 })).toBe(false);
+  });
+
+  it('getLocationAtPoint returns the containing area names in flag order, or null', () => {
+    // Inside Jocheon Old Mansion (SmallArea) and Jeju (Zone)
+    expect(getLocationAtPoint({ x: 100000, y: -100000 })?.map((name) => name.en)).toEqual([
+      'Jocheon Old Mansion',
+      'Jeju',
+    ]);
+    // Inside Gapa only
+    expect(getLocationAtPoint({ x: 0, y: 900000 })?.map((name) => name.en)).toEqual(['Gapa']);
+    // No area contains the point
+    expect(getLocationAtPoint({ x: 500000, y: -100000 })).toBeNull();
+  });
+
+  it('getLocationNearPoint returns the closest zone', () => {
+    expect(getLocationNearPoint({ x: 500000, y: -100000 }).en).toBe('Seongsan');
   });
 });
 

@@ -16,9 +16,8 @@
   import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
   import type { Pins } from '$lib/schema/pin';
-  import { getLocationAtPoint } from '$lib/data/area';
   import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { getSelectionClearedParams } from '../utils';
+  import { formatLocationAtPoint, getSelectionClearedParams } from '../utils';
 
   export type SearchPoint = {
     guid?: string;
@@ -263,7 +262,7 @@
                   </div>
                 {/if}
                 <div class="text-text-400 text-xs font-semibold">
-                  {getLocationAtPoint(point.coord)}
+                  {formatLocationAtPoint(point.coord)}
                 </div>
               </div>
             </a>

@@ -464,7 +464,8 @@
     "no_players": "No players online.",
     "no_results": "No players found."
   },
-  "unknown_location": "unknown location",
+  "out_of_map": "Out of map",
+  "somewhere_close_to": "Somewhere close to {zone}",
   "go_back": "Go Back",
   "locales_do_not_duplicate": {
     "cs": "Čeština",

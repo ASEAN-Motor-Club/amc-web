@@ -12,7 +12,7 @@
   import { m } from '$messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import TeleportInfo from './TeleportInfo.svelte';
-  import { getLocationAtPoint } from '$lib/data/area';
+  import { formatLocationAtPoint } from '../utils';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import { stripPlayerRoleTag } from '$lib/utils/parsePlayerRole';
 
@@ -146,7 +146,7 @@
       {/if}
       <div class="my-0.5 w-full border-t-1 border-gray-100/20"></div>
       <div class="text-text-400 mb-0.5 text-xs font-semibold">
-        {getLocationAtPoint(hoverInfo.info.coord)}
+        {formatLocationAtPoint(hoverInfo.info.coord)}
       </div>
       {#if hoverInfo.pointType === PointType.Teleport}
         <Button

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { m } from '$messages';
 
 const { mockPage, mockIsSm } = vi.hoisted(() => ({
   mockPage: { url: new URL('http://localhost/map?delivery=5&player=2&house=3&focus_index=0') },
@@ -16,6 +17,7 @@ vi.mock('$lib/utils/media.svelte', () => ({
 import {
   DetailsFeatures,
   Features,
+  formatLocationAtPoint,
   getLinkHref,
   getSelectionClearedParams,
   getViewHref,
@@ -95,5 +97,23 @@ describe('getViewHref', () => {
     mockIsSm.current = true;
     mockPage.url = new URL('http://localhost/map?delivery=5');
     expect(getViewHref(Features.House, '7', true)).toBe('/map?house=7');
+  });
+});
+
+describe('formatLocationAtPoint', () => {
+  it('formats areas inside the map, zones first', () => {
+    // Inside Jocheon Old Mansion (SmallArea) and Jeju (Zone)
+    expect(formatLocationAtPoint({ x: 100000, y: -100000 })).toBe('Jocheon Old Mansion, Jeju');
+  });
+
+  it('falls back to the closest zone inside the map bounds', () => {
+    expect(formatLocationAtPoint({ x: 500000, y: -100000 })).toBe(
+      m.somewhere_close_to({ zone: 'Seongsan' }),
+    );
+  });
+
+  it('reports points outside the map bounds as out of map', () => {
+    expect(formatLocationAtPoint({ x: 1000000, y: 0 })).toBe(m.out_of_map());
+    expect(formatLocationAtPoint({ x: 0, y: -400000 })).toBe(m.out_of_map());
   });
 });
