@@ -8,9 +8,10 @@ globs:
 
 # Testing
 
-Two Vitest projects, and **the file name decides which one runs a test**: `*.svelte.{test,spec}.ts` goes to `comp` (real Chromium via the Playwright provider, `vitest-browser-svelte`), everything else to `unit` (node). Both extend `vite.config.ts`, so tests inherit the app's plugins and need the `PUBLIC_*` env present.
+Two Vitest projects, and **the file name decides which one runs a test**: `*.svelte.{test,spec}.ts` and `*.integration.ts` go to `comp` (real Chromium via the Playwright provider, `vitest-browser-svelte`), everything else to `unit` (node). Both extend `vite.config.ts`, so tests inherit the app's plugins and need the `PUBLIC_*` env present.
 
 - Name a test after the module it covers so the pair sorts adjacent: `delivery.ts` → `delivery.test.ts`, `_stream.svelte.ts` → `_stream.svelte.test.ts`, `DeliveryInfo.svelte` → `DeliveryInfo.svelte.test.ts`.
+- Integration tests exercise a whole page in the browser and carry `.integration` only — `RadioPage.integration.ts`, with a `<Name>.integration.svelte` harness when the page reads context it cannot be handed.
 - Colocate tests with the code; there is no `tests/` tree.
 
 ## Runes in tests
@@ -24,7 +25,7 @@ const dispose = $effect.root(() => {
 await tick();
 ```
 
-Add a harness only when the subject reads context it cannot be handed (e.g. a `QueryClient` from its provider). Name it `<Name>.test.svelte`; Vitest collects only `.ts`/`.js`, so it is never treated as a test itself.
+Add a harness only when the subject reads context it cannot be handed (e.g. a `QueryClient` from its provider). Name it `<Name>.test.svelte` (or `<Name>.integration.svelte` for integration tests); Vitest collects only `.ts`/`.js`, so it is never treated as a test itself.
 
 ## Component tests (comp project)
 
