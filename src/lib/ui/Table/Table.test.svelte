@@ -2,11 +2,13 @@
   import Table from './Table.svelte';
   import TableRow from './TableRow.svelte';
 
+  // @unocss-skip-start
   interface Props {
     loading?: boolean;
     empty?: boolean;
     gridClass?: `grid-cols-${number}` | `grid-cols-[${string}]`;
   }
+  // @unocss-skip-end
 
   const { loading = false, empty = false, gridClass = 'grid-cols-4' }: Props = $props();
 </script>
