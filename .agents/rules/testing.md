@@ -1,5 +1,5 @@
 ---
-description: Vitest setup — the comp (browser) and unit (node) projects, the file name that picks one, runes and harnesses in tests, how to run them.
+description: Vitest setup — the comp (browser components), inte (browser pages) and unit (node) projects, the file name that picks one, runes and harnesses in tests, how to run them.
 globs:
   - src/**/*.test.ts
   - src/**/*.spec.ts
@@ -8,7 +8,7 @@ globs:
 
 # Testing
 
-Two Vitest projects, and **the file name decides which one runs a test**: `*.svelte.{test,spec}.ts` and `*.integration.ts` go to `comp` (real Chromium via the Playwright provider, `vitest-browser-svelte`), everything else to `unit` (node). Both extend `vite.config.ts`, so tests inherit the app's plugins and need the `PUBLIC_*` env present.
+Three Vitest projects, and **the file name decides which one runs a test**: `*.svelte.{test,spec}.ts` go to `comp` (real Chromium via the Playwright provider, `vitest-browser-svelte`), `*.integration.ts` to `inte` (same browser harness, one project per suite so it can be targeted by name), everything else to `unit` (node). All extend `vite.config.ts`, so tests inherit the app's plugins and need the `PUBLIC_*` env present.
 
 - Name a test after the module it covers so the pair sorts adjacent: `delivery.ts` → `delivery.test.ts`, `_stream.svelte.ts` → `_stream.svelte.test.ts`, `DeliveryInfo.svelte` → `DeliveryInfo.svelte.test.ts`.
 - Integration tests exercise a whole page in the browser and carry `.integration` only — `RadioPage.integration.ts`, with a `<Name>.integration.svelte` harness when the page reads context it cannot be handed.
@@ -27,7 +27,7 @@ await tick();
 
 Add a harness only when the subject reads context it cannot be handed (e.g. a `QueryClient` from its provider). Name it `<Name>.test.svelte` (or `<Name>.integration.svelte` for integration tests); Vitest collects only `.ts`/`.js`, so it is never treated as a test itself.
 
-## Component tests (comp project)
+## Browser tests (comp and inte projects)
 
 Tests run inside a real Chromium iframe: `document`, `window` and `localStorage` are directly accessible, and `locator.element()` / `locator.query()` return the `HTMLElement` synchronously.
 
@@ -47,8 +47,10 @@ import { createRawSnippet } from 'svelte';
 ## Running
 
 ```bash
-pnpm test                                  # single run, both projects — prefer this
+pnpm test                                  # single run, all three projects — prefer this
 pnpm exec vitest run --project unit        # node only
+pnpm exec vitest run --project comp        # component tests only
+pnpm exec vitest run --project inte        # page integration tests only
 pnpm exec vitest run path/to/file.test.ts  # one file
 ```
 

@@ -19,7 +19,22 @@ export default defineConfig((configEnv) =>
                 headless: true,
               },
               setupFiles: ['src/test/browser.setup.ts'],
-              include: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.integration.{js,ts}'],
+              include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+              exclude: ['src/lib/server/**'],
+            },
+          },
+          {
+            extends: './vite.config.ts',
+            test: {
+              name: 'inte',
+              browser: {
+                enabled: true,
+                provider: playwright(),
+                instances: [{ browser: 'chromium' }],
+                headless: true,
+              },
+              setupFiles: ['src/test/browser.setup.ts'],
+              include: ['src/**/*.integration.{js,ts}'],
               exclude: ['src/lib/server/**'],
             },
           },
