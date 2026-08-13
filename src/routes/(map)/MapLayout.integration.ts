@@ -166,6 +166,9 @@ describe('(map) layout', () => {
   describe('/jobs/[id]', () => {
     it('renders the selected job details once it resolves', async () => {
       setPage('/jobs/42', { id: '42' });
+      // expired_at in the recent past so the detail view shows the expired copy regardless of
+      // when the suite runs.
+      const expiredAt = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
       setJobs([
         {
           id: 42,
@@ -178,7 +181,7 @@ describe('(map) layout', () => {
           quantity_fulfilled: 7,
           requested_at: '2026-08-01T00:00:00Z',
           fulfilled_at: null,
-          expired_at: '2026-08-02T00:00:00Z',
+          expired_at: expiredAt,
           bonus_multiplier: 1,
           completion_bonus: 500,
           description: '',

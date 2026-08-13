@@ -3,6 +3,7 @@ import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
 import { m } from '$messages';
+import type * as championshipApi from '$lib/api/championship';
 import ChampionshipResultPage from './ChampionshipResultPage.integration.svelte';
 
 const { eventQueryMock, eventResultsQueryMock } = vi.hoisted(() => ({
@@ -26,7 +27,8 @@ vi.mock('$app/state', () => {
   };
 });
 
-vi.mock('$lib/api/championship', () => ({
+vi.mock('$lib/api/championship', async (importOriginal) => ({
+  ...(await importOriginal<typeof championshipApi>()),
   createEventQuery: eventQueryMock,
   createEventResultsQuery: eventResultsQueryMock,
 }));

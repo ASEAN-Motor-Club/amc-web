@@ -1,9 +1,27 @@
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$env/static/public';
 import { m } from '$messages';
+import type * as playerApi from '$lib/api/player';
 import HomePage from './+page.svelte';
+
+// The player-count stream would open a live connection to the production API; stub it so the
+// suite stays hermetic. The page renders the "Live Server" label either way.
+const { createPlayerCountStreamMock } = vi.hoisted(() => ({
+  createPlayerCountStreamMock: vi.fn().mockReturnValue({
+    data: undefined,
+    isPending: false,
+    isError: false,
+    error: undefined,
+    status: 'success',
+  }),
+}));
+
+vi.mock('$lib/api/player', async (importOriginal) => ({
+  ...(await importOriginal<typeof playerApi>()),
+  createPlayerCountStream: createPlayerCountStreamMock,
+}));
 
 const FEATURES = [
   m['home.friendly_community'](),
@@ -13,6 +31,10 @@ const FEATURES = [
 ];
 
 describe('home page', () => {
+  beforeEach(() => {
+    createPlayerCountStreamMock.mockClear();
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -49,13 +71,16 @@ describe('home page', () => {
   it('links to the map, Discord, Patreon, and radio', async () => {
     const output = await render(HomePage);
 
+    // Hermeticity proof: the page must have consumed the mocked stream, not opened a live
+    // connection to the production API.
+    expect(createPlayerCountStreamMock).toHaveBeenCalledOnce();
+
     const mapLink = output.container.querySelector('a[href="/map"]');
     if (!(mapLink instanceof HTMLAnchorElement)) {
       throw new Error('expected the live-server link to /map');
     }
-    // The player-count stream hits the real API and may or may not report a count;
-    // the label always contains "Live Server" either way.
-    expect(mapLink.textContent).toContain('Live Server');
+    // The player-count stream is mocked, so the no-count fallback label is shown.
+    await expect.element(page.getByText(m['home.live_server_no_count']())).toBeVisible();
 
     await expect
       .element(page.getByRole('link', { name: m['home.join_discord']() }))

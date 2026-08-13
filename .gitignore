@@ -37,3 +37,6 @@ storybook-static
 
 # test pak, ignored bc it not owned by the repo
 /test_pak
+
+# Pi agent harness state
+.pi

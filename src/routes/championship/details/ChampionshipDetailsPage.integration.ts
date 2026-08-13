@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PUBLIC_SEASON_START_DATE } from '$env/static/public';
 import { m } from '$messages';
 import { format } from '$lib/date';
+import type * as championshipApi from '$lib/api/championship';
 import ChampionshipDetailsPage from './ChampionshipDetailsPage.integration.svelte';
 
 const { teamStandingsQueryMock, personalStandingsQueryMock } = vi.hoisted(() => ({
@@ -11,7 +12,8 @@ const { teamStandingsQueryMock, personalStandingsQueryMock } = vi.hoisted(() => 
   personalStandingsQueryMock: vi.fn(),
 }));
 
-vi.mock('$lib/api/championship', () => ({
+vi.mock('$lib/api/championship', async (importOriginal) => ({
+  ...(await importOriginal<typeof championshipApi>()),
   createTeamStandingsQuery: teamStandingsQueryMock,
   createPersonalStandingsQuery: personalStandingsQueryMock,
 }));

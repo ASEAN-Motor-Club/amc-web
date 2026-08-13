@@ -5,13 +5,15 @@ import { tick } from 'svelte';
 import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
 import { m } from '$messages';
 import { format } from '$lib/date';
+import type * as teamsApi from '$lib/api/teams';
 import ChampionshipPage from './ChampionshipPage.integration.svelte';
 
 const { createTeamsQueryMock } = vi.hoisted(() => ({
   createTeamsQueryMock: vi.fn(),
 }));
 
-vi.mock('$lib/api/teams', () => ({
+vi.mock('$lib/api/teams', async (importOriginal) => ({
+  ...(await importOriginal<typeof teamsApi>()),
   createTeamsQuery: createTeamsQueryMock,
 }));
 
