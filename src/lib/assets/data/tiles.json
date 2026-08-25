@@ -2,11 +2,11 @@
   "maxZoom": 5,
   "tileInnerResolution": 44,
   "tileSampleCount": 46,
-  "widthMeters": 22000.0,
-  "heightMeters": 22000.0,
-  "originMetersX": -12800.0,
-  "originMetersY": -3200.0,
-  "minZ": -256.0,
-  "maxZ": 87.90625,
-  "oceanLevelMeters": -223.74
+  "widthCm": 2200000.0,
+  "heightCm": 2200000.0,
+  "originXCm": -1280000.0,
+  "originYCm": -320000.0,
+  "minZ": -25600.0,
+  "maxZ": 8790.625,
+  "oceanLevelCm": -22374.0
 }
