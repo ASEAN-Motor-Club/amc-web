@@ -16,6 +16,7 @@
   import { pinsSchema, type Pins } from '$lib/schema/pin';
   import * as z from 'zod/mini';
   import OlMapWrapper from './OlMapWrapper.svelte';
+  import ThreeMapWrapper from './ThreeMapWrapper.svelte';
   import { goto } from '$app/navigation';
   import { getSelectionClearedParams } from '../utils';
   import { isMouse, isSm } from '$lib/utils/media.svelte';
@@ -32,6 +33,15 @@
   const { jobsData, playerData, houseData, onPlayerLayerDataEnabledChange }: Props = $props();
 
   const MAP_STATE_STORAGE_KEY = 'mapState';
+  const EXPERIMENTAL_3D_MAP_FLAG = '__experimental_3d_map';
+
+  /** Whether the 3D map mode is even available: gated behind an experimental flag in
+   * localStorage so regular visitors never see the switch. */
+  const threeDEnabled = $derived(
+    typeof window !== 'undefined' && localStorage.getItem(EXPERIMENTAL_3D_MAP_FLAG) === '1',
+  );
+  /** The active map mode - 3D renders the terrain through ThreeMapWrapper. */
+  let threeDMode = $state(false);
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -409,22 +419,47 @@
   </button>
 {/if}
 <div class="relative h-full w-full" bind:this={mapRootEl}>
-  <OlMapWrapper
-    {pipActive}
-    {enterPip}
-    {mapState}
-    {jobsData}
-    {playerData}
-    {houseData}
-    {pinsData}
-    {teleportData}
-    {shortcutZoneData}
-    {deliveryLineData}
-    {selection}
-    onHover={handleHover}
-    onClick={handleMapClick}
-    onRightClick={handleMapRightClick}
-  />
+  {#if threeDMode}
+    <ThreeMapWrapper
+      {pipActive}
+      {enterPip}
+      {mapState}
+      {playerData}
+      {pinsData}
+      {selection}
+      onHover={handleHover}
+      onClick={handleMapClick}
+      onRightClick={handleMapRightClick}
+    />
+  {:else}
+    <OlMapWrapper
+      {pipActive}
+      {enterPip}
+      {mapState}
+      {jobsData}
+      {playerData}
+      {houseData}
+      {pinsData}
+      {teleportData}
+      {shortcutZoneData}
+      {deliveryLineData}
+      {selection}
+      onHover={handleHover}
+      onClick={handleMapClick}
+      onRightClick={handleMapRightClick}
+    />
+  {/if}
+
+  {#if threeDEnabled && !pipActive}
+    <button
+      type="button"
+      class="absolute top-3 right-3 z-10 rounded-sm bg-gray-900/50 px-2 py-1 text-xs text-white shadow ring ring-white/5 backdrop-blur-sm hover:bg-gray-900/60"
+      onclick={() => (threeDMode = !threeDMode)}
+    >
+      {threeDMode ? '2D' : '3D'}
+    </button>
+  {/if}
+
   {#if !pipActive}
     <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
     <div
