@@ -150,7 +150,16 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
   createOceanQuad(scene, meta);
 
-  const tileManager = createTileManager(scene, meta, renderer, camera, controls);
+  const loadingManager = new THREE.LoadingManager();
+  const tileManager = createTileManager(
+    scene,
+    meta,
+    renderer,
+    camera,
+    controls,
+    loadingManager.abortController.signal,
+    loadingManager,
+  );
   const panPhys: GroundPan = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
 
   function refreshVisibleTiles(): void {
@@ -198,6 +207,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     dispose() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
+      loadingManager.abort();
       tileManager.setZoomDebug(false);
       tileManager.setWireframe(false);
       renderer.dispose();

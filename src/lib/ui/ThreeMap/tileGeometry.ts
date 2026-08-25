@@ -5,8 +5,13 @@ import { rawHeightToWorldZMeters } from './heightmap';
 const COLOR_BASE_URL = '/map_tiles/719/colors';
 const HEIGHT_BASE_URL = '/map_tiles/719/heights';
 
-export async function fetchHeightTile(z: number, x: number, y: number): Promise<Uint16Array> {
-  const r = await fetch(`${HEIGHT_BASE_URL}/${z}_${x}_${y}.bin`);
+export async function fetchHeightTile(
+  z: number,
+  x: number,
+  y: number,
+  signal?: AbortSignal,
+): Promise<Uint16Array> {
+  const r = await fetch(`${HEIGHT_BASE_URL}/${z}_${x}_${y}.bin`, { signal });
   if (!r.ok) throw new Error(`height tile ${z}_${x}_${y}: HTTP ${r.status}`);
   return new Uint16Array(await r.arrayBuffer());
 }
@@ -16,6 +21,7 @@ export function loadColorTexture(
   x: number,
   y: number,
   renderer: THREE.WebGLRenderer,
+  manager?: THREE.LoadingManager,
 ): Promise<THREE.Texture> {
   const { promise, resolve, reject } = Promise.withResolvers<THREE.Texture>();
   const depth = Math.max(0, z - COLOR_MAX_ZOOM);
@@ -25,7 +31,7 @@ export function loadColorTexture(
   const frac = 1 / (1 << depth);
   const offX = (x - (colorX << depth)) * frac;
   const offY = (y - (colorY << depth)) * frac;
-  new THREE.TextureLoader().load(
+  new THREE.TextureLoader(manager).load(
     `${COLOR_BASE_URL}/${colorZ}_${colorX}_${colorY}.avif`,
     (texture) => {
       texture.flipY = false;

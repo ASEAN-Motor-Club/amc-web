@@ -44,6 +44,8 @@ export function createTileManager(
   renderer: THREE.WebGLRenderer,
   camera: THREE.Camera,
   controls: OrbitControls,
+  signal: AbortSignal,
+  loadingManager: THREE.LoadingManager,
 ): TileManager {
   const tileGroup = new THREE.Group();
   scene.add(tileGroup);
@@ -80,10 +82,13 @@ export function createTileManager(
     loading.add(key);
     try {
       const [rawHeights, texture] = await Promise.all([
-        fetchHeightTile(z, x, y),
-        loadColorTexture(z, x, y, renderer),
+        fetchHeightTile(z, x, y, signal),
+        loadColorTexture(z, x, y, renderer, loadingManager),
       ]);
       dataCache.set(key, { z, x, y, rawHeights, texture });
+    } catch (_err) {
+      // Abort on dispose always rejects (fetch/image abort) - that is expected.
+      if (!signal.aborted) throw _err;
     } finally {
       loading.delete(key);
     }
