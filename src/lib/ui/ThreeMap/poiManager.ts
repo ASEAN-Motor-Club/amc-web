@@ -218,16 +218,19 @@ export function createPoiManager(
     camera.getWorldDirection(_upView);
     _upWorld.copy(camera.up).projectOnPlane(_upView).normalize();
     for (const marker of ordered) {
-      const dist = Math.max(
-        _distance.set(marker.world[0], marker.world[1], marker.world[2]).sub(camPos).length(),
+      // Perspective projection scales by depth along the view axis, not Euclidean
+      // distance - a marker at the viewport edge is farther from the camera in a straight
+      // line but at the same depth, and would otherwise render oversize.
+      const viewDepth = Math.max(
+        _distance.set(marker.world[0], marker.world[1], marker.world[2]).sub(camPos).dot(_upView),
         1,
       );
-      const s = dist * K;
+      const s = viewDepth * K;
       const sizePx = marker.dot.userData.dotSizePx as number;
       marker.dot.scale.set(sizePx * s, sizePx * s, 1);
       if (marker.label) {
         // Sprite world height = 128*fs; the text occupies 40/128 of it. Solve fs so the
-        // text is marker.labelConfig.sizePx on screen: s = dist*K, screenPx = 40*fs / s.
+        // text is marker.labelConfig.sizePx on screen: s = viewDepth*K, screenPx = 40*fs / s.
         const fs = (marker.labelConfig.sizePx * s) / 40;
         marker.label.scale.set(512 * fs, 128 * fs, 1);
         marker.label.position

@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import { COLOR_MAX_ZOOM, SKIRT_DROP } from './constants';
 import { rawHeightToWorldZMeters } from './heightmap';
 
-const COLOR_BASE_URL = '/map_tiles/719/colors';
-const HEIGHT_BASE_URL = '/map_tiles/719/heights';
+const COLOR_BASE_URL = '/map_tiles/719a/colors';
+const HEIGHT_BASE_URL = '/map_tiles/719a/heights';
 
 export async function fetchHeightTile(
   z: number,

@@ -84,6 +84,6 @@ until all four of its finer replacements have loaded, so zooming never flashes a
 
 ## Asset URLs
 
-Tiles come from `static/map_tiles/719/` (`colors/` and `heights/`), the same directory the OL map
+Tiles come from `static/map_tiles/{version}/` (`colors/` and `heights/`), the same directory the OL map
 serves. The color dir is plural — `colors/`, not `color/` (a missed-plural 404 was the one real
 port bug).

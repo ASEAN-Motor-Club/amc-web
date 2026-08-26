@@ -11,7 +11,7 @@ Stage 1 (render 3D terrain in place of the OL map) is committed. Stage 2 (POI la
     fallback cover (no holes, "2×2 swap only when fully loaded").
   - `lod.ts` — quadtree LOD selection (vision rings from orbit point + altitude cap + frustum cull).
   - `tileGeometry.ts` — per-tile height `.bin` + color `.avif` fetch, grid+skirt geometry,
-    analytic normals; color URL is `/map_tiles/719/colors/` (plural — a real 404 bug, fixed).
+    analytic normals; color URL is `/map_tiles/{version}/colors/` (plural — a real 404 bug, fixed).
   - `heightmap.ts` — `TILES_META` from a **static import** of `src/lib/assets/data/tiles.json`
     (cm → m, no fetch), `tileWorldRect`, raw-height→meters.
   - `constants.ts`, `three-map-types.ts`, `groundPan.ts`.
