@@ -424,8 +424,12 @@
       {pipActive}
       {enterPip}
       {mapState}
+      {jobsData}
       {playerData}
+      {houseData}
       {pinsData}
+      {teleportData}
+      {shortcutZoneData}
       {selection}
       onHover={handleHover}
       onClick={handleMapClick}

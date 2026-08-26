@@ -12,6 +12,7 @@ import {
 } from './constants';
 import { setupGroundPan, type GroundPan } from './groundPan';
 import { TILES_META } from './heightmap';
+import { createPoiManager, type PoiManager } from './poiManager';
 import { createTileManager } from './tileManager';
 import type { TileManager } from './tileManager';
 import type { TilesMeta } from './three-map-types';
@@ -95,6 +96,18 @@ export function createCameraRig(renderer: THREE.WebGLRenderer): CameraRig {
   return { camera, controls, update, zoomBy };
 }
 
+export interface ThreeMapScene {
+  renderer: THREE.WebGLRenderer;
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  controls: OrbitControls;
+  tileManager: TileManager;
+  poiManager: PoiManager;
+  meta: TilesMeta;
+  zoomBy: (deltaY: number) => void;
+  dispose: () => void;
+}
+
 export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): THREE.Mesh | null {
   if (meta.oceanLevelMeters == null) {
     console.warn('tiles.json has no oceanLevelMeters - skipping the ocean quad');
@@ -114,16 +127,6 @@ export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): THREE.Mesh
   mesh.position.y = meta.oceanLevelMeters;
   scene.add(mesh);
   return mesh;
-}
-
-export interface ThreeMapScene {
-  renderer: THREE.WebGLRenderer;
-  scene: THREE.Scene;
-  camera: THREE.PerspectiveCamera;
-  controls: OrbitControls;
-  tileManager: TileManager;
-  zoomBy: (deltaY: number) => void;
-  dispose: () => void;
 }
 
 export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
@@ -161,9 +164,11 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     loadingManager,
   );
   const panPhys: GroundPan = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
+  const poiManager = createPoiManager(scene, meta, tileManager);
 
   function refreshVisibleTiles(): void {
     tileManager.updateVisibleTiles();
+    poiManager.syncCovers();
   }
 
   controls.target.set(0, 0, 0);
@@ -174,6 +179,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
+    poiManager.setViewportSize(container.clientWidth, container.clientHeight);
   }
   window.addEventListener('resize', onResize);
 
@@ -187,6 +193,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     lastFrameTime = now;
     updateCameraRig(dt);
     panPhys.update(dt);
+    poiManager.update(camera);
 
     if (now - lastTileUpdate > TILE_UPDATE_INTERVAL_MS) {
       lastTileUpdate = now;
@@ -203,11 +210,14 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera,
     controls,
     tileManager,
+    poiManager,
+    meta,
     zoomBy,
     dispose() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
       loadingManager.abort();
+      poiManager.dispose();
       tileManager.setZoomDebug(false);
       tileManager.setWireframe(false);
       renderer.dispose();
