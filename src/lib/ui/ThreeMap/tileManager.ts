@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM, ZOOM_DEBUG_COLORS } from './constants';
 import { tileWorldRect } from './heightmap';
@@ -41,7 +42,7 @@ interface TickContext {
 export function createTileManager(
   scene: THREE.Scene,
   meta: TilesMeta,
-  renderer: THREE.WebGLRenderer,
+  renderer: Renderer,
   camera: THREE.Camera,
   controls: OrbitControls,
   signal: AbortSignal,

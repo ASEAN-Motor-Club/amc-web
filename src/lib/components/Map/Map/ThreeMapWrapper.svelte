@@ -20,6 +20,7 @@
   import type { DeliveryLineData } from './deliveryLine';
   import type { Pins } from '$lib/schema/pin';
   import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
+  import { ZOOM_BUTTON_LOG_STEP } from '$lib/ui/ThreeMap/constants';
   import type { PoiMarker, PoiInput } from '$lib/ui/ThreeMap/poiManager';
   import { m } from '$messages';
   import { reProjectPointInverse } from '$lib/ui/OlMap/utils';
@@ -68,9 +69,8 @@
     deliveryLineData: _deliveryLineData,
   }: ThreeMapWrapperProps = $props();
 
-  // One full wheel notch (100 deltaY), so a button tap scales distance ~1.13x like a
-  // wheel tick.
-  const ZOOM_BUTTON_DELTA_Y = 100;
+  // One +/- click steps log-distance by ZOOM_BUTTON_LOG_STEP: ×e^0.2 ≈ ×1.22,
+  // matched to the OL map's button feel. Positive = zoom out.
 
   let container: HTMLDivElement;
   let three = $state<ThreeMapScene | undefined>(undefined);
@@ -98,69 +98,84 @@
         : 0;
   }
 
-  /** The full POI set, ordered delivery → house → player → pin → teleport → shortcut. */
-  const allPois = $derived.by(() => {
+  // ---- Per-type POI sets: one data source each, so a changing source (e.g. live
+  // player updates) only touches its own markers, never the other layers. ----
+  const deliveryPois = $derived.by(() => {
+    if (!mapState.delivery) return [];
+    return deliveryPointsList.map((point) => ({
+      pointType: PointType.Delivery,
+      id: point.guid,
+      coord: point.coord,
+      info: point,
+      jobs: jobsFor(point),
+    }));
+  });
+
+  const housePois = $derived.by(() => {
+    if (!mapState.house) return [];
+    return housesList.map((point) => ({
+      pointType: PointType.House,
+      id: point.name,
+      coord: point.coord,
+      info: point,
+    }));
+  });
+
+  const playerPois = $derived.by(() => {
+    if (!mapState.player) return [];
+    return playerData.map((point) => ({
+      pointType: PointType.Player,
+      id: point.guid,
+      coord: playerCoord(point),
+      info: point,
+    }));
+  });
+
+  const pinPois = $derived.by(() => {
+    if (!mapState.pins) return [];
     const pois: PoiInput[] = [];
-    if (mapState.delivery) {
-      for (const point of deliveryPointsList) {
-        pois.push({
-          pointType: PointType.Delivery,
-          id: point.guid,
-          coord: point.coord,
-          info: point,
-          jobs: jobsFor(point),
-        });
-      }
-    }
-    if (mapState.house) {
-      for (const point of housesList) {
-        pois.push({
-          pointType: PointType.House,
-          id: point.name,
-          coord: point.coord,
-          info: point,
-        });
-      }
-    }
-    if (mapState.player) {
-      for (const point of playerData) {
-        pois.push({
-          pointType: PointType.Player,
-          id: point.guid,
-          coord: playerCoord(point),
-          info: point,
-        });
-      }
-    }
-    if (mapState.pins) {
-      for (let i = 0; i < pinsData.length; i++) {
-        const point = pinsData[i];
-        pois.push({
-          pointType: PointType.Pin,
-          id: i.toString(),
-          coord: pinCoord(point),
-          info: point,
-        });
-      }
-    }
-    if (mapState.teleport) {
-      for (const point of teleportData) {
-        pois.push({
-          pointType: PointType.Teleport,
-          id: point.name,
-          coord: point.coord,
-          info: point,
-        });
-      }
+    for (let i = 0; i < pinsData.length; i++) {
+      const point = pinsData[i];
+      pois.push({
+        pointType: PointType.Pin,
+        id: i.toString(),
+        coord: pinCoord(point),
+        info: point,
+      });
     }
     return pois;
   });
 
-  // ---- POI set effect: forward the derived set into the manager ----
+  const teleportPois = $derived.by(() => {
+    if (!mapState.teleport) return [];
+    return teleportData.map((point) => ({
+      pointType: PointType.Teleport,
+      id: point.name,
+      coord: point.coord,
+      info: point,
+    }));
+  });
+
+  // ---- POI set effects: one per data source, so each only reconciles its own type. ----
   $effect(() => {
     if (!three) return;
-    three.poiManager.setPois(allPois);
-    centerOnSelection();
+    three.poiManager.setPoisFor(PointType.Delivery, deliveryPois);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.poiManager.setPoisFor(PointType.House, housePois);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.poiManager.setPoisFor(PointType.Player, playerPois);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.poiManager.setPoisFor(PointType.Pin, pinPois);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.poiManager.setPoisFor(PointType.Teleport, teleportPois);
   });
 
   // ---- visibility toggles ----
@@ -188,30 +203,53 @@
     }
   });
 
-  // ---- labels ----
+  // ---- labels: one label concern per effect, re-applied when that type's set changes
+  // (a toggled layer recreates markers which need their labels set again). ----
   $effect(() => {
     if (!three) return;
+    void playerPois;
     const pm = three.poiManager;
-    for (const marker of pm.markers()) {
-      const text = (() => {
-        switch (marker.pointType) {
-          case PointType.Player:
-            return mapState.playerName ? (marker.info as PlayerData).name : '';
-          case PointType.Teleport:
-            return mapState.teleportLabels ? (marker.info as TeleportPoint).name : '';
-          case PointType.Pin:
-            return mapState.pinLabels ? (marker.info as Pins[number]).label : '';
-          case PointType.House: {
-            if (!mapState.houseLabels) return '';
-            const house = marker.info as House;
-            const owner = houseData?.[house.name]?.ownerName;
-            if (mapState.houseVacantOnly && !owner) return '';
-            return owner ?? m['housing.vacant']();
-          }
-          default:
-        }
-      })();
-      pm.setLabel(marker.id, text ?? '');
+    const show = mapState.playerName;
+    for (const marker of pm.markersOf(PointType.Player)) {
+      pm.setLabel(marker.id, show ? (marker.info as PlayerData).name : '');
+    }
+  });
+  $effect(() => {
+    if (!three) return;
+    void teleportPois;
+    const pm = three.poiManager;
+    const show = mapState.teleportLabels;
+    for (const marker of pm.markersOf(PointType.Teleport)) {
+      pm.setLabel(marker.id, show ? (marker.info as TeleportPoint).name : '');
+    }
+  });
+  $effect(() => {
+    if (!three) return;
+    void pinPois;
+    const pm = three.poiManager;
+    const show = mapState.pinLabels;
+    for (const marker of pm.markersOf(PointType.Pin)) {
+      pm.setLabel(marker.id, show ? (marker.info as Pins[number]).label : '');
+    }
+  });
+  $effect(() => {
+    if (!three) return;
+    void housePois;
+    const pm = three.poiManager;
+    const show = mapState.houseLabels;
+    const vacantOnly = mapState.houseVacantOnly;
+    for (const marker of pm.markersOf(PointType.House)) {
+      if (!show) {
+        pm.setLabel(marker.id, '');
+        continue;
+      }
+      const house = marker.info as House;
+      const owner = houseData?.[house.name]?.ownerName;
+      if (vacantOnly && !owner) {
+        pm.setLabel(marker.id, '');
+        continue;
+      }
+      pm.setLabel(marker.id, owner ?? m['housing.vacant']());
     }
   });
 
@@ -232,14 +270,12 @@
   function pickAtPointer(event: { clientX: number; clientY: number }): PoiMarker | undefined {
     if (!three) return undefined;
     const rect = three.renderer.domElement.getBoundingClientRect();
-    pendingRaycaster.setFromCamera(
-      new THREE.Vector2(
-        ((event.clientX - rect.left) / rect.width) * 2 - 1,
-        -((event.clientY - rect.top) / rect.height) * 2 + 1,
-      ),
-      three.camera,
+    const ndc = new THREE.Vector2(
+      ((event.clientX - rect.left) / rect.width) * 2 - 1,
+      -((event.clientY - rect.top) / rect.height) * 2 + 1,
     );
-    return three.poiManager.pick(pendingRaycaster) ?? undefined;
+    pendingRaycaster.setFromCamera(ndc, three.camera);
+    return three.poiManager.pick(pendingRaycaster, ndc) ?? undefined;
   }
 
   function updateHoverAt(event: { clientX: number; clientY: number }): void {
@@ -287,9 +323,8 @@
     };
   });
 
-  const zoomIn = () => three?.zoomBy(-ZOOM_BUTTON_DELTA_Y);
-
-  const zoomOut = () => three?.zoomBy(ZOOM_BUTTON_DELTA_Y);
+  const zoomIn = () => three?.stepBy(ZOOM_BUTTON_LOG_STEP);
+  const zoomOut = () => three?.stepBy(-ZOOM_BUTTON_LOG_STEP);
 
   // ---- selection lock ----
   let lastCenteredSelection = $state<string | undefined>(undefined);
@@ -335,6 +370,22 @@
 
   $effect(() => {
     if (!three || !selection) return;
+    // Re-run when the selected layer's set changes - the marker may arrive after the
+    // selection effect first fires (the toggles in Map.svelte run in their own effect).
+    switch (selection.pointType) {
+      case PointType.House:
+        void housePois;
+        break;
+      case PointType.Delivery:
+        void deliveryPois;
+        break;
+      case PointType.Player:
+        void playerPois;
+        break;
+      case PointType.Pin:
+        void pinPois;
+        break;
+    }
     centerOnSelection();
   });
 </script>

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { Renderer } from 'three/webgpu';
 import { COLOR_MAX_ZOOM, SKIRT_DROP } from './constants';
 import { rawHeightToWorldZMeters } from './heightmap';
 
@@ -20,7 +21,7 @@ export function loadColorTexture(
   z: number,
   x: number,
   y: number,
-  renderer: THREE.WebGLRenderer,
+  renderer: Renderer,
   manager?: THREE.LoadingManager,
 ): Promise<THREE.Texture> {
   const { promise, resolve, reject } = Promise.withResolvers<THREE.Texture>();
@@ -36,7 +37,7 @@ export function loadColorTexture(
     (texture) => {
       texture.flipY = false;
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      texture.anisotropy = renderer.getMaxAnisotropy();
       if (depth > 0) {
         texture.repeat.set(frac, frac);
         texture.offset.set(offX, offY);

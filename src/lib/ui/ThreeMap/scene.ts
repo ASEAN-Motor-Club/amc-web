@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { WebGPURenderer, type Renderer } from 'three/webgpu';
 import { debounce } from 'es-toolkit';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
@@ -11,6 +12,8 @@ import {
   TILE_UPDATE_INTERVAL_MS,
   ZOOM_DAMPING_FACTOR,
   ZOOM_LOG_PER_WHEEL_DELTA,
+  WHEEL_NOTCH_DELTA_Y,
+  ZOOM_LOG_PER_WHEEL_NOTCH,
 } from './constants';
 import { setupGroundPan, type GroundPan } from './groundPan';
 import { TILES_META } from './heightmap';
@@ -23,12 +26,13 @@ export interface CameraRig {
   camera: THREE.PerspectiveCamera;
   controls: OrbitControls;
   update: (dt: number) => void;
-  /** Feeds the inertial wheel-zoom accumulator directly - used by the on-map
-   * zoom buttons. Positive deltaY zooms out, negative zooms in. */
+  /** Feeds the inertial wheel-zoom accumulator - same code path as the wheel
+   * handler. Positive deltaY zooms out, negative zooms in. */
   zoomBy: (deltaY: number) => void;
-}
 
-export function createCameraRig(renderer: THREE.WebGLRenderer): CameraRig {
+  stepBy: (logStep: number) => void;
+}
+export function createCameraRig(renderer: Renderer): CameraRig {
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 5, 100000);
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -48,7 +52,19 @@ export function createCameraRig(renderer: THREE.WebGLRenderer): CameraRig {
     'wheel',
     (event) => {
       event.preventDefault();
-      const deltaLog = event.deltaY * ZOOM_LOG_PER_WHEEL_DELTA;
+      // deltaMode 1 (lines) / 2 (pages) - normalize to pixels like real browsers do.
+      const px =
+        event.deltaMode === 1
+          ? event.deltaY * 16
+          : event.deltaMode === 2
+            ? event.deltaY * 100
+            : event.deltaY;
+      // A mouse-wheel DETENT arrives as one large discrete event; trackpad
+      // gestures emit many small ones. Scale each with its own factor so the
+      // inertial accumulator's ~2.9x damping gain doesn't over-boost notches.
+      const perUnit =
+        Math.abs(px) >= WHEEL_NOTCH_DELTA_Y ? ZOOM_LOG_PER_WHEEL_NOTCH : ZOOM_LOG_PER_WHEEL_DELTA;
+      const deltaLog = px * perUnit;
       if (deltaLog !== 0 && zoomLog > 0 !== deltaLog > 0) {
         zoomLog = 0;
       }
@@ -71,7 +87,19 @@ export function createCameraRig(renderer: THREE.WebGLRenderer): CameraRig {
     zoomLog *= Math.pow(1 - ZOOM_DAMPING_FACTOR, dt * 60);
     if (Math.abs(zoomLog) < 0.002) zoomLog = 0;
   }
+  /** Feeds the inertial wheel-zoom accumulator - same code path as the wheel
+   * handler. Positive deltaY zooms out, negative zooms in. */
+  function zoomBy(deltaY: number): void {
+    const deltaLog = deltaY * ZOOM_LOG_PER_WHEEL_DELTA;
+    if (deltaLog !== 0 && zoomLog > 0 !== deltaLog > 0) {
+      zoomLog = 0;
+    }
+    zoomLog += deltaLog;
+  }
 
+  /** Pending zoom-button travel in accumulator log-units. Buttons feed this
+   * instead of teleporting the camera, so each click glides. */
+  let buttonZoomPending = 0;
   function update(dt: number): void {
     const distance = camera.position.distanceTo(controls.target);
     const t = THREE.MathUtils.clamp(
@@ -83,23 +111,27 @@ export function createCameraRig(renderer: THREE.WebGLRenderer): CameraRig {
     controls.maxPolarAngle = THREE.MathUtils.degToRad(
       THREE.MathUtils.lerp(LOOK_UP_ANGLE_NEAR_DEG, LOOK_UP_ANGLE_FAR_DEG, t),
     );
+    // Drain queued button clicks into the shared inertial accumulator.
+    if (buttonZoomPending !== 0) {
+      zoomLog += buttonZoomPending;
+      buttonZoomPending = 0;
+    }
     integrateZoom(dt);
     controls.update();
   }
 
-  function zoomBy(deltaY: number): void {
-    const deltaLog = deltaY * ZOOM_LOG_PER_WHEEL_DELTA;
-    if (deltaLog !== 0 && zoomLog > 0 !== deltaLog > 0) {
-      zoomLog = 0;
-    }
-    zoomLog += deltaLog;
+  function stepBy(logStep: number): void {
+    // Damping DECAYS the queue each frame, so the accumulator integrates
+    // ~1/ZOOM_DAMPING_FACTOR (≈2.86x) of whatever it holds. Queue the deficit
+    // complement so the glide lands exactly on logStep.
+    buttonZoomPending += logStep * ZOOM_DAMPING_FACTOR;
   }
 
-  return { camera, controls, update, zoomBy };
+  return { camera, controls, update, zoomBy, stepBy };
 }
 
 export interface ThreeMapScene {
-  renderer: THREE.WebGLRenderer;
+  renderer: WebGPURenderer;
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   controls: OrbitControls;
@@ -107,6 +139,9 @@ export interface ThreeMapScene {
   poiManager: PoiManager;
   meta: TilesMeta;
   zoomBy: (deltaY: number) => void;
+  /** Zoom buttons: exact, immediate step in log-distance units (no inertia).
+   * Positive steps out, negative steps in. */
+  stepBy: (logStep: number) => void;
   dispose: () => void;
 }
 
@@ -132,7 +167,7 @@ export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): THREE.Mesh
 }
 
 export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
+  const renderer = new WebGPURenderer({ antialias: true, logarithmicDepthBuffer: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(container.clientWidth, container.clientHeight);
   const skyColor = 0x8fb8e0;
@@ -144,7 +179,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   scene.background = new THREE.Color(skyColor);
   scene.fog = new THREE.Fog(skyColor, 25000, 100000);
 
-  const { camera, controls, update: updateCameraRig, zoomBy } = createCameraRig(renderer);
+  const { camera, controls, update: updateCameraRig, zoomBy, stepBy } = createCameraRig(renderer);
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);
@@ -182,7 +217,6 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
-    poiManager.setViewportSize(container.clientWidth, container.clientHeight);
     // The size has settled - clear the transition blur.
     renderer.domElement.style.filter = '';
   }
@@ -198,10 +232,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
   let lastTileUpdate = 0;
   let lastFrameTime = 0;
-  let rafId = 0;
 
   function animate(now: number): void {
-    rafId = requestAnimationFrame(animate);
     const dt = lastFrameTime === 0 ? 1 / 60 : Math.min((now - lastFrameTime) / 1000, 0.1);
     lastFrameTime = now;
     updateCameraRig(dt);
@@ -215,7 +247,10 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
     renderer.render(scene, camera);
   }
-  animate(0);
+  // setAnimationLoop drives the frame AND the node-material update pass, and awaits the
+  // async backend init (WebGPU or, on unsupported browsers, the WebGL2 fallback) before
+  // the first render. dispose() cancels it via renderer.dispose().
+  void renderer.setAnimationLoop(animate);
 
   return {
     renderer,
@@ -226,11 +261,9 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     poiManager,
     meta,
     zoomBy,
+    stepBy,
     dispose() {
-      cancelAnimationFrame(rafId);
-      onResizeDebounced.cancel();
-      resizeObserver.disconnect();
-      loadingManager.abort();
+      panPhys.dispose();
       poiManager.dispose();
       tileManager.setZoomDebug(false);
       tileManager.setWireframe(false);

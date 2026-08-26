@@ -18,7 +18,21 @@ import {
 
 export const ROTATE_SPEED_NEAR = 0.15;
 export const ROTATE_SPEED_FAR = 1.0;
-export const ZOOM_LOG_PER_WHEEL_DELTA = 0.00021;
+export const ZOOM_LOG_PER_WHEEL_DELTA = 0.0012;
+
+/** Factor for a discrete wheel DETENT (mouse wheel notch, |deltaY| >= 50 in one
+ * event). Smaller than the gesture factor because a notch lands whole in the
+ * inertial accumulator (~2.9x damping gain), while trackpad gestures drip in.
+ * Net per notch: exp(0.00055 * 100 / 0.35) ~= x1.17. */
+export const ZOOM_LOG_PER_WHEEL_NOTCH = 0.00055;
+/** A wheel event counts as a detent at or above this |deltaY| (px). */
+export const WHEEL_NOTCH_DELTA_Y = 50;
+
+/** Zoom-button step in log-distance units, deliberately decoupled from
+ * ZOOM_LOG_PER_WHEEL_DELTA: wheel deltas come straight from input hardware and
+ * must stay hand-tunable without changing how far one +/- click steps.
+ * Negative zooms in, matching the wheel's positive-deltaY-zooms-out sign. */
+export const ZOOM_BUTTON_LOG_STEP = -0.2;
 export const ZOOM_DAMPING_FACTOR = 0.35;
 export const PAN_DAMPING_FACTOR = 0.35;
 export const PAN_FLING_SAMPLE_MS = 90;
@@ -53,11 +67,9 @@ export interface PoiDotStyle {
 
 /** Label styling for a POI type, matching OL's label styles:
  * - sizePx: on-screen text height in px (OL font: 0.5rem=8, 0.6rem=10, 0.75rem=12)
- * - offsetY: on-screen vertical offset above the marker in px (OL text offsetY is negative =
- *   above the point; we store the positive screen-px distance above) */
+ */
 export interface PoiLabelConfig {
   sizePx: number;
-  offsetY: number;
 }
 
 /** Everything a POI type renders with - the single source of truth for the 3D map. */
@@ -66,42 +78,41 @@ export interface PoiTypeConfig {
   label: PoiLabelConfig;
 }
 
-const textAdjust = (px: number) => px;
-const offsetAdjust = (px: number) => -15 + px;
-const dotSize = (olRadius: number) => Math.round(olRadius * 2.4);
+const textAdjust = (px: number) => px / 280;
+const dotSize = (olRadius: number) => olRadius / 400;
 
 export const POI_CONFIG: Record<number, PoiTypeConfig> = {
   // Delivery - no text label in OL
   0: {
     dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
-    label: { sizePx: textAdjust(0), offsetY: offsetAdjust(0) },
+    label: { sizePx: textAdjust(0) },
   },
   // House - 600 0.6rem, offset -12
   1: {
     dot: { fill: colorCyan500, stroke: colorCyan950, size: dotSize(6) },
-    label: { sizePx: textAdjust(10), offsetY: offsetAdjust(12) },
+    label: { sizePx: textAdjust(10) },
   },
   // Player - 600 0.75rem, offset -12
   2: {
     dot: { fill: colorEmerald400, stroke: colorEmerald950, size: dotSize(4) },
-    label: { sizePx: textAdjust(12), offsetY: offsetAdjust(12) },
+    label: { sizePx: textAdjust(12) },
   },
   // Pin - 600 0.75rem, offset -14
   3: {
     dot: { fill: colorRed400, stroke: colorRed950, size: dotSize(5) },
-    label: { sizePx: textAdjust(12), offsetY: offsetAdjust(14) },
+    label: { sizePx: textAdjust(12) },
   },
   // Teleport - 600 0.5rem, offset -12
   4: {
     dot: { fill: colorViolet400, stroke: colorViolet950, size: dotSize(5) },
-    label: { sizePx: textAdjust(8), offsetY: offsetAdjust(12) },
+    label: { sizePx: textAdjust(8) },
   },
 };
 
 /** Fallback config for any unrecognized POI type. */
 export const POI_DEFAULT: PoiTypeConfig = {
   dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
-  label: { sizePx: textAdjust(12), offsetY: offsetAdjust(12) },
+  label: { sizePx: textAdjust(12) },
 };
 
 /** Delivery-point variants, mirroring the OL delivery layer:

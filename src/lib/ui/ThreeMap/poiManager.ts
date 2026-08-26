@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { SpriteNodeMaterial } from 'three/webgpu';
+import { instancedBufferAttribute, uniform } from 'three/tsl';
 import { PointType, type PlayerData, type TeleportPoint } from '$lib/components/Map/Map/types';
 import type { DeliveryPoint } from '$lib/data/deliveryPoint';
 import type { House } from '$lib/data/house';
@@ -13,9 +15,8 @@ import {
   POI_DELIVERY_JOB_SOURCE,
   POI_DELIVERY_RESIDENT,
   type PoiDotStyle,
-  type PoiLabelConfig,
 } from './constants';
-import { makeDotSprite, makeTextSprite } from './poi';
+import { dotPaletteKey, makeDotTexture, makeTextSprite } from './poi';
 import { tileWorldRect } from './heightmap';
 import { colorTextDark, colorGray950, adjustOpacity } from '$lib/tw-var';
 
@@ -34,12 +35,10 @@ export interface PoiMarker {
   coord: Vector3;
   /** World position (meters, y-up). */
   world: [x: number, y: number, z: number];
-  /** The dot sprite (for hover/pick). */
-  dot: THREE.Sprite;
-  /** Text label sprite. */
-  label: THREE.Sprite | null;
-  /** Per-type label styling (size + vertical offset). */
-  labelConfig: PoiLabelConfig;
+  /** The pixel diameter of the instanced dot (the palette size). */
+  size: number;
+  /** On-screen text height for the label, in px. */
+  sizePx: number;
   id: string;
   info: DeliveryPoint | House | PlayerData | Pin | TeleportPoint;
   /** Job role for delivery points: 1 = source, 2 = destination, else 0/undefined. */
@@ -57,25 +56,39 @@ export interface PoiManager {
   poiGroup: THREE.Group;
   markerById: (id: string) => PoiMarker | undefined;
   markers: () => PoiMarker[];
-  setPois: (pois: PoiInput[]) => void;
-  updatePositions: (moves: { id: string; coord: Vector3 }[]) => void;
-  /** Returns the marker whose sprites the camera ray hits, or null. */
-  pick: (raycaster: THREE.Raycaster) => PoiMarker | null;
-  /** Keeps dot/label sprites at a constant screen size for the given camera. */
+  /** Reconciles only the given POI type's markers - other types are untouched. */
+  setPoisFor: (pointType: PointType, pois: PoiInput[]) => void;
+  /** Markers of one POI type (single data concern per effect). */
+  markersOf: (pointType: PointType) => PoiMarker[];
+  /** Returns the marker whose dot the pointer (in NDC) hits, or null. */
+  pick: (raycaster: THREE.Raycaster, pointerNdc: THREE.Vector2) => PoiMarker | null;
+  /** Keeps labels hanging above their dots (screen-up offset). Sizes are fixed by sizeAttenuation: false. */
   update: (camera: THREE.Camera) => void;
   /** Recomputes cover tiles and resident visibility. */
   syncCovers: () => void;
   setMarkerVisible: (id: string, visible: boolean) => void;
   setLabel: (id: string, text: string) => void;
-  setViewportSize: (w: number, h: number) => void;
   dispose: () => void;
 }
+
+/**
+ * One instanced sprite PER distinct dot palette (the three.js `webgpu_instance_sprites`
+ * pattern, which the WebGPURenderer also runs under WebGL2 when WebGPU is unavailable).
+ * Instancing only steps reliably when every instance shares the same texture, so each
+ * palette - delivery base, resident, job source, job dest, house, player, pin, teleport -
+ * gets its own sprite + single dot texture. The per-type scale is constant, so it goes
+ * through a `uniform()` (like the example's `material.scaleNode = uniform(15)`); only the
+ * per-instance position and opacity are buffer attributes. Markers are a plain collection
+ * (OL-layer style): reconciling a type rewrites that type's sprite buffers, and only the
+ * attribute actually touched gets `needsUpdate = true`. Labels cannot be instanced, so
+ * each labelled marker keeps its own text Sprite.
+ */
 
 /** Resident points only render inside the finest LOD ring. */
 const RESIDENT_MIN_COVER_Z = 5;
 
-/** Viewport height used for the constant-screen-size projection (updated on resize). */
-let viewportH = 800;
+/** Per-sprite instanced capacity; doubles as a palette's markers grow. */
+const MIN_CAPACITY = 64;
 
 /** Dot style for a POI type - all values live in POI_CONFIG (constants.ts). */
 function dotStyleFor(pointType: PointType): PoiDotStyle {
@@ -90,6 +103,28 @@ function deliveryDotStyle(info: DeliveryPoint, jobs?: 0 | 1 | 2): PoiDotStyle {
   return POI_CONFIG[PointType.Delivery].dot;
 }
 
+/** Palette for a marker; delivery points resolve their variant, everything else uses its type. */
+function paletteFor(input: PoiInput): PoiDotStyle {
+  return input.pointType === PointType.Delivery
+    ? deliveryDotStyle(input.info as DeliveryPoint, input.jobs)
+    : dotStyleFor(input.pointType);
+}
+
+/** One instanced sprite + its backing buffers, for a single dot texture. */
+interface SpriteGroup {
+  key: string;
+  palette: PoiDotStyle;
+  sprite: THREE.Sprite;
+  material: SpriteNodeMaterial;
+  posArray: Float32Array;
+  opacityArray: Float32Array;
+  posAttr: THREE.InstancedBufferAttribute;
+  opacityAttr: THREE.InstancedBufferAttribute;
+  capacity: number;
+  /** Marker ids in this sprite, in render order. */
+  ids: string[];
+}
+
 export function createPoiManager(
   scene: THREE.Scene,
   meta: TilesMeta,
@@ -98,147 +133,103 @@ export function createPoiManager(
   const poiGroup = new THREE.Group();
   scene.add(poiGroup);
 
+  /** Per-marker render data: which sprite group + slot inside it. */
+  const state = new Map<string, { groupKey: string; slot: number }>();
   const markers = new Map<string, PoiMarker>();
+  const groups = new Map<string, SpriteGroup>();
   let ordered: PoiMarker[] = [];
 
-  function makeMarker(input: PoiInput): void {
-    const world = gameCoordToWorld(input.coord, meta);
-    const palette =
-      input.pointType === PointType.Delivery
-        ? deliveryDotStyle(input.info as DeliveryPoint, input.jobs)
-        : dotStyleFor(input.pointType);
-    const dot = makeDotSprite(palette);
-    dot.position.set(world[0], world[1], world[2]);
-    dot.userData.markerId = input.id;
-    dot.userData.dotSizePx = palette.size;
-    poiGroup.add(dot);
-    const marker: PoiMarker = {
-      pointType: input.pointType,
-      coord: input.coord,
-      world,
-      dot,
-      label: null,
-      labelConfig: POI_CONFIG[input.pointType].label,
-      id: input.id,
-      info: input.info,
-      jobs: input.jobs,
-      cover: null,
-      hovered: false,
-      visible: true,
-      lodOk: true,
+  /** A marker's render state - every marker created through makeMarker has one. */
+  function stateOf(id: string): { groupKey: string; slot: number } {
+    const s = state.get(id);
+    if (!s) throw new Error(`missing render state for marker ${id}`);
+    return s;
+  }
+
+  /** A definitely-present sprite group (throws on inconsistency rather than corrupting buffers). */
+  function groupOf(key: string): SpriteGroup {
+    const group = groups.get(key);
+    if (!group) throw new Error(`missing sprite group ${key}`);
+    return group;
+  }
+
+  function makeGroup(palette: PoiDotStyle): SpriteGroup {
+    const key = dotPaletteKey(palette);
+    const posArray = new Float32Array(MIN_CAPACITY * 3);
+    const opacityArray = new Float32Array(MIN_CAPACITY);
+    const posAttr = new THREE.InstancedBufferAttribute(posArray, 3);
+    const opacityAttr = new THREE.InstancedBufferAttribute(opacityArray, 1);
+
+    const material = new SpriteNodeMaterial({
+      sizeAttenuation: false,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+    });
+    material.map = makeDotTexture(palette);
+    // Per-instance position + visibility; the palette size is constant for the whole
+    // sprite, so it is a uniform - exactly the example's `scaleNode = uniform(15)`.
+    material.positionNode = instancedBufferAttribute(posAttr);
+    material.opacityNode = instancedBufferAttribute(opacityAttr);
+    material.scaleNode = uniform(palette.size);
+
+    const sprite = new THREE.Sprite(material);
+    sprite.count = MIN_CAPACITY;
+    sprite.frustumCulled = false;
+    sprite.renderOrder = 1;
+    poiGroup.add(sprite);
+
+    const group: SpriteGroup = {
+      key,
+      palette,
+      sprite,
+      material,
+      posArray,
+      opacityArray,
+      posAttr,
+      opacityAttr,
+      capacity: MIN_CAPACITY,
+      ids: [],
     };
-    markers.set(marker.id, marker);
-    ordered.push(marker);
+    groups.set(key, group);
+    return group;
   }
 
-  function removeMarker(id: string): void {
-    const marker = markers.get(id);
-    if (!marker) return;
-    poiGroup.remove(marker.dot);
-    marker.dot.material.map?.dispose();
-    marker.dot.material.dispose();
-    if (marker.label) {
-      poiGroup.remove(marker.label);
-      marker.label.material.map?.dispose();
-      marker.label.material.dispose();
-    }
-    markers.delete(id);
-    ordered = ordered.filter((m) => m !== marker);
+  function groupFor(palette: PoiDotStyle): SpriteGroup {
+    const key = dotPaletteKey(palette);
+    return groups.get(key) ?? makeGroup(palette);
   }
 
-  function setPois(pois: PoiInput[]): void {
-    const wanted = new Set<string>();
-    for (const input of pois) {
-      wanted.add(input.id);
-      const existing = markers.get(input.id);
-      if (existing) {
-        existing.coord = input.coord;
-        existing.info = input.info;
-        const w = gameCoordToWorld(input.coord, meta);
-        existing.world = w;
-        existing.dot.position.set(w[0], w[1], w[2]);
-        const jobs = input.jobs;
-        if (jobs !== (existing.jobs ?? 0)) {
-          existing.jobs = jobs;
-          // Rebuild the dot sprite when the job role changed the palette/style.
-          const palette =
-            existing.pointType === PointType.Delivery
-              ? deliveryDotStyle(existing.info as DeliveryPoint, jobs)
-              : dotStyleFor(existing.pointType);
-          const ndot = makeDotSprite(palette);
-          ndot.position.copy(existing.dot.position);
-          ndot.userData.markerId = existing.id;
-          ndot.scale.copy(existing.dot.scale);
-          ndot.userData.dotSizePx = palette.size;
-          poiGroup.remove(existing.dot);
-          existing.dot.material.map?.dispose();
-          existing.dot.material.dispose();
-          poiGroup.add(ndot);
-          existing.dot = ndot;
-        }
-      } else {
-        makeMarker(input);
-      }
-    }
-    for (const id of [...markers.keys()]) {
-      if (!wanted.has(id)) removeMarker(id);
-    }
+  /** Grows one group's buffers (carrying live data over) and rebuilds its sprite. */
+  function ensureGroupCapacity(group: SpriteGroup, needed: number): void {
+    if (needed <= group.capacity) return;
+    let next = group.capacity;
+    while (next < needed) next *= 2;
+    const newPos = new Float32Array(next * 3);
+    newPos.set(group.posArray);
+    const newOpacity = new Float32Array(next);
+    newOpacity.set(group.opacityArray);
+    group.posArray = newPos;
+    group.opacityArray = newOpacity;
+    group.capacity = next;
+
+    group.posAttr = new THREE.InstancedBufferAttribute(newPos, 3);
+    group.opacityAttr = new THREE.InstancedBufferAttribute(newOpacity, 1);
+    group.material.positionNode = instancedBufferAttribute(group.posAttr);
+    group.material.opacityNode = instancedBufferAttribute(group.opacityAttr);
+
+    poiGroup.remove(group.sprite);
+    group.sprite.material.dispose();
+    group.sprite = new THREE.Sprite(group.material);
+    group.sprite.count = group.capacity;
+    group.sprite.frustumCulled = false;
+    group.sprite.renderOrder = 1;
+    poiGroup.add(group.sprite);
   }
 
-  function updatePositions(moves: { id: string; coord: Vector3 }[]): void {
-    for (const move of moves) {
-      const marker = markers.get(move.id);
-      if (!marker) continue;
-      marker.coord = move.coord;
-      marker.world = gameCoordToWorld(move.coord, meta);
-      marker.dot.position.set(marker.world[0], marker.world[1], marker.world[2]);
-    }
-  }
-
-  function pick(raycaster: THREE.Raycaster): PoiMarker | null {
-    const hits = raycaster.intersectObjects(poiGroup.children, false);
-    for (const hit of hits) {
-      if (!hit.object.visible) continue;
-      const marker = markers.get(hit.object.userData.markerId as string);
-      if (marker) return marker;
-    }
-    return null;
-  }
-
-  const _distance = new THREE.Vector3();
-  const _upView = new THREE.Vector3();
-  const _upWorld = new THREE.Vector3();
-  const _markerPos = new THREE.Vector3();
-  function update(camera: THREE.Camera): void {
-    const camPos = camera.position;
-    const fov = camera instanceof THREE.PerspectiveCamera ? camera.fov : 55;
-    const K = (2 * Math.tan(THREE.MathUtils.degToRad(fov) / 2)) / viewportH;
-    // World direction that maps to "up" on screen (perpendicular to the view direction),
-    // so the label rides above the dot regardless of camera roll.
-    camera.getWorldDirection(_upView);
-    _upWorld.copy(camera.up).projectOnPlane(_upView).normalize();
-    for (const marker of ordered) {
-      // Perspective projection scales by depth along the view axis, not Euclidean
-      // distance - a marker at the viewport edge is farther from the camera in a straight
-      // line but at the same depth, and would otherwise render oversize.
-      const viewDepth = Math.max(
-        _distance.set(marker.world[0], marker.world[1], marker.world[2]).sub(camPos).dot(_upView),
-        1,
-      );
-      const s = viewDepth * K;
-      const sizePx = marker.dot.userData.dotSizePx as number;
-      marker.dot.scale.set(sizePx * s, sizePx * s, 1);
-      if (marker.label) {
-        // Sprite world height = 128*fs; the text occupies 40/128 of it. Solve fs so the
-        // text is marker.labelConfig.sizePx on screen: s = viewDepth*K, screenPx = 40*fs / s.
-        const fs = (marker.labelConfig.sizePx * s) / 40;
-        marker.label.scale.set(512 * fs, 128 * fs, 1);
-        marker.label.position
-          .copy(_upWorld)
-          .multiplyScalar(marker.labelConfig.offsetY * s)
-          .add(_markerPos.set(marker.world[0], marker.world[1], marker.world[2]));
-      }
-    }
+  /** A marker draws when user-visible AND, for residents, inside the finest ring. */
+  function draws(marker: PoiMarker): boolean {
+    return marker.visible && (isResident(marker) ? marker.lodOk : true);
   }
 
   function isResident(marker: PoiMarker): boolean {
@@ -248,8 +239,224 @@ export function createPoiManager(
     );
   }
 
+  /**
+   * Rewrites one group's position + opacity buffers from its marker ids, then its draw
+   * count. Both attributes carried new data, so both are flagged.
+   */
+  function refreshGroup(group: SpriteGroup): void {
+    ensureGroupCapacity(group, group.ids.length);
+    for (let i = 0; i < group.ids.length; i++) {
+      const marker = markers.get(group.ids[i]);
+      if (!marker) continue;
+      const s = stateOf(marker.id);
+      s.slot = i;
+      const [wx, wy, wz] = marker.world;
+      group.posArray[i * 3] = wx;
+      group.posArray[i * 3 + 1] = wy;
+      group.posArray[i * 3 + 2] = wz;
+      group.opacityArray[i] = draws(marker) ? 1 : 0;
+    }
+    group.posAttr.needsUpdate = true;
+    group.opacityAttr.needsUpdate = true;
+    group.sprite.count = group.ids.length;
+  }
+
+  /**
+   * Rebuilds every group. Used when markers move between palettes (job role changes);
+   * a normal setPoisFor only refreshes the touched group.
+   */
+  function refreshAll(): void {
+    for (const group of groups.values()) refreshGroup(group);
+  }
+
+  // ---- markers (plain collection; OL-layer style). ----
+
+  function makeMarker(input: PoiInput): PoiMarker {
+    const world = gameCoordToWorld(input.coord, meta);
+    const palette = paletteFor(input);
+    const marker: PoiMarker = {
+      pointType: input.pointType,
+      coord: input.coord,
+      world,
+      size: palette.size,
+      sizePx: POI_CONFIG[input.pointType].label.sizePx,
+      id: input.id,
+      info: input.info,
+      jobs: input.jobs,
+      cover: null,
+      hovered: false,
+      visible: true,
+      lodOk: true,
+    };
+    const group = groupFor(palette);
+    state.set(marker.id, { groupKey: group.key, slot: group.ids.length });
+    markers.set(marker.id, marker);
+    group.ids.push(marker.id);
+    ordered.push(marker);
+    return marker;
+  }
+
+  function removeMarker(id: string): void {
+    const marker = markers.get(id);
+    if (!marker) return;
+    const s = stateOf(id);
+    const group = groupOf(s.groupKey);
+    group.ids = group.ids.filter((gid) => gid !== id);
+    markers.delete(id);
+    state.delete(id);
+    removeLabel(id);
+    ordered = ordered.filter((m) => m !== marker);
+  }
+
+  function setPoisFor(pointType: PointType, pois: PoiInput[]): void {
+    const wanted = new Set<string>();
+    const touched = new Set<string>();
+    for (const input of pois) {
+      wanted.add(input.id);
+      const existing = markers.get(input.id);
+      if (existing) {
+        existing.coord = input.coord;
+        existing.info = input.info;
+        existing.world = gameCoordToWorld(input.coord, meta);
+        const jobs = input.jobs;
+        if (jobs !== (existing.jobs ?? 0)) {
+          existing.jobs = jobs;
+          const palette = paletteFor(input);
+          existing.size = palette.size;
+          const prev = stateOf(existing.id);
+          const newGroup = groupFor(palette);
+          if (newGroup.key !== prev.groupKey) {
+            const oldGroup = groupOf(prev.groupKey);
+            oldGroup.ids = oldGroup.ids.filter((gid) => gid !== existing.id);
+            state.set(existing.id, { groupKey: newGroup.key, slot: newGroup.ids.length });
+            newGroup.ids.push(existing.id);
+            touched.add(oldGroup.key);
+            touched.add(newGroup.key);
+          }
+        }
+        // The marker may have moved (live players) - its group buffer needs a rewrite
+        // even though it stays in the same palette/sprite.
+        touched.add(stateOf(existing.id).groupKey);
+      } else {
+        makeMarker(input);
+        touched.add(stateOf(input.id).groupKey);
+      }
+    }
+    // Remove only this type's markers that are no longer wanted - never touch other types'
+    // markers so a changing data source (e.g. live players) can't disturb their dots.
+    for (const [id, m] of [...markers]) {
+      if (m.pointType === pointType && !wanted.has(id)) {
+        touched.add(stateOf(id).groupKey);
+        removeMarker(id);
+      }
+    }
+    for (const key of touched) {
+      const group = groups.get(key);
+      if (group) refreshGroup(group);
+    }
+  }
+
   function applyVisibility(marker: PoiMarker): void {
-    marker.dot.visible = marker.visible && (isResident(marker) ? marker.lodOk : true);
+    const s = state.get(marker.id);
+    if (!s) return;
+    const group = groups.get(s.groupKey);
+    if (!group || s.slot < 0) return;
+    group.opacityArray[s.slot] = draws(marker) ? 1 : 0;
+    // Only the opacity slice changed.
+    group.opacityAttr.needsUpdate = true;
+  }
+
+  // ---- picking. ----
+
+  const _projPos = new THREE.Vector3();
+
+  function pick(raycaster: THREE.Raycaster, pointerNdc?: THREE.Vector2): PoiMarker | null {
+    const camera = raycaster.camera as THREE.Camera | null;
+    if (!camera || !pointerNdc) return null;
+
+    // sizeAttenuation:false sprites keep a constant screen size, so at any depth the dot's
+    // NDC half-extent is size / (2 * tan(fovY/2)) - independent of distance. Project each
+    // marker to NDC and test 2D distance against that constant radius, nearest-first so an
+    // overlapping nearer dot wins (matching the old per-sprite raycast's sort order).
+    const fovY = (camera as THREE.PerspectiveCamera).fov;
+    const tanHalfFov = Math.tan(THREE.MathUtils.degToRad(fovY / 2));
+
+    const candidates = ordered
+      .filter((m) => draws(m))
+      .map((m) => {
+        _projPos.set(m.world[0], m.world[1], m.world[2]).project(camera);
+        const dx = camera.position.x - m.world[0];
+        const dy = camera.position.y - m.world[1];
+        const dz = camera.position.z - m.world[2];
+        return {
+          m,
+          ndcX: _projPos.x,
+          ndcY: _projPos.y,
+          ndcZ: _projPos.z,
+          d: dx * dx + dy * dy + dz * dz,
+        };
+      })
+      .sort((a, b) => a.d - b.d);
+
+    for (const c of candidates) {
+      const half = (0.5 * c.m.size) / tanHalfFov;
+      // Markers behind the camera project to an out-of-range NDC z - skip them.
+      if (c.ndcZ <= -1 || c.ndcZ >= 1) continue;
+      const dx = c.ndcX - pointerNdc.x;
+      const dy = c.ndcY - pointerNdc.y;
+      if (dx * dx + dy * dy <= half * half) return c.m;
+    }
+    return null;
+  }
+
+  // ---- labels (cannot be instanced - one Sprite per labelled marker). ----
+
+  const labels = new Map<string, THREE.Sprite>();
+
+  function removeLabel(id: string): void {
+    const spr = labels.get(id);
+    if (!spr) return;
+    poiGroup.remove(spr);
+    spr.material.map?.dispose();
+    spr.material.dispose();
+    labels.delete(id);
+  }
+
+  function setLabel(id: string, text: string): void {
+    const marker = markers.get(id);
+    if (!marker) return;
+    removeLabel(id);
+    if (!text) return;
+    const label = makeTextSprite(text, {
+      font: '600 40px sans-serif',
+      fillStyle: colorTextDark,
+      strokeStyle: adjustOpacity(colorGray950, 0.4),
+      strokeWidth: 8,
+      sizePx: marker.sizePx,
+    });
+    poiGroup.add(label);
+    labels.set(id, label);
+  }
+
+  // ---- update (position labels above dots). ----
+
+  const _upView = new THREE.Vector3();
+  const _upWorld = new THREE.Vector3();
+  const _markerPos = new THREE.Vector3();
+
+  function update(camera: THREE.Camera): void {
+    if (labels.size === 0) return;
+    // Labels hang above their dots along the screen-up direction (which rotates with
+    // camera yaw). Sizes are fixed by sizeAttenuation: false - only the offset moves.
+    camera.getWorldDirection(_upView);
+    _upWorld.copy(camera.up).projectOnPlane(_upView).normalize();
+    for (const marker of ordered) {
+      const label = labels.get(marker.id);
+      if (!label) continue;
+      label.position
+        .copy(_upWorld)
+        .add(_markerPos.set(marker.world[0], marker.world[1], marker.world[2]));
+    }
   }
 
   function syncCovers(): void {
@@ -278,12 +485,14 @@ export function createPoiManager(
     }
   }
 
+  refreshAll();
+
   return {
     poiGroup,
     markerById: (id: string) => markers.get(id),
     markers: () => [...markers.values()],
-    setPois,
-    updatePositions,
+    setPoisFor,
+    markersOf: (pointType: PointType) => ordered.filter((m) => m.pointType === pointType),
     pick,
     update,
     syncCovers,
@@ -293,44 +502,18 @@ export function createPoiManager(
       marker.visible = visible;
       applyVisibility(marker);
     },
-    setLabel(id: string, text: string) {
-      const marker = markers.get(id);
-      if (!marker) return;
-      if (marker.label) {
-        poiGroup.remove(marker.label);
-        marker.label.material.map?.dispose();
-        marker.label.material.dispose();
-        marker.label = null;
-      }
-      if (!text) return;
-      const sprite = makeTextSprite(text, {
-        font: '600 40px sans-serif',
-        fillStyle: colorTextDark,
-        strokeStyle: adjustOpacity(colorGray950, 0.4),
-        strokeWidth: 8,
-      });
-      // Anchor the label above the dot at the configured vertical offset.
-      sprite.position.set(marker.world[0], marker.world[1], marker.world[2]);
-      poiGroup.add(sprite);
-      marker.label = sprite;
-    },
+    setLabel,
 
-    setViewportSize(_w: number, h: number) {
-      viewportH = Math.max(h, 1);
-    },
     dispose() {
-      for (const marker of markers.values()) {
-        poiGroup.remove(marker.dot);
-        marker.dot.material.map?.dispose();
-        marker.dot.material.dispose();
-        if (marker.label) {
-          poiGroup.remove(marker.label);
-          marker.label.material.map?.dispose();
-          marker.label.material.dispose();
-        }
-      }
+      for (const id of [...labels.keys()]) removeLabel(id);
       markers.clear();
+      state.clear();
       ordered = [];
+      for (const group of groups.values()) {
+        poiGroup.remove(group.sprite);
+        group.material.dispose();
+      }
+      groups.clear();
     },
   };
 }

@@ -1,13 +1,16 @@
 import * as THREE from 'three';
+import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants';
 
 export interface GroundPan {
   update: (_dt: number) => void;
+  /** Removes the pointer listeners attached to the renderer's canvas. */
+  dispose: () => void;
 }
 
 export function setupGroundPan(
-  renderer: THREE.WebGLRenderer,
+  renderer: Renderer,
   camera: THREE.Camera,
   controls: OrbitControls,
   tileGroup: THREE.Group,
@@ -34,9 +37,11 @@ export function setupGroundPan(
     pointerNDC.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
   }
 
-  renderer.domElement.addEventListener('contextmenu', (event) => event.preventDefault());
+  function onContextMenu(event: Event): void {
+    event.preventDefault();
+  }
 
-  renderer.domElement.addEventListener('pointerdown', (event) => {
+  function onPointerDown(event: PointerEvent): void {
     if (event.button !== 0) return;
     panVelocity = null;
     samples.length = 0;
@@ -48,9 +53,9 @@ export function setupGroundPan(
     panPlane.setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 1, 0), grabbedPoint);
     panning = true;
     renderer.domElement.setPointerCapture(event.pointerId);
-  });
+  }
 
-  renderer.domElement.addEventListener('pointermove', (event) => {
+  function onPointerMove(event: PointerEvent): void {
     if (!panning) return;
     setPointerNDC(event);
     raycaster.setFromCamera(pointerNDC, camera);
@@ -60,7 +65,7 @@ export function setupGroundPan(
     controls.target.add(delta);
     samples.push({ time: performance.now(), worldX: delta.x, worldZ: delta.z });
     if (samples.length > 32) samples.shift();
-  });
+  }
 
   function endPan(event: PointerEvent): void {
     if (!panning) return;
@@ -80,8 +85,13 @@ export function setupGroundPan(
     }
     samples.length = 0;
   }
-  renderer.domElement.addEventListener('pointerup', endPan);
-  renderer.domElement.addEventListener('pointercancel', endPan);
+
+  const dom = renderer.domElement;
+  dom.addEventListener('contextmenu', onContextMenu);
+  dom.addEventListener('pointerdown', onPointerDown);
+  dom.addEventListener('pointermove', onPointerMove);
+  dom.addEventListener('pointerup', endPan);
+  dom.addEventListener('pointercancel', endPan);
 
   function update(dt: number): void {
     if (!panVelocity) return;
@@ -92,5 +102,14 @@ export function setupGroundPan(
     if (panVelocity.lengthSq() < 0.25) panVelocity = null;
   }
 
-  return { update };
+  return {
+    update,
+    dispose() {
+      dom.removeEventListener('contextmenu', onContextMenu);
+      dom.removeEventListener('pointerdown', onPointerDown);
+      dom.removeEventListener('pointermove', onPointerMove);
+      dom.removeEventListener('pointerup', endPan);
+      dom.removeEventListener('pointercancel', endPan);
+    },
+  };
 }
