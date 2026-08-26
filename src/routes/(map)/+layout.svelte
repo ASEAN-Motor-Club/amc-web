@@ -71,7 +71,7 @@
 
   const playerData: PlayerData[] = $derived(
     playerPositionsStream.data?.players.map((item) => {
-      const coord = { x: item.x, y: item.y };
+      const coord = { x: item.x, y: item.y, z: item.z };
       return {
         geometry: reProjectVec2(coord),
         name: item.playerName,
@@ -87,6 +87,8 @@
   );
 
   const playerDataLoading = $derived(playerPositionsStream.isPending);
+  /** Map mode drives the sidebar transition speed (faster in 3D). */
+  let threeDMode = $state(false);
 
   const housingQuery = createHousingQuery(() => ({
     options: { enabled: showMap || openCollapsible === 'housing' },
@@ -136,6 +138,7 @@
               {houseData}
               {playerData}
               onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
+              onThreeDModeChange={(m) => (threeDMode = m)}
             />
           {:catch _}
             <div
@@ -152,6 +155,7 @@
   <Collapsible
     {validOpenCollapsible}
     {showFull}
+    {threeDMode}
     {openCollapsible}
     {openCollapsibleId}
     {playerData}

@@ -27,7 +27,8 @@ export interface PlayerData {
   geometry: [x: number, y: number];
   name: string;
   pointType: PointType.Player;
-  coord: Vector2;
+  /** Game UE coords. z is the altitude (the 3D map floats players at it). */
+  coord: Vector2 & { z?: number };
   vehicleKey: string | 'None';
   guid: string;
 }

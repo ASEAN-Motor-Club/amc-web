@@ -25,6 +25,10 @@ export interface DotPalette {
   fill: string | number;
   /** Dot outline color. */
   stroke: string | number;
+  /** Dot diameter in screen px. */
+  size: number;
+  /** Dot outline thickness in texture px (defaults to DOT_STROKE_PX). */
+  strokeWidth?: number;
 }
 
 const DOT_TEXTURE_SIZE = 128;
@@ -39,7 +43,7 @@ const dotTextureCache = new Map<string, THREE.CanvasTexture>();
  * texture per palette keeps memory flat.
  */
 export function makeDotSprite(palette: DotPalette): THREE.Sprite {
-  const key = `${palette.fill}|${palette.stroke}`;
+  const key = `${palette.fill}|${palette.stroke}|${palette.strokeWidth ?? DOT_STROKE_PX}`;
   let texture = dotTextureCache.get(key);
   if (!texture) {
     const canvas = document.createElement('canvas');
@@ -53,7 +57,7 @@ export function makeDotSprite(palette: DotPalette): THREE.Sprite {
     ctx.arc(cx, cy, DOT_RADIUS_PX, 0, Math.PI * 2);
     ctx.fillStyle = makeColor(palette.fill).getStyle();
     ctx.fill();
-    ctx.lineWidth = DOT_STROKE_PX;
+    ctx.lineWidth = palette.strokeWidth ?? DOT_STROKE_PX;
     ctx.strokeStyle = makeColor(palette.stroke).getStyle();
     ctx.stroke();
     texture = new THREE.CanvasTexture(canvas);
@@ -65,10 +69,13 @@ export function makeDotSprite(palette: DotPalette): THREE.Sprite {
     map: texture,
     transparent: true,
     depthWrite: false,
+    // Always draw the marker above the terrain so points never clip into the ground.
+    depthTest: false,
   });
   const sprite = new THREE.Sprite(material);
   sprite.scale.set(DOT_TEXTURE_SIZE, DOT_TEXTURE_SIZE, 1);
   sprite.center.set(0.5, 0.5);
+  sprite.renderOrder = 1;
   // UserData: base scale so the manager can scale by distance.
   return sprite;
 }
@@ -106,9 +113,12 @@ export function makeTextSprite(text: string, style: LabelStyle): THREE.Sprite {
     map: texture,
     transparent: true,
     depthWrite: false,
+    // Render above the dots and the terrain.
+    depthTest: false,
   });
   const sprite = new THREE.Sprite(material);
-  sprite.center.set(0.5, 1);
+  sprite.center.set(0.5, 0);
+  sprite.renderOrder = 2;
   // Base scale maps canvas px to world units 1:1; the manager scales by distance for constant
   // screen size. Anchor bottom-center so the text sits just above the dot.
   sprite.scale.set(TEXTURE_W, TEXTURE_H, 1);

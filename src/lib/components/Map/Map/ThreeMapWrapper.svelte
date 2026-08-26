@@ -3,7 +3,6 @@
   import * as THREE from 'three';
   import Feature from 'ol/Feature';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
-  import type { ShortcutZone } from '$lib/api/shortcutZone';
   import {
     PointType,
     type MapSelection,
@@ -11,7 +10,11 @@
     type PlayerData,
     type TeleportPoint,
   } from '$lib/components/Map/Map/types';
-  import { deliveryPoints as deliveryPointsList } from '$lib/data/deliveryPoint';
+  import {
+    deliveryPoints as deliveryPointsList,
+    type DeliveryPoint,
+  } from '$lib/data/deliveryPoint';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { houses as housesList } from '$lib/data/house';
   import type { House } from '$lib/data/house';
   import type { DeliveryLineData } from './deliveryLine';
@@ -39,7 +42,6 @@
     houseData: HouseData | undefined;
     pinsData: Pins;
     teleportData: TeleportPoint[];
-    shortcutZoneData: ShortcutZone[];
     /** Lines to draw around the hovered or locked delivery point - not drawn in 3D (stage 2) */
     deliveryLineData?: DeliveryLineData;
     /** Point to highlight and lock the map onto, driven by the URL */
@@ -62,8 +64,7 @@
     onClick,
     onRightClick,
     enterPip: _enterPip,
-    jobsData: _jobsData,
-    shortcutZoneData,
+    jobsData,
     deliveryLineData: _deliveryLineData,
   }: ThreeMapWrapperProps = $props();
 
@@ -81,11 +82,20 @@
   }
 
   function playerCoord(point: PlayerData): Vector3 {
-    return pxToGame([point.geometry[0], point.geometry[1]]);
+    // PlayerData.coord is the raw game coord (proto x/y/z); geometry is px-only.
+    return { x: point.coord.x, y: point.coord.y, z: point.coord.z ?? 0 };
   }
 
   function pinCoord(point: Pins[number]): Vector3 {
     return pxToGame([point.x, point.y]);
+  }
+  /** OL's job role for a delivery point: 1 = job source, 2 = job destination, else 0. */
+  function jobsFor(point: DeliveryPoint): 0 | 1 | 2 {
+    return jobsData.some(getMatchJobSourceFn(point))
+      ? 1
+      : jobsData.some(getMatchJobDestFn(point))
+        ? 2
+        : 0;
   }
 
   /** The full POI set, ordered delivery → house → player → pin → teleport → shortcut. */
@@ -98,6 +108,7 @@
           id: point.guid,
           coord: point.coord,
           info: point,
+          jobs: jobsFor(point),
         });
       }
     }
@@ -241,7 +252,10 @@
   // ---- pointer events ----
   function onPointerMove(event: PointerEvent): void {
     if (!three) return;
-    lastPixel = [event.clientX, event.clientY];
+    // OL reports container-relative pixels; the tooltip is positioned inside the map
+    // container, so client coords would float it by the container's viewport offset.
+    const rect = container.getBoundingClientRect();
+    lastPixel = [event.clientX - rect.left, event.clientY - rect.top];
     updateHoverAt(event);
   }
 
@@ -273,25 +287,50 @@
     };
   });
 
-  // ---- shortcut zone ground shading ----
-  $effect(() => {
-    if (!three) return;
-    three.poiManager.setShortcutZones(mapState.shortcutZone ? shortcutZoneData : []);
-  });
-
   const zoomIn = () => three?.zoomBy(-ZOOM_BUTTON_DELTA_Y);
+
   const zoomOut = () => three?.zoomBy(ZOOM_BUTTON_DELTA_Y);
 
   // ---- selection lock ----
   let lastCenteredSelection = $state<string | undefined>(undefined);
 
+  const _panNdc = new THREE.Vector2();
+  const _panRay = new THREE.Raycaster();
+  const _panPlane = new THREE.Plane();
+  const _panPoint = new THREE.Vector3();
+
+  /** Pan the marker to screen center without changing zoom or orbit, exactly like groundPan:
+   * raycast screen-center onto a horizontal plane at the marker's height, get the world delta
+   * from the ray hit to the marker, then translate BOTH the controls target and the camera by
+   * that delta. Moving camera and target equally keeps the offset constant - orbit and zoom
+   * are preserved by construction. */
   function centerOnSelection(): void {
     if (!three || !selection || lastCenteredSelection === selection.id) return;
     const marker = three.poiManager.markerById(selection.id);
     if (!marker) return;
     lastCenteredSelection = selection.id;
-    const [wx, wy, wz] = marker.world;
-    three.controls.target.set(wx, wy, wz);
+    const camera = three.camera;
+    const controls = three.controls;
+    // Ray through screen center. If the marker is exactly on the view axis this still works -
+    // the plane intersection gives the point to move to the marker's spot.
+    _panNdc.set(0, 0);
+    _panRay.setFromCamera(_panNdc, camera);
+    _panPlane.setFromNormalAndCoplanarPoint(
+      new THREE.Vector3(0, 1, 0),
+      new THREE.Vector3(marker.world[0], marker.world[1], marker.world[2]),
+    );
+    const hitX = marker.world[0];
+    const hitZ = marker.world[2];
+    if (_panRay.ray.intersectPlane(_panPlane, _panPoint)) {
+      // Delta = marker world - point currently under the screen center (same height plane).
+      const dx = hitX - _panPoint.x;
+      const dz = hitZ - _panPoint.z;
+      controls.target.x += dx;
+      controls.target.z += dz;
+      camera.position.x += dx;
+      camera.position.z += dz;
+      controls.update();
+    }
   }
 
   $effect(() => {

@@ -3,6 +3,9 @@ import type * as THREE from 'three';
 export interface TilesMeta {
   widthMeters: number;
   heightMeters: number;
+  /** World origin (game UE coords, meters) - the corner tiles.json calls origin*. */
+  originXMeters: number;
+  originYMeters: number;
   maxZoom: number;
   oceanLevelMeters: number | null;
   minZ: number;

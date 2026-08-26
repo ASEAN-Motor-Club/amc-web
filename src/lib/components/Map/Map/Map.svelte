@@ -28,9 +28,17 @@
     playerData: PlayerData[];
     houseData: HouseData | undefined;
     onPlayerLayerDataEnabledChange?: (enabled: boolean) => void;
+    /** Fired when the map switches between 2D and 3D mode (the sidebar speeds up in 3D). */
+    onThreeDModeChange?: (mode: boolean) => void;
   }
 
-  const { jobsData, playerData, houseData, onPlayerLayerDataEnabledChange }: Props = $props();
+  const {
+    jobsData,
+    playerData,
+    houseData,
+    onPlayerLayerDataEnabledChange,
+    onThreeDModeChange,
+  }: Props = $props();
 
   const MAP_STATE_STORAGE_KEY = 'mapState';
   const EXPERIMENTAL_3D_MAP_FLAG = '__experimental_3d_map';
@@ -150,6 +158,9 @@
   $effect(() => {
     onPlayerLayerDataEnabledChange?.(mapState.player);
   });
+  $effect(() => {
+    onThreeDModeChange?.(threeDMode);
+  });
 
   let hoverPoint: { f: Feature; pixel: [x: number, y: number] } | undefined = $state();
 
@@ -266,12 +277,15 @@
         mapState.teleportLabels = !mapState.teleportLabels;
         break;
       case PoiType.ShortcutZone:
+        if (threeDMode) break;
         mapState.shortcutZone = !mapState.shortcutZone;
         break;
       case PoiType.ShortcutZoneLabels:
+        if (threeDMode) break;
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
       case PoiType.AreaName:
+        if (threeDMode) break;
         mapState.areaName = !mapState.areaName;
         break;
       case PoiType.AreaBound:
@@ -429,7 +443,6 @@
       {houseData}
       {pinsData}
       {teleportData}
-      {shortcutZoneData}
       {selection}
       onHover={handleHover}
       onClick={handleMapClick}
@@ -474,6 +487,7 @@
 
     <PoiPanel
       {mapState}
+      {threeDMode}
       {havePins}
       {haveTeleports}
       {haveShortcutZones}

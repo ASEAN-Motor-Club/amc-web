@@ -6,6 +6,8 @@ const raw = tilesJson as unknown as RawTilesJson;
 export const TILES_META: TilesMeta = {
   widthMeters: raw.widthCm / 100,
   heightMeters: raw.heightCm / 100,
+  originXMeters: raw.originXCm / 100,
+  originYMeters: raw.originYCm / 100,
   maxZoom: raw.maxZoom,
   oceanLevelMeters: raw.oceanLevelCm === null ? null : raw.oceanLevelCm / 100,
   minZ: raw.minZ / 100,

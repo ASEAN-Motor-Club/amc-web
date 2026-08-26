@@ -1,6 +1,24 @@
+import {
+  colorAmber300,
+  colorAmber950,
+  colorBlue600,
+  colorCyan500,
+  colorCyan950,
+  colorEmerald400,
+  colorEmerald950,
+  colorGreen600,
+  colorOrange500,
+  colorRed400,
+  colorRed950,
+  colorViolet400,
+  colorViolet950,
+  colorYellow500,
+  colorYellow950,
+} from '$lib/tw-var';
+
 export const ROTATE_SPEED_NEAR = 0.15;
 export const ROTATE_SPEED_FAR = 1.0;
-export const ZOOM_LOG_PER_WHEEL_DELTA = 0.00012;
+export const ZOOM_LOG_PER_WHEEL_DELTA = 0.00021;
 export const ZOOM_DAMPING_FACTOR = 0.35;
 export const PAN_DAMPING_FACTOR = 0.35;
 export const PAN_FLING_SAMPLE_MS = 90;
@@ -19,3 +37,91 @@ export const ZOOM_DEBUG_COLORS = [
   0xff3b30, 0xff9500, 0xffdd00, 0x34c759, 0x0a84ff, 0xaf52de, 0xff6b6b, 0x2dd4bf, 0x845ef7,
 ];
 export const TILE_UPDATE_INTERVAL_MS = 150;
+export const RESIZE_DEBOUNCE_MS = 100;
+
+/** How a POI dot renders - maps directly from the OL map's circle style. */
+export interface PoiDotStyle {
+  /** Dot fill color. */
+  fill: string;
+  /** Dot outline color. */
+  stroke: string;
+  /** Dot diameter in screen px (OL circle radius * 2). */
+  size: number;
+  /** Outline thickness in texture px; defaults to the single width. */
+  strokeWidth?: number;
+}
+
+/** Label styling for a POI type, matching OL's label styles:
+ * - sizePx: on-screen text height in px (OL font: 0.5rem=8, 0.6rem=10, 0.75rem=12)
+ * - offsetY: on-screen vertical offset above the marker in px (OL text offsetY is negative =
+ *   above the point; we store the positive screen-px distance above) */
+export interface PoiLabelConfig {
+  sizePx: number;
+  offsetY: number;
+}
+
+/** Everything a POI type renders with - the single source of truth for the 3D map. */
+export interface PoiTypeConfig {
+  dot: PoiDotStyle;
+  label: PoiLabelConfig;
+}
+
+const textAdjust = (px: number) => px;
+const offsetAdjust = (px: number) => -15 + px;
+const dotSize = (olRadius: number) => Math.round(olRadius * 2.4);
+
+export const POI_CONFIG: Record<number, PoiTypeConfig> = {
+  // Delivery - no text label in OL
+  0: {
+    dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
+    label: { sizePx: textAdjust(0), offsetY: offsetAdjust(0) },
+  },
+  // House - 600 0.6rem, offset -12
+  1: {
+    dot: { fill: colorCyan500, stroke: colorCyan950, size: dotSize(6) },
+    label: { sizePx: textAdjust(10), offsetY: offsetAdjust(12) },
+  },
+  // Player - 600 0.75rem, offset -12
+  2: {
+    dot: { fill: colorEmerald400, stroke: colorEmerald950, size: dotSize(4) },
+    label: { sizePx: textAdjust(12), offsetY: offsetAdjust(12) },
+  },
+  // Pin - 600 0.75rem, offset -14
+  3: {
+    dot: { fill: colorRed400, stroke: colorRed950, size: dotSize(5) },
+    label: { sizePx: textAdjust(12), offsetY: offsetAdjust(14) },
+  },
+  // Teleport - 600 0.5rem, offset -12
+  4: {
+    dot: { fill: colorViolet400, stroke: colorViolet950, size: dotSize(5) },
+    label: { sizePx: textAdjust(8), offsetY: offsetAdjust(12) },
+  },
+};
+
+/** Fallback config for any unrecognized POI type. */
+export const POI_DEFAULT: PoiTypeConfig = {
+  dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
+  label: { sizePx: textAdjust(12), offsetY: offsetAdjust(12) },
+};
+
+/** Delivery-point variants, mirroring the OL delivery layer:
+ * - RESIDENT: amber, one radius smaller (min zoom 5)
+ * - JOB_SOURCE (jobs=1): orange fill, green stroke, thicker outline
+ * - JOB_DEST (jobs=2): orange fill, blue stroke, thicker outline */
+export const POI_DELIVERY_RESIDENT: PoiDotStyle = {
+  fill: colorAmber300,
+  stroke: colorAmber950,
+  size: dotSize(5),
+};
+export const POI_DELIVERY_JOB_SOURCE: PoiDotStyle = {
+  fill: colorOrange500,
+  stroke: colorGreen600,
+  size: dotSize(6),
+  strokeWidth: 20,
+};
+export const POI_DELIVERY_JOB_DEST: PoiDotStyle = {
+  fill: colorOrange500,
+  stroke: colorBlue600,
+  size: dotSize(6),
+  strokeWidth: 20,
+};

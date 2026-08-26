@@ -1,9 +1,11 @@
 import * as THREE from 'three';
+import { debounce } from 'es-toolkit';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
   LOOK_UP_ANGLE_FAR_DEG,
   LOOK_UP_ANGLE_NEAR_DEG,
   OCEAN_QUAD_SIZE,
+  RESIZE_DEBOUNCE_MS,
   ROTATE_SPEED_FAR,
   ROTATE_SPEED_NEAR,
   TILE_UPDATE_INTERVAL_MS,
@@ -136,6 +138,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   const skyColor = 0x8fb8e0;
   renderer.setClearColor(skyColor);
   container.appendChild(renderer.domElement);
+  renderer.domElement.style.transition = 'filter 130ms ease';
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(skyColor);
@@ -180,8 +183,18 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
     poiManager.setViewportSize(container.clientWidth, container.clientHeight);
+    // The size has settled - clear the transition blur.
+    renderer.domElement.style.filter = '';
   }
-  window.addEventListener('resize', onResize);
+  // ResizeObserver fires on every container size change (side menu/panels too). Blur the
+  // canvas while the transition runs, then debounce the actual resize so it collapses to
+  // one size update after the animation settles.
+  const onResizeDebounced = debounce(onResize, RESIZE_DEBOUNCE_MS);
+  const resizeObserver = new ResizeObserver(() => {
+    renderer.domElement.style.filter = 'blur(8px)';
+    onResizeDebounced();
+  });
+  resizeObserver.observe(container);
 
   let lastTileUpdate = 0;
   let lastFrameTime = 0;
@@ -215,7 +228,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     zoomBy,
     dispose() {
       cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', onResize);
+      onResizeDebounced.cancel();
+      resizeObserver.disconnect();
       loadingManager.abort();
       poiManager.dispose();
       tileManager.setZoomDebug(false);
