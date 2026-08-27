@@ -36,6 +36,11 @@ export const ZOOM_BUTTON_LOG_STEP = -0.2;
 export const ZOOM_DAMPING_FACTOR = 0.35;
 export const PAN_DAMPING_FACTOR = 0.35;
 export const PAN_FLING_SAMPLE_MS = 90;
+/** Selection glide: fixed easing duration centering a selected POI, matching
+ * the 2D map's 600ms view animation. Under a one-meter snap gap the flight is
+ * skipped and the residual consumed instantly. */
+export const SELECTION_PAN_DURATION_S = 0.6;
+export const SELECTION_PAN_SNAP_EPSILON = 1;
 export const MIN_RENDER_ZOOM = 1;
 export const CACHE_MAX_ZOOM = 5;
 export const COLOR_MAX_ZOOM = 5;

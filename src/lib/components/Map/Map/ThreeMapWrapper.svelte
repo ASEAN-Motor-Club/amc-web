@@ -329,43 +329,16 @@
   // ---- selection lock ----
   let lastCenteredSelection = $state<string | undefined>(undefined);
 
-  const _panNdc = new THREE.Vector2();
-  const _panRay = new THREE.Raycaster();
-  const _panPlane = new THREE.Plane();
-  const _panPoint = new THREE.Vector3();
-
-  /** Pan the marker to screen center without changing zoom or orbit, exactly like groundPan:
-   * raycast screen-center onto a horizontal plane at the marker's height, get the world delta
-   * from the ray hit to the marker, then translate BOTH the controls target and the camera by
-   * that delta. Moving camera and target equally keeps the offset constant - orbit and zoom
-   * are preserved by construction. */
+  /** Glide the selected marker to screen center: the scene's selectionPan servo
+   * measures the ground-plane delta to the marker's height plane once, then
+   * eases camera+target along it together, so orbit and zoom are preserved.
+   * Reduced motion lands immediately (the servo handles it). */
   function centerOnSelection(): void {
     if (!three || !selection || lastCenteredSelection === selection.id) return;
     const marker = three.poiManager.markerById(selection.id);
     if (!marker) return;
     lastCenteredSelection = selection.id;
-    const camera = three.camera;
-    const controls = three.controls;
-    // Ray through screen center. If the marker is exactly on the view axis this still works -
-    // the plane intersection gives the point to move to the marker's spot.
-    _panNdc.set(0, 0);
-    _panRay.setFromCamera(_panNdc, camera);
-    _panPlane.setFromNormalAndCoplanarPoint(
-      new THREE.Vector3(0, 1, 0),
-      new THREE.Vector3(marker.world[0], marker.world[1], marker.world[2]),
-    );
-    const hitX = marker.world[0];
-    const hitZ = marker.world[2];
-    if (_panRay.ray.intersectPlane(_panPlane, _panPoint)) {
-      // Delta = marker world - point currently under the screen center (same height plane).
-      const dx = hitX - _panPoint.x;
-      const dz = hitZ - _panPoint.z;
-      controls.target.x += dx;
-      controls.target.z += dz;
-      camera.position.x += dx;
-      camera.position.z += dz;
-      controls.update();
-    }
+    three.selectionPan.panTo(marker.world[0], marker.world[1], marker.world[2]);
   }
 
   $effect(() => {

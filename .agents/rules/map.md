@@ -7,6 +7,11 @@ globs:
   - src/routes/(map)/**
 ---
 
+Applies to the OpenLayers (2D) map only. The experimental 3D terrain map
+(`src/lib/ui/ThreeMap/**`, `ThreeMapWrapper.svelte`) has its own rule:
+`rule://three-map` — its conventions (coordinates via `gameCoordToWorld`, instanced POI
+sprites, tile pipeline) are different and must not be mixed with the ones below.
+
 # Map system (OpenLayers)
 
 Never instantiate a raw `ol/Map`. Four layers, each with one job:

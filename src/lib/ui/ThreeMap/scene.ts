@@ -15,6 +15,7 @@ import {
   WHEEL_NOTCH_DELTA_Y,
   ZOOM_LOG_PER_WHEEL_NOTCH,
 } from './constants';
+import { createSelectionPan, type SelectionPan } from './selectionPan';
 import { setupGroundPan, type GroundPan } from './groundPan';
 import { TILES_META } from './heightmap';
 import { createPoiManager, type PoiManager } from './poiManager';
@@ -138,6 +139,9 @@ export interface ThreeMapScene {
   tileManager: TileManager;
   poiManager: PoiManager;
   meta: TilesMeta;
+  /** Selection-glide servo: ThreeMapWrapper re-targets it via panTo(); the
+   * frame loop advances it. */
+  selectionPan: SelectionPan;
   zoomBy: (deltaY: number) => void;
   /** Zoom buttons: exact, immediate step in log-distance units (no inertia).
    * Positive steps out, negative steps in. */
@@ -201,6 +205,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     loadingManager.abortController.signal,
     loadingManager,
   );
+  const selectionPan = createSelectionPan(renderer.domElement, camera, controls);
   const panPhys: GroundPan = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
   const poiManager = createPoiManager(scene, meta, tileManager);
 
@@ -238,6 +243,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     lastFrameTime = now;
     updateCameraRig(dt);
     panPhys.update(dt);
+    selectionPan.update(dt);
     poiManager.update(camera);
 
     if (now - lastTileUpdate > TILE_UPDATE_INTERVAL_MS) {
@@ -260,10 +266,12 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     tileManager,
     poiManager,
     meta,
+    selectionPan,
     zoomBy,
     stepBy,
     dispose() {
       panPhys.dispose();
+      selectionPan.dispose();
       poiManager.dispose();
       tileManager.setZoomDebug(false);
       tileManager.setWireframe(false);
