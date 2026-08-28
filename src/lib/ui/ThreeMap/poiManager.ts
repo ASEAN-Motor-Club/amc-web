@@ -108,11 +108,13 @@ function dotStyleFor(pointType: PointType): PoiDotStyle {
   return POI_CONFIG[pointType].dot;
 }
 
-/** Delivery point dot style, mirroring the OL map's delivery layer. */
+/** Delivery point dot style, mirroring the OL map's delivery layer. OL renders a job
+ * endpoint identically on the delivery and resident layers (orange fill, 2px stroke,
+ * green/blue stroke), so the job check precedes the resident check. */
 function deliveryDotStyle(info: DeliveryPoint, jobs?: 0 | 1 | 2): PoiDotStyle {
-  if (info.type === 'Resident_C') return POI_DELIVERY_RESIDENT;
   if (jobs === 1) return POI_DELIVERY_JOB_SOURCE;
   if (jobs === 2) return POI_DELIVERY_JOB_DEST;
+  if (info.type === 'Resident_C') return POI_DELIVERY_RESIDENT;
   return POI_CONFIG[PointType.Delivery].dot;
 }
 

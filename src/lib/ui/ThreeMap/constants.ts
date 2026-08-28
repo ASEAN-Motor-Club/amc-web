@@ -183,7 +183,7 @@ export const POI_DELIVERY_JOB_SOURCE: PoiDotStyle = {
   fill: colorOrange500,
   stroke: colorGreen600,
   diameterPx: dotSize(6),
-  strokeWidth: 1,
+  strokeWidth: 2,
   hover: { fill: colorOrange300 },
   selected: { fill: colorOrange600, stroke: colorGreen500 },
 };
@@ -191,7 +191,7 @@ export const POI_DELIVERY_JOB_DEST: PoiDotStyle = {
   fill: colorOrange500,
   stroke: colorBlue600,
   diameterPx: dotSize(6),
-  strokeWidth: 1,
+  strokeWidth: 2,
   hover: { fill: colorOrange300 },
   selected: { fill: colorOrange600, stroke: colorBlue500 },
 };
