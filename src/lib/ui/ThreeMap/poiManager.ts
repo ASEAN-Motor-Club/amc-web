@@ -27,7 +27,7 @@ import {
 import type { TextSprite } from './poi';
 import type { Renderer } from 'three/webgpu';
 import { tileWorldRect } from './heightmap';
-import { colorTextDark, colorGray950, adjustOpacity } from '$lib/tw-var';
+import { colorTextDark, colorGray950, adjustOpacity, fontSans } from '$lib/tw-var';
 
 /** One world point, fed in game/UE coordinates (x right, y down, z up, cm). */
 export interface PoiInput {
@@ -416,10 +416,10 @@ export function createPoiManager(
       {
         weight: 600,
         sizeCss: marker.sizeCss,
-        family: 'sans-serif',
+        family: fontSans,
         fillStyle: colorTextDark,
         strokeStyle: adjustOpacity(colorGray950, 0.4),
-        strokeWidthCss: 1,
+        strokeWidthCss: 3,
       },
       viewport,
     );
