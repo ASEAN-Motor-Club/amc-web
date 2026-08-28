@@ -135,10 +135,15 @@ export interface ThreeMapScene {
   dispose: () => void;
 }
 
-export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): void {
+/** Adds the ocean plane at meta.oceanLevelMeters. Returns the mesh so the scene's
+ * dispose() can free its GPU resources (geometry + material). */
+export function createOceanQuad(
+  scene: THREE.Scene,
+  meta: TilesMeta,
+): THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial> | null {
   if (meta.oceanLevelMeters == null) {
     console.warn('tiles.json has no oceanLevelMeters - skipping the ocean quad');
-    return;
+    return null;
   }
   const geometry = new THREE.PlaneGeometry(OCEAN_QUAD_SIZE, OCEAN_QUAD_SIZE);
   geometry.rotateX(-Math.PI / 2);
@@ -153,6 +158,7 @@ export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): void {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.y = meta.oceanLevelMeters;
   scene.add(mesh);
+  return mesh;
 }
 
 export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
@@ -178,7 +184,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
   const meta = TILES_META;
 
-  createOceanQuad(scene, meta);
+  const ocean = createOceanQuad(scene, meta);
 
   const loadingManager = new THREE.LoadingManager();
   const tileManager = createTileManager(
@@ -254,9 +260,15 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     selectionPan,
     stepBy,
     dispose() {
+      // Kill in-flight tile fetches/texture loads first: their continuations check the
+      // signal and bail instead of repopulating the caches tileManager.dispose() drains.
+      loadingManager.abort();
       panPhys.dispose();
       selectionPan.dispose();
       poiManager.dispose();
+      tileManager.dispose();
+      ocean?.geometry.dispose();
+      ocean?.material.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     },

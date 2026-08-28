@@ -234,16 +234,20 @@
     return f;
   }
 
+  // Reused across pointer events (a pointermove fires up to ~120x/s) - setFromCamera()
+  // and set() fully reset both, and pick() reads them synchronously.
+  const _pickRaycaster = new THREE.Raycaster();
+  const _pickNdc = new THREE.Vector2();
+
   function pickAtPointer(event: { clientX: number; clientY: number }): PoiMarker | undefined {
     if (!three) return undefined;
     const rect = three.renderer.domElement.getBoundingClientRect();
-    const ndc = new THREE.Vector2(
+    _pickNdc.set(
       ((event.clientX - rect.left) / rect.width) * 2 - 1,
       -((event.clientY - rect.top) / rect.height) * 2 + 1,
     );
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(ndc, three.camera);
-    return three.poiManager.pick(raycaster, ndc) ?? undefined;
+    _pickRaycaster.setFromCamera(_pickNdc, three.camera);
+    return three.poiManager.pick(_pickRaycaster, _pickNdc) ?? undefined;
   }
 
   function updateHoverAt(event: { clientX: number; clientY: number }): void {

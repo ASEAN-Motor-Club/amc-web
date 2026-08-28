@@ -11,6 +11,8 @@ export interface TileManager {
   tileGroup: THREE.Group;
   activeTiles: ReadonlyMap<string, ActiveTile>;
   updateVisibleTiles: () => void;
+  /** Frees every cached texture and built geometry/material (GPU resources). */
+  dispose: () => void;
 }
 
 interface DesiredTile {
@@ -215,5 +217,18 @@ export function createTileManager(
     tileGroup,
     activeTiles,
     updateVisibleTiles,
+    dispose() {
+      // Every mounted tile's material shares its texture with the dataCache entry,
+      // so textures go through dataCache (the superset) and geometry+material
+      // through builtTiles - nothing is disposed twice, nothing is missed.
+      for (const cached of dataCache.values()) cached.texture.dispose();
+      for (const tile of builtTiles.values()) {
+        tile.geometry.dispose();
+        tile.material.dispose();
+      }
+      dataCache.clear();
+      builtTiles.clear();
+      activeTiles.clear();
+    },
   };
 }
