@@ -3,18 +3,12 @@ import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants';
 
-export interface GroundPan {
-  update: (_dt: number) => void;
-  /** Removes the pointer listeners attached to the renderer's canvas. */
-  dispose: () => void;
-}
-
 export function setupGroundPan(
   renderer: Renderer,
   camera: THREE.Camera,
   controls: OrbitControls,
   tileGroup: THREE.Group,
-): GroundPan {
+) {
   const raycaster = new THREE.Raycaster();
   const pointerNDC = new THREE.Vector2();
   const panPlane = new THREE.Plane();
@@ -35,10 +29,6 @@ export function setupGroundPan(
     const rect = renderer.domElement.getBoundingClientRect();
     pointerNDC.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     pointerNDC.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-  }
-
-  function onContextMenu(event: Event): void {
-    event.preventDefault();
   }
 
   function onPointerDown(event: PointerEvent): void {
@@ -87,7 +77,6 @@ export function setupGroundPan(
   }
 
   const dom = renderer.domElement;
-  dom.addEventListener('contextmenu', onContextMenu);
   dom.addEventListener('pointerdown', onPointerDown);
   dom.addEventListener('pointermove', onPointerMove);
   dom.addEventListener('pointerup', endPan);
@@ -105,7 +94,6 @@ export function setupGroundPan(
   return {
     update,
     dispose() {
-      dom.removeEventListener('contextmenu', onContextMenu);
       dom.removeEventListener('pointerdown', onPointerDown);
       dom.removeEventListener('pointermove', onPointerMove);
       dom.removeEventListener('pointerup', endPan);

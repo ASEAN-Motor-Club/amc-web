@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM, ZOOM_DEBUG_COLORS } from './constants';
+import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants';
 import { tileWorldRect } from './heightmap';
 import { selectLeafTiles } from './lod';
 import { fetchHeightTile, loadColorTexture, buildTileGeometry } from './tileGeometry';
@@ -11,8 +11,6 @@ export interface TileManager {
   tileGroup: THREE.Group;
   activeTiles: ReadonlyMap<string, ActiveTile>;
   updateVisibleTiles: () => void;
-  setZoomDebug: (enabled: boolean) => void;
-  setWireframe: (enabled: boolean) => void;
 }
 
 interface DesiredTile {
@@ -50,13 +48,6 @@ export function createTileManager(
 ): TileManager {
   const tileGroup = new THREE.Group();
   scene.add(tileGroup);
-
-  const debugMaterials = ZOOM_DEBUG_COLORS.map(
-    (color) =>
-      new THREE.MeshStandardMaterial({ color, roughness: 0.95, metalness: 0, wireframe: false }),
-  );
-  let showZoomDebug = false;
-  let wireframeEnabled = false;
 
   const dataCache = new Map<string, CachedTile>();
   const loading = new Set<string>();
@@ -168,9 +159,8 @@ export function createTileManager(
       roughness: 0.95,
       metalness: 0,
       side: THREE.DoubleSide,
-      wireframe: wireframeEnabled,
     });
-    const mesh = new THREE.Mesh(geometry, showZoomDebug ? debugMaterials[z] : material);
+    const mesh = new THREE.Mesh(geometry, material);
     return { mesh, geometry, material, texture, z, x, y };
   }
 
@@ -182,8 +172,6 @@ export function createTileManager(
       tile = buildTile(cached);
       builtTiles.set(key, tile);
     }
-    tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
-    tile.material.wireframe = wireframeEnabled;
     tileGroup.add(tile.mesh);
     activeTiles.set(key, tile);
   }
@@ -227,19 +215,5 @@ export function createTileManager(
     tileGroup,
     activeTiles,
     updateVisibleTiles,
-    setZoomDebug(enabled: boolean) {
-      showZoomDebug = enabled;
-      for (const tile of activeTiles.values()) {
-        tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
-      }
-      for (const tile of builtTiles.values()) {
-        tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
-      }
-    },
-    setWireframe(enabled: boolean) {
-      wireframeEnabled = enabled;
-      for (const material of debugMaterials) material.wireframe = wireframeEnabled;
-      for (const tile of builtTiles.values()) tile.material.wireframe = wireframeEnabled;
-    },
   };
 }

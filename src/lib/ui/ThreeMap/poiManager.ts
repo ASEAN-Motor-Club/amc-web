@@ -52,9 +52,6 @@ export interface PoiMarker {
   info: DeliveryPoint | House | PlayerData | Pin | TeleportPoint;
   /** Job role for delivery points: 1 = source, 2 = destination, else 0/undefined. */
   jobs?: 0 | 1 | 2;
-  /** The finest world patch that currently covers the marker. */
-  cover: { z: number; x: number; y: number } | null;
-  hovered: boolean;
   /** User-facing visibility (POI toggle). */
   visible: boolean;
   /** Resident LOD gate: true when the marker sits in the z5 ring. */
@@ -62,9 +59,7 @@ export interface PoiMarker {
 }
 
 export interface PoiManager {
-  poiGroup: THREE.Group;
   markerById: (id: string) => PoiMarker | undefined;
-  markers: () => PoiMarker[];
   /** Reconciles only the given POI type's markers - other types are untouched. */
   setPoisFor: (pointType: PointType, pois: PoiInput[]) => void;
   /** Markers of one POI type (single data concern per effect). */
@@ -76,7 +71,6 @@ export interface PoiManager {
   /** Recomputes cover tiles and resident visibility. */
   syncCovers: () => void;
   setViewport: () => void;
-  setMarkerVisible: (id: string, visible: boolean) => void;
   setLabel: (id: string, text: string) => void;
   dispose: () => void;
 }
@@ -306,8 +300,6 @@ export function createPoiManager(
       id: input.id,
       info: input.info,
       jobs: input.jobs,
-      cover: null,
-      hovered: false,
       visible: true,
       lodOk: true,
     };
@@ -492,11 +484,7 @@ export function createPoiManager(
   }
 
   function syncCovers(): void {
-    const active = tileManager.activeTiles.values();
-    const activeList: { z: number; x: number; y: number }[] = [];
-    for (const tile of active) {
-      activeList.push({ z: tile.z, x: tile.x, y: tile.y });
-    }
+    const activeList = [...tileManager.activeTiles.values()];
     for (const marker of ordered) {
       let cover: { z: number; x: number; y: number } | null = null;
       for (const tile of activeList) {
@@ -510,7 +498,6 @@ export function createPoiManager(
           if (!cover || tile.z > cover.z) cover = { z: tile.z, x: tile.x, y: tile.y };
         }
       }
-      marker.cover = cover;
       // Resident points only appear inside the finest LOD ring.
       marker.lodOk = !isResident(marker) || (cover?.z ?? -1) >= RESIDENT_MIN_COVER_Z;
       applyVisibility(marker);
@@ -559,19 +546,11 @@ export function createPoiManager(
   refreshAll();
 
   return {
-    poiGroup,
     markerById: (id: string) => markers.get(id),
-    markers: () => [...markers.values()],
     setPoisFor,
     markersOf: (pointType: PointType) => ordered.filter((m) => m.pointType === pointType),
     pick,
     syncCovers,
-    setMarkerVisible(id: string, visible: boolean) {
-      const marker = markers.get(id);
-      if (!marker) return;
-      marker.visible = visible;
-      applyVisibility(marker);
-    },
     setLabel,
     update,
     setViewport,
