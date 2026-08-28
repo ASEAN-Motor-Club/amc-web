@@ -17,7 +17,6 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
   import { houses as housesList } from '$lib/data/house';
   import type { House } from '$lib/data/house';
-  import type { DeliveryLineData } from './deliveryLine';
   import type { Pins } from '$lib/schema/pin';
   import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
   import { ZOOM_BUTTON_LOG_STEP } from '$lib/ui/ThreeMap/constants';
@@ -42,8 +41,6 @@
     houseData: HouseData | undefined;
     pinsData: Pins;
     teleportData: TeleportPoint[];
-    /** Lines to draw around the hovered or locked delivery point - not drawn in 3D (stage 2) */
-    deliveryLineData?: DeliveryLineData;
     /** Point to highlight and lock the map onto, driven by the URL */
     selection?: MapSelection;
     onHover?: (feature: Feature | undefined, pixel: [x: number, y: number]) => void;
@@ -64,7 +61,6 @@
     onClick,
     onRightClick,
     jobsData,
-    deliveryLineData: _deliveryLineData,
   }: ThreeMapWrapperProps = $props();
 
   // One +/- click steps log-distance by ZOOM_BUTTON_LOG_STEP: ×e^0.2 ≈ ×1.22,
@@ -176,31 +172,6 @@
     three.poiManager.setPoisFor(PointType.Teleport, teleportPois);
   });
 
-  // ---- visibility toggles ----
-  $effect(() => {
-    if (!three) return;
-    const pm = three.poiManager;
-    for (const marker of pm.markers()) {
-      const visible = (() => {
-        switch (marker.pointType) {
-          case PointType.Delivery:
-            return mapState.delivery;
-          case PointType.House:
-            return mapState.house;
-          case PointType.Player:
-            return mapState.player;
-          case PointType.Pin:
-            return mapState.pins;
-          case PointType.Teleport:
-            return mapState.teleport;
-          default:
-            return true;
-        }
-      })();
-      pm.setMarkerVisible(marker.id, visible);
-    }
-  });
-
   // ---- labels: one label concern per effect, re-applied when that type's set changes
   // (a toggled layer recreates markers which need their labels set again). ----
   $effect(() => {
@@ -263,17 +234,20 @@
     return f;
   }
 
-  let pendingRaycaster = new THREE.Raycaster();
+  // Reused across pointer events (a pointermove fires up to ~120x/s) - setFromCamera()
+  // and set() fully reset both, and pick() reads them synchronously.
+  const _pickRaycaster = new THREE.Raycaster();
+  const _pickNdc = new THREE.Vector2();
 
   function pickAtPointer(event: { clientX: number; clientY: number }): PoiMarker | undefined {
     if (!three) return undefined;
     const rect = three.renderer.domElement.getBoundingClientRect();
-    const ndc = new THREE.Vector2(
+    _pickNdc.set(
       ((event.clientX - rect.left) / rect.width) * 2 - 1,
       -((event.clientY - rect.top) / rect.height) * 2 + 1,
     );
-    pendingRaycaster.setFromCamera(ndc, three.camera);
-    return three.poiManager.pick(pendingRaycaster, ndc) ?? undefined;
+    _pickRaycaster.setFromCamera(_pickNdc, three.camera);
+    return three.poiManager.pick(_pickRaycaster, _pickNdc) ?? undefined;
   }
 
   function updateHoverAt(event: { clientX: number; clientY: number }): void {

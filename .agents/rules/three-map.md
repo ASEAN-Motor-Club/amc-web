@@ -91,7 +91,7 @@ active (`activeTiles`), like `syncCovers()` does — not a recomputation of the 
 `OrbitControls` is deliberately hobbled: `{ LEFT: null, MIDDLE: DOLLY, RIGHT: ROTATE }`,
 `enablePan = false`, `enableZoom = false`. Custom drivers replace the defaults:
 
-- **Wheel** — inertial exponential zoom. `zoomBy(deltaY)` accumulates into a log-distance value
+- **Wheel** — inertial exponential zoom. The wheel handler accumulates into a log-distance value
   applied per frame as `distance *= exp(zoomLog)`, damped (uniform scroll feel at every zoom).
   Mouse-wheel detents use a different factor than trackpad drips (split at
   `WHEEL_NOTCH_DELTA_Y`). Positive deltaY zooms out. Zoom +/- buttons feed
@@ -111,14 +111,16 @@ don't resize the renderer anywhere else.
 ## POIs (poi.ts + poiManager.ts)
 
 - All dot/label styling ports 1:1 from the OL layers: `POI_CONFIG[pointType]` plus
-  `POI_DELIVERY_RESIDENT/_JOB_SOURCE/_JOB_DEST` variants and `POI_DEFAULT` fallback is the
+  `POI_DELIVERY_RESIDENT/_JOB_SOURCE/_JOB_DEST` variants is the
   single source of truth. Colors come from `$lib/tw-var` — including oklch strings, which
   `THREE.Color` cannot parse: always via `makeColor`/`convertOklchToHex` (culori) from `poi.ts`.
 - Dots are **one `THREE.Sprite` per distinct palette** (`dotPaletteKey` = fill|stroke|
   strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity
   `InstancedBufferAttribute`s and a uniform scale (palette size is constant per group).
   Capacity starts at `MIN_CAPACITY` and doubles on demand. Mutations happen only through
-  `setPoisFor` / `setMarkerVisible` — writing those buffers anywhere else desyncs slot bookkeeping.
+  `setPoisFor` — writing those buffers anywhere else desyncs slot bookkeeping
+  (layer toggles add/remove markers through `setPoisFor`; there is no separate
+  visibility setter).
 - Sprites render with `depthTest: false` + `renderOrder: 1`, so ordinary raycasting cannot hit
   them. Hit-testing goes through `pick(raycaster, ndc)`: project each drawable marker to NDC and
   compare against the constant screen radius implied by `sizeAttenuation: false`, nearest-first.

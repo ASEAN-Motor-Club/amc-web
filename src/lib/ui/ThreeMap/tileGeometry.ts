@@ -53,18 +53,12 @@ export function loadColorTexture(
   return promise;
 }
 
-export interface TileGeometryResult {
-  geometry: THREE.BufferGeometry;
-  N: number;
-  flat: boolean;
-}
-
 export function buildTileGeometry(
   rawHeights: Uint16Array,
   worldX0: number,
   worldZ0: number,
   tileWorldSize: number,
-): TileGeometryResult {
+): THREE.BufferGeometry {
   const haloSize = Math.round(Math.sqrt(rawHeights.length));
   if (haloSize * haloSize !== rawHeights.length) {
     throw new Error(`height tile is not square: ${rawHeights.length} samples`);
@@ -167,5 +161,5 @@ export function buildTileGeometry(
   geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
   geometry.setIndex(indices);
 
-  return { geometry, N, flat };
+  return geometry;
 }

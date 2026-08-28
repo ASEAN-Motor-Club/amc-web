@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import { formatHex, oklch, type Color } from 'culori';
+import type { PoiDotStyle } from './constants';
 
 /** Converts an oklch() string to hex (three's Color cannot parse oklch), via culori. */
-export const convertOklchToHex = (oklchStr: string): string => {
+const convertOklchToHex = (oklchStr: string): string => {
   try {
     return formatHex(oklch(oklchStr) as Color);
   } catch {
@@ -12,21 +13,10 @@ export const convertOklchToHex = (oklchStr: string): string => {
 };
 
 /** Reads a hex or oklch color (three's Color can't parse oklch). */
-export function makeColor(color: string | number): THREE.Color {
+function makeColor(color: string | number): THREE.Color {
   return typeof color === 'string' && color.startsWith('oklch(')
     ? new THREE.Color(convertOklchToHex(color))
     : new THREE.Color(color);
-}
-
-export interface DotPalette {
-  /** Dot fill color. */
-  fill: string | number;
-  /** Dot outline color. */
-  stroke: string | number;
-  /** Dot diameter in CSS px (OL circle radius * 2). */
-  diameterPx: number;
-  /** Outline thickness in CSS px; defaults to 1 (OL's single circle-stroke-width). */
-  strokeWidth?: number;
 }
 
 /** Default outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
@@ -58,24 +48,24 @@ export function viewportScale(camera: THREE.PerspectiveCamera, renderer: Rendere
 }
 
 /** Palette signature - identical palettes share one instanced sprite group. */
-export function dotPaletteKey(palette: DotPalette): string {
+export function dotPaletteKey(palette: PoiDotStyle): string {
   return `${palette.fill}|${palette.stroke}|${palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX}`;
 }
 
 /** Outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
-export function dotStrokeCssPx(palette: DotPalette): number {
+export function dotStrokeCssPx(palette: PoiDotStyle): number {
   return palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX;
 }
 
 /** Canvas side in device px: the stroke-cleared dot at native size plus an AA margin. */
-function dotCanvasSidePx(palette: DotPalette, viewport: ViewportScale): number {
+function dotCanvasSidePx(palette: PoiDotStyle, viewport: ViewportScale): number {
   const radiusDevice = (palette.diameterPx / 2) * viewport.dpr;
   const strokeDevice = dotStrokeCssPx(palette) * viewport.dpr;
   return Math.ceil(2 * (radiusDevice + strokeDevice / 2 + DOT_AA_PAD_PX));
 }
 
 /** Sprite scaleNode value mapping the dot canvas 1:1 onto device pixels. */
-export function dotSpriteScale(palette: DotPalette, viewport: ViewportScale): number {
+export function dotSpriteScale(palette: PoiDotStyle, viewport: ViewportScale): number {
   return dotCanvasSidePx(palette, viewport) / viewport.pxPerWorld;
 }
 
@@ -87,7 +77,7 @@ export function dotSpriteScale(palette: DotPalette, viewport: ViewportScale): nu
  * DPR changes (with dotSpriteScale for the matching scale); an unchanged DPR keeps the
  * canvas across window resizes - only the sprite scale follows the buffer height.
  */
-export function makeDotTexture(palette: DotPalette, viewport: ViewportScale): THREE.CanvasTexture {
+export function makeDotTexture(palette: PoiDotStyle, viewport: ViewportScale): THREE.CanvasTexture {
   const side = dotCanvasSidePx(palette, viewport);
   const canvas = document.createElement('canvas');
   canvas.width = side;

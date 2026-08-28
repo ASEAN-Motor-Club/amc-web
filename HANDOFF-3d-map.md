@@ -17,7 +17,7 @@ Stage 1 (render 3D terrain in place of the OL map) is committed. Stage 2 (POI la
   - `constants.ts`, `three-map-types.ts`, `groundPan.ts`.
 - **`src/lib/components/Map/Map/ThreeMapWrapper.svelte`** — same props shape as `OlMapWrapper`;
   terrain-only for now. Zoom `+`/`−` buttons bottom-right, styled like the OL controls, driving
-  the inertial zoom via `scene.zoomBy(deltaY)`.
+  the inertial zoom via `scene.stepBy(ZOOM_BUTTON_LOG_STEP)`.
 - **`src/lib/components/Map/Map/Map.svelte`** — `{#if threeDMode}` swaps
   `ThreeMapWrapper`/`OlMapWrapper`; a `2D`/`3D` button top-right is shown only when
   `localStorage.__experimental_3d_map === '1'`.

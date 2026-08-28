@@ -52,9 +52,6 @@ export const LOOK_UP_ANGLE_FAR_DEG = 60;
 export const LOOK_UP_ANGLE_NEAR_DEG = 90;
 export const SKIRT_DROP = 400;
 export const OCEAN_QUAD_SIZE = 200000;
-export const ZOOM_DEBUG_COLORS = [
-  0xff3b30, 0xff9500, 0xffdd00, 0x34c759, 0x0a84ff, 0xaf52de, 0xff6b6b, 0x2dd4bf, 0x845ef7,
-];
 export const TILE_UPDATE_INTERVAL_MS = 150;
 export const RESIZE_DEBOUNCE_MS = 100;
 
@@ -112,12 +109,6 @@ export const POI_CONFIG: Record<number, PoiTypeConfig> = {
     dot: { fill: colorViolet400, stroke: colorViolet950, diameterPx: dotSize(5) },
     label: { sizeCss: 8 },
   },
-};
-
-/** Fallback config for any unrecognized POI type. */
-export const POI_DEFAULT: PoiTypeConfig = {
-  dot: { fill: colorYellow500, stroke: colorYellow950, diameterPx: dotSize(6) },
-  label: { sizeCss: 12 },
 };
 
 /** Delivery-point variants, mirroring the OL delivery layer:

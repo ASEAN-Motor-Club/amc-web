@@ -1,18 +1,18 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM, ZOOM_DEBUG_COLORS } from './constants';
+import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants';
 import { tileWorldRect } from './heightmap';
 import { selectLeafTiles } from './lod';
 import { fetchHeightTile, loadColorTexture, buildTileGeometry } from './tileGeometry';
-import type { TilesMeta, ActiveTile, LeafTile } from './three-map-types';
+import type { TilesMeta, ActiveTile } from './three-map-types';
 
 export interface TileManager {
   tileGroup: THREE.Group;
   activeTiles: ReadonlyMap<string, ActiveTile>;
   updateVisibleTiles: () => void;
-  setZoomDebug: (enabled: boolean) => void;
-  setWireframe: (enabled: boolean) => void;
+  /** Frees every cached texture and built geometry/material (GPU resources). */
+  dispose: () => void;
 }
 
 interface DesiredTile {
@@ -33,12 +33,6 @@ interface CachedTile {
   texture: THREE.Texture;
 }
 
-interface TickContext {
-  desired: DesiredTile[];
-  desiredKeys: Set<string>;
-  cover: Set<string>;
-}
-
 export function createTileManager(
   scene: THREE.Scene,
   meta: TilesMeta,
@@ -51,13 +45,6 @@ export function createTileManager(
   const tileGroup = new THREE.Group();
   scene.add(tileGroup);
 
-  const debugMaterials = ZOOM_DEBUG_COLORS.map(
-    (color) =>
-      new THREE.MeshStandardMaterial({ color, roughness: 0.95, metalness: 0, wireframe: false }),
-  );
-  let showZoomDebug = false;
-  let wireframeEnabled = false;
-
   const dataCache = new Map<string, CachedTile>();
   const loading = new Set<string>();
 
@@ -66,15 +53,6 @@ export function createTileManager(
 
   function keyOf(z: number, x: number, y: number): string {
     return `${z}_${x}_${y}`;
-  }
-
-  function runLodStage(tick: TickContext): void {
-    const leaves: LeafTile[] = selectLeafTiles(camera, meta, controls.target);
-    for (const [z, x, y] of leaves) {
-      const key = keyOf(z, x, y);
-      tick.desiredKeys.add(key);
-      tick.desired.push({ key, z, x, y, ...tileWorldRect(meta, z, x, y) });
-    }
   }
 
   async function loadTileData(z: number, x: number, y: number): Promise<void> {
@@ -119,8 +97,6 @@ export function createTileManager(
   }
 
   function computeFallbackCover(desired: DesiredTile[], desiredKeys: Set<string>): Set<string> {
-    const cover = new Set<string>();
-
     function containsDesiredDescendant(childZ: number, childX: number, childY: number): boolean {
       const cr = tileWorldRect(meta, childZ, childX, childY);
       return desired.some((d) => d.z >= childZ && contains(cr, d));
@@ -149,28 +125,20 @@ export function createTileManager(
       return new Set();
     }
 
-    const root = choose(0, 0, 0);
-    for (const k of root) cover.add(k);
-    return cover;
-  }
-
-  function runLoadCacheStage(tick: TickContext): void {
-    for (const { z, x, y } of tick.desired) ensureAncestorsCached(z, x, y);
-    tick.cover = computeFallbackCover(tick.desired, tick.desiredKeys);
+    return choose(0, 0, 0);
   }
 
   function buildTile(cached: CachedTile): ActiveTile {
     const { z, x, y, rawHeights, texture } = cached;
     const { worldX0, worldZ0, tileSize } = tileWorldRect(meta, z, x, y);
-    const { geometry } = buildTileGeometry(rawHeights, worldX0, worldZ0, tileSize);
+    const geometry = buildTileGeometry(rawHeights, worldX0, worldZ0, tileSize);
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       roughness: 0.95,
       metalness: 0,
       side: THREE.DoubleSide,
-      wireframe: wireframeEnabled,
     });
-    const mesh = new THREE.Mesh(geometry, showZoomDebug ? debugMaterials[z] : material);
+    const mesh = new THREE.Mesh(geometry, material);
     return { mesh, geometry, material, texture, z, x, y };
   }
 
@@ -182,16 +150,14 @@ export function createTileManager(
       tile = buildTile(cached);
       builtTiles.set(key, tile);
     }
-    tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
-    tile.material.wireframe = wireframeEnabled;
     tileGroup.add(tile.mesh);
     activeTiles.set(key, tile);
   }
 
   function unmountTile(tile: ActiveTile): void {
     tileGroup.remove(tile.mesh);
-    activeTiles.delete(keyOf(tile.z, tile.x, tile.y));
     const key = keyOf(tile.z, tile.x, tile.y);
+    activeTiles.delete(key);
     if (tile.z > CACHE_MAX_ZOOM) {
       const cached = dataCache.get(key);
       if (cached) {
@@ -207,39 +173,44 @@ export function createTileManager(
     }
   }
 
-  function runGenerationStage(tick: TickContext): void {
-    for (const [key, tile] of [...activeTiles]) {
-      if (!tick.cover.has(key)) unmountTile(tile);
+  function updateVisibleTiles(): void {
+    // 1. LOD: pick the leaf tiles the camera can see.
+    const desired: DesiredTile[] = [];
+    const desiredKeys = new Set<string>();
+    for (const [z, x, y] of selectLeafTiles(camera, meta, controls.target)) {
+      const key = keyOf(z, x, y);
+      desiredKeys.add(key);
+      desired.push({ key, z, x, y, ...tileWorldRect(meta, z, x, y) });
     }
-    for (const key of tick.cover) {
+    // 2. Cache: ensure the desired tiles and their ancestors have data, then compute
+    // the best cover actually renderable right now.
+    for (const { z, x, y } of desired) ensureAncestorsCached(z, x, y);
+    const cover = computeFallbackCover(desired, desiredKeys);
+    // 3. Generation: unmount what fell out of the cover, mount what entered it.
+    for (const [key, tile] of [...activeTiles]) {
+      if (!cover.has(key)) unmountTile(tile);
+    }
+    for (const key of cover) {
       if (!activeTiles.has(key)) mountTile(key);
     }
-  }
-
-  function updateVisibleTiles(): void {
-    const tick: TickContext = { desired: [], desiredKeys: new Set(), cover: new Set() };
-    runLodStage(tick);
-    runLoadCacheStage(tick);
-    runGenerationStage(tick);
   }
 
   return {
     tileGroup,
     activeTiles,
     updateVisibleTiles,
-    setZoomDebug(enabled: boolean) {
-      showZoomDebug = enabled;
-      for (const tile of activeTiles.values()) {
-        tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
-      }
+    dispose() {
+      // Every mounted tile's material shares its texture with the dataCache entry,
+      // so textures go through dataCache (the superset) and geometry+material
+      // through builtTiles - nothing is disposed twice, nothing is missed.
+      for (const cached of dataCache.values()) cached.texture.dispose();
       for (const tile of builtTiles.values()) {
-        tile.mesh.material = showZoomDebug ? debugMaterials[tile.z] : tile.material;
+        tile.geometry.dispose();
+        tile.material.dispose();
       }
-    },
-    setWireframe(enabled: boolean) {
-      wireframeEnabled = enabled;
-      for (const material of debugMaterials) material.wireframe = wireframeEnabled;
-      for (const tile of builtTiles.values()) tile.material.wireframe = wireframeEnabled;
+      dataCache.clear();
+      builtTiles.clear();
+      activeTiles.clear();
     },
   };
 }

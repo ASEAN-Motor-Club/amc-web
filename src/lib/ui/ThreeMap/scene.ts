@@ -16,7 +16,7 @@ import {
   ZOOM_LOG_PER_WHEEL_NOTCH,
 } from './constants';
 import { createSelectionPan, type SelectionPan } from './selectionPan';
-import { setupGroundPan, type GroundPan } from './groundPan';
+import { setupGroundPan } from './groundPan';
 import { TILES_META } from './heightmap';
 import { createPoiManager, type PoiManager } from './poiManager';
 import { createTileManager } from './tileManager';
@@ -27,10 +27,8 @@ export interface CameraRig {
   camera: THREE.PerspectiveCamera;
   controls: OrbitControls;
   update: (dt: number) => void;
-  /** Feeds the inertial wheel-zoom accumulator - same code path as the wheel
-   * handler. Positive deltaY zooms out, negative zooms in. */
-  zoomBy: (deltaY: number) => void;
-
+  /** Queues one zoom-button step (log-distance units); the frame loop feeds it
+   * into the inertial accumulator, so each click glides instead of teleporting. */
   stepBy: (logStep: number) => void;
 }
 export function createCameraRig(renderer: Renderer): CameraRig {
@@ -88,16 +86,6 @@ export function createCameraRig(renderer: Renderer): CameraRig {
     zoomLog *= Math.pow(1 - ZOOM_DAMPING_FACTOR, dt * 60);
     if (Math.abs(zoomLog) < 0.002) zoomLog = 0;
   }
-  /** Feeds the inertial wheel-zoom accumulator - same code path as the wheel
-   * handler. Positive deltaY zooms out, negative zooms in. */
-  function zoomBy(deltaY: number): void {
-    const deltaLog = deltaY * ZOOM_LOG_PER_WHEEL_DELTA;
-    if (deltaLog !== 0 && zoomLog > 0 !== deltaLog > 0) {
-      zoomLog = 0;
-    }
-    zoomLog += deltaLog;
-  }
-
   /** Pending zoom-button travel in accumulator log-units. Buttons feed this
    * instead of teleporting the camera, so each click glides. */
   let buttonZoomPending = 0;
@@ -128,7 +116,7 @@ export function createCameraRig(renderer: Renderer): CameraRig {
     buttonZoomPending += logStep * ZOOM_DAMPING_FACTOR;
   }
 
-  return { camera, controls, update, zoomBy, stepBy };
+  return { camera, controls, update, stepBy };
 }
 
 export interface ThreeMapScene {
@@ -138,18 +126,21 @@ export interface ThreeMapScene {
   controls: OrbitControls;
   tileManager: TileManager;
   poiManager: PoiManager;
-  meta: TilesMeta;
   /** Selection-glide servo: ThreeMapWrapper re-targets it via panTo(); the
    * frame loop advances it. */
   selectionPan: SelectionPan;
-  zoomBy: (deltaY: number) => void;
   /** Zoom buttons: exact, immediate step in log-distance units (no inertia).
    * Positive steps out, negative steps in. */
   stepBy: (logStep: number) => void;
   dispose: () => void;
 }
 
-export function createOceanQuad(scene: THREE.Scene, meta: TilesMeta): THREE.Mesh | null {
+/** Adds the ocean plane at meta.oceanLevelMeters. Returns the mesh so the scene's
+ * dispose() can free its GPU resources (geometry + material). */
+export function createOceanQuad(
+  scene: THREE.Scene,
+  meta: TilesMeta,
+): THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial> | null {
   if (meta.oceanLevelMeters == null) {
     console.warn('tiles.json has no oceanLevelMeters - skipping the ocean quad');
     return null;
@@ -183,7 +174,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   scene.background = new THREE.Color(skyColor);
   scene.fog = new THREE.Fog(skyColor, 25000, 100000);
 
-  const { camera, controls, update: updateCameraRig, zoomBy, stepBy } = createCameraRig(renderer);
+  const { camera, controls, update: updateCameraRig, stepBy } = createCameraRig(renderer);
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);
@@ -193,7 +184,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
   const meta = TILES_META;
 
-  createOceanQuad(scene, meta);
+  const ocean = createOceanQuad(scene, meta);
 
   const loadingManager = new THREE.LoadingManager();
   const tileManager = createTileManager(
@@ -206,7 +197,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     loadingManager,
   );
   const selectionPan = createSelectionPan(renderer.domElement, camera, controls);
-  const panPhys: GroundPan = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
+  const panPhys = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
   const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer);
 
   function refreshVisibleTiles(): void {
@@ -266,16 +257,18 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     controls,
     tileManager,
     poiManager,
-    meta,
     selectionPan,
-    zoomBy,
     stepBy,
     dispose() {
+      // Kill in-flight tile fetches/texture loads first: their continuations check the
+      // signal and bail instead of repopulating the caches tileManager.dispose() drains.
+      loadingManager.abort();
       panPhys.dispose();
       selectionPan.dispose();
       poiManager.dispose();
-      tileManager.setZoomDebug(false);
-      tileManager.setWireframe(false);
+      tileManager.dispose();
+      ocean?.geometry.dispose();
+      ocean?.material.dispose();
       renderer.dispose();
       renderer.domElement.remove();
     },
