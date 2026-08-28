@@ -52,6 +52,27 @@ export function dotPaletteKey(palette: PoiDotStyle): string {
   return `${palette.fill}|${palette.stroke}|${palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX}`;
 }
 
+/** Dot visual state - indexes the atlas cell, mirroring OL's `hover`/`selected` attribute switches. */
+export const enum PoiState {
+  Normal = 0,
+  Hover = 1,
+  Selected = 2,
+}
+
+/** Cells in each dot atlas, laid out side by side along U: normal | hover | selected. */
+export const DOT_ATLAS_CELLS = 3;
+
+/** Resolved cell colors: the base palette with the state's overrides applied. */
+function dotCellColors(palette: PoiDotStyle, state: PoiState): { fill: string; stroke: string } {
+  const override =
+    state === PoiState.Hover
+      ? palette.hover
+      : state === PoiState.Selected
+        ? palette.selected
+        : undefined;
+  return { fill: override?.fill ?? palette.fill, stroke: override?.stroke ?? palette.stroke };
+}
+
 /** Outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
 export function dotStrokeCssPx(palette: PoiDotStyle): number {
   return palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX;
@@ -70,29 +91,36 @@ export function dotSpriteScale(palette: PoiDotStyle, viewport: ViewportScale): n
 }
 
 /**
- * One dot texture per distinct palette, drawn at its native on-screen device size (plus
- * stroke and AA padding) for the given viewport - no downsampling, no shimmer. Each
+ * One dot ATLAS texture per distinct palette, drawn at its native on-screen device size
+ * (plus stroke and AA padding) for the given viewport - no downsampling, no shimmer. Each
  * instanced sprite renders a single texture, so the dot always samples its own cell - no
- * per-instance UV, which is what keeps instancing reliable across marker types. Remake on
- * DPR changes (with dotSpriteScale for the matching scale); an unchanged DPR keeps the
- * canvas across window resizes - only the sprite scale follows the buffer height.
+ * per-instance UV, which is what keeps instancing reliable across marker types. The atlas
+ * packs the three visual states side by side (`PoiState`); a per-instance UV shift in
+ * poiManager picks the cell. Remake on DPR changes (with dotSpriteScale for the matching
+ * scale); an unchanged DPR keeps the canvas across window resizes - only the sprite scale
+ * follows the buffer height.
  */
-export function makeDotTexture(palette: PoiDotStyle, viewport: ViewportScale): THREE.CanvasTexture {
+export function makeDotAtlasTexture(
+  palette: PoiDotStyle,
+  viewport: ViewportScale,
+): THREE.CanvasTexture {
   const side = dotCanvasSidePx(palette, viewport);
   const canvas = document.createElement('canvas');
-  canvas.width = side;
+  canvas.width = side * DOT_ATLAS_CELLS;
   canvas.height = side;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('no 2d context for dot');
-  const cx = side / 2;
-  const cy = side / 2;
-  ctx.beginPath();
-  ctx.arc(cx, cy, (palette.diameterPx / 2) * viewport.dpr, 0, Math.PI * 2);
-  ctx.fillStyle = makeColor(palette.fill).getStyle();
-  ctx.fill();
-  ctx.lineWidth = dotStrokeCssPx(palette) * viewport.dpr;
-  ctx.strokeStyle = makeColor(palette.stroke).getStyle();
-  ctx.stroke();
+  for (const state of [PoiState.Normal, PoiState.Hover, PoiState.Selected]) {
+    const { fill, stroke } = dotCellColors(palette, state);
+    const cx = state * side + side / 2;
+    ctx.beginPath();
+    ctx.arc(cx, side / 2, (palette.diameterPx / 2) * viewport.dpr, 0, Math.PI * 2);
+    ctx.fillStyle = makeColor(fill).getStyle();
+    ctx.fill();
+    ctx.lineWidth = dotStrokeCssPx(palette) * viewport.dpr;
+    ctx.strokeStyle = makeColor(stroke).getStyle();
+    ctx.stroke();
+  }
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;

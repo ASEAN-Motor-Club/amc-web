@@ -114,13 +114,23 @@ don't resize the renderer anywhere else.
   `POI_DELIVERY_RESIDENT/_JOB_SOURCE/_JOB_DEST` variants is the
   single source of truth. Colors come from `$lib/tw-var` — including oklch strings, which
   `THREE.Color` cannot parse: always via `makeColor`/`convertOklchToHex` (culori) from `poi.ts`.
+  Each style also carries optional `hover`/`selected` color overrides, ported 1:1 from the
+  OL layers' `hover`/`selected` attribute switches.
 - Dots are **one `THREE.Sprite` per distinct palette** (`dotPaletteKey` = fill|stroke|
-  strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity
+  strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity+state
   `InstancedBufferAttribute`s and a uniform scale (palette size is constant per group).
-  Capacity starts at `MIN_CAPACITY` and doubles on demand. Mutations happen only through
-  `setPoisFor` — writing those buffers anywhere else desyncs slot bookkeeping
-  (layer toggles add/remove markers through `setPoisFor`; there is no separate
-  visibility setter).
+  Each palette's dot texture is a **three-cell atlas** (`PoiState`: normal | hover |
+  selected) built by `makeDotAtlasTexture`; the per-instance state attribute shifts the
+  sampled cell inside `material.colorNode` (`dotAtlasColorNode`) — instancing stays
+  single-texture, which is what keeps it reliable. Capacity starts at `MIN_CAPACITY` and
+  doubles on demand. Mutations happen only through `setPoisFor` (buffers) and
+  `setMarkerState` (a single state slot, `applyVisibility`-style) — writing those buffers
+  anywhere else desyncs slot bookkeeping (layer toggles add/remove markers through
+  `setPoisFor`; there is no separate visibility setter).
+- Hover/selected paint is driven by the wrapper: it resolves each marker's state with OL's
+  precedence (hover > selected > normal) and applies it via `poiManager.setMarkerState`;
+  the selection effect re-applies on its type's marker-set changes so re-created markers
+  regain the selected paint.
 - Sprites render with `depthTest: false` + `renderOrder: 1`, so ordinary raycasting cannot hit
   them. Hit-testing goes through `pick(raycaster, ndc)`: project each drawable marker to NDC and
   compare against the constant screen radius implied by `sizeAttenuation: false`, nearest-first.

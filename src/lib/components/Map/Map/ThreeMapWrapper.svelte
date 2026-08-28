@@ -20,6 +20,7 @@
   import type { Pins } from '$lib/schema/pin';
   import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
   import { ZOOM_BUTTON_LOG_STEP } from '$lib/ui/ThreeMap/constants';
+  import { PoiState } from '$lib/ui/ThreeMap/poi';
   import type { PoiMarker, PoiInput } from '$lib/ui/ThreeMap/poiManager';
   import { m } from '$messages';
   import { reProjectPointInverse } from '$lib/ui/OlMap/utils';
@@ -226,6 +227,17 @@
   let hoveredMarker: PoiMarker | undefined = $state();
   let lastPixel: [x: number, y: number] | undefined = $state();
 
+  /** Dot paint for a marker: OL precedence - hover over selected, normal otherwise. */
+  function markerStateFor(id: string): PoiState {
+    if (hoveredMarker?.id === id) return PoiState.Hover;
+    if (selection?.id === id) return PoiState.Selected;
+    return PoiState.Normal;
+  }
+
+  function applyMarkerState(id: string): void {
+    three?.poiManager.setMarkerState(id, markerStateFor(id));
+  }
+
   function markerFeature(marker: PoiMarker | undefined): Feature | undefined {
     if (!marker) return undefined;
     const f = new Feature();
@@ -253,7 +265,11 @@
   function updateHoverAt(event: { clientX: number; clientY: number }): void {
     const marker = pickAtPointer(event);
     if (marker === hoveredMarker) return;
+    const previousId = hoveredMarker?.id;
     hoveredMarker = marker;
+    // Repaint the dot itself; the tooltip rides on onHover below.
+    if (previousId !== undefined) applyMarkerState(previousId);
+    if (marker) applyMarkerState(marker.id);
     onHover?.(markerFeature(marker), lastPixel ?? [-1, -1]);
   }
 
@@ -300,6 +316,7 @@
 
   // ---- selection lock ----
   let lastCenteredSelection = $state<string | undefined>(undefined);
+  let selectedMarkerId: string | undefined = undefined;
 
   /** Glide the selected marker to screen center: the scene's selectionPan servo
    * measures the ground-plane delta to the marker's height plane once, then
@@ -314,9 +331,15 @@
   }
 
   $effect(() => {
-    if (!three || !selection) return;
+    if (!three || !selection) {
+      // Deselected (or scene not up yet): drop the previous marker's selected paint.
+      if (three && selectedMarkerId !== undefined) applyMarkerState(selectedMarkerId);
+      selectedMarkerId = undefined;
+      return;
+    }
     // Re-run when the selected layer's set changes - the marker may arrive after the
-    // selection effect first fires (the toggles in Map.svelte run in their own effect).
+    // selection effect first fires (the toggles in Map.svelte run in their own effect),
+    // and a re-created marker must regain its selected paint.
     switch (selection.pointType) {
       case PointType.House:
         void housePois;
@@ -331,6 +354,11 @@
         void pinPois;
         break;
     }
+    if (selectedMarkerId !== selection.id) {
+      if (selectedMarkerId !== undefined) applyMarkerState(selectedMarkerId);
+      selectedMarkerId = selection.id;
+    }
+    applyMarkerState(selection.id);
     centerOnSelection();
   });
 </script>
