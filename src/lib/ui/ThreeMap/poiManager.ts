@@ -41,11 +41,8 @@ export interface PoiInput {
 
 export interface PoiMarker {
   pointType: PointType;
-  coord: Vector3;
   /** World position (meters, y-up). */
   world: [x: number, y: number, z: number];
-  /** Dot diameter in CSS px (the palette's). */
-  diameterPx: number;
   /** On-screen text height for the label, in CSS px. */
   sizeCss: number;
   id: string;
@@ -56,6 +53,10 @@ export interface PoiMarker {
   visible: boolean;
   /** Resident LOD gate: true when the marker sits in the z5 ring. */
   lodOk: boolean;
+  /** Which instanced sprite (palette group) draws this marker, and its slot in
+   * that group's buffers - maintained by makeMarker/setPoisFor/refreshGroup. */
+  groupKey: string;
+  slot: number;
 }
 
 export interface PoiManager {
@@ -122,8 +123,6 @@ interface SpriteGroup {
   material: SpriteNodeMaterial;
   /** scaleNode uniform - remade when the drawing-buffer height changes. */
   scale: UniformNode<'float', number>;
-  /** The dpr the group's dot texture was drawn for. */
-  dpr: number;
   posArray: Float32Array;
   opacityArray: Float32Array;
   posAttr: THREE.InstancedBufferAttribute;
@@ -146,18 +145,9 @@ export function createPoiManager(
   /** Sprite screen metrics for the current drawing buffer; refit on viewport changes. */
   let viewport = viewportScale(camera, renderer);
 
-  /** Per-marker render data: which sprite group + slot inside it. */
-  const state = new Map<string, { groupKey: string; slot: number }>();
   const markers = new Map<string, PoiMarker>();
   const groups = new Map<string, SpriteGroup>();
   let ordered: PoiMarker[] = [];
-
-  /** A marker's render state - every marker created through makeMarker has one. */
-  function stateOf(id: string): { groupKey: string; slot: number } {
-    const s = state.get(id);
-    if (!s) throw new Error(`missing render state for marker ${id}`);
-    return s;
-  }
 
   /** A definitely-present sprite group (throws on inconsistency rather than corrupting buffers). */
   function groupOf(key: string): SpriteGroup {
@@ -200,7 +190,6 @@ export function createPoiManager(
       sprite,
       material,
       scale,
-      dpr: viewport.dpr,
       posArray,
       opacityArray,
       posAttr,
@@ -217,21 +206,18 @@ export function createPoiManager(
     return groups.get(key) ?? makeGroup(palette);
   }
 
-  /** Grows one group's buffers (carrying live data over) and rebuilds its sprite. */
+  /** Grows one group's buffers and rebuilds its sprite. Stale data is not carried:
+   * refreshGroup rewrites every drawn slot immediately after. */
   function ensureGroupCapacity(group: SpriteGroup, needed: number): void {
     if (needed <= group.capacity) return;
     let next = group.capacity;
     while (next < needed) next *= 2;
-    const newPos = new Float32Array(next * 3);
-    newPos.set(group.posArray);
-    const newOpacity = new Float32Array(next);
-    newOpacity.set(group.opacityArray);
-    group.posArray = newPos;
-    group.opacityArray = newOpacity;
+    group.posArray = new Float32Array(next * 3);
+    group.opacityArray = new Float32Array(next);
     group.capacity = next;
 
-    group.posAttr = new THREE.InstancedBufferAttribute(newPos, 3);
-    group.opacityAttr = new THREE.InstancedBufferAttribute(newOpacity, 1);
+    group.posAttr = new THREE.InstancedBufferAttribute(group.posArray, 3);
+    group.opacityAttr = new THREE.InstancedBufferAttribute(group.opacityArray, 1);
     group.material.positionNode = instancedBufferAttribute(group.posAttr);
     group.material.opacityNode = instancedBufferAttribute(group.opacityAttr);
 
@@ -265,8 +251,7 @@ export function createPoiManager(
     for (let i = 0; i < group.ids.length; i++) {
       const marker = markers.get(group.ids[i]);
       if (!marker) continue;
-      const s = stateOf(marker.id);
-      s.slot = i;
+      marker.slot = i;
       const [wx, wy, wz] = marker.world;
       group.posArray[i * 3] = wx;
       group.posArray[i * 3 + 1] = wy;
@@ -278,33 +263,23 @@ export function createPoiManager(
     group.sprite.count = group.ids.length;
   }
 
-  /**
-   * Rebuilds every group. Used when markers move between palettes (job role changes);
-   * a normal setPoisFor only refreshes the touched group.
-   */
-  function refreshAll(): void {
-    for (const group of groups.values()) refreshGroup(group);
-  }
-
   // ---- markers (plain collection; OL-layer style). ----
 
   function makeMarker(input: PoiInput): PoiMarker {
-    const world = gameCoordToWorld(input.coord, meta);
     const palette = paletteFor(input);
+    const group = groupFor(palette);
     const marker: PoiMarker = {
       pointType: input.pointType,
-      coord: input.coord,
-      world,
-      diameterPx: palette.diameterPx,
+      world: gameCoordToWorld(input.coord, meta),
       sizeCss: POI_CONFIG[input.pointType].label.sizeCss,
       id: input.id,
       info: input.info,
       jobs: input.jobs,
       visible: true,
       lodOk: true,
+      groupKey: group.key,
+      slot: group.ids.length,
     };
-    const group = groupFor(palette);
-    state.set(marker.id, { groupKey: group.key, slot: group.ids.length });
     markers.set(marker.id, marker);
     group.ids.push(marker.id);
     ordered.push(marker);
@@ -314,11 +289,9 @@ export function createPoiManager(
   function removeMarker(id: string): void {
     const marker = markers.get(id);
     if (!marker) return;
-    const s = stateOf(id);
-    const group = groupOf(s.groupKey);
+    const group = groupOf(marker.groupKey);
     group.ids = group.ids.filter((gid) => gid !== id);
     markers.delete(id);
-    state.delete(id);
     removeLabel(id);
     ordered = ordered.filter((m) => m !== marker);
   }
@@ -330,38 +303,33 @@ export function createPoiManager(
       wanted.add(input.id);
       const existing = markers.get(input.id);
       if (existing) {
-        existing.coord = input.coord;
         existing.info = input.info;
         existing.world = gameCoordToWorld(input.coord, meta);
         const jobs = input.jobs;
         if (jobs !== (existing.jobs ?? 0)) {
           existing.jobs = jobs;
-          const palette = paletteFor(input);
-          existing.diameterPx = palette.diameterPx;
-          const prev = stateOf(existing.id);
-          const newGroup = groupFor(palette);
-          if (newGroup.key !== prev.groupKey) {
-            const oldGroup = groupOf(prev.groupKey);
+          const newGroup = groupFor(paletteFor(input));
+          if (newGroup.key !== existing.groupKey) {
+            const oldGroup = groupOf(existing.groupKey);
             oldGroup.ids = oldGroup.ids.filter((gid) => gid !== existing.id);
-            state.set(existing.id, { groupKey: newGroup.key, slot: newGroup.ids.length });
+            existing.groupKey = newGroup.key;
+            existing.slot = newGroup.ids.length;
             newGroup.ids.push(existing.id);
             touched.add(oldGroup.key);
-            touched.add(newGroup.key);
           }
         }
         // The marker may have moved (live players) - its group buffer needs a rewrite
         // even though it stays in the same palette/sprite.
-        touched.add(stateOf(existing.id).groupKey);
+        touched.add(existing.groupKey);
       } else {
-        makeMarker(input);
-        touched.add(stateOf(input.id).groupKey);
+        touched.add(makeMarker(input).groupKey);
       }
     }
     // Remove only this type's markers that are no longer wanted - never touch other types'
     // markers so a changing data source (e.g. live players) can't disturb their dots.
     for (const [id, m] of [...markers]) {
       if (m.pointType === pointType && !wanted.has(id)) {
-        touched.add(stateOf(id).groupKey);
+        touched.add(m.groupKey);
         removeMarker(id);
       }
     }
@@ -372,11 +340,9 @@ export function createPoiManager(
   }
 
   function applyVisibility(marker: PoiMarker): void {
-    const s = state.get(marker.id);
-    if (!s) return;
-    const group = groups.get(s.groupKey);
-    if (!group || s.slot < 0) return;
-    group.opacityArray[s.slot] = draws(marker) ? 1 : 0;
+    const group = groups.get(marker.groupKey);
+    if (!group) return;
+    group.opacityArray[marker.slot] = draws(marker) ? 1 : 0;
     // Only the opacity slice changed.
     group.opacityAttr.needsUpdate = true;
   }
@@ -385,9 +351,8 @@ export function createPoiManager(
 
   const _projPos = new THREE.Vector3();
 
-  function pick(raycaster: THREE.Raycaster, pointerNdc?: THREE.Vector2): PoiMarker | null {
-    const camera = raycaster.camera as THREE.Camera | null;
-    if (!camera || !pointerNdc) return null;
+  function pick(raycaster: THREE.Raycaster, pointerNdc: THREE.Vector2): PoiMarker | null {
+    const camera = raycaster.camera;
 
     // sizeAttenuation:false sprites keep a constant screen size, so at any depth the dot's
     // NDC half-extent is (diameter/2 + stroke) / tan(fovY/2) - independent of distance, and
@@ -416,7 +381,7 @@ export function createPoiManager(
 
     for (const c of candidates) {
       // Half the drawn canvas side in world units - the fill circle exactly fills it.
-      const group = groupOf(stateOf(c.m.id).groupKey);
+      const group = groupOf(c.m.groupKey);
       const half = group.scale.value / 2 / tanHalfFov;
       // Markers behind the camera project to an out-of-range NDC z - skip them.
       if (c.ndcZ <= -1 || c.ndcZ >= 1) continue;
@@ -543,8 +508,6 @@ export function createPoiManager(
     }
   }
 
-  refreshAll();
-
   return {
     markerById: (id: string) => markers.get(id),
     setPoisFor,
@@ -557,7 +520,6 @@ export function createPoiManager(
     dispose() {
       for (const id of [...labels.keys()]) removeLabel(id);
       markers.clear();
-      state.clear();
       ordered = [];
       for (const group of groups.values()) {
         poiGroup.remove(group.sprite);
