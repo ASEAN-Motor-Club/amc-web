@@ -13,7 +13,7 @@ const convertOklchToHex = (oklchStr: string): string => {
 };
 
 /** Reads a hex or oklch color (three's Color can't parse oklch). */
-function makeColor(color: string | number): THREE.Color {
+export function makeColor(color: string | number): THREE.Color {
   return typeof color === 'string' && color.startsWith('oklch(')
     ? new THREE.Color(convertOklchToHex(color))
     : new THREE.Color(color);

@@ -438,6 +438,8 @@
       {houseData}
       {pinsData}
       {teleportData}
+      {shortcutZoneData}
+      {deliveryLineData}
       {selection}
       onToggleMapMode={toggleMapMode}
       onHover={handleHover}

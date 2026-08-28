@@ -31,3 +31,52 @@ export function gameCoordToWorld(
   const wz = meta.heightMeters / 2 - pxY / CM_PER_M;
   return [wx, coord.z / CM_PER_M, wz];
 }
+
+/** Converts a game-plane point (x right, y down, cm) to world XZ meters. */
+export function gamePlaneToWorldXZ(x: number, y: number, meta: TilesMeta): [x: number, z: number] {
+  const [wx, , wz] = gameCoordToWorld({ x, y, z: 0 }, meta);
+  return [wx, wz];
+}
+
+function pointInRing(px: number, pz: number, ring: [x: number, z: number][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, zi] = ring[i];
+    const [xj, zj] = ring[j];
+    if (zi > pz !== zj > pz && px < ((xj - xi) * (pz - zi)) / (zj - zi) + xi) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+/**
+ * A point inside the ring (odd-even test), for anchoring polygon labels: the bbox center
+ * when it lies inside, otherwise a grid scan (mirrors OL's interior-point text placement).
+ * Returns the first ring vertex as a last resort for degenerate rings.
+ */
+export function ringInteriorPoint(ring: [x: number, z: number][]): [x: number, z: number] {
+  if (ring.length === 0) throw new Error('ring has no points');
+  let minX = Infinity,
+    minZ = Infinity,
+    maxX = -Infinity,
+    maxZ = -Infinity;
+  for (const [x, z] of ring) {
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (z < minZ) minZ = z;
+    if (z > maxZ) maxZ = z;
+  }
+  const center: [x: number, z: number] = [(minX + maxX) / 2, (minZ + maxZ) / 2];
+  if (pointInRing(center[0], center[1], ring)) return center;
+  for (let fz = 0.25; fz < 1; fz += 0.25) {
+    for (let fx = 0.25; fx < 1; fx += 0.25) {
+      const candidate: [x: number, z: number] = [
+        minX + (maxX - minX) * fx,
+        minZ + (maxZ - minZ) * fz,
+      ];
+      if (pointInRing(candidate[0], candidate[1], ring)) return candidate;
+    }
+  }
+  return ring[0];
+}

@@ -13,8 +13,7 @@ A three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer:
 the toggle is the `onToggleMapMode` prop both wrappers accept, rendered as an icon button above
 the zoom control (`material-symbols:3d-2-rounded` in 2D, `material-symbols:2d-2-rounded` in 3D).
 No picture-in-picture in 3D: the wrapper takes no PiP props and Map.svelte hides its PiP button
-in 3D mode. Delivery lines are not drawn (`deliveryLineData` accepted, unused) — treat that as
-staged work, not a bug to fix blindly.
+in 3D mode.
 
 Follow map.md's one-way data flow for everything around this module; this rule covers only the
 things unique to the 3D side.
@@ -30,7 +29,8 @@ things unique to the 3D side.
   ocean quad, camera rig, tile manager, POI manager, RAF loop. Everything it creates needs a
   matching step in its returned `dispose()`.
 - `lod.ts`, `tileGeometry.ts`, `tileManager.ts`, `groundPan.ts`, `poi.ts`, `poiManager.ts`,
-  `coords.ts`, `heightmap.ts`, `constants.ts` — one concern each, described below.
+  `coords.ts`, `heightmap.ts`, `groundHeights.ts`, `areaLabels.ts`, `deliveryLines.ts`,
+  `shortcutZones.ts`, `constants.ts` — one concern each, described below.
 
 ## Coordinates
 
@@ -139,6 +139,32 @@ don't resize the renderer anywhere else.
   its dot along screen-up in `poiManager.update(camera)` every frame.
 - Resident delivery points draw only within the finest LOD ring: `draws()` gates them on their
   covering tile reaching `RESIDENT_MIN_COVER_Z`.
+
+## Ground overlays (groundHeights + areaLabels + deliveryLines + shortcutZones)
+
+Everything here drapes over the terrain and draws UNDER the POI dots/labels (transparent,
+`depthTest: false`, `renderOrder: 0` — the ground itself renders in the opaque pass first, so
+"behind every other layer except ground" is exactly this).
+
+- `groundHeights.ts` owns the height-tile fetches for overlays, separate from tileManager's
+  cache (tileManager evicts fine tiles outside the camera ring; overlays sit in fixed places).
+  `sample()` returns null while the tile loads and kicks the fetch — callers re-sample on a
+  later frame and mount only complete geometry. `zoomForBox()` bounds tile fetches per feature.
+- `areaLabels.ts` ports OL's `areaNameLayers`: one `makeTextSprite` per area at the ring's
+  interior point (`ringInteriorPoint` in coords.ts), OL's per-flag weight/size/fill and
+  `AREA_NAME_TIERS` gating on the covering tile's z (recomputed in `syncCovers()`, called
+  from `refreshVisibleTiles` right after `updateVisibleTiles()` like `poiManager.syncCovers`).
+  `setTexts()` re-applies localized text — the wrapper re-runs it on locale changes.
+- `deliveryLines.ts` ports OL's flowing dashed lines: one straight ribbon per
+  demand/supply/drop link, sampled along the terrain, width and dash cycle derived from the
+  line's camera distance (OL's screen-px styling), refit when the camera crosses
+  `DELIVERY_LINE_REFIT_LOG2_STEP` of an octave. The dash flow animates `map.offset.x` at
+  OL's px/s rate — the UV math is zoom-independent by construction. Reduced motion freezes it.
+- `shortcutZones.ts` ports OL's `shortcutZoneLayer`: triangulated ring fill (red @0.12)
+  midpoint-subdivided and draped at terrain height, a dashed border (`LineSegments`, dash
+  cycle world-sized — screen-constant dashes would need per-frame rebuilds), and the zone
+  name as a text sprite at the interior point (gated by `mapState.shortcutZoneLabels`).
+  Fill and border mount only once every sampled vertex has ground data.
 
 ## App bridge (the wrapper)
 
