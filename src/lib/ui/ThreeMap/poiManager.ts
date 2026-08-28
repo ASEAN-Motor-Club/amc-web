@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { SpriteNodeMaterial } from 'three/webgpu';
 import { instancedBufferAttribute, uniform } from 'three/tsl';
+import type UniformNode from 'three/src/nodes/core/UniformNode.js';
 import { PointType, type PlayerData, type TeleportPoint } from '$lib/components/Map/Map/types';
 import type { DeliveryPoint } from '$lib/data/deliveryPoint';
 import type { House } from '$lib/data/house';
@@ -16,7 +17,15 @@ import {
   POI_DELIVERY_RESIDENT,
   type PoiDotStyle,
 } from './constants';
-import { dotPaletteKey, makeDotTexture, makeTextSprite } from './poi';
+import {
+  dotPaletteKey,
+  dotSpriteScale,
+  makeDotTexture,
+  makeTextSprite,
+  viewportScale,
+} from './poi';
+import type { TextSprite } from './poi';
+import type { Renderer } from 'three/webgpu';
 import { tileWorldRect } from './heightmap';
 import { colorTextDark, colorGray950, adjustOpacity } from '$lib/tw-var';
 
@@ -35,10 +44,10 @@ export interface PoiMarker {
   coord: Vector3;
   /** World position (meters, y-up). */
   world: [x: number, y: number, z: number];
-  /** The pixel diameter of the instanced dot (the palette size). */
-  size: number;
-  /** On-screen text height for the label, in px. */
-  sizePx: number;
+  /** Dot diameter in CSS px (the palette's). */
+  diameterPx: number;
+  /** On-screen text height for the label, in CSS px. */
+  sizeCss: number;
   id: string;
   info: DeliveryPoint | House | PlayerData | Pin | TeleportPoint;
   /** Job role for delivery points: 1 = source, 2 = destination, else 0/undefined. */
@@ -66,6 +75,7 @@ export interface PoiManager {
   update: (camera: THREE.Camera) => void;
   /** Recomputes cover tiles and resident visibility. */
   syncCovers: () => void;
+  setViewport: () => void;
   setMarkerVisible: (id: string, visible: boolean) => void;
   setLabel: (id: string, text: string) => void;
   dispose: () => void;
@@ -116,6 +126,10 @@ interface SpriteGroup {
   palette: PoiDotStyle;
   sprite: THREE.Sprite;
   material: SpriteNodeMaterial;
+  /** scaleNode uniform - remade when the drawing-buffer height changes. */
+  scale: UniformNode<'float', number>;
+  /** The dpr the group's dot texture was drawn for. */
+  dpr: number;
   posArray: Float32Array;
   opacityArray: Float32Array;
   posAttr: THREE.InstancedBufferAttribute;
@@ -129,9 +143,14 @@ export function createPoiManager(
   scene: THREE.Scene,
   meta: TilesMeta,
   tileManager: TileManager,
+  camera: THREE.PerspectiveCamera,
+  renderer: Renderer,
 ): PoiManager {
   const poiGroup = new THREE.Group();
   scene.add(poiGroup);
+
+  /** Sprite screen metrics for the current drawing buffer; refit on viewport changes. */
+  let viewport = viewportScale(camera, renderer);
 
   /** Per-marker render data: which sprite group + slot inside it. */
   const state = new Map<string, { groupKey: string; slot: number }>();
@@ -166,12 +185,14 @@ export function createPoiManager(
       depthTest: false,
       depthWrite: false,
     });
-    material.map = makeDotTexture(palette);
+    material.map = makeDotTexture(palette, viewport);
     // Per-instance position + visibility; the palette size is constant for the whole
     // sprite, so it is a uniform - exactly the example's `scaleNode = uniform(15)`.
     material.positionNode = instancedBufferAttribute(posAttr);
     material.opacityNode = instancedBufferAttribute(opacityAttr);
-    material.scaleNode = uniform(palette.size);
+    // The dot canvas maps 1:1 onto device pixels for the current drawing buffer.
+    const scale = uniform(dotSpriteScale(palette, viewport));
+    material.scaleNode = scale;
 
     const sprite = new THREE.Sprite(material);
     sprite.count = MIN_CAPACITY;
@@ -184,6 +205,8 @@ export function createPoiManager(
       palette,
       sprite,
       material,
+      scale,
+      dpr: viewport.dpr,
       posArray,
       opacityArray,
       posAttr,
@@ -278,8 +301,8 @@ export function createPoiManager(
       pointType: input.pointType,
       coord: input.coord,
       world,
-      size: palette.size,
-      sizePx: POI_CONFIG[input.pointType].label.sizePx,
+      diameterPx: palette.diameterPx,
+      sizeCss: POI_CONFIG[input.pointType].label.sizeCss,
       id: input.id,
       info: input.info,
       jobs: input.jobs,
@@ -322,7 +345,7 @@ export function createPoiManager(
         if (jobs !== (existing.jobs ?? 0)) {
           existing.jobs = jobs;
           const palette = paletteFor(input);
-          existing.size = palette.size;
+          existing.diameterPx = palette.diameterPx;
           const prev = stateOf(existing.id);
           const newGroup = groupFor(palette);
           if (newGroup.key !== prev.groupKey) {
@@ -375,7 +398,8 @@ export function createPoiManager(
     if (!camera || !pointerNdc) return null;
 
     // sizeAttenuation:false sprites keep a constant screen size, so at any depth the dot's
-    // NDC half-extent is size / (2 * tan(fovY/2)) - independent of distance. Project each
+    // NDC half-extent is (diameter/2 + stroke) / tan(fovY/2) - independent of distance, and
+    // exactly the hit area of the fill circle drawn in the group's canvas. Project each
     // marker to NDC and test 2D distance against that constant radius, nearest-first so an
     // overlapping nearer dot wins (matching the old per-sprite raycast's sort order).
     const fovY = (camera as THREE.PerspectiveCamera).fov;
@@ -399,7 +423,9 @@ export function createPoiManager(
       .sort((a, b) => a.d - b.d);
 
     for (const c of candidates) {
-      const half = (0.5 * c.m.size) / tanHalfFov;
+      // Half the drawn canvas side in world units - the fill circle exactly fills it.
+      const group = groupOf(stateOf(c.m.id).groupKey);
+      const half = group.scale.value / 2 / tanHalfFov;
       // Markers behind the camera project to an out-of-range NDC z - skip them.
       if (c.ndcZ <= -1 || c.ndcZ >= 1) continue;
       const dx = c.ndcX - pointerNdc.x;
@@ -411,14 +437,15 @@ export function createPoiManager(
 
   // ---- labels (cannot be instanced - one Sprite per labelled marker). ----
 
-  const labels = new Map<string, THREE.Sprite>();
+  const labels = new Map<string, TextSprite>();
 
   function removeLabel(id: string): void {
-    const spr = labels.get(id);
-    if (!spr) return;
-    poiGroup.remove(spr);
-    spr.material.map?.dispose();
-    spr.material.dispose();
+    const label = labels.get(id);
+    if (!label) return;
+    poiGroup.remove(label.sprite);
+    const material = label.sprite.material;
+    material.map?.dispose();
+    material.dispose();
     labels.delete(id);
   }
 
@@ -427,14 +454,19 @@ export function createPoiManager(
     if (!marker) return;
     removeLabel(id);
     if (!text) return;
-    const label = makeTextSprite(text, {
-      font: '600 40px sans-serif',
-      fillStyle: colorTextDark,
-      strokeStyle: adjustOpacity(colorGray950, 0.4),
-      strokeWidth: 8,
-      sizePx: marker.sizePx,
-    });
-    poiGroup.add(label);
+    const label = makeTextSprite(
+      text,
+      {
+        weight: 600,
+        sizeCss: marker.sizeCss,
+        family: 'sans-serif',
+        fillStyle: colorTextDark,
+        strokeStyle: adjustOpacity(colorGray950, 0.4),
+        strokeWidthCss: 1,
+      },
+      viewport,
+    );
+    poiGroup.add(label.sprite);
     labels.set(id, label);
   }
 
@@ -453,7 +485,7 @@ export function createPoiManager(
     for (const marker of ordered) {
       const label = labels.get(marker.id);
       if (!label) continue;
-      label.position
+      label.sprite.position
         .copy(_upWorld)
         .add(_markerPos.set(marker.world[0], marker.world[1], marker.world[2]));
     }
@@ -485,6 +517,45 @@ export function createPoiManager(
     }
   }
 
+  /**
+   * Refits every sprite to the current drawing buffer. New buffer height → new
+   * pxPerWorld → new scaleNode values; a DPR change redraws dot textures and label
+   * sprites at the new native size (a DPR change always accompanies a buffer resize).
+   */
+  function setViewport(): void {
+    const next = viewportScale(camera, renderer);
+    if (next.dpr === viewport.dpr && next.pxPerWorld === viewport.pxPerWorld) return;
+    const dprChanged = next.dpr !== viewport.dpr;
+    viewport = next;
+    for (const group of groups.values()) {
+      if (dprChanged) {
+        const oldMap = group.material.map;
+        group.material.map = makeDotTexture(group.palette, viewport);
+        oldMap?.dispose();
+      }
+      group.scale.value = dotSpriteScale(group.palette, viewport);
+    }
+    if (dprChanged) {
+      for (const [id, label] of labels) {
+        const remade = makeTextSprite(label.text, label.style, viewport);
+        poiGroup.remove(label.sprite);
+        const material = label.sprite.material;
+        material.map?.dispose();
+        material.dispose();
+        poiGroup.add(remade.sprite);
+        labels.set(id, remade);
+      }
+    } else {
+      for (const label of labels.values()) {
+        label.sprite.scale.set(
+          label.widthDevice / viewport.pxPerWorld,
+          label.heightDevice / viewport.pxPerWorld,
+          1,
+        );
+      }
+    }
+  }
+
   refreshAll();
 
   return {
@@ -494,7 +565,6 @@ export function createPoiManager(
     setPoisFor,
     markersOf: (pointType: PointType) => ordered.filter((m) => m.pointType === pointType),
     pick,
-    update,
     syncCovers,
     setMarkerVisible(id: string, visible: boolean) {
       const marker = markers.get(id);
@@ -503,7 +573,8 @@ export function createPoiManager(
       applyVisibility(marker);
     },
     setLabel,
-
+    update,
+    setViewport,
     dispose() {
       for (const id of [...labels.keys()]) removeLabel(id);
       markers.clear();
@@ -511,6 +582,7 @@ export function createPoiManager(
       ordered = [];
       for (const group of groups.values()) {
         poiGroup.remove(group.sprite);
+        group.material.map?.dispose();
         group.material.dispose();
       }
       groups.clear();

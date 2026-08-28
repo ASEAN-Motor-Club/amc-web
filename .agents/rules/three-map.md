@@ -1,5 +1,5 @@
 ---
-description: The experimental 3D terrain map (three.js) — the three-stage tile pipeline, quadtree LOD selection, inertial camera controls, instanced POI sprites, game-to-world coordinates, and the ThreeMapWrapper bridge.
+description: The 3D terrain map (three.js) — the three-stage tile pipeline, quadtree LOD selection, inertial camera controls, instanced POI sprites, game-to-world coordinates, and the ThreeMapWrapper bridge.
 globs:
   - src/lib/ui/ThreeMap/**
   - src/lib/components/Map/Map/ThreeMapWrapper.svelte
@@ -9,10 +9,12 @@ globs:
 
 A three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer: the same
 `static/map_tiles/{version}` color+height pyramids the OL map serves, draped over a quadtree of
-3D terrain patches. Rendered in place of `OlMapWrapper` behind the `__experimental_3d_map`
-localStorage flag (`EXPERIMENTAL_3D_MAP_FLAG` in `Map.svelte`). Terrain + POIs only: delivery
-lines are not drawn (`deliveryLineData` accepted, unused) and the PiP button is unused — treat
-those as staged work, not bugs to fix blindly.
+3D terrain patches. Rendered in place of `OlMapWrapper` when the user toggles the map mode —
+the toggle is the `onToggleMapMode` prop both wrappers accept, rendered as an icon button above
+the zoom control (`material-symbols:3d-2-rounded` in 2D, `material-symbols:2d-2-rounded` in 3D).
+No picture-in-picture in 3D: the wrapper takes no PiP props and Map.svelte hides its PiP button
+in 3D mode. Delivery lines are not drawn (`deliveryLineData` accepted, unused) — treat that as
+staged work, not a bug to fix blindly.
 
 Follow map.md's one-way data flow for everything around this module; this rule covers only the
 things unique to the 3D side.

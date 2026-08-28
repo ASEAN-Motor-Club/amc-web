@@ -207,7 +207,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   );
   const selectionPan = createSelectionPan(renderer.domElement, camera, controls);
   const panPhys: GroundPan = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
-  const poiManager = createPoiManager(scene, meta, tileManager);
+  const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer);
 
   function refreshVisibleTiles(): void {
     tileManager.updateVisibleTiles();
@@ -222,6 +222,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
+    poiManager.setViewport();
     // The size has settled - clear the transition blur.
     renderer.domElement.style.filter = '';
   }

@@ -34,9 +34,8 @@
   export interface ThreeMapWrapperProps {
     /** CSS class to apply to the 3D map container */
     class?: ClassValue;
-    /** Whether the map is currently detached into a picture-in-picture window */
-    pipActive: boolean;
-    enterPip: () => void;
+    /** Toggles the map back to the 2D renderer */
+    onToggleMapMode?: () => void;
     mapState: MapState;
     jobsData: DeliveryJob[];
     playerData: PlayerData[];
@@ -54,7 +53,6 @@
 
   const {
     class: propsClass,
-    pipActive,
     mapState,
     playerData,
     houseData,
@@ -62,9 +60,9 @@
     teleportData,
     selection,
     onHover,
+    onToggleMapMode,
     onClick,
     onRightClick,
-    enterPip: _enterPip,
     jobsData,
     deliveryLineData: _deliveryLineData,
   }: ThreeMapWrapperProps = $props();
@@ -365,29 +363,38 @@
 
 <div class="relative h-full w-full">
   <div class={twMerge('h-full w-full', clsx(propsClass))} bind:this={container}></div>
-  {#if !pipActive}
-    <div class="absolute right-4 bottom-4 flex flex-col gap-2">
-      <div class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5">
-        <Button
-          class="text-text-dark pointer-events-auto rounded-b-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
-          color="custom"
-          size="sm"
-          icon
-          onClick={zoomIn}
-        >
-          <Icon class="i-material-symbols:add-2-rounded" />
-        </Button>
-        <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
-        <Button
-          class="text-text-dark pointer-events-auto rounded-t-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
-          color="custom"
-          size="sm"
-          icon
-          onClick={zoomOut}
-        >
-          <Icon class="i-material-symbols:remove-rounded" />
-        </Button>
-      </div>
+  <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
+    {#if onToggleMapMode}
+      <Button
+        class="text-text-dark pointer-events-auto rounded-sm !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+        color="custom"
+        size="sm"
+        icon
+        onClick={onToggleMapMode}
+      >
+        <Icon class="i-material-symbols:2d-2-rounded" />
+      </Button>
+    {/if}
+    <div class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5">
+      <Button
+        class="text-text-dark pointer-events-auto rounded-b-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+        color="custom"
+        size="sm"
+        icon
+        onClick={zoomIn}
+      >
+        <Icon class="i-material-symbols:add-2-rounded" />
+      </Button>
+      <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
+      <Button
+        class="text-text-dark pointer-events-auto rounded-t-none !bg-gray-900/50 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+        color="custom"
+        size="sm"
+        icon
+        onClick={zoomOut}
+      >
+        <Icon class="i-material-symbols:remove-rounded" />
+      </Button>
     </div>
-  {/if}
+  </div>
 </div>

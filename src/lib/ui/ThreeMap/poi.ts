@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { Renderer } from 'three/webgpu';
 import { formatHex, oklch, type Color } from 'culori';
 
 /** Converts an oklch() string to hex (three's Color cannot parse oklch), via culori. */
@@ -22,81 +23,158 @@ export interface DotPalette {
   fill: string | number;
   /** Dot outline color. */
   stroke: string | number;
-  /** Dot diameter in screen px. */
-  size: number;
-  /** Dot outline thickness in texture px (defaults to DOT_STROKE_PX). */
+  /** Dot diameter in CSS px (OL circle radius * 2). */
+  diameterPx: number;
+  /** Outline thickness in CSS px; defaults to 1 (OL's single circle-stroke-width). */
   strokeWidth?: number;
 }
 
-const DOT_TEXTURE_SIZE = 128;
-const DOT_RADIUS_PX = 52; // ~40% of canvas so the ring fits
-const DOT_STROKE_PX = 10;
+/** Default outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
+export const DEFAULT_DOT_STROKE_CSS_PX = 1;
+/** Device-px margin around the outer stroke edge so the AA fringe survives linear filtering. */
+const DOT_AA_PAD_PX = 2;
 
-/** Palette signature - identical palettes share one texture (and one instanced sprite). */
-export function dotPaletteKey(palette: DotPalette): string {
-  return `${palette.fill}|${palette.stroke}|${palette.strokeWidth ?? DOT_STROKE_PX}`;
+export interface ViewportScale {
+  /** Device px per CSS px on the drawing surface. */
+  dpr: number;
+  /** Device px covered by one world unit for a sizeAttenuation:false sprite. */
+  pxPerWorld: number;
 }
 
-const dotTextureCache = new Map<string, THREE.CanvasTexture>();
+const _bufferSize = new THREE.Vector2();
 
 /**
- * One dot texture per distinct palette, shared by every marker using it. Each instanced
- * sprite renders a single texture, so the dot always samples its own cell - no per-instance
- * UV, which is what keeps instancing reliable across marker types.
+ * Sprite screen metrics for the current drawing buffer. A sizeAttenuation:false sprite's
+ * NDC extent is scale/tan(fovY/2), so one world unit spans f*bufferHeight/2 device px -
+ * the exact factor that divides a native-size canvas into sprite scale.
  */
-export function makeDotTexture(palette: DotPalette): THREE.CanvasTexture {
-  const key = dotPaletteKey(palette);
-  const cached = dotTextureCache.get(key);
-  if (cached) return cached;
+export function viewportScale(camera: THREE.PerspectiveCamera, renderer: Renderer): ViewportScale {
+  renderer.getDrawingBufferSize(_bufferSize);
+  const f = 1 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  return {
+    dpr: _bufferSize.y / Math.max(renderer.domElement.clientHeight, 1),
+    pxPerWorld: Math.max((f * _bufferSize.y) / 2, 1e-6),
+  };
+}
 
+/** Palette signature - identical palettes share one instanced sprite group. */
+export function dotPaletteKey(palette: DotPalette): string {
+  return `${palette.fill}|${palette.stroke}|${palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX}`;
+}
+
+/** Outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
+export function dotStrokeCssPx(palette: DotPalette): number {
+  return palette.strokeWidth ?? DEFAULT_DOT_STROKE_CSS_PX;
+}
+
+/** Canvas side in device px: the stroke-cleared dot at native size plus an AA margin. */
+function dotCanvasSidePx(palette: DotPalette, viewport: ViewportScale): number {
+  const radiusDevice = (palette.diameterPx / 2) * viewport.dpr;
+  const strokeDevice = dotStrokeCssPx(palette) * viewport.dpr;
+  return Math.ceil(2 * (radiusDevice + strokeDevice / 2 + DOT_AA_PAD_PX));
+}
+
+/** Sprite scaleNode value mapping the dot canvas 1:1 onto device pixels. */
+export function dotSpriteScale(palette: DotPalette, viewport: ViewportScale): number {
+  return dotCanvasSidePx(palette, viewport) / viewport.pxPerWorld;
+}
+
+/**
+ * One dot texture per distinct palette, drawn at its native on-screen device size (plus
+ * stroke and AA padding) for the given viewport - no downsampling, no shimmer. Each
+ * instanced sprite renders a single texture, so the dot always samples its own cell - no
+ * per-instance UV, which is what keeps instancing reliable across marker types. Remake on
+ * DPR changes (with dotSpriteScale for the matching scale); an unchanged DPR keeps the
+ * canvas across window resizes - only the sprite scale follows the buffer height.
+ */
+export function makeDotTexture(palette: DotPalette, viewport: ViewportScale): THREE.CanvasTexture {
+  const side = dotCanvasSidePx(palette, viewport);
   const canvas = document.createElement('canvas');
-  canvas.width = DOT_TEXTURE_SIZE;
-  canvas.height = DOT_TEXTURE_SIZE;
+  canvas.width = side;
+  canvas.height = side;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('no 2d context for dot');
-  const cx = DOT_TEXTURE_SIZE / 2;
-  const cy = DOT_TEXTURE_SIZE / 2;
+  const cx = side / 2;
+  const cy = side / 2;
   ctx.beginPath();
-  ctx.arc(cx, cy, DOT_RADIUS_PX, 0, Math.PI * 2);
+  ctx.arc(cx, cy, (palette.diameterPx / 2) * viewport.dpr, 0, Math.PI * 2);
   ctx.fillStyle = makeColor(palette.fill).getStyle();
   ctx.fill();
-  ctx.lineWidth = palette.strokeWidth ?? DOT_STROKE_PX;
+  ctx.lineWidth = dotStrokeCssPx(palette) * viewport.dpr;
   ctx.strokeStyle = makeColor(palette.stroke).getStyle();
   ctx.stroke();
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.generateMipmaps = false;
-  dotTextureCache.set(key, texture);
+  texture.minFilter = THREE.LinearFilter;
   return texture;
 }
 
-const TEXTURE_W = 512;
-const TEXTURE_H = 128;
-/** Text occupies this fraction of the sprite texture height (baseline-middle at center). */
-const TEXT_HEIGHT_FRACTION = 40 / TEXTURE_H;
+export interface LabelStyle {
+  /** CSS font weight, e.g. 600. */
+  weight: number;
+  /** Text height in CSS px. */
+  sizeCss: number;
+  /** CSS font-family list. */
+  family: string;
+  fillStyle: string;
+  strokeStyle: string;
+  /** Outline thickness in CSS px. */
+  strokeWidthCss: number;
+}
 
-/** A text sprite always facing the camera, kept at a constant screen size. */
-export function makeTextSprite(text: string, style: LabelStyle): THREE.Sprite {
+export interface TextSprite {
+  sprite: THREE.Sprite;
+  /** The text and style the sprite was built from - remade on DPR changes. */
+  text: string;
+  style: LabelStyle;
+  /** Canvas size in device px - rescale with viewportScale.pxPerWorld on viewport changes. */
+  widthDevice: number;
+  heightDevice: number;
+}
+
+/** Device-px margin around the glyph ink so the AA fringe survives linear filtering. */
+const LABEL_AA_PAD_PX = 2;
+/** Glyph-center height above the sprite's bottom anchor, in CSS px - matches the old
+ * half-texture lift and OL's 12-14px label offsetY. */
+const LABEL_LIFT_CSS_PX = 15;
+
+/** A text sprite always facing the camera, kept at a constant screen size. Ink is measured
+ * and packed at native device size, so remake it when the DPR changes. */
+export function makeTextSprite(
+  text: string,
+  style: LabelStyle,
+  viewport: ViewportScale,
+): TextSprite {
   const canvas = document.createElement('canvas');
-  canvas.width = TEXTURE_W;
-  canvas.height = TEXTURE_H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('no 2d context for text');
-  ctx.font = style.font;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.measureText(text);
-  const cx = TEXTURE_W / 2;
-  const cy = TEXTURE_H / 2;
-  if (style.strokeWidth > 0) {
+  ctx.font = `${style.weight} ${style.sizeCss * viewport.dpr}px ${style.family}`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  const ink = ctx.measureText(text);
+  const inkW = ink.actualBoundingBoxLeft + ink.actualBoundingBoxRight;
+  const inkH = ink.actualBoundingBoxAscent + ink.actualBoundingBoxDescent;
+  const strokeDevice = style.strokeWidthCss * viewport.dpr;
+  const pad = strokeDevice / 2 + LABEL_AA_PAD_PX;
+  // Resizing the canvas resets the context - set font/alignment again before drawing.
+  canvas.width = Math.ceil(inkW + pad * 2);
+  canvas.height = Math.ceil(inkH / 2 + LABEL_LIFT_CSS_PX * viewport.dpr + pad);
+  ctx.font = `${style.weight} ${style.sizeCss * viewport.dpr}px ${style.family}`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.lineJoin = 'round';
+  // Anchor the ink box: its left/top edge sits pad in from the canvas corner.
+  const ax = pad + ink.actualBoundingBoxLeft;
+  const ay = pad + ink.actualBoundingBoxAscent;
+  if (strokeDevice > 0) {
     ctx.strokeStyle = style.strokeStyle;
-    ctx.lineWidth = style.strokeWidth;
-    ctx.lineJoin = 'round';
-    ctx.strokeText(text, cx, cy);
+    ctx.lineWidth = strokeDevice;
+    ctx.strokeText(text, ax, ay);
   }
   ctx.fillStyle = style.fillStyle;
-  ctx.fillText(text, cx, cy);
+  ctx.fillText(text, ax, ay);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -114,18 +192,13 @@ export function makeTextSprite(text: string, style: LabelStyle): THREE.Sprite {
   const sprite = new THREE.Sprite(material);
   sprite.center.set(0.5, 0);
   sprite.renderOrder = 2;
-  // World units map 1:1 to screen pixels with sizeAttenuation: false. Scale so the
-  // text (which fills TEXT_HEIGHT_FRACTION of the texture) renders style.sizePx tall.
-  // Anchor bottom-center so the caller positions the label above the dot.
-  sprite.scale.set(style.sizePx / TEXT_HEIGHT_FRACTION, style.sizePx, 1);
-  return sprite;
-}
-
-export interface LabelStyle {
-  font: string;
-  fillStyle: string;
-  strokeStyle: string;
-  strokeWidth: number;
-  /** On-screen text height in px. */
-  sizePx: number;
+  // Map the canvas 1:1 onto device pixels (sizeAttenuation:false: NDC extent = scale*f).
+  sprite.scale.set(canvas.width / viewport.pxPerWorld, canvas.height / viewport.pxPerWorld, 1);
+  return {
+    sprite,
+    text,
+    style,
+    widthDevice: canvas.width,
+    heightDevice: canvas.height,
+  };
 }

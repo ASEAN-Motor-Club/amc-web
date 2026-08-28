@@ -64,17 +64,17 @@ export interface PoiDotStyle {
   fill: string;
   /** Dot outline color. */
   stroke: string;
-  /** Dot diameter in screen px (OL circle radius * 2). */
-  size: number;
-  /** Outline thickness in texture px; defaults to the single width. */
+  /** Dot diameter in CSS px (OL circle radius * 2). */
+  diameterPx: number;
+  /** Outline thickness in CSS px (OL circle-stroke-width). */
   strokeWidth?: number;
 }
 
 /** Label styling for a POI type, matching OL's label styles:
- * - sizePx: on-screen text height in px (OL font: 0.5rem=8, 0.6rem=10, 0.75rem=12)
+ * - sizeCss: on-screen text height in px (OL font: 0.5rem=8, 0.6rem=10, 0.75rem=12)
  */
 export interface PoiLabelConfig {
-  sizePx: number;
+  sizeCss: number;
 }
 
 /** Everything a POI type renders with - the single source of truth for the 3D map. */
@@ -83,41 +83,41 @@ export interface PoiTypeConfig {
   label: PoiLabelConfig;
 }
 
-const textAdjust = (px: number) => px / 280;
-const dotSize = (olRadius: number) => olRadius / 400;
+/** olRadius * 2 - OL's circle-radius is a CSS px radius. */
+const dotSize = (olRadius: number) => olRadius * 2;
 
 export const POI_CONFIG: Record<number, PoiTypeConfig> = {
   // Delivery - no text label in OL
   0: {
-    dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
-    label: { sizePx: textAdjust(0) },
+    dot: { fill: colorYellow500, stroke: colorYellow950, diameterPx: dotSize(6) },
+    label: { sizeCss: 0 },
   },
   // House - 600 0.6rem, offset -12
   1: {
-    dot: { fill: colorCyan500, stroke: colorCyan950, size: dotSize(6) },
-    label: { sizePx: textAdjust(10) },
+    dot: { fill: colorCyan500, stroke: colorCyan950, diameterPx: dotSize(6) },
+    label: { sizeCss: 10 },
   },
   // Player - 600 0.75rem, offset -12
   2: {
-    dot: { fill: colorEmerald400, stroke: colorEmerald950, size: dotSize(4) },
-    label: { sizePx: textAdjust(12) },
+    dot: { fill: colorEmerald400, stroke: colorEmerald950, diameterPx: dotSize(4) },
+    label: { sizeCss: 12 },
   },
   // Pin - 600 0.75rem, offset -14
   3: {
-    dot: { fill: colorRed400, stroke: colorRed950, size: dotSize(5) },
-    label: { sizePx: textAdjust(12) },
+    dot: { fill: colorRed400, stroke: colorRed950, diameterPx: dotSize(5) },
+    label: { sizeCss: 12 },
   },
   // Teleport - 600 0.5rem, offset -12
   4: {
-    dot: { fill: colorViolet400, stroke: colorViolet950, size: dotSize(5) },
-    label: { sizePx: textAdjust(8) },
+    dot: { fill: colorViolet400, stroke: colorViolet950, diameterPx: dotSize(5) },
+    label: { sizeCss: 8 },
   },
 };
 
 /** Fallback config for any unrecognized POI type. */
 export const POI_DEFAULT: PoiTypeConfig = {
-  dot: { fill: colorYellow500, stroke: colorYellow950, size: dotSize(6) },
-  label: { sizePx: textAdjust(12) },
+  dot: { fill: colorYellow500, stroke: colorYellow950, diameterPx: dotSize(6) },
+  label: { sizeCss: 12 },
 };
 
 /** Delivery-point variants, mirroring the OL delivery layer:
@@ -127,17 +127,17 @@ export const POI_DEFAULT: PoiTypeConfig = {
 export const POI_DELIVERY_RESIDENT: PoiDotStyle = {
   fill: colorAmber300,
   stroke: colorAmber950,
-  size: dotSize(5),
+  diameterPx: dotSize(5),
 };
 export const POI_DELIVERY_JOB_SOURCE: PoiDotStyle = {
   fill: colorOrange500,
   stroke: colorGreen600,
-  size: dotSize(6),
-  strokeWidth: 20,
+  diameterPx: dotSize(6),
+  strokeWidth: 1,
 };
 export const POI_DELIVERY_JOB_DEST: PoiDotStyle = {
   fill: colorOrange500,
   stroke: colorBlue600,
-  size: dotSize(6),
-  strokeWidth: 20,
+  diameterPx: dotSize(6),
+  strokeWidth: 1,
 };

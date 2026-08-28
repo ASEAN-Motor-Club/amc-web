@@ -87,6 +87,8 @@
     onHover?: (feature: Feature | undefined, pixel: [x: number, y: number]) => void;
     onClick?: (feature: Feature | undefined) => void;
     onRightClick?: (feature: Feature | undefined) => void;
+    /** Toggles the map between the 2D and 3D renderers */
+    onToggleMapMode?: () => void;
   }
 
   const {
@@ -104,6 +106,7 @@
     onHover,
     onClick,
     onRightClick,
+    onToggleMapMode,
   }: Props = $props();
 
   let map: OlMap;
@@ -1015,5 +1018,6 @@
   onMoveEnd={handleMoveEnd}
   {pipActive}
   onEnterPip={enterPip}
+  {onToggleMapMode}
   bind:this={map}
 />

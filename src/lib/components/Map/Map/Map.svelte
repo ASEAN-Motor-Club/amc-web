@@ -41,13 +41,6 @@
   }: Props = $props();
 
   const MAP_STATE_STORAGE_KEY = 'mapState';
-  const EXPERIMENTAL_3D_MAP_FLAG = '__experimental_3d_map';
-
-  /** Whether the 3D map mode is even available: gated behind an experimental flag in
-   * localStorage so regular visitors never see the switch. */
-  const threeDEnabled = $derived(
-    typeof window !== 'undefined' && localStorage.getItem(EXPERIMENTAL_3D_MAP_FLAG) === '1',
-  );
   /** The active map mode - 3D renders the terrain through ThreeMapWrapper. */
   let threeDMode = $state(false);
 
@@ -404,6 +397,10 @@
     clearSelection();
   };
 
+  const toggleMapMode = () => {
+    threeDMode = !threeDMode;
+  };
+
   const handleInfoClick = () => {
     if (!hoverInfo) return;
 
@@ -435,8 +432,6 @@
 <div class="relative h-full w-full" bind:this={mapRootEl}>
   {#if threeDMode}
     <ThreeMapWrapper
-      {pipActive}
-      {enterPip}
       {mapState}
       {jobsData}
       {playerData}
@@ -444,6 +439,7 @@
       {pinsData}
       {teleportData}
       {selection}
+      onToggleMapMode={toggleMapMode}
       onHover={handleHover}
       onClick={handleMapClick}
       onRightClick={handleMapRightClick}
@@ -461,20 +457,11 @@
       {shortcutZoneData}
       {deliveryLineData}
       {selection}
+      onToggleMapMode={toggleMapMode}
       onHover={handleHover}
       onClick={handleMapClick}
       onRightClick={handleMapRightClick}
     />
-  {/if}
-
-  {#if threeDEnabled && !pipActive}
-    <button
-      type="button"
-      class="absolute top-3 right-3 z-10 rounded-sm bg-gray-900/50 px-2 py-1 text-xs text-white shadow ring ring-white/5 backdrop-blur-sm hover:bg-gray-900/60"
-      onclick={() => (threeDMode = !threeDMode)}
-    >
-      {threeDMode ? '2D' : '3D'}
-    </button>
   {/if}
 
   {#if !pipActive}

@@ -2,8 +2,8 @@
 
 A Three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer. It drapes the
 same `static/map_tiles/719` color+height pyramids that OpenLayers uses over a quadtree of 3D
-terrain patches. Rendered in place of the OL map through a Wrapper component toggled behind the
-`__experimental_3d_map` localStorage flag.
+terrain patches. Rendered in place of the OL map through the `onToggleMapMode` toggle button both
+map wrappers expose above their zoom control.
 
 ## File layout
 
@@ -75,11 +75,11 @@ until all four of its finer replacements have loaded, so zooming never flashes a
 - `src/lib/ui/ThreeMap/scene.ts` exports `createThreeMapScene(container)`; the Svelte wrapper
   (`src/lib/components/Map/Map/ThreeMapWrapper.svelte`) creates it in `onMount` and disposes it on
   unmount (`dispose()` cancels RAF, removes listeners, disposes the renderer).
-- `Map.svelte` swtches between `OlMapWrapper` and `ThreeMapWrapper` via a button shown only when
-  `localStorage.__experimental_3d_map === '1'`. The Wrapper carries the same props shape as
-  `OlMapWrapper`, but POI layers and input callbacks (hover/click/right-click) are not wired yet —
-  stage 1 renders terrain only.
-- The OL base tile layer (`src/lib/ui/OlMap/OlMap.svelte`) now reads its zoom range from
+- `Map.svelte` toggles between `OlMapWrapper` and `ThreeMapWrapper` via the `onToggleMapMode`
+  button both wrappers render above the zoom control. The Wrapper carries the same props shape as
+  `OlMapWrapper`, minus the PiP pair (`pipActive`/`enterPip` — no PiP in 3D); POI layers and
+  input callbacks (hover/click/right-click) are wired. Delivery lines are not drawn yet.
+- The OL base tile layer (`src/lib/ui/OlMap/OlMap.svelte`) reads its zoom range from
   `TILES_META` instead of hardcoded values.
 
 ## Asset URLs

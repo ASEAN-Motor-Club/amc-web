@@ -73,6 +73,10 @@
      */
     disablePip?: boolean;
     /**
+     * Callback for the map mode toggle button (2D/3D), shown above the zoom control
+     */
+    onToggleMapMode?: () => void;
+    /**
      * Centre and zoom to open at, e.g. one captured with `getViewState` before an unmount.
      * Defaults to the whole map.
      */
@@ -93,6 +97,7 @@
     onEnterPip,
     disablePip,
     initialView,
+    onToggleMapMode,
   }: OlMapProps = $props();
 
   const pipSupported = $derived(
@@ -248,6 +253,17 @@
           onClick={() => onEnterPip?.()}
         >
           <Icon class="i-material-symbols:picture-in-picture-center-outline-rounded" />
+        </Button>
+      {/if}
+      {#if onToggleMapMode}
+        <Button
+          class="text-text-dark pointer-events-auto rounded-sm !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          color="custom"
+          size="sm"
+          icon
+          onClick={onToggleMapMode}
+        >
+          <Icon class="i-material-symbols:3d-2-rounded" />
         </Button>
       {/if}
       <div class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5">
