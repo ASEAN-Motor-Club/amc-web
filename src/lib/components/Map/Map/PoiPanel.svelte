@@ -12,16 +12,13 @@
 
   interface Props {
     mapState: MapState;
-    /** In 3D mode, shortcut zones and area labels are not supported - force them off. */
-    threeDMode: boolean;
     havePins: boolean;
     haveTeleports: boolean;
     haveShortcutZones: boolean;
     onToggle: (poi: PoiType) => void;
   }
 
-  const { mapState, threeDMode, havePins, haveTeleports, haveShortcutZones, onToggle }: Props =
-    $props();
+  const { mapState, havePins, haveTeleports, haveShortcutZones, onToggle }: Props = $props();
 
   let poiOpen = $state(false);
 </script>
@@ -178,16 +175,14 @@
                   dotClass="border-red-500 bg-red-500/12 border-dashed border-2"
                   label={m['map.poi.shortcut_zone']()}
                   desc={m['map.poi.shortcut_zone_desc']()}
-                  enabled={threeDMode ? false : mapState.shortcutZone}
-                  disabled={threeDMode}
+                  enabled={mapState.shortcutZone}
                   onclick={() => onToggle(PoiType.ShortcutZone)}
                 />
                 <PoiItem
                   dotClass="border-gray-950 bg-white"
                   label={m['map.poi.shortcut_zone_labels']()}
                   desc={m['map.poi.shortcut_zone_labels_desc']()}
-                  enabled={threeDMode ? false : mapState.shortcutZoneLabels}
-                  disabled={threeDMode}
+                  enabled={mapState.shortcutZoneLabels}
                   onclick={() => onToggle(PoiType.ShortcutZoneLabels)}
                   parentEnabled={mapState.shortcutZone}
                   sub
@@ -201,8 +196,7 @@
                 dotClass="border-gray-600 bg-gray-300"
                 label={m['map.poi.area']()}
                 desc={m['map.poi.area_desc']()}
-                enabled={threeDMode ? false : mapState.areaName}
-                disabled={threeDMode}
+                enabled={mapState.areaName}
                 onclick={() => onToggle(PoiType.AreaName)}
               />
               {#if dev}

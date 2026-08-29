@@ -270,15 +270,12 @@
         mapState.teleportLabels = !mapState.teleportLabels;
         break;
       case PoiType.ShortcutZone:
-        if (threeDMode) break;
         mapState.shortcutZone = !mapState.shortcutZone;
         break;
       case PoiType.ShortcutZoneLabels:
-        if (threeDMode) break;
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
       case PoiType.AreaName:
-        if (threeDMode) break;
         mapState.areaName = !mapState.areaName;
         break;
       case PoiType.AreaBound:
@@ -476,7 +473,6 @@
 
     <PoiPanel
       {mapState}
-      {threeDMode}
       {havePins}
       {haveTeleports}
       {haveShortcutZones}
