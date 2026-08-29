@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { prefersReducedMotion } from 'svelte/motion';
   import * as THREE from 'three';
   import Feature from 'ol/Feature';
   import type { DeliveryJob, HouseData } from '$lib/api/types';
+  import type { ShortcutZone } from '$lib/api/shortcutZone';
   import {
     PointType,
     type MapSelection,
@@ -10,6 +12,7 @@
     type PlayerData,
     type TeleportPoint,
   } from '$lib/components/Map/Map/types';
+  import type { DeliveryLineData } from './deliveryLine';
   import { getMtLocale } from '$lib/utils/getMtLocale';
   import {
     deliveryPoints as deliveryPointsList,
@@ -44,6 +47,10 @@
     houseData: HouseData | undefined;
     pinsData: Pins;
     teleportData: TeleportPoint[];
+    /** Shortcut zones to shade on the ground, gated by `mapState.shortcutZone` */
+    shortcutZoneData: ShortcutZone[];
+    /** Delivery lines around the selected/hovered delivery point, gated by `mapState.delivery` */
+    deliveryLineData: DeliveryLineData | undefined;
     /** Point to highlight and lock the map onto, driven by the URL */
     selection?: MapSelection;
     onHover?: (feature: Feature | undefined, pixel: [x: number, y: number]) => void;
@@ -58,6 +65,8 @@
     houseData,
     pinsData,
     teleportData,
+    shortcutZoneData,
+    deliveryLineData,
     selection,
     onHover,
     onToggleMapMode,
@@ -235,6 +244,32 @@
     if (!three) return;
     void getMtLocale(areaBoundaries[0]?.name ?? { en: '' });
     three.areaLabels.setTexts();
+  });
+
+  $effect(() => {
+    if (!three) return;
+    three.deliveryLines.setData(deliveryLineData ?? null);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.deliveryLines.setVisible(mapState.delivery);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.deliveryLines.setFlowFrozen(prefersReducedMotion.current);
+  });
+
+  $effect(() => {
+    if (!three) return;
+    three.shortcutZones.setZones(shortcutZoneData);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.shortcutZones.setVisible(mapState.shortcutZone);
+  });
+  $effect(() => {
+    if (!three) return;
+    three.shortcutZones.setLabelsVisible(mapState.shortcutZoneLabels);
   });
 
   // ---- hover ----

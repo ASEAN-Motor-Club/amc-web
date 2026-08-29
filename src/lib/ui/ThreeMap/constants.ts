@@ -71,10 +71,37 @@ export const OCEAN_QUAD_SIZE = 200000;
 export const TILE_UPDATE_INTERVAL_MS = 150;
 export const RESIZE_DEBOUNCE_MS = 100;
 
-// ---- ground overlays (area labels) ----
+// ---- ground overlays (delivery lines, shortcut zones, area labels) ----
 
 /** Overlay meshes drape this far above the sampled ground so they never z-fight it. */
 export const OVERLAY_GROUND_OFFSET_M = 2;
+
+/** OL delivery-line flow: dash geometry and travel speed are screen px, so the flow
+ * reads identically at every zoom (world sizes derive from camera distance per frame). */
+export const DELIVERY_LINE_WIDTH_PX = 2;
+export const DELIVERY_FLOW_DASH_LENGTH_PX = 6;
+export const DELIVERY_FLOW_DASH_GAP_PX = 4;
+export const DELIVERY_FLOW_DASH_SPEED_PX = 6;
+export const DELIVERY_LINE_OPACITY = 0.75;
+/** Refit the ribbons when the camera crosses this fraction of an octave (log2 distance). */
+export const DELIVERY_LINE_REFIT_LOG2_STEP = 0.5;
+/** Cap on height tiles fetched for one line's ground sampling - coarser zoom when exceeded. */
+export const DELIVERY_LINE_MAX_TILES = 12;
+/** Ground samples per ribbon, clamped so short lines keep their shape. */
+export const DELIVERY_LINE_MIN_SAMPLES = 8;
+export const DELIVERY_LINE_MAX_SAMPLES = 192;
+
+/** OL shortcut zones: fill red @0.12, dashed border, name label in the center. The dash
+ * cycle is world-sized (screen-constant dashes would need per-frame geometry rebuilds). */
+export const SHORTCUT_ZONE_FILL_OPACITY = 0.12;
+export const SHORTCUT_ZONE_DASH_M = 80;
+export const SHORTCUT_ZONE_GAP_M = 120;
+export const SHORTCUT_ZONE_LABEL_OFFSET_M = 20;
+/** Subdivide the draped zone fill until no triangle edge exceeds this (world meters). */
+export const SHORTCUT_ZONE_MAX_EDGE_M = 40;
+export const SHORTCUT_ZONE_MAX_SUBDIV_DEPTH = 6;
+/** Cap on height tiles fetched for one zone's ground sampling - coarser zoom when exceeded. */
+export const SHORTCUT_ZONE_MAX_TILES = 12;
 
 /** Area names appear by hierarchy as the map zooms in: zones always, LargeArea/RaceTrack
  * from cover zoom 3, SmallArea/unnamed only from cover zoom 4 (OL's areaNameTiers). */

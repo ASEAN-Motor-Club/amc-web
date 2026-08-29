@@ -19,8 +19,6 @@
     parentEnabled?: boolean;
     /** Whether enabling this option filters out items from the map */
     filter?: boolean;
-    /** Force-disable the item (unclickable, dimmed) */
-    disabled?: boolean;
   }
 
   const {
@@ -32,7 +30,6 @@
     sub = false,
     parentEnabled = true,
     filter = false,
-    disabled = false,
   }: PoiItemProps = $props();
 
   // main:on  sub:on  → opacity 100 (no class)
@@ -49,11 +46,10 @@
 <button
   class={[
     'flex w-full py-2 text-left transition-colors',
-    disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer hover:bg-gray-100/5',
+    'cursor-pointer hover:bg-gray-100/5',
     sub ? 'border-t border-gray-100/10 pr-2.5 pl-6' : 'px-2.5',
   ]}
   {onclick}
-  {disabled}
 >
   <div class={['flex gap-2 transition-opacity', opacityClass]}>
     <div class={['mt-1.25 size-3 shrink-0 rounded-full border', dotClass]}></div>
