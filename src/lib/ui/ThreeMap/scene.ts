@@ -23,6 +23,8 @@ import { createTileManager } from './tileManager';
 import type { TileManager } from './tileManager';
 import { createGroundHeights } from './groundHeights';
 import { createAreaLabelLayer, type AreaLabelLayer } from './areaLabels';
+import { createDeliveryLineLayer, type DeliveryLineLayer } from './deliveryLines';
+import { createShortcutZoneLayer, type ShortcutZoneLayer } from './shortcutZones';
 import { viewportScale } from './poi';
 import type { TilesMeta } from './three-map-types';
 
@@ -129,8 +131,10 @@ export interface ThreeMapScene {
   controls: OrbitControls;
   tileManager: TileManager;
   poiManager: PoiManager;
-  /** Ground overlays: floating area names. */
+  /** Ground overlays: floating area names, delivery lines, shortcut zones. */
   areaLabels: AreaLabelLayer;
+  deliveryLines: DeliveryLineLayer;
+  shortcutZones: ShortcutZoneLayer;
   /** Selection-glide servo: ThreeMapWrapper re-targets it via panTo(); the
    * frame loop advances it. */
   selectionPan: SelectionPan;
@@ -209,6 +213,11 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   const groundHeights = createGroundHeights(meta, loadingManager.abortController.signal);
   const getViewport = () => viewportScale(camera, renderer);
   const areaLabels = createAreaLabelLayer(scene, meta, tileManager, groundHeights, getViewport);
+  const deliveryLines = createDeliveryLineLayer(scene, meta, groundHeights, () =>
+    Math.max(renderer.domElement.clientHeight, 1),
+  );
+  const shortcutZones = createShortcutZoneLayer(scene, meta, groundHeights, getViewport);
+
   function refreshVisibleTiles(): void {
     tileManager.updateVisibleTiles();
     poiManager.syncCovers();
@@ -225,6 +234,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     renderer.setSize(container.clientWidth, container.clientHeight);
     poiManager.setViewport();
     areaLabels.setViewport();
+    deliveryLines.setViewport();
+    shortcutZones.setViewport();
     // The size has settled - clear the transition blur.
     renderer.domElement.style.filter = '';
   }
@@ -249,6 +260,9 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     selectionPan.update(dt);
     poiManager.update(camera);
     areaLabels.update();
+    deliveryLines.update(camera, dt);
+    shortcutZones.update();
+
     if (now - lastTileUpdate > TILE_UPDATE_INTERVAL_MS) {
       lastTileUpdate = now;
       refreshVisibleTiles();
@@ -269,6 +283,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     tileManager,
     poiManager,
     areaLabels,
+    deliveryLines,
+    shortcutZones,
     selectionPan,
     stepBy,
     dispose() {
@@ -279,6 +295,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
       selectionPan.dispose();
       poiManager.dispose();
       areaLabels.dispose();
+      deliveryLines.dispose();
+      shortcutZones.dispose();
       groundHeights.dispose();
       tileManager.dispose();
       ocean?.geometry.dispose();
