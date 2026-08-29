@@ -16,7 +16,7 @@ import {
   ZOOM_LOG_PER_WHEEL_NOTCH,
 } from './constants';
 import { createSelectionPan, type SelectionPan } from './selectionPan';
-import { setupGroundPan } from './groundPan';
+import { createGroundPan } from './groundPan';
 import { TILES_META } from './heightmap';
 import { createPoiManager, type PoiManager } from './poiManager';
 import { createTileManager } from './tileManager';
@@ -197,7 +197,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     loadingManager,
   );
   const selectionPan = createSelectionPan(renderer.domElement, camera, controls);
-  const panPhys = setupGroundPan(renderer, camera, controls, tileManager.tileGroup);
+  const panPhys = createGroundPan(renderer, camera, controls, tileManager.tileGroup);
   const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer);
 
   function refreshVisibleTiles(): void {

@@ -3,7 +3,7 @@ import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants';
 
-export function setupGroundPan(
+export function createGroundPan(
   renderer: Renderer,
   camera: THREE.Camera,
   controls: OrbitControls,
