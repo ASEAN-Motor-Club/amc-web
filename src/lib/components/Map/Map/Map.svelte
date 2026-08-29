@@ -270,9 +270,11 @@
         mapState.teleportLabels = !mapState.teleportLabels;
         break;
       case PoiType.ShortcutZone:
+        if (threeDMode) break;
         mapState.shortcutZone = !mapState.shortcutZone;
         break;
       case PoiType.ShortcutZoneLabels:
+        if (threeDMode) break;
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
       case PoiType.AreaName:
@@ -435,8 +437,6 @@
       {houseData}
       {pinsData}
       {teleportData}
-      {shortcutZoneData}
-      {deliveryLineData}
       {selection}
       onToggleMapMode={toggleMapMode}
       onHover={handleHover}
@@ -473,6 +473,7 @@
 
     <PoiPanel
       {mapState}
+      {threeDMode}
       {havePins}
       {haveTeleports}
       {haveShortcutZones}
