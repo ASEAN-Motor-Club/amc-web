@@ -21,6 +21,9 @@ import { TILES_META } from './heightmap';
 import { createPoiManager, type PoiManager } from './poiManager';
 import { createTileManager } from './tileManager';
 import type { TileManager } from './tileManager';
+import { createGroundHeights } from './groundHeights';
+import { createAreaLabelLayer, type AreaLabelLayer } from './areaLabels';
+import { viewportScale } from './poi';
 import type { TilesMeta } from './three-map-types';
 
 export interface CameraRig {
@@ -126,6 +129,8 @@ export interface ThreeMapScene {
   controls: OrbitControls;
   tileManager: TileManager;
   poiManager: PoiManager;
+  /** Ground overlays: floating area names. */
+  areaLabels: AreaLabelLayer;
   /** Selection-glide servo: ThreeMapWrapper re-targets it via panTo(); the
    * frame loop advances it. */
   selectionPan: SelectionPan;
@@ -200,9 +205,14 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
   const panPhys = createGroundPan(renderer, camera, controls, tileManager.tileGroup);
   const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer);
 
+  // Ground overlays: own height-tile fetches (fixed places, never evicted), shared abort.
+  const groundHeights = createGroundHeights(meta, loadingManager.abortController.signal);
+  const getViewport = () => viewportScale(camera, renderer);
+  const areaLabels = createAreaLabelLayer(scene, meta, tileManager, groundHeights, getViewport);
   function refreshVisibleTiles(): void {
     tileManager.updateVisibleTiles();
     poiManager.syncCovers();
+    areaLabels.syncCovers();
   }
 
   controls.target.set(0, 0, 0);
@@ -214,6 +224,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
     poiManager.setViewport();
+    areaLabels.setViewport();
     // The size has settled - clear the transition blur.
     renderer.domElement.style.filter = '';
   }
@@ -237,7 +248,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     panPhys.update(dt);
     selectionPan.update(dt);
     poiManager.update(camera);
-
+    areaLabels.update();
     if (now - lastTileUpdate > TILE_UPDATE_INTERVAL_MS) {
       lastTileUpdate = now;
       refreshVisibleTiles();
@@ -257,6 +268,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     controls,
     tileManager,
     poiManager,
+    areaLabels,
     selectionPan,
     stepBy,
     dispose() {
@@ -266,6 +278,8 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
       panPhys.dispose();
       selectionPan.dispose();
       poiManager.dispose();
+      areaLabels.dispose();
+      groundHeights.dispose();
       tileManager.dispose();
       ocean?.geometry.dispose();
       ocean?.material.dispose();

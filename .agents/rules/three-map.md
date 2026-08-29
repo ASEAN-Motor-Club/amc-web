@@ -13,8 +13,8 @@ A three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer:
 the toggle is the `onToggleMapMode` prop both wrappers accept, rendered as an icon button above
 the zoom control (`material-symbols:3d-2-rounded` in 2D, `material-symbols:2d-2-rounded` in 3D).
 No picture-in-picture in 3D: the wrapper takes no PiP props and Map.svelte hides its PiP button
-in 3D mode. Delivery lines are not drawn (`deliveryLineData` accepted, unused) — treat that as
-staged work, not a bug to fix blindly.
+in 3D mode. Shortcut zones and delivery lines are not drawn in 3D (the wrappers no longer
+take that data) — staged work on a WIP branch, not a bug to fix blindly.
 
 Follow map.md's one-way data flow for everything around this module; this rule covers only the
 things unique to the 3D side.
@@ -30,7 +30,8 @@ things unique to the 3D side.
   ocean quad, camera rig, tile manager, POI manager, RAF loop. Everything it creates needs a
   matching step in its returned `dispose()`.
 - `lod.ts`, `tileGeometry.ts`, `tileManager.ts`, `groundPan.ts`, `poi.ts`, `poiManager.ts`,
-  `coords.ts`, `heightmap.ts`, `constants.ts` — one concern each, described below.
+  `coords.ts`, `heightmap.ts`, `groundHeights.ts`, `areaLabels.ts`, `constants.ts` — one
+  concern each, described below.
 
 ## Coordinates
 
@@ -114,13 +115,23 @@ don't resize the renderer anywhere else.
   `POI_DELIVERY_RESIDENT/_JOB_SOURCE/_JOB_DEST` variants is the
   single source of truth. Colors come from `$lib/tw-var` — including oklch strings, which
   `THREE.Color` cannot parse: always via `makeColor`/`convertOklchToHex` (culori) from `poi.ts`.
+  Each style also carries optional `hover`/`selected` color overrides, ported 1:1 from the
+  OL layers' `hover`/`selected` attribute switches.
 - Dots are **one `THREE.Sprite` per distinct palette** (`dotPaletteKey` = fill|stroke|
-  strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity
+  strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity+state
   `InstancedBufferAttribute`s and a uniform scale (palette size is constant per group).
-  Capacity starts at `MIN_CAPACITY` and doubles on demand. Mutations happen only through
-  `setPoisFor` — writing those buffers anywhere else desyncs slot bookkeeping
-  (layer toggles add/remove markers through `setPoisFor`; there is no separate
-  visibility setter).
+  Each palette's dot texture is a **three-cell atlas** (`PoiState`: normal | hover |
+  selected) built by `makeDotAtlasTexture`; the per-instance state attribute shifts the
+  sampled cell inside `material.colorNode` (`dotAtlasColorNode`) — instancing stays
+  single-texture, which is what keeps it reliable. Capacity starts at `MIN_CAPACITY` and
+  doubles on demand. Mutations happen only through `setPoisFor` (buffers) and
+  `setMarkerState` (a single state slot, `applyVisibility`-style) — writing those buffers
+  anywhere else desyncs slot bookkeeping (layer toggles add/remove markers through
+  `setPoisFor`; there is no separate visibility setter).
+- Hover/selected paint is driven by the wrapper: it resolves each marker's state with OL's
+  precedence (hover > selected > normal) and applies it via `poiManager.setMarkerState`;
+  the selection effect re-applies on its type's marker-set changes so re-created markers
+  regain the selected paint.
 - Sprites render with `depthTest: false` + `renderOrder: 1`, so ordinary raycasting cannot hit
   them. Hit-testing goes through `pick(raycaster, ndc)`: project each drawable marker to NDC and
   compare against the constant screen radius implied by `sizeAttenuation: false`, nearest-first.
@@ -129,6 +140,22 @@ don't resize the renderer anywhere else.
   its dot along screen-up in `poiManager.update(camera)` every frame.
 - Resident delivery points draw only within the finest LOD ring: `draws()` gates them on their
   covering tile reaching `RESIDENT_MIN_COVER_Z`.
+
+## Ground overlays (groundHeights + areaLabels)
+
+Everything here drapes over the terrain and draws UNDER the POI dots/labels (transparent,
+`depthTest: false`, `renderOrder: 0` — the ground itself renders in the opaque pass first, so
+"behind every other layer except ground" is exactly this).
+
+- `groundHeights.ts` owns the height-tile fetches for overlays, separate from tileManager's
+  cache (tileManager evicts fine tiles outside the camera ring; overlays sit in fixed places).
+  `sample()` returns null while the tile loads and kicks the fetch — callers re-sample on a
+  later frame and mount only complete geometry. `zoomForBox()` bounds tile fetches per feature.
+- `areaLabels.ts` ports OL's `areaNameLayers`: one `makeTextSprite` per area at the ring's
+  interior point (`ringInteriorPoint` in coords.ts), OL's per-flag weight/size/fill and
+  `AREA_NAME_TIERS` gating on the covering tile's z (recomputed in `syncCovers()`, called
+  from `refreshVisibleTiles` right after `updateVisibleTiles()` like `poiManager.syncCovers`).
+  `setTexts()` re-applies localized text — the wrapper re-runs it on locale changes.
 
 ## App bridge (the wrapper)
 

@@ -278,7 +278,6 @@
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
       case PoiType.AreaName:
-        if (threeDMode) break;
         mapState.areaName = !mapState.areaName;
         break;
       case PoiType.AreaBound:

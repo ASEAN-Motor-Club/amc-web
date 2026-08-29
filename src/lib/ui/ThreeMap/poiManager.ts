@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { SpriteNodeMaterial } from 'three/webgpu';
-import { instancedBufferAttribute, uniform } from 'three/tsl';
+import { instancedBufferAttribute, texture, uniform, uv, vec2 } from 'three/tsl';
 import type UniformNode from 'three/src/nodes/core/UniformNode.js';
 import { PointType, type PlayerData, type TeleportPoint } from '$lib/components/Map/Map/types';
 import type { DeliveryPoint } from '$lib/data/deliveryPoint';
@@ -18,10 +18,12 @@ import {
   type PoiDotStyle,
 } from './constants';
 import {
+  DOT_ATLAS_CELLS,
   dotPaletteKey,
   dotSpriteScale,
-  makeDotTexture,
+  makeDotAtlasTexture,
   makeTextSprite,
+  PoiState,
   viewportScale,
 } from './poi';
 import type { TextSprite } from './poi';
@@ -57,6 +59,8 @@ export interface PoiMarker {
    * that group's buffers - maintained by makeMarker/setPoisFor/refreshGroup. */
   groupKey: string;
   slot: number;
+  /** Atlas cell currently drawn (hover/selected paint - see setMarkerState). */
+  state: PoiState;
 }
 
 export interface PoiManager {
@@ -69,6 +73,8 @@ export interface PoiManager {
   pick: (raycaster: THREE.Raycaster, pointerNdc: THREE.Vector2) => PoiMarker | null;
   /** Keeps labels hanging above their dots (screen-up offset). Sizes are fixed by sizeAttenuation: false. */
   update: (camera: THREE.Camera) => void;
+  /** Repaints one marker's dot with the given visual state (hover/selected). */
+  setMarkerState: (id: string, state: PoiState) => void;
   /** Recomputes cover tiles and resident visibility. */
   syncCovers: () => void;
   setViewport: () => void;
@@ -81,12 +87,14 @@ export interface PoiManager {
  * pattern, which the WebGPURenderer also runs under WebGL2 when WebGPU is unavailable).
  * Instancing only steps reliably when every instance shares the same texture, so each
  * palette - delivery base, resident, job source, job dest, house, player, pin, teleport -
- * gets its own sprite + single dot texture. The per-type scale is constant, so it goes
- * through a `uniform()` (like the example's `material.scaleNode = uniform(15)`); only the
- * per-instance position and opacity are buffer attributes. Markers are a plain collection
- * (OL-layer style): reconciling a type rewrites that type's sprite buffers, and only the
- * attribute actually touched gets `needsUpdate = true`. Labels cannot be instanced, so
- * each labelled marker keeps its own text Sprite.
+ * gets its own sprite + one dot ATLAS texture whose three cells hold the visual states
+ * (normal | hover | selected); a per-instance state attribute shifts the sampled cell.
+ * The per-type scale is constant, so it goes through a `uniform()` (like the example's
+ * `material.scaleNode = uniform(15)`); only the per-instance position, opacity and state
+ * are buffer attributes. Markers are a plain collection (OL-layer style): reconciling a
+ * type rewrites that type's sprite buffers, and only the attribute actually touched gets
+ * `needsUpdate = true`. Labels cannot be instanced, so each labelled marker keeps its own
+ * text Sprite.
  */
 
 /** Resident points only render inside the finest LOD ring. */
@@ -100,11 +108,13 @@ function dotStyleFor(pointType: PointType): PoiDotStyle {
   return POI_CONFIG[pointType].dot;
 }
 
-/** Delivery point dot style, mirroring the OL map's delivery layer. */
+/** Delivery point dot style, mirroring the OL map's delivery layer. OL renders a job
+ * endpoint identically on the delivery and resident layers (orange fill, 2px stroke,
+ * green/blue stroke), so the job check precedes the resident check. */
 function deliveryDotStyle(info: DeliveryPoint, jobs?: 0 | 1 | 2): PoiDotStyle {
-  if (info.type === 'Resident_C') return POI_DELIVERY_RESIDENT;
   if (jobs === 1) return POI_DELIVERY_JOB_SOURCE;
   if (jobs === 2) return POI_DELIVERY_JOB_DEST;
+  if (info.type === 'Resident_C') return POI_DELIVERY_RESIDENT;
   return POI_CONFIG[PointType.Delivery].dot;
 }
 
@@ -115,7 +125,7 @@ function paletteFor(input: PoiInput): PoiDotStyle {
     : dotStyleFor(input.pointType);
 }
 
-/** One instanced sprite + its backing buffers, for a single dot texture. */
+/** One instanced sprite + its backing buffers, for a single dot atlas texture. */
 interface SpriteGroup {
   key: string;
   palette: PoiDotStyle;
@@ -123,13 +133,32 @@ interface SpriteGroup {
   material: SpriteNodeMaterial;
   /** scaleNode uniform - remade when the drawing-buffer height changes. */
   scale: UniformNode<'float', number>;
+  /** The palette's atlas; sampled through material.colorNode (kept here for disposal/refit). */
+  atlasTexture: THREE.CanvasTexture;
   posArray: Float32Array;
   opacityArray: Float32Array;
+  stateArray: Float32Array;
   posAttr: THREE.InstancedBufferAttribute;
   opacityAttr: THREE.InstancedBufferAttribute;
+  stateAttr: THREE.InstancedBufferAttribute;
   capacity: number;
   /** Marker ids in this sprite, in render order. */
   ids: string[];
+}
+
+/** Samples the instance's atlas cell: U splits into DOT_ATLAS_CELLS columns and the
+ * per-instance state picks the column. One texture per group keeps instancing reliable. */
+function dotAtlasColorNode(
+  atlasTexture: THREE.CanvasTexture,
+  stateAttr: THREE.InstancedBufferAttribute,
+) {
+  const cellW = 1 / DOT_ATLAS_CELLS;
+  return texture(
+    atlasTexture,
+    uv()
+      .mul(vec2(cellW, 1))
+      .add(instancedBufferAttribute<'vec2'>(stateAttr).mul(vec2(cellW, 0))),
+  );
 }
 
 export function createPoiManager(
@@ -160,8 +189,10 @@ export function createPoiManager(
     const key = dotPaletteKey(palette);
     const posArray = new Float32Array(MIN_CAPACITY * 3);
     const opacityArray = new Float32Array(MIN_CAPACITY);
+    const stateArray = new Float32Array(MIN_CAPACITY);
     const posAttr = new THREE.InstancedBufferAttribute(posArray, 3);
     const opacityAttr = new THREE.InstancedBufferAttribute(opacityArray, 1);
+    const stateAttr = new THREE.InstancedBufferAttribute(stateArray, 1);
 
     const material = new SpriteNodeMaterial({
       sizeAttenuation: false,
@@ -169,8 +200,11 @@ export function createPoiManager(
       depthTest: false,
       depthWrite: false,
     });
-    material.map = makeDotTexture(palette, viewport);
-    // Per-instance position + visibility; the palette size is constant for the whole
+    const atlasTexture = makeDotAtlasTexture(palette, viewport);
+    // The atlas holds all three visual states; the per-instance state attribute shifts the
+    // sampled cell. Instancing stays single-texture, so it still steps reliably.
+    material.colorNode = dotAtlasColorNode(atlasTexture, stateAttr);
+    // Per-instance position + visibility + state; the palette size is constant for the whole
     // sprite, so it is a uniform - exactly the example's `scaleNode = uniform(15)`.
     material.positionNode = instancedBufferAttribute(posAttr);
     material.opacityNode = instancedBufferAttribute(opacityAttr);
@@ -190,10 +224,13 @@ export function createPoiManager(
       sprite,
       material,
       scale,
+      atlasTexture,
       posArray,
       opacityArray,
+      stateArray,
       posAttr,
       opacityAttr,
+      stateAttr,
       capacity: MIN_CAPACITY,
       ids: [],
     };
@@ -214,12 +251,15 @@ export function createPoiManager(
     while (next < needed) next *= 2;
     group.posArray = new Float32Array(next * 3);
     group.opacityArray = new Float32Array(next);
+    group.stateArray = new Float32Array(next);
     group.capacity = next;
 
     group.posAttr = new THREE.InstancedBufferAttribute(group.posArray, 3);
     group.opacityAttr = new THREE.InstancedBufferAttribute(group.opacityArray, 1);
+    group.stateAttr = new THREE.InstancedBufferAttribute(group.stateArray, 1);
     group.material.positionNode = instancedBufferAttribute(group.posAttr);
     group.material.opacityNode = instancedBufferAttribute(group.opacityAttr);
+    group.material.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
 
     poiGroup.remove(group.sprite);
     group.sprite.material.dispose();
@@ -243,8 +283,8 @@ export function createPoiManager(
   }
 
   /**
-   * Rewrites one group's position + opacity buffers from its marker ids, then its draw
-   * count. Both attributes carried new data, so both are flagged.
+   * Rewrites one group's position + opacity + state buffers from its marker ids, then its
+   * draw count. All three attributes carried new data, so all are flagged.
    */
   function refreshGroup(group: SpriteGroup): void {
     ensureGroupCapacity(group, group.ids.length);
@@ -257,9 +297,11 @@ export function createPoiManager(
       group.posArray[i * 3 + 1] = wy;
       group.posArray[i * 3 + 2] = wz;
       group.opacityArray[i] = draws(marker) ? 1 : 0;
+      group.stateArray[i] = marker.state;
     }
     group.posAttr.needsUpdate = true;
     group.opacityAttr.needsUpdate = true;
+    group.stateAttr.needsUpdate = true;
     group.sprite.count = group.ids.length;
   }
 
@@ -279,6 +321,7 @@ export function createPoiManager(
       lodOk: true,
       groupKey: group.key,
       slot: group.ids.length,
+      state: PoiState.Normal,
     };
     markers.set(marker.id, marker);
     group.ids.push(marker.id);
@@ -345,6 +388,17 @@ export function createPoiManager(
     group.opacityArray[marker.slot] = draws(marker) ? 1 : 0;
     // Only the opacity slice changed.
     group.opacityAttr.needsUpdate = true;
+  }
+
+  function setMarkerState(id: string, state: PoiState): void {
+    const marker = markers.get(id);
+    if (!marker || marker.state === state) return;
+    marker.state = state;
+    const group = groups.get(marker.groupKey);
+    if (!group) return;
+    group.stateArray[marker.slot] = state;
+    // Only the state slice changed (applyVisibility-style single-slot write).
+    group.stateAttr.needsUpdate = true;
   }
 
   // ---- picking. ----
@@ -481,9 +535,10 @@ export function createPoiManager(
     viewport = next;
     for (const group of groups.values()) {
       if (dprChanged) {
-        const oldMap = group.material.map;
-        group.material.map = makeDotTexture(group.palette, viewport);
-        oldMap?.dispose();
+        const oldTexture = group.atlasTexture;
+        group.atlasTexture = makeDotAtlasTexture(group.palette, viewport);
+        group.material.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
+        oldTexture.dispose();
       }
       group.scale.value = dotSpriteScale(group.palette, viewport);
     }
@@ -516,6 +571,7 @@ export function createPoiManager(
     syncCovers,
     setLabel,
     update,
+    setMarkerState,
     setViewport,
     dispose() {
       for (const id of [...labels.keys()]) removeLabel(id);
@@ -523,7 +579,7 @@ export function createPoiManager(
       ordered = [];
       for (const group of groups.values()) {
         poiGroup.remove(group.sprite);
-        group.material.map?.dispose();
+        group.atlasTexture.dispose();
         group.material.dispose();
       }
       groups.clear();
