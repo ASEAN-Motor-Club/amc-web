@@ -246,6 +246,7 @@
     "player_info": {
       "driving": "Driving {vehicle}",
       "on_foot": "On foot/Passenger",
+      "hidden": "Hidden",
       "unknown_vehicle": "unknown vehicle",
       "vehicle": "Vehicle",
       "location": "Location",

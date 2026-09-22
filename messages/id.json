@@ -245,6 +245,7 @@
     "player_info": {
       "driving": "Mengemudi {vehicle}",
       "on_foot": "Berjalan kaki/Penumpang",
+      "hidden": "Disembunyikan",
       "unknown_vehicle": "kendaraan tidak diketahui",
       "vehicle": "Kendaraan",
       "location": "Lokasi"

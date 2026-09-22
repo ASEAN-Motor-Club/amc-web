@@ -20,7 +20,7 @@
 
   const vehicleKey = $derived(player?.vehicleKey ?? 'None');
 
-  /** Backend withheld this player: name, vehicle and location all show as _hidden_. */
+  /** Backend withheld this player: name, vehicle and location all show as "Hidden". */
   const hidden = $derived(player?.hidden ?? false);
 
   const vehicleName = $derived(
@@ -28,16 +28,18 @@
   );
 
   const playerName = $derived(player?.name ?? '.');
-
-  /** Literal `_hidden_` placeholder (per design request — not translatable copy). */
-  const HIDDEN_LABEL = '_hidden_';
+  const hiddenLabel = $derived(m['map.player_info.hidden']());
 </script>
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="flex w-full items-center justify-between">
-    <TruncateText tag="h2" text={hidden ? HIDDEN_LABEL : playerName} class="flex-1 font-semibold">
+    <TruncateText
+      tag="h2"
+      text={hidden ? hiddenLabel : playerName}
+      class={[hidden && 'italic', 'flex-1 font-semibold']}
+    >
       <HighlightText
-        text={hidden ? HIDDEN_LABEL : playerName}
+        text={hidden ? hiddenLabel : playerName}
         {highlight}
         caseInSensitive
         tag="span"
@@ -61,9 +63,9 @@
   <div class="text-text-700 dark:text-text-300 mt-2 flex justify-between gap-1 text-sm">
     <div class="truncate">
       <div class="text-text-500 text-xs font-semibold">{m['map.player_info.vehicle']()}</div>
-      <div class={[vehicleKey === 'None' && !hidden ? 'italic' : '']}>
+      <div class={[hidden || vehicleKey === 'None' ? 'italic' : '']}>
         {hidden
-          ? HIDDEN_LABEL
+          ? hiddenLabel
           : vehicleKey === 'None'
             ? m['map.player_info.on_foot']()
             : vehicleName
@@ -73,8 +75,8 @@
     </div>
     <div class="text-right">
       <div class="text-text-500 text-xs font-semibold">{m['map.player_info.location']()}</div>
-      <div>
-        {hidden ? HIDDEN_LABEL : player ? formatLocationAtPoint(player.coord) : '.'}
+      <div class={[hidden ? 'italic' : '']}>
+        {hidden ? hiddenLabel : player ? formatLocationAtPoint(player.coord) : '.'}
       </div>
     </div>
   </div>
