@@ -82,9 +82,13 @@
             ? vehicleKeyToString(item.vehicleKey.value)
             : (item.vehicleKey.value ?? 'None'),
         guid: item.uniqueId,
+        hidden: item.hidden,
       };
     }) ?? [],
   );
+
+  /** Hidden players stream as 0,0 stubs — they must never appear on the map. */
+  const mapPlayerData: PlayerData[] = $derived(playerData.filter((player) => !player.hidden));
 
   const playerDataLoading = $derived(playerPositionsStream.isPending);
   /** Map mode drives the sidebar transition speed (faster in 3D). */
@@ -136,7 +140,7 @@
             <Map
               {jobsData}
               {houseData}
-              {playerData}
+              playerData={mapPlayerData}
               onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
               onThreeDModeChange={(m) => (threeDMode = m)}
             />

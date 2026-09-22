@@ -188,8 +188,13 @@ message PlayerPosition {
         VehicleKey vehicle_key_enum = 6;
         string vehicle_key_unknown = 7;
     }
+    // True when the backend withholds this player's location/vehicle
+    // (wanted or costume criminal; police while someone is wanted).
+    bool hidden = 8;
 }
 
 message PlayerPositions {
     repeated PlayerPosition players = 1;
+    // UTC epoch milliseconds of the mod-server query that produced this snapshot.
+    int64 timestamp_ms = 2;
 }

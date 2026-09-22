@@ -170,6 +170,21 @@ describe('player streams', () => {
     });
   });
 
+  it('decodes the hidden flag and snapshot timestamp from a protobuf frame', async () => {
+    const stream = await mount(() => createPlayerPositionsV2Stream());
+    const message = create(PlayerPositionsSchema, {
+      players: [{ ...SAMPLE_POSITION, hidden: true }],
+      timestampMs: 1_700_000_000_500n,
+    });
+
+    const frame = toBinary(PlayerPositionsSchema, message);
+    FakeWebSocket.live[0].onmessage?.(new MessageEvent('message', { data: frame.buffer }));
+    await tick();
+
+    expect(stream.data?.players[0].hidden).toBe(true);
+    expect(stream.data?.timestampMs).toBe(1_700_000_000_500n);
+  });
+
   it('opens no socket while the positions stream is disabled', async () => {
     const stream = await mount(() => createPlayerPositionsV2Stream(() => ({ enabled: false })));
 
