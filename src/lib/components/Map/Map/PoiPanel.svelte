@@ -12,7 +12,7 @@
 
   interface Props {
     mapState: MapState;
-    /** In 3D mode, shortcut zones and area labels are not supported - force them off. */
+    /** In 3D mode, shortcut zones are not rendered - force them off. */
     threeDMode: boolean;
     havePins: boolean;
     haveTeleports: boolean;
@@ -201,8 +201,7 @@
                 dotClass="border-gray-600 bg-gray-300"
                 label={m['map.poi.area']()}
                 desc={m['map.poi.area_desc']()}
-                enabled={threeDMode ? false : mapState.areaName}
-                disabled={threeDMode}
+                enabled={mapState.areaName}
                 onclick={() => onToggle(PoiType.AreaName)}
               />
               {#if dev}
