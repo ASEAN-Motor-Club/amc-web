@@ -240,6 +240,7 @@
     "player_info": {
       "driving": "กำลังขับ {vehicle}",
       "on_foot": "เดินเท้า/ผู้โดยสาร",
+      "hidden": "ซ่อนอยู่",
       "unknown_vehicle": "ยานพาหนะที่ไม่รู้จัก",
       "vehicle": "ยานพาหนะ",
       "location": "ตำแหน่ง"
