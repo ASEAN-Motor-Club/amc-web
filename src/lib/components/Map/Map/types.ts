@@ -31,6 +31,12 @@ export interface PlayerData {
   coord: Vector2 & { z?: number };
   vehicleKey: string | 'None';
   guid: string;
+  /**
+   * Backend withheld this player's location/vehicle (wanted or costume
+   * criminal; police while someone is wanted). Hidden players carry 0,0
+   * coords and must not be rendered on the map.
+   */
+  hidden: boolean;
 }
 
 export const enum PlayerRoles {
