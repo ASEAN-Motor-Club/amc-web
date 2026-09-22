@@ -20,7 +20,7 @@
 
   const vehicleKey = $derived(player?.vehicleKey ?? 'None');
 
-  /** Backend withheld this player: name, vehicle and location all show as "Hidden". */
+  /** Backend withheld this player: vehicle and location show as "Hidden". */
   const hidden = $derived(player?.hidden ?? false);
 
   const vehicleName = $derived(
@@ -33,13 +33,9 @@
 
 <Card class="relative overflow-hidden" {loading}>
   <div class="flex w-full items-center justify-between">
-    <TruncateText
-      tag="h2"
-      text={hidden ? hiddenLabel : playerName}
-      class={[hidden && 'italic', 'flex-1 font-semibold']}
-    >
+    <TruncateText tag="h2" text={playerName} class="flex-1 font-semibold">
       <HighlightText
-        text={hidden ? hiddenLabel : playerName}
+        text={playerName}
         {highlight}
         caseInSensitive
         tag="span"
