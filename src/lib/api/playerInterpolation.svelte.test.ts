@@ -180,24 +180,26 @@ describe('playerInterpolation', () => {
 
     it('snaps teleports instead of sweeping across the map', () => {
       const interp = createPlayerInterpolator();
-      // 100 m in 1 s = 360 km/h: above any vehicle, so the move snaps to the newest
-      // snapshot on every frame instead of gliding through the whole segment.
+      // Coordinates are Unreal cm: 100 m in 1 s = 36 000 cm = 360 km/h, above any
+      // vehicle, so the move snaps to the newest snapshot on every frame instead of
+      // gliding through the whole segment.
       interp.push(msg(1000n, [position('a', 0)]));
-      interp.push(msg(2000n, [position('a', 100)]));
-      interp.push(msg(3000n, [position('a', 110)]));
+      interp.push(msg(2000n, [position('a', 36_000)]));
+      interp.push(msg(3000n, [position('a', 36_100)]));
 
-      expect(interp.tick(500)?.players[0].x).toBe(100);
-      expect(interp.tick(250)?.players[0].x).toBe(100);
+      expect(interp.tick(500)?.players[0].x).toBe(36_000);
+      expect(interp.tick(250)?.players[0].x).toBe(36_000);
     });
 
     it('interpolates at the threshold boundary', () => {
       const interp = createPlayerInterpolator();
-      // 300 km/h ≈ 83.3 m over 1 s: exactly at the limit, still interpolated.
+      // Coordinates are Unreal cm: 300 km/h ≈ 8333.3 cm over 1 s: exactly at the
+      // limit, still interpolated.
       interp.push(msg(1000n, [position('a', 0)]));
-      interp.push(msg(2000n, [position('a', 83.3)]));
-      interp.push(msg(3000n, [position('a', 166.6)]));
+      interp.push(msg(2000n, [position('a', 8333.3)]));
+      interp.push(msg(3000n, [position('a', 16666.6)]));
 
-      expect(interp.tick(500)?.players[0].x).toBeCloseTo(41.65);
+      expect(interp.tick(500)?.players[0].x).toBeCloseTo(4166.65);
     });
 
     it('snaps joins, leaves and hidden toggles instead of interpolating them', () => {

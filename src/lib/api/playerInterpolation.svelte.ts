@@ -30,6 +30,8 @@ const BUFFERED_FRAMES = 3;
 
 /** No game vehicle reaches this; a faster implied displacement is a teleport/respawn. */
 const MAX_INTERPOLATED_SPEED_KMH = 300;
+/** Game coordinates are Unreal centimeters. */
+const CM_PER_M = 100;
 
 export interface PlayerInterpolator {
   /** Feeds one decoded snapshot; duplicates and reordered frames are dropped. */
@@ -73,11 +75,10 @@ export const createPlayerInterpolator = (): PlayerInterpolator => {
       // withheld (0,0) and must never be interpolated from or to.
       const prev = a.players.find((q) => q.uniqueId === p.uniqueId);
       if (!prev || prev.hidden || p.hidden) return p;
-      // No vehicle reaches ~300 km/h; anything faster is a teleport/respawn, which
-      // must snap instead of sweeping across the map for the whole segment. Compare
-      // squared distances so no sqrt is needed.
+      // Coordinates are Unreal cm; convert the m/s threshold to cm/s. Compare squared
+      // distances so no sqrt is needed.
       const dtS = (b.t - a.t) / 1000;
-      const maxD = MAX_INTERPOLATED_SPEED_KMH * (1000 / 3600) * Math.max(dtS, 0.001);
+      const maxD = MAX_INTERPOLATED_SPEED_KMH * (1000 / 3600) * Math.max(dtS, 0.001) * CM_PER_M;
       if (dist2DSq(prev, p) > maxD * maxD) {
         return p;
       }
