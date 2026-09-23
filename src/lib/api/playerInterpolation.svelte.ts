@@ -7,6 +7,7 @@ import {
   type PlayerPositions,
 } from './proto/generated/player_positions_pb';
 import { createPlayerPositionsV2Stream, type PlayerStreamInput } from './player';
+import { dist2DSq } from '$lib/utils/math/vectors';
 import type { QueryParam } from './_api';
 import type { StreamResult } from './_stream.svelte';
 
@@ -73,10 +74,11 @@ export const createPlayerInterpolator = (): PlayerInterpolator => {
       const prev = a.players.find((q) => q.uniqueId === p.uniqueId);
       if (!prev || prev.hidden || p.hidden) return p;
       // No vehicle reaches ~300 km/h; anything faster is a teleport/respawn, which
-      // must snap instead of sweeping across the map for the whole segment.
+      // must snap instead of sweeping across the map for the whole segment. Compare
+      // squared distances so no sqrt is needed.
       const dtS = (b.t - a.t) / 1000;
-      const distanceM = Math.hypot(p.x - prev.x, p.y - prev.y);
-      if (distanceM / Math.max(dtS, 0.001) > MAX_INTERPOLATED_SPEED_KMH * (1000 / 3600)) {
+      const maxD = MAX_INTERPOLATED_SPEED_KMH * (1000 / 3600) * Math.max(dtS, 0.001);
+      if (dist2DSq(prev, p) > maxD * maxD) {
         return p;
       }
       return create(PlayerPositionSchema, {

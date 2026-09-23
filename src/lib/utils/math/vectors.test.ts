@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { orientation2D, toDeg, toRad } from './vectors';
+import { orientation2D, toDeg, toRad, dist2DSq } from './vectors';
 import type { Vector3 } from '$lib/types';
 
 describe('vectors', () => {
@@ -108,6 +108,28 @@ describe('vectors', () => {
     it('should handle decimal degrees', () => {
       expect(toRad(57.2958)).toBeCloseTo(1); // ≈ 1 radian
       expect(toRad(28.6479)).toBeCloseTo(0.5);
+    });
+  });
+
+  describe('dist2DSq', () => {
+    it('should return squared distance between two points', () => {
+      expect(dist2DSq({ x: 0, y: 0 }, { x: 3, y: 4 })).toBe(25);
+    });
+
+    it('should be zero for identical points', () => {
+      expect(dist2DSq({ x: 5, y: -2 }, { x: 5, y: -2 })).toBe(0);
+    });
+
+    it('should be symmetric and order-independent', () => {
+      const a = { x: 1.5, y: -7 };
+      const b = { x: -40, y: 12 };
+      expect(dist2DSq(a, b)).toBe(dist2DSq(b, a));
+    });
+
+    it('should match Math.hypot squared', () => {
+      const a = { x: -3.25, y: 9.75 };
+      const b = { x: 101.5, y: -0.5 };
+      expect(dist2DSq(a, b)).toBeCloseTo(Math.hypot(b.x - a.x, b.y - a.y) ** 2);
     });
   });
 
