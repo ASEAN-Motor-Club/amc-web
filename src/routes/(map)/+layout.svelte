@@ -3,7 +3,7 @@
   import { page } from '$app/state';
   import { createDeliveryJobsQuery } from '$lib/api/delivery';
   import { createHousingQuery } from '$lib/api/housing';
-  import { createPlayerPositionsV2Stream } from '$lib/api/player';
+  import { createInterpolatedPlayerPositionsStream } from '$lib/api/playerInterpolation.svelte';
   import type { DeliveryJob } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
@@ -65,7 +65,7 @@
 
   const showMap = $derived(!(showFull || (!isSm.current && validOpenCollapsible)));
 
-  const playerPositionsStream = createPlayerPositionsV2Stream(() => ({
+  const playerPositionsStream = createInterpolatedPlayerPositionsStream(() => ({
     enabled: (showMap && playerLayerDataEnabled) || openCollapsible === 'players',
   }));
 

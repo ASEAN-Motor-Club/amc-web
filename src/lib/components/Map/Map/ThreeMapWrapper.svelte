@@ -177,9 +177,11 @@
 
   // ---- labels: one label concern per effect, re-applied when that type's set changes
   // (a toggled layer recreates markers which need their labels set again). ----
+  // Player labels key on membership/name only: interpolated coords churn per frame.
+  const playerLabelKey = $derived(playerData.map((p) => `${p.guid} ${p.name}`).join('\n'));
   $effect(() => {
     if (!three) return;
-    void playerPois;
+    void playerLabelKey;
     const pm = three.poiManager;
     const show = mapState.playerName;
     for (const marker of pm.markersOf(PointType.Player)) {
