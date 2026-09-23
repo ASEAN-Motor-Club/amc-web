@@ -27,6 +27,9 @@ interface Frame {
 /** Two frames being interpolated plus the newest one held back. */
 const BUFFERED_FRAMES = 3;
 
+/** No game vehicle reaches this; a faster implied displacement is a teleport/respawn. */
+const MAX_INTERPOLATED_SPEED_KMH = 300;
+
 export interface PlayerInterpolator {
   /** Feeds one decoded snapshot; duplicates and reordered frames are dropped. */
   push: (msg: PlayerPositions) => void;
@@ -69,6 +72,13 @@ export const createPlayerInterpolator = (): PlayerInterpolator => {
       // withheld (0,0) and must never be interpolated from or to.
       const prev = a.players.find((q) => q.uniqueId === p.uniqueId);
       if (!prev || prev.hidden || p.hidden) return p;
+      // No vehicle reaches ~300 km/h; anything faster is a teleport/respawn, which
+      // must snap instead of sweeping across the map for the whole segment.
+      const dtS = (b.t - a.t) / 1000;
+      const distanceM = Math.hypot(p.x - prev.x, p.y - prev.y);
+      if (distanceM / Math.max(dtS, 0.001) > MAX_INTERPOLATED_SPEED_KMH * (1000 / 3600)) {
+        return p;
+      }
       return create(PlayerPositionSchema, {
         ...p,
         x: prev.x + (p.x - prev.x) * alpha,
