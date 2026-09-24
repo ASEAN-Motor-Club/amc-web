@@ -141,6 +141,16 @@
     "join_discord": "เข้าร่วม Discord ของเรา",
     "pak_conflict": "ความขัดแย้งของมอด"
   },
+  "leaderboard": {
+    "title": "กระดานผู้นำ",
+    "head": "{siteName} | กระดานผู้นำ",
+    "description": "อันดับการรับส่งสินค้าต่อซีซัน (POC — ข้อมูลตัวอย่าง)",
+    "rank": "#",
+    "player": "ผู้เล่น",
+    "deliveries": "ส่งแล้ว",
+    "points": "แต้ม",
+    "no_entries": "ยังไม่มีอันดับ"
+  },
   "pak": {
     "conflict": {
       "head": "{siteName} | ตรวจสอบความขัดแย้ง Pak",
