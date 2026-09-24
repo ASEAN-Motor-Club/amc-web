@@ -141,6 +141,16 @@
     "join_discord": "JOIN OUR DISCORD",
     "pak_conflict": "Mod Conflict"
   },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "head": "{siteName} | Leaderboard",
+    "description": "Season delivery standings (POC — mock data).",
+    "rank": "#",
+    "player": "Player",
+    "deliveries": "Deliveries",
+    "points": "Points",
+    "no_entries": "No standings yet."
+  },
   "pak": {
     "conflict": {
       "head": "{siteName} | Mod Pak Conflict Checker",

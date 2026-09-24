@@ -141,6 +141,16 @@
     "join_discord": "GABUNG DISCORD KAMI",
     "pak_conflict": "Konflik Mod"
   },
+  "leaderboard": {
+    "title": "Papan Peringkat",
+    "head": "{siteName} | Papan Peringkat",
+    "description": "Peringkat pengantaran musim (POC — data contoh).",
+    "rank": "#",
+    "player": "Pemain",
+    "deliveries": "Pengantaran",
+    "points": "Poin",
+    "no_entries": "Belum ada peringkat."
+  },
   "pak": {
     "conflict": {
       "head": "{siteName} | Pemeriksa Konflik Pak",
