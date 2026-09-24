@@ -12,11 +12,11 @@ import type { QueryParam } from './_api';
 import type { StreamResult } from './_stream.svelte';
 
 /**
- * Smooth player rendering: the stream renders two snapshots behind the newest received
- * frame, so every played segment has a complete delta to interpolate over. Segment
- * durations come from the protobuf `timestampMs` deltas, positions are linearly
- * interpolated on a rAF clock, and everything else (roster, vehicle, hidden flag) is
- * the newer snapshot's value.
+ * Smooth player rendering: the newest received snapshot is always the playing
+ * segment's end — one snapshot of render delay. Segment durations come from the
+ * protobuf `timestampMs` deltas; positions lerp on a rAF clock with alpha uncapped
+ * past 1, so a late next snapshot extrapolates along the segment instead of freezing.
+ * Everything else (roster, vehicle, hidden flag) is the newer snapshot's value.
  */
 
 interface Frame {
@@ -24,9 +24,6 @@ interface Frame {
   t: number;
   players: PlayerPosition[];
 }
-
-/** Two frames being interpolated plus the newest one held back. */
-const BUFFERED_FRAMES = 3;
 
 /** No game vehicle reaches this; a faster implied displacement is a teleport/respawn. */
 const MAX_INTERPOLATED_SPEED_KMH = 300;
@@ -40,23 +37,24 @@ export interface PlayerInterpolator {
   reset: () => void;
   /**
    * Advances the render clock to `nowMs` (a rAF timestamp) and returns the interpolated
-   * snapshot. Returns the same object while the rendered state is unchanged (hold), so
-   * consumers can skip no-op frames.
+   * snapshot. Returns the same object while frames and alpha are unchanged (e.g. the
+   * alpha-0 hold after an early handover), so consumers can skip no-op frames.
    */
   tick: (nowMs: number) => PlayerPositions | undefined;
 }
 
 export const createPlayerInterpolator = (): PlayerInterpolator => {
   /**
-   * Ascending snapshot window: [segmentStart, segmentEnd, holdback?]. The newest frame
-   * is held back until the segment before it has played out, so every played segment
-   * has a complete delta. Bursts beyond one holdback collapse to the latest frame.
+   * Playing window: [segmentStart, segmentEnd] where segmentEnd is always the newest
+   * received frame — one snapshot of render delay. A fresh frame slides the window on
+   * push; tick never mutates it. While the next snapshot is late the uncapped alpha
+   * extrapolates past the segment end instead of stalling.
    */
   let frames: Frame[] = [];
   /**
    * rAF-clock time at which the playing segment started (alpha 0). Anchored when the
-   * segment's second endpoint arrives; a window slide chains it by the played delta,
-   * so shifts stay continuous and the timeline stays derived from protobuf timestamps.
+   * segment's second endpoint arrives; a push slide chains it by the played portion
+   * of the old segment, keeping the rendered timestamp continuous.
    * rAF timestamps share the performance.now() origin.
    */
   let anchor = 0;
@@ -106,15 +104,23 @@ export const createPlayerInterpolator = (): PlayerInterpolator => {
         if (t >= frames[0].t) return;
         frames = [];
       }
-      if (frames.length < BUFFERED_FRAMES) {
+      if (frames.length < 2) {
         frames.push({ t, players: msg.players });
         // A second endpoint starts the segment: anchor alpha 0 at the wall clock.
         if (frames.length === 2) anchor = performance.now();
         return;
       }
-      // Window is full (playing pair + holdback): the fresh frame replaces the
-      // holdback, so a fast burst collapses to its latest snapshot.
-      frames[2] = { t, players: msg.players };
+      // Newer snapshot: slide the window on arrival. The anchor chains by the old
+      // segment's timestamp delta, so the rendered timeline continues from wherever
+      // it currently plays: a late frame hands over from the extrapolated position
+      // (uncapped alpha), an early one holds the new segment start until the wall
+      // clock reaches it. The floor keeps the timeline from outrunning the data
+      // after an extreme stall, snapping the render up to the newest snapshot.
+      anchor = Math.max(
+        anchor + (frames[1].t - frames[0].t),
+        performance.now() - (t - frames[1].t),
+      );
+      frames = [frames[1], { t, players: msg.players }];
     },
 
     reset() {
@@ -123,23 +129,14 @@ export const createPlayerInterpolator = (): PlayerInterpolator => {
 
     tick(nowMs) {
       if (frames.length === 0) return undefined;
-      const oldest = frames[0];
-
-      // Played out: slide the window one frame; the holdback becomes the segment end
-      // and the clock chains from the exact segment end (no later than one delta ago,
-      // which also catches up after a stall).
-      if (frames.length === 3 && nowMs - anchor >= frames[1].t - oldest.t) {
-        const playedDelta = frames[1].t - oldest.t;
-        const nextDelta = frames[2].t - frames[1].t;
-        frames = frames.slice(1);
-        anchor = Math.max(anchor + playedDelta, nowMs - nextDelta);
-      }
-
       const start = frames[0];
-      // During warmup (one frame) the snapshot passes through unchanged.
+      // Warmup (one frame) passes the snapshot through unchanged; two frames lerp.
       const end = frames.length > 1 ? frames[1] : start;
       const segDelta = end.t - start.t;
-      const alpha = segDelta > 0 ? Math.min(Math.max((nowMs - anchor) / segDelta, 0), 1) : 1;
+      // Uncapped above 1: while the next snapshot is late, the motion extrapolates
+      // along the segment instead of freezing. Clamped at 0 so an early handover
+      // holds the segment start instead of rendering before any data.
+      const alpha = segDelta > 0 ? Math.max((nowMs - anchor) / segDelta, 0) : 1;
 
       if (lastEmit?.frames === frames && lastEmit.alpha === alpha) {
         return lastEmit.out;

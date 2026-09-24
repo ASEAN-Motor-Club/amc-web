@@ -124,56 +124,67 @@ describe('playerInterpolation', () => {
       expect(interp.tick(500)?.players[0].x).toBe(1);
     });
 
-    it('renders two snapshots behind in steady state: newest is never an endpoint', () => {
+    it('renders one snapshot behind in steady state: newest is the segment end', () => {
       const interp = createPlayerInterpolator();
       // Frames arriving on a 1s server cadence, wall clock advancing with them.
       interp.push(msg(1000n, [position('a', 0)]));
       clock = 1000;
       interp.push(msg(2000n, [position('a', 10)]));
-      clock = 1500;
+      clock = 2000;
       interp.push(msg(3000n, [position('a', 20)]));
 
-      // Mid-way through wall time, the render sits inside the 1000→2000 segment; the
-      // newest snapshot (3000) is held back and the render timestamp trails it.
-      const out = interp.tick(1500);
-      expect(out?.players[0].x).toBe(5);
-      expect(out?.timestampMs).toBe(1500n);
+      // Halfway into the 2000→3000 segment: the render timestamp trails the newest
+      // snapshot by half its cadence — exactly one snapshot behind.
+      const out = interp.tick(2500);
+      expect(out?.players[0].x).toBe(15);
+      expect(out?.timestampMs).toBe(2500n);
     });
 
-    it('never interpolates beyond the newest received snapshot', () => {
+    it('extrapolates past the segment end while the next snapshot is late, then hands over continuously', () => {
       const interp = createPlayerInterpolator();
       interp.push(msg(1000n, [position('a', 0)]));
+      clock = 1000;
       interp.push(msg(2000n, [position('a', 10)]));
-      interp.push(msg(3000n, [position('a', 20)]));
 
-      // Long after the stream went quiet: clamped at the newest received position,
-      // never extrapolated toward unseen coordinates.
-      expect(interp.tick(1_000_000)?.players[0].x).toBe(20);
+      // 500ms past the segment end: uncapped alpha keeps the motion going.
+      expect(interp.tick(2500)?.players[0].x).toBe(15);
+      expect(interp.tick(2500)?.timestampMs).toBe(2500n);
+
+      // The late snapshot arrives: the window slides and the clock chains from the
+      // played-out segment, so the rendered position is unchanged by the handover.
+      interp.push(msg(3000n, [position('a', 20)]));
+      expect(interp.tick(2500)?.players[0].x).toBe(15);
+      expect(interp.tick(2500)?.timestampMs).toBe(2500n);
+      // ...and the new segment continues from there.
+      expect(interp.tick(3000)?.players[0].x).toBe(20);
     });
 
     it('linearly interpolates between the two frames bracketing the render time', () => {
       const interp = createPlayerInterpolator();
       interp.push(msg(1000n, [position('a', 0)]));
       interp.push(msg(2000n, [position('a', 10)]));
-      interp.push(msg(3000n, [position('a', 30)]));
 
-      // Segment 1000→2000 anchored when its second endpoint arrived (clock 0): halfway
-      // through the delta is halfway between the endpoints.
-      expect(interp.tick(500)?.players[0].x).toBe(5);
+      // The second endpoint anchors alpha 0 at the wall clock: wall 0→1000 plays the
+      // 1000→2000 segment.
       expect(interp.tick(250)?.players[0].x).toBe(2.5);
+      expect(interp.tick(250)?.timestampMs).toBe(1250n);
+      expect(interp.tick(750)?.players[0].x).toBe(7.5);
+      expect(interp.tick(750)?.timestampMs).toBe(1750n);
     });
 
     it('keeps the rendered position continuous when the window shifts', () => {
       const interp = createPlayerInterpolator();
       interp.push(msg(1000n, [position('a', 0)]));
+      clock = 1000;
       interp.push(msg(2000n, [position('a', 10)]));
-      interp.push(msg(3000n, [position('a', 20)]));
 
-      // t=999 renders just below segment end; crossing into the next segment must not
+      // t=1999 renders just below segment end; crossing into the next segment must not
       // jump - the shift chains the clock from the exact segment end.
-      const before = interp.tick(999);
+      const before = interp.tick(1999);
       expect(before?.players[0].x).toBeCloseTo(9.99);
-      const after = interp.tick(1000);
+      clock = 2000;
+      interp.push(msg(3000n, [position('a', 20)]));
+      const after = interp.tick(2000);
       expect(after?.players[0].x).toBe(10);
       expect(after?.timestampMs).toBe(2000n);
     });
@@ -199,16 +210,17 @@ describe('playerInterpolation', () => {
       interp.push(msg(2000n, [position('a', 8333.3)]));
       interp.push(msg(3000n, [position('a', 16666.6)]));
 
-      expect(interp.tick(500)?.players[0].x).toBeCloseTo(4166.65);
+      // Midway through the 8333.3→16666.6 segment proves it interpolates, not snaps.
+      expect(interp.tick(1500)?.players[0].x).toBeCloseTo(12499.95);
     });
 
     it('snaps joins, leaves and hidden toggles instead of interpolating them', () => {
       const interp = createPlayerInterpolator();
       interp.push(msg(1000n, [position('a', 0), position('gone', 5), position('hider', 7, true)]));
+      clock = 1000;
       interp.push(msg(2000n, [position('a', 10), position('new', 3), position('hider', 7, true)]));
-      interp.push(msg(3000n, [position('a', 20), position('new', 4)]));
 
-      const out = interp.tick(500);
+      const out = interp.tick(1500);
       const byId = new Map((out?.players ?? []).map((p) => [p.uniqueId, p]));
       expect(byId.get('a')?.x).toBe(5);
       // Joined after the segment start: newest snapshot value, no glide from nowhere.
@@ -225,8 +237,11 @@ describe('playerInterpolation', () => {
       interp.push(msg(2000n, [position('a', 10)]));
       const first = interp.tick(100);
       expect(interp.tick(100)).toBe(first);
-      // Alpha clamped at the segment end holds the same object too.
-      expect(interp.tick(1_000_000)).toBe(interp.tick(1_000_001));
+      // A third frame arriving early holds alpha 0 at the new segment start.
+      interp.push(msg(3000n, [position('a', 20)]));
+      expect(interp.tick(150)).toBe(interp.tick(200));
+      // Extrapolation alpha keeps ticking, so the object identity tracks it.
+      expect(interp.tick(10_000)).not.toBe(interp.tick(10_001));
     });
 
     it('drops duplicate and reordered frames', () => {
@@ -237,11 +252,11 @@ describe('playerInterpolation', () => {
       clock = 1200;
       interp.push(msg(2000n, [position('a', 99)]));
       interp.push(msg(1500n, [position('a', 99)]));
+      // Segment 1 plays out to its end...
+      expect(interp.tick(1999)?.players[0].x).toBeCloseTo(9.99);
       clock = 2200;
       interp.push(msg(3000n, [position('a', 20)]));
-
-      // Segment 1 plays out to its end, then the window chains into 2000→3000.
-      expect(interp.tick(1999)?.players[0].x).toBeCloseTo(9.99);
+      // ...then the window chains into 2000→3000.
       expect(interp.tick(2000)?.players[0].x).toBe(10);
       expect(interp.tick(2000)?.timestampMs).toBe(2000n);
       // Midpoint of 2000→3000 proves the poisoned frames never entered the buffer.
@@ -276,18 +291,16 @@ describe('playerInterpolation', () => {
   });
 
   describe('createInterpolatedPlayerPositionsStream', () => {
-    it('renders two snapshots behind: the newest frame is held back', async () => {
+    it('renders one snapshot behind: the newest frame is the segment end', async () => {
       const stream = await mount();
       await push(frame(1000n, [position('1', 0)]));
       await push(frame(2000n, [position('1', 10)]));
       await push(frame(3000n, [position('1', 20)]));
 
-      // A held frame still counts as received, so the clock starts (status success).
-      expect(rafCallbacks.length).toBeGreaterThan(0);
       runFrame(500);
 
       expect(stream.status).toBe('success');
-      expect(stream.data?.players[0].x).toBe(5);
+      expect(stream.data?.players[0].x).toBe(10);
       expect(stream.snapshot?.timestampMs).toBe(3000n);
     });
 
@@ -297,10 +310,11 @@ describe('playerInterpolation', () => {
       await push(frame(2000n, [position('1', 10)]));
       await push(frame(3000n, [position('1', 20)]));
 
-      runFrame(250);
-      expect(stream.data?.players[0].x).toBe(2.5);
-      runFrame(750);
-      expect(stream.data?.players[0].x).toBe(7.5);
+      // Playing 2000→3000 over wall 1000→2000: alpha 0.25 and 0.75 of that segment.
+      runFrame(1250);
+      expect(stream.data?.players[0].x).toBe(12.5);
+      runFrame(1750);
+      expect(stream.data?.players[0].x).toBe(17.5);
     });
 
     it('clears rendered data when the stream is disabled', async () => {
