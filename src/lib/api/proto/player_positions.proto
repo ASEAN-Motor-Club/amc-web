@@ -191,6 +191,13 @@ message PlayerPosition {
     // True when the backend withholds this player's location/vehicle
     // (wanted or costume criminal; police while someone is wanted).
     bool hidden = 8;
+    Velocity velocity = 9;
+}
+
+message Velocity {
+    double x = 1;
+    double y = 2;
+    double z = 3;
 }
 
 message PlayerPositions {
