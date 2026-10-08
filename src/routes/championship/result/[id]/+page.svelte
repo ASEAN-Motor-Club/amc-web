@@ -57,13 +57,20 @@
 </svelte:head>
 
 <div class="flex flex-col items-center p-8">
-  <h1 class="font-sans-em pt-8 pb-5 text-center text-7xl font-bold tracking-wide">
+  <h1 class="font-sans-em pt-8 pb-2 text-center text-7xl font-bold tracking-wide">
     {#if eventData}
       {eventData.name}
     {:else if loadingOrNoData}
       <TextSkeleton class="w-100" />
     {/if}
   </h1>
+  {#if eventData?.championship}
+    <p class="text-text-600 dark:text-text-400 pb-5 text-center text-lg font-semibold">
+      {eventData.championship.name}
+    </p>
+  {:else}
+    <div class="pb-5"></div>
+  {/if}
   <div class="sm:items-unset flex flex-col items-center gap-4 pb-8 sm:flex-row">
     <Button
       variant="text"

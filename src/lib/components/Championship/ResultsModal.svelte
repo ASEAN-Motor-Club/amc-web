@@ -62,6 +62,11 @@
       {event
         ? m['championship.event.event_results']({ event: event.name })
         : m['championship.event.results']()}
+      {#if event?.championship}
+        <span class="text-text-600 dark:text-text-400 block text-sm font-semibold">
+          {event.championship.name}
+        </span>
+      {/if}
     </h1>
     <Table
       gridClass="grid-cols-[1fr_4fr_2fr_1fr_2fr]"

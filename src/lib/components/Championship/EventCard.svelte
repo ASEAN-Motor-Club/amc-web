@@ -85,6 +85,11 @@
   >
     {format(event.start_time, eventStyle)} &ndash; {format(event.end_time, eventStyle)}
   </div>
+  {#if event.championship}
+    <div class="mb-4 text-xs font-semibold">
+      {event.championship.name}
+    </div>
+  {/if}
   <h1 class="mb-8 text-3xl font-semibold tracking-tight">
     {event.name}
   </h1>
