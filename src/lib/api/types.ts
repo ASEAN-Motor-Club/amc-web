@@ -50,6 +50,11 @@ export interface Team {
   text_color: string;
 }
 
+export interface ScheduledEventChampionship {
+  id: number;
+  name: string;
+}
+
 export interface ScheduledEvent {
   id: number;
   name: string;
@@ -59,6 +64,7 @@ export interface ScheduledEvent {
   race_setup: number;
   description: string;
   time_trial: boolean;
+  championship?: ScheduledEventChampionship | null;
 }
 
 export interface TeamStanding {
