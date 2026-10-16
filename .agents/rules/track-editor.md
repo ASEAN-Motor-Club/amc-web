@@ -38,15 +38,19 @@ It always renders gates, so the gate-mode toggle is hidden while it is mounted; 
 `getViewState()` returns `undefined` — the 2D viewport is parked in `parkedMapView` on the way
 in and restored on the way out.
 
-- `trackGates.ts` owns the overlay: one terrain-draped yellow gate strip per waypoint, a
-  waypoint **dot** that shows from afar and fades out as the camera closes in (gate fades in
-  over the same `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range), number labels, and the orange
-  selected overlay drawn from the live `selectedPoint` — the committed track's own meshes
-  double as the drag ghost, exactly like the 2D Translate flow.
+- `trackGates.ts` owns the overlay: one yellow gate **ribbon** per waypoint built straight
+  from the waypoint's full 3D data — endpoints = translation ± (quaternion's UE local-Y
+  width axis) × scale3D.y·100/2 cm, height from translation.z (no terrain sampling; the
+  quaternion rotates in the UE frame and maps to world components x/−y/z directly, so
+  three.js rotation conventions never enter). A waypoint **dot** shows from afar and fades
+  out as the camera closes in (gate fades in over the same
+  `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range), number labels follow `showNum`, and the
+  orange selected overlay is drawn from the live `selectedWaypoint` (`fromEulerWp` of the
+  editing buffer) — the committed track's own meshes double as the drag ghost, exactly like
+  the 2D Translate flow.
 - Pointer interaction lives in the wrapper: ground pan is suppressed via the scene's
   `groundPanBlocked` callback (queried inside groundPan's pointerdown, which runs first);
-  a press on the selected gate drags along a horizontal plane at the grabbed gate's draped
-  height and commits through `onSelectedPointMove` on release, converting world→game with
+  a press on the selected gate drags along a horizontal plane at the grabbed gate's height and commits through `onSelectedPointMove` on release, converting world→game with
   `worldXZToGamePlane` (the inverse of `gamePlaneToWorldXZ`, round-trip tested).
 
 ## Monaco
