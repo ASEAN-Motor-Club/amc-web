@@ -121,12 +121,15 @@ export function createCameraRig(renderer: Renderer): CameraRig {
     buttonZoomPending += logStep * ZOOM_DAMPING_FACTOR;
   }
 
-  // Shift+left-drag rotates: while shift is held, LEFT goes to OrbitControls' ROTATE
-  // (groundPan ignores shift presses), otherwise LEFT stays disabled for the ground pan.
-  // OrbitControls reads mouseButtons at pointerdown, so a mid-press switch is harmless.
+  // Shift+left-drag rotates. OrbitControls hardcodes "modifiers on a ROTATE mapping =
+  // pan", and pan is disabled — so shift+left mapped to ROTATE would do nothing.
+  // The inverse trick works: mapping LEFT to PAN makes the modifier branch take the
+  // ROTATE path (enableRotate is on), while the no-modifier path is a no-op because
+  // enablePan is false (and groundPan ignores shift presses anyway). OrbitControls
+  // reads mouseButtons at pointerdown, so a mid-press switch is harmless.
   const setShiftRotate = (event: KeyboardEvent): void => {
     if (event.key !== 'Shift' || event.repeat) return;
-    controls.mouseButtons = { ...controls.mouseButtons, LEFT: THREE.MOUSE.ROTATE };
+    controls.mouseButtons = { ...controls.mouseButtons, LEFT: THREE.MOUSE.PAN };
   };
   const clearShiftRotate = (event: KeyboardEvent): void => {
     if (event.key !== 'Shift') return;
