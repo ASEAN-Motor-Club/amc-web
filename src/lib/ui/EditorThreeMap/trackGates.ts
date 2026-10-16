@@ -3,9 +3,12 @@ import {
   GATE_FACE_OPACITY,
   GATE_FADE_FAR_M,
   GATE_FADE_NEAR_M,
+  GATE_XRAY_EDGE_OPACITY,
+  GATE_XRAY_FACE_OPACITY,
   TRACK_GATE_PICK_RADIUS_PX,
   TRACK_LINE_OPACITY,
   TRACK_LINE_WIDTH_M,
+  TRACK_LINE_XRAY_OPACITY,
 } from '../ThreeMap/constants';
 import { makeColor, makeTextSprite, type TextSprite, type ViewportScale } from '../ThreeMap/poi';
 import {
@@ -246,12 +249,19 @@ function boxEdgeGeometry(spec: GateSpec): THREE.BufferGeometry {
 }
 
 interface GateVisuals {
-  /** Semi-transparent box (all 6 faces). */
+  /** Semi-transparent box (all 6 faces), hidden where terrain/props occlude it. */
   face: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
-  /** Opaque frame: the box's 12 edges as line segments. */
+  /** X-ray twin of the face: shares the geometry, draws ONLY the occluded fragments
+   * (depthFunc GreaterDepth) at a reduced opacity — the game's see-through style. */
+  faceXray: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  /** Opaque frame: the box's 12 edges as line segments (depth-tested). */
   edges: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
+  /** X-ray twin of the frame, for the occluded fragments. */
+  edgesXray: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
   faceMat: THREE.MeshBasicMaterial;
   edgeMat: THREE.LineBasicMaterial;
+  faceXrayMat: THREE.MeshBasicMaterial;
+  edgeXrayMat: THREE.LineBasicMaterial;
 }
 
 function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
@@ -267,21 +277,47 @@ function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
     transparent: true,
     opacity: 0,
   });
+  // X-ray materials only draw fragments that FAIL the depth test against opaque
+  // geometry (terrain, props) — the parts of the gate behind the landscape — at a
+  // reduced opacity, like the game renders players through walls.
+  const faceXrayMat = new THREE.MeshBasicMaterial({
+    color: makeColor(color),
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    depthFunc: THREE.GreaterDepth,
+  });
+  const edgeXrayMat = new THREE.LineBasicMaterial({
+    color: makeColor(color),
+    transparent: true,
+    opacity: 0,
+    depthFunc: THREE.GreaterDepth,
+  });
   const face = new THREE.Mesh(boxFaceGeometry(spec), faceMat);
   const edges = new THREE.LineSegments(boxEdgeGeometry(spec), edgeMat);
+  // The x-ray twins share the geometries — one buffer, two draw passes.
+  const faceXray = new THREE.Mesh(face.geometry, faceXrayMat);
+  const edgesXray = new THREE.LineSegments(edges.geometry, edgeXrayMat);
   face.renderOrder = 1;
   edges.renderOrder = 1;
+  faceXray.renderOrder = 1;
+  edgesXray.renderOrder = 1;
   face.visible = false;
   edges.visible = false;
-  return { face, edges, faceMat, edgeMat };
+  faceXray.visible = false;
+  edgesXray.visible = false;
+  return { face, faceXray, edges, edgesXray, faceMat, edgeMat, faceXrayMat, edgeXrayMat };
 }
 
 function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
-  group.remove(visuals.face, visuals.edges);
+  group.remove(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray);
   visuals.face.geometry.dispose();
   visuals.edges.geometry.dispose();
   visuals.faceMat.dispose();
   visuals.edgeMat.dispose();
+  visuals.faceXrayMat.dispose();
+  visuals.edgeXrayMat.dispose();
 }
 
 /** The track polyline as a flat ribbon `TRACK_LINE_WIDTH_M` wide, following each
@@ -378,6 +414,8 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
   const entries: GateEntry[] = [];
   let line: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
+  /** X-ray twin of the connector, sharing its geometry (see setTrack). */
+  let lineXrayMesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
 
   // Selected overlay (live editing-buffer position of the selected waypoint).
   let selectedIndex: number | undefined = undefined;
@@ -412,7 +450,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   function makeEntry(spec: GateSpec): GateEntry {
     const visuals = buildGateVisuals(spec, colorYellow500);
     const dot = makeDotMesh(normalDot, dotGeometry, 2);
-    group.add(visuals.face, visuals.edges, dot.mesh);
+    group.add(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray, dot.mesh);
     return {
       spec,
       ...visuals,
@@ -464,7 +502,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     const dot = makeDotMesh(selectedDotTex, dotGeometry, 2);
     selectedDot = dot.mesh;
     selectedDotMat = dot.material;
-    group.add(visuals.face, visuals.edges, selectedDot);
+    group.add(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray, selectedDot);
     selectedCenter3.set(...selectedSpec.center);
     selectedDot.position.copy(selectedCenter3);
   }
@@ -502,6 +540,11 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         line.material.dispose();
         line = null;
       }
+      if (lineXrayMesh) {
+        group.remove(lineXrayMesh);
+        lineXrayMesh.material.dispose();
+        lineXrayMesh = null;
+      }
 
       for (const spec of specs) {
         const entry = makeEntry(spec);
@@ -510,18 +553,31 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       }
 
       if (linePoints.length >= 2) {
+        // Two passes share the ribbon geometry: the solid pass is depth-tested (hidden
+        // behind terrain), the x-ray pass draws ONLY the occluded fragments (GreaterDepth)
+        // at a reduced opacity, so the line stays readable behind hills like in game.
         const material = new THREE.MeshBasicMaterial({
           color: makeColor(colorWhite),
           transparent: true,
           opacity: TRACK_LINE_OPACITY,
           depthWrite: false,
-          // No depth test: the connector reads on top of the terrain like the 2D line.
-          depthTest: false,
           side: THREE.DoubleSide,
         });
-        line = new THREE.Mesh(ribbonGeometry(linePoints), material);
+        const xrayMaterial = new THREE.MeshBasicMaterial({
+          color: makeColor(colorWhite),
+          transparent: true,
+          opacity: TRACK_LINE_XRAY_OPACITY,
+          depthWrite: false,
+          side: THREE.DoubleSide,
+          depthFunc: THREE.GreaterDepth,
+        });
+        const geometry = ribbonGeometry(linePoints);
+        line = new THREE.Mesh(geometry, material);
+        const lineXray = new THREE.Mesh(geometry, xrayMaterial);
         line.renderOrder = 0;
-        group.add(line);
+        lineXray.renderOrder = 0;
+        group.add(line, lineXray);
+        lineXrayMesh = lineXray;
       }
 
       selectedIndex = nextSelectedIndex;
@@ -629,15 +685,15 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       for (const entry of entries) {
         const d = camera.position.distanceTo(entry.center3);
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
-        entry.faceMat.opacity = GATE_FACE_OPACITY * (1 - t);
-        entry.edgeMat.opacity = 1 - t;
-        // The selected waypoint's committed gate doubles as the ghost (mirrors the 2D
-        // editor): it stays visible at its original position for as long as the point
-        // is selected — through the drag too — and on Save the committed track catches
-        // up, so ghost and overlay simply coincide.
         const gateVisible = t < 0.999;
         entry.face.visible = gateVisible;
+        entry.faceXray.visible = gateVisible;
         entry.edges.visible = gateVisible;
+        entry.edgesXray.visible = gateVisible;
+        entry.faceMat.opacity = GATE_FACE_OPACITY * (1 - t);
+        entry.edgeMat.opacity = 1 - t;
+        entry.faceXrayMat.opacity = GATE_XRAY_FACE_OPACITY * (1 - t);
+        entry.edgeXrayMat.opacity = GATE_XRAY_EDGE_OPACITY * (1 - t);
         entry.dotMat.opacity = t;
         entry.dot.visible = t > 0.001;
         if (entry.dot.visible) {
@@ -654,9 +710,13 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       // hidden — the per-frame pass owns their visibility too.
       if (selectedVisuals) {
         selectedVisuals.face.visible = true;
+        selectedVisuals.faceXray.visible = true;
         selectedVisuals.edges.visible = true;
+        selectedVisuals.edgesXray.visible = true;
         selectedVisuals.faceMat.opacity = GATE_FACE_OPACITY;
         selectedVisuals.edgeMat.opacity = 1;
+        selectedVisuals.faceXrayMat.opacity = GATE_XRAY_FACE_OPACITY;
+        selectedVisuals.edgeXrayMat.opacity = GATE_XRAY_EDGE_OPACITY;
       }
       if (selectedDot && selectedDotMat) {
         const d = camera.position.distanceTo(selectedCenter3);
@@ -719,6 +779,11 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         line.geometry.dispose();
         line.material.dispose();
         line = null;
+      }
+      if (lineXrayMesh) {
+        group.remove(lineXrayMesh);
+        lineXrayMesh.material.dispose();
+        lineXrayMesh = null;
       }
       disposeSelectedOverlay();
       normalDot.texture.dispose();

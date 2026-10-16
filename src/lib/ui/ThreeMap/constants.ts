@@ -80,10 +80,16 @@ export const GATE_FADE_NEAR_M = 250;
 export const GATE_FADE_FAR_M = 1200;
 /** Opacity of the gate box faces at zero distance (the 12-edge frame is opaque). */
 export const GATE_FACE_OPACITY = 0.35;
+/** X-ray pass (drawn only where terrain/props occlude the gate): the face and edge
+ * frame render at these reduced opacities, like the game's see-through players. */
+export const GATE_XRAY_FACE_OPACITY = 0.1;
+export const GATE_XRAY_EDGE_OPACITY = 0.3;
 /** The waypoint connector renders as a flat ribbon this many meters wide (a plain
- * GL line is always 1px), with TRACK_LINE_OPACITY opacity and no depth test. */
+ * GL line is always 1px). In front of terrain it draws at TRACK_LINE_OPACITY; occluded
+ * segments get an x-ray pass at TRACK_LINE_XRAY_OPACITY instead of vanishing. */
 export const TRACK_LINE_WIDTH_M = 5;
 export const TRACK_LINE_OPACITY = 0.2;
+export const TRACK_LINE_XRAY_OPACITY = 0.08;
 /** The track editor's 3D view lets you zoom closer than the main map (gates are ~1 m). */
 export const TRACK_EDITOR_MIN_DISTANCE_M = 2;
 /** Screen-space (CSS px) half-width of the gate pick area, measured across the gate. */
