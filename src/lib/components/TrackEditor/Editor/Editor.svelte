@@ -35,6 +35,7 @@
   import { toRad } from '$lib/utils/math/vectors';
   import { normalizedWaypoints } from '../utils/normalized';
   import { getMsgModalContext } from '$lib/components/MsgModal/context';
+  import { fetchTerrainZcm } from '$lib/api/terrain';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate';
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import type { Track, WaypointEuler } from '$lib/schema/track';
@@ -149,6 +150,18 @@
   const handlePointMove = (e: Vector2) => {
     editingPoint.translation.x = e.x;
     editingPoint.translation.y = e.y;
+  };
+
+  const handleSnapToGround = async () => {
+    const z = await fetchTerrainZcm(editingPoint.translation.x, editingPoint.translation.y);
+    if (z === null) {
+      showModal({
+        title: m['track_editor.editor.snap_to_ground_failed.title'](),
+        message: m['track_editor.editor.snap_to_ground_failed.desc'](),
+      });
+      return;
+    }
+    editingPoint.translation.z = z;
   };
 
   const handleNormalize = () => {
@@ -466,6 +479,9 @@
           </Button>
         </div>
         <div class="flex flex-col gap-2">
+          <Button onClick={handleSnapToGround}>
+            {m['track_editor.editor.snap_to_ground']()}
+          </Button>
           <Button disabled={!localDirty} onClick={handleSaveChanges}
             >{m['track_editor.editor.save_changes']()}</Button
           >
