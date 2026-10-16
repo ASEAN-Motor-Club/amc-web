@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import {
-  GATE_EDGE_THICKNESS_M,
-  GATE_FACE_HEIGHT_M,
   GATE_FACE_OPACITY,
   GATE_FADE_FAR_M,
   GATE_FADE_NEAR_M,
@@ -29,11 +27,15 @@ import {
  * translation z — nothing is inferred from the terrain. */
 export interface GateSpec {
   index: number;
-  /** Gate center in world meters. */
+  /** Box center in world meters. */
   center: [x: number, y: number, z: number];
-  /** Gate segment endpoints in world meters. */
+  /** Width-axis (local Y × scale3D.y) endpoints in world meters — also the pick line. */
   a: [x: number, y: number, z: number];
   b: [x: number, y: number, z: number];
+  /** Half-extent vectors (world meters) along the rotation's local X (depth,
+   * scale3D.x) and local Z (height, scale3D.z). */
+  ex: [x: number, y: number, z: number];
+  ez: [x: number, y: number, z: number];
 }
 
 /** A gate hit by the pointer. */
@@ -129,40 +131,130 @@ function makeDotMesh(dot: DotTexture, dotGeometry: THREE.BufferGeometry, renderO
   return { mesh, material };
 }
 
-/** One vertical quad between a and b; the four heights are absolute (world meters). */
-function quadGeometry(
-  a: GateSpec['a'],
-  b: GateSpec['b'],
-  aLow: number,
-  aHigh: number,
-  bLow: number,
-  bHigh: number,
-): THREE.BufferGeometry {
+/** The gate's full 3D box: the in-game gate object is a 1 m cube scaled by the
+ * waypoint's scale3D (scale(1,1,1) IS a cube), so the overlay box spans
+ * scale3D.y along the rotation's local Y (width, the a/b pick line), scale3D.x
+ * along local X (depth) and scale3D.z along local Z (height). The ex/ez spec
+ * fields are the world-space half-extent vectors for those two axes; the ey
+ * half-extent is (a − center). */
+function boxCorners(spec: GateSpec): THREE.Vector3[] {
+  const c = new THREE.Vector3(...spec.center);
+  const ex = new THREE.Vector3(...spec.ex);
+  const ey = new THREE.Vector3(...spec.a).sub(c);
+  const ez = new THREE.Vector3(...spec.ez);
+  const corners: THREE.Vector3[] = [];
+  for (const sx of [-1, 1]) {
+    for (const sy of [-1, 1]) {
+      for (const sz of [-1, 1]) {
+        corners.push(
+          c.clone().addScaledVector(ex, sx).addScaledVector(ey, sy).addScaledVector(ez, sz),
+        );
+      }
+    }
+  }
+  return corners;
+}
+
+/** Corner index for the (sx, sy, sz) signs in [-1, 1]. */
+function cornerIndex(sx: number, sy: number, sz: number): number {
+  return (sx > 0 ? 4 : 0) + (sy > 0 ? 2 : 0) + (sz > 0 ? 1 : 0);
+}
+
+/** The 6 box faces as one indexed geometry (4 verts + 2 triangles per face). */
+function boxFaceGeometry(spec: GateSpec): THREE.BufferGeometry {
+  const corners = boxCorners(spec);
   const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    'position',
-    new THREE.BufferAttribute(
-      new Float32Array([a[0], aLow, a[2], a[0], aHigh, a[2], b[0], bLow, b[2], b[0], bHigh, b[2]]),
-      3,
-    ),
-  );
-  geometry.setIndex([0, 1, 2, 2, 1, 3]);
+  const positions = new Float32Array(24 * 3);
+  const indices: number[] = [];
+  /** The 4 corner-sign triples of one face, in winding order (DoubleSide material). */
+  const faces: [number, number, number][][] = [];
+  for (const sx of [-1, 1]) {
+    faces.push([
+      [sx, -1, -1],
+      [sx, 1, -1],
+      [sx, 1, 1],
+      [sx, -1, 1],
+    ]);
+  }
+  for (const sy of [-1, 1]) {
+    faces.push([
+      [-1, sy, -1],
+      [1, sy, -1],
+      [1, sy, 1],
+      [-1, sy, 1],
+    ]);
+  }
+  for (const sz of [-1, 1]) {
+    faces.push([
+      [-1, -1, sz],
+      [1, -1, sz],
+      [1, 1, sz],
+      [-1, 1, sz],
+    ]);
+  }
+  faces.forEach((quad, faceIndex) => {
+    quad.forEach((signs, corner) => {
+      const v = corners[cornerIndex(...signs)];
+      const base = (faceIndex * 4 + corner) * 3;
+      positions[base] = v.x;
+      positions[base + 1] = v.y;
+      positions[base + 2] = v.z;
+    });
+    const v0 = faceIndex * 4;
+    indices.push(v0, v0 + 1, v0 + 2, v0, v0 + 2, v0 + 3);
+  });
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  return geometry;
+}
+
+/** The 12 box edges as line segments (the opaque frame). */
+function boxEdgeGeometry(spec: GateSpec): THREE.BufferGeometry {
+  const corners = boxCorners(spec);
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(24 * 3);
+  const edges: [number, number][] = [];
+  for (const sy of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      edges.push([cornerIndex(-1, sy, sz), cornerIndex(1, sy, sz)]);
+    }
+  }
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      edges.push([cornerIndex(sx, -1, sz), cornerIndex(sx, 1, sz)]);
+    }
+  }
+  for (const sx of [-1, 1]) {
+    for (const sy of [-1, 1]) {
+      edges.push([cornerIndex(sx, sy, -1), cornerIndex(sx, sy, 1)]);
+    }
+  }
+  edges.forEach(([from, to], edgeIndex) => {
+    for (const [slot, corner] of [
+      [0, from],
+      [1, to],
+    ] as const) {
+      const v = corners[corner];
+      const base = (edgeIndex * 2 + slot) * 3;
+      positions[base] = v.x;
+      positions[base + 1] = v.y;
+      positions[base + 2] = v.z;
+    }
+  });
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   return geometry;
 }
 
 interface GateVisuals {
-  /** Semi-transparent face spanning the full gate height. */
+  /** Semi-transparent box (all 6 faces). */
   face: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
-  /** Opaque strips along the top and bottom edges of the face. */
-  edgeTop: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
-  edgeBottom: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  /** Opaque frame: the box's 12 edges as line segments. */
+  edges: THREE.LineSegments<THREE.BufferGeometry, THREE.LineBasicMaterial>;
   faceMat: THREE.MeshBasicMaterial;
-  edgeMat: THREE.MeshBasicMaterial;
+  edgeMat: THREE.LineBasicMaterial;
 }
 
 function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
-  const halfH = GATE_FACE_HEIGHT_M / 2;
-  const edge = GATE_EDGE_THICKNESS_M;
   const faceMat = new THREE.MeshBasicMaterial({
     color: makeColor(color),
     transparent: true,
@@ -170,58 +262,24 @@ function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
     depthWrite: false,
     side: THREE.DoubleSide,
   });
-  const edgeMat = new THREE.MeshBasicMaterial({
+  const edgeMat = new THREE.LineBasicMaterial({
     color: makeColor(color),
     transparent: true,
     opacity: 0,
-    depthWrite: false,
-    side: THREE.DoubleSide,
   });
-  const face = new THREE.Mesh(
-    quadGeometry(
-      spec.a,
-      spec.b,
-      spec.a[1] - halfH,
-      spec.a[1] + halfH,
-      spec.b[1] - halfH,
-      spec.b[1] + halfH,
-    ),
-    faceMat,
-  );
-  const edgeTop = new THREE.Mesh(
-    quadGeometry(
-      spec.a,
-      spec.b,
-      spec.a[1] + halfH - edge,
-      spec.a[1] + halfH,
-      spec.b[1] + halfH - edge,
-      spec.b[1] + halfH,
-    ),
-    edgeMat,
-  );
-  const edgeBottom = new THREE.Mesh(
-    quadGeometry(
-      spec.a,
-      spec.b,
-      spec.a[1] - halfH,
-      spec.a[1] - halfH + edge,
-      spec.b[1] - halfH,
-      spec.b[1] - halfH + edge,
-    ),
-    edgeMat,
-  );
-  for (const mesh of [face, edgeTop, edgeBottom]) {
-    mesh.renderOrder = 1;
-    mesh.visible = false;
-  }
-  return { face, edgeTop, edgeBottom, faceMat, edgeMat };
+  const face = new THREE.Mesh(boxFaceGeometry(spec), faceMat);
+  const edges = new THREE.LineSegments(boxEdgeGeometry(spec), edgeMat);
+  face.renderOrder = 1;
+  edges.renderOrder = 1;
+  face.visible = false;
+  edges.visible = false;
+  return { face, edges, faceMat, edgeMat };
 }
 
 function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
-  group.remove(visuals.face, visuals.edgeTop, visuals.edgeBottom);
-  for (const mesh of [visuals.face, visuals.edgeTop, visuals.edgeBottom]) {
-    mesh.geometry.dispose();
-  }
+  group.remove(visuals.face, visuals.edges);
+  visuals.face.geometry.dispose();
+  visuals.edges.geometry.dispose();
   visuals.faceMat.dispose();
   visuals.edgeMat.dispose();
 }
@@ -354,7 +412,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   function makeEntry(spec: GateSpec): GateEntry {
     const visuals = buildGateVisuals(spec, colorYellow500);
     const dot = makeDotMesh(normalDot, dotGeometry, 2);
-    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, dot.mesh);
+    group.add(visuals.face, visuals.edges, dot.mesh);
     return {
       spec,
       ...visuals,
@@ -406,7 +464,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     const dot = makeDotMesh(selectedDotTex, dotGeometry, 2);
     selectedDot = dot.mesh;
     selectedDotMat = dot.material;
-    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, selectedDot);
+    group.add(visuals.face, visuals.edges, selectedDot);
     selectedCenter3.set(...selectedSpec.center);
     selectedDot.position.copy(selectedCenter3);
   }
@@ -556,36 +614,11 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         b: [selectedSpec.b[0] + shiftX, selectedSpec.b[1], selectedSpec.b[2] + shiftZ],
       };
       selectedCenter3.set(x, selectedSpec.center[1], z);
-      const halfH = GATE_FACE_HEIGHT_M / 2;
-      const edge = GATE_EDGE_THICKNESS_M;
       const visuals = selectedVisuals;
       visuals.face.geometry.dispose();
-      visuals.face.geometry = quadGeometry(
-        selectedSpec.a,
-        selectedSpec.b,
-        selectedSpec.a[1] - halfH,
-        selectedSpec.a[1] + halfH,
-        selectedSpec.b[1] - halfH,
-        selectedSpec.b[1] + halfH,
-      );
-      visuals.edgeTop.geometry.dispose();
-      visuals.edgeTop.geometry = quadGeometry(
-        selectedSpec.a,
-        selectedSpec.b,
-        selectedSpec.a[1] + halfH - edge,
-        selectedSpec.a[1] + halfH,
-        selectedSpec.b[1] + halfH - edge,
-        selectedSpec.b[1] + halfH,
-      );
-      visuals.edgeBottom.geometry.dispose();
-      visuals.edgeBottom.geometry = quadGeometry(
-        selectedSpec.a,
-        selectedSpec.b,
-        selectedSpec.a[1] - halfH,
-        selectedSpec.a[1] - halfH + edge,
-        selectedSpec.b[1] - halfH,
-        selectedSpec.b[1] - halfH + edge,
-      );
+      visuals.face.geometry = boxFaceGeometry(selectedSpec);
+      visuals.edges.geometry.dispose();
+      visuals.edges.geometry = boxEdgeGeometry(selectedSpec);
       selectedDot?.position.copy(selectedCenter3);
     },
 
@@ -604,8 +637,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         // up, so ghost and overlay simply coincide.
         const gateVisible = t < 0.999;
         entry.face.visible = gateVisible;
-        entry.edgeTop.visible = gateVisible;
-        entry.edgeBottom.visible = gateVisible;
+        entry.edges.visible = gateVisible;
         entry.dotMat.opacity = t;
         entry.dot.visible = t > 0.001;
         if (entry.dot.visible) {
@@ -622,8 +654,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       // hidden — the per-frame pass owns their visibility too.
       if (selectedVisuals) {
         selectedVisuals.face.visible = true;
-        selectedVisuals.edgeTop.visible = true;
-        selectedVisuals.edgeBottom.visible = true;
+        selectedVisuals.edges.visible = true;
         selectedVisuals.faceMat.opacity = GATE_FACE_OPACITY;
         selectedVisuals.edgeMat.opacity = 1;
       }

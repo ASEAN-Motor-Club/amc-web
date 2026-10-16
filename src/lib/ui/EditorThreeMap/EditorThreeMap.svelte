@@ -58,19 +58,40 @@
    */
   /** The package's rotateVector return is typed as a union (array | {x,y,z}); both
    * shapes carry the same components — normalize to a tuple for the spec math. */
-  function rotatedYAxis(q: Quaternion): [x: number, y: number, z: number] {
-    const v = q.rotateVector([0, 1, 0]);
+  function rotatedAxis(q: Quaternion, axis: [number, number, number]): [number, number, number] {
+    const v = q.rotateVector(axis);
     return Array.isArray(v) ? [v[0], v[1], v[2]] : [v.x, v.y, v.z];
+  }
+
+  /** Half-extent vector of one box axis in world meters: the rotation's local axis,
+   * scaled by the waypoint's scale3D (UE cm → the game object is a 1 m cube at
+   * scale 1,1,1), mapped through worldPos like the width endpoints. */
+  function axisHalfExtent(
+    q: Quaternion,
+    axis: [number, number, number],
+    scale: number,
+    t: Vector3,
+    centerWorld: [number, number, number],
+  ): [number, number, number] {
+    const [rx, ry, rz] = rotatedAxis(q, axis);
+    const halfCm = (scale * 100) / 2;
+    const tip = worldPos({
+      x: t.x + rx * halfCm,
+      y: t.y + ry * halfCm,
+      z: t.z + rz * halfCm,
+    });
+    return [tip[0] - centerWorld[0], tip[1] - centerWorld[1], tip[2] - centerWorld[2]];
   }
 
   function gateSpecFor(index: number, waypoint: Waypoint): GateSpec {
     const q = new Quaternion(waypoint.rotation);
-    const [rx, ry, rz] = rotatedYAxis(q);
+    const [rx, ry, rz] = rotatedAxis(q, [0, 1, 0]);
     const halfWidth = (waypoint.scale3D.y * 100) / 2;
     const t = waypoint.translation;
+    const center = worldPos(t);
     return {
       index,
-      center: worldPos(t),
+      center,
       a: worldPos({
         x: t.x + rx * halfWidth,
         y: t.y + ry * halfWidth,
@@ -81,6 +102,8 @@
         y: t.y - ry * halfWidth,
         z: t.z - rz * halfWidth,
       }),
+      ex: axisHalfExtent(q, [1, 0, 0], waypoint.scale3D.x, t, center),
+      ez: axisHalfExtent(q, [0, 0, 1], waypoint.scale3D.z, t, center),
     };
   }
 

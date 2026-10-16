@@ -78,11 +78,7 @@ export const RESIZE_DEBOUNCE_MS = 100;
  * same range (fully drawn inside GATE_FADE_NEAR_M, gone beyond GATE_FADE_FAR_M). */
 export const GATE_FADE_NEAR_M = 250;
 export const GATE_FADE_FAR_M = 1200;
-/** The gate face spans this many meters vertically (the 2D gate is a 4px stroke). */
-export const GATE_FACE_HEIGHT_M = 4;
-/** Opaque edge strips run along the face's top and bottom borders, this thick. */
-export const GATE_EDGE_THICKNESS_M = 0.8;
-/** Opacity of the gate face at zero distance (the edges are opaque). */
+/** Opacity of the gate box faces at zero distance (the 12-edge frame is opaque). */
 export const GATE_FACE_OPACITY = 0.35;
 /** The waypoint connector renders as a flat ribbon this many meters wide (a plain
  * GL line is always 1px), with TRACK_LINE_OPACITY opacity and no depth test. */
