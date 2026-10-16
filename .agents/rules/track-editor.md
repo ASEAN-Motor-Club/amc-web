@@ -38,16 +38,19 @@ It always renders gates, so the gate-mode toggle is hidden while it is mounted; 
 `getViewState()` returns `undefined` — the 2D viewport is parked in `parkedMapView` on the way
 in and restored on the way out.
 
-- `trackGates.ts` owns the overlay: one yellow **gate** per waypoint built straight from the
-  waypoint's full 3D data — endpoints = translation ± (quaternion's UE local-Y width axis)
-  × scale3D.y·100/2 cm, height from translation.z (no terrain sampling; the quaternion
-  rotates in the UE frame and maps to world components x/−y/z directly, so three.js
-  rotation conventions never enter). A gate is a semi-transparent face (height
-  `GATE_FACE_HEIGHT_M`, opacity `GATE_FACE_OPACITY`) with opaque edge strips
-  (`GATE_EDGE_THICKNESS_M`) on its top/bottom borders. A waypoint **dot** shows from afar
+- `trackGates.ts` owns the overlay: one yellow **gate box** per waypoint built straight from the
+  waypoint's full 3D data — the in-game gate object is a 1 m cube scaled by scale3D
+  (scale(1,1,1) IS a cube), so the box spans scale3D.y along the quaternion's UE local-Y
+  (width, the a/b pick line), scale3D.x along local X (depth) and scale3D.z along local Z
+  (height); no terrain sampling, and the quaternion rotates in the UE frame and maps to
+  world components x/−y/z directly, so three.js rotation conventions never enter. The spec
+  carries world-space half-extent vectors `ex`/`ez` for the two extra axes (ey = a − center).
+  The box renders as 6 semi-transparent faces (`GATE_FACE_OPACITY`) plus the 12 edges as an
+  opaque `LineSegments` frame. A waypoint **dot** shows from afar
   and fades out as the camera closes in (the gate fades in over the same
   `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range, incl. the selected dot); the connector line is
-  a flat ribbon (`TRACK_LINE_WIDTH_M`, no depth test, renderOrder below the gates). Dots
+  a flat ribbon with clamped miter joins (`TRACK_LINE_WIDTH_M`, `TRACK_LINE_OPACITY`, no
+  depth test, renderOrder below the gates). Dots
   are camera-facing `Mesh` quads with `MeshBasicMaterial` (its opacity animation is proven
   under WebGPURenderer; SpriteMaterial/SpriteNodeMaterial opacity paths both misbehaved —
   one never showed, the other never faded), scaled per frame for constant screen size. Number labels follow `showNum`; the orange
