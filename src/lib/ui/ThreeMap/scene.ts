@@ -33,6 +33,8 @@ export interface CameraRig {
   /** Queues one zoom-button step (log-distance units); the frame loop feeds it
    * into the inertial accumulator, so each click glides instead of teleporting. */
   stepBy: (logStep: number) => void;
+  /** Removes the rig's global listeners (shift-key tracking). */
+  dispose: () => void;
 }
 export function createCameraRig(renderer: Renderer): CameraRig {
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 5, 100000);
@@ -119,7 +121,37 @@ export function createCameraRig(renderer: Renderer): CameraRig {
     buttonZoomPending += logStep * ZOOM_DAMPING_FACTOR;
   }
 
-  return { camera, controls, update, stepBy };
+  // Shift+left-drag rotates: while shift is held, LEFT goes to OrbitControls' ROTATE
+  // (groundPan ignores shift presses), otherwise LEFT stays disabled for the ground pan.
+  // OrbitControls reads mouseButtons at pointerdown, so a mid-press switch is harmless.
+  const setShiftRotate = (event: KeyboardEvent): void => {
+    if (event.key !== 'Shift' || event.repeat) return;
+    controls.mouseButtons = { ...controls.mouseButtons, LEFT: THREE.MOUSE.ROTATE };
+  };
+  const clearShiftRotate = (event: KeyboardEvent): void => {
+    if (event.key !== 'Shift') return;
+    controls.mouseButtons = { ...controls.mouseButtons, LEFT: null };
+  };
+  window.addEventListener('keydown', setShiftRotate);
+  window.addEventListener('keyup', clearShiftRotate);
+  // A shift release between a drag's pointerdown and pointerup would leave OrbitControls
+  // rotating without the button mapped - re-sync on blur (alt-tab, window switch).
+  const clearShiftRotateOnBlur = (): void => {
+    controls.mouseButtons = { ...controls.mouseButtons, LEFT: null };
+  };
+  window.addEventListener('blur', clearShiftRotateOnBlur);
+
+  return {
+    camera,
+    controls,
+    update,
+    stepBy,
+    dispose() {
+      window.removeEventListener('keydown', setShiftRotate);
+      window.removeEventListener('keyup', clearShiftRotate);
+      window.removeEventListener('blur', clearShiftRotateOnBlur);
+    },
+  };
 }
 
 export interface ThreeMapScene {
@@ -198,7 +230,13 @@ export function createThreeMapScene(
   scene.background = new THREE.Color(skyColor);
   scene.fog = new THREE.Fog(skyColor, 25000, 100000);
 
-  const { camera, controls, update: updateCameraRig, stepBy } = createCameraRig(renderer);
+  const {
+    camera,
+    controls,
+    update: updateCameraRig,
+    stepBy,
+    dispose: disposeCameraRig,
+  } = createCameraRig(renderer);
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);
@@ -314,6 +352,7 @@ export function createThreeMapScene(
       // Kill in-flight tile fetches/texture loads first: their continuations check the
       // signal and bail instead of repopulating the caches tileManager.dispose() drains.
       loadingManager.abort();
+      disposeCameraRig();
       resizeCallbacks.clear();
       frameCallbacks.clear();
       panPhys.dispose();

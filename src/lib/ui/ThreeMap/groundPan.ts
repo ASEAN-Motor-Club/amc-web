@@ -36,6 +36,9 @@ export function createGroundPan(
 
   function onPointerDown(event: PointerEvent): void {
     if (event.button !== 0) return;
+    // Shift+left-drag rotates the camera (the rig hands LEFT to OrbitControls while
+    // shift is held), so the pan must not grab that press.
+    if (event.shiftKey) return;
     if (isBlocked?.(event)) return;
     panVelocity = null;
     samples.length = 0;

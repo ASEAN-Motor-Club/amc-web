@@ -137,6 +137,8 @@
 
   function onPointerDown(event: PointerEvent): void {
     if (event.button !== 0 || !three) return;
+    // Shift+left is the rotate gesture — never grab a gate with it.
+    if (event.shiftKey) return;
     const hit = pickAt(event);
     if (hit && hit.index === selectedWaypoint?.index && onSelectedPointMove) {
       pending = {
