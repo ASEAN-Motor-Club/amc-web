@@ -55,9 +55,10 @@ export interface TrackGates {
     numbers: boolean,
   ) => void;
   setHovered: (index: number | undefined) => void;
-  /** Marks the drag state: while true the selected waypoint's committed gate stays
-   * visible as the ghost behind the moving orange overlay; once the drag commits
-   * (dragging = false) the ghost clears — the overlay IS the waypoint then. */
+  /** Marks the drag state: while dragging, the selected waypoint's committed gate stays
+   * visible at its ORIGINAL position as the ghost; when the drag releases, the move has
+   * committed to the editing buffer and the ghost clears (the committed track only
+   * catches up on Save, where ghost and overlay coincide again anyway). */
   setDragging: (dragging: boolean) => void;
   /** Screen-space pick: pointer in NDC over the canvas rect → nearest gate, or null. */
   pick: (
@@ -232,27 +233,61 @@ function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
 
 /** The track polyline as a flat ribbon `TRACK_LINE_WIDTH_M` wide, following each
  * point's data height. Plain lines are always 1px (linewidth is unsupported), so a
- * ribbon is the way to get a thick connector. */
+ * ribbon is the way to get a thick connector. Joints use a clamped miter: each vertex's
+ * offset bisects its two segment normals, scaled so the strip keeps the half-width
+ * distance from the centerline (a plain averaged-direction offset pinches corners —
+ * the measured width shrinks by cos of the joint angle). The clamp keeps hairpin
+ * turns from spiking into long horns; at the clamp the width narrows slightly. */
 function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.BufferGeometry {
   const geometry = new THREE.BufferGeometry();
   if (points.length < 2) return geometry;
   const half = TRACK_LINE_WIDTH_M / 2;
-  const positions = new Float32Array(points.length * 2 * 3);
+  /** Unit perpendicular of a segment direction, in XZ. */
+  const perp = (dx: number, dz: number): [number, number] => {
+    const length = Math.hypot(dx, dz) || 1;
+    return [-dz / length, dx / length];
+  };
+  const offsets: [number, number][] = [];
   for (let i = 0; i < points.length; i++) {
     const prev = points[Math.max(0, i - 1)];
     const next = points[Math.min(points.length - 1, i + 1)];
-    const dx = next[0] - prev[0];
-    const dz = next[2] - prev[2];
-    const length = Math.hypot(dx, dz) || 1;
-    const px = (-dz / length) * half;
-    const pz = (dx / length) * half;
+    if (i === 0) {
+      const [nx, nz] = perp(next[0] - prev[0], next[2] - prev[2]);
+      offsets.push([nx * half, nz * half]);
+    } else if (i === points.length - 1) {
+      const [nx, nz] = perp(next[0] - prev[0], next[2] - prev[2]);
+      offsets.push([nx * half, nz * half]);
+    } else {
+      const [n1x, n1z] = perp(points[i][0] - prev[0], points[i][2] - prev[2]);
+      const [n2x, n2z] = perp(next[0] - points[i][0], next[2] - points[i][2]);
+      let mx = n1x + n2x;
+      let mz = n1z + n2z;
+      const mLength = Math.hypot(mx, mz);
+      if (mLength < 1e-6) {
+        // Near-180° reversal: the miter is undefined; keep the incoming normal.
+        mx = n1x;
+        mz = n1z;
+        offsets.push([mx * half, mz * half]);
+      } else {
+        mx /= mLength;
+        mz /= mLength;
+        // dot(m, n1) = cos of the half joint angle; clamp so hairpins don't spike.
+        const cosHalf = Math.max(0.35, Math.min(1, mx * n1x + mz * n1z));
+        const scale = half / cosHalf;
+        offsets.push([mx * scale, mz * scale]);
+      }
+    }
+  }
+  const positions = new Float32Array(points.length * 2 * 3);
+  for (let i = 0; i < points.length; i++) {
+    const [ox, oz] = offsets[i];
     const base = i * 6;
-    positions[base] = points[i][0] + px;
+    positions[base] = points[i][0] + ox;
     positions[base + 1] = points[i][1];
-    positions[base + 2] = points[i][2] + pz;
-    positions[base + 3] = points[i][0] - px;
+    positions[base + 2] = points[i][2] + oz;
+    positions[base + 3] = points[i][0] - ox;
     positions[base + 4] = points[i][1];
-    positions[base + 5] = points[i][2] - pz;
+    positions[base + 5] = points[i][2] - oz;
   }
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   const indices: number[] = [];
@@ -303,7 +338,8 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   /** Label rebuild keys — labels are canvas sprites, so only remake them when needed. */
   let labelCount = -1;
   let hoveredIndex: number | undefined = undefined;
-  /** While a drag is live the committed gate stays as the ghost; after commit it hides. */
+  /** Ghost rule: the committed gate of the selected waypoint shows at its original
+   * position ONLY while a drag is live; on release the ghost clears. */
   let dragging = false;
 
   let normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
@@ -572,17 +608,21 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       for (const entry of entries) {
         const d = camera.position.distanceTo(entry.center3);
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
-        // While the selected waypoint is dragged its committed gate is the ghost; once
-        // the drag commits (overlay == waypoint) the ghost clears.
-        const ghost = entry.spec.index === selectedIndex && !!selectedSpec && dragging;
         entry.faceMat.opacity = GATE_FACE_OPACITY * (1 - t);
         entry.edgeMat.opacity = 1 - t;
-        const gateVisible = t < 0.999 && !ghost;
+        // The selected waypoint's committed gate is the ghost: visible at its original
+        // position while the drag is live, cleared once the drag releases (the overlay
+        // carries the live position; Save moves the committed track itself).
+        let hideAsGhost = false;
+        if (entry.spec.index === selectedIndex && selectedSpec) {
+          hideAsGhost = entry.center3.distanceTo(selectedCenter3) > 0.5 && !dragging;
+        }
+        const gateVisible = t < 0.999 && !hideAsGhost;
         entry.face.visible = gateVisible;
         entry.edgeTop.visible = gateVisible;
         entry.edgeBottom.visible = gateVisible;
         entry.dotMat.opacity = t;
-        entry.dot.visible = t > 0.001 && !ghost;
+        entry.dot.visible = t > 0.001 && !hideAsGhost;
         if (entry.dot.visible) {
           // Constant screen size: world scale = (texture side in device px / pxPerWorld) ×
           // distance; billboarded to the camera so the circle always reads as a dot.
@@ -593,8 +633,12 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       }
 
       // The selected overlay is always fully drawn (it IS the live waypoint); its dot
-      // fades out up close like every other dot.
+      // fades out up close like every other dot. buildGateVisuals starts the meshes
+      // hidden — the per-frame pass owns their visibility too.
       if (selectedVisuals) {
+        selectedVisuals.face.visible = true;
+        selectedVisuals.edgeTop.visible = true;
+        selectedVisuals.edgeBottom.visible = true;
         selectedVisuals.faceMat.opacity = GATE_FACE_OPACITY;
         selectedVisuals.edgeMat.opacity = 1;
       }
