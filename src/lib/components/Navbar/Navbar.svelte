@@ -66,6 +66,12 @@
           icon: pakIcon,
           exact: false,
         },
+        {
+          href: '/leaderboard',
+          label: m['leaderboard.title'](),
+          icon: leaderboardIcon,
+          exact: true,
+        },
       ],
     },
     {
@@ -144,6 +150,13 @@
 {#snippet pakIcon(pathMatch: boolean)}
   <NavbarIcon
     class="i-material-symbols:folder-zip-outline-rounded group-hover:text-yellow-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet leaderboardIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="i-material-symbols:leaderboard-outline-rounded group-hover:text-amber-500"
     {pathMatch}
   />
 {/snippet}
