@@ -48,8 +48,9 @@ in and restored on the way out.
   and fades out as the camera closes in (the gate fades in over the same
   `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range, incl. the selected dot); the connector line is
   a flat ribbon (`TRACK_LINE_WIDTH_M`, no depth test, renderOrder below the gates). Dots
-  are `SpriteNodeMaterial` + TSL `uniform` opacity — plain `SpriteMaterial.opacity` is not
-  reliably animated under WebGPURenderer. Number labels follow `showNum`; the orange
+  are camera-facing `Mesh` quads with `MeshBasicMaterial` (its opacity animation is proven
+  under WebGPURenderer; SpriteMaterial/SpriteNodeMaterial opacity paths both misbehaved —
+  one never showed, the other never faded), scaled per frame for constant screen size. Number labels follow `showNum`; the orange
   selected overlay is drawn from the live `selectedWaypoint` (`fromEulerWp` of the editing
   buffer). The ghost: while a drag is live (`setDragging(true)`) the committed gate stays
   visible at its original spot; when the drag commits, the ghost clears — the overlay IS

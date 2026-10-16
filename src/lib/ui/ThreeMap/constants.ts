@@ -86,10 +86,10 @@ export const GATE_EDGE_THICKNESS_M = 0.8;
 export const GATE_FACE_OPACITY = 0.35;
 /** The waypoint connector renders as a flat ribbon this many meters wide (a plain
  * GL line is always 1px), with TRACK_LINE_OPACITY opacity and no depth test. */
-export const TRACK_LINE_WIDTH_M = 2.5;
-export const TRACK_LINE_OPACITY = 0.3;
+export const TRACK_LINE_WIDTH_M = 5;
+export const TRACK_LINE_OPACITY = 0.4;
 /** The track editor's 3D view lets you zoom closer than the main map (gates are ~1 m). */
-export const TRACK_EDITOR_MIN_DISTANCE_M = 8;
+export const TRACK_EDITOR_MIN_DISTANCE_M = 4;
 /** Screen-space (CSS px) half-width of the gate pick area, measured across the gate. */
 export const TRACK_GATE_PICK_RADIUS_PX = 14;
 

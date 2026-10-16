@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import { SpriteNodeMaterial } from 'three/webgpu';
-import { texture, uniform } from 'three/tsl';
-import type UniformNode from 'three/src/nodes/core/UniformNode.js';
 import {
   GATE_EDGE_THICKNESS_M,
   GATE_FACE_HEIGHT_M,
@@ -116,38 +113,24 @@ function makeGateDotTexture(fill: string, stroke: string, viewport: ViewportScal
   return { texture, sideDevice: side };
 }
 
-function gateDotScale(dot: DotTexture, viewport: ViewportScale): number {
-  return dot.sideDevice / viewport.pxPerWorld;
-}
-
-/** A screen-facing dot sprite driven by the node pipeline (like the POI delivery dots):
- * `SpriteMaterial.opacity` animates unreliably under WebGPURenderer, while a TSL
- * `uniform` wired into `opacityNode` is the proven per-material fade path. */
-function makeDotSprite(
-  dot: DotTexture,
-  viewport: ViewportScale,
-  renderOrder: number,
-): {
-  sprite: THREE.Sprite;
-  material: SpriteNodeMaterial;
-  opacity: UniformNode<'float', number>;
-  scale: UniformNode<'float', number>;
-} {
-  const material = new SpriteNodeMaterial({
-    sizeAttenuation: false,
+/** A camera-facing quad with the dot texture. Sprites (both SpriteMaterial and the
+ * SpriteNodeMaterial pipeline) misbehaved here — one flavor never showed, the other
+ * never faded — while MeshBasicMaterial opacity animation is proven in this renderer
+ * (the gates run on it), so the dots ride the same class. The quad is billboarded to
+ * the camera and scaled per frame, so it keeps a constant screen size at any distance. */
+function makeDotMesh(dot: DotTexture, dotGeometry: THREE.BufferGeometry, renderOrder: number) {
+  const material = new THREE.MeshBasicMaterial({
+    map: dot.texture,
     transparent: true,
+    opacity: 0,
     depthWrite: false,
     depthTest: false,
   });
-  material.colorNode = texture(dot.texture);
-  const opacity = uniform(0);
-  material.opacityNode = opacity;
-  const scale = uniform(gateDotScale(dot, viewport));
-  material.scaleNode = scale;
-  const sprite = new THREE.Sprite(material);
-  sprite.visible = false;
-  sprite.renderOrder = renderOrder;
-  return { sprite, material, opacity, scale };
+  const mesh = new THREE.Mesh(dotGeometry, material);
+  mesh.visible = false;
+  mesh.renderOrder = renderOrder;
+  mesh.frustumCulled = false;
+  return { mesh, material };
 }
 
 /** One vertical quad between a and b; the four heights are absolute (world meters). */
@@ -283,9 +266,8 @@ function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.Buff
 
 interface GateEntry extends GateVisuals {
   spec: GateSpec;
-  dot: THREE.Sprite;
-  dotOpacity: UniformNode<'float', number>;
-  dotScale: UniformNode<'float', number>;
+  dot: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  dotMat: THREE.MeshBasicMaterial;
   label: TextSprite | null;
   center3: THREE.Vector3;
   endA3: THREE.Vector3;
@@ -313,9 +295,8 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   let selectedIndex: number | undefined = undefined;
   let selectedSpec: GateSpec | undefined = undefined;
   let selectedVisuals: GateVisuals | null = null;
-  let selectedDot: THREE.Sprite | null = null;
-  let selectedDotOpacity: UniformNode<'float', number> | null = null;
-  let selectedDotScale: UniformNode<'float', number> | null = null;
+  let selectedDot: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
+  let selectedDotMat: THREE.MeshBasicMaterial | null = null;
   const selectedCenter3 = new THREE.Vector3();
 
   let numbers = false;
@@ -327,10 +308,13 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
   let normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
   let selectedDotTex = makeGateDotTexture(colorAmber500, colorWhite, viewport);
+  /** Shared unit quad for every dot mesh; scaled per frame to keep constant screen size. */
+  const dotGeometry = new THREE.PlaneGeometry(1, 1);
 
   function disposeEntryVisuals(entry: GateEntry): void {
     disposeGateVisuals(group, entry);
-    entry.dot.material.dispose();
+    group.remove(entry.dot);
+    entry.dotMat.dispose();
     if (entry.label) {
       group.remove(entry.label.sprite);
       const material = entry.label.sprite.material;
@@ -341,15 +325,13 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
   function makeEntry(spec: GateSpec): GateEntry {
     const visuals = buildGateVisuals(spec, colorYellow500);
-    const dot = makeDotSprite(normalDot, viewport, 2);
-    dot.sprite.visible = false;
-    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, dot.sprite);
+    const dot = makeDotMesh(normalDot, dotGeometry, 2);
+    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, dot.mesh);
     return {
       spec,
       ...visuals,
-      dot: dot.sprite,
-      dotOpacity: dot.opacity,
-      dotScale: dot.scale,
+      dot: dot.mesh,
+      dotMat: dot.material,
       label: null,
       center3: new THREE.Vector3(...spec.center),
       endA3: new THREE.Vector3(...spec.a),
@@ -382,10 +364,9 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     }
     if (selectedDot) {
       group.remove(selectedDot);
-      selectedDot.material.dispose();
+      selectedDotMat?.dispose();
       selectedDot = null;
-      selectedDotOpacity = null;
-      selectedDotScale = null;
+      selectedDotMat = null;
     }
   }
 
@@ -394,10 +375,9 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     if (!selectedSpec) return;
     const visuals = buildGateVisuals(selectedSpec, colorOrange500);
     selectedVisuals = visuals;
-    const dot = makeDotSprite(selectedDotTex, viewport, 2);
-    selectedDot = dot.sprite;
-    selectedDotOpacity = dot.opacity;
-    selectedDotScale = dot.scale;
+    const dot = makeDotMesh(selectedDotTex, dotGeometry, 2);
+    selectedDot = dot.mesh;
+    selectedDotMat = dot.material;
     group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, selectedDot);
     selectedCenter3.set(...selectedSpec.center);
     selectedDot.position.copy(selectedCenter3);
@@ -601,19 +581,33 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         entry.face.visible = gateVisible;
         entry.edgeTop.visible = gateVisible;
         entry.edgeBottom.visible = gateVisible;
-        entry.dotOpacity.value = t;
+        entry.dotMat.opacity = t;
         entry.dot.visible = t > 0.001 && !ghost;
+        if (entry.dot.visible) {
+          // Constant screen size: world scale = (texture side in device px / pxPerWorld) ×
+          // distance; billboarded to the camera so the circle always reads as a dot.
+          entry.dot.position.copy(entry.center3);
+          entry.dot.quaternion.copy(camera.quaternion);
+          entry.dot.scale.setScalar((normalDot.sideDevice / viewport.pxPerWorld) * d);
+        }
       }
 
       // The selected overlay is always fully drawn (it IS the live waypoint); its dot
       // fades out up close like every other dot.
-      if (selectedVisuals && selectedDotOpacity) {
+      if (selectedVisuals) {
         selectedVisuals.faceMat.opacity = GATE_FACE_OPACITY;
         selectedVisuals.edgeMat.opacity = 1;
+      }
+      if (selectedDot && selectedDotMat) {
         const d = camera.position.distanceTo(selectedCenter3);
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
-        selectedDotOpacity.value = t;
-        if (selectedDot) selectedDot.visible = t > 0.001;
+        selectedDotMat.opacity = t;
+        selectedDot.visible = t > 0.001;
+        if (selectedDot.visible) {
+          selectedDot.position.copy(selectedCenter3);
+          selectedDot.quaternion.copy(camera.quaternion);
+          selectedDot.scale.setScalar((selectedDotTex.sideDevice / viewport.pxPerWorld) * d);
+        }
       }
 
       // Number labels hang above their dots along the screen-up direction.
@@ -641,19 +635,20 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
         selectedDotTex = makeGateDotTexture(colorAmber500, colorWhite, viewport);
         for (const entry of entries) {
-          entry.dot.material.colorNode = texture(normalDot.texture);
+          entry.dotMat.map = normalDot.texture;
+          entry.dotMat.needsUpdate = true;
         }
-        if (selectedDot) selectedDot.material.colorNode = texture(selectedDotTex.texture);
+        if (selectedDotMat) {
+          selectedDotMat.map = selectedDotTex.texture;
+          selectedDotMat.needsUpdate = true;
+        }
         labelCount = -1;
         refreshLabels();
         for (const entry of entries) {
           if (entry.label) entry.label.sprite.visible = numbers;
         }
       }
-      for (const entry of entries) {
-        entry.dotScale.value = gateDotScale(normalDot, viewport);
-      }
-      if (selectedDotScale) selectedDotScale.value = gateDotScale(selectedDotTex, viewport);
+      // Dot scale is recomputed per frame from pxPerWorld — nothing static to refit here.
     },
 
     dispose() {
@@ -668,6 +663,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       disposeSelectedOverlay();
       normalDot.texture.dispose();
       selectedDotTex.texture.dispose();
+      dotGeometry.dispose();
       scene.remove(group);
     },
   };

@@ -37,7 +37,14 @@ export interface CameraRig {
   dispose: () => void;
 }
 export function createCameraRig(renderer: Renderer, minDistance = 30): CameraRig {
-  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 5, 100000);
+  const camera = new THREE.PerspectiveCamera(
+    55,
+    window.innerWidth / window.innerHeight,
+    // The near plane must sit inside the zoom range: close-up editors (minDistance 4 m)
+    // need a tight near plane, the main map keeps the default 5 m.
+    Math.min(5, minDistance * 0.4),
+    100000,
+  );
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
