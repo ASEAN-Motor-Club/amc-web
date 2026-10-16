@@ -150,7 +150,6 @@
         grabY: hit.world.y,
       };
       dragWorld = null;
-      gates.setDragging(true);
       three.renderer.domElement.setPointerCapture(event.pointerId);
       return;
     }
@@ -186,7 +185,6 @@
     const lastDrag = dragWorld;
     pending = null;
     dragWorld = null;
-    gates?.setDragging(false);
     const moved =
       Math.hypot(event.clientX - press.clientX, event.clientY - press.clientY) > CLICK_MAX_MOVE_PX;
     if (press.dragging) {

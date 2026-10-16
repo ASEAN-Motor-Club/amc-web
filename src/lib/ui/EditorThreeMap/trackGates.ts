@@ -55,11 +55,6 @@ export interface TrackGates {
     numbers: boolean,
   ) => void;
   setHovered: (index: number | undefined) => void;
-  /** Marks the drag state: while dragging, the selected waypoint's committed gate stays
-   * visible at its ORIGINAL position as the ghost; when the drag releases, the move has
-   * committed to the editing buffer and the ghost clears (the committed track only
-   * catches up on Save, where ghost and overlay coincide again anyway). */
-  setDragging: (dragging: boolean) => void;
   /** Screen-space pick: pointer in NDC over the canvas rect → nearest gate, or null. */
   pick: (
     ndcX: number,
@@ -338,9 +333,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   /** Label rebuild keys — labels are canvas sprites, so only remake them when needed. */
   let labelCount = -1;
   let hoveredIndex: number | undefined = undefined;
-  /** Ghost rule: the committed gate of the selected waypoint shows at its original
-   * position ONLY while a drag is live; on release the ghost clears. */
-  let dragging = false;
 
   let normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
   let selectedDotTex = makeGateDotTexture(colorAmber500, colorWhite, viewport);
@@ -492,10 +484,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       for (const entry of entries) applyBandColor(entry);
     },
 
-    setDragging(next) {
-      dragging = next;
-    },
-
     pick(ndcX, ndcY, camera, rectWidth, rectHeight) {
       const pointerX = (ndcX * 0.5 + 0.5) * rectWidth;
       const pointerY = (1 - (ndcY * 0.5 + 0.5)) * rectHeight;
@@ -610,19 +598,16 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
         entry.faceMat.opacity = GATE_FACE_OPACITY * (1 - t);
         entry.edgeMat.opacity = 1 - t;
-        // The selected waypoint's committed gate is the ghost: visible at its original
-        // position while the drag is live, cleared once the drag releases (the overlay
-        // carries the live position; Save moves the committed track itself).
-        let hideAsGhost = false;
-        if (entry.spec.index === selectedIndex && selectedSpec) {
-          hideAsGhost = entry.center3.distanceTo(selectedCenter3) > 0.5 && !dragging;
-        }
-        const gateVisible = t < 0.999 && !hideAsGhost;
+        // The selected waypoint's committed gate doubles as the ghost (mirrors the 2D
+        // editor): it stays visible at its original position for as long as the point
+        // is selected — through the drag too — and on Save the committed track catches
+        // up, so ghost and overlay simply coincide.
+        const gateVisible = t < 0.999;
         entry.face.visible = gateVisible;
         entry.edgeTop.visible = gateVisible;
         entry.edgeBottom.visible = gateVisible;
         entry.dotMat.opacity = t;
-        entry.dot.visible = t > 0.001 && !hideAsGhost;
+        entry.dot.visible = t > 0.001;
         if (entry.dot.visible) {
           // Constant screen size: world scale = (texture side in device px / pxPerWorld) ×
           // distance; billboarded to the camera so the circle always reads as a dot.
