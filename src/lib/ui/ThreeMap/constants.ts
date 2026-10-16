@@ -74,12 +74,22 @@ export const RESIZE_DEBOUNCE_MS = 100;
 // ---- track editor overlays (EditorThreeMap) ----
 
 /** Waypoint dots are visible from far away and fade out as the camera closes in, like an
- * in-game waypoint; the gate band fades in over the same range (fully drawn inside
- * GATE_FADE_NEAR_M, gone beyond GATE_FADE_FAR_M). */
-export const GATE_FADE_NEAR_M = 250;
-export const GATE_FADE_FAR_M = 900;
-/** The gate renders as a ground strip this many meters thick (2D draws a 4px stroke). */
-export const GATE_BAND_THICKNESS_M = 4;
+ * in-game waypoint; the gate (semi-transparent face + opaque edges) fades in over the
+ * same range (fully drawn inside GATE_FADE_NEAR_M, gone beyond GATE_FADE_FAR_M). */
+export const GATE_FADE_NEAR_M = 80;
+export const GATE_FADE_FAR_M = 400;
+/** The gate face spans this many meters vertically (the 2D gate is a 4px stroke). */
+export const GATE_FACE_HEIGHT_M = 4;
+/** Opaque edge strips run along the face's top and bottom borders, this thick. */
+export const GATE_EDGE_THICKNESS_M = 0.8;
+/** Opacity of the gate face at zero distance (the edges are opaque). */
+export const GATE_FACE_OPACITY = 0.35;
+/** The waypoint connector renders as a flat ribbon this many meters wide (a plain
+ * GL line is always 1px), with TRACK_LINE_OPACITY opacity and no depth test. */
+export const TRACK_LINE_WIDTH_M = 2.5;
+export const TRACK_LINE_OPACITY = 0.3;
+/** The track editor's 3D view lets you zoom closer than the main map (gates are ~1 m). */
+export const TRACK_EDITOR_MIN_DISTANCE_M = 8;
 /** Screen-space (CSS px) half-width of the gate pick area, measured across the gate. */
 export const TRACK_GATE_PICK_RADIUS_PX = 14;
 

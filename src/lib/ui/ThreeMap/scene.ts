@@ -36,13 +36,13 @@ export interface CameraRig {
   /** Removes the rig's global listeners (shift-key tracking). */
   dispose: () => void;
 }
-export function createCameraRig(renderer: Renderer): CameraRig {
+export function createCameraRig(renderer: Renderer, minDistance = 30): CameraRig {
   const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 5, 100000);
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
-  controls.minDistance = 30;
+  controls.minDistance = minDistance;
   controls.maxDistance = 25000;
 
   camera.position.set(0, controls.maxDistance, 0);
@@ -189,6 +189,9 @@ export interface ThreeMapSceneOptions {
   /** Returns true when a pointer press must not start the ground pan
    * (e.g. the track editor grabs a gate instead). Queried inside pointerdown. */
   groundPanBlocked?: (event: PointerEvent) => boolean;
+  /** OrbitControls' closest zoom distance in meters (default 30 — the main map).
+   * The track editor passes a smaller value to allow close-up gate work. */
+  minDistance?: number;
 }
 
 /** Adds the ocean plane at meta.oceanLevelMeters. Returns the mesh so the scene's
@@ -239,7 +242,7 @@ export function createThreeMapScene(
     update: updateCameraRig,
     stepBy,
     dispose: disposeCameraRig,
-  } = createCameraRig(renderer);
+  } = createCameraRig(renderer, opts.minDistance);
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);

@@ -38,20 +38,30 @@ It always renders gates, so the gate-mode toggle is hidden while it is mounted; 
 `getViewState()` returns `undefined` — the 2D viewport is parked in `parkedMapView` on the way
 in and restored on the way out.
 
-- `trackGates.ts` owns the overlay: one yellow gate **ribbon** per waypoint built straight
-  from the waypoint's full 3D data — endpoints = translation ± (quaternion's UE local-Y
-  width axis) × scale3D.y·100/2 cm, height from translation.z (no terrain sampling; the
-  quaternion rotates in the UE frame and maps to world components x/−y/z directly, so
-  three.js rotation conventions never enter). A waypoint **dot** shows from afar and fades
-  out as the camera closes in (gate fades in over the same
-  `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range), number labels follow `showNum`, and the
-  orange selected overlay is drawn from the live `selectedWaypoint` (`fromEulerWp` of the
-  editing buffer) — the committed track's own meshes double as the drag ghost, exactly like
-  the 2D Translate flow.
+- `trackGates.ts` owns the overlay: one yellow **gate** per waypoint built straight from the
+  waypoint's full 3D data — endpoints = translation ± (quaternion's UE local-Y width axis)
+  × scale3D.y·100/2 cm, height from translation.z (no terrain sampling; the quaternion
+  rotates in the UE frame and maps to world components x/−y/z directly, so three.js
+  rotation conventions never enter). A gate is a semi-transparent face (height
+  `GATE_FACE_HEIGHT_M`, opacity `GATE_FACE_OPACITY`) with opaque edge strips
+  (`GATE_EDGE_THICKNESS_M`) on its top/bottom borders. A waypoint **dot** shows from afar
+  and fades out as the camera closes in (the gate fades in over the same
+  `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range, incl. the selected dot); the connector line is
+  a flat ribbon (`TRACK_LINE_WIDTH_M`, no depth test, renderOrder below the gates). Dots
+  are `SpriteNodeMaterial` + TSL `uniform` opacity — plain `SpriteMaterial.opacity` is not
+  reliably animated under WebGPURenderer. Number labels follow `showNum`; the orange
+  selected overlay is drawn from the live `selectedWaypoint` (`fromEulerWp` of the editing
+  buffer). The ghost: while a drag is live (`setDragging(true)`) the committed gate stays
+  visible at its original spot; when the drag commits, the ghost clears — the overlay IS
+  the waypoint then (deselect restores it).
 - Pointer interaction lives in the wrapper: ground pan is suppressed via the scene's
   `groundPanBlocked` callback (queried inside groundPan's pointerdown, which runs first);
   a press on the selected gate drags along a horizontal plane at the grabbed gate's height and commits through `onSelectedPointMove` on release, converting world→game with
   `worldXZToGamePlane` (the inverse of `gamePlaneToWorldXZ`, round-trip tested).
+- `zoomFit` tips the camera toward **+Z**: with a near-straight-down lookAt, screen-up
+  resolves opposite the horizontal offset, so a +X offset renders west-up; the +Z offset
+  projects screen-up onto world −Z (north up). The editor scene passes
+  `minDistance: TRACK_EDITOR_MIN_DISTANCE_M` so gates can be worked on up close.
 
 ## Monaco
 

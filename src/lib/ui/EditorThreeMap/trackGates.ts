@@ -1,9 +1,16 @@
 import * as THREE from 'three';
+import { SpriteNodeMaterial } from 'three/webgpu';
+import { texture, uniform } from 'three/tsl';
+import type UniformNode from 'three/src/nodes/core/UniformNode.js';
 import {
-  GATE_BAND_THICKNESS_M,
+  GATE_EDGE_THICKNESS_M,
+  GATE_FACE_HEIGHT_M,
+  GATE_FACE_OPACITY,
   GATE_FADE_FAR_M,
   GATE_FADE_NEAR_M,
   TRACK_GATE_PICK_RADIUS_PX,
+  TRACK_LINE_OPACITY,
+  TRACK_LINE_WIDTH_M,
 } from '../ThreeMap/constants';
 import { makeColor, makeTextSprite, type TextSprite, type ViewportScale } from '../ThreeMap/poi';
 import {
@@ -51,6 +58,10 @@ export interface TrackGates {
     numbers: boolean,
   ) => void;
   setHovered: (index: number | undefined) => void;
+  /** Marks the drag state: while true the selected waypoint's committed gate stays
+   * visible as the ghost behind the moving orange overlay; once the drag commits
+   * (dragging = false) the ghost clears — the overlay IS the waypoint then. */
+  setDragging: (dragging: boolean) => void;
   /** Screen-space pick: pointer in NDC over the canvas rect → nearest gate, or null. */
   pick: (
     ndcX: number,
@@ -109,34 +120,172 @@ function gateDotScale(dot: DotTexture, viewport: ViewportScale): number {
   return dot.sideDevice / viewport.pxPerWorld;
 }
 
-/** A gate ribbon following the 3D segment: 4 corners, thickness measured vertically. */
-function bandGeometry(a: GateSpec['a'], b: GateSpec['b']): THREE.BufferGeometry {
-  const halfT = GATE_BAND_THICKNESS_M / 2;
-  const positions = new Float32Array([
-    a[0],
-    a[1] + halfT,
-    a[2],
-    a[0],
-    a[1] - halfT,
-    a[2],
-    b[0],
-    b[1] + halfT,
-    b[2],
-    b[0],
-    b[1] - halfT,
-    b[2],
-  ]);
+/** A screen-facing dot sprite driven by the node pipeline (like the POI delivery dots):
+ * `SpriteMaterial.opacity` animates unreliably under WebGPURenderer, while a TSL
+ * `uniform` wired into `opacityNode` is the proven per-material fade path. */
+function makeDotSprite(
+  dot: DotTexture,
+  viewport: ViewportScale,
+  renderOrder: number,
+): {
+  sprite: THREE.Sprite;
+  material: SpriteNodeMaterial;
+  opacity: UniformNode<'float', number>;
+  scale: UniformNode<'float', number>;
+} {
+  const material = new SpriteNodeMaterial({
+    sizeAttenuation: false,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+  });
+  material.colorNode = texture(dot.texture);
+  const opacity = uniform(0);
+  material.opacityNode = opacity;
+  const scale = uniform(gateDotScale(dot, viewport));
+  material.scaleNode = scale;
+  const sprite = new THREE.Sprite(material);
+  sprite.visible = false;
+  sprite.renderOrder = renderOrder;
+  return { sprite, material, opacity, scale };
+}
+
+/** One vertical quad between a and b; the four heights are absolute (world meters). */
+function quadGeometry(
+  a: GateSpec['a'],
+  b: GateSpec['b'],
+  aLow: number,
+  aHigh: number,
+  bLow: number,
+  bHigh: number,
+): THREE.BufferGeometry {
   const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(
+      new Float32Array([a[0], aLow, a[2], a[0], aHigh, a[2], b[0], bLow, b[2], b[0], bHigh, b[2]]),
+      3,
+    ),
+  );
   geometry.setIndex([0, 1, 2, 2, 1, 3]);
   return geometry;
 }
 
-interface GateEntry {
+interface GateVisuals {
+  /** Semi-transparent face spanning the full gate height. */
+  face: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  /** Opaque strips along the top and bottom edges of the face. */
+  edgeTop: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  edgeBottom: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+  faceMat: THREE.MeshBasicMaterial;
+  edgeMat: THREE.MeshBasicMaterial;
+}
+
+function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
+  const halfH = GATE_FACE_HEIGHT_M / 2;
+  const edge = GATE_EDGE_THICKNESS_M;
+  const faceMat = new THREE.MeshBasicMaterial({
+    color: makeColor(color),
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const edgeMat = new THREE.MeshBasicMaterial({
+    color: makeColor(color),
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const face = new THREE.Mesh(
+    quadGeometry(
+      spec.a,
+      spec.b,
+      spec.a[1] - halfH,
+      spec.a[1] + halfH,
+      spec.b[1] - halfH,
+      spec.b[1] + halfH,
+    ),
+    faceMat,
+  );
+  const edgeTop = new THREE.Mesh(
+    quadGeometry(
+      spec.a,
+      spec.b,
+      spec.a[1] + halfH - edge,
+      spec.a[1] + halfH,
+      spec.b[1] + halfH - edge,
+      spec.b[1] + halfH,
+    ),
+    edgeMat,
+  );
+  const edgeBottom = new THREE.Mesh(
+    quadGeometry(
+      spec.a,
+      spec.b,
+      spec.a[1] - halfH,
+      spec.a[1] - halfH + edge,
+      spec.b[1] - halfH,
+      spec.b[1] - halfH + edge,
+    ),
+    edgeMat,
+  );
+  for (const mesh of [face, edgeTop, edgeBottom]) {
+    mesh.renderOrder = 1;
+    mesh.visible = false;
+  }
+  return { face, edgeTop, edgeBottom, faceMat, edgeMat };
+}
+
+function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
+  group.remove(visuals.face, visuals.edgeTop, visuals.edgeBottom);
+  for (const mesh of [visuals.face, visuals.edgeTop, visuals.edgeBottom]) {
+    mesh.geometry.dispose();
+  }
+  visuals.faceMat.dispose();
+  visuals.edgeMat.dispose();
+}
+
+/** The track polyline as a flat ribbon `TRACK_LINE_WIDTH_M` wide, following each
+ * point's data height. Plain lines are always 1px (linewidth is unsupported), so a
+ * ribbon is the way to get a thick connector. */
+function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.BufferGeometry {
+  const geometry = new THREE.BufferGeometry();
+  if (points.length < 2) return geometry;
+  const half = TRACK_LINE_WIDTH_M / 2;
+  const positions = new Float32Array(points.length * 2 * 3);
+  for (let i = 0; i < points.length; i++) {
+    const prev = points[Math.max(0, i - 1)];
+    const next = points[Math.min(points.length - 1, i + 1)];
+    const dx = next[0] - prev[0];
+    const dz = next[2] - prev[2];
+    const length = Math.hypot(dx, dz) || 1;
+    const px = (-dz / length) * half;
+    const pz = (dx / length) * half;
+    const base = i * 6;
+    positions[base] = points[i][0] + px;
+    positions[base + 1] = points[i][1];
+    positions[base + 2] = points[i][2] + pz;
+    positions[base + 3] = points[i][0] - px;
+    positions[base + 4] = points[i][1];
+    positions[base + 5] = points[i][2] - pz;
+  }
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const indices: number[] = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    const a = i * 2;
+    indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+  }
+  geometry.setIndex(indices);
+  return geometry;
+}
+
+interface GateEntry extends GateVisuals {
   spec: GateSpec;
-  band: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
   dot: THREE.Sprite;
-  dotMaterial: THREE.SpriteMaterial;
+  dotOpacity: UniformNode<'float', number>;
+  dotScale: UniformNode<'float', number>;
   label: TextSprite | null;
   center3: THREE.Vector3;
   endA3: THREE.Vector3;
@@ -144,12 +293,12 @@ interface GateEntry {
 }
 
 /**
- * The track editor's 3D overlay: one yellow gate ribbon per waypoint (straight from the
- * waypoint's full 3D data), a waypoint dot that shows from far away and fades out as the
- * camera closes in (like an in-game waypoint), optional number labels and the orange
- * selected-point overlay. The committed track's meshes double as the drag ghost — the
- * selected overlay moves during a drag while the original stays where the track data
- * still says it is.
+ * The track editor's 3D overlay: one yellow gate per waypoint (semi-transparent face,
+ * opaque edges, straight from the waypoint's full 3D data), a waypoint dot that shows
+ * from far away and fades out as the camera closes in (like an in-game waypoint),
+ * optional number labels and the orange selected-point overlay. While the selected
+ * waypoint is being dragged, its committed gate stays visible as the ghost; when the
+ * drag commits, the ghost clears and the overlay is the waypoint.
  */
 export function createTrackGates(scene: THREE.Scene, getViewport: () => ViewportScale): TrackGates {
   const group = new THREE.Group();
@@ -158,28 +307,30 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   let viewport = getViewport();
 
   const entries: GateEntry[] = [];
-  let line: THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial> | null = null;
+  let line: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
 
   // Selected overlay (live editing-buffer position of the selected waypoint).
   let selectedIndex: number | undefined = undefined;
   let selectedSpec: GateSpec | undefined = undefined;
-  let selectedBand: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
+  let selectedVisuals: GateVisuals | null = null;
   let selectedDot: THREE.Sprite | null = null;
+  let selectedDotOpacity: UniformNode<'float', number> | null = null;
+  let selectedDotScale: UniformNode<'float', number> | null = null;
   const selectedCenter3 = new THREE.Vector3();
 
   let numbers = false;
   /** Label rebuild keys — labels are canvas sprites, so only remake them when needed. */
   let labelCount = -1;
   let hoveredIndex: number | undefined = undefined;
+  /** While a drag is live the committed gate stays as the ghost; after commit it hides. */
+  let dragging = false;
 
   let normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
-  let hoverDot = makeGateDotTexture(colorYellow300, colorYellow950, viewport);
   let selectedDotTex = makeGateDotTexture(colorAmber500, colorWhite, viewport);
 
   function disposeEntryVisuals(entry: GateEntry): void {
-    entry.band.geometry.dispose();
-    entry.band.material.dispose();
-    entry.dotMaterial.dispose();
+    disposeGateVisuals(group, entry);
+    entry.dot.material.dispose();
     if (entry.label) {
       group.remove(entry.label.sprite);
       const material = entry.label.sprite.material;
@@ -189,33 +340,16 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   }
 
   function makeEntry(spec: GateSpec): GateEntry {
-    const bandMaterial = new THREE.MeshBasicMaterial({
-      color: makeColor(colorYellow500),
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-    });
-    const band = new THREE.Mesh(bandGeometry(spec.a, spec.b), bandMaterial);
-    band.renderOrder = 0;
-    const dotMaterial = new THREE.SpriteMaterial({
-      map: normalDot.texture,
-      sizeAttenuation: false,
-      transparent: true,
-      opacity: 0,
-      depthWrite: false,
-      depthTest: false,
-    });
-    const dot = new THREE.Sprite(dotMaterial);
-    dot.scale.setScalar(gateDotScale(normalDot, viewport));
-    dot.visible = false;
-    dot.renderOrder = 1;
-    group.add(band, dot);
+    const visuals = buildGateVisuals(spec, colorYellow500);
+    const dot = makeDotSprite(normalDot, viewport, 2);
+    dot.sprite.visible = false;
+    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, dot.sprite);
     return {
       spec,
-      band,
-      dot,
-      dotMaterial,
+      ...visuals,
+      dot: dot.sprite,
+      dotOpacity: dot.opacity,
+      dotScale: dot.scale,
       label: null,
       center3: new THREE.Vector3(...spec.center),
       endA3: new THREE.Vector3(...spec.a),
@@ -237,49 +371,41 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       viewport,
     );
     entry.label.sprite.visible = numbers;
-    entry.label.sprite.renderOrder = 2;
+    entry.label.sprite.renderOrder = 3;
     group.add(entry.label.sprite);
   }
 
   function disposeSelectedOverlay(): void {
-    if (selectedBand) {
-      group.remove(selectedBand);
-      selectedBand.geometry.dispose();
-      selectedBand.material.dispose();
-      selectedBand = null;
+    if (selectedVisuals) {
+      disposeGateVisuals(group, selectedVisuals);
+      selectedVisuals = null;
     }
     if (selectedDot) {
       group.remove(selectedDot);
       selectedDot.material.dispose();
       selectedDot = null;
+      selectedDotOpacity = null;
+      selectedDotScale = null;
     }
   }
 
   function makeSelectedOverlay(): void {
     disposeSelectedOverlay();
     if (!selectedSpec) return;
-    const bandMaterial = new THREE.MeshBasicMaterial({
-      color: makeColor(colorOrange500),
-      transparent: true,
-      opacity: 1,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-    });
-    selectedBand = new THREE.Mesh(bandGeometry(selectedSpec.a, selectedSpec.b), bandMaterial);
-    selectedBand.renderOrder = 0;
-    const dotMaterial = new THREE.SpriteMaterial({
-      map: selectedDotTex.texture,
-      sizeAttenuation: false,
-      transparent: true,
-      depthWrite: false,
-      depthTest: false,
-    });
-    selectedDot = new THREE.Sprite(dotMaterial);
-    selectedDot.scale.setScalar(gateDotScale(selectedDotTex, viewport));
-    selectedDot.renderOrder = 1;
-    group.add(selectedBand, selectedDot);
+    const visuals = buildGateVisuals(selectedSpec, colorOrange500);
+    selectedVisuals = visuals;
+    const dot = makeDotSprite(selectedDotTex, viewport, 2);
+    selectedDot = dot.sprite;
+    selectedDotOpacity = dot.opacity;
+    selectedDotScale = dot.scale;
+    group.add(visuals.face, visuals.edgeTop, visuals.edgeBottom, selectedDot);
     selectedCenter3.set(...selectedSpec.center);
     selectedDot.position.copy(selectedCenter3);
+  }
+
+  function applyFaceColor(visuals: GateVisuals, color: string): void {
+    visuals.faceMat.color.copy(makeColor(color));
+    visuals.edgeMat.color.copy(makeColor(color));
   }
 
   function applyBandColor(entry: GateEntry): void {
@@ -289,7 +415,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         : entry.spec.index === hoveredIndex
           ? colorYellow300
           : colorYellow500;
-    entry.band.material.color.copy(makeColor(color));
+    applyFaceColor(entry, color);
   }
 
   function refreshLabels(): void {
@@ -318,18 +444,17 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       }
 
       if (linePoints.length >= 2) {
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute(
-          'position',
-          new THREE.BufferAttribute(new Float32Array(linePoints.flat()), 3),
-        );
-        const material = new THREE.LineBasicMaterial({
+        const material = new THREE.MeshBasicMaterial({
           color: makeColor(colorWhite),
           transparent: true,
-          opacity: 0.25,
+          opacity: TRACK_LINE_OPACITY,
           depthWrite: false,
+          // No depth test: the connector reads on top of the terrain like the 2D line.
+          depthTest: false,
+          side: THREE.DoubleSide,
         });
-        line = new THREE.Line(geometry, material);
+        line = new THREE.Mesh(ribbonGeometry(linePoints), material);
+        line.renderOrder = 0;
         group.add(line);
       }
 
@@ -349,6 +474,10 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       if (index === hoveredIndex) return;
       hoveredIndex = index;
       for (const entry of entries) applyBandColor(entry);
+    },
+
+    setDragging(next) {
+      dragging = next;
     },
 
     pick(ndcX, ndcY, camera, rectWidth, rectHeight) {
@@ -397,7 +526,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       for (const entry of entries) {
         consider(entry.spec.index, entry.endA3, entry.endB3, entry.center3);
       }
-      if (selectedSpec && selectedBand) {
+      if (selectedSpec && selectedVisuals) {
         // The live overlay is pickable at its dragged position too.
         consider(
           selectedSpec.index,
@@ -412,7 +541,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     },
 
     dragTo(x, z) {
-      if (!selectedSpec || !selectedBand || !selectedDot) return;
+      if (!selectedSpec || !selectedVisuals) return;
       // A drag moves the waypoint on the map plane; the data's z height is kept.
       const shiftX = x - selectedSpec.center[0];
       const shiftZ = z - selectedSpec.center[2];
@@ -423,21 +552,68 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         b: [selectedSpec.b[0] + shiftX, selectedSpec.b[1], selectedSpec.b[2] + shiftZ],
       };
       selectedCenter3.set(x, selectedSpec.center[1], z);
-      selectedBand.geometry.dispose();
-      selectedBand.geometry = bandGeometry(selectedSpec.a, selectedSpec.b);
-      selectedDot.position.copy(selectedCenter3);
+      const halfH = GATE_FACE_HEIGHT_M / 2;
+      const edge = GATE_EDGE_THICKNESS_M;
+      const visuals = selectedVisuals;
+      visuals.face.geometry.dispose();
+      visuals.face.geometry = quadGeometry(
+        selectedSpec.a,
+        selectedSpec.b,
+        selectedSpec.a[1] - halfH,
+        selectedSpec.a[1] + halfH,
+        selectedSpec.b[1] - halfH,
+        selectedSpec.b[1] + halfH,
+      );
+      visuals.edgeTop.geometry.dispose();
+      visuals.edgeTop.geometry = quadGeometry(
+        selectedSpec.a,
+        selectedSpec.b,
+        selectedSpec.a[1] + halfH - edge,
+        selectedSpec.a[1] + halfH,
+        selectedSpec.b[1] + halfH - edge,
+        selectedSpec.b[1] + halfH,
+      );
+      visuals.edgeBottom.geometry.dispose();
+      visuals.edgeBottom.geometry = quadGeometry(
+        selectedSpec.a,
+        selectedSpec.b,
+        selectedSpec.a[1] - halfH,
+        selectedSpec.a[1] - halfH + edge,
+        selectedSpec.b[1] - halfH,
+        selectedSpec.b[1] - halfH + edge,
+      );
+      selectedDot?.position.copy(selectedCenter3);
     },
 
     update(camera) {
-      // Distance fade: the dot is the far waypoint marker, the gate ribbon takes over up close.
+      // Distance fade: the dot is the far waypoint marker, the gate face + opaque edges
+      // take over up close. Both ramp smoothly over the same range.
       const nearSpan = GATE_FADE_FAR_M - GATE_FADE_NEAR_M;
       for (const entry of entries) {
         const d = camera.position.distanceTo(entry.center3);
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
-        entry.band.material.opacity = 1 - t;
-        entry.band.visible = t < 0.999;
-        entry.dotMaterial.opacity = t;
-        entry.dot.visible = t > 0.001;
+        // While the selected waypoint is dragged its committed gate is the ghost; once
+        // the drag commits (overlay == waypoint) the ghost clears.
+        const ghost = entry.spec.index === selectedIndex && !!selectedSpec && dragging;
+        entry.faceMat.opacity = GATE_FACE_OPACITY * (1 - t);
+        entry.edgeMat.opacity = 1 - t;
+        const gateVisible = t < 0.999 && !ghost;
+        entry.face.visible = gateVisible;
+        entry.edgeTop.visible = gateVisible;
+        entry.edgeBottom.visible = gateVisible;
+        entry.dotOpacity.value = t;
+        entry.dot.visible = t > 0.001 && !ghost;
+      }
+
+      // The selected overlay is always fully drawn (it IS the live waypoint); its dot
+      // fades out up close like every other dot.
+      if (selectedVisuals && selectedDotOpacity) {
+        selectedVisuals.faceMat.opacity = GATE_FACE_OPACITY;
+        selectedVisuals.edgeMat.opacity = 1;
+        const d = camera.position.distanceTo(selectedCenter3);
+        const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
+        selectedDotOpacity.value = t;
+        if (selectedDot) selectedDot.visible = t > 0.001;
       }
 
       // Number labels hang above their dots along the screen-up direction.
@@ -457,25 +633,27 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     refit() {
       const next = getViewport();
       if (next.dpr === viewport.dpr && next.pxPerWorld === viewport.pxPerWorld) return;
-      viewport = next;
       const dprChanged = next.dpr !== viewport.dpr;
+      viewport = next;
       if (dprChanged) {
         normalDot.texture.dispose();
-        hoverDot.texture.dispose();
         selectedDotTex.texture.dispose();
         normalDot = makeGateDotTexture(colorYellow500, colorYellow950, viewport);
-        hoverDot = makeGateDotTexture(colorYellow300, colorYellow950, viewport);
         selectedDotTex = makeGateDotTexture(colorAmber500, colorWhite, viewport);
-        for (const entry of entries) entry.dotMaterial.map = normalDot.texture;
-        if (selectedDot) selectedDot.material.map = selectedDotTex.texture;
+        for (const entry of entries) {
+          entry.dot.material.colorNode = texture(normalDot.texture);
+        }
+        if (selectedDot) selectedDot.material.colorNode = texture(selectedDotTex.texture);
         labelCount = -1;
         refreshLabels();
         for (const entry of entries) {
           if (entry.label) entry.label.sprite.visible = numbers;
         }
       }
-      for (const entry of entries) entry.dot.scale.setScalar(gateDotScale(normalDot, viewport));
-      if (selectedDot) selectedDot.scale.setScalar(gateDotScale(selectedDotTex, viewport));
+      for (const entry of entries) {
+        entry.dotScale.value = gateDotScale(normalDot, viewport);
+      }
+      if (selectedDotScale) selectedDotScale.value = gateDotScale(selectedDotTex, viewport);
     },
 
     dispose() {
@@ -489,7 +667,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       }
       disposeSelectedOverlay();
       normalDot.texture.dispose();
-      hoverDot.texture.dispose();
       selectedDotTex.texture.dispose();
       scene.remove(group);
     },

@@ -9,6 +9,7 @@
   import type { Waypoint } from '$lib/schema/track';
   import { Quaternion } from 'quaternion';
   import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
+  import { TRACK_EDITOR_MIN_DISTANCE_M } from '$lib/ui/ThreeMap/constants';
   import { TILES_META } from '$lib/ui/ThreeMap/heightmap';
   import { gameCoordToWorld, worldXZToGamePlane } from '$lib/ui/ThreeMap/coords';
   import { createTrackGates, type GateSpec, type TrackGates } from './trackGates';
@@ -136,7 +137,7 @@
   const CLICK_MAX_MOVE_PX = 5;
 
   function onPointerDown(event: PointerEvent): void {
-    if (event.button !== 0 || !three) return;
+    if (event.button !== 0 || !three || !gates) return;
     // Shift+left is the rotate gesture — never grab a gate with it.
     if (event.shiftKey) return;
     const hit = pickAt(event);
@@ -149,6 +150,7 @@
         grabY: hit.world.y,
       };
       dragWorld = null;
+      gates.setDragging(true);
       three.renderer.domElement.setPointerCapture(event.pointerId);
       return;
     }
@@ -184,6 +186,7 @@
     const lastDrag = dragWorld;
     pending = null;
     dragWorld = null;
+    gates?.setDragging(false);
     const moved =
       Math.hypot(event.clientX - press.clientX, event.clientY - press.clientY) > CLICK_MAX_MOVE_PX;
     if (press.dragging) {
@@ -204,7 +207,10 @@
   }
 
   onMount(() => {
-    three = createThreeMapScene(container, { groundPanBlocked });
+    three = createThreeMapScene(container, {
+      groundPanBlocked,
+      minDistance: TRACK_EDITOR_MIN_DISTANCE_M,
+    });
     const scene = three;
     gates = createTrackGates(scene.scene, scene.viewport);
     const unregisterFrame = scene.onFrame(() => gates?.update(scene.camera));
@@ -253,13 +259,16 @@
     const controls = three.controls;
     const camera = three.camera;
     controls.target.set(centerX, centerY, centerZ);
-    // A hair of tilt keeps lookAt off the degenerate straight-down axis.
+    // A hair of tilt keeps lookAt off the degenerate straight-down axis. The tilt goes
+    // toward +Z (south): with a lookAt straight down, the screen-up direction ends up
+    // opposite the horizontal offset — offsetting +Z projects screen-up onto world -Z,
+    // i.e. north up (an +X offset would render west up).
     const distance = THREE.MathUtils.clamp(
       (radius / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))) * 1.2,
       300,
       controls.maxDistance * 0.8,
     );
-    camera.position.set(centerX + distance * 0.01, centerY + distance, centerZ);
+    camera.position.set(centerX, centerY + distance, centerZ + distance * 0.01);
     camera.lookAt(controls.target);
     controls.update();
   };
