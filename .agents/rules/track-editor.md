@@ -29,6 +29,26 @@ Each buffer commits only on its own Save and confirms before being abandoned. `l
 
 Waypoint rotations are `{x, y, z, w}` quaternions. Use the `quaternion` package through `TrackEditor/utils/` and always convert with the shared `WP_EULER_ORDER`; never drop to Euler angles for intermediate math. Vector and normalization helpers live in `$lib/utils/math/`.
 
+## 3D view
+
+`EditorThreeMap.svelte` (`src/lib/ui/EditorThreeMap/`) is a third view flavor driven by a
+`threeDView` state in `Editor.svelte` (a button, not a query param — only code/map are URLs).
+It always renders gates, so the gate-mode toggle is hidden while it is mounted; the shared
+`map` ref is typed structurally (`EditorMap`: `zoomFit` + `getViewState`), and 3D's
+`getViewState()` returns `undefined` — the 2D viewport is parked in `parkedMapView` on the way
+in and restored on the way out.
+
+- `trackGates.ts` owns the overlay: one terrain-draped yellow gate strip per waypoint, a
+  waypoint **dot** that shows from afar and fades out as the camera closes in (gate fades in
+  over the same `GATE_FADE_NEAR_M..GATE_FADE_FAR_M` range), number labels, and the orange
+  selected overlay drawn from the live `selectedPoint` — the committed track's own meshes
+  double as the drag ghost, exactly like the 2D Translate flow.
+- Pointer interaction lives in the wrapper: ground pan is suppressed via the scene's
+  `groundPanBlocked` callback (queried inside groundPan's pointerdown, which runs first);
+  a press on the selected gate drags along a horizontal plane at the grabbed gate's draped
+  height and commits through `onSelectedPointMove` on release, converting world→game with
+  `worldXZToGamePlane` (the inverse of `gamePlaneToWorldXZ`, round-trip tested).
+
 ## Monaco
 
 **Pinned to 0.54.0 — do not bump blindly.** 0.55 moved `languages.json` off the `monaco` namespace; 0.56 added an `exports` map that breaks every `monaco-editor/esm/vs/…` specifier and deleted `editor.all.js`. Either bump means rewriting `src/lib/ui/CodeEditor/monaco.ts`.
