@@ -8,6 +8,9 @@ export function createGroundPan(
   camera: THREE.Camera,
   controls: OrbitControls,
   tileGroup: THREE.Group,
+  /** Returns true when this press must not start a pan (e.g. a track-gate drag).
+   * Queried synchronously inside pointerdown, before any state is taken. */
+  isBlocked?: (event: PointerEvent) => boolean,
 ) {
   const raycaster = new THREE.Raycaster();
   const pointerNDC = new THREE.Vector2();
@@ -33,6 +36,7 @@ export function createGroundPan(
 
   function onPointerDown(event: PointerEvent): void {
     if (event.button !== 0) return;
+    if (isBlocked?.(event)) return;
     panVelocity = null;
     samples.length = 0;
     setPointerNDC(event);

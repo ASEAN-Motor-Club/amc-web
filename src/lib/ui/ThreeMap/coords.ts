@@ -38,6 +38,18 @@ export function gamePlaneToWorldXZ(x: number, y: number, meta: TilesMeta): [x: n
   return [wx, wz];
 }
 
+/** Inverse of {@link gamePlaneToWorldXZ}: world XZ meters → game-plane cm (x right, y down). */
+export function worldXZToGamePlane(
+  x: number,
+  z: number,
+  meta: TilesMeta,
+): [gx: number, gy: number] {
+  const sizePx = meta.widthMeters * CM_PER_M; // square map
+  const pxX = (x + meta.widthMeters / 2) * CM_PER_M;
+  const pxY = (meta.heightMeters / 2 - z) * CM_PER_M;
+  return [pxX + meta.originXMeters * CM_PER_M, meta.originYMeters * CM_PER_M + (sizePx - pxY)];
+}
+
 function pointInRing(px: number, pz: number, ring: [x: number, z: number][]): boolean {
   let inside = false;
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {

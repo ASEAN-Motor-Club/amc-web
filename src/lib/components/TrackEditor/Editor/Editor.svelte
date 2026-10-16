@@ -39,6 +39,7 @@
   import Slider from '$lib/ui/Slider/Slider.svelte';
   import type { Track, WaypointEuler } from '$lib/schema/track';
   import EditorOlMap from '$lib/ui/EditorOlMap/EditorOlMap.svelte';
+  import EditorThreeMap from '$lib/ui/EditorThreeMap/EditorThreeMap.svelte';
   import type { MapViewState } from '$lib/ui/OlMap/OlMap.svelte';
   import { onMount, untrack } from 'svelte';
   import type { Vector2 } from '$lib/types';
@@ -53,8 +54,14 @@
   }
   const { initialTrackData }: EditorProps = $props();
 
+  /** Whichever map flavor is mounted — both expose `zoomFit`; `getViewState` is 2D-only
+   * (the 3D map has no convertible view state and returns undefined). */
+  interface EditorMap {
+    zoomFit: () => void;
+    getViewState: () => MapViewState | undefined;
+  }
   // Only one of the map and the code editor is mounted at a time, so this is unset in code view.
-  let map = $state<EditorOlMap | undefined>(undefined);
+  let map = $state<EditorMap | undefined>(undefined);
   /** Where the map was looking when it unmounted, handed back so the view survives a view switch. */
   let mapView = $state<MapViewState | undefined>(undefined);
 
@@ -342,6 +349,22 @@
   let gateMode = $state(false);
   let showNum = $state(true);
 
+  // The 3D map always renders gates, so the gate-mode toggle only exists in 2D. The 2D
+  // viewport is parked while in 3D (which has no convertible view state) and restored back.
+  let threeDView = $state(false);
+  let parkedMapView: MapViewState | undefined = undefined;
+
+  const enter3dView = () => {
+    parkedMapView = map?.getViewState();
+    mapView = undefined;
+    threeDView = true;
+  };
+
+  const exit3dView = () => {
+    threeDView = false;
+    mapView = parkedMapView;
+  };
+
   const mapBtnClass = 'text-text bg-white/80 hover:bg-white active:bg-gray-50 backdrop-blur-xs';
 </script>
 
@@ -368,6 +391,16 @@
           </ul>
         </div>
       {/if}
+    {:else if threeDView}
+      <EditorThreeMap
+        class="h-full"
+        {points}
+        onPointClick={handlePointClick}
+        {selectedPoint}
+        bind:this={map}
+        onSelectedPointMove={handlePointMove}
+        {showNum}
+      />
     {:else}
       <EditorOlMap
         class="h-full"
@@ -380,20 +413,25 @@
         {showNum}
         initialView={mapView}
       />
-      <div class="absolute bottom-4 left-4 flex gap-2">
-        <Button size="sm" onClick={() => map?.zoomFit()} class={mapBtnClass}>
-          {m['track_editor.editor.recenter']()}
-        </Button>
+    {/if}
+    <div class="absolute bottom-4 left-4 flex gap-2">
+      <Button size="sm" onClick={() => map?.zoomFit()} class={mapBtnClass}>
+        {m['track_editor.editor.recenter']()}
+      </Button>
+      {#if !threeDView}
         <Button size="sm" onClick={() => (gateMode = !gateMode)} class={mapBtnClass}>
           {gateMode ? m['track_editor.editor.hide_width']() : m['track_editor.editor.show_width']()}
         </Button>
-        <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
-          {showNum
-            ? m['track_editor.editor.hide_number']()
-            : m['track_editor.editor.show_number']()}
-        </Button>
-      </div>
-    {/if}
+      {/if}
+      <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
+        {showNum ? m['track_editor.editor.hide_number']() : m['track_editor.editor.show_number']()}
+      </Button>
+      <Button size="sm" onClick={threeDView ? exit3dView : enter3dView} class={mapBtnClass}>
+        {threeDView
+          ? m['track_editor.editor.switch_to_2d']()
+          : m['track_editor.editor.switch_to_3d']()}
+      </Button>
+    </div>
   </Card>
   <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">

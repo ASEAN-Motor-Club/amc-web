@@ -101,6 +101,8 @@
       "view": "มุมมอง",
       "switch_to_code_view": "สลับไปมุมมองโค้ด",
       "switch_to_map_view": "สลับไปมุมมองแผนที่",
+      "switch_to_3d": "แผนที่ 3D",
+      "switch_to_2d": "แผนที่ 2D",
       "unselect": "ยกเลิกการเลือกจุด",
       "discard_point_changes": {
         "title": "ยกเลิกการแก้ไข",
