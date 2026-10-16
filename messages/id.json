@@ -101,6 +101,8 @@
       "view": "Tampilan",
       "switch_to_code_view": "Beralih ke Tampilan Kode",
       "switch_to_map_view": "Beralih ke Tampilan Peta",
+      "switch_to_3d": "Peta 3D",
+      "switch_to_2d": "Peta 2D",
       "unselect": "Batalkan Pilihan Titik",
       "discard_point_changes": {
         "title": "Buang Perubahan",

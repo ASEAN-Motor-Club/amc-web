@@ -101,6 +101,8 @@
       "view": "View",
       "switch_to_code_view": "Switch to Code View",
       "switch_to_map_view": "Switch to Map View",
+      "switch_to_3d": "3D Map",
+      "switch_to_2d": "2D Map",
       "unselect": "Unselect Waypoint",
       "discard_point_changes": {
         "title": "Discard Changes",

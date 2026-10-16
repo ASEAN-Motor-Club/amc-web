@@ -21,9 +21,9 @@ import { TILES_META } from './heightmap';
 import { createPoiManager, type PoiManager } from './poiManager';
 import { createTileManager } from './tileManager';
 import type { TileManager } from './tileManager';
-import { createGroundHeights } from './groundHeights';
+import { createGroundHeights, type GroundHeights } from './groundHeights';
 import { createAreaLabelLayer, type AreaLabelLayer } from './areaLabels';
-import { viewportScale } from './poi';
+import { viewportScale, type ViewportScale } from './poi';
 import type { TilesMeta } from './three-map-types';
 
 export interface CameraRig {
@@ -131,6 +131,16 @@ export interface ThreeMapScene {
   poiManager: PoiManager;
   /** Ground overlays: floating area names. */
   areaLabels: AreaLabelLayer;
+  /** Tile-height sampler for extra ground overlays (delivery lines, editor gates). */
+  groundHeights: GroundHeights;
+  /** Sprite screen metrics for the current drawing buffer (dot/label sizing). */
+  viewport: () => ViewportScale;
+  /** Registers a callback fired after the debounced container resize applies.
+   * Returns an unregister function. */
+  onResize: (fn: () => void) => () => void;
+  /** Registers a per-frame callback (runs right before the render, after the
+   * built-in updates). Returns an unregister function. */
+  onFrame: (fn: () => void) => () => void;
   /** Selection-glide servo: ThreeMapWrapper re-targets it via panTo(); the
    * frame loop advances it. */
   selectionPan: SelectionPan;
@@ -138,6 +148,12 @@ export interface ThreeMapScene {
    * Positive steps out, negative steps in. */
   stepBy: (logStep: number) => void;
   dispose: () => void;
+}
+
+export interface ThreeMapSceneOptions {
+  /** Returns true when a pointer press must not start the ground pan
+   * (e.g. the track editor grabs a gate instead). Queried inside pointerdown. */
+  groundPanBlocked?: (event: PointerEvent) => boolean;
 }
 
 /** Adds the ocean plane at meta.oceanLevelMeters. Returns the mesh so the scene's
@@ -166,7 +182,10 @@ export function createOceanQuad(
   return mesh;
 }
 
-export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
+export function createThreeMapScene(
+  container: HTMLElement,
+  opts: ThreeMapSceneOptions = {},
+): ThreeMapScene {
   const renderer = new WebGPURenderer({ antialias: true, logarithmicDepthBuffer: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(container.clientWidth, container.clientHeight);
@@ -202,13 +221,21 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     loadingManager,
   );
   const selectionPan = createSelectionPan(renderer.domElement, camera, controls);
-  const panPhys = createGroundPan(renderer, camera, controls, tileManager.tileGroup);
+  const panPhys = createGroundPan(
+    renderer,
+    camera,
+    controls,
+    tileManager.tileGroup,
+    opts.groundPanBlocked,
+  );
   const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer);
 
   // Ground overlays: own height-tile fetches (fixed places, never evicted), shared abort.
   const groundHeights = createGroundHeights(meta, loadingManager.abortController.signal);
   const getViewport = () => viewportScale(camera, renderer);
   const areaLabels = createAreaLabelLayer(scene, meta, tileManager, groundHeights, getViewport);
+  const resizeCallbacks = new Set<() => void>();
+  const frameCallbacks = new Set<() => void>();
   function refreshVisibleTiles(): void {
     tileManager.updateVisibleTiles();
     poiManager.syncCovers();
@@ -225,6 +252,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     renderer.setSize(container.clientWidth, container.clientHeight);
     poiManager.setViewport();
     areaLabels.setViewport();
+    for (const fn of resizeCallbacks) fn();
     // The size has settled - clear the transition blur.
     renderer.domElement.style.filter = '';
   }
@@ -249,6 +277,7 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     selectionPan.update(dt);
     poiManager.update(camera);
     areaLabels.update();
+    for (const fn of frameCallbacks) fn();
     if (now - lastTileUpdate > TILE_UPDATE_INTERVAL_MS) {
       lastTileUpdate = now;
       refreshVisibleTiles();
@@ -269,12 +298,24 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
     tileManager,
     poiManager,
     areaLabels,
+    groundHeights,
+    viewport: getViewport,
+    onResize(fn) {
+      resizeCallbacks.add(fn);
+      return () => resizeCallbacks.delete(fn);
+    },
+    onFrame(fn) {
+      frameCallbacks.add(fn);
+      return () => frameCallbacks.delete(fn);
+    },
     selectionPan,
     stepBy,
     dispose() {
       // Kill in-flight tile fetches/texture loads first: their continuations check the
       // signal and bail instead of repopulating the caches tileManager.dispose() drains.
       loadingManager.abort();
+      resizeCallbacks.clear();
+      frameCallbacks.clear();
       panPhys.dispose();
       selectionPan.dispose();
       poiManager.dispose();

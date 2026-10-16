@@ -71,6 +71,18 @@ export const OCEAN_QUAD_SIZE = 200000;
 export const TILE_UPDATE_INTERVAL_MS = 150;
 export const RESIZE_DEBOUNCE_MS = 100;
 
+// ---- track editor overlays (EditorThreeMap) ----
+
+/** Waypoint dots are visible from far away and fade out as the camera closes in, like an
+ * in-game waypoint; the gate band fades in over the same range (fully drawn inside
+ * GATE_FADE_NEAR_M, gone beyond GATE_FADE_FAR_M). */
+export const GATE_FADE_NEAR_M = 250;
+export const GATE_FADE_FAR_M = 900;
+/** The gate renders as a ground strip this many meters thick (2D draws a 4px stroke). */
+export const GATE_BAND_THICKNESS_M = 4;
+/** Screen-space (CSS px) half-width of the gate pick area, measured across the gate. */
+export const TRACK_GATE_PICK_RADIUS_PX = 14;
+
 // ---- ground overlays (area labels) ----
 
 /** Overlay meshes drape this far above the sampled ground so they never z-fight it. */
