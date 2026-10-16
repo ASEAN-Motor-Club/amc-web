@@ -76,8 +76,8 @@ export const RESIZE_DEBOUNCE_MS = 100;
 /** Waypoint dots are visible from far away and fade out as the camera closes in, like an
  * in-game waypoint; the gate (semi-transparent face + opaque edges) fades in over the
  * same range (fully drawn inside GATE_FADE_NEAR_M, gone beyond GATE_FADE_FAR_M). */
-export const GATE_FADE_NEAR_M = 80;
-export const GATE_FADE_FAR_M = 400;
+export const GATE_FADE_NEAR_M = 250;
+export const GATE_FADE_FAR_M = 1200;
 /** The gate face spans this many meters vertically (the 2D gate is a 4px stroke). */
 export const GATE_FACE_HEIGHT_M = 4;
 /** Opaque edge strips run along the face's top and bottom borders, this thick. */
