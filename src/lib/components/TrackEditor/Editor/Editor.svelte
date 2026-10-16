@@ -394,9 +394,11 @@
     {:else if threeDView}
       <EditorThreeMap
         class="h-full"
-        {points}
+        waypoints={trackData.waypoints}
+        selectedWaypoint={selectedPointIndex !== undefined
+          ? { index: selectedPointIndex, waypoint: fromEulerWp(editingPoint) }
+          : undefined}
         onPointClick={handlePointClick}
-        {selectedPoint}
         bind:this={map}
         onSelectedPointMove={handlePointMove}
         {showNum}

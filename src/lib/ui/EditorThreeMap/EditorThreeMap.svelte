@@ -4,22 +4,23 @@
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';
   import type { ClassValue } from 'svelte/elements';
-  import type { Vector2 } from '$lib/types';
+  import type { Vector2, Vector3 } from '$lib/types';
   import type { MapViewState } from '$lib/ui/OlMap/OlMap.svelte';
-  import type { SelectedTrackPoint, TrackPoint } from '$lib/ui/EditorOlMap/EditorOlMap.svelte';
+  import type { Waypoint } from '$lib/schema/track';
+  import { Quaternion } from 'quaternion';
   import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
   import { TILES_META } from '$lib/ui/ThreeMap/heightmap';
-  import { gamePlaneToWorldXZ, worldXZToGamePlane } from '$lib/ui/ThreeMap/coords';
-  import { reProjectPointInverse, reProjectVec2 } from '$lib/ui/OlMap/utils';
+  import { gameCoordToWorld, worldXZToGamePlane } from '$lib/ui/ThreeMap/coords';
   import { createTrackGates, type GateSpec, type TrackGates } from './trackGates';
 
   export interface EditorThreeMapProps {
     /** The class to apply to the map element */
     class?: ClassValue;
-    /** Map points */
-    points: TrackPoint[];
-    /** The currently selected point (its live editing-buffer position) */
-    selectedPoint?: SelectedTrackPoint;
+    /** The track's waypoints (full 3D data: quaternion rotation, translation z, scale3D) */
+    waypoints: Waypoint[];
+    /** The selected waypoint's live editing-buffer position (orange overlay), already
+     * converted to the quaternion representation via the editor's `fromEulerWp`. */
+    selectedWaypoint?: { index: number; waypoint: Waypoint };
     /** Show waypoint numbers */
     showNum?: boolean;
     /** Callback fired when a point is clicked (undefined = empty map) */
@@ -30,8 +31,8 @@
 
   const {
     class: propsClass,
-    points,
-    selectedPoint,
+    waypoints,
+    selectedWaypoint,
     showNum = false,
     onPointClick,
     onSelectedPointMove,
@@ -41,46 +42,56 @@
   let three = $state<ThreeMapScene | undefined>(undefined);
   let gates = $state<TrackGates | undefined>(undefined);
 
-  /** px-space (0..2200000) point → world XZ meters centered on the map origin. */
-  function pxToWorldXZ(px: [x: number, y: number]): [x: number, z: number] {
-    const game = reProjectPointInverse(px);
-    return gamePlaneToWorldXZ(game.x, game.y, TILES_META);
+  /** World position of a game point (UE cm, x right / y south / z up) → world meters. */
+  function worldPos(game: Vector3): [x: number, y: number, z: number] {
+    return gameCoordToWorld(game, TILES_META);
   }
 
-  /** The same gate geometry the 2D editor draws: half the width on the yaw perpendicular. */
-  function gateSpecFor(index: number, point: TrackPoint): GateSpec {
-    const [px, py] = reProjectVec2(point.coord);
-    const yaw = point.yaw ?? 0;
-    const scaleY = point.scaleY ?? 1;
-    const halfWidth = (scaleY * 100) / 2;
-    const perpAngle = -(yaw + Math.PI / 2);
-    const a = pxToWorldXZ([
-      px + Math.cos(perpAngle) * halfWidth,
-      py + Math.sin(perpAngle) * halfWidth,
-    ]);
-    const b = pxToWorldXZ([
-      px - Math.cos(perpAngle) * halfWidth,
-      py - Math.sin(perpAngle) * halfWidth,
-    ]);
+  /**
+   * The gate geometry straight from the waypoint's 3D data: the gate spans along the
+   * rotation's local Y axis (UE: X forward, Y right, Z up), half of scale3D.y × 100 cm to
+   * each side — the same width formula the 2D editor draws, but with the FULL quaternion,
+   * so pitch/roll tilt the gate like the game does. The quaternion rotates in the UE
+   * frame and only then maps to world components (x, -y, z), so three.js's own rotation
+   * conventions never enter the math.
+   */
+  /** The package's rotateVector return is typed as a union (array | {x,y,z}); both
+   * shapes carry the same components — normalize to a tuple for the spec math. */
+  function rotatedYAxis(q: Quaternion): [x: number, y: number, z: number] {
+    const v = q.rotateVector([0, 1, 0]);
+    return Array.isArray(v) ? [v[0], v[1], v[2]] : [v.x, v.y, v.z];
+  }
+
+  function gateSpecFor(index: number, waypoint: Waypoint): GateSpec {
+    const q = new Quaternion(waypoint.rotation);
+    const [rx, ry, rz] = rotatedYAxis(q);
+    const halfWidth = (waypoint.scale3D.y * 100) / 2;
+    const t = waypoint.translation;
     return {
       index,
-      center: pxToWorldXZ([px, py]),
-      angle: Math.atan2(b[1] - a[1], b[0] - a[0]),
-      widthM: Math.hypot(b[0] - a[0], b[1] - a[1]),
+      center: worldPos(t),
+      a: worldPos({
+        x: t.x + rx * halfWidth,
+        y: t.y + ry * halfWidth,
+        z: t.z + rz * halfWidth,
+      }),
+      b: worldPos({
+        x: t.x - rx * halfWidth,
+        y: t.y - ry * halfWidth,
+        z: t.z - rz * halfWidth,
+      }),
     };
   }
 
-  const trackSpecs = $derived(points.map((point, index) => gateSpecFor(index, point)));
-  const trackLine = $derived(
-    points.map((point) => pxToWorldXZ(reProjectVec2(point.coord)) as [x: number, z: number]),
-  );
+  const trackSpecs = $derived(waypoints.map((waypoint, index) => gateSpecFor(index, waypoint)));
+  const trackLine = $derived(waypoints.map((waypoint) => worldPos(waypoint.translation)));
   const selectedSpec = $derived(
-    selectedPoint ? gateSpecFor(selectedPoint.index, selectedPoint) : undefined,
+    selectedWaypoint ? gateSpecFor(selectedWaypoint.index, selectedWaypoint.waypoint) : undefined,
   );
 
   $effect(() => {
     if (!three || !gates) return;
-    gates.setTrack(trackSpecs, trackLine, selectedPoint?.index, selectedSpec, showNum);
+    gates.setTrack(trackSpecs, trackLine, selectedWaypoint?.index, selectedSpec, showNum);
   });
 
   // ---- pointer interaction: hover, click-to-select, drag the selected gate. ----
@@ -89,6 +100,7 @@
   const _pointerNdc = new THREE.Vector2();
   const _dragPlane = new THREE.Plane();
   const _dragPoint = new THREE.Vector3();
+  const _planeNormal = new THREE.Vector3(0, 1, 0);
 
   /** The gate under the pointer, or null. */
   function pickAt(event: { clientX: number; clientY: number }) {
@@ -114,7 +126,7 @@
     clientY: number;
     /** True when the press grabbed the already-selected gate. */
     dragging: boolean;
-    /** The grabbed gate's draped height — the horizontal drag plane. */
+    /** The grabbed gate's height — the horizontal drag plane. */
     grabY: number;
   }
   let pending: PendingPress | null = null;
@@ -126,7 +138,7 @@
   function onPointerDown(event: PointerEvent): void {
     if (event.button !== 0 || !three) return;
     const hit = pickAt(event);
-    if (hit && hit.index === selectedPoint?.index && onSelectedPointMove) {
+    if (hit && hit.index === selectedWaypoint?.index && onSelectedPointMove) {
       pending = {
         index: hit.index,
         clientX: event.clientX,
@@ -158,7 +170,7 @@
       -((event.clientY - rect.top) / rect.height) * 2 + 1,
     );
     _raycaster.setFromCamera(_pointerNdc, three.camera);
-    _dragPlane.set(new THREE.Vector3(0, 1, 0), -pending.grabY);
+    _dragPlane.setFromNormalAndCoplanarPoint(_planeNormal, _dragPoint.set(0, pending.grabY, 0));
     if (!_raycaster.ray.intersectPlane(_dragPlane, _dragPoint)) return;
     dragWorld = [_dragPoint.x, _dragPoint.z];
     gates.dragTo(_dragPoint.x, _dragPoint.z);
@@ -192,7 +204,7 @@
   onMount(() => {
     three = createThreeMapScene(container, { groundPanBlocked });
     const scene = three;
-    gates = createTrackGates(scene.scene, TILES_META, scene.groundHeights, scene.viewport);
+    gates = createTrackGates(scene.scene, scene.viewport);
     const unregisterFrame = scene.onFrame(() => gates?.update(scene.camera));
     const unregisterResize = scene.onResize(() => gates?.refit());
     const dom = scene.renderer.domElement;
@@ -224,25 +236,28 @@
     let minZ = Infinity;
     let maxX = -Infinity;
     let maxZ = -Infinity;
-    for (const [x, z] of trackLine) {
+    let maxY = -Infinity;
+    for (const [x, y, z] of trackLine) {
       if (x < minX) minX = x;
       if (x > maxX) maxX = x;
       if (z < minZ) minZ = z;
       if (z > maxZ) maxZ = z;
+      if (y > maxY) maxY = y;
     }
     const centerX = (minX + maxX) / 2;
     const centerZ = (minZ + maxZ) / 2;
+    const centerY = Math.max(maxY, 0);
     const radius = Math.max(Math.hypot(maxX - minX, maxZ - minZ) / 2, 150);
     const controls = three.controls;
     const camera = three.camera;
-    controls.target.set(centerX, 0, centerZ);
+    controls.target.set(centerX, centerY, centerZ);
     // A hair of tilt keeps lookAt off the degenerate straight-down axis.
     const distance = THREE.MathUtils.clamp(
       (radius / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))) * 1.2,
       300,
       controls.maxDistance * 0.8,
     );
-    camera.position.set(centerX + distance * 0.01, distance, centerZ);
+    camera.position.set(centerX + distance * 0.01, centerY + distance, centerZ);
     camera.lookAt(controls.target);
     controls.update();
   };
