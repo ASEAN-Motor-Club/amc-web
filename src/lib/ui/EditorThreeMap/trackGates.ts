@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import {
-  DOT_XRAY_FACTOR,
   GATE_FACE_OPACITY,
   GATE_FADE_FAR_M,
   GATE_FADE_NEAR_M,
@@ -126,31 +125,13 @@ function makeDotMesh(dot: DotTexture, dotGeometry: THREE.BufferGeometry, renderO
     transparent: true,
     opacity: 0,
     depthWrite: false,
-    // Default LessEqualDepth passes depth ties, so a dot exactly on the ground still
-    // draws; a hill in front occludes the solid pass (the x-ray twin shows it).
-    depthTest: true,
+    depthTest: false,
   });
   const mesh = new THREE.Mesh(dotGeometry, material);
-  // X-ray twin: the same billboarded quad drawn ONLY where geometry occludes the dot
-  // (depthFunc GreaterDepth), at a fraction of the solid pass's fade opacity — a dot
-  // behind a hill reads translucent instead of showing at full color over the hill.
-  const xrayMaterial = new THREE.MeshBasicMaterial({
-    map: dot.texture,
-    transparent: true,
-    opacity: 0,
-    depthWrite: false,
-    depthTest: true,
-    depthFunc: THREE.GreaterDepth,
-  });
-  const xrayMesh = new THREE.Mesh(dotGeometry, xrayMaterial);
-  xrayMesh.visible = false;
-  xrayMesh.renderOrder = renderOrder;
-  xrayMesh.frustumCulled = false;
-  mesh.add(xrayMesh);
   mesh.visible = false;
   mesh.renderOrder = renderOrder;
   mesh.frustumCulled = false;
-  return { mesh, material, xrayMesh, xrayMaterial };
+  return { mesh, material };
 }
 
 /** The gate's full 3D box: the in-game gate object is a 1 m cube scaled by the
@@ -505,7 +486,6 @@ interface GateEntry extends GateVisuals {
   spec: GateSpec;
   dot: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
   dotMat: THREE.MeshBasicMaterial;
-  dotXrayMat: THREE.MeshBasicMaterial;
   label: TextSprite | null;
   center3: THREE.Vector3;
   endA3: THREE.Vector3;
@@ -545,7 +525,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   group.add(selectedGroup);
   let selectedDot: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
   let selectedDotMat: THREE.MeshBasicMaterial | null = null;
-  let selectedDotXrayMat: THREE.MeshBasicMaterial | null = null;
   const selectedCenter3 = new THREE.Vector3();
   /** Group translation (XZ) from the spec's base position while dragging. */
   const selectedDragOffset = new THREE.Vector3();
@@ -572,13 +551,11 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     disposeGateVisuals(group, entry);
     group.remove(entry.dot);
     entry.dotMat.dispose();
-    entry.dotXrayMat.dispose();
     if (entry.label) {
       group.remove(entry.label.sprite);
       const material = entry.label.sprite.material;
       material.map?.dispose();
       material.dispose();
-      entry.label.xraySprite.material.dispose();
     }
   }
 
@@ -591,7 +568,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       ...visuals,
       dot: dot.mesh,
       dotMat: dot.material,
-      dotXrayMat: dot.xrayMaterial,
       label: null,
       center3: new THREE.Vector3(...spec.center),
       endA3: new THREE.Vector3(...spec.a),
@@ -625,10 +601,8 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     if (selectedDot) {
       selectedGroup.remove(selectedDot);
       selectedDotMat?.dispose();
-      selectedDotXrayMat?.dispose();
       selectedDot = null;
       selectedDotMat = null;
-      selectedDotXrayMat = null;
     }
     selectedDragOffset.set(0, 0, 0);
   }
@@ -656,7 +630,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     const dot = makeDotMesh(selectedDotTex, dotGeometry, 2);
     selectedDot = dot.mesh;
     selectedDotMat = dot.material;
-    selectedDotXrayMat = dot.xrayMaterial;
     selectedGroup.add(
       visuals.face,
       visuals.faceXray,
@@ -922,7 +895,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         entry.faceXrayMat.opacity = GATE_XRAY_FACE_OPACITY * (1 - t);
         entry.edgeXrayMat.opacity = GATE_XRAY_EDGE_OPACITY * (1 - t);
         entry.dotMat.opacity = t;
-        entry.dotXrayMat.opacity = t * DOT_XRAY_FACTOR;
         entry.dot.visible = t > 0.001;
         if (entry.dot.visible) {
           // Constant screen size: world scale = (texture side in device px / pxPerWorld) ×
@@ -950,7 +922,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         const d = camera.position.distanceTo(selectedCenter3);
         const t = THREE.MathUtils.clamp((d - GATE_FADE_NEAR_M) / nearSpan, 0, 1);
         selectedDotMat.opacity = t;
-        if (selectedDotXrayMat) selectedDotXrayMat.opacity = t * DOT_XRAY_FACTOR;
         selectedDot.visible = t > 0.001;
         if (selectedDot.visible) {
           // Local position: the dot rides the overlay group, which carries the drag.
@@ -984,16 +955,10 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         for (const entry of entries) {
           entry.dotMat.map = normalDot.texture;
           entry.dotMat.needsUpdate = true;
-          entry.dotXrayMat.map = normalDot.texture;
-          entry.dotXrayMat.needsUpdate = true;
         }
         if (selectedDotMat) {
           selectedDotMat.map = selectedDotTex.texture;
           selectedDotMat.needsUpdate = true;
-        }
-        if (selectedDotXrayMat) {
-          selectedDotXrayMat.map = selectedDotTex.texture;
-          selectedDotXrayMat.needsUpdate = true;
         }
         labelCount = -1;
         refreshLabels();

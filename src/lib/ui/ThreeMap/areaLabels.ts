@@ -107,7 +107,6 @@ export function createAreaLabelLayer(
       const material = entry.sprite.sprite.material;
       material.map?.dispose();
       material.dispose();
-      entry.sprite.xraySprite.material.dispose();
       group.add(remade.sprite);
       entry.sprite = remade;
     }
@@ -163,7 +162,6 @@ export function createAreaLabelLayer(
         const material = entry.sprite.sprite.material;
         material.map?.dispose();
         material.dispose();
-        entry.sprite.xraySprite.material.dispose();
       }
       entries.length = 0;
       scene.remove(group);
