@@ -187,9 +187,13 @@
 
   function onPointerMove(event: PointerEvent): void {
     if (!three || !gates) return;
-    const hit = pickAt(event);
-    gates.setHovered(hit?.index);
-    if (!pending?.dragging) return;
+    // While dragging, skip the hover pick entirely — it projects every gate per event
+    // and the hovered gate can't change during a drag anyway.
+    if (!pending?.dragging) {
+      const hit = pickAt(event);
+      gates.setHovered(hit?.index);
+      return;
+    }
     const rect = three.renderer.domElement.getBoundingClientRect();
     _pointerNdc.set(
       ((event.clientX - rect.left) / rect.width) * 2 - 1,
