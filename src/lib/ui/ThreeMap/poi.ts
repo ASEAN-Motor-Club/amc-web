@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import { formatHex, oklch, type Color } from 'culori';
-import { type PoiDotStyle, LABEL_XRAY_OPACITY } from './constants';
+import type { PoiDotStyle } from './constants';
 
 /** Converts an oklch() string to hex (three's Color cannot parse oklch), via culori. */
 const convertOklchToHex = (oklchStr: string): string => {
@@ -144,10 +144,6 @@ export interface LabelStyle {
 
 export interface TextSprite {
   sprite: THREE.Sprite;
-  /** X-ray twin (child of `sprite`): same texture, drawn ONLY where geometry occludes
-   * the label, at reduced opacity — so a label behind a hill reads translucent instead
-   * of either vanishing or showing at full color. Follows the parent automatically. */
-  xraySprite: THREE.Sprite;
   /** The text and style the sprite was built from - remade on DPR changes. */
   text: string;
   style: LabelStyle;
@@ -205,42 +201,19 @@ export function makeTextSprite(
   const material = new THREE.SpriteMaterial({
     map: texture,
     transparent: true,
-    opacity: 1,
     depthWrite: false,
     // Constant screen size regardless of camera distance.
     sizeAttenuation: false,
-    // Depth-tested: geometry in front hides the label's solid pass (the x-ray twin
-    // below shows it translucent through the occluder). LessEqualDepth ties pass,
-    // so ground-anchored labels still draw.
-    depthTest: true,
+    // Render above the dots and the terrain.
+    depthTest: false,
   });
   const sprite = new THREE.Sprite(material);
   sprite.center.set(0.5, 0);
   sprite.renderOrder = 2;
-  // X-ray twin: the same quad drawn ONLY where the depth buffer shows geometry IN
-  // FRONT of the label (GreaterDepth), at reduced opacity — like the track line's
-  // x-ray pass. Child of the solid sprite, so position/visibility/scale follow it.
-  const xrayMaterial = new THREE.SpriteMaterial({
-    map: texture,
-    transparent: true,
-    opacity: LABEL_XRAY_OPACITY,
-    depthWrite: false,
-    sizeAttenuation: false,
-    depthTest: true,
-    depthFunc: THREE.GreaterDepth,
-  });
-  const xraySprite = new THREE.Sprite(xrayMaterial);
-  xraySprite.center.set(0.5, 0);
-  xraySprite.renderOrder = 2;
-  // Identity local scale: the parent's world scale IS the canvas mapping (both were
-  // sized for the same viewport), so the child maps the canvas 1:1 like the parent.
-  xraySprite.scale.set(1, 1, 1);
-  sprite.add(xraySprite);
   // Map the canvas 1:1 onto device pixels (sizeAttenuation:false: NDC extent = scale*f).
   sprite.scale.set(canvas.width / viewport.pxPerWorld, canvas.height / viewport.pxPerWorld, 1);
   return {
     sprite,
-    xraySprite,
     text,
     style,
     widthDevice: canvas.width,
