@@ -163,6 +163,94 @@ function cornerIndex(sx: number, sy: number, sz: number): number {
   return (sx > 0 ? 4 : 0) + (sy > 0 ? 2 : 0) + (sz > 0 ? 1 : 0);
 }
 
+/** Writes the 6 box faces' 24 vertex positions into an existing Float32Array. */
+function writeBoxFacePositions(positions: Float32Array, spec: GateSpec): void {
+  const corners = boxCorners(spec);
+  const faces: [number, number, number][][] = [];
+  for (const sx of [-1, 1]) {
+    faces.push([
+      [sx, -1, -1],
+      [sx, 1, -1],
+      [sx, 1, 1],
+      [sx, -1, 1],
+    ]);
+  }
+  for (const sy of [-1, 1]) {
+    faces.push([
+      [-1, sy, -1],
+      [1, sy, -1],
+      [1, sy, 1],
+      [-1, sy, 1],
+    ]);
+  }
+  for (const sz of [-1, 1]) {
+    faces.push([
+      [-1, -1, sz],
+      [1, -1, sz],
+      [1, 1, sz],
+      [-1, 1, sz],
+    ]);
+  }
+  faces.forEach((quad, faceIndex) => {
+    quad.forEach((signs, corner) => {
+      const v = corners[cornerIndex(...signs)];
+      const base = (faceIndex * 4 + corner) * 3;
+      positions[base] = v.x;
+      positions[base + 1] = v.y;
+      positions[base + 2] = v.z;
+    });
+  });
+}
+
+/** Writes the 12 box edges' 24 vertex positions into an existing Float32Array. */
+function writeBoxEdgePositions(positions: Float32Array, spec: GateSpec): void {
+  const corners = boxCorners(spec);
+  const edges: [number, number][] = [];
+  for (const sy of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      edges.push([cornerIndex(-1, sy, sz), cornerIndex(1, sy, sz)]);
+    }
+  }
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      edges.push([cornerIndex(sx, -1, sz), cornerIndex(sx, 1, sz)]);
+    }
+  }
+  for (const sx of [-1, 1]) {
+    for (const sy of [-1, 1]) {
+      edges.push([cornerIndex(sx, sy, -1), cornerIndex(sx, sy, 1)]);
+    }
+  }
+  edges.forEach(([from, to], edgeIndex) => {
+    for (const [slot, corner] of [
+      [0, from],
+      [1, to],
+    ] as const) {
+      const v = corners[corner];
+      const base = (edgeIndex * 2 + slot) * 3;
+      positions[base] = v.x;
+      positions[base + 1] = v.y;
+      positions[base + 2] = v.z;
+    }
+  });
+}
+
+/** In-place gate geometry update: the box face and edge geometries have FIXED vertex
+ * counts (24 each), so a moved gate only rewrites its position arrays. Disposing and
+ * rebuilding BufferGeometries on the WebGPU renderer leaves destroyed GPU buffers in
+ * the render pass — `setIndexBuffer ... not of type GPUBuffer` — so editing NEVER
+ * disposes; the buffers are only replaced when a whole track is loaded/cleared. */
+function updateBoxGeometries(
+  face: THREE.BufferGeometry,
+  edges: THREE.BufferGeometry,
+  spec: GateSpec,
+): void {
+  writeBoxFacePositions(face.getAttribute('position').array as Float32Array, spec);
+  writeBoxEdgePositions(edges.getAttribute('position').array as Float32Array, spec);
+  face.getAttribute('position').needsUpdate = true;
+  edges.getAttribute('position').needsUpdate = true;
+}
+
 /** The 6 box faces as one indexed geometry (4 verts + 2 triangles per face). */
 function boxFaceGeometry(spec: GateSpec): THREE.BufferGeometry {
   const corners = boxCorners(spec);
@@ -310,8 +398,8 @@ function buildGateVisuals(spec: GateSpec, color: string): GateVisuals {
   return { face, faceXray, edges, edgesXray, faceMat, edgeMat, faceXrayMat, edgeXrayMat };
 }
 
-function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
-  group.remove(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray);
+function disposeGateVisuals(parent: THREE.Object3D, visuals: GateVisuals): void {
+  parent.remove(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray);
   visuals.face.geometry.dispose();
   visuals.edges.geometry.dispose();
   visuals.faceMat.dispose();
@@ -327,9 +415,8 @@ function disposeGateVisuals(group: THREE.Group, visuals: GateVisuals): void {
  * distance from the centerline (a plain averaged-direction offset pinches corners —
  * the measured width shrinks by cos of the joint angle). The clamp keeps hairpin
  * turns from spiking into long horns; at the clamp the width narrows slightly. */
-function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.BufferGeometry {
-  const geometry = new THREE.BufferGeometry();
-  if (points.length < 2) return geometry;
+/** Per-vertex XZ offsets of the mitered ribbon (shared by build + in-place update). */
+function ribbonOffsets(points: [x: number, y: number, z: number][]): [number, number][] {
   const half = TRACK_LINE_WIDTH_M / 2;
   /** Unit perpendicular of a segment direction, in XZ. */
   const perp = (dx: number, dz: number): [number, number] => {
@@ -367,6 +454,13 @@ function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.Buff
       }
     }
   }
+  return offsets;
+}
+
+function ribbonGeometry(points: [x: number, y: number, z: number][]): THREE.BufferGeometry {
+  const geometry = new THREE.BufferGeometry();
+  if (points.length < 2) return geometry;
+  const offsets = ribbonOffsets(points);
   const positions = new Float32Array(points.length * 2 * 3);
   for (let i = 0; i < points.length; i++) {
     const [ox, oz] = offsets[i];
@@ -416,14 +510,32 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   let line: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
   /** X-ray twin of the connector, sharing its geometry (see setTrack). */
   let lineXrayMesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
+  /** The line points the ribbon was last built from (incremental rebuild key). */
+  let lastLinePoints: [x: number, y: number, z: number][] = [];
 
   // Selected overlay (live editing-buffer position of the selected waypoint).
+  // The visuals live in `selectedGroup` so a drag TRANSLATES the group instead of
+  // rebuilding geometries: with the WebGPU renderer, per-event new BufferGeometry
+  // means new GPU buffers + pipeline bindings each pointermove — that churn froze
+  // the drag. The group starts at the origin; dragTo shifts it in XZ.
   let selectedIndex: number | undefined = undefined;
   let selectedSpec: GateSpec | undefined = undefined;
   let selectedVisuals: GateVisuals | null = null;
+  const selectedGroup = new THREE.Group();
+  group.add(selectedGroup);
   let selectedDot: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial> | null = null;
   let selectedDotMat: THREE.MeshBasicMaterial | null = null;
   const selectedCenter3 = new THREE.Vector3();
+  /** Group translation (XZ) from the spec's base position while dragging. */
+  const selectedDragOffset = new THREE.Vector3();
+  /** The spec's own center — the dot's LOCAL position (the group carries the drag). */
+  const selectedBaseCenter3 = new THREE.Vector3();
+  /** Pick scratch for the dragged overlay's center. */
+  const _selectedPickCenter = new THREE.Vector3();
+  /** Label scratch vectors — update() runs every frame. */
+  const _labelUpView = new THREE.Vector3();
+  const _labelUpWorld = new THREE.Vector3();
+  const _labelPosition = new THREE.Vector3();
 
   let numbers = false;
   /** Label rebuild keys — labels are canvas sprites, so only remake them when needed. */
@@ -483,18 +595,34 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
   function disposeSelectedOverlay(): void {
     if (selectedVisuals) {
-      disposeGateVisuals(group, selectedVisuals);
+      disposeGateVisuals(selectedGroup, selectedVisuals);
       selectedVisuals = null;
     }
     if (selectedDot) {
-      group.remove(selectedDot);
+      selectedGroup.remove(selectedDot);
       selectedDotMat?.dispose();
       selectedDot = null;
       selectedDotMat = null;
     }
+    selectedDragOffset.set(0, 0, 0);
   }
 
   function makeSelectedOverlay(): void {
+    if (selectedVisuals && selectedSpec) {
+      // Overlay already built: update in place, never dispose (see updateBoxGeometries).
+      updateBoxGeometries(
+        selectedVisuals.face.geometry,
+        selectedVisuals.edges.geometry,
+        selectedSpec,
+      );
+      selectedBaseCenter3.set(...selectedSpec.center);
+      // The new spec already includes any committed drag — the offset resets.
+      selectedDragOffset.set(0, 0, 0);
+      selectedGroup.position.set(0, 0, 0);
+      selectedCenter3.copy(selectedBaseCenter3);
+      selectedDot?.position.copy(selectedBaseCenter3);
+      return;
+    }
     disposeSelectedOverlay();
     if (!selectedSpec) return;
     const visuals = buildGateVisuals(selectedSpec, colorOrange500);
@@ -502,9 +630,16 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     const dot = makeDotMesh(selectedDotTex, dotGeometry, 2);
     selectedDot = dot.mesh;
     selectedDotMat = dot.material;
-    group.add(visuals.face, visuals.faceXray, visuals.edges, visuals.edgesXray, selectedDot);
-    selectedCenter3.set(...selectedSpec.center);
-    selectedDot.position.copy(selectedCenter3);
+    selectedGroup.add(
+      visuals.face,
+      visuals.faceXray,
+      visuals.edges,
+      visuals.edgesXray,
+      selectedDot,
+    );
+    selectedBaseCenter3.set(...selectedSpec.center);
+    selectedCenter3.copy(selectedBaseCenter3);
+    selectedDot.position.copy(selectedBaseCenter3);
   }
 
   function applyFaceColor(visuals: GateVisuals, color: string): void {
@@ -532,57 +667,125 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
   return {
     setTrack(specs, linePoints, nextSelectedIndex, nextSelectedSpec, nextNumbers) {
-      for (const entry of entries) disposeEntryVisuals(entry);
-      entries.length = 0;
-      if (line) {
-        group.remove(line);
-        line.geometry.dispose();
-        line.material.dispose();
-        line = null;
+      // Incremental rebuild: the editor re-derives ALL specs on every keystroke/drag
+      // event, and with the WebGPU renderer a full dispose+rebuild per change means
+      // GPU buffer + pipeline churn — visible as a freeze while dragging. Reuse every
+      // entry whose spec is unchanged; rebuild only the ones that moved.
+      const sameSpec = (a: GateSpec, b: GateSpec): boolean =>
+        a.index === b.index &&
+        a.center[0] === b.center[0] &&
+        a.center[1] === b.center[1] &&
+        a.center[2] === b.center[2] &&
+        a.a[0] === b.a[0] &&
+        a.a[1] === b.a[1] &&
+        a.a[2] === b.a[2] &&
+        a.b[0] === b.b[0] &&
+        a.b[1] === b.b[1] &&
+        a.b[2] === b.b[2] &&
+        a.ex[0] === b.ex[0] &&
+        a.ex[1] === b.ex[1] &&
+        a.ex[2] === b.ex[2] &&
+        a.ez[0] === b.ez[0] &&
+        a.ez[1] === b.ez[1] &&
+        a.ez[2] === b.ez[2];
+
+      if (specs.length !== entries.length) {
+        // Different track — the full-rebuild path.
+        for (const entry of entries) disposeEntryVisuals(entry);
+        entries.length = 0;
+        for (const spec of specs) {
+          const entry = makeEntry(spec);
+          applyBandColor(entry);
+          entries.push(entry);
+        }
+      } else {
+        for (let i = 0; i < specs.length; i++) {
+          const entry = entries[i];
+          const spec = specs[i];
+          if (sameSpec(entry.spec, spec)) continue;
+          // In-place: rewrite the position arrays, never dispose (see updateBoxGeometries).
+          updateBoxGeometries(entry.face.geometry, entry.edges.geometry, spec);
+          entry.spec = spec;
+          entry.center3.set(...spec.center);
+          entry.endA3.set(...spec.a);
+          entry.endB3.set(...spec.b);
+          entry.dot.position.copy(entry.center3);
+        }
       }
-      if (lineXrayMesh) {
-        group.remove(lineXrayMesh);
-        lineXrayMesh.material.dispose();
-        lineXrayMesh = null;
+      const lastLine = lastLinePoints;
+      const lineCountChanged = lastLine.length !== linePoints.length;
+      const lineChanged =
+        lineCountChanged ||
+        linePoints.some(
+          (p, i) => p[0] !== lastLine[i][0] || p[1] !== lastLine[i][1] || p[2] !== lastLine[i][2],
+        );
+      lastLinePoints = linePoints;
+      if (lineChanged) {
+        if (!lineCountChanged && line && linePoints.length >= 2) {
+          // Same point count: rewrite the ribbon's position array in place (no dispose).
+          const attr = line.geometry.getAttribute('position');
+          for (let i = 0; i < linePoints.length; i++) {
+            const [ox, oz] = ribbonOffsets(linePoints)[i];
+            const base = i * 6;
+            attr.array[base] = linePoints[i][0] + ox;
+            attr.array[base + 1] = linePoints[i][1];
+            attr.array[base + 2] = linePoints[i][2] + oz;
+            attr.array[base + 3] = linePoints[i][0] - ox;
+            attr.array[base + 4] = linePoints[i][1];
+            attr.array[base + 5] = linePoints[i][2] - oz;
+          }
+          attr.needsUpdate = true;
+        } else {
+          // Point count changed (or no ribbon yet) — full rebuild; only this path disposes.
+          if (line) {
+            group.remove(line);
+            line.geometry.dispose();
+            line.material.dispose();
+            line = null;
+          }
+          if (lineXrayMesh) {
+            group.remove(lineXrayMesh);
+            lineXrayMesh.material.dispose();
+            lineXrayMesh = null;
+          }
+          if (linePoints.length >= 2) {
+            // Two passes share the ribbon geometry: the solid pass is depth-tested (hidden
+            // behind terrain), the x-ray pass draws ONLY the occluded fragments (GreaterDepth)
+            // at a reduced opacity, so the line stays readable behind hills like in game.
+            const material = new THREE.MeshBasicMaterial({
+              color: makeColor(colorWhite),
+              transparent: true,
+              opacity: TRACK_LINE_OPACITY,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+            });
+            const xrayMaterial = new THREE.MeshBasicMaterial({
+              color: makeColor(colorWhite),
+              transparent: true,
+              opacity: TRACK_LINE_XRAY_OPACITY,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+              depthFunc: THREE.GreaterDepth,
+            });
+            const geometry = ribbonGeometry(linePoints);
+            line = new THREE.Mesh(geometry, material);
+            const lineXray = new THREE.Mesh(geometry, xrayMaterial);
+            line.renderOrder = 0;
+            lineXray.renderOrder = 0;
+            group.add(line, lineXray);
+            lineXrayMesh = lineXray;
+          }
+        }
       }
 
-      for (const spec of specs) {
-        const entry = makeEntry(spec);
-        applyBandColor(entry);
-        entries.push(entry);
-      }
-
-      if (linePoints.length >= 2) {
-        // Two passes share the ribbon geometry: the solid pass is depth-tested (hidden
-        // behind terrain), the x-ray pass draws ONLY the occluded fragments (GreaterDepth)
-        // at a reduced opacity, so the line stays readable behind hills like in game.
-        const material = new THREE.MeshBasicMaterial({
-          color: makeColor(colorWhite),
-          transparent: true,
-          opacity: TRACK_LINE_OPACITY,
-          depthWrite: false,
-          side: THREE.DoubleSide,
-        });
-        const xrayMaterial = new THREE.MeshBasicMaterial({
-          color: makeColor(colorWhite),
-          transparent: true,
-          opacity: TRACK_LINE_XRAY_OPACITY,
-          depthWrite: false,
-          side: THREE.DoubleSide,
-          depthFunc: THREE.GreaterDepth,
-        });
-        const geometry = ribbonGeometry(linePoints);
-        line = new THREE.Mesh(geometry, material);
-        const lineXray = new THREE.Mesh(geometry, xrayMaterial);
-        line.renderOrder = 0;
-        lineXray.renderOrder = 0;
-        group.add(line, lineXray);
-        lineXrayMesh = lineXray;
-      }
-
+      const selectedChanged =
+        (nextSelectedSpec === undefined) !== (selectedSpec === undefined) ||
+        (nextSelectedSpec !== undefined &&
+          selectedSpec !== undefined &&
+          !sameSpec(nextSelectedSpec, selectedSpec));
       selectedIndex = nextSelectedIndex;
       selectedSpec = nextSelectedSpec;
-      makeSelectedOverlay();
+      if (selectedChanged) makeSelectedOverlay();
       for (const entry of entries) applyBandColor(entry);
 
       numbers = nextNumbers;
@@ -601,7 +804,10 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     pick(ndcX, ndcY, camera, rectWidth, rectHeight) {
       const pointerX = (ndcX * 0.5 + 0.5) * rectWidth;
       const pointerY = (1 - (ndcY * 0.5 + 0.5)) * rectHeight;
+      /** Scratch — pick runs on every pointermove, so no per-call allocation. */
       const projected = new THREE.Vector3();
+      const vecA = new THREE.Vector3();
+      const vecB = new THREE.Vector3();
       /** The pick radius folds the "close enough" gate into the min-search. */
       const pickRadius = TRACK_GATE_PICK_RADIUS_PX;
       const toScreen = (v: THREE.Vector3): [x: number, y: number] | null => {
@@ -645,12 +851,15 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         consider(entry.spec.index, entry.endA3, entry.endB3, entry.center3);
       }
       if (selectedSpec && selectedVisuals) {
-        // The live overlay is pickable at its dragged position too.
+        // The live overlay is pickable at its dragged position too — the drag offset
+        // lives on the overlay group now, so shift the endpoints here.
+        vecA.set(...selectedSpec.a).add(selectedDragOffset);
+        vecB.set(...selectedSpec.b).add(selectedDragOffset);
         consider(
           selectedSpec.index,
-          new THREE.Vector3(...selectedSpec.a),
-          new THREE.Vector3(...selectedSpec.b),
-          selectedCenter3,
+          vecA,
+          vecB,
+          _selectedPickCenter.copy(selectedBaseCenter3).add(selectedDragOffset),
         );
       }
       if (candidates.length === 0) return null;
@@ -661,21 +870,12 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
     dragTo(x, z) {
       if (!selectedSpec || !selectedVisuals) return;
       // A drag moves the waypoint on the map plane; the data's z height is kept.
-      const shiftX = x - selectedSpec.center[0];
-      const shiftZ = z - selectedSpec.center[2];
-      selectedSpec = {
-        ...selectedSpec,
-        center: [x, selectedSpec.center[1], z],
-        a: [selectedSpec.a[0] + shiftX, selectedSpec.a[1], selectedSpec.a[2] + shiftZ],
-        b: [selectedSpec.b[0] + shiftX, selectedSpec.b[1], selectedSpec.b[2] + shiftZ],
-      };
-      selectedCenter3.set(x, selectedSpec.center[1], z);
-      const visuals = selectedVisuals;
-      visuals.face.geometry.dispose();
-      visuals.face.geometry = boxFaceGeometry(selectedSpec);
-      visuals.edges.geometry.dispose();
-      visuals.edges.geometry = boxEdgeGeometry(selectedSpec);
-      selectedDot?.position.copy(selectedCenter3);
+      // Translate the overlay group instead of rebuilding geometry — with the WebGPU
+      // renderer, per-event geometry churn means new GPU buffers + pipeline bindings
+      // per pointermove, which froze the drag. The commit's setTrack rebuilds once.
+      selectedDragOffset.set(x - selectedSpec.center[0], 0, z - selectedSpec.center[2]);
+      selectedGroup.position.copy(selectedDragOffset);
+      selectedCenter3.copy(selectedBaseCenter3).add(selectedDragOffset);
     },
 
     update(camera) {
@@ -724,7 +924,8 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         selectedDotMat.opacity = t;
         selectedDot.visible = t > 0.001;
         if (selectedDot.visible) {
-          selectedDot.position.copy(selectedCenter3);
+          // Local position: the dot rides the overlay group, which carries the drag.
+          selectedDot.position.copy(selectedBaseCenter3);
           selectedDot.quaternion.copy(camera.quaternion);
           selectedDot.scale.setScalar((selectedDotTex.sideDevice / viewport.pxPerWorld) * d);
         }
@@ -732,14 +933,11 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
 
       // Number labels hang above their dots along the screen-up direction.
       if (numbers) {
-        const upView = new THREE.Vector3();
-        const upWorld = new THREE.Vector3();
-        camera.getWorldDirection(upView);
-        upWorld.copy(camera.up).projectOnPlane(upView).normalize();
-        const position = new THREE.Vector3();
+        camera.getWorldDirection(_labelUpView);
+        _labelUpWorld.copy(camera.up).projectOnPlane(_labelUpView).normalize();
         for (const entry of entries) {
           if (!entry.label) continue;
-          entry.label.sprite.position.copy(upWorld).add(position.copy(entry.center3));
+          entry.label.sprite.position.copy(_labelUpWorld).add(_labelPosition.copy(entry.center3));
         }
       }
     },
@@ -786,6 +984,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         lineXrayMesh = null;
       }
       disposeSelectedOverlay();
+      group.remove(selectedGroup);
       normalDot.texture.dispose();
       selectedDotTex.texture.dispose();
       dotGeometry.dispose();
