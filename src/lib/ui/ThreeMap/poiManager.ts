@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { SpriteNodeMaterial } from 'three/webgpu';
-import { instancedBufferAttribute, texture, uniform, uv, vec2 } from 'three/tsl';
+import { instancedBufferAttribute, mul, texture, uniform, uv, vec2 } from 'three/tsl';
 import type UniformNode from 'three/src/nodes/core/UniformNode.js';
 import { PointType, type PlayerData, type TeleportPoint } from '$lib/components/Map/Map/types';
 import type { DeliveryPoint } from '$lib/data/deliveryPoint';
@@ -11,6 +11,7 @@ import type { TileManager } from './tileManager';
 import type { TilesMeta } from './three-map-types';
 import { gameCoordToWorld } from './coords';
 import {
+  DOT_XRAY_FACTOR,
   POI_CONFIG,
   POI_DELIVERY_JOB_DEST,
   POI_DELIVERY_JOB_SOURCE,
@@ -131,6 +132,9 @@ interface SpriteGroup {
   palette: PoiDotStyle;
   sprite: THREE.Sprite;
   material: SpriteNodeMaterial;
+  /** X-ray twin sprite (see makeGroup) — mirrors count/visibility of `sprite`. */
+  xraySprite: THREE.Sprite;
+  xrayMaterial: SpriteNodeMaterial;
   /** scaleNode uniform - remade when the drawing-buffer height changes. */
   scale: UniformNode<'float', number>;
   /** The palette's atlas; sampled through material.colorNode (kept here for disposal/refit). */
@@ -197,7 +201,9 @@ export function createPoiManager(
     const material = new SpriteNodeMaterial({
       sizeAttenuation: false,
       transparent: true,
-      depthTest: false,
+      // Default LessEqualDepth passes depth ties, so dots exactly on the ground still
+      // draw; a hill in front occludes the solid pass (the x-ray twin shows it).
+      depthTest: true,
       depthWrite: false,
     });
     const atlasTexture = makeDotAtlasTexture(palette, viewport);
@@ -218,11 +224,34 @@ export function createPoiManager(
     sprite.renderOrder = 1;
     poiGroup.add(sprite);
 
+    // X-ray twin: the same instanced dots drawn ONLY where geometry occludes them
+    // (depthFunc GreaterDepth), at a fraction of the solid opacity — a dot behind a
+    // hill reads translucent instead of full color. Shares every node input, so the
+    // refit/capacity paths just mirror the solid material's node updates.
+    const xrayMaterial = new SpriteNodeMaterial({
+      sizeAttenuation: false,
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+      depthFunc: THREE.GreaterDepth,
+    });
+    xrayMaterial.colorNode = dotAtlasColorNode(atlasTexture, stateAttr);
+    xrayMaterial.positionNode = instancedBufferAttribute(posAttr);
+    xrayMaterial.opacityNode = mul(instancedBufferAttribute(opacityAttr), DOT_XRAY_FACTOR);
+    xrayMaterial.scaleNode = scale;
+    const xraySprite = new THREE.Sprite(xrayMaterial);
+    xraySprite.count = MIN_CAPACITY;
+    xraySprite.frustumCulled = false;
+    xraySprite.renderOrder = 1;
+    poiGroup.add(xraySprite);
+
     const group: SpriteGroup = {
       key,
       palette,
       sprite,
       material,
+      xraySprite,
+      xrayMaterial,
       scale,
       atlasTexture,
       posArray,
@@ -260,6 +289,12 @@ export function createPoiManager(
     group.material.positionNode = instancedBufferAttribute(group.posAttr);
     group.material.opacityNode = instancedBufferAttribute(group.opacityAttr);
     group.material.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
+    group.xrayMaterial.positionNode = instancedBufferAttribute(group.posAttr);
+    group.xrayMaterial.opacityNode = mul(
+      instancedBufferAttribute(group.opacityAttr),
+      DOT_XRAY_FACTOR,
+    );
+    group.xrayMaterial.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
 
     poiGroup.remove(group.sprite);
     group.sprite.material.dispose();
@@ -268,6 +303,12 @@ export function createPoiManager(
     group.sprite.frustumCulled = false;
     group.sprite.renderOrder = 1;
     poiGroup.add(group.sprite);
+    poiGroup.remove(group.xraySprite);
+    group.xraySprite = new THREE.Sprite(group.xrayMaterial);
+    group.xraySprite.count = group.capacity;
+    group.xraySprite.frustumCulled = false;
+    group.xraySprite.renderOrder = 1;
+    poiGroup.add(group.xraySprite);
   }
 
   /** A marker draws when user-visible AND, for residents, inside the finest ring. */
@@ -303,6 +344,7 @@ export function createPoiManager(
     group.opacityAttr.needsUpdate = true;
     group.stateAttr.needsUpdate = true;
     group.sprite.count = group.ids.length;
+    group.xraySprite.count = group.ids.length;
   }
 
   // ---- markers (plain collection; OL-layer style). ----
@@ -457,6 +499,7 @@ export function createPoiManager(
     const material = label.sprite.material;
     material.map?.dispose();
     material.dispose();
+    label.xraySprite.material.dispose();
     labels.delete(id);
   }
 
@@ -538,6 +581,7 @@ export function createPoiManager(
         const oldTexture = group.atlasTexture;
         group.atlasTexture = makeDotAtlasTexture(group.palette, viewport);
         group.material.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
+        group.xrayMaterial.colorNode = dotAtlasColorNode(group.atlasTexture, group.stateAttr);
         oldTexture.dispose();
       }
       group.scale.value = dotSpriteScale(group.palette, viewport);
@@ -549,6 +593,7 @@ export function createPoiManager(
         const material = label.sprite.material;
         material.map?.dispose();
         material.dispose();
+        label.xraySprite.material.dispose();
         poiGroup.add(remade.sprite);
         labels.set(id, remade);
       }
@@ -579,8 +624,10 @@ export function createPoiManager(
       ordered = [];
       for (const group of groups.values()) {
         poiGroup.remove(group.sprite);
+        poiGroup.remove(group.xraySprite);
         group.atlasTexture.dispose();
         group.material.dispose();
+        group.xrayMaterial.dispose();
       }
       groups.clear();
     },

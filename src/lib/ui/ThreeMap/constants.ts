@@ -90,6 +90,13 @@ export const GATE_XRAY_EDGE_OPACITY = 0.3;
 export const TRACK_LINE_WIDTH_M = 5;
 export const TRACK_LINE_OPACITY = 0.2;
 export const TRACK_LINE_XRAY_OPACITY = 0.08;
+
+/** Opacity of a text label's x-ray pass: the label seen THROUGH terrain. Fainter than
+ * the gate box x-ray (0.1–0.3) because full-size text at 0.3 already reads solid. */
+export const LABEL_XRAY_OPACITY = 0.22;
+
+/** Multiplier on a dot's fade opacity for its x-ray pass through terrain. */
+export const DOT_XRAY_FACTOR = 0.35;
 /** The track editor's 3D view lets you zoom closer than the main map (gates are ~1 m). */
 export const TRACK_EDITOR_MIN_DISTANCE_M = 2;
 /** Screen-space (CSS px) half-width of the gate pick area, measured across the gate. */
