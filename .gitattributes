@@ -1,0 +1,2 @@
+# graphify code graph: one-line generated JSON, refreshed by .github/workflows/graph.yml
+graphify-out/graph.json linguist-generated=true -diff

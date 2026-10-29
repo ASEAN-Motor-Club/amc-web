@@ -1,0 +1,93 @@
+name: 🕸️ Graphify
+permissions:
+  contents: write
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'graphify-out/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRAPHIFY_VERSION: '0.9.97'
+  GRAPHIFY_NO_TIPS: '1'
+
+jobs:
+  graph:
+    name: 🕸️ Refresh code graph
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v7
+
+      - name: 🗃️ Install pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+
+      # `prepare` runs `svelte-kit sync`, whose tsconfig carries the `$lib` alias;
+      # without it and the generated trees, imports resolve to dangling refs.
+      - name: 📦 Install dependencies
+        run: pnpm install
+
+      - name: 🔌 Generate protobuf types
+        run: pnpm proto:generate
+
+      - name: 🌐 Generate i18n
+        run: pnpm paraglide:compile
+
+      - name: 🕸️ Install graphify
+        run: pipx install "graphifyy==${GRAPHIFY_VERSION}"
+
+      # Only graph.json is committed, so rebuild the labels file from the names
+      # it already carries; otherwise every community is renamed automatically.
+      - name: 🏷️ Restore community labels
+        run: |
+          python3 - <<'EOF'
+          import json
+          from pathlib import Path
+          graph = json.loads(Path('graphify-out/graph.json').read_text(encoding='utf-8'))
+          labels = {
+              str(n['community']): n['community_name']
+              for n in graph['nodes']
+              if n.get('community') is not None and n.get('community_name')
+          }
+          Path('graphify-out/.graphify_labels.json').write_text(json.dumps(labels, ensure_ascii=False), encoding='utf-8')
+          EOF
+
+      # Re-extracts code only (no LLM); doc/image nodes already in graph.json are kept.
+      # --force lets deleted code shrink the graph instead of tripping the shrink guard.
+      - name: 🔄 Rebuild code graph
+        run: graphify update . --force
+
+      - name: 📤 Commit graph
+        run: |
+          # built_at_commit changes on every run; ignore it so unchanged graphs don't commit.
+          if python3 - <<'EOF'
+          import json, subprocess, sys
+          old = subprocess.run(['git', 'show', 'HEAD:graphify-out/graph.json'], capture_output=True)
+          if old.returncode != 0:
+              sys.exit(1)
+          old = json.loads(old.stdout)
+          new = json.load(open('graphify-out/graph.json', encoding='utf-8'))
+          for g in (old, new):
+              g.pop('built_at_commit', None)
+          sys.exit(0 if old == new else 1)
+          EOF
+          then
+            echo "Graph unchanged."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add graphify-out/graph.json
+          git commit -m 'chore(graph): refresh code graph [skip ci]'
+          git pull --rebase origin main
+          git push

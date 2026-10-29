@@ -13,13 +13,16 @@ SvelteKit + Svelte 5 + TypeScript, built with `adapter-static` and `fallback: 'f
 
 ## Generated trees — never hand-edit, always regenerate
 
-| Tree                           | Command                  |
-| ------------------------------ | ------------------------ |
-| `src/lib/paraglide/`           | `pnpm paraglide:compile` |
-| `src/lib/api/proto/generated/` | `pnpm proto:generate`    |
-| `wasm/pakop/bin`, `obj`        | `pnpm build:pakop`       |
+| Tree                           | Command                                         |
+| ------------------------------ | ----------------------------------------------- |
+| `src/lib/paraglide/`           | `pnpm paraglide:compile`                        |
+| `src/lib/api/proto/generated/` | `pnpm proto:generate`                           |
+| `wasm/pakop/bin`, `obj`        | `pnpm build:pakop`                              |
+| `graphify-out/graph.json`      | CI (`graph.yml`) on push to main; `/graphify .` |
 
 The proto output is gitignored, so a fresh clone must generate before typecheck, build or test.
+
+`graphify-out/graph.json` is the only committed graphify output. The `🕸️ Graphify` workflow rebuilds its code layer on every push to `main` and commits the result. Doc and image nodes come from an LLM pass that CI can't run, so after changing docs or images, run `/graphify . --update` locally and commit `graph.json`.
 
 ## Vite knobs that look removable but aren't
 

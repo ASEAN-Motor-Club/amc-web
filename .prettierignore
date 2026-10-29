@@ -15,3 +15,6 @@ project.inlang/*
 
 # Generated WASM files
 wasm/*
+
+# Generated code graph (graphify)
+graphify-out/

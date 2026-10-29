@@ -40,3 +40,10 @@ storybook-static
 
 # Pi agent harness state
 .pi
+
+
+.claude/settings.local.json
+
+# graphify: only the graph is shared; CI (graph.yml) keeps it fresh
+/graphify-out/*
+!/graphify-out/graph.json
