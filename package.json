@@ -62,7 +62,7 @@
     "@fontsource-variable/noto-sans-sc": "5.3.0",
     "@fontsource-variable/noto-sans-thai": "5.3.0",
     "@fontsource-variable/playfair-display": "5.3.0",
-    "@fontsource/great-vibes": "^5.3.0",
+    "@fontsource/great-vibes": "5.3.0",
     "@fontsource/kanit": "5.3.0",
     "@fontsource/koulen": "5.3.0",
     "@iconify-json/material-symbols": "1.2.88",
@@ -99,5 +99,5 @@
     "node": ">=22",
     "pnpm": ">=11"
   },
-  "packageManager": "pnpm@12.0.0+sha512.9e2e3dc3911995868dc94b8175c217c27e95408fa03b4a22749778f2b34f773b77cdd3b39ede8171b22fcd53be6a35342e9fac9948a68ef58df6488ce89a7e67"
+  "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }
