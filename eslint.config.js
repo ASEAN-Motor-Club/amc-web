@@ -57,6 +57,12 @@ export default defineConfig(
               message: 'Use zod/mini instead for smaller bundle size',
               allowTypeImports: true,
             },
+            {
+              name: 'ol/source',
+              message:
+                'Import the source by deep path (e.g. ol/source/ImageTile). The barrel loads ol/source/GeoTIFF → web-worker, which crashes prerender.',
+              allowTypeImports: true,
+            },
           ],
           patterns: [
             {

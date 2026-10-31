@@ -280,7 +280,6 @@
     },
     "start_search": "Start typing to search...",
     "no_results": "No results found.",
-    "load_error": "Problem loading the map. Please try refreshing the page.",
     "poi": {
       "delivery": "Delivery points",
       "delivery_desc": "Delivery stations & supply routes",

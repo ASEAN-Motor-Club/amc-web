@@ -33,7 +33,8 @@ Game coordinates are not map coordinates. Every geometry goes through `reProject
 
 - `WebGLVectorLayer` for large or frequently updated point sets; plain `VectorLayer` for labels and small overlays.
 - Colors and fonts in `Style` objects come from `$lib/tw-var` — never hardcoded hex or px.
-- Follow the existing import split: barrels for `ol`, `ol/geom`, `ol/style`, `ol/source`; deep paths for layers and `ol/source/Vector`.
+- Follow the existing import split: barrels for `ol`, `ol/geom`, `ol/style`; deep paths for layers and every source (`ol/source/Vector`, `ol/source/ImageTile`). The `ol/source` barrel is eslint-banned: it drags in `ol/source/GeoTIFF` → `web-worker`, which throws on import inside SvelteKit's prerender worker thread. That is what keeps `Map.svelte` a static import in `routes/(map)/+layout.svelte` (SSR-rendered, prefetched with the route) — don't reintroduce a lazy `import()`.
+- ol is external in the SSR build, so Node evaluates every barrel in full — tree-shaking only happens client-side. The remaining barrels are safe today (they only reach `rbush`, which is inert on import). After an ol bump, if prerender fails with an error thrown at module load, check whether a barrel now pulls in a package that runs code on import, and eslint-ban that barrel the same way as `ol/source`.
 
 ## Selection is the URL
 

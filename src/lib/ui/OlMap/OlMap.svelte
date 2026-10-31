@@ -6,7 +6,7 @@
   import WebGLTileLayer from 'ol/layer/WebGLTile';
   import 'ol/ol.css';
   import { Projection } from 'ol/proj';
-  import { ImageTile } from 'ol/source';
+  import ImageTile from 'ol/source/ImageTile';
   import { getCenter, type Extent } from 'ol/extent';
   import type BaseLayer from 'ol/layer/Base';
   import { MAP_REAL_SIZE } from './utils';

@@ -263,7 +263,6 @@
     "pin_labels": "Label Pin",
     "pin_no": "Pin {index}",
     "last_updated": "Terakhir diperbarui",
-    "load_error": "Gagal memuat peta. Silakan coba muat ulang halaman.",
     "side_menu": {
       "housing": "RUMAH",
       "map": "PETA",

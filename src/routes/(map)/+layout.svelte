@@ -7,10 +7,9 @@
   import type { DeliveryJob } from '$lib/api/types';
   import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
   import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
+  import Map from '$lib/components/Map/Map/Map.svelte';
   import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
   import type { CollapsibleType } from '$lib/components/Map/types';
-  import { m } from '$lib/paraglide/messages';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
   import { vehicleKeyToString } from '$lib/api/proto/vehicleKeyUtils';
   import { reProjectVec2 } from '$lib/ui/OlMap/utils';
   import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
@@ -40,12 +39,7 @@
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  let MapComponent: Promise<typeof import('$lib/components/Map/Map/Map.svelte')> | undefined =
-    $state(undefined);
-
   onMount(() => {
-    MapComponent = import('$lib/components/Map/Map/Map.svelte');
     if (!isSm.current && page.url.pathname === '/map' && openCollapsible) {
       const newParams = new SvelteURLSearchParams(clientSearchParams());
       newParams.delete('menu');
@@ -126,32 +120,13 @@
       ]}
     >
       <div class="contents duration-150">
-        {#if MapComponent}
-          {#await MapComponent}
-            <div
-              class="flex h-full w-full items-center justify-center bg-[lab(47.888%_-2.821_-32.915)]"
-            >
-              <Icon
-                class="i-material-symbols:progress-activity animate-spin text-2xl text-white/20"
-              />
-            </div>
-          {:then M}
-            {@const Map = M.default}
-            <Map
-              {jobsData}
-              {houseData}
-              playerData={mapPlayerData}
-              onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-              onThreeDModeChange={(m) => (threeDMode = m)}
-            />
-          {:catch _}
-            <div
-              class="text-text-700 dark:text-text-300 flex h-full w-full items-center justify-center"
-            >
-              {m['map.load_error']()}
-            </div>
-          {/await}
-        {/if}
+        <Map
+          {jobsData}
+          {houseData}
+          playerData={mapPlayerData}
+          onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
+          onThreeDModeChange={(m) => (threeDMode = m)}
+        />
       </div>
     </div>
   </div>
