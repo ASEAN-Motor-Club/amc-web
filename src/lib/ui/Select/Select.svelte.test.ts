@@ -8,6 +8,13 @@ import Harness from './Select.test.svelte';
 const optionA = () => page.getByRole('button', { name: 'Option A' });
 const optionB = () => page.getByRole('button', { name: 'Option B' });
 
+/** The display-only input is aria-hidden, so role queries cannot reach it. */
+const displayInput = () => {
+  const input = document.querySelector('input[name="pick"]');
+  if (!input) throw new Error('expected the display input');
+  return page.elementLocator(input);
+};
+
 /** Opens the menu by clicking the select wrapper button (first button in DOM order). */
 const openMenu = async (): Promise<void> => {
   page
@@ -38,8 +45,7 @@ describe('Select', () => {
 
   it('shows the placeholder when no option matches the value', async () => {
     await render(Harness, {});
-    const input = page.getByRole('textbox');
-    await expect.element(input).toHaveAttribute('placeholder', 'Pick one');
+    await expect.element(displayInput()).toHaveAttribute('placeholder', 'Pick one');
   });
 
   it('keeps the menu closed initially', async () => {
@@ -81,6 +87,14 @@ describe('Select', () => {
       .element()
       .dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
 
-    await expect.element(page.getByRole('textbox')).toHaveValue('Option B');
+    await expect.element(displayInput()).toHaveValue('Option B');
+  });
+
+  it('reflects the open state on the trigger with aria-expanded', async () => {
+    await render(Harness, {});
+    const trigger = page.getByRole('button').first();
+    await expect.element(trigger).toHaveAttribute('aria-expanded', 'false');
+    await openMenu();
+    await expect.element(trigger).toHaveAttribute('aria-expanded', 'true');
   });
 });

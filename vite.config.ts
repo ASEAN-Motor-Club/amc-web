@@ -9,6 +9,7 @@ import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest.ts';
 import { dotnetWasmAssetPlugin } from './vite-plugins/dotnet-wasm-asset.ts';
 import path from 'node:path';
+import { siteOrigin } from './src/lib/data/site.ts';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -21,6 +22,8 @@ export default defineConfig(({ mode }) => {
       sveltekit({
         preprocess: vitePreprocess(),
         adapter: adapter({ fallback: 'fallback.html' }),
+        // Prerendered `event.url` / `page.url` carry the real origin, so canonical and og:url are absolute.
+        paths: { origin: siteOrigin },
       }),
       paraglideVitePlugin({
         project: './project.inlang',

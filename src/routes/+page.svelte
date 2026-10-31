@@ -27,13 +27,16 @@
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="og:title" content={title} />
+  <meta property="og:title" content={title} />
+  <meta name="twitter:title" content={title} />
 </svelte:head>
 
 <div class="flex w-full flex-col items-center">
   <div class="relative -mt-16 h-svh w-full pt-16">
     <div class="relative flex h-full w-full justify-center bg-black">
       <video
+        aria-hidden="true"
+        tabindex="-1"
         autoplay={!prefersReducedMotion.current}
         loop
         muted
@@ -54,7 +57,7 @@
             color="custom"
             tag="a"
           >
-            <div class="relative mr-2 flex size-2">
+            <div class="relative mr-2 flex size-2" aria-hidden="true">
               <div
                 class="absolute size-full rounded-full bg-[currentColor] opacity-1 motion-safe:animate-ping"
               ></div>
@@ -70,22 +73,24 @@
         >
           {m.site_name()}
         </h1>
-        <div class="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-15 sm:justify-start">
+        <ul class="mb-6 flex flex-wrap justify-center gap-1.5 sm:mb-15 sm:justify-start">
           {#each features as feature (feature)}
-            <Button
-              variant="contained"
-              size="xs"
-              round
-              class="pointer-events-none h-6 px-2.5 font-medium"
-              tag="div">{feature}</Button
-            >
+            <li class="contents">
+              <Button
+                variant="contained"
+                size="xs"
+                round
+                class="pointer-events-none h-6 px-2.5 font-medium"
+                tag="div">{feature}</Button
+              >
+            </li>
           {/each}
-        </div>
+        </ul>
         <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
           <Button
             variant="contained"
             color="custom"
-            class=" bg-[#5865f2] hover:bg-[color-mix(in_oklab,#5865f2_90%,white)] active:bg-[color-mix(in_oklab,#5865f2_95%,black)]"
+            class=" bg-[#4e5ae8] hover:bg-[color-mix(in_oklab,#4e5ae8_90%,white)] active:bg-[color-mix(in_oklab,#4e5ae8_95%,black)]"
             tag="a"
             href={PUBLIC_DISCORD_LINK}
             target="_blank"
@@ -116,11 +121,12 @@
       <ScrollHint />
     </div>
   </div>
-  <div
+  <section
+    aria-labelledby="home-about"
     class="-mt-16 grid min-h-svh w-full max-w-340 items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
-      <h2 class="font-sans-em mb-3 text-2xl tracking-wide">
+      <h2 id="home-about" class="font-sans-em mb-3 text-2xl tracking-wide">
         {m['home.desc_title']()}
       </h2>
       <p class="text-text-700 dark:text-text-300">{m['home.description']()}</p>
@@ -139,5 +145,5 @@
         loading="lazy"
       ></iframe>
     </div>
-  </div>
+  </section>
 </div>

@@ -64,6 +64,7 @@
         value={playerContext.volume}
         onChange={playerContext.changeVolume}
         name="radio_volume"
+        aria-label={m['a11y.volume']()}
         min={0}
         max={1}
         size="sm"

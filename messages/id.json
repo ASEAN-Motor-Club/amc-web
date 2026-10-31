@@ -20,6 +20,26 @@
     "delete": "Hapus",
     "cancel": "Batal"
   },
+  "a11y": {
+    "skip_to_content": "Langsung ke konten utama",
+    "main_navigation": "Navigasi utama",
+    "open_menu": "Buka menu",
+    "settings": "Pengaturan",
+    "previous_month": "Bulan sebelumnya",
+    "next_month": "Bulan berikutnya",
+    "view_on_map": "Lihat di peta",
+    "expand": "Perluas",
+    "collapse": "Ciutkan",
+    "clear": "Hapus",
+    "loading": "Memuat",
+    "sort_by": "Urutkan berdasarkan",
+    "zoom_in": "Perbesar",
+    "zoom_out": "Perkecil",
+    "picture_in_picture": "Gambar-dalam-gambar",
+    "switch_to_3d": "Beralih ke peta 3D",
+    "switch_to_2d": "Beralih ke peta 2D",
+    "volume": "Volume"
+  },
   "or": "atau",
   "unknown": "Tidak Dikenal",
   "track_editor": {

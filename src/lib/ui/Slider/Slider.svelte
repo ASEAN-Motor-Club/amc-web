@@ -56,6 +56,10 @@
      * CSS class to apply to the slider knob
      */
     knobClass?: ClassValue;
+    /**
+     * Accessible name, defaults to the surrounding InputGroup label
+     */
+    'aria-label'?: string;
   }
 
   const {
@@ -71,6 +75,7 @@
     trackClass,
     progressedTrackClass,
     knobClass,
+    'aria-label': propsAriaLabel,
   }: TextInputProps = $props();
 
   const inputGroupContext = getInputGroupContext();
@@ -132,6 +137,37 @@
     };
   });
 
+  const keyboardSteps = 20;
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    const step = (max - min) / keyboardSteps;
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowUp':
+        next = valueLocal + step;
+        break;
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        next = valueLocal - step;
+        break;
+      case 'Home':
+        next = min;
+        break;
+      case 'End':
+        next = max;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    next = Math.max(min, Math.min(max, next));
+    if (next === valueLocal) return;
+    doTransition = true;
+    valueLocal = next;
+    onChange?.(next);
+  };
+
   const handleSliderMouseUp = () => {
     moving = false;
   };
@@ -160,8 +196,10 @@
   onmousedown={handleSliderMouseDown}
   ontouchstart={handleSliderMouseDown}
   bind:this={slider}
+  onkeydown={handleKeydown}
   role="slider"
   tabindex="0"
+  aria-label={propsAriaLabel ?? inputGroupContext?.label}
   aria-valuemin={min}
   aria-valuemax={max}
   aria-valuenow={valueLocal}

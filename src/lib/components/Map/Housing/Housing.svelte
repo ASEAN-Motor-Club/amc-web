@@ -95,6 +95,7 @@
       placeholder={m['housing.search_placeholder']()}
       name="search"
       type="search"
+      additionalAttributes={{ 'aria-label': m['housing.search_placeholder']() }}
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
       onInput={onSearch}
       disabled={!houseData}
@@ -103,6 +104,7 @@
     <Select
       value={sortValue}
       name="sort"
+      aria-label={m['a11y.sort_by']()}
       onChange={handleSortChange}
       class={['w-full flex-shrink-0', fullScreen && 'sm:max-w-45']}
     >

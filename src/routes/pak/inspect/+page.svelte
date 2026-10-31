@@ -59,7 +59,8 @@
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="og:title" content={title} />
+  <meta property="og:title" content={title} />
+  <meta name="twitter:title" content={title} />
 </svelte:head>
 
 <div class="flex h-full w-full p-8">
@@ -105,15 +106,16 @@
             class="rounded border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900"
           >
             {#each files as f (f.path + f.hash)}
-              <!-- svelte-ignore a11y_click_events_have_key_events -->
-              <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-              <li
-                class="border-b border-gray-100 px-3 py-1 font-mono text-xs last:border-0 dark:border-gray-800"
-                onclick={() => handleInspectFile(f.raw_path)}
-              >
-                {f.path}
-                <br />
-                <span class="text-text-600 dark:text-text-400 text-[0.625rem]">{f.hash}</span>
+              <li class="border-b border-gray-100 last:border-0 dark:border-gray-800">
+                <button
+                  type="button"
+                  class="w-full cursor-pointer px-3 py-1 text-left font-mono text-xs hover:bg-gray-500/10"
+                  onclick={() => handleInspectFile(f.raw_path)}
+                >
+                  {f.path}
+                  <br />
+                  <span class="text-text-600 dark:text-text-400 text-[0.625rem]">{f.hash}</span>
+                </button>
               </li>
             {/each}
           </ul>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from '#messages';
   import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import { portal } from '#lib/utils/portal.js';
@@ -67,6 +68,13 @@
       }
     }
   });
+  const handleKeydown = (event: KeyboardEvent) => {
+    // Only the most recently opened modal reacts, so nested modals close one at a time.
+    if (event.key !== 'Escape' || !open || [...modalCounter].at(-1) !== id) return;
+    event.preventDefault();
+    onClose?.();
+  };
+
   onMount(() => {
     return () => {
       modalCounter.delete(id);
@@ -78,8 +86,12 @@
   });
 </script>
 
+<svelte:window onkeydown={handleKeydown} />
+
 {#snippet modalBase()}
   <div
+    role="dialog"
+    aria-modal="true"
     class={twMerge(
       'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
       clsx(propsClass),
@@ -91,7 +103,8 @@
     <button
       class="fixed inset-0 -z-1 h-full w-full overscroll-none opacity-0"
       onclick={onClose}
-      aria-label="Close modal"
+      tabindex="-1"
+      aria-label={m['action.close']()}
     ></button>
     {@render children()}
   </div>

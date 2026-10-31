@@ -11,9 +11,11 @@
     color: Color;
     href: string;
     icon: string;
+    /** Accessible name, the button shows only an icon */
+    label: string;
   }
 
-  const { class: propsClass, href, icon, color }: Props = $props();
+  const { class: propsClass, href, icon, color, label }: Props = $props();
 </script>
 
 <div
@@ -29,6 +31,7 @@
     {color}
     tag="a"
     {href}
+    aria-label={label}
   >
     <Icon class={icon} />
   </Button>

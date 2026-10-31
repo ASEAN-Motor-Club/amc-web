@@ -120,8 +120,9 @@ describe('championship result page', () => {
     if (!(moreInfo instanceof HTMLAnchorElement)) {
       throw new Error('expected the more-info link');
     }
-    // On an <a> element Svelte renders the disabled prop as a string attribute.
-    expect(moreInfo.getAttribute('disabled')).toBe('true');
+    // <a> has no `disabled`; Button marks it aria-disabled and drops it from the tab order.
+    expect(moreInfo.getAttribute('aria-disabled')).toBe('true');
+    expect(moreInfo.tabIndex).toBe(-1);
   });
 
   it('renders the event and its filtered results once loaded', async () => {
@@ -146,7 +147,7 @@ describe('championship result page', () => {
       throw new Error('expected the more-info link');
     }
     expect(moreInfo.href).toBe(`${PUBLIC_DISCORD_EVENT_BASE}/${EVENT.discord_event_id}`);
-    expect(moreInfo.getAttribute('disabled')).toBe('false');
+    expect(moreInfo.hasAttribute('aria-disabled')).toBe(false);
   });
 
   it('opens the error modal when the event queries fail', async () => {

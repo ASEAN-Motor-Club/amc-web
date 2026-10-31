@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from '#messages';
   import type {
     ChangeEventHandler,
     ClassValue,
@@ -202,6 +203,7 @@
       size="sm"
       onClick={() => onClear()}
       icon
+      aria-label={m['a11y.clear']()}
     >
       <Icon class="i-material-symbols:close-rounded" size="!text-lg" />
     </Button>

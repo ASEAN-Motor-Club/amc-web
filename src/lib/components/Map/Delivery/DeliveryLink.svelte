@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from '#messages';
   import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
   import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import type { ClassValue } from 'svelte/elements';
@@ -54,6 +55,7 @@
     tag="a"
     href={getViewHref(Features.Delivery, guid, !fullScreen)}
     variant="contained-light"
+    aria-label={m['a11y.view_on_map']()}
   >
     <Icon class="i-material-symbols:map-search-rounded" size="sm" />
   </Button>

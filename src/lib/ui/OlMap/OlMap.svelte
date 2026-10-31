@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from '#messages';
   import { onMount } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import Map from 'ol/Map';
@@ -253,6 +254,7 @@
           size="sm"
           icon
           onClick={() => onEnterPip?.()}
+          aria-label={m['a11y.picture_in_picture']()}
         >
           <Icon class="i-material-symbols:picture-in-picture-center-outline-rounded" />
         </Button>
@@ -264,6 +266,7 @@
           size="sm"
           icon
           onClick={onToggleMapMode}
+          aria-label={m['a11y.switch_to_3d']()}
         >
           <Icon class="i-material-symbols:3d-2-rounded" />
         </Button>
@@ -279,6 +282,7 @@
               zoom: (map.getView().getZoom() ?? 1) + 1,
               duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
             })}
+          aria-label={m['a11y.zoom_in']()}
         >
           <Icon class="i-material-symbols:add-2-rounded" />
         </Button>
@@ -293,6 +297,7 @@
               zoom: (map.getView().getZoom() ?? 1) - 1,
               duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs * 2,
             })}
+          aria-label={m['a11y.zoom_out']()}
         >
           <Icon class="i-material-symbols:remove-rounded" />
         </Button>

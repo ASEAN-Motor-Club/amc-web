@@ -191,7 +191,7 @@
   {#each links as link (link.label)}
     <NavbarItem {...link} onClick={() => setMenu(false)} {mobile} />
   {/each}
-  <div class="mt-6 flex items-center lg:mt-0">
+  <li class="mt-6 flex items-center lg:mt-0">
     <Button
       variant="contained-light"
       color="custom"
@@ -201,22 +201,30 @@
       target="_blank"
       rel="noreferrer">{m['navbar.join_discord']()}</Button
     >
-  </div>
+  </li>
 {/snippet}
 
 <nav
+  aria-label={m['a11y.main_navigation']()}
   class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-gray-950/10 ring-gray-950/1 select-none"
 >
-  <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
+  <Button
+    class="mr-2 -ml-2 lg:hidden"
+    variant="text"
+    onClick={() => setMenu(true)}
+    icon
+    aria-label={m['a11y.open_menu']()}
+    aria-expanded={menu}
+  >
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-em mr-6 text-2xl leading-none tracking-wide">
     {m.site_name()}
   </a>
   {#if isLg.current}
-    <div class="flex h-full items-stretch gap-6">
+    <ul class="flex h-full items-stretch gap-6">
       {@render menuItems()}
-    </div>
+    </ul>
   {:else}
     <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
       <div
@@ -233,9 +241,9 @@
         >
           {m.site_name()}
         </a>
-        <div class="flex flex-col gap-4">
+        <ul class="flex flex-col gap-4">
           {@render menuItems(true)}
-        </div>
+        </ul>
       </div>
     </Modal>
   {/if}

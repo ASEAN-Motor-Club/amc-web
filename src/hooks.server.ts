@@ -12,6 +12,9 @@ import splashBig from '#lib/assets/images/splash_big.jpg?no-inline';
 import faviconIco from '#lib/assets/images/icon/favicon.ico?no-inline';
 import faviconSvg from '#lib/assets/images/icon/favicon.svg?no-inline';
 import appleTouchIcon from '#lib/assets/images/icon/apple-touch-icon.png?no-inline';
+import androidChrome512 from '#lib/assets/images/icon/android-chrome-512x512.png?no-inline';
+import { siteOrigin } from '#lib/data/site.js';
+import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$app/env/public';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
   // No `url` strategy, so the middleware's request is a same-URL clone; `event.request` is readonly in Kit 3.
@@ -30,9 +33,54 @@ const deferredFontCssUrls = [
   notoSansKRCssUrl,
 ] as unknown as string[];
 
+const splashWidth = 1440;
+const splashHeight = 810;
+
+/** Kit renders the SPA fallback page from this pseudo-path; it has no URL of its own to canonicalize. */
+const fallbackPathname = '/[fallback]';
+
+const absoluteUrl = (path: string) => new URL(path, siteOrigin).href;
+
+// `<` is escaped so no string value can close the surrounding <script> early.
+const jsonLd = (data: unknown) =>
+  `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+
+const structuredData = () =>
+  jsonLd({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${siteOrigin}/#organization`,
+        name: m.site_name(),
+        alternateName: m.site_name_short(),
+        url: absoluteUrl('/'),
+        logo: absoluteUrl(androidChrome512),
+        description: m['home.description'](),
+        sameAs: [
+          PUBLIC_DISCORD_LINK,
+          PUBLIC_PATREON_LINK,
+          'https://wiki.aseanmotorclub.com/',
+        ].filter(Boolean),
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${siteOrigin}/#website`,
+        name: m.site_name(),
+        alternateName: m.site_name_short(),
+        url: absoluteUrl('/'),
+        description: m['home.desc_title'](),
+        publisher: { '@id': `${siteOrigin}/#organization` },
+      },
+    ],
+  });
+
 const handleStaticHead: Handle = ({ event, resolve }) =>
   resolve(event, {
     transformPageChunk: ({ html }) => {
+      const pageUrl =
+        event.url.pathname === fallbackPathname ? undefined : absoluteUrl(event.url.pathname);
+      const ogImage = absoluteUrl(splashBig);
       const staticHead = [
         `<meta name="theme-color" content="${colorBackground100}" media="(prefers-color-scheme: light)" />`,
         `<meta name="theme-color" content="${colorBackground900}" media="(prefers-color-scheme: dark)" />`,
@@ -47,9 +95,22 @@ const handleStaticHead: Handle = ({ event, resolve }) =>
         `<link rel="apple-touch-icon" href="${appleTouchIcon}" />`,
         `<meta property="og:site_name" content="${m.site_name()}" />`,
         `<meta property="og:description" content="${m['home.desc_title']()}" />`,
-        `<meta property="og:image" content="${splashBig}" />`,
-        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta property="og:image" content="${ogImage}" />`,
+        `<meta property="og:image:width" content="${splashWidth}" />`,
+        `<meta property="og:image:height" content="${splashHeight}" />`,
+        `<meta property="og:image:alt" content="${m.site_name()}" />`,
         `<meta property="og:type" content="website" />`,
+        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta name="twitter:description" content="${m['home.desc_title']()}" />`,
+        `<meta name="twitter:image" content="${ogImage}" />`,
+        ...(pageUrl
+          ? [
+              `<link rel="canonical" href="${pageUrl}" />`,
+              `<meta property="og:url" content="${pageUrl}" />`,
+            ]
+          : []),
+        `<link rel="sitemap" type="application/xml" href="/sitemap.xml" />`,
+        structuredData(),
         `<meta name="apple-mobile-web-app-capable" content="yes" />`,
         `<meta name="apple-mobile-web-app-status-bar-style" content="default" />`,
         `<meta name="apple-mobile-web-app-title" content="${m.site_name_short()}" />`,

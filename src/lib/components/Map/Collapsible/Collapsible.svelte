@@ -148,6 +148,7 @@
       <CollapsibleActionButton
         color="danger"
         icon="i-material-symbols:close-rounded"
+        label={m['action.close']()}
         href={closeHref}
       />
     {/if}
@@ -158,6 +159,7 @@
         icon={showFull
           ? 'i-material-symbols:collapse-content-rounded'
           : 'i-material-symbols:expand-content-rounded'}
+        label={showFull ? m['a11y.collapse']() : m['a11y.expand']()}
         href={toggleFullHref}
       />
     {/if}

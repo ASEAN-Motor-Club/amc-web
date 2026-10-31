@@ -44,5 +44,6 @@
   {title}
   role={title ? 'img' : undefined}
   aria-label={title}
+  aria-hidden={title ? undefined : 'true'}
   class={twMerge(sizeClass, clsx(propsClass))}
 ></div>

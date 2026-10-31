@@ -389,6 +389,7 @@
         size="sm"
         icon
         onClick={onToggleMapMode}
+        aria-label={m['a11y.switch_to_2d']()}
       >
         <Icon class="i-material-symbols:2d-2-rounded" />
       </Button>
@@ -400,6 +401,7 @@
         size="sm"
         icon
         onClick={zoomIn}
+        aria-label={m['a11y.zoom_in']()}
       >
         <Icon class="i-material-symbols:add-2-rounded" />
       </Button>
@@ -410,6 +412,7 @@
         size="sm"
         icon
         onClick={zoomOut}
+        aria-label={m['a11y.zoom_out']()}
       >
         <Icon class="i-material-symbols:remove-rounded" />
       </Button>

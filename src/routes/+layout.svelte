@@ -21,6 +21,7 @@
   import { rtDate } from '#lib/realtimeDate.svelte.js';
   import { QueryClientProvider } from '@tanstack/svelte-query';
   import { createQueryClient } from '#lib/api/queryClient.js';
+  import { m } from '#messages';
 
   const queryClient = createQueryClient();
 
@@ -62,10 +63,17 @@
 <QueryClientProvider client={queryClient}>
   <GlobalPlayer>
     <MsgModal>
+      <a
+        href="#main-content"
+        class="bg-background-50 dark:bg-background-900 sr-only fixed top-2 left-2 z-1000001 rounded-md px-4 py-2 font-semibold shadow-md focus:not-sr-only"
+        >{m['a11y.skip_to_content']()}</a
+      >
       <Navbar />
       {#key id}
         <main
-          class="h-full min-h-dvh pt-16"
+          id="main-content"
+          tabindex="-1"
+          class="h-full min-h-dvh pt-16 outline-none"
           in:fade={{ duration: defaultTransitionDurationMs * 3 }}
         >
           {@render children()}
