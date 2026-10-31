@@ -2,7 +2,11 @@
   import Select from './Select.svelte';
   import SelectOption from './SelectOption.svelte';
 
-  let { onChange } = $props<{ onChange?: (id: string) => void }>();
+  interface Props {
+    onChange?: (id: string) => void;
+  }
+
+  const { onChange }: Props = $props();
 
   let value = $state('');
 

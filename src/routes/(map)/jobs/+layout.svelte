@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$messages';
+  import { m } from '#messages';
 
   const { children } = $props();
   const title = $derived(

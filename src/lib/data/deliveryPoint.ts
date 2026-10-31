@@ -1,9 +1,9 @@
-import deliveryPointJson from '$lib/assets/data/out_delivery_point.json';
-import residentNameJson from '$lib/assets/data/resident_name.json';
-import type { MtNameRecord, Vector3 } from '$lib/types';
+import deliveryPointJson from '#lib/assets/data/out_delivery_point.json';
+import residentNameJson from '#lib/assets/data/resident_name.json';
+import type { MtNameRecord, Vector3 } from '#lib/types/index.js';
 import { uniq } from 'es-toolkit';
 import type { DeliveryCargo, DeliveryCargoKey, DeliveryPointType } from './types';
-import { flattenCargoType } from '$lib/utils/delivery';
+import { flattenCargoType } from '#lib/utils/delivery.js';
 
 /** Resident points share one name, the export ships it on its own. */
 export const residentName = residentNameJson as MtNameRecord;

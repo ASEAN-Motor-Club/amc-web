@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { colorNeutral400 } from '$lib/tw-var';
+  import { colorNeutral400 } from '#lib/tw-var.js';
   import { devicePixelRatio } from 'svelte/reactivity/window';
   import { prefersReducedMotion } from 'svelte/motion';
   import { expoOut } from 'svelte/easing';

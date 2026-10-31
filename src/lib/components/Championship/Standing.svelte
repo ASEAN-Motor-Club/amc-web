@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { m } from '$messages';
-  import { createPersonalStandingsQuery, createTeamStandingsQuery } from '$lib/api/championship';
-  import { PUBLIC_SEASON_NO } from '$env/static/public';
+  import { m } from '#messages';
+  import { createPersonalStandingsQuery, createTeamStandingsQuery } from '#lib/api/championship.js';
+  import { PUBLIC_SEASON_NO } from '$app/env/public';
   import StandingCard from './StandingCard.svelte';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
-  import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
-  import TableRow from '$lib/ui/Table/TableRow.svelte';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
+  import TableEmptyState from '#lib/ui/Table/TableEmptyState.svelte';
+  import TableRow from '#lib/ui/Table/TableRow.svelte';
 
   const season = Number(PUBLIC_SEASON_NO);
 

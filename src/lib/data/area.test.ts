@@ -6,7 +6,7 @@ import {
   getLocationNearPoint,
   isInMapBound,
 } from './area';
-import areaVolume from '$lib/assets/data/out_area_volume.json';
+import areaVolume from '#lib/assets/data/out_area_volume.json';
 
 const vertexKey = (p: { x: number; y: number }) => `${p.x},${p.y}`;
 

@@ -40,6 +40,6 @@ describe('Button', () => {
       appendIcon: text('APP'),
     });
     const button = page.getByRole('button');
-    await expect.element(button).toHaveTextContent(/PRE\s+Label\s+APP/);
+    await expect.element(button).toMatchTextContent(/PRE\s+Label\s+APP/);
   });
 });

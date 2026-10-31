@@ -1,3 +1,5 @@
+import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv, type UserConfig } from 'vite';
@@ -6,6 +8,7 @@ import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest.ts';
 import { dotnetWasmAssetPlugin } from './vite-plugins/dotnet-wasm-asset.ts';
+import path from 'node:path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -15,18 +18,29 @@ export default defineConfig(({ mode }) => {
     plugins: [
       dotnetWasmAssetPlugin(),
       UnoCSS(),
-      sveltekit(),
+      sveltekit({
+        preprocess: vitePreprocess(),
+        adapter: adapter({ fallback: 'fallback.html' }),
+      }),
       paraglideVitePlugin({
         project: './project.inlang',
         outdir: './src/lib/paraglide',
         strategy: ['custom-svelteReactiveLocale', 'baseLocale'],
         localStorageKey: 'siteLocale',
       }),
-      analyzer({
-        enabled: !isCi,
-        analyzerMode: 'static',
-        exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
-      }),
+      // Kit 3 builds client and ssr as environments of one Vite build and leaves the top-level
+      // `build.outDir` at Vite's default (`dist`), which is where the analyzer would write. The
+      // client output is what adapter-static copies into `build/`, so the report ends up at
+      // `build/stats.html`. Assign rather than spread: the analyzer swaps its own hooks after creation.
+      Object.assign(
+        analyzer({
+          enabled: !isCi,
+          analyzerMode: 'static',
+          fileName: path.resolve('.svelte-kit/output/client/stats.html'),
+          exclude: /.+\.(mp4|avif|png|jpg|jpeg|gif|svg)$/,
+        }),
+        { applyToEnvironment: (environment: { name: string }) => environment.name === 'client' },
+      ),
       webmanifestPlugin(),
     ],
     build: {},

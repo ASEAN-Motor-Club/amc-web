@@ -1,6 +1,6 @@
 <script module lang="ts">
   import * as z from 'zod/mini';
-  import { trackSchema } from '$lib/schema/track';
+  import { trackSchema } from '#lib/schema/track.js';
 
   const VIEW_PARAM = 'view';
   const VIEW_CODE = 'code';
@@ -20,34 +20,34 @@
 </script>
 
 <script lang="ts">
-  import { m } from '$messages';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import TextInput from '$lib/ui/TextInput/TextInput.svelte';
-  import InputGroup from '$lib/ui/InputGroup/InputGroup.svelte';
-  import Divider from '$lib/ui/Divider/Divider.svelte';
+  import { m } from '#messages';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import TextInput from '#lib/ui/TextInput/TextInput.svelte';
+  import InputGroup from '#lib/ui/InputGroup/InputGroup.svelte';
+  import Divider from '#lib/ui/Divider/Divider.svelte';
   import DownloadCard from './DownloadCard.svelte';
-  import CodeEditor from '$lib/ui/CodeEditor/CodeEditor.svelte';
+  import CodeEditor from '#lib/ui/CodeEditor/CodeEditor.svelte';
   import { cloneDeep, isEqual } from 'es-toolkit';
   import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
   import { formatTrackError } from '../utils/formatError';
   import { Quaternion } from 'quaternion';
-  import { toRad } from '$lib/utils/math/vectors';
+  import { toRad } from '#lib/utils/math/vectors.js';
   import { normalizedWaypoints } from '../utils/normalized';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import { fetchTerrainZcm } from '$lib/api/terrain';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
+  import { fetchTerrainZcm } from '#lib/api/terrain.js';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate';
-  import Slider from '$lib/ui/Slider/Slider.svelte';
-  import type { Track, WaypointEuler } from '$lib/schema/track';
-  import EditorOlMap from '$lib/ui/EditorOlMap/EditorOlMap.svelte';
-  import EditorThreeMap from '$lib/ui/EditorThreeMap/EditorThreeMap.svelte';
-  import type { MapViewState } from '$lib/ui/OlMap/OlMap.svelte';
+  import Slider from '#lib/ui/Slider/Slider.svelte';
+  import type { Track, WaypointEuler } from '#lib/schema/track.js';
+  import EditorOlMap from '#lib/ui/EditorOlMap/EditorOlMap.svelte';
+  import EditorThreeMap from '#lib/ui/EditorThreeMap/EditorThreeMap.svelte';
+  import type { MapViewState } from '#lib/ui/OlMap/OlMap.svelte';
   import { onMount, untrack } from 'svelte';
-  import type { Vector2 } from '$lib/types';
+  import type { Vector2 } from '#lib/types/index.js';
   import { beforeNavigate, goto } from '$app/navigation';
   import { page } from '$app/state';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
 
   export interface EditorProps {
     /** The track data to be edited */
@@ -213,13 +213,13 @@
     }
   };
 
-  // The view is a query param written with replaceState, so switching never grows the history stack.
+  // The view is a query param written with `replace`, so switching never grows the history stack.
   const codeView = $derived(clientSearchParamsGet(VIEW_PARAM) === VIEW_CODE);
 
   const setView = (view: string) => {
     const params = new SvelteURLSearchParams(clientSearchParams());
     params.set(VIEW_PARAM, view);
-    void goto(`?${params.toString()}`, { replaceState: true, noScroll: true });
+    void goto(`?${params.toString()}`, { replace: true, reset: false });
   };
 
   /** The code view's own buffer, committed to `trackData` only on save. */

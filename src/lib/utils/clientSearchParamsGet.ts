@@ -7,9 +7,10 @@ export function clientSearchParamsGet(key: string): string | null {
   return page.url.searchParams.get(key);
 }
 
-export function clientSearchParams() {
+// `page.url` is readonly in SvelteKit 3; callers copy this string into their own mutable params.
+export function clientSearchParams(): string {
   if (typeof window === 'undefined') {
-    return new URLSearchParams();
+    return '';
   }
-  return page.url.searchParams;
+  return page.url.searchParams.toString();
 }

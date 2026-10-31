@@ -7,7 +7,7 @@ import {
   type PlayerPositions,
 } from './proto/generated/player_positions_pb';
 import { createPlayerPositionsV2Stream, type PlayerStreamInput } from './player';
-import { dist2DSq } from '$lib/utils/math/vectors';
+import { dist2DSq } from '#lib/utils/math/vectors.js';
 import type { QueryParam } from './_api';
 import type { StreamResult } from './_stream.svelte';
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Button from '$lib/ui/Button/Button.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
   import { EventType } from './types';
-  import { rtDate } from '$lib/realtimeDate.svelte';
+  import { rtDate } from '#lib/realtimeDate.svelte.js';
 
   interface EventButtonProps {
     currentMonth: number;

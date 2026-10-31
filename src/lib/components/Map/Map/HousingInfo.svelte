@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { House } from '$lib/data/house';
-  import type { HouseData } from '$lib/api/types';
-  import { isBefore } from '$lib/date';
-  import { formatDistanceStrict } from '$lib/date';
-  import { m } from '$messages';
-  import { getLocale } from '$lib/paraglide/runtime';
-  import { rtDate } from '$lib/realtimeDate.svelte';
+  import type { House } from '#lib/data/house.js';
+  import type { HouseData } from '#lib/api/types.js';
+  import { isBefore } from '#lib/date.js';
+  import { formatDistanceStrict } from '#lib/date.js';
+  import { m } from '#messages';
+  import { getLocale } from '#lib/paraglide/runtime.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.js';
 
   export interface HoverInfo {
     info: House;

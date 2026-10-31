@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { averageRotation } from '$lib/components/TrackEditor/utils/average';
+import { averageRotation } from '#lib/components/TrackEditor/utils/average.js';
 
 describe('averageRotation', () => {
   it('should calculate average rotation for straight line', () => {

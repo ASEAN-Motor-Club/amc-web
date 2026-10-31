@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type Snippet, onMount } from 'svelte';
-  import { PUBLIC_RADIO_STREAM_URL } from '$env/static/public';
-  import { m } from '$messages';
+  import { PUBLIC_RADIO_STREAM_URL } from '$app/env/public';
+  import { m } from '#messages';
   import { setGlobalPlayerContext } from './context';
 
   interface Props {

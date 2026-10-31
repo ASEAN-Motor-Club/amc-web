@@ -1,8 +1,8 @@
 <script lang="ts">
   import Calendar from './Calendar.svelte';
-  import { addMilliseconds, eachDayOfInterval, format } from '$lib/date';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { addMilliseconds, eachDayOfInterval, format } from '#lib/date.js';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import { EventType } from './types';
   import { SvelteMap } from 'svelte/reactivity';
   import { getChampionshipContext } from './context';

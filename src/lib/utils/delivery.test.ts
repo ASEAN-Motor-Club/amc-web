@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 // Mock the cargo key data before importing the module
-vi.mock('$lib/assets/data/out_cargo_key.json', () => ({
+vi.mock('#lib/assets/data/out_cargo_key.json', () => ({
   default: {
     _TSmallPackage: ['SmallBox', 'CheeseBox', 'MeatBox', 'BreadBox'],
     _TLargePackage: ['BoxPallete_01', 'Container_20ft_01'],
@@ -10,9 +10,9 @@ vi.mock('$lib/assets/data/out_cargo_key.json', () => ({
 }));
 
 import { isCargoType, flattenCargoType, getMatchJobSourceFn, getInventoryAmount } from './delivery';
-import type { DeliveryJob, DeliveryPointInfo, InputInventoryElement } from '$lib/api/types';
-import type { DeliveryPoint } from '$lib/data/deliveryPoint';
-import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '$lib/data/types';
+import type { DeliveryJob, DeliveryPointInfo, InputInventoryElement } from '#lib/api/types.js';
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
+import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '#lib/data/types.js';
 
 describe('delivery utilities', () => {
   describe('isCargoType', () => {

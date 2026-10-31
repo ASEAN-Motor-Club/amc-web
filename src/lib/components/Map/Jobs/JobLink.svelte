@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DeliveryJob } from '$lib/api/types';
+  import type { DeliveryJob } from '#lib/api/types.js';
   import type { ClassValue } from 'svelte/elements';
   import { DetailsFeatures, getLinkHref } from '../utils';
 

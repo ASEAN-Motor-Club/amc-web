@@ -23,7 +23,7 @@ import {
   colorYellow500,
   colorYellow950,
   fontSans,
-} from '$lib/tw-var';
+} from '#lib/tw-var.js';
 
 /** One waypoint's gate geometry, in world meters (y-up). Fully 3D: the endpoints come
  * from the waypoint's UE quaternion (local-Y width axis scaled by scale3D.y) and its

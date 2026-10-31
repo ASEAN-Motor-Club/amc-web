@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { fromEulerWp, toEulerWp } from './index';
-import type { Waypoint, WaypointEuler } from '$lib/schema/track';
+import type { Waypoint, WaypointEuler } from '#lib/schema/track.js';
 
 describe('waypoint utilities', () => {
   const deg30Quat = {

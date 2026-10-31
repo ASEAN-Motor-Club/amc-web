@@ -1,13 +1,13 @@
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { m } from '$messages';
+import { m } from '#messages';
 import MapLayout from './MapLayout.integration.svelte';
-import type * as playerApi from '$lib/api/player';
-import type * as housingApi from '$lib/api/housing';
-import type * as deliveryApi from '$lib/api/delivery';
-import { deliveryPointsMap } from '$lib/data/deliveryPoint';
-import { getMtLocale } from '$lib/utils/getMtLocale';
+import type * as playerApi from '#lib/api/player.js';
+import type * as housingApi from '#lib/api/housing.js';
+import type * as deliveryApi from '#lib/api/delivery.js';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
+import { getMtLocale } from '#lib/utils/getMtLocale.js';
 
 // The (map) layout derives its panels from the route in $app/state and pushes streams/queries
 // that would hit the production API. The route and the data sources are mocked per-test so the
@@ -49,7 +49,7 @@ const { mockJobs, setJobs } = vi.hoisted(() => {
   return { mockJobs: jobs, setJobs };
 });
 
-vi.mock('$lib/api/player', async (importOriginal) => {
+vi.mock('#lib/api/player.js', async (importOriginal) => {
   const actual = await importOriginal<typeof playerApi>();
   return {
     ...actual,
@@ -63,7 +63,7 @@ vi.mock('$lib/api/player', async (importOriginal) => {
   };
 });
 
-vi.mock('$lib/api/housing', async (importOriginal) => {
+vi.mock('#lib/api/housing.js', async (importOriginal) => {
   const actual = await importOriginal<typeof housingApi>();
   return {
     ...actual,
@@ -71,7 +71,7 @@ vi.mock('$lib/api/housing', async (importOriginal) => {
   };
 });
 
-vi.mock('$lib/api/delivery', async (importOriginal) => {
+vi.mock('#lib/api/delivery.js', async (importOriginal) => {
   const actual = await importOriginal<typeof deliveryApi>();
   return {
     ...actual,
@@ -82,7 +82,7 @@ vi.mock('$lib/api/delivery', async (importOriginal) => {
 
 // The real map mounts WebGL + OlMap on load; stub it so the layout test asserts the scaffold,
 // not map internals.
-vi.mock('$lib/components/Map/Map/Map.svelte', async () => ({
+vi.mock('#lib/components/Map/Map/Map.svelte', async () => ({
   default: (await import('./MockMap.svelte')).default,
 }));
 

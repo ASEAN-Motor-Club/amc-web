@@ -2,11 +2,11 @@ import * as THREE from 'three';
 import { SpriteNodeMaterial } from 'three/webgpu';
 import { instancedBufferAttribute, texture, uniform, uv, vec2 } from 'three/tsl';
 import type UniformNode from 'three/src/nodes/core/UniformNode.js';
-import { PointType, type PlayerData, type TeleportPoint } from '$lib/components/Map/Map/types';
-import type { DeliveryPoint } from '$lib/data/deliveryPoint';
-import type { House } from '$lib/data/house';
-import type { Pin } from '$lib/schema/pin';
-import type { Vector3 } from '$lib/types';
+import { PointType, type PlayerData, type TeleportPoint } from '#lib/components/Map/Map/types.js';
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
+import type { House } from '#lib/data/house.js';
+import type { Pin } from '#lib/schema/pin.js';
+import type { Vector3 } from '#lib/types/index.js';
 import type { TileManager } from './tileManager';
 import type { TilesMeta } from './three-map-types';
 import { gameCoordToWorld } from './coords';
@@ -29,7 +29,7 @@ import {
 import type { TextSprite } from './poi';
 import type { Renderer } from 'three/webgpu';
 import { tileWorldRect } from './heightmap';
-import { colorTextDark, colorGray950, adjustOpacity, fontSans } from '$lib/tw-var';
+import { colorTextDark, colorGray950, adjustOpacity, fontSans } from '#lib/tw-var.js';
 
 /** One world point, fed in game/UE coordinates (x right, y down, z up, cm). */
 export interface PoiInput {

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Table from '$lib/ui/Table/Table.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Table from '#lib/ui/Table/Table.svelte';
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
 

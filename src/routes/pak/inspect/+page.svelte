@@ -1,12 +1,12 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans-mono';
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Divider from '$lib/ui/Divider/Divider.svelte';
-  import { MarkdownText } from '$lib/ui/MarkdownText';
-  import { Status } from '$lib/utils/status';
-  import mappings from '$lib/assets/mappings/Mappings718.usmap?url';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Divider from '#lib/ui/Divider/Divider.svelte';
+  import { MarkdownText } from '#lib/ui/MarkdownText/index.js';
+  import { Status } from '#lib/utils/status.js';
+  import mappings from '#lib/assets/mappings/Mappings718.usmap?url';
 
   const title = $derived(
     m['pak.inspect.head']({

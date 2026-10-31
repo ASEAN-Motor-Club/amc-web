@@ -1,7 +1,7 @@
 <script lang="ts">
   import { QueryClientProvider } from '@tanstack/svelte-query';
-  import { createQueryClient } from '$lib/api/queryClient';
-  import { setChampionshipContext } from '$lib/components/Championship/context';
+  import { createQueryClient } from '#lib/api/queryClient.js';
+  import { setChampionshipContext } from '#lib/components/Championship/context.js';
   import { noop } from 'es-toolkit';
   import Page from './+page.svelte';
 

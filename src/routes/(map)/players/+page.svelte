@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$messages';
+  import { m } from '#messages';
   const title = $derived(
     m['players.head']({
       siteName: m.site_name_short(),

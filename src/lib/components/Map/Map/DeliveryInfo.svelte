@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
-  import { cargoName } from '$lib/data/cargo';
-  import type { DeliveryCargo } from '$lib/data/types';
-  import { m } from '$messages';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
-  import { formatDistanceStrict, differenceInSeconds, min } from '$lib/date';
-  import { createDeliveryPointQuery } from '$lib/api/delivery';
+  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
+  import { cargoName } from '#lib/data/cargo.js';
+  import type { DeliveryCargo } from '#lib/data/types.js';
+  import { m } from '#messages';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
+  import { formatDistanceStrict, differenceInSeconds, min } from '#lib/date.js';
+  import { createDeliveryPointQuery } from '#lib/api/delivery.js';
   import { debounce } from 'es-toolkit';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { getInventoryAmount as utilGetInventoryAmount } from '$lib/utils/delivery';
-  import { rtDate } from '$lib/realtimeDate.svelte';
-  import { isCargoType } from '$lib/utils/delivery';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import { getInventoryAmount as utilGetInventoryAmount } from '#lib/utils/delivery.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import { isCargoType } from '#lib/utils/delivery.js';
   import { DELIVERY_STALE_WARN_SECONDS } from '../utils';
 
   export interface HoverInfo {

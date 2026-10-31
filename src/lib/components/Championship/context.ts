@@ -1,5 +1,5 @@
 import { createContext } from 'svelte';
-import type { ScheduledEvent } from '$lib/api/types';
+import type { ScheduledEvent } from '#lib/api/types.js';
 
 export interface ChampionshipContext {
   readonly events: ScheduledEvent[];

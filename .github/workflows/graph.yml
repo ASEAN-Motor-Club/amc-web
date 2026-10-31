@@ -32,8 +32,8 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
-      # `prepare` runs `svelte-kit sync`, whose tsconfig carries the `$lib` alias;
-      # without it and the generated trees, imports resolve to dangling refs.
+      # `prepare` runs `svelte-kit sync`, which generates the `$app/tsconfig` the root tsconfig
+      # extends; without it and the generated trees, imports resolve to dangling refs.
       - name: 📦 Install dependencies
         run: pnpm install
 

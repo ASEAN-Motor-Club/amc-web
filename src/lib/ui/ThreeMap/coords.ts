@@ -1,4 +1,4 @@
-import type { Vector3 } from '$lib/types';
+import type { Vector3 } from '#lib/types/index.js';
 import type { TilesMeta } from './three-map-types';
 
 const CM_PER_M = 100;

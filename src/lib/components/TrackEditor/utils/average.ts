@@ -1,6 +1,6 @@
-import type { Waypoint } from '$lib/schema/track';
-import { orientation2D } from '$lib/utils/math/vectors';
-import { normalizedRotation } from '$lib/utils/math/rotation/normalized';
+import type { Waypoint } from '#lib/schema/track.js';
+import { orientation2D } from '#lib/utils/math/vectors.js';
+import { normalizedRotation } from '#lib/utils/math/rotation/normalized.js';
 
 export function averageRotation(
   prevWaypoint: Pick<Waypoint, 'translation'>,

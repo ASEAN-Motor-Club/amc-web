@@ -30,7 +30,7 @@ import {
   colorYellow500,
   colorYellow600,
   colorYellow950,
-} from '$lib/tw-var';
+} from '#lib/tw-var.js';
 
 export const ROTATE_SPEED_NEAR = 0.15;
 export const ROTATE_SPEED_FAR = 1.0;

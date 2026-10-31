@@ -1,10 +1,10 @@
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { PUBLIC_SEASON_START_DATE } from '$env/static/public';
-import { m } from '$messages';
-import { format } from '$lib/date';
-import type * as championshipApi from '$lib/api/championship';
+import { PUBLIC_SEASON_START_DATE } from '$app/env/public';
+import { m } from '#messages';
+import { format } from '#lib/date.js';
+import type * as championshipApi from '#lib/api/championship.js';
 import ChampionshipDetailsPage from './ChampionshipDetailsPage.integration.svelte';
 
 const { teamStandingsQueryMock, personalStandingsQueryMock } = vi.hoisted(() => ({
@@ -12,7 +12,7 @@ const { teamStandingsQueryMock, personalStandingsQueryMock } = vi.hoisted(() => 
   personalStandingsQueryMock: vi.fn(),
 }));
 
-vi.mock('$lib/api/championship', async (importOriginal) => ({
+vi.mock('#lib/api/championship.js', async (importOriginal) => ({
   ...(await importOriginal<typeof championshipApi>()),
   createTeamStandingsQuery: teamStandingsQueryMock,
   createPersonalStandingsQuery: personalStandingsQueryMock,

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { portal } from '$lib/utils/portal';
+  import { portal } from '#lib/utils/portal.js';
   import type { ClassValue } from 'svelte/elements';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { modalCounter } from './modalCounter.svelte';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';

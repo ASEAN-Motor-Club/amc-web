@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { mtLocale } from '$lib/components/Locale/locale.svelte';
+import { mtLocale } from '#lib/components/Locale/locale.svelte.js';
 import { getMtLocale } from './getMtLocale';
-import type { MtNameRecord } from '$lib/types';
+import type { MtNameRecord } from '#lib/types/index.js';
 
 const table: MtNameRecord = {
   en: 'English name',

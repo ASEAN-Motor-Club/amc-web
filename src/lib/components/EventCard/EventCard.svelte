@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { EventResult } from '$lib/api/types';
-  import { m } from '$messages';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Lottie from '$lib/ui/Lottie/Lottie.svelte';
-  import lottieSpark from '$lib/assets/lottie/sparkle.json';
-  import { formatTime } from '$lib/utils/formatTime';
+  import type { EventResult } from '#lib/api/types.js';
+  import { m } from '#messages';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Lottie from '#lib/ui/Lottie/Lottie.svelte';
+  import lottieSpark from '#lib/assets/lottie/sparkle.json';
+  import { formatTime } from '#lib/utils/formatTime.js';
   import { prefersReducedMotion } from 'svelte/motion';
 
   export interface Props {

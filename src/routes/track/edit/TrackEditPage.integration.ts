@@ -2,8 +2,8 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { goto } from '$app/navigation';
-import { m } from '$messages';
-import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
+import { m } from '#messages';
+import { trackData } from '#lib/components/TrackEditor/trackData.svelte.js';
 import TrackEditPage from './TrackEditPage.integration.svelte';
 
 vi.mock('$app/navigation', () => ({ goto: vi.fn(), beforeNavigate: vi.fn() }));
@@ -32,7 +32,7 @@ describe('track edit page', () => {
     await vi.waitFor(() => {
       expect(goto).toHaveBeenCalledWith(
         expect.stringContaining('/track'),
-        expect.objectContaining({ replaceState: true }),
+        expect.objectContaining({ replace: true }),
       );
     });
     expect(document.title).toBe(m['track_editor.head']({ siteName: m.site_name_short() }));

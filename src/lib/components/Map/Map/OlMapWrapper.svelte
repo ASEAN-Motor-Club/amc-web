@@ -37,11 +37,11 @@
     colorCyan600,
     colorCyan500,
     colorCyan950,
-  } from '$lib/tw-var';
-  import OlMap from '$lib/ui/OlMap/OlMap.svelte';
+  } from '#lib/tw-var.js';
+  import OlMap from '#lib/ui/OlMap/OlMap.svelte';
   import { Collection, Feature, type MapBrowserEvent, type MapEvent } from 'ol';
   import type OlMapType from 'ol/Map';
-  import { isMouse } from '$lib/utils/media.svelte';
+  import { isMouse } from '#lib/utils/media.svelte.js';
   import { prefersReducedMotion } from 'svelte/motion';
   import { LineString, Point, Polygon } from 'ol/geom';
   import VectorLayer from 'ol/layer/Vector';
@@ -55,19 +55,19 @@
     type PlayerData,
     type TeleportPoint,
   } from './types';
-  import { DeliveryLineType, type DeliveryJob, type HouseData } from '$lib/api/types';
-  import type { ShortcutZone } from '$lib/api/shortcutZone';
-  import { deliveryPoints, type DeliveryPoint } from '$lib/data/deliveryPoint';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-  import { m } from '$messages';
+  import { DeliveryLineType, type DeliveryJob, type HouseData } from '#lib/api/types.js';
+  import type { ShortcutZone } from '#lib/api/shortcutZone.js';
+  import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
+  import { m } from '#messages';
   import type { DeliveryLineData } from './deliveryLine';
-  import { reProjectPoint, reProjectVec2 } from '$lib/ui/OlMap/utils';
-  import { dev } from '$app/environment';
-  import type { Pins } from '$lib/schema/pin';
-  import { houses } from '$lib/data/house';
-  import { areaBoundaries, areaNameFontSize } from '$lib/data/area';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
-  import type { MtNameRecord } from '$lib/types';
+  import { reProjectPoint, reProjectVec2 } from '#lib/ui/OlMap/utils.js';
+  import { dev } from '$app/env';
+  import type { Pins } from '#lib/schema/pin.js';
+  import { houses } from '#lib/data/house.js';
+  import { areaBoundaries, areaNameFontSize } from '#lib/data/area.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import type { MtNameRecord } from '#lib/types/index.js';
   import type { Pixel } from 'ol/pixel';
 
   interface Props {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import type { ClassValue } from 'svelte/elements';
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';

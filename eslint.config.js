@@ -8,8 +8,10 @@ import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
+import { loadConfig } from '@sveltejs/load-config';
 import { defineConfig } from 'eslint/config';
+
+const svelteConfig = (await loadConfig('./', { traverse: false }))?.config;
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
@@ -67,7 +69,7 @@ export default defineConfig(
           patterns: [
             {
               group: ['date-fns', 'date-fns/*'],
-              message: 'Use unified imports from $lib/date instead',
+              message: 'Use unified imports from #lib/date.js instead',
               allowTypeImports: true,
             },
             {
@@ -100,17 +102,12 @@ export default defineConfig(
         projectService: true,
         extraFileExtensions,
         parser: ts.parser,
-        svelteConfig: {
-          ...svelteConfig,
-          kit: {
-            ...svelteConfig.kit,
-            prerender: {
-              ...svelteConfig.kit.prerender,
-              handleHttpError: undefined,
-            },
-          },
-        },
+        svelteConfig,
       },
+    },
+    rules: {
+      // `void state;` inside `$effect` is how a dependency is tracked without using its value.
+      '@typescript-eslint/no-meaningless-void-operator': 'off',
     },
   },
   storybook.configs['flat/recommended'],

@@ -1,7 +1,7 @@
-import { PUBLIC_API_BASE } from '$env/static/public';
+import { PUBLIC_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions } from '@tanstack/svelte-query';
-import type { DeliveryCargo } from '$lib/data/types';
-import { deliveryPointsMap } from '$lib/data/deliveryPoint';
+import type { DeliveryCargo } from '#lib/data/types.js';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
 import type { DeliveryJob, DeliveryPointInfo } from './types';
 import { apiClient, type QueryOverrides, type QueryParam } from './_api';
 

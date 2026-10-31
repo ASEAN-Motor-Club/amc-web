@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { m } from '$messages';
-import type { TrackIssue } from '$lib/schema/track';
+import { m } from '#messages';
+import type { TrackIssue } from '#lib/schema/track.js';
 import { formatTrackError } from './formatError';
 
 describe('formatTrackError', () => {

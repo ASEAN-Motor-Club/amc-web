@@ -2,7 +2,7 @@
   import { page } from '$app/state';
   import type { NavbarItem as NavbarItemType } from './types';
   import { slide } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { prefersReducedMotion } from 'svelte/motion';
   import { debounce, type DebouncedFunction } from 'es-toolkit';
   import { onDestroy } from 'svelte';

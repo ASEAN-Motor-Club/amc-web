@@ -1,23 +1,23 @@
 <script lang="ts">
-  import type { DeliveryJob } from '$lib/api/types';
-  import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '$lib/date';
-  import { rtDate } from '$lib/realtimeDate.svelte';
-  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
+  import type { DeliveryJob } from '#lib/api/types.js';
+  import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
+  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '#lib/date.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import TextSkeleton from '#lib/ui/TextSkeleton/TextSkeleton.svelte';
   import type { SvelteMap } from 'svelte/reactivity';
-  import { m } from '$messages';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
-  import { cargoName } from '$lib/data/cargo';
-  import Card from '$lib/ui/Card/Card.svelte';
+  import { m } from '#messages';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import { cargoName } from '#lib/data/cargo.js';
+  import Card from '#lib/ui/Card/Card.svelte';
 
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
-  import Divider from '$lib/ui/Divider/Divider.svelte';
+  import Divider from '#lib/ui/Divider/Divider.svelte';
   import { getJobValidPoints } from './validPoints';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
-  import Table from '$lib/ui/Table/Table.svelte';
-  import TableHead from '$lib/ui/Table/TableHead.svelte';
-  import TableRow from '$lib/ui/Table/TableRow.svelte';
-  import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
+  import Table from '#lib/ui/Table/Table.svelte';
+  import TableHead from '#lib/ui/Table/TableHead.svelte';
+  import TableRow from '#lib/ui/Table/TableRow.svelte';
+  import TableEmptyState from '#lib/ui/Table/TableEmptyState.svelte';
 
   interface Props {
     id: string;

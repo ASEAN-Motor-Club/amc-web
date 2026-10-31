@@ -1,22 +1,22 @@
 <script lang="ts">
-  import Card from '$lib/ui/Card/Card.svelte';
-  import TextInput from '$lib/ui/TextInput/TextInput.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import TextInput from '#lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
-  import { deliveryPoints as unmappedDeliveryPoints } from '$lib/data/deliveryPoint';
-  import { houses as unmappedHouse } from '$lib/data/house';
+  import { deliveryPoints as unmappedDeliveryPoints } from '#lib/data/deliveryPoint.js';
+  import { houses as unmappedHouse } from '#lib/data/house.js';
   import { PointType, type PlayerData } from './types';
-  import { cargoName } from '$lib/data/cargo';
-  import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
+  import { cargoName } from '#lib/data/cargo.js';
+  import HighlightText from '#lib/ui/HighlightText/HighlightText.svelte';
   import { goto } from '$app/navigation';
-  import type { Vector2 } from '$lib/types';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import type { Vector2 } from '#lib/types/index.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { fade } from 'svelte/transition';
-  import type { HouseData } from '$lib/api/types';
-  import { m } from '$messages';
-  import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
+  import type { HouseData } from '#lib/api/types.js';
+  import { m } from '#messages';
+  import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
-  import type { Pins } from '$lib/schema/pin';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
+  import type { Pins } from '#lib/schema/pin.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import { formatLocationAtPoint, getSelectionClearedParams } from '../utils';
 
   export type SearchPoint = {
@@ -143,7 +143,7 @@
   const handleLinkClick = (event: Event, point: SearchPoint) => {
     focus = false;
     event.preventDefault();
-    goto(getHref(point), { noScroll: true, keepFocus: true });
+    goto(getHref(point), { reset: false });
   };
 
   const maxShow = 50;

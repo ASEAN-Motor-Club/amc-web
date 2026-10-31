@@ -1,28 +1,27 @@
-import type { Handle } from '@sveltejs/kit';
-import { paraglideMiddleware } from '$lib/paraglide/server';
-import { getTextDirection } from '$lib/paraglide/runtime';
-import { sequence } from '@sveltejs/kit/hooks';
-import { colorBackground100, colorBackground900 } from '$lib/tw-var';
-import { m } from '$lib/paraglide/messages';
+import { paraglideMiddleware } from '#lib/paraglide/server.js';
+import { getTextDirection } from '#lib/paraglide/runtime.js';
+import { sequence, type Handle } from '@sveltejs/kit/hooks';
+import { colorBackground100, colorBackground900 } from '#lib/tw-var.js';
+import { m } from '#lib/paraglide/messages.js';
 import notoSansLatinWghtNormalWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2?no-inline';
 import notoSansThaiCssUrl from '@fontsource-variable/noto-sans-thai/index.css?url';
 import notoSansSCCssUrl from '@fontsource-variable/noto-sans-sc/index.css?url';
 import notoSansJPCssUrl from '@fontsource-variable/noto-sans-jp/index.css?url';
 import notoSansKRCssUrl from '@fontsource-variable/noto-sans-kr/index.css?url';
-import splashBig from '$lib/assets/images/splash_big.jpg?no-inline';
-import faviconIco from '$lib/assets/images/icon/favicon.ico?no-inline';
-import faviconSvg from '$lib/assets/images/icon/favicon.svg?no-inline';
-import appleTouchIcon from '$lib/assets/images/icon/apple-touch-icon.png?no-inline';
+import splashBig from '#lib/assets/images/splash_big.jpg?no-inline';
+import faviconIco from '#lib/assets/images/icon/favicon.ico?no-inline';
+import faviconSvg from '#lib/assets/images/icon/favicon.svg?no-inline';
+import appleTouchIcon from '#lib/assets/images/icon/apple-touch-icon.png?no-inline';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
-  paraglideMiddleware(event.request, ({ request: localizedRequest, locale }) => {
-    event.request = localizedRequest;
-    return resolve(event, {
+  // No `url` strategy, so the middleware's request is a same-URL clone; `event.request` is readonly in Kit 3.
+  paraglideMiddleware(event.request, ({ locale }) =>
+    resolve(event, {
       transformPageChunk: ({ html }) => {
         return html.replace('%lang%', locale).replace('%dir%', getTextDirection(locale));
       },
-    });
-  });
+    }),
+  );
 
 const deferredFontCssUrls = [
   notoSansThaiCssUrl,

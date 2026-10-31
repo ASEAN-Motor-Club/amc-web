@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getDeliveryLine, type DeliveryLink } from './deliveryLine';
-import { deliveryPointsMap } from '$lib/data/deliveryPoint';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
 
 /** Sangdo Lumbermill, whose drop point takes its logs but not its fuel. */
 const LUMBERMILL = '2b33867446cf343cad06f388f68922af';

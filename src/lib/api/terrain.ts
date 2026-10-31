@@ -1,4 +1,4 @@
-import { PUBLIC_API_BASE } from '$env/static/public';
+import { PUBLIC_API_BASE } from '$app/env/public';
 
 export interface TerrainHeightResponse {
   /** Terrain height at the requested location, in game Z centimeters. */

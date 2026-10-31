@@ -1,4 +1,4 @@
-import type { MtLocaleKey } from '$lib/data/types';
+import type { MtLocaleKey } from '#lib/data/types.js';
 
 export interface Quaternion {
   x: number;

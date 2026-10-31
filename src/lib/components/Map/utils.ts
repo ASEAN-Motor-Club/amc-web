@@ -1,10 +1,10 @@
-import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
-import { isSm } from '$lib/utils/media.svelte';
+import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.js';
+import { isSm } from '#lib/utils/media.svelte.js';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
-import { getLocationAtPoint, getLocationNearPoint, isInMapBound } from '$lib/data/area';
-import { getMtLocale } from '$lib/utils/getMtLocale';
-import { m } from '$messages';
-import type { Vector2 } from '$lib/types';
+import { getLocationAtPoint, getLocationNearPoint, isInMapBound } from '#lib/data/area.js';
+import { getMtLocale } from '#lib/utils/getMtLocale.js';
+import { m } from '#messages';
+import type { Vector2 } from '#lib/types/index.js';
 
 /** Age at which delivery point data is flagged as stale to the user. */
 export const DELIVERY_STALE_WARN_SECONDS = 60;

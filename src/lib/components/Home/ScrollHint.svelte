@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import type { UIEventHandler } from 'svelte/elements';
   import { fade } from 'svelte/transition';
 

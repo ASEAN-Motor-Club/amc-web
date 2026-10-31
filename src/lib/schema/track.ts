@@ -1,5 +1,5 @@
 import * as z from 'zod/mini';
-import type { Vector3 } from '$lib/types';
+import type { Vector3 } from '#lib/types/index.js';
 
 /** The subset of a zod/mini issue the track schema can produce. */
 export interface TrackIssue {

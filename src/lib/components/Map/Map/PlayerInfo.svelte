@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { PlayerData } from './types';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
-  import { parsePlayerRoles } from '$lib/utils/parsePlayerRole';
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
+  import { parsePlayerRoles } from '#lib/utils/parsePlayerRole.js';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
 
   export interface HoverInfo {
     info: PlayerData;

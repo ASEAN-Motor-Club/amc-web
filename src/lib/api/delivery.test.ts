@@ -5,7 +5,7 @@ import {
   deliveryPointQueryOptions,
   type DeliveryPointQueryInput,
 } from './delivery';
-import { deliveryPointsMap } from '$lib/data/deliveryPoint';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

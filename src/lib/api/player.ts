@@ -1,4 +1,4 @@
-import { PUBLIC_API_BASE } from '$env/static/public';
+import { PUBLIC_API_BASE } from '$app/env/public';
 import { fromBinary } from '@bufbuild/protobuf';
 import { PlayerPositionsSchema, type PlayerPositions } from './proto/generated/player_positions_pb';
 import type { PlayerEventData } from './types';

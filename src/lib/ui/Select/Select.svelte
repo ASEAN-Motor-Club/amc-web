@@ -72,7 +72,7 @@
   import Card from '../Card/Card.svelte';
   import ClickAwayBlock from '../ClickAwayBlock/ClickAwayBlock.svelte';
   import { slide } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { setSelectContext } from './context';
   import { SvelteMap } from 'svelte/reactivity';
   import Icon from '../Icon/Icon.svelte';

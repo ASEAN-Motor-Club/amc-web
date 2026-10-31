@@ -1,7 +1,7 @@
-import type { DeliveryJob, DeliveryPointInfo } from '$lib/api/types';
-import outCargoKey from '$lib/assets/data/out_cargo_key.json';
-import type { DeliveryPoint } from '$lib/data/deliveryPoint';
-import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '$lib/data/types';
+import type { DeliveryJob, DeliveryPointInfo } from '#lib/api/types.js';
+import outCargoKey from '#lib/assets/data/out_cargo_key.json';
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
+import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '#lib/data/types.js';
 
 export const isCargoType = (cargo: DeliveryCargo): cargo is DeliveryCargoType => {
   return cargo.startsWith('_T');

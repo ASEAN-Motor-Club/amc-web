@@ -2,17 +2,17 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { tick } from 'svelte';
-import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
-import { m } from '$messages';
-import { format } from '$lib/date';
-import type * as teamsApi from '$lib/api/teams';
+import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$app/env/public';
+import { m } from '#messages';
+import { format } from '#lib/date.js';
+import type * as teamsApi from '#lib/api/teams.js';
 import ChampionshipPage from './ChampionshipPage.integration.svelte';
 
 const { createTeamsQueryMock } = vi.hoisted(() => ({
   createTeamsQueryMock: vi.fn(),
 }));
 
-vi.mock('$lib/api/teams', async (importOriginal) => ({
+vi.mock('#lib/api/teams.js', async (importOriginal) => ({
   ...(await importOriginal<typeof teamsApi>()),
   createTeamsQuery: createTeamsQueryMock,
 }));

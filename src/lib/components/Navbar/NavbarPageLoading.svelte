@@ -1,7 +1,7 @@
 <script lang="ts">
   import { navigating } from '$app/state';
   import { fade } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
 
   let show = $state(false);
   let speedUp = $state(false);

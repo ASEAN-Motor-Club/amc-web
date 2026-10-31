@@ -1,4 +1,4 @@
-import type { TeleportResponse } from '$lib/api/teleport';
+import type { TeleportResponse } from '#lib/api/teleport.js';
 import type { TeleportPoint } from './types';
 
 /**

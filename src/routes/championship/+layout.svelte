@@ -1,38 +1,38 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { createEventsQuery } from '$lib/api/championship';
-  import type { ScheduledEvent } from '$lib/api/types';
-  import EventModal from '$lib/components/Championship/EventModal.svelte';
-  import ResultsModal from '$lib/components/Championship/ResultsModal.svelte';
-  import { setChampionshipContext } from '$lib/components/Championship/context';
+  import { createEventsQuery } from '#lib/api/championship.js';
+  import type { ScheduledEvent } from '#lib/api/types.js';
+  import EventModal from '#lib/components/Championship/EventModal.svelte';
+  import ResultsModal from '#lib/components/Championship/ResultsModal.svelte';
+  import { setChampionshipContext } from '#lib/components/Championship/context.js';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { isValid } from '$lib/date';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { isValid } from '#lib/date.js';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
 
   const eventsQuery = createEventsQuery();
   const events = $derived(eventsQuery.data ?? []);
 
   const openEvent = (day: number, month: number, year: number) => {
     const newUrl = `?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    goto(newUrl, { noScroll: true });
+    goto(newUrl, { reset: false });
   };
 
   const closeEvent = () => {
     const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.delete('date');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+    goto(`?${newParams.toString()}`, { replace: true, reset: false });
   };
 
   const openResultsModal = (event: ScheduledEvent) => {
     const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.append('event', event.id.toString());
-    goto(`?${newParams.toString()}`, { noScroll: true });
+    goto(`?${newParams.toString()}`, { reset: false });
   };
 
   const closeResultsModal = () => {
     const newParams = new SvelteURLSearchParams(clientSearchParams());
     newParams.delete('event');
-    goto(`?${newParams.toString()}`, { replaceState: true, noScroll: true });
+    goto(`?${newParams.toString()}`, { replace: true, reset: false });
   };
 
   const { children } = $props();

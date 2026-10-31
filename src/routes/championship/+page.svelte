@@ -1,21 +1,21 @@
 <script lang="ts">
-  import '$lib/font-sans-em';
-  import poster455 from '$lib/assets/images/poster/asean_poster_w455.avif';
-  import poster909 from '$lib/assets/images/poster/asean_poster_w909.avif';
-  import poster1364 from '$lib/assets/images/poster/asean_poster_w1364.avif';
-  import poster1818 from '$lib/assets/images/poster/asean_poster_w1818.avif';
-  import poster2727 from '$lib/assets/images/poster/asean_poster_w2727.avif';
-  import poster3636 from '$lib/assets/images/poster/asean_poster_w3636.avif';
-  import { m } from '$messages';
+  import '#lib/font-sans-em.js';
+  import poster455 from '#lib/assets/images/poster/asean_poster_w455.avif';
+  import poster909 from '#lib/assets/images/poster/asean_poster_w909.avif';
+  import poster1364 from '#lib/assets/images/poster/asean_poster_w1364.avif';
+  import poster1818 from '#lib/assets/images/poster/asean_poster_w1818.avif';
+  import poster2727 from '#lib/assets/images/poster/asean_poster_w2727.avif';
+  import poster3636 from '#lib/assets/images/poster/asean_poster_w3636.avif';
+  import { m } from '#messages';
   import { onMount, onDestroy, tick, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { createTeamsQuery } from '$lib/api/teams';
-  import { format } from '$lib/date';
+  import { createTeamsQuery } from '#lib/api/teams.js';
+  import { format } from '#lib/date.js';
   import { page } from '$app/state';
-  import { replaceState } from '$app/navigation';
-  import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$env/static/public';
-  import Button from '$lib/ui/Button/Button.svelte';
+  import { goto } from '$app/navigation';
+  import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$app/env/public';
+  import Button from '#lib/ui/Button/Button.svelte';
 
   const startDate = new Date(PUBLIC_SEASON_START_DATE);
 
@@ -100,9 +100,9 @@
                   if (teamTag) {
                     const expectedHash = `#team-${teamTag}`;
                     if (self.isActive) {
-                      replaceState(expectedHash, page.state);
+                      goto(expectedHash, { shallow: true, replace: true, state: page.state });
                     } else {
-                      replaceState('', page.state);
+                      goto('', { shallow: true, replace: true, state: page.state });
                     }
                   }
                 },

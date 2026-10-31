@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { EventResult, ScheduledEvent } from '$lib/api/types';
-  import { createEventResultsQuery } from '$lib/api/championship';
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Modal from '$lib/ui/Modal/Modal.svelte';
-  import { formatTime } from '$lib/utils/formatTime';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import type { EventResult, ScheduledEvent } from '#lib/api/types.js';
+  import { createEventResultsQuery } from '#lib/api/championship.js';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Modal from '#lib/ui/Modal/Modal.svelte';
+  import { formatTime } from '#lib/utils/formatTime.js';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
   import { page } from '$app/state';
-  import Table from '$lib/ui/Table/Table.svelte';
-  import TableRow from '$lib/ui/Table/TableRow.svelte';
-  import TableEmptyState from '$lib/ui/Table/TableEmptyState.svelte';
+  import Table from '#lib/ui/Table/Table.svelte';
+  import TableRow from '#lib/ui/Table/TableRow.svelte';
+  import TableEmptyState from '#lib/ui/Table/TableEmptyState.svelte';
 
   interface ResultsModalProps {
     event: ScheduledEvent | undefined;

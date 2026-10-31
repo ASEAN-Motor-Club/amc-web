@@ -10,10 +10,10 @@ globs:
 ## TypeScript
 
 - `const enum`, never a plain `enum`.
-- No magic numbers — name them, or take them from `$lib/tw-var` / `src/lib/data`.
+- No magic numbers — name them, or take them from `#lib/tw-var.js` / `src/lib/data`.
 - Comment only non-obvious constraints; never restate code, never leave commented-out code.
-- Banned imports (eslint `no-restricted-imports`, type imports allowed): `zod` → `zod/mini`, `date-fns` → `$lib/date`, `react`.
-- Aliases: `$lib` → `src/lib`, `$messages` → `src/lib/paraglide/messages` (the only `kit.alias`; there are no tsconfig `paths`). Import components by full path — `MarkdownText` is the only barrel.
+- Banned imports (eslint `no-restricted-imports`, type imports allowed): `zod` → `zod/mini`, `date-fns` → `#lib/date.js`, `react`.
+- Imports: `#lib/*` → `src/lib/*` and `#messages` → `src/lib/paraglide/messages.js`, both Node subpath imports in `package.json` `imports` (Kit 3 dropped `$lib` and deprecated `kit.alias`; there are no tsconfig `paths`). `#lib` specifiers carry the module extension (`#lib/date.js`, `.svelte` for components). Import components by full path — `MarkdownText` is the only barrel.
 
 ## Svelte 5
 
@@ -44,4 +44,4 @@ globs:
 ## Icons & styling
 
 - `<Icon class="i-material-symbols:…-rounded" size="sm" />` — `class` is required; inside a `Button` the button context **overrides** `size`.
-- UnoCSS Wind4 utilities; a class with no effect usually doesn't exist in the preset. Values needed from TS come from `$lib/tw-var`.
+- UnoCSS Wind4 utilities; a class with no effect usually doesn't exist in the preset. Values needed from TS come from `#lib/tw-var.js`.

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { deliveryPointsMap } from '$lib/data/deliveryPoint';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
+  import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import type { ClassValue } from 'svelte/elements';
   import { DetailsFeatures, Features, getLinkHref, getViewHref } from '../utils';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
 
   export interface DeliveryLinkProps {
     fullScreen: boolean;

@@ -1,14 +1,14 @@
 <script lang="ts">
-  import '$lib/font-sans-em';
+  import '#lib/font-sans-em.js';
   import { page } from '$app/state';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import { m } from '$messages';
-  import EventCard from '$lib/components/EventCard/EventCard.svelte';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import { m } from '#messages';
+  import EventCard from '#lib/components/EventCard/EventCard.svelte';
   import { goto } from '$app/navigation';
-  import { createEventQuery, createEventResultsQuery } from '$lib/api/championship';
-  import { PUBLIC_DISCORD_EVENT_BASE } from '$env/static/public';
-  import TextSkeleton from '$lib/ui/TextSkeleton/TextSkeleton.svelte';
+  import { createEventQuery, createEventResultsQuery } from '#lib/api/championship.js';
+  import { PUBLIC_DISCORD_EVENT_BASE } from '$app/env/public';
+  import TextSkeleton from '#lib/ui/TextSkeleton/TextSkeleton.svelte';
 
   const { showModal } = getMsgModalContext();
 

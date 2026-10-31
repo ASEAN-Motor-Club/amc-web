@@ -1,9 +1,9 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans-mono';
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Slider from '$lib/ui/Slider/Slider.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Slider from '#lib/ui/Slider/Slider.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import PlayerWaveform from './PlayerWaveform.svelte';
   import { getGlobalPlayerContext } from './GlobalPlayer/context';
   import { createFrequencyBands } from './GlobalPlayer/frequency.svelte';

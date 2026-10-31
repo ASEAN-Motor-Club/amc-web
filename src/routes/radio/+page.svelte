@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { m } from '$messages';
-  import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Player from '$lib/components/Radio/Player.svelte';
-  import MarkdownText from '$lib/ui/MarkdownText/MarkdownText.svelte';
+  import { m } from '#messages';
+  import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Player from '#lib/components/Radio/Player.svelte';
+  import MarkdownText from '#lib/ui/MarkdownText/MarkdownText.svelte';
 
-  import tireTrack480 from '$lib/assets/images/tire_track/tire_tracks_w480.avif';
-  import tireTrack960 from '$lib/assets/images/tire_track/tire_tracks_w960.avif';
-  import tireTrack1440 from '$lib/assets/images/tire_track/tire_tracks_w1440.avif';
-  import tireTrack1920 from '$lib/assets/images/tire_track/tire_tracks_w1920.avif';
-  import tireTrack2880 from '$lib/assets/images/tire_track/tire_tracks_w2880.avif';
-  import tireTrack3840 from '$lib/assets/images/tire_track/tire_tracks_w3840.avif';
-  import tireTrackP180 from '$lib/assets/images/tire_track/tire_tracks_p_w180.avif';
-  import tireTrackP360 from '$lib/assets/images/tire_track/tire_tracks_p_w360.avif';
-  import tireTrackP720 from '$lib/assets/images/tire_track/tire_tracks_p_w720.avif';
-  import tireTrackP1080 from '$lib/assets/images/tire_track/tire_tracks_p_w1080.avif';
-  import tireTrackP1440 from '$lib/assets/images/tire_track/tire_tracks_p_w1440.avif';
+  import tireTrack480 from '#lib/assets/images/tire_track/tire_tracks_w480.avif';
+  import tireTrack960 from '#lib/assets/images/tire_track/tire_tracks_w960.avif';
+  import tireTrack1440 from '#lib/assets/images/tire_track/tire_tracks_w1440.avif';
+  import tireTrack1920 from '#lib/assets/images/tire_track/tire_tracks_w1920.avif';
+  import tireTrack2880 from '#lib/assets/images/tire_track/tire_tracks_w2880.avif';
+  import tireTrack3840 from '#lib/assets/images/tire_track/tire_tracks_w3840.avif';
+  import tireTrackP180 from '#lib/assets/images/tire_track/tire_tracks_p_w180.avif';
+  import tireTrackP360 from '#lib/assets/images/tire_track/tire_tracks_p_w360.avif';
+  import tireTrackP720 from '#lib/assets/images/tire_track/tire_tracks_p_w720.avif';
+  import tireTrackP1080 from '#lib/assets/images/tire_track/tire_tracks_p_w1080.avif';
+  import tireTrackP1440 from '#lib/assets/images/tire_track/tire_tracks_p_w1440.avif';
 
   const title = $derived(
     m['radio.head']({

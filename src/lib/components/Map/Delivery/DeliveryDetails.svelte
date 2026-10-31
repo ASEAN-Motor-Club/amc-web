@@ -1,29 +1,29 @@
 <script lang="ts">
-  import { createDeliveryPointQuery } from '$lib/api/delivery';
-  import type { DeliveryJob } from '$lib/api/types';
-  import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { cargoName } from '$lib/data/cargo';
-  import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
+  import { createDeliveryPointQuery } from '#lib/api/delivery.js';
+  import type { DeliveryJob } from '#lib/api/types.js';
+  import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
+  import { cargoName } from '#lib/data/cargo.js';
+  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import {
     flattenCargoType,
     getMatchJobDestFn,
     getInventoryAmount as utilGetInventoryAmount,
-  } from '$lib/utils/delivery';
-  import type { DeliveryCargo } from '$lib/data/types';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import { m } from '$messages';
-  import { differenceInSeconds, formatDistanceStrict, min } from '$lib/date';
-  import { rtDate } from '$lib/realtimeDate.svelte';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import { getMatchJobSourceFn } from '$lib/utils/delivery';
+  } from '#lib/utils/delivery.js';
+  import type { DeliveryCargo } from '#lib/data/types.js';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import { m } from '#messages';
+  import { differenceInSeconds, formatDistanceStrict, min } from '#lib/date.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import { getMatchJobSourceFn } from '#lib/utils/delivery.js';
 
-  import { isCargoType } from '$lib/utils/delivery';
+  import { isCargoType } from '#lib/utils/delivery.js';
   import { DELIVERY_STALE_WARN_SECONDS, Features, getViewHref } from '../utils';
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
-  import Table from '$lib/ui/Table/Table.svelte';
-  import TableRow from '$lib/ui/Table/TableRow.svelte';
+  import Table from '#lib/ui/Table/Table.svelte';
+  import TableRow from '#lib/ui/Table/TableRow.svelte';
 
   interface Props {
     id: string;

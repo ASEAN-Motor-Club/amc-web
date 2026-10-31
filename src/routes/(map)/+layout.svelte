@@ -1,19 +1,19 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { createDeliveryJobsQuery } from '$lib/api/delivery';
-  import { createHousingQuery } from '$lib/api/housing';
-  import { createInterpolatedPlayerPositionsStream } from '$lib/api/playerInterpolation.svelte';
-  import type { DeliveryJob } from '$lib/api/types';
-  import Collapsible from '$lib/components/Map/Collapsible/Collapsible.svelte';
-  import { ALL_MENU } from '$lib/components/Map/Collapsible/constants';
-  import Map from '$lib/components/Map/Map/Map.svelte';
-  import { PointType, type PlayerData } from '$lib/components/Map/Map/types';
-  import type { CollapsibleType } from '$lib/components/Map/types';
-  import { vehicleKeyToString } from '$lib/api/proto/vehicleKeyUtils';
-  import { reProjectVec2 } from '$lib/ui/OlMap/utils';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import { isSm } from '$lib/utils/media.svelte';
+  import { createDeliveryJobsQuery } from '#lib/api/delivery.js';
+  import { createHousingQuery } from '#lib/api/housing.js';
+  import { createInterpolatedPlayerPositionsStream } from '#lib/api/playerInterpolation.svelte.js';
+  import type { DeliveryJob } from '#lib/api/types.js';
+  import Collapsible from '#lib/components/Map/Collapsible/Collapsible.svelte';
+  import { ALL_MENU } from '#lib/components/Map/Collapsible/constants.js';
+  import Map from '#lib/components/Map/Map/Map.svelte';
+  import { PointType, type PlayerData } from '#lib/components/Map/Map/types.js';
+  import type { CollapsibleType } from '#lib/components/Map/types.js';
+  import { vehicleKeyToString } from '#lib/api/proto/vehicleKeyUtils.js';
+  import { reProjectVec2 } from '#lib/ui/OlMap/utils.js';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { isSm } from '#lib/utils/media.svelte.js';
   import { onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
 

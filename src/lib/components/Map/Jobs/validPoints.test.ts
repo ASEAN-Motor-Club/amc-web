@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { DeliveryJob } from '$lib/api/types';
-import { deliveryPoints } from '$lib/data/deliveryPoint';
+import type { DeliveryJob } from '#lib/api/types.js';
+import { deliveryPoints } from '#lib/data/deliveryPoint.js';
 import { getJobValidPoints } from './validPoints';
 
 const baseJob: DeliveryJob = {

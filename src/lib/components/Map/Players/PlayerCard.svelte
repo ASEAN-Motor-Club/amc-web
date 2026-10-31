@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import HighlightText from '$lib/ui/HighlightText/HighlightText.svelte';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import HighlightText from '#lib/ui/HighlightText/HighlightText.svelte';
   import type { PlayerData } from '../Map/types';
-  import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
+  import vehiclesName from '#lib/assets/data/out_vehicles_name.json';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import { Features, formatLocationAtPoint, getViewHref } from '../utils';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
-  import type { MtNameRecord } from '$lib/types';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
+  import type { MtNameRecord } from '#lib/types/index.js';
 
   export interface Props {
     player?: PlayerData;

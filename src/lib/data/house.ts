@@ -1,6 +1,6 @@
-import type { Vector2, Vector3 } from '$lib/types';
-import houseJson from '$lib/assets/data/out_house.json';
-import { PUBLIC_HOUSE_PRICE_MULTIPLIER } from '$env/static/public';
+import type { Vector2, Vector3 } from '#lib/types/index.js';
+import houseJson from '#lib/assets/data/out_house.json';
+import { PUBLIC_HOUSE_PRICE_MULTIPLIER } from '$app/env/public';
 
 export interface House {
   name: string;

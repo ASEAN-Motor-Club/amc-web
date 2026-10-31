@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { HouseData } from '$lib/api/types';
-  import HouseCard from '$lib/components/Map/Housing/HouseCard.svelte';
-  import { houses } from '$lib/data/house';
-  import TextInput from '$lib/ui/TextInput/TextInput.svelte';
+  import type { HouseData } from '#lib/api/types.js';
+  import HouseCard from '#lib/components/Map/Housing/HouseCard.svelte';
+  import { houses } from '#lib/data/house.js';
+  import TextInput from '#lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
-  import Select from '$lib/ui/Select/Select.svelte';
-  import SelectOption from '$lib/ui/Select/SelectOption.svelte';
-  import CommonHead from '$lib/components/CommonHead/CommonHead.svelte';
-  import { m } from '$messages';
+  import Select from '#lib/ui/Select/Select.svelte';
+  import SelectOption from '#lib/ui/Select/SelectOption.svelte';
+  import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
+  import { m } from '#messages';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
 
   interface Props {
     houseData: HouseData | undefined;

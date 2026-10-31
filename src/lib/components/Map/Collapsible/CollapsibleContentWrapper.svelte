@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import type { Snippet } from 'svelte';
 
   interface Props {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import vehiclesName from '$lib/assets/data/out_vehicles_name.json';
+import vehiclesName from '#lib/assets/data/out_vehicles_name.json';
 import { VehicleKey } from './generated/player_positions_pb';
 import { vehicleKeyToString } from './vehicleKeyUtils';
 

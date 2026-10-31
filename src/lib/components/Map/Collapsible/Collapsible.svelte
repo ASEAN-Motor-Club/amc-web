@@ -4,14 +4,14 @@
   import { slide } from 'svelte/transition';
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { isSm } from '$lib/utils/media.svelte';
-  import { m } from '$messages';
-  import { clientSearchParams, clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { isSm } from '#lib/utils/media.svelte.js';
+  import { m } from '#messages';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
   import DeliveryDetails from '../Delivery/DeliveryDetails.svelte';
   import type { PlayerData } from '../Map/types';
   import Players from '../Players/Players.svelte';
   import Jobs from '../Jobs/Jobs.svelte';
-  import type { DeliveryJob, HouseData } from '$lib/api/types';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
   import JobDetails from '../Jobs/JobDetails.svelte';
 
   import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';

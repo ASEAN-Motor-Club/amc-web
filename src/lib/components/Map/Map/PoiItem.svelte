@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Icon from '$lib/ui/Icon/Icon.svelte';
-  import { m } from '$messages';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
+  import { m } from '#messages';
 
   export interface PoiItemProps {
     /** Tailwind border + bg color classes for the dot, e.g. 'border-yellow-950 bg-yellow-500' */

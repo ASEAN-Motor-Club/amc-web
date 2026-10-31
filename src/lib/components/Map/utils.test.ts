@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { m } from '$messages';
+import { m } from '#messages';
 
 const { mockPage, mockIsSm } = vi.hoisted(() => ({
   mockPage: { url: new URL('http://localhost/map?delivery=5&player=2&house=3&focus_index=0') },
@@ -10,7 +10,7 @@ vi.mock('$app/state', () => ({
   page: mockPage,
 }));
 
-vi.mock('$lib/utils/media.svelte', () => ({
+vi.mock('#lib/utils/media.svelte.js', () => ({
   isSm: mockIsSm,
 }));
 

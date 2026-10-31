@@ -1,5 +1,5 @@
-import { m } from '$messages';
-import type { TrackIssue } from '$lib/schema/track';
+import { m } from '#messages';
+import type { TrackIssue } from '#lib/schema/track.js';
 
 /**
  * Localize a raw zod/mini issue from {@link trackSchema} in one step. The schema is built only

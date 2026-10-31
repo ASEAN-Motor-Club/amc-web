@@ -1,4 +1,4 @@
-import tilesJson from '$lib/assets/data/tiles.json';
+import tilesJson from '#lib/assets/data/tiles.json';
 import type { RawTilesJson, TilesMeta } from './three-map-types';
 
 const raw = tilesJson as unknown as RawTilesJson;

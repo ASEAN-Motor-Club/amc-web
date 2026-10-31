@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { PUBLIC_HOUSE_PRICE_MULTIPLIER } from '$env/static/public';
+import { PUBLIC_HOUSE_PRICE_MULTIPLIER } from '$app/env/public';
 import { houses } from './house';
-import houseJson from '$lib/assets/data/out_house.json';
+import houseJson from '#lib/assets/data/out_house.json';
 
 const rawHouses = houseJson as { name: string; cost: number; coord: unknown; size: unknown }[];
 

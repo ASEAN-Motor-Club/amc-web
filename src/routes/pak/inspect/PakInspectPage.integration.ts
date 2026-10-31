@@ -1,7 +1,7 @@
 import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { m } from '$messages';
+import { m } from '#messages';
 import PakInspectPage from './+page.svelte';
 
 describe('pak inspect page', () => {

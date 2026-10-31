@@ -1,5 +1,5 @@
-import type { MtLocaleKey } from '$lib/data/types';
-import { baseLocale, localStorageKey, type Locale } from '$lib/paraglide/runtime';
+import type { MtLocaleKey } from '#lib/data/types.js';
+import { baseLocale, localStorageKey, type Locale } from '#lib/paraglide/runtime.js';
 
 export const mtLocale = $state<{ l: MtLocaleKey }>({ l: 'en' });
 

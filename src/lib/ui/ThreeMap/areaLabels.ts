@@ -11,10 +11,10 @@ import type { GroundHeights } from './groundHeights';
 import { makeTextSprite, type TextSprite, type ViewportScale } from './poi';
 import type { TileManager } from './tileManager';
 import type { TilesMeta } from './three-map-types';
-import { areaBoundaries, areaNameFontSize } from '$lib/data/area';
-import { getMtLocale } from '$lib/utils/getMtLocale';
-import type { MtNameRecord } from '$lib/types';
-import { adjustOpacity, colorBlue300, colorGray950, colorTextDark, fontSans } from '$lib/tw-var';
+import { areaBoundaries, areaNameFontSize } from '#lib/data/area.js';
+import { getMtLocale } from '#lib/utils/getMtLocale.js';
+import type { MtNameRecord } from '#lib/types/index.js';
+import { adjustOpacity, colorBlue300, colorGray950, colorTextDark, fontSans } from '#lib/tw-var.js';
 
 export interface AreaLabelLayer {
   /** Re-applies localized text (re-runs on locale changes, like OL's label effect). */

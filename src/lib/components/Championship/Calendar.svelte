@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { m } from '$messages';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import { getDateFnsLocale, format } from '$lib/date';
+  import { m } from '#messages';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import { getDateFnsLocale, format } from '#lib/date.js';
   import EventButton from './EventButton.svelte';
   import type { Day } from 'date-fns';
   import type { EventType } from './types';
   import type { SvelteMap } from 'svelte/reactivity';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
 
   interface CalendarProps {
     month: number;

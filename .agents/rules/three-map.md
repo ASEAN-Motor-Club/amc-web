@@ -113,7 +113,7 @@ don't resize the renderer anywhere else.
 
 - All dot/label styling ports 1:1 from the OL layers: `POI_CONFIG[pointType]` plus
   `POI_DELIVERY_RESIDENT/_JOB_SOURCE/_JOB_DEST` variants is the
-  single source of truth. Colors come from `$lib/tw-var` — including oklch strings, which
+  single source of truth. Colors come from `#lib/tw-var.js` — including oklch strings, which
   `THREE.Color` cannot parse: always via `makeColor`/`convertOklchToHex` (culori) from `poi.ts`.
   Each style also carries optional `hover`/`selected` color overrides, ported 1:1 from the
   OL layers' `hover`/`selected` attribute switches.

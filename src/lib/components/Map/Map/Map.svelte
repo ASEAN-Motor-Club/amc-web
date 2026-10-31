@@ -1,27 +1,27 @@
 <script lang="ts">
   import type Feature from 'ol/Feature';
   import { onMount } from 'svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
   import { PointType, PoiType, type MapSelection, type MapState, type PlayerData } from './types';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
-  import { deliveryPointsMap, type DeliveryPoint } from '$lib/data/deliveryPoint';
+  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
   import { getDeliveryLine } from './deliveryLine';
   import Search from './Search.svelte';
-  import type { DeliveryJob, HouseData } from '$lib/api/types';
-  import { createTeleportsQuery } from '$lib/api/teleport';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
+  import { createTeleportsQuery } from '#lib/api/teleport.js';
   import { mergeTeleportPoints } from './teleport';
-  import { createShortcutZonesQuery } from '$lib/api/shortcutZone';
-  import { m } from '$messages';
-  import { pinsSchema, type Pins } from '$lib/schema/pin';
+  import { createShortcutZonesQuery } from '#lib/api/shortcutZone.js';
+  import { m } from '#messages';
+  import { pinsSchema, type Pins } from '#lib/schema/pin.js';
   import * as z from 'zod/mini';
   import OlMapWrapper from './OlMapWrapper.svelte';
   import ThreeMapWrapper from './ThreeMapWrapper.svelte';
   import { goto } from '$app/navigation';
   import { getSelectionClearedParams } from '../utils';
-  import { isMouse, isSm } from '$lib/utils/media.svelte';
-  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
+  import { isMouse, isSm } from '#lib/utils/media.svelte.js';
+  import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
 
   interface Props {
     jobsData: DeliveryJob[];

@@ -2,8 +2,8 @@ import { render } from 'vitest-browser-svelte';
 import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { tick } from 'svelte';
-import { PUBLIC_RADIO_STREAM_URL } from '$env/static/public';
-import { m } from '$messages';
+import { PUBLIC_RADIO_STREAM_URL } from '$app/env/public';
+import { m } from '#messages';
 import RadioPage from './RadioPage.integration.svelte';
 
 const RECT = {

@@ -1,23 +1,23 @@
 <script lang="ts">
-  import '$lib/font-sans-em';
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Modal from '$lib/ui/Modal/Modal.svelte';
+  import '#lib/font-sans-em.js';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Modal from '#lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import NavbarItem from './NavbarItem.svelte';
   import NavbarIcon from './NavbarIcon.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
-  import { PUBLIC_DISCORD_LINK } from '$env/static/public';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
+  import { PUBLIC_DISCORD_LINK } from '$app/env/public';
   import NavbarPageLoading from './NavbarPageLoading.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import SettingsMenu from './SettingsMenu.svelte';
   import type { NavbarItem as NavbarItemType } from './types';
   import { page } from '$app/state';
-  import { pushState, replaceState } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
   import SoundBarIcon from './SoundBarIcon.svelte';
-  import { isLg } from '$lib/utils/media.svelte';
+  import { isLg } from '#lib/utils/media.svelte.js';
 
   const playerContext = getGlobalPlayerContext();
 
@@ -93,9 +93,16 @@
 
   const setMenu = (value: boolean) => {
     if (value) {
-      pushState('', { ...page.state, navbarMenuOpen: true });
+      goto('', {
+        shallow: true,
+        state: { ...page.state, navbarMenuOpen: true },
+      });
     } else {
-      replaceState('', { ...page.state, navbarMenuOpen: false });
+      goto('', {
+        shallow: true,
+        replace: true,
+        state: { ...page.state, navbarMenuOpen: false },
+      });
     }
   };
 </script>

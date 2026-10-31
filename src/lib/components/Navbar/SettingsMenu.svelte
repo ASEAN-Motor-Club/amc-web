@@ -1,21 +1,21 @@
 <script lang="ts">
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
-  import Divider from '$lib/ui/Divider/Divider.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
-  import Select from '$lib/ui/Select/Select.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
+  import Divider from '#lib/ui/Divider/Divider.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
+  import Select from '#lib/ui/Select/Select.svelte';
   import { onMount } from 'svelte';
-  import { m } from '$messages';
-  import SelectOption from '$lib/ui/Select/SelectOption.svelte';
+  import { m } from '#messages';
+  import SelectOption from '#lib/ui/Select/SelectOption.svelte';
   import { mtLocale, setLocale } from '../Locale/locale.svelte';
-  import type { MtLocaleKey } from '$lib/data/types';
-  import { getLocale, type Locale } from '$lib/paraglide/runtime';
-  import ClickAwayBlock from '$lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
+  import type { MtLocaleKey } from '#lib/data/types.js';
+  import { getLocale, type Locale } from '#lib/paraglide/runtime.js';
+  import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import { fade } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { page } from '$app/state';
-  import { pushState, replaceState } from '$app/navigation';
-  import TruncateText from '$lib/ui/TruncateText/TruncateText.svelte';
+  import { goto } from '$app/navigation';
+  import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
 
   const mtLocales = [
     'cs',
@@ -71,9 +71,16 @@
 
   const setMenu = (value: boolean) => {
     if (value) {
-      pushState('', { ...page.state, settingMenuOpen: true });
+      goto('', {
+        shallow: true,
+        state: { ...page.state, settingMenuOpen: true },
+      });
     } else {
-      replaceState('', { ...page.state, settingMenuOpen: false });
+      goto('', {
+        shallow: true,
+        replace: true,
+        state: { ...page.state, settingMenuOpen: false },
+      });
     }
   };
 

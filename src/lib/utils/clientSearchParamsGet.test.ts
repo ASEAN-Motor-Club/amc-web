@@ -43,8 +43,12 @@ describe('clientSearchParamsGet', () => {
 });
 
 describe('clientSearchParams', () => {
-  it('returns the live URLSearchParams', () => {
-    const params = clientSearchParams();
-    expect(params.get('delivery')).toBe('5');
+  it('returns the current query string without the leading ?', () => {
+    expect(clientSearchParams()).toBe('delivery=5&menu=jobs%2F1');
+  });
+
+  it('returns an empty string outside the browser', () => {
+    vi.unstubAllGlobals();
+    expect(clientSearchParams()).toBe('');
   });
 });

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { localStorageKey } from '$lib/paraglide/runtime';
+import { localStorageKey } from '#lib/paraglide/runtime.js';
 import { mtLocale, setLocale, siteLocale } from './locale.svelte';
 
 describe('locale', () => {

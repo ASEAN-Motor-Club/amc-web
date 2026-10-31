@@ -2,7 +2,7 @@
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import EditorOlMap from './EditorOlMap.svelte';
   import type { TrackPoint, SelectedTrackPoint } from './EditorOlMap.svelte';
-  import type { Vector2 } from '$lib/types';
+  import type { Vector2 } from '#lib/types/index.js';
 
   const { Story } = defineMeta({
     title: 'Ui/EditorOlMap',

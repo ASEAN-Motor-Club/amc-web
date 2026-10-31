@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Modal from '$lib/ui/Modal/Modal.svelte';
-  import Card from '$lib/ui/Card/Card.svelte';
+  import Modal from '#lib/ui/Modal/Modal.svelte';
+  import Card from '#lib/ui/Card/Card.svelte';
   import { setMsgModalContext, type ModalParams } from './context';
   import type { Snippet } from 'svelte';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import { m } from '$messages';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import { m } from '#messages';
 
   interface Props {
     children: Snippet;

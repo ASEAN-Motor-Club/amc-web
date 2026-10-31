@@ -1,4 +1,4 @@
-import type { Vector2 } from '$lib/types';
+import type { Vector2 } from '#lib/types/index.js';
 
 export const MAP_REAL_X_LEFT = -1280000;
 export const MAP_REAL_Y_TOP = -320000;

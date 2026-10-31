@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { m } from '$messages';
+  import { m } from '#messages';
 
   interface Props {
     rows: string[];

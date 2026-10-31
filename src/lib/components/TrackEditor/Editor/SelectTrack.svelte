@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { m } from '$messages';
-  import Button from '$lib/ui/Button/Button.svelte';
+  import { m } from '#messages';
+  import Button from '#lib/ui/Button/Button.svelte';
   import { getAbortSignal, onMount } from 'svelte';
-  import { trackSchema, type Track } from '$lib/schema/track';
+  import { trackSchema, type Track } from '#lib/schema/track.js';
   import { formatTrackError } from '../utils/formatError';
   import type { ChangeEventHandler } from 'svelte/elements';
-  import { getMsgModalContext } from '$lib/components/MsgModal/context';
-  import Modal from '$lib/ui/Modal/Modal.svelte';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
+  import Modal from '#lib/ui/Modal/Modal.svelte';
   import { noop } from 'es-toolkit';
-  import { clientSearchParamsGet } from '$lib/utils/clientSearchParamsGet';
+  import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
 
   export interface SelectTrackProps {
     onSelect: (trackData: Track) => void;

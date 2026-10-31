@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Vector2 } from '$lib/types';
+  import type { Vector2 } from '#lib/types/index.js';
   import type { ClassValue } from 'svelte/elements';
   import OlMap, { type MapViewState } from '../OlMap/OlMap.svelte';
   import VectorSource from 'ol/source/Vector';
@@ -23,7 +23,7 @@
     adjustOpacity,
     colorGray950,
     colorTextDark,
-  } from '$lib/tw-var';
+  } from '#lib/tw-var.js';
   import type { MapBrowserEvent } from 'ol';
   import { reProjectPointInverse, reProjectVec2 } from '../OlMap/utils';
   import Translate from 'ol/interaction/Translate';

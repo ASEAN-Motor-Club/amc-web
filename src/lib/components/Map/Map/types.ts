@@ -1,4 +1,4 @@
-import type { Vector2, Vector3 } from '$lib/types';
+import type { Vector2, Vector3 } from '#lib/types/index.js';
 
 export const enum PointType {
   Delivery,

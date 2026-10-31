@@ -1,5 +1,5 @@
 ---
-description: Track editor and its Monaco JSON view — the code view is a view not a modal, three dirty flags, quaternion rotations, the pinned monaco version and its single import choke point.
+description: Track editor and its Monaco JSON view — the code view is a view not a modal, three dirty flags, quaternion rotations, monaco bump hazards and its single import choke point.
 globs:
   - src/lib/components/TrackEditor/**
   - src/lib/ui/CodeEditor/**
@@ -7,7 +7,7 @@ globs:
 
 # Track editor
 
-`Editor/Editor.svelte` swaps the map for the code editor in place, driven by the `?view=` param and written with `goto('?…', { replaceState: true, noScroll: true })`. `replaceState` keeps view switching out of the history stack. An earlier `pushState` modal went badly (`beforeNavigate` doesn't fire for shallow routing, and the close guard re-ran on every keystroke) — don't rebuild it.
+`Editor/Editor.svelte` swaps the map for the code editor in place, driven by the `?view=` param and written with `goto('?…', { replace: true, reset: false })`. `replace` keeps view switching out of the history stack. An earlier shallow-routing modal went badly (the close guard re-ran on every keystroke) — don't rebuild it.
 
 - Exactly one of the map and the editor is mounted, so the viewport is carried by hand: capture `getViewState()` before switching, pass it back as `initialView`, and keep the `untrack` around `zoomFit` or it refits on every edit.
 - `beforeNavigate` must ignore same-pathname navigations, or every view switch raises the leave guard.
@@ -27,7 +27,7 @@ Each buffer commits only on its own Save and confirms before being abandoned. `l
 
 ## Rotations
 
-Waypoint rotations are `{x, y, z, w}` quaternions. Use the `quaternion` package through `TrackEditor/utils/` and always convert with the shared `WP_EULER_ORDER`; never drop to Euler angles for intermediate math. Vector and normalization helpers live in `$lib/utils/math/`.
+Waypoint rotations are `{x, y, z, w}` quaternions. Use the `quaternion` package through `TrackEditor/utils/` and always convert with the shared `WP_EULER_ORDER`; never drop to Euler angles for intermediate math. Vector and normalization helpers live in `#lib/utils/math/`.
 
 ## 3D view
 
@@ -69,19 +69,20 @@ in and restored on the way out.
 
 ## Monaco
 
-**Pinned to 0.54.0 — do not bump blindly.** 0.55 moved `languages.json` off the `monaco` namespace; 0.56 added an `exports` map that breaks every `monaco-editor/esm/vs/…` specifier and deleted `editor.all.js`. Either bump means rewriting `src/lib/ui/CodeEditor/monaco.ts`.
+Bumps have repeatedly broken the import paths — read the changelog and rerun the manual check below on every bump. 0.55 moved `languages.json` off the `monaco` namespace; 0.56 added an `exports` map that prepends `esm/vs/` itself (specifiers must not repeat it) and moved `jsonDefaults` into the json feature register, which `monaco.ts` re-exports.
 
 `monaco.ts` is the single import choke point. A second specifier creates a second standalone-API singleton and only one carries the json contribution, so diagnostics die silently.
 
 ```ts
-import 'monaco-editor/esm/vs/editor/editor.all.js';
-import 'monaco-editor/esm/vs/language/json/monaco.contribution.js';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
+import 'monaco-editor/editor/editor.main.js';
+import 'monaco-editor/language/json/monaco.contribution.js';
+import * as monaco from 'monaco-editor/editor/editor.api.js';
+export { jsonDefaults } from 'monaco-editor/languages/features/json/register.js';
 ```
 
-- Keep the `.js` extensions, and keep `editor.all.js` — `editor.api.js` alone registers zero contributions (no suggest, no hover, empty codicons).
+- Keep the `.js` extensions, and keep `editor.main.js` — `editor.api.js` alone registers zero contributions (no suggest, no hover, empty codicons).
 - Handle both worker labels: `json` → JsonWorker, everything else → EditorWorker.
-- If you ever switch `optimizeDeps.exclude` to `include`, list all three specifiers or you get two singletons again.
+- If you ever switch `optimizeDeps.exclude` to `include`, list every specifier or you get two singletons again.
 
 ### Schema validation
 

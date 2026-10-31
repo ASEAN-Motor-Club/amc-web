@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import type { ClassValue } from 'svelte/elements';
 
   interface Props {

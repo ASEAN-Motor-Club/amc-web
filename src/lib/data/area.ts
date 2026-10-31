@@ -1,6 +1,6 @@
-import type { MtNameRecord, Vector2 } from '$lib/types';
-import areaVolume from '$lib/assets/data/out_area_volume.json';
-import { MAP_REAL_SIZE, MAP_REAL_X_LEFT, MAP_REAL_Y_TOP } from '$lib/ui/OlMap/utils';
+import type { MtNameRecord, Vector2 } from '#lib/types/index.js';
+import areaVolume from '#lib/assets/data/out_area_volume.json';
+import { MAP_REAL_SIZE, MAP_REAL_X_LEFT, MAP_REAL_Y_TOP } from '#lib/ui/OlMap/utils.js';
 
 const flagOrder = {
   '': 0,

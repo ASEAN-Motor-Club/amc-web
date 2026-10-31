@@ -2,33 +2,33 @@
   import { onMount } from 'svelte';
   import * as THREE from 'three';
   import Feature from 'ol/Feature';
-  import type { DeliveryJob, HouseData } from '$lib/api/types';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
   import {
     PointType,
     type MapSelection,
     type MapState,
     type PlayerData,
     type TeleportPoint,
-  } from '$lib/components/Map/Map/types';
-  import { getMtLocale } from '$lib/utils/getMtLocale';
+  } from '#lib/components/Map/Map/types.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.js';
   import {
     deliveryPoints as deliveryPointsList,
     type DeliveryPoint,
-  } from '$lib/data/deliveryPoint';
-  import { areaBoundaries } from '$lib/data/area';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '$lib/utils/delivery';
-  import { houses as housesList } from '$lib/data/house';
-  import type { House } from '$lib/data/house';
-  import type { Pins } from '$lib/schema/pin';
-  import { createThreeMapScene, type ThreeMapScene } from '$lib/ui/ThreeMap/scene';
-  import { ZOOM_BUTTON_LOG_STEP } from '$lib/ui/ThreeMap/constants';
-  import { PoiState } from '$lib/ui/ThreeMap/poi';
-  import type { PoiMarker, PoiInput } from '$lib/ui/ThreeMap/poiManager';
-  import { m } from '$messages';
-  import { reProjectPointInverse } from '$lib/ui/OlMap/utils';
-  import type { Vector3 } from '$lib/types';
-  import Button from '$lib/ui/Button/Button.svelte';
-  import Icon from '$lib/ui/Icon/Icon.svelte';
+  } from '#lib/data/deliveryPoint.js';
+  import { areaBoundaries } from '#lib/data/area.js';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
+  import { houses as housesList } from '#lib/data/house.js';
+  import type { House } from '#lib/data/house.js';
+  import type { Pins } from '#lib/schema/pin.js';
+  import { createThreeMapScene, type ThreeMapScene } from '#lib/ui/ThreeMap/scene.js';
+  import { ZOOM_BUTTON_LOG_STEP } from '#lib/ui/ThreeMap/constants.js';
+  import { PoiState } from '#lib/ui/ThreeMap/poi.js';
+  import type { PoiMarker, PoiInput } from '#lib/ui/ThreeMap/poiManager.js';
+  import { m } from '#messages';
+  import { reProjectPointInverse } from '#lib/ui/OlMap/utils.js';
+  import type { Vector3 } from '#lib/types/index.js';
+  import Button from '#lib/ui/Button/Button.svelte';
+  import Icon from '#lib/ui/Icon/Icon.svelte';
   import clsx from 'clsx';
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';

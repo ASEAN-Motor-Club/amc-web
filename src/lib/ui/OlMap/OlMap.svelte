@@ -12,13 +12,13 @@
   import { MAP_REAL_SIZE } from './utils';
   import type { MapBrowserEvent, MapEvent } from 'ol';
   import { defaults } from 'ol/interaction';
-  import { defaultTransitionDurationMs } from '$lib/tw-var';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
   import { prefersReducedMotion } from 'svelte/motion';
   import type { SimpleGeometry } from 'ol/geom';
   import type { Coordinate } from 'ol/coordinate';
   import Button from '../Button/Button.svelte';
   import Icon from '../Icon/Icon.svelte';
-  import { isSm } from '$lib/utils/media.svelte';
+  import { isSm } from '#lib/utils/media.svelte.js';
 
   let map: Map;
 
@@ -168,7 +168,9 @@
       }
     };
 
-    map.getViewport().addEventListener('contextmenu', handleContextMenu);
+    // Typed optional since ol 10.11 (absent only in offscreen-canvas workers).
+    const viewport = map.getViewport();
+    viewport?.addEventListener('contextmenu', handleContextMenu);
 
     const handlePointerDrag = (e: MapBrowserEvent) => {
       onPointerDrag?.(e);
@@ -194,7 +196,7 @@
       map.un('pointerdrag', handlePointerDrag);
       map.un('movestart', handleMoveStart);
       map.un('moveend', handleMoveEnd);
-      map.getViewport().removeEventListener('contextmenu', handleContextMenu);
+      viewport?.removeEventListener('contextmenu', handleContextMenu);
       map.setTarget();
     };
   });

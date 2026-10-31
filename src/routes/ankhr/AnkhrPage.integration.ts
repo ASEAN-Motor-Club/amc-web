@@ -45,7 +45,7 @@ describe('ankhr page', () => {
     expect(output.container.querySelectorAll('blockquote')).toHaveLength(3);
     for (const author of ['A Fellow Driver', 'A Convoy Navigator', 'A Young Apprentice']) {
       // The footer is the only element carrying the em-dash signature.
-      await expect.element(page.getByText(`— ${author},`)).toBeVisible();
+      await expect.element(page.getByText(`— ${author},`, { exact: false })).toBeVisible();
     }
   });
 

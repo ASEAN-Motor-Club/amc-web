@@ -1,4 +1,4 @@
-import type { Waypoint } from '$lib/schema/track';
+import type { Waypoint } from '#lib/schema/track.js';
 import { WP_EULER_ORDER } from '.';
 import { averageRotation } from './average';
 import Quat from 'quaternion';

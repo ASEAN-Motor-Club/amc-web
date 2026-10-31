@@ -1,5 +1,5 @@
-import type { DeliveryCargo, DeliveryCargoKey } from '$lib/data/types';
-import type { Track } from '$lib/schema/track';
+import type { DeliveryCargo, DeliveryCargoKey } from '#lib/data/types.js';
+import type { Track } from '#lib/schema/track.js';
 import type { Vector3 } from '../types';
 
 export type HouseData = Record<string, House>;

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import Editor from '$lib/components/TrackEditor/Editor/Editor.svelte';
+  import Editor from '#lib/components/TrackEditor/Editor/Editor.svelte';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { m } from '$messages';
-  import { trackData } from '$lib/components/TrackEditor/trackData.svelte';
-  import { clientSearchParams } from '$lib/utils/clientSearchParamsGet';
+  import { m } from '#messages';
+  import { trackData } from '#lib/components/TrackEditor/trackData.svelte.js';
+  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.js';
 
   onMount(() => {
     if (!trackData.value) {
-      const params = clientSearchParams().toString();
-      goto('/track' + (params && `?${params}`), { replaceState: true });
+      const params = clientSearchParams();
+      goto('/track' + (params && `?${params}`), { replace: true });
     }
   });
 
