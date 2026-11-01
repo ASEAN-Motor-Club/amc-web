@@ -1,5 +1,5 @@
 // Site-wide smoke test against the static build (`pnpm build && pnpm test:e2e`): SEO head tags,
-// robots/sitemap, axe-core accessibility and keyboard reachability on every sitemap route.
+// robots/sitemap/llms.txt/ARD manifest, axe-core accessibility and keyboard reachability on every sitemap route.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { chromium, type Browser } from 'playwright';
 import { siteOrigin, sitemapPaths } from '#lib/data/site.ts';
@@ -47,6 +47,19 @@ describe('SEO', () => {
       (match) => match[1],
     );
     expect(locs).toEqual(sitemapPaths.map((path) => new URL(path, siteOrigin).href));
+  });
+
+  it('llms.txt is markdown linking every indexable page', () => {
+    const llms = readBuildFile('llms.txt');
+    expect(llms).toMatch(/^# \S/);
+    for (const path of sitemapPaths.filter((path) => path !== '/')) {
+      expect(llms).toContain(`](${new URL(path, siteOrigin).href})`);
+    }
+  });
+
+  it('/.well-known/ard.json is an ARD manifest with an entries array', () => {
+    const manifest: unknown = JSON.parse(readBuildFile('.well-known/ard.json'));
+    expect(manifest).toHaveProperty('entries', expect.any(Array));
   });
 
   it.each(sitemapPaths)('%s is prerendered with complete head tags', (path) => {
