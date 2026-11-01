@@ -16,6 +16,8 @@
 
   const { date, onClose, events, openResultsModal }: EventModalProps = $props();
 
+  const titleId = $props.id();
+
   const eventsToday = $derived.by(() => {
     if (!date) return [];
 
@@ -31,9 +33,9 @@
   const formattedDate = $derived(date ? format(date, m['format.dateFull']()) : '');
 </script>
 
-<Modal open={!!date} {onClose}>
+<Modal open={!!date} {onClose} aria-labelledby={titleId}>
   <Card class="flex max-h-full w-150 max-w-full flex-col p-5">
-    <h1 class="pb-5 text-2xl font-bold tracking-tight">
+    <h1 id={titleId} class="pb-5 text-2xl font-bold tracking-tight">
       {m['championship.event.title']({ date: formattedDate })}
     </h1>
     <div

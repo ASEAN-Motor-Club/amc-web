@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { m } from '#messages';
   import Calendar from './Calendar.svelte';
   import { addMilliseconds, eachDayOfInterval, format } from '#lib/date.js';
   import Button from '#lib/ui/Button/Button.svelte';
@@ -52,7 +53,13 @@
 </script>
 
 <div class="flex items-center gap-8">
-  <Button icon round class="hidden sm:flex" onClick={prevMonth}>
+  <Button
+    icon
+    round
+    class="hidden sm:flex"
+    onClick={prevMonth}
+    aria-label={m['a11y.previous_month']()}
+  >
     <Icon class="i-material-symbols:arrow-left-rounded" />
   </Button>
   <Calendar
@@ -63,7 +70,7 @@
     {prevMonth}
     {nextMonth}
   />
-  <Button icon round class="hidden sm:flex" onClick={nextMonth}>
+  <Button icon round class="hidden sm:flex" onClick={nextMonth} aria-label={m['a11y.next_month']()}>
     <Icon class="i-material-symbols:arrow-right-rounded" />
   </Button>
 </div>

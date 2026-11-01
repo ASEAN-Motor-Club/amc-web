@@ -159,7 +159,8 @@
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="og:title" content={title} />
+  <meta property="og:title" content={title} />
+  <meta name="twitter:title" content={title} />
 </svelte:head>
 
 <div class="flex h-full w-full p-8">

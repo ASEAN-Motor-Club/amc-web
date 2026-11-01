@@ -61,6 +61,8 @@
      * The id of the input
      */
     id?: string;
+    /** Accessible name when no InputGroup label is associated with the select */
+    'aria-label'?: string;
   }
 </script>
 
@@ -96,6 +98,7 @@
     inputClass,
     menuClass,
     onChange,
+    'aria-label': ariaLabel,
   }: SelectProps<T> = $props();
 
   const uid = Math.random().toString(36).substring(2, 15);
@@ -142,8 +145,12 @@
   const uniqueOpen = $derived(open && activeSelect.a === uid);
 </script>
 
-<div class={twMerge('relative flex w-full items-center', clsx(propsClass))}>
-  <button class="group w-full cursor-pointer" onclick={handleInputClick}>
+<div class={twMerge('group relative flex w-full items-center', clsx(propsClass))}>
+  <!-- The input is display-only: hidden from AT and covered by the trigger button rather than nested
+       inside it, since a focusable control inside a button is announced inconsistently. The button
+       carries the id so an InputGroup <label for> names it. -->
+  <!-- TextInput's root is flex-none; this wrapper keeps it at the select's width. -->
+  <div class="w-full min-w-0">
     <TextInput
       class={twMerge('pointer-events-none w-full pr-10', clsx(inputClass))}
       type="text"
@@ -155,9 +162,23 @@
       {error}
       {placeholder}
       {name}
-      {id}
       {disabled}
+      additionalAttributes={{ tabindex: -1, readonly: true, 'aria-hidden': 'true' }}
     />
+  </div>
+  <button
+    type="button"
+    class={twMerge(
+      'absolute inset-0 cursor-pointer outline-offset-2',
+      round ? 'rounded-full' : 'rounded-md',
+    )}
+    onclick={handleInputClick}
+    id={id || undefined}
+    aria-label={ariaLabel}
+    aria-expanded={uniqueOpen}
+    {disabled}
+  >
+    <span class="sr-only">{displayedValue || placeholder}</span>
   </button>
 
   <Icon

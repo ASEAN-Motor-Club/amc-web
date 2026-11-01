@@ -60,6 +60,23 @@
     closeSubMenu();
   };
 
+  // Keyboard users reach the sub menu by tabbing into the item; close it once focus leaves.
+  const handleFocusIn = () => {
+    closeSubMenu.cancel();
+    subMenu = true;
+  };
+
+  const handleFocusOut = (event: FocusEvent & { currentTarget: HTMLLIElement }) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      closeSubMenu();
+    }
+  };
+
+  const toggleSubMenu = () => {
+    closeSubMenu.cancel();
+    subMenu = !subMenu;
+  };
+
   onDestroy(() => {
     closeSubMenu.flush();
   });
@@ -68,24 +85,46 @@
     'group flex items-center gap-1',
     !mobile && '-mx-3 px-3 transition-colors hover:bg-gray-500/10',
   ]);
+
+  const subMenuId = $props.id();
 </script>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class={mobile ? 'contents' : 'relative'} onmouseleave={handleMouseLeave}>
-  <a
-    {href}
-    class={['h-full', baseLinkClass, mobile && !href && 'pointer-events-none opacity-65']}
-    onclick={onClick}
-    onmouseenter={handleMouseEnter}
-    target={external ? '_blank' : undefined}
-    rel={external ? 'noreferrer' : undefined}
-  >
-    {@render icon(pathMatch(href, external, exact))}
-    <NavbarText {href} {label} {exact} {external} {textClass} />
-  </a>
+<li
+  class={mobile ? 'contents' : 'relative'}
+  onmouseleave={handleMouseLeave}
+  onfocusin={mobile ? undefined : handleFocusIn}
+  onfocusout={mobile ? undefined : handleFocusOut}
+>
+  {#if href || mobile}
+    <a
+      {href}
+      class={['h-full', baseLinkClass, mobile && !href && 'pointer-events-none opacity-80']}
+      onclick={onClick}
+      onmouseenter={handleMouseEnter}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      aria-current={pathMatch(href, external, exact) && exact ? 'page' : undefined}
+    >
+      {@render icon(pathMatch(href, external, exact))}
+      <NavbarText {href} {label} {exact} {external} {textClass} />
+    </a>
+  {:else}
+    <button
+      type="button"
+      class={['h-full cursor-pointer', baseLinkClass]}
+      onclick={toggleSubMenu}
+      onmouseenter={handleMouseEnter}
+      aria-expanded={subMenu}
+      aria-controls={subItems ? subMenuId : undefined}
+    >
+      {@render icon(pathMatch(href, external, exact))}
+      <NavbarText {href} {label} {exact} {external} {textClass} />
+    </button>
+  {/if}
   {#if subItems}
     {#if subMenu || mobile}
-      <div
+      <ul
+        id={subMenuId}
         class={mobile
           ? 'contents'
           : 'bg-background-200 dark:bg-background-900 absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full px-3 shadow-gray-950/10'}
@@ -94,25 +133,30 @@
         }}
       >
         {#each subItems as item (label + item.label)}
-          <a
-            href={item.href}
-            class={[baseLinkClass, mobile ? 'pl-4' : 'py-2']}
-            onclick={onClick}
-            onmouseenter={() => handleSubMenuMouseEnter(item.onMouseEnter)}
-            target={item.external ? '_blank' : undefined}
-            rel={item.external ? 'noreferrer' : undefined}
-          >
-            {@render item.icon(pathMatch(item.href, item.external, item.exact))}
-            <NavbarText
+          <li class="contents">
+            <a
               href={item.href}
-              label={item.label}
-              exact={item.exact}
-              external={item.external}
-              textClass={item.textClass}
-            />
-          </a>
+              class={[baseLinkClass, mobile ? 'pl-4' : 'py-2']}
+              onclick={onClick}
+              onmouseenter={() => handleSubMenuMouseEnter(item.onMouseEnter)}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noreferrer' : undefined}
+              aria-current={pathMatch(item.href, item.external, item.exact) && (item.exact ?? true)
+                ? 'page'
+                : undefined}
+            >
+              {@render item.icon(pathMatch(item.href, item.external, item.exact))}
+              <NavbarText
+                href={item.href}
+                label={item.label}
+                exact={item.exact}
+                external={item.external}
+                textClass={item.textClass}
+              />
+            </a>
+          </li>
         {/each}
-      </div>
+      </ul>
     {/if}
   {/if}
-</div>
+</li>

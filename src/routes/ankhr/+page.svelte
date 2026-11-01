@@ -60,7 +60,8 @@
 
 <svelte:head>
   <title>AnkhR — {epithet}</title>
-  <meta name="og:title" content="AnkhR — {epithet}" />
+  <meta property="og:title" content="AnkhR — {epithet}" />
+  <meta name="twitter:title" content="AnkhR — {epithet}" />
   <meta
     name="description"
     content="A tribute to the legendary AnkhR, the greatest driver the ASEAN Motor Club has ever known — and he's still out there."

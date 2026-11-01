@@ -3,6 +3,7 @@ import { page } from 'vitest/browser';
 import { describe, expect, it, vi } from 'vitest';
 import { tick } from 'svelte';
 import Harness from './Modal.test.svelte';
+import { m } from '#messages';
 
 describe('Modal', () => {
   it('renders nothing while closed', async () => {
@@ -18,8 +19,20 @@ describe('Modal', () => {
   it('calls onClose when the backdrop is clicked', async () => {
     const onClose = vi.fn();
     await render(Harness, { open: true, onClose });
-    document.querySelector<HTMLButtonElement>('[aria-label="Close modal"]')?.click();
+    document.querySelector<HTMLButtonElement>(`[aria-label="${m['action.close']()}"]`)?.click();
     expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it('calls onClose when Escape is pressed', async () => {
+    const onClose = vi.fn();
+    await render(Harness, { open: true, onClose });
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it('exposes itself as a modal dialog', async () => {
+    await render(Harness, { open: true });
+    await expect.element(page.getByRole('dialog')).toHaveAttribute('aria-modal', 'true');
   });
 
   it('removes the content again once closed', async () => {

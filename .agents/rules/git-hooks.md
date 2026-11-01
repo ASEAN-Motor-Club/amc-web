@@ -10,6 +10,6 @@ One piped pre-commit hook, gated on staged paths (`lefthook.yml` is the source o
 - `pnpm lint` only _checks_ formatting, so run `pnpm format` first or the commit fails.
 - Codegen refreshes generated files, but you still have to stage whatever changed.
 - Files outside both globs (notably `messages/*.json`) trigger nothing — regenerate by hand.
-- CI mirrors both jobs, so a green local run predicts CI.
+- CI mirrors both jobs, and additionally builds the site and runs `pnpm test:e2e` (a11y + SEO smoke suite), which pre-commit does not — run `pnpm build && pnpm test:e2e` yourself after UI or head-tag changes.
 
 Pre-flight: `pnpm format && pnpm lint && pnpm check && pnpm test`.

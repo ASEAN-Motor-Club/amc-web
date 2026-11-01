@@ -20,6 +20,26 @@
     "delete": "Delete",
     "cancel": "Cancel"
   },
+  "a11y": {
+    "skip_to_content": "Skip to main content",
+    "main_navigation": "Main navigation",
+    "open_menu": "Open menu",
+    "settings": "Settings",
+    "previous_month": "Previous month",
+    "next_month": "Next month",
+    "view_on_map": "View on map",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "clear": "Clear",
+    "loading": "Loading",
+    "sort_by": "Sort by",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "picture_in_picture": "Picture-in-picture",
+    "switch_to_3d": "Switch to 3D map",
+    "switch_to_2d": "Switch to 2D map",
+    "volume": "Volume"
+  },
   "or": "or",
   "unknown": "Unknown",
   "track_editor": {

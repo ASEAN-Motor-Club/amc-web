@@ -103,6 +103,7 @@
     <Select
       value={sortValue}
       name="sort"
+      aria-label={m['a11y.sort_by']()}
       onChange={handleSortChange}
       class={['w-full flex-shrink-0', fullScreen && 'sm:max-w-45']}
     >

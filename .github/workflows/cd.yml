@@ -26,6 +26,10 @@ jobs:
   check:
     uses: ./.github/workflows/check.yml
 
+  e2e:
+    needs: wasm
+    uses: ./.github/workflows/e2e.yml
+
   build:
     name: 🏗️ Build
     needs: wasm
@@ -69,7 +73,7 @@ jobs:
 
   deploy:
     name: 🚀 Deploy
-    needs: [check, build]
+    needs: [check, e2e, build]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:

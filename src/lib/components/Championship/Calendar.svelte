@@ -74,10 +74,26 @@
       {format(new Date(year, month - 1, 1), m['format.calendarFormat']())}
     </h4>
     <div class="flex gap-3">
-      <Button icon round class="sm:hidden" onClick={prevMonth} size="sm" variant="contained-light">
+      <Button
+        icon
+        round
+        class="sm:hidden"
+        onClick={prevMonth}
+        size="sm"
+        variant="contained-light"
+        aria-label={m['a11y.previous_month']()}
+      >
         <Icon class="i-material-symbols:arrow-left-rounded" />
       </Button>
-      <Button icon round class="sm:hidden" onClick={nextMonth} size="sm" variant="contained-light">
+      <Button
+        icon
+        round
+        class="sm:hidden"
+        onClick={nextMonth}
+        size="sm"
+        variant="contained-light"
+        aria-label={m['a11y.next_month']()}
+      >
         <Icon class="i-material-symbols:arrow-right-rounded" />
       </Button>
     </div>

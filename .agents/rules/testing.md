@@ -1,9 +1,11 @@
 ---
-description: Vitest setup — the comp (browser components), inte (browser pages) and unit (node) projects, the file name that picks one, runes and harnesses in tests, how to run them.
+description: Vitest setup — the comp (browser components), inte (browser pages) and unit (node) projects, the file name that picks one, runes and harnesses in tests, the separate e2e smoke suite over the build, how to run them.
 globs:
   - src/**/*.test.ts
   - src/**/*.spec.ts
+  - src/**/*.e2e.ts
   - vitest.config.ts
+  - vitest.e2e.config.ts
 ---
 
 # Testing
@@ -44,6 +46,10 @@ import { createRawSnippet } from 'svelte';
 - `src/test/browser.setup.ts` seeds `globalThis.__sveltekit_dev`: Kit's dev `$app/env/public` module reads it, and only the Kit dev server injects it.
 - Fake `requestAnimationFrame`/`ResizeObserver`/`matchMedia` via `vi.stubGlobal`; restore with `vi.unstubAllGlobals()` in `afterEach`.
 - Test observable behavior (roles, attributes, callbacks, DOM state), never tailwind class strings.
+
+## E2E smoke suite (separate config)
+
+`src/**/*.e2e.ts` run under `vitest.e2e.config.ts` (node environment, Playwright driven directly), **not** in `pnpm test` or pre-commit, because they need the static build: `pnpm build && pnpm test:e2e`. `src/test/e2e.ts` serves `build/` with the SPA fallback, opens pages with every off-origin request aborted (the live API, streams and Discord widget would make results network- and data-dependent) and wraps axe-core and a Tab walk. CI runs it as the `e2e` job, which gates deploy. Use it for site-wide guarantees (a11y, SEO, head tags); page behaviour still belongs in `*.integration.ts`.
 
 ## Running
 

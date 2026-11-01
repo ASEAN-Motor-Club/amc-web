@@ -43,6 +43,21 @@ describe('TextInput', () => {
     expect(onClear).toHaveBeenCalledOnce();
   });
 
+  it('uses the placeholder as its accessible name when nothing else labels it', async () => {
+    await render(TextInput, { name: 'q', value: 'typed', placeholder: 'Search' });
+    await expect.element(page.getByRole('textbox', { name: 'Search' })).toBeVisible();
+  });
+
+  it('lets an explicit aria-label override the placeholder name', async () => {
+    await render(TextInput, {
+      name: 'q',
+      value: '',
+      placeholder: 'Search',
+      additionalAttributes: { 'aria-label': 'Find a house' },
+    });
+    await expect.element(page.getByRole('textbox', { name: 'Find a house' })).toBeVisible();
+  });
+
   it('disables the input when disabled', async () => {
     await render(TextInput, { name: 'q', value: '', disabled: true });
     await expect.element(page.getByRole('textbox')).toHaveAttribute('disabled');

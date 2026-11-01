@@ -20,6 +20,26 @@
     "delete": "ลบ",
     "cancel": "ยกเลิก"
   },
+  "a11y": {
+    "skip_to_content": "ข้ามไปยังเนื้อหาหลัก",
+    "main_navigation": "เมนูนำทางหลัก",
+    "open_menu": "เปิดเมนู",
+    "settings": "การตั้งค่า",
+    "previous_month": "เดือนก่อนหน้า",
+    "next_month": "เดือนถัดไป",
+    "view_on_map": "ดูบนแผนที่",
+    "expand": "ขยาย",
+    "collapse": "ย่อ",
+    "clear": "ล้าง",
+    "loading": "กำลังโหลด",
+    "sort_by": "เรียงตาม",
+    "zoom_in": "ซูมเข้า",
+    "zoom_out": "ซูมออก",
+    "picture_in_picture": "ภาพซ้อนภาพ",
+    "switch_to_3d": "สลับเป็นแผนที่ 3 มิติ",
+    "switch_to_2d": "สลับเป็นแผนที่ 2 มิติ",
+    "volume": "ระดับเสียง"
+  },
   "or": "หรือ",
   "unknown": "ไม่มีข้อมูล",
   "track_editor": {

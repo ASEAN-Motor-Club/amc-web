@@ -15,7 +15,7 @@ describe('pak conflict page', () => {
     await render(PakConflictPage);
 
     expect(document.title).toBe(title);
-    const ogTitle = document.querySelector('meta[name="og:title"]');
+    const ogTitle = document.querySelector('meta[property="og:title"]');
     if (!(ogTitle instanceof HTMLMetaElement)) {
       throw new Error('expected an og:title meta tag');
     }

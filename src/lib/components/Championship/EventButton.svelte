@@ -53,6 +53,7 @@
       },
   ]}
   onClick={handleClick}
+  aria-current={today ? 'date' : undefined}
   tag="a"
   href={`?date=${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`}
 >

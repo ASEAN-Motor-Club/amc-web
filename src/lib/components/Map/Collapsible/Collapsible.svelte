@@ -148,6 +148,7 @@
       <CollapsibleActionButton
         color="danger"
         icon="i-material-symbols:close-rounded"
+        label={m['action.close']()}
         href={closeHref}
       />
     {/if}
@@ -158,6 +159,7 @@
         icon={showFull
           ? 'i-material-symbols:collapse-content-rounded'
           : 'i-material-symbols:expand-content-rounded'}
+        label={showFull ? m['a11y.collapse']() : m['a11y.expand']()}
         href={toggleFullHref}
       />
     {/if}
@@ -170,7 +172,7 @@
         ]}
       >
         <CollapsibleButton
-          class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/20 hover:text-green-700 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
+          class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/20 hover:text-green-800 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
           icon="i-material-symbols:map-outline-rounded"
           text={m['map.side_menu.map']()}
           href={closeHref}
@@ -178,31 +180,34 @@
       </div>
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-emerald-700/20 hover:text-emerald-700 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
+          'h-12 flex-1 hover:bg-emerald-700/20 hover:text-emerald-800 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
           openCollapsible === 'players' &&
-            'bg-emerald-800/20 text-emerald-700 dark:text-emerald-500',
+            'bg-emerald-800/20 text-emerald-800 dark:text-emerald-500',
         ]}
         icon="i-material-symbols:person-outline-rounded"
         text={m['map.side_menu.players']()}
         href={getCollapsibleHref('players')}
+        current={openCollapsible === 'players'}
       />
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-blue-700/20 hover:text-blue-700 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
-          openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-700 dark:text-blue-500',
+          'h-12 flex-1 hover:bg-blue-700/20 hover:text-blue-800 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
+          openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-800 dark:text-blue-500',
         ]}
         icon="i-material-symbols:home-outline-rounded"
         text={m['map.side_menu.housing']()}
         href={getCollapsibleHref('housing')}
+        current={openCollapsible === 'housing'}
       />
       <CollapsibleButton
         class={[
-          'h-12 flex-1 hover:bg-orange-700/20 hover:text-orange-700 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
-          openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-700 dark:text-orange-500',
+          'h-12 flex-1 hover:bg-orange-700/20 hover:text-orange-800 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
+          openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-800 dark:text-orange-500',
         ]}
         icon="i-material-symbols:delivery-truck-speed-outline-rounded"
         text={m['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
+        current={openCollapsible === 'jobs'}
       />
     </div>
     {#if openCollapsible === 'deliveries' && openCollapsibleId}
@@ -213,7 +218,7 @@
         }}
       >
         <CollapsibleButton
-          class="h-12 w-12 bg-yellow-800/20 text-yellow-700 hover:bg-yellow-700/20 hover:text-yellow-700 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          class="h-12 w-12 bg-yellow-800/20 text-yellow-800 hover:bg-yellow-700/20 hover:text-yellow-800 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
           icon="i-material-symbols:box-outline-rounded"
           text={m['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}

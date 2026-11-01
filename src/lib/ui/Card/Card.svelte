@@ -3,6 +3,7 @@
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
+  import { m } from '#messages';
 
   export interface CardProps {
     /**
@@ -46,12 +47,23 @@
       : 'bg-background-50 dark:bg-background-900 shadow-md ring ring-gray-950/5 dark:shadow-white/3 dark:ring-white/5',
     clsx(propsClass),
   )}
+  aria-busy={loading ? 'true' : undefined}
   {...othersCardProps}
 >
   {#if loading}
-    <div class="absolute top-0 left-0 h-full w-full animate-pulse rounded-md bg-gray-500/20"></div>
+    <div
+      class="absolute top-0 left-0 h-full w-full animate-pulse rounded-md bg-gray-500/20"
+      role="status"
+    >
+      <span class="sr-only">{m['a11y.loading']()}</span>
+    </div>
   {/if}
-  <div class={['contents', loading && 'invisible']}>
+  <!-- Placeholder content only sizes the skeleton; keep it out of the a11y tree and tab order. -->
+  <div
+    class={['contents', loading && 'invisible']}
+    aria-hidden={loading ? 'true' : undefined}
+    inert={loading}
+  >
     {@render children()}
   </div>
 </svelte:element>

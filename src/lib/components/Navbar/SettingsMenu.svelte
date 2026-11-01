@@ -150,7 +150,16 @@
   };
 </script>
 
-<Button class="ml-auto" variant="text" round size="sm" onClick={handleMenuClick} icon>
+<Button
+  class="ml-auto"
+  variant="text"
+  round
+  size="sm"
+  onClick={handleMenuClick}
+  icon
+  aria-label={m['a11y.settings']()}
+  aria-expanded={menu}
+>
   <Icon class="i-material-symbols:settings-rounded" size="sm" />
 </Button>
 
@@ -186,6 +195,7 @@
           />
           <Select
             name="siteLocale"
+            aria-label={m['settings.site_language']()}
             value={getLocale()}
             onChange={changeSiteLocale}
             class="w-3/5 flex-none"
@@ -203,6 +213,7 @@
           />
           <Select
             name="mtLocale"
+            aria-label={m['settings.game_language']()}
             value={mtLocale.l}
             onChange={changeMtLocale}
             class="w-3/5 flex-none"

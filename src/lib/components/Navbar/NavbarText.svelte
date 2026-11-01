@@ -28,7 +28,7 @@
 </script>
 
 <div class="relative flex items-center">
-  <span class="invisible leading-none font-bold">{label}</span>
+  <span class="invisible leading-none font-bold" aria-hidden="true">{label}</span>
   <span
     class={twMerge(
       'absolute left-0 leading-none whitespace-nowrap motion-safe:transition-all motion-reduce:transition-colors',

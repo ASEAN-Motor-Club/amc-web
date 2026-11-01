@@ -53,6 +53,18 @@
      * append Icon to the button, size will be automatically adjust
      */
     appendIcon?: Snippet;
+    /**
+     * Accessible name; required when the button has no text content, e.g. an icon button
+     */
+    'aria-label'?: string;
+    /**
+     * Expanded state of the menu or region this button toggles
+     */
+    'aria-expanded'?: boolean;
+    /**
+     * Whether the button represents the current item, e.g. the active page or date
+     */
+    'aria-current'?: 'page' | 'date' | 'true';
   } & (
     | {
         /**
@@ -116,6 +128,9 @@
     icon = false,
     prependIcon,
     appendIcon,
+    'aria-label': ariaLabel,
+    'aria-expanded': ariaExpanded,
+    'aria-current': ariaCurrent,
     ...props
   }: ButtonProps = $props();
 
@@ -211,9 +226,14 @@
   )}
   onclick={onClick as MouseEventHandler<HTMLDivElement>}
   type={props.tag === 'button' || props.tag === undefined ? (props.type ?? 'button') : undefined}
-  {disabled}
+  disabled={props.tag === 'button' || props.tag === undefined ? disabled : undefined}
+  aria-disabled={props.tag === 'a' && disabled ? 'true' : undefined}
+  role={props.tag === 'div' && onClick ? 'button' : undefined}
+  tabindex={props.tag === 'a' && disabled ? -1 : props.tag === 'div' && onClick ? 0 : undefined}
+  aria-label={ariaLabel}
+  aria-expanded={ariaExpanded}
+  aria-current={ariaCurrent}
   href={props.tag === 'a' ? props.href : undefined}
-  role={props.tag ?? 'button'}
   target={props.tag === 'a' ? props.target : undefined}
   rel={props.tag === 'a' ? props.rel : undefined}
 >

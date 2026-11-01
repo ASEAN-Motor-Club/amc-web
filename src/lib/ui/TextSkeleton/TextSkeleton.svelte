@@ -19,5 +19,6 @@
     `inline-block animate-pulse rounded-md bg-gray-500/20 text-transparent select-none`,
     clsx(propsClass),
   )}
+  aria-hidden="true"
   >{#each Array(lines) as _, i (i)}.{#if i < lines - 1}<br />{/if}{/each}.</span
 >

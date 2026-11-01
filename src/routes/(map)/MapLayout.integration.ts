@@ -100,7 +100,7 @@ describe('(map) layout', () => {
       await render(MapLayout);
 
       expect(document.title).toBe(m['map.head']({ siteName: m.site_name_short() }));
-      const ogTitle = document.querySelector('meta[name="og:title"]');
+      const ogTitle = document.querySelector('meta[property="og:title"]');
       expect(ogTitle?.getAttribute('content')).toBe(
         m['map.head']({ siteName: m.site_name_short() }),
       );

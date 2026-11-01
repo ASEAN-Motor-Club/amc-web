@@ -191,34 +191,47 @@
   {#each links as link (link.label)}
     <NavbarItem {...link} onClick={() => setMenu(false)} {mobile} />
   {/each}
-  <div class="mt-6 flex items-center lg:mt-0">
+  <li class="mt-6 flex items-center lg:mt-0">
     <Button
       variant="contained-light"
       color="custom"
-      class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
+      class="bg-[#5865f2]/15 !text-[#4752c4] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:!text-[#9ba3f7] dark:hover:bg-[#5865f2]/20"
       tag="a"
       href={PUBLIC_DISCORD_LINK}
       target="_blank"
       rel="noreferrer">{m['navbar.join_discord']()}</Button
     >
-  </div>
+  </li>
 {/snippet}
 
 <nav
+  aria-label={m['a11y.main_navigation']()}
   class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-gray-950/10 ring-gray-950/1 select-none"
 >
-  <Button class="mr-2 -ml-2 lg:hidden" variant="text" onClick={() => setMenu(true)} icon>
+  <Button
+    class="mr-2 -ml-2 lg:hidden"
+    variant="text"
+    onClick={() => setMenu(true)}
+    icon
+    aria-label={m['a11y.open_menu']()}
+    aria-expanded={menu}
+  >
     <Icon class="i-material-symbols:menu-rounded" />
   </Button>
   <a href="/" class="font-sans-em mr-6 text-2xl leading-none tracking-wide">
     {m.site_name()}
   </a>
   {#if isLg.current}
-    <div class="flex h-full items-stretch gap-6">
+    <ul class="flex h-full items-stretch gap-6">
       {@render menuItems()}
-    </div>
+    </ul>
   {:else}
-    <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
+    <Modal
+      open={menu}
+      onClose={() => setMenu(false)}
+      class="align-start justify-start p-0"
+      aria-label={m['a11y.main_navigation']()}
+    >
       <div
         class="bg-background-200 dark:bg-background-900 flex h-dvh flex-col px-4 py-8"
         transition:fly={{
@@ -233,9 +246,9 @@
         >
           {m.site_name()}
         </a>
-        <div class="flex flex-col gap-4">
+        <ul class="flex flex-col gap-4">
           {@render menuItems(true)}
-        </div>
+        </ul>
       </div>
     </Modal>
   {/if}
