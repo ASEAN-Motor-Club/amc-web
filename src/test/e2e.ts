@@ -69,10 +69,13 @@ export interface PageOptions {
   theme?: 'light' | 'dark';
   /** Emulated `prefers-contrast` */
   contrast?: 'more' | 'no-preference';
+  /** Emulated `prefers-reduced-motion`. Defaults to `reduce` so overlays and transitions settle
+   * before axe measures them; `no-preference` audits the animated states. */
+  reducedMotion?: 'reduce' | 'no-preference';
 }
 
 /**
- * A page at the given width with reduced motion and, by default, the light theme. Every request
+ * A page at the given width, by default with reduced motion and the light theme. Every request
  * off the local server is aborted: the live API, radio stream and Discord widget would make results
  * depend on the network and on whatever data is live, so pages render their loading/empty states.
  */
@@ -81,11 +84,11 @@ export async function openPage(
   origin: string,
   path: string,
   width: number,
-  { theme = 'light', contrast = 'no-preference' }: PageOptions = {},
+  { theme = 'light', contrast = 'no-preference', reducedMotion = 'reduce' }: PageOptions = {},
 ) {
   const context = await browser.newContext({
     viewport: { width, height: 900 },
-    reducedMotion: 'reduce',
+    reducedMotion,
     colorScheme: theme,
     contrast,
   });
