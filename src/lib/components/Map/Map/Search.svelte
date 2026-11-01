@@ -183,7 +183,7 @@
         }}
       >
         <Card
-          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm media-not-mouse:mr-17"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
@@ -290,7 +290,7 @@
         }}
       >
         <Card
-          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm media-not-mouse:mr-17"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17"
         >
           <div class="px-3 py-2 text-text-300 italic">
             {searchValue ? m['map.no_results']() : m['map.start_search']()}

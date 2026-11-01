@@ -112,7 +112,7 @@
     bind:this={tooltip}
   >
     <Card
-      class="m-1 flex flex-col gap-0.5 !bg-gray-900/50 px-1.5 py-1 whitespace-nowrap text-text-dark shadow-white/3 ring-white/5 backdrop-blur-sm select-none media-mouse:m-2"
+      class="m-1 flex flex-col gap-0.5 !bg-gray-900/50 px-1.5 py-1 whitespace-nowrap text-text-dark shadow-white/3 ring-white/5 backdrop-blur-sm select-none pointer-fine:m-2"
     >
       <div class="text-xs font-bold text-text-400">
         {typeText}
@@ -151,14 +151,14 @@
       {#if hoverInfo.pointType === PointType.Teleport}
         <Button
           size="xs"
-          class="mb-0.5 bg-white/10 px-2 text-text-300 media-not-mouse:pointer-events-auto"
+          class="mb-0.5 bg-white/10 px-2 text-text-300 not-pointer-fine:pointer-events-auto"
           onClick={onCopyTeleport}
         >
           <span class="relative">
-            <span class={['hidden media-mouse:inline', { invisible: teleportCopied }]}
+            <span class={['hidden pointer-fine:inline', { invisible: teleportCopied }]}
               >{m['map.teleport_copy_hint']()}</span
             >
-            <span class={['hidden media-not-mouse:inline', { invisible: teleportCopied }]}
+            <span class={['hidden not-pointer-fine:inline', { invisible: teleportCopied }]}
               >{m['map.teleport_copy']()}</span
             >
             {#if teleportCopied}
@@ -172,11 +172,11 @@
       {#if typeHasMoreInfo}
         <Button
           size="xs"
-          class="mb-0.5 bg-white/10 px-2 text-text-300 media-not-mouse:pointer-events-auto"
+          class="mb-0.5 bg-white/10 px-2 text-text-300 not-pointer-fine:pointer-events-auto"
           {onClick}
         >
-          <span class="hidden media-mouse:inline">{m['map.click_info']()}</span>
-          <span class="hidden media-not-mouse:inline">{m['map.click_here_info']()}</span>
+          <span class="hidden pointer-fine:inline">{m['map.click_info']()}</span>
+          <span class="hidden not-pointer-fine:inline">{m['map.click_here_info']()}</span>
         </Button>
       {/if}
     </Card>

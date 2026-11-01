@@ -9,16 +9,8 @@
 @plugin '@tailwindcss/typography';
 @plugin '@iconify/tailwind4';
 
+/* Theme follows the `.dark` class (app.html bootstrap + settings toggle), not only the OS preference. */
 @custom-variant dark (&:where(.dark, .dark *));
-
-@custom-variant media-touch (@media (hover: none) and (pointer: coarse));
-@custom-variant media-stylus (@media (hover: none) and (pointer: fine));
-@custom-variant media-pointer (@media (hover) and (pointer: coarse));
-@custom-variant media-mouse (@media (hover) and (pointer: fine));
-@custom-variant media-not-touch (@media not ((hover: none) and (pointer: coarse)));
-@custom-variant media-not-stylus (@media not ((hover: none) and (pointer: fine)));
-@custom-variant media-not-pointer (@media not ((hover) and (pointer: coarse)));
-@custom-variant media-not-mouse (@media not ((hover) and (pointer: fine)));
 
 @theme {
   --font-sans:
