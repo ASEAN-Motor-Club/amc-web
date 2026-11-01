@@ -478,5 +478,10 @@
   },
   "out_of_map": "นอกแผนที่",
   "somewhere_close_to": "ที่ไหนสักแห่งใกล้ {zone}",
-  "go_back": "ย้อนกลับ"
+  "go_back": "ย้อนกลับ",
+  "manifest": {
+    "radio_desc": "ฟังวิทยุ AMC",
+    "map_desc": "ดูแผนที่แบบอินเทอร์แอคทีฟ",
+    "jobs_desc": "ดูงานที่มีอยู่"
+  }
 }

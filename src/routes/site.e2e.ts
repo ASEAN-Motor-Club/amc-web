@@ -62,6 +62,18 @@ describe('SEO', () => {
     expect(manifest).toHaveProperty('entries', expect.any(Array));
   });
 
+  it('pages link a web app manifest whose icons ship in the build', () => {
+    const href = attr(readBuildFile('index.html'), /<link rel="manifest" href="([^"]+)"/);
+    expect(href, 'manifest link').toBeTruthy();
+    const manifest = JSON.parse(readBuildFile((href ?? '').slice(1))) as {
+      icons: { src: string }[];
+      shortcuts: { icons: { src: string }[] }[];
+    };
+    for (const { src } of [...manifest.icons, ...manifest.shortcuts.flatMap((s) => s.icons)]) {
+      expect.soft(buildFileExists(src.slice(1)), src).toBe(true);
+    }
+  });
+
   it.each(sitemapPaths)('%s is prerendered with complete head tags', (path) => {
     expect(buildFileExists(htmlFile(path)), 'prerendered html').toBe(true);
     const html = readBuildFile(htmlFile(path));

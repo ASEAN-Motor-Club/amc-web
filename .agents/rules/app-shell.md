@@ -16,6 +16,8 @@ globs:
 
 `handleStaticHead` also emits the absolute canonical link and `og:url` (from `event.url`, made absolute by Kit's `paths.origin` = `siteOrigin` in `src/lib/data/site.ts`; skipped for the `/[fallback]` SPA page), absolute `og:image`/`twitter:image`, and schema.org `Organization`/`WebSite` JSON-LD via the escaping `jsonLd()` helper. `static/robots.txt` and the prerendered `src/routes/sitemap.xml/+server.ts` complete the SEO surface — conventions in `rule://a11y-seo`.
 
+The web app manifest is the prerendered `src/routes/manifest.webmanifest/+server.ts` (localized names from `#messages`, icons via `?no-inline` imports, colors from `#lib/tw-var.ts`), linked by `handleStaticHead`. Keep it in Kit, not a Vite plugin: Kit 3's adapter writes `build/` after Vite's `closeBundle`, so a plugin can't patch the prerendered HTML.
+
 `src/app.html` also carries an inline blocking script that applies dark mode from `localStorage` before first paint — keep it inline and blocking, or the page flashes.
 
 Asset imports need an explicit suffix:

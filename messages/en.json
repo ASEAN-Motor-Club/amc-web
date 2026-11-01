@@ -492,6 +492,11 @@
   "out_of_map": "Out of map",
   "somewhere_close_to": "Somewhere close to {zone}",
   "go_back": "Go Back",
+  "manifest": {
+    "radio_desc": "Listen to AMC Radio",
+    "map_desc": "View the interactive map",
+    "jobs_desc": "View available jobs"
+  },
   "locales_do_not_duplicate": {
     "cs": "Čeština",
     "de": "Deutsch",

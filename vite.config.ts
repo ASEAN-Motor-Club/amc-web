@@ -6,7 +6,6 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
-import { webmanifestPlugin } from './vite-plugins/webmanifest.ts';
 import { dotnetWasmAssetPlugin } from './vite-plugins/dotnet-wasm-asset.ts';
 import path from 'node:path';
 import { siteOrigin } from './src/lib/data/site.ts';
@@ -44,7 +43,6 @@ export default defineConfig(({ mode }) => {
         }),
         { applyToEnvironment: (environment: { name: string }) => environment.name === 'client' },
       ),
-      webmanifestPlugin(),
     ],
     build: {},
     // Monaco's worker bootstrap expects module workers; Vite still defaults to 'iife'.

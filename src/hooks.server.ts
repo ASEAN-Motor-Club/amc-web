@@ -93,6 +93,7 @@ const handleStaticHead: Handle = ({ event, resolve }) =>
         `<link rel="icon" href="${faviconSvg}" type="image/svg+xml" />`,
         `<link rel="icon" href="${faviconIco}" />`,
         `<link rel="apple-touch-icon" href="${appleTouchIcon}" />`,
+        `<link rel="manifest" href="/manifest.webmanifest" />`,
         `<meta property="og:site_name" content="${m.site_name()}" />`,
         `<meta property="og:description" content="${m['home.desc_title']()}" />`,
         `<meta property="og:image" content="${ogImage}" />`,

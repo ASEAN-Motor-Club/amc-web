@@ -484,5 +484,10 @@
   },
   "out_of_map": "Di luar peta",
   "somewhere_close_to": "Di suatu tempat dekat {zone}",
-  "go_back": "Kembali"
+  "go_back": "Kembali",
+  "manifest": {
+    "radio_desc": "Dengarkan AMC Radio",
+    "map_desc": "Lihat peta interaktif",
+    "jobs_desc": "Lihat pekerjaan yang tersedia"
+  }
 }
