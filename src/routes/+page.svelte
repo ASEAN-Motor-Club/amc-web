@@ -59,7 +59,7 @@
           >
             <div class="relative mr-2 flex size-2" aria-hidden="true">
               <div
-                class="absolute size-full rounded-full bg-[currentColor] opacity-1 motion-safe:animate-ping"
+                class="absolute size-full rounded-full bg-[currentColor] motion-safe:animate-ping motion-reduce:hidden"
               ></div>
               <div class="size-full rounded-full bg-[currentColor]"></div>
             </div>
