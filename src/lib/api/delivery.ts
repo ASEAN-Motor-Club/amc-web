@@ -1,9 +1,9 @@
 import { PUBLIC_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions } from '@tanstack/svelte-query';
-import type { DeliveryCargo } from '#lib/data/types.js';
-import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
-import type { DeliveryJob, DeliveryPointInfo } from './types';
-import { apiClient, type QueryOverrides, type QueryParam } from './_api';
+import type { DeliveryCargo } from '#lib/data/types.ts';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
+import type { DeliveryJob, DeliveryPointInfo } from './types.ts';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api.ts';
 
 /**
  * Server-side delivery state refreshes roughly this often, so both the poll cadence and the

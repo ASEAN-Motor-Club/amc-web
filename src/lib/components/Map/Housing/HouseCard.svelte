@@ -1,14 +1,14 @@
 <script lang="ts">
-  import type { HouseData } from '#lib/api/types.js';
-  import type { House } from '#lib/data/house.js';
-  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '#lib/date.js';
+  import type { HouseData } from '#lib/api/types.ts';
+  import type { House } from '#lib/data/house.ts';
+  import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '#lib/date.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
   import HighlightText from '#lib/ui/HighlightText/HighlightText.svelte';
   import { getLocale } from '#lib/paraglide/runtime.js';
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
-  import { Features, getViewHref } from '../utils';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
+  import { Features, getViewHref } from '../utils.ts';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {

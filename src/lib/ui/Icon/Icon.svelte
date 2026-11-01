@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ClassValue } from 'svelte/elements';
-  import { getBtnIconSizeContext } from '../Button/context';
+  import { getBtnIconSizeContext } from '../Button/context.ts';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 

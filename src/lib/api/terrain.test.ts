@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { fetchTerrainZcm } from './terrain';
+import { fetchTerrainZcm } from './terrain.ts';
 
 const jsonResponse = (data: unknown, ok = true) => ({
   ok,

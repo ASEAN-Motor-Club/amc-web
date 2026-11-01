@@ -1,6 +1,6 @@
 <script lang="ts">
   import { m } from '#messages';
-  import type { TeleportPoint } from './types';
+  import type { TeleportPoint } from './types.ts';
 
   export interface HoverInfo {
     info: TeleportPoint;

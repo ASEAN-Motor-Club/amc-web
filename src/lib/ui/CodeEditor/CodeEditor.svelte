@@ -4,7 +4,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { twMerge } from 'tailwind-merge';
   import type * as Monaco from 'monaco-editor';
-  import { monaco, jsonDefaults, LIGHT_THEME, DARK_THEME } from './monaco';
+  import { monaco, jsonDefaults, LIGHT_THEME, DARK_THEME } from './monaco.ts';
 
   export interface CodeEditorProps {
     /**

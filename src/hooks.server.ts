@@ -1,7 +1,7 @@
 import { paraglideMiddleware } from '#lib/paraglide/server.js';
 import { getTextDirection } from '#lib/paraglide/runtime.js';
 import { sequence, type Handle } from '@sveltejs/kit/hooks';
-import { colorBackground100, colorBackground900 } from '#lib/tw-var.js';
+import { colorBackground100, colorBackground900 } from '#lib/tw-var.ts';
 import { m } from '#lib/paraglide/messages.js';
 import notoSansLatinWghtNormalWoff2 from '@fontsource-variable/noto-sans/files/noto-sans-latin-wght-normal.woff2?no-inline';
 import notoSansThaiCssUrl from '@fontsource-variable/noto-sans-thai/index.css?url';
@@ -13,7 +13,7 @@ import faviconIco from '#lib/assets/images/icon/favicon.ico?no-inline';
 import faviconSvg from '#lib/assets/images/icon/favicon.svg?no-inline';
 import appleTouchIcon from '#lib/assets/images/icon/apple-touch-icon.png?no-inline';
 import androidChrome512 from '#lib/assets/images/icon/android-chrome-512x512.png?no-inline';
-import { siteOrigin } from '#lib/data/site.js';
+import { siteOrigin } from '#lib/data/site.ts';
 import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$app/env/public';
 
 const handleParaglide: Handle = ({ event, resolve }) =>

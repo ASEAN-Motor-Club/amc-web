@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import { tick } from 'svelte';
-import { createFrequencyBands, type FrequencyBands } from './frequency.svelte';
+import { createFrequencyBands, type FrequencyBands } from './frequency.svelte.ts';
 
 interface FakeAnalyser {
   frequencyBinCount: number;

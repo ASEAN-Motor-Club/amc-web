@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { HouseData } from '#lib/api/types.js';
+  import type { HouseData } from '#lib/api/types.ts';
   import HouseCard from '#lib/components/Map/Housing/HouseCard.svelte';
-  import { houses } from '#lib/data/house.js';
+  import { houses } from '#lib/data/house.ts';
   import TextInput from '#lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
   import Select from '#lib/ui/Select/Select.svelte';
@@ -10,7 +10,7 @@
   import { m } from '#messages';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { goto } from '$app/navigation';
-  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
 
   interface Props {
     houseData: HouseData | undefined;

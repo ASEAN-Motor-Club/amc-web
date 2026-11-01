@@ -1,6 +1,6 @@
 import Quat, { Quaternion } from 'quaternion';
-import { toDeg, toRad } from '#lib/utils/math/vectors.js';
-import type { Waypoint, WaypointEuler } from '#lib/schema/track.js';
+import { toDeg, toRad } from '#lib/utils/math/vectors.ts';
+import type { Waypoint, WaypointEuler } from '#lib/schema/track.ts';
 
 export const WP_EULER_ORDER = 'XYZ';
 

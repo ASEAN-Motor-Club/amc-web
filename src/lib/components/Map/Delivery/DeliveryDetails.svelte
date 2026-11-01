@@ -1,25 +1,25 @@
 <script lang="ts">
-  import { createDeliveryPointQuery } from '#lib/api/delivery.js';
-  import type { DeliveryJob } from '#lib/api/types.js';
+  import { createDeliveryPointQuery } from '#lib/api/delivery.ts';
+  import type { DeliveryJob } from '#lib/api/types.ts';
   import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
-  import { cargoName } from '#lib/data/cargo.js';
-  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import { cargoName } from '#lib/data/cargo.ts';
+  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
   import {
     flattenCargoType,
     getMatchJobDestFn,
     getInventoryAmount as utilGetInventoryAmount,
-  } from '#lib/utils/delivery.js';
-  import type { DeliveryCargo } from '#lib/data/types.js';
+  } from '#lib/utils/delivery.ts';
+  import type { DeliveryCargo } from '#lib/data/types.ts';
   import Card from '#lib/ui/Card/Card.svelte';
   import { m } from '#messages';
-  import { differenceInSeconds, formatDistanceStrict, min } from '#lib/date.js';
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import { differenceInSeconds, formatDistanceStrict, min } from '#lib/date.ts';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
   import Button from '#lib/ui/Button/Button.svelte';
-  import { getMatchJobSourceFn } from '#lib/utils/delivery.js';
+  import { getMatchJobSourceFn } from '#lib/utils/delivery.ts';
 
-  import { isCargoType } from '#lib/utils/delivery.js';
-  import { DELIVERY_STALE_WARN_SECONDS, Features, getViewHref } from '../utils';
+  import { isCargoType } from '#lib/utils/delivery.ts';
+  import { DELIVERY_STALE_WARN_SECONDS, Features, getViewHref } from '../utils.ts';
   import DeliveryLink from './DeliveryLink.svelte';
   import JobLink from '../Jobs/JobLink.svelte';
   import Table from '#lib/ui/Table/Table.svelte';

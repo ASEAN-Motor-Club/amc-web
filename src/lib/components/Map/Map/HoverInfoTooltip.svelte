@@ -1,20 +1,20 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { PointType, type PlayerData, type TeleportPoint } from './types';
+  import { PointType, type PlayerData, type TeleportPoint } from './types.ts';
   import Card from '#lib/ui/Card/Card.svelte';
   import DeliveryInfo from './DeliveryInfo.svelte';
   import HousingInfo from './HousingInfo.svelte';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
-  import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
-  import type { House } from '#lib/data/house.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
+  import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+  import type { House } from '#lib/data/house.ts';
   import Button from '#lib/ui/Button/Button.svelte';
-  import type { HouseData } from '#lib/api/types.js';
+  import type { HouseData } from '#lib/api/types.ts';
   import { m } from '#messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import TeleportInfo from './TeleportInfo.svelte';
-  import { formatLocationAtPoint } from '../utils';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
-  import { stripPlayerRoleTag } from '#lib/utils/parsePlayerRole.js';
+  import { formatLocationAtPoint } from '../utils.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
+  import { stripPlayerRoleTag } from '#lib/utils/parsePlayerRole.ts';
 
   export type HoverInfo = {
     pixelCoord: [x: number, y: number];

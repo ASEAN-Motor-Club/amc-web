@@ -1,13 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { createEventsQuery } from '#lib/api/championship.js';
-  import type { ScheduledEvent } from '#lib/api/types.js';
+  import { createEventsQuery } from '#lib/api/championship.ts';
+  import type { ScheduledEvent } from '#lib/api/types.ts';
   import EventModal from '#lib/components/Championship/EventModal.svelte';
   import ResultsModal from '#lib/components/Championship/ResultsModal.svelte';
-  import { setChampionshipContext } from '#lib/components/Championship/context.js';
+  import { setChampionshipContext } from '#lib/components/Championship/context.ts';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { isValid } from '#lib/date.js';
-  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { isValid } from '#lib/date.ts';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
 
   const eventsQuery = createEventsQuery();
   const events = $derived(eventsQuery.data ?? []);

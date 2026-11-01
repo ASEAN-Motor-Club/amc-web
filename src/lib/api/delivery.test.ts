@@ -4,8 +4,8 @@ import {
   deliveryJobsQueryOptions,
   deliveryPointQueryOptions,
   type DeliveryPointQueryInput,
-} from './delivery';
-import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
+} from './delivery.ts';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

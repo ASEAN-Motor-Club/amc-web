@@ -6,7 +6,7 @@ import {
   reProjectPoint,
   reProjectPointInverse,
   reProjectVec2,
-} from './utils';
+} from './utils.ts';
 
 describe('reProjectPoint', () => {
   it('moves the game origin into the map extent', () => {

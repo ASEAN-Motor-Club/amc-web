@@ -7,12 +7,12 @@
   import { onMount } from 'svelte';
   import { m } from '#messages';
   import SelectOption from '#lib/ui/Select/SelectOption.svelte';
-  import { mtLocale, setLocale } from '../Locale/locale.svelte';
-  import type { MtLocaleKey } from '#lib/data/types.js';
+  import { mtLocale, setLocale } from '../Locale/locale.svelte.ts';
+  import type { MtLocaleKey } from '#lib/data/types.ts';
   import { getLocale, type Locale } from '#lib/paraglide/runtime.js';
   import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import { fade } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';

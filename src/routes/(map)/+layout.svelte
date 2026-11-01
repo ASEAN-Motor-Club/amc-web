@@ -1,19 +1,19 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import { createDeliveryJobsQuery } from '#lib/api/delivery.js';
-  import { createHousingQuery } from '#lib/api/housing.js';
-  import { createInterpolatedPlayerPositionsStream } from '#lib/api/playerInterpolation.svelte.js';
-  import type { DeliveryJob } from '#lib/api/types.js';
+  import { createDeliveryJobsQuery } from '#lib/api/delivery.ts';
+  import { createHousingQuery } from '#lib/api/housing.ts';
+  import { createInterpolatedPlayerPositionsStream } from '#lib/api/playerInterpolation.svelte.ts';
+  import type { DeliveryJob } from '#lib/api/types.ts';
   import Collapsible from '#lib/components/Map/Collapsible/Collapsible.svelte';
-  import { ALL_MENU } from '#lib/components/Map/Collapsible/constants.js';
+  import { ALL_MENU } from '#lib/components/Map/Collapsible/constants.ts';
   import Map from '#lib/components/Map/Map/Map.svelte';
-  import { PointType, type PlayerData } from '#lib/components/Map/Map/types.js';
-  import type { CollapsibleType } from '#lib/components/Map/types.js';
-  import { vehicleKeyToString } from '#lib/api/proto/vehicleKeyUtils.js';
-  import { reProjectVec2 } from '#lib/ui/OlMap/utils.js';
-  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
-  import { isSm } from '#lib/utils/media.svelte.js';
+  import { PointType, type PlayerData } from '#lib/components/Map/Map/types.ts';
+  import type { CollapsibleType } from '#lib/components/Map/types.ts';
+  import { vehicleKeyToString } from '#lib/api/proto/vehicleKeyUtils.ts';
+  import { reProjectVec2 } from '#lib/ui/OlMap/utils.ts';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
+  import { isSm } from '#lib/utils/media.svelte.ts';
   import { onMount } from 'svelte';
   import { SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
 

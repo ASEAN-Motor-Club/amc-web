@@ -2,14 +2,14 @@ import * as THREE from 'three';
 import { SpriteNodeMaterial } from 'three/webgpu';
 import { instancedBufferAttribute, texture, uniform, uv, vec2 } from 'three/tsl';
 import type UniformNode from 'three/src/nodes/core/UniformNode.js';
-import { PointType, type PlayerData, type TeleportPoint } from '#lib/components/Map/Map/types.js';
-import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
-import type { House } from '#lib/data/house.js';
-import type { Pin } from '#lib/schema/pin.js';
-import type { Vector3 } from '#lib/types/index.js';
-import type { TileManager } from './tileManager';
-import type { TilesMeta } from './three-map-types';
-import { gameCoordToWorld } from './coords';
+import { PointType, type PlayerData, type TeleportPoint } from '#lib/components/Map/Map/types.ts';
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+import type { House } from '#lib/data/house.ts';
+import type { Pin } from '#lib/schema/pin.ts';
+import type { Vector3 } from '#lib/types/index.ts';
+import type { TileManager } from './tileManager.ts';
+import type { TilesMeta } from './three-map-types.ts';
+import { gameCoordToWorld } from './coords.ts';
 import {
   POI_CONFIG,
   POI_DELIVERY_JOB_DEST,
@@ -17,7 +17,7 @@ import {
   POI_DELIVERY_RESIDENT,
   POI_HOUSE_VACANT,
   type PoiDotStyle,
-} from './constants';
+} from './constants.ts';
 import {
   DOT_ATLAS_CELLS,
   dotPaletteKey,
@@ -26,11 +26,11 @@ import {
   makeTextSprite,
   PoiState,
   viewportScale,
-} from './poi';
-import type { TextSprite } from './poi';
+} from './poi.ts';
+import type { TextSprite } from './poi.ts';
 import type { Renderer } from 'three/webgpu';
-import { tileWorldRect } from './heightmap';
-import { colorTextDark, colorGray950, adjustOpacity, fontSans } from '#lib/tw-var.js';
+import { tileWorldRect } from './heightmap.ts';
+import { colorTextDark, colorGray950, adjustOpacity, fontSans } from '#lib/tw-var.ts';
 
 /** One world point, fed in game/UE coordinates (x right, y down, z up, cm). */
 export interface PoiInput {

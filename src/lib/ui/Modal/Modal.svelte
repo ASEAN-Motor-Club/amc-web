@@ -2,10 +2,10 @@
   import { m } from '#messages';
   import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { portal } from '#lib/utils/portal.js';
+  import { portal } from '#lib/utils/portal.ts';
   import type { ClassValue } from 'svelte/elements';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
-  import { modalCounter } from './modalCounter.svelte';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
+  import { modalCounter } from './modalCounter.svelte.ts';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 

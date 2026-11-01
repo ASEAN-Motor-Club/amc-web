@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants';
-import { tileWorldRect } from './heightmap';
-import { selectLeafTiles } from './lod';
-import { fetchHeightTile, loadColorTexture, buildTileGeometry } from './tileGeometry';
-import type { TilesMeta, ActiveTile } from './three-map-types';
+import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants.ts';
+import { tileWorldRect } from './heightmap.ts';
+import { selectLeafTiles } from './lod.ts';
+import { fetchHeightTile, loadColorTexture, buildTileGeometry } from './tileGeometry.ts';
+import type { TilesMeta, ActiveTile } from './three-map-types.ts';
 
 export interface TileManager {
   tileGroup: THREE.Group;

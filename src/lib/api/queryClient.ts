@@ -1,5 +1,5 @@
 import { QueryCache, QueryClient } from '@tanstack/svelte-query';
-import { isAbortError } from './_api';
+import { isAbortError } from './_api.ts';
 
 /**
  * Data is considered fresh for this long, so remounting a component or switching back to the

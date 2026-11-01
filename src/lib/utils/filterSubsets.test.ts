@@ -1,4 +1,4 @@
-import { filterSubsets } from './filterSubsets';
+import { filterSubsets } from './filterSubsets.ts';
 import { describe, it, expect } from 'vitest';
 
 describe('filterSubsets', () => {

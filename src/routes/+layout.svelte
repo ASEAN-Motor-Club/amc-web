@@ -5,7 +5,7 @@
   import MsgModal from '#lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '#lib/components/Navbar/Navbar.svelte';
   import { onMount } from 'svelte';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { fade } from 'svelte/transition';
   import { page } from '$app/state';
   import GlobalPlayer from '#lib/components/Radio/GlobalPlayer/GlobalPlayer.svelte';
@@ -15,12 +15,12 @@
     baseLocale,
     type Locale,
   } from '#lib/paraglide/runtime.js';
-  import { siteLocale } from '#lib/components/Locale/locale.svelte.js';
+  import { siteLocale } from '#lib/components/Locale/locale.svelte.ts';
   import { noop } from 'es-toolkit';
 
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
   import { QueryClientProvider } from '@tanstack/svelte-query';
-  import { createQueryClient } from '#lib/api/queryClient.js';
+  import { createQueryClient } from '#lib/api/queryClient.ts';
   import { m } from '#messages';
 
   const queryClient = createQueryClient();

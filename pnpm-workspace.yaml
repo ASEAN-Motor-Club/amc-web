@@ -7,6 +7,8 @@ allowBuilds:
   '@bufbuild/buf': true
   esbuild: true
   lefthook: true
+  # napi-postinstall only fetches a binding when the optional platform package is missing.
+  unrs-resolver: false
 dedupePeers: true
 minimumReleaseAge: 4320
 savePrefix: ''

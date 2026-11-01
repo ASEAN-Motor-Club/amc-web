@@ -1,7 +1,7 @@
-import type { HouseData } from '#lib/api/types.js';
+import type { HouseData } from '#lib/api/types.ts';
 import { PUBLIC_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions } from '@tanstack/svelte-query';
-import { apiClient, type QueryOverrides, type QueryParam } from './_api';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api.ts';
 
 type GetHousingDataResponse = Record<
   string,

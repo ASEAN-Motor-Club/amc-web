@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cargoMetadata, cargoName } from './cargo';
+import { cargoMetadata, cargoName } from './cargo.ts';
 
 describe('cargoName', () => {
   it('has an English name for every cargo and cargo type', () => {

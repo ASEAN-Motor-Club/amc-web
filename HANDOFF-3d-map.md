@@ -42,7 +42,7 @@ Then the `3D` button appears top-right. Switch back with `2D`.
 
 - The Wrapper props are already the full `OlMapWrapper` contract; deferred props are captured in a
   rest (`_deferredProps`) so `svelte/no-unused-props` stays quiet — consume them as POI lands.
-- Game → map coordinates: `reProjectPoint`/`reProjectVec2` from `#lib/ui/OlMap/utils.js` (px space,
+- Game → map coordinates: `reProjectPoint`/`reProjectVec2` from `#lib/ui/OlMap/utils.ts` (px space,
   0..2200000). The 3D world is meters centered on the map origin: px→world is
   `(px - MAP_REAL_SIZE/2) / 100`... i.e. world = `(px/100) - widthMeters/2` for both axes; y-up in
   three. Verify before drawing.

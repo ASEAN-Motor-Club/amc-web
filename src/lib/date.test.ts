@@ -1,8 +1,8 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { noop } from 'es-toolkit';
-import { defineCustomClientStrategy } from './paraglide/runtime';
-import { siteLocale } from './components/Locale/locale.svelte';
-import { format, formatDistanceStrict, formatDuration } from './date';
+import { defineCustomClientStrategy } from './paraglide/runtime.js';
+import { siteLocale } from './components/Locale/locale.svelte.ts';
+import { format, formatDistanceStrict, formatDuration } from './date.ts';
 
 // Mirror the wiring in src/routes/+layout.svelte so getLocale() follows siteLocale state.
 beforeAll(() => {

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { m } from '#messages';
-  import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
   import type { ClassValue } from 'svelte/elements';
-  import { DetailsFeatures, Features, getLinkHref, getViewHref } from '../utils';
+  import { DetailsFeatures, Features, getLinkHref, getViewHref } from '../utils.ts';
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import Button from '#lib/ui/Button/Button.svelte';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';

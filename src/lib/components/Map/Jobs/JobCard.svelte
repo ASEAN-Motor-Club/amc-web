@@ -1,16 +1,16 @@
 <script lang="ts">
   import Card from '#lib/ui/Card/Card.svelte';
-  import type { DeliveryJob } from '#lib/api/types.js';
-  import { formatDistanceStrict, isBefore } from '#lib/date.js';
+  import type { DeliveryJob } from '#lib/api/types.ts';
+  import { formatDistanceStrict, isBefore } from '#lib/date.ts';
   import { m } from '#messages';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
-  import { cargoName } from '#lib/data/cargo.js';
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
+  import { cargoName } from '#lib/data/cargo.ts';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
   import Button from '#lib/ui/Button/Button.svelte';
-  import { DetailsFeatures, getLinkHref } from '../utils';
+  import { DetailsFeatures, getLinkHref } from '../utils.ts';
   import DeliveryLink from '../Delivery/DeliveryLink.svelte';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
-  import { getJobValidPoints } from './validPoints';
+  import { getJobValidPoints } from './validPoints.ts';
 
   export interface Props {
     job?: DeliveryJob;

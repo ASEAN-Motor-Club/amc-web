@@ -1,6 +1,6 @@
 <script lang="ts">
   import { QueryClientProvider } from '@tanstack/svelte-query';
-  import { createQueryClient } from '#lib/api/queryClient.js';
+  import { createQueryClient } from '#lib/api/queryClient.ts';
   import MsgModal from '#lib/components/MsgModal/MsgModal.svelte';
   import Page from './+page.svelte';
 

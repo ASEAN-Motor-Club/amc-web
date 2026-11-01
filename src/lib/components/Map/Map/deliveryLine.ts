@@ -1,13 +1,13 @@
-import type { DeliveryJob } from '#lib/api/types.js';
-import { cargoMetadata, type CargoMetadata } from '#lib/data/cargo.js';
+import type { DeliveryJob } from '#lib/api/types.ts';
+import { cargoMetadata, type CargoMetadata } from '#lib/data/cargo.ts';
 import {
   deliveryPointsMap,
   demandKeyMapNoResident,
   supplyKeyMap,
   type DeliveryPoint,
-} from '#lib/data/deliveryPoint.js';
-import type { Vector2 } from '#lib/types/index.js';
-import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
+} from '#lib/data/deliveryPoint.ts';
+import type { Vector2 } from '#lib/types/index.ts';
+import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
 import { uniq } from 'es-toolkit';
 
 /** An ordered pair of points, drawn as one line running from the first to the second. */

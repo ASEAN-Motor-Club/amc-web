@@ -5,11 +5,11 @@ import {
   PlayerPositionsSchema,
   type PlayerPosition,
   type PlayerPositions,
-} from './proto/generated/player_positions_pb';
-import { createPlayerPositionsV2Stream, type PlayerStreamInput } from './player';
-import { dist2DSq } from '#lib/utils/math/vectors.js';
-import type { QueryParam } from './_api';
-import type { StreamResult } from './_stream.svelte';
+} from './proto/generated/player_positions_pb.ts';
+import { createPlayerPositionsV2Stream, type PlayerStreamInput } from './player.ts';
+import { dist2DSq } from '#lib/utils/math/vectors.ts';
+import type { QueryParam } from './_api.ts';
+import type { StreamResult } from './_stream.svelte.ts';
 
 /**
  * Smooth player rendering: the newest received snapshot is always the playing

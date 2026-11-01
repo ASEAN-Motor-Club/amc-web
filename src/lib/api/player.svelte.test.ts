@@ -2,13 +2,13 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { tick } from 'svelte';
 import { focusManager } from '@tanstack/svelte-query';
 import { create, toBinary } from '@bufbuild/protobuf';
-import { PlayerPositionsSchema, VehicleKey } from './proto/generated/player_positions_pb';
-import type { StreamResult } from './_stream.svelte';
+import { PlayerPositionsSchema, VehicleKey } from './proto/generated/player_positions_pb.ts';
+import type { StreamResult } from './_stream.svelte.ts';
 import {
   createPlayerCountStream,
   createPlayerPositionsStream,
   createPlayerPositionsV2Stream,
-} from './player';
+} from './player.ts';
 
 class FakeEventSource {
   static instances: FakeEventSource[] = [];

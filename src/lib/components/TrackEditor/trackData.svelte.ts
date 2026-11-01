@@ -1,4 +1,4 @@
-import type { Track } from '#lib/schema/track.js';
+import type { Track } from '#lib/schema/track.ts';
 
 export interface TrackDataGlobal {
   value: Track | undefined;

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { ScheduledEvent } from '#lib/api/types.js';
+  import type { ScheduledEvent } from '#lib/api/types.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
   import Modal from '#lib/ui/Modal/Modal.svelte';
-  import { format, isAfter, isBefore, isSameDay } from '#lib/date.js';
+  import { format, isAfter, isBefore, isSameDay } from '#lib/date.ts';
   import EventCard from './EventCard.svelte';
 
   interface EventModalProps {

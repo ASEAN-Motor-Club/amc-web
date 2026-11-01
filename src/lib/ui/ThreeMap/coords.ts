@@ -1,5 +1,5 @@
-import type { Vector3 } from '#lib/types/index.js';
-import type { TilesMeta } from './three-map-types';
+import type { Vector3 } from '#lib/types/index.ts';
+import type { TilesMeta } from './three-map-types.ts';
 
 const CM_PER_M = 100;
 

@@ -3,7 +3,7 @@
   import type { FormEventHandler } from 'svelte/elements';
   import CommonHead from '#lib/components/CommonHead/CommonHead.svelte';
   import { m } from '#messages';
-  import type { PlayerData } from '../Map/types';
+  import type { PlayerData } from '../Map/types.ts';
   import PlayerCard from '#lib/components/Map/Players/PlayerCard.svelte';
 
   interface Props {

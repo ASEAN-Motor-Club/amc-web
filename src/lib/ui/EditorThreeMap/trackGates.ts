@@ -9,8 +9,8 @@ import {
   TRACK_LINE_OPACITY,
   TRACK_LINE_WIDTH_M,
   TRACK_LINE_XRAY_OPACITY,
-} from '../ThreeMap/constants';
-import { makeColor, makeTextSprite, type TextSprite, type ViewportScale } from '../ThreeMap/poi';
+} from '../ThreeMap/constants.ts';
+import { makeColor, makeTextSprite, type TextSprite, type ViewportScale } from '../ThreeMap/poi.ts';
 import {
   adjustOpacity,
   colorAmber500,
@@ -23,7 +23,7 @@ import {
   colorYellow500,
   colorYellow950,
   fontSans,
-} from '#lib/tw-var.js';
+} from '#lib/tw-var.ts';
 
 /** One waypoint's gate geometry, in world meters (y-up). Fully 3D: the endpoints come
  * from the waypoint's UE quaternion (local-Y width axis scaled by scale3D.y) and its

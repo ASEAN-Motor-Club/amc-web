@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import type { NavbarItem as NavbarItemType } from './types';
+  import type { NavbarItem as NavbarItemType } from './types.ts';
   import { slide } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { prefersReducedMotion } from 'svelte/motion';
   import { debounce, type DebouncedFunction } from 'es-toolkit';
   import { onDestroy } from 'svelte';

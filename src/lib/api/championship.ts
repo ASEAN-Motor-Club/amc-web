@@ -1,7 +1,7 @@
 import { PUBLIC_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions, skipToken } from '@tanstack/svelte-query';
-import type { EventResult, PersonalStanding, ScheduledEvent, TeamStanding } from './types';
-import { apiClient, type QueryOverrides, type QueryParam } from './_api';
+import type { EventResult, PersonalStanding, ScheduledEvent, TeamStanding } from './types.ts';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api.ts';
 
 export interface EventsQueryInput {
   /** Overrides spread over the endpoint's defaults. */

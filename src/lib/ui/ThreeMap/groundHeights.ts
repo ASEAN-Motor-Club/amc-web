@@ -1,6 +1,6 @@
-import { rawHeightToWorldZMeters, tileWorldRect } from './heightmap';
-import type { TilesMeta } from './three-map-types';
-import { fetchHeightTile } from './tileGeometry';
+import { rawHeightToWorldZMeters, tileWorldRect } from './heightmap.ts';
+import type { TilesMeta } from './three-map-types.ts';
+import { fetchHeightTile } from './tileGeometry.ts';
 
 export interface GroundHeights {
   /**

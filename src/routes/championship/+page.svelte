@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '#lib/font-sans-em.js';
+  import '#lib/font-sans-em.ts';
   import poster455 from '#lib/assets/images/poster/asean_poster_w455.avif';
   import poster909 from '#lib/assets/images/poster/asean_poster_w909.avif';
   import poster1364 from '#lib/assets/images/poster/asean_poster_w1364.avif';
@@ -10,8 +10,8 @@
   import { onMount, onDestroy, tick, settled } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { createTeamsQuery } from '#lib/api/teams.js';
-  import { format } from '#lib/date.js';
+  import { createTeamsQuery } from '#lib/api/teams.ts';
+  import { format } from '#lib/date.ts';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
   import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$app/env/public';

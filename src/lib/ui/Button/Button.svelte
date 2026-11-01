@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import type { Color } from '../shared';
+  import type { Color } from '../shared.ts';
   import type { ClassValue, MouseEventHandler } from 'svelte/elements';
-  import { setBtnIconSizeContext } from './context';
+  import { setBtnIconSizeContext } from './context.ts';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 

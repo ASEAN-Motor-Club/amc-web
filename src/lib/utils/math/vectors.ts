@@ -1,4 +1,4 @@
-import type { Vector2, Vector3 } from '#lib/types/index.js';
+import type { Vector2, Vector3 } from '#lib/types/index.ts';
 
 /** Squared planar distance between two points. Compare against squared thresholds —
  * sqrt-free, an order of magnitude faster than hypot for pure comparisons. */

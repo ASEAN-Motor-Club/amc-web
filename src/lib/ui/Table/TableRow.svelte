@@ -1,6 +1,6 @@
 <script lang="ts">
   import { twMerge } from 'tailwind-merge';
-  import { getTableContext } from './context';
+  import { getTableContext } from './context.ts';
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import clsx from 'clsx';

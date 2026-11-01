@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import { teamsQueryOptions } from './teams';
-import type { Team } from './types';
+import { teamsQueryOptions } from './teams.ts';
+import type { Team } from './types.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

@@ -1,5 +1,5 @@
 import tilesJson from '#lib/assets/data/tiles.json';
-import type { RawTilesJson, TilesMeta } from './three-map-types';
+import type { RawTilesJson, TilesMeta } from './three-map-types.ts';
 
 const raw = tilesJson as unknown as RawTilesJson;
 

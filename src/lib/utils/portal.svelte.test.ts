@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { portal } from './portal';
+import { portal } from './portal.ts';
 
 describe('portal', () => {
   const created: HTMLElement[] = [];

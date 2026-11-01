@@ -25,7 +25,7 @@ export {
 } from 'date-fns';
 
 import { enUS, th, id } from 'date-fns/locale';
-import { getLocale } from './paraglide/runtime';
+import { getLocale } from './paraglide/runtime.js';
 
 export const getDateFnsLocale = () => {
   const locale = getLocale();

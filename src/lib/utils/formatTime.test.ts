@@ -1,4 +1,4 @@
-import { formatTime } from './formatTime';
+import { formatTime } from './formatTime.ts';
 import { describe, it, expect } from 'vitest';
 
 describe('formatTime', () => {

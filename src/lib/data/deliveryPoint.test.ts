@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { DeliveryCargo, DeliveryCargoKey } from './types';
+import type { DeliveryCargo, DeliveryCargoKey } from './types.ts';
 import {
   demandMap,
   demandKeyMap,
@@ -10,7 +10,7 @@ import {
   residentName,
   supplyMap,
   supplyKeyMap,
-} from './deliveryPoint';
+} from './deliveryPoint.ts';
 
 describe('deliveryPoints', () => {
   it('is non-empty and keyed uniquely by guid', () => {

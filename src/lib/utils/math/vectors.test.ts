@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { orientation2D, toDeg, toRad, dist2DSq } from './vectors';
-import type { Vector3 } from '#lib/types/index.js';
+import { orientation2D, toDeg, toRad, dist2DSq } from './vectors.ts';
+import type { Vector3 } from '#lib/types/index.ts';
 
 describe('vectors', () => {
   describe('orientation2D', () => {

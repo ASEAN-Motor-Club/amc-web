@@ -3,7 +3,7 @@ import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$app/env/public';
 import { m } from '#messages';
-import type * as playerApi from '#lib/api/player.js';
+import type * as playerApi from '#lib/api/player.ts';
 import HomePage from './+page.svelte';
 
 // The player-count stream would open a live connection to the production API; stub it so the
@@ -18,7 +18,7 @@ const { createPlayerCountStreamMock } = vi.hoisted(() => ({
   }),
 }));
 
-vi.mock('#lib/api/player.js', async (importOriginal) => ({
+vi.mock('#lib/api/player.ts', async (importOriginal) => ({
   ...(await importOriginal<typeof playerApi>()),
   createPlayerCountStream: createPlayerCountStreamMock,
 }));

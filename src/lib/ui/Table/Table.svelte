@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ClassValue } from 'svelte/elements';
-  import { setTableContext } from './context';
+  import { setTableContext } from './context.ts';
   import type { Snippet } from 'svelte';
   import clsx from 'clsx';
   import TextSkeleton from '../TextSkeleton/TextSkeleton.svelte';

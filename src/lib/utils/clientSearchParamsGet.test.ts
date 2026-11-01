@@ -8,7 +8,7 @@ vi.mock('$app/state', () => ({
   page: mockPage,
 }));
 
-import { clientSearchParams, clientSearchParamsGet } from './clientSearchParamsGet';
+import { clientSearchParams, clientSearchParamsGet } from './clientSearchParamsGet.ts';
 
 // clientSearchParamsGet bails out unless `window` exists; the node test env has none.
 beforeEach(() => {

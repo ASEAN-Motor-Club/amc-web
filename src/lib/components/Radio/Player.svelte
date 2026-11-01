@@ -5,8 +5,8 @@
   import Slider from '#lib/ui/Slider/Slider.svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import PlayerWaveform from './PlayerWaveform.svelte';
-  import { getGlobalPlayerContext } from './GlobalPlayer/context';
-  import { createFrequencyBands } from './GlobalPlayer/frequency.svelte';
+  import { getGlobalPlayerContext } from './GlobalPlayer/context.ts';
+  import { createFrequencyBands } from './GlobalPlayer/frequency.svelte.ts';
 
   /** Loudness is 0–1; these turn it into a subtle bulge and wobble of the speaker grill. */
   const MAX_GRILL_GROWTH = 0.42;

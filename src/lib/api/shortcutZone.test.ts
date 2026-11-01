@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import { shortcutZonesQueryOptions, type ShortcutZone } from './shortcutZone';
+import { shortcutZonesQueryOptions, type ShortcutZone } from './shortcutZone.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

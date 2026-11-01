@@ -1,6 +1,6 @@
 <script module lang="ts">
   import * as z from 'zod/mini';
-  import { trackSchema } from '#lib/schema/track.js';
+  import { trackSchema } from '#lib/schema/track.ts';
 
   const VIEW_PARAM = 'view';
   const VIEW_CODE = 'code';
@@ -29,25 +29,25 @@
   import DownloadCard from './DownloadCard.svelte';
   import CodeEditor from '#lib/ui/CodeEditor/CodeEditor.svelte';
   import { cloneDeep, isEqual } from 'es-toolkit';
-  import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils';
-  import { formatTrackError } from '../utils/formatError';
+  import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils/index.ts';
+  import { formatTrackError } from '../utils/formatError.ts';
   import { Quaternion } from 'quaternion';
-  import { toRad } from '#lib/utils/math/vectors.js';
-  import { normalizedWaypoints } from '../utils/normalized';
-  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
-  import { fetchTerrainZcm } from '#lib/api/terrain.js';
-  import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate';
+  import { toRad } from '#lib/utils/math/vectors.ts';
+  import { normalizedWaypoints } from '../utils/normalized.ts';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
+  import { fetchTerrainZcm } from '#lib/api/terrain.ts';
+  import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate.ts';
   import Slider from '#lib/ui/Slider/Slider.svelte';
-  import type { Track, WaypointEuler } from '#lib/schema/track.js';
+  import type { Track, WaypointEuler } from '#lib/schema/track.ts';
   import EditorOlMap from '#lib/ui/EditorOlMap/EditorOlMap.svelte';
   import EditorThreeMap from '#lib/ui/EditorThreeMap/EditorThreeMap.svelte';
   import type { MapViewState } from '#lib/ui/OlMap/OlMap.svelte';
   import { onMount, untrack } from 'svelte';
-  import type { Vector2 } from '#lib/types/index.js';
+  import type { Vector2 } from '#lib/types/index.ts';
   import { beforeNavigate, goto } from '$app/navigation';
   import { page } from '$app/state';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
 
   export interface EditorProps {
     /** The track data to be edited */

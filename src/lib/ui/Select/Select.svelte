@@ -68,20 +68,20 @@
 
 <script generics="T extends string | number" lang="ts">
   import type { ClassValue } from 'svelte/elements';
-  import { getInputGroupContext } from '../InputGroup/context';
+  import { getInputGroupContext } from '../InputGroup/context.ts';
   import type { Snippet } from 'svelte';
   import TextInput from '../TextInput/TextInput.svelte';
   import Card from '../Card/Card.svelte';
   import ClickAwayBlock from '../ClickAwayBlock/ClickAwayBlock.svelte';
   import { slide } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
-  import { setSelectContext } from './context';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
+  import { setSelectContext } from './context.ts';
   import { SvelteMap } from 'svelte/reactivity';
   import Icon from '../Icon/Icon.svelte';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { activeSelect } from './activeSelect.svelte';
+  import { activeSelect } from './activeSelect.svelte.ts';
 
   const {
     value,

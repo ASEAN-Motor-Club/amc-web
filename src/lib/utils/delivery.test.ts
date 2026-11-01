@@ -9,10 +9,15 @@ vi.mock('#lib/assets/data/out_cargo_key.json', () => ({
   },
 }));
 
-import { isCargoType, flattenCargoType, getMatchJobSourceFn, getInventoryAmount } from './delivery';
-import type { DeliveryJob, DeliveryPointInfo, InputInventoryElement } from '#lib/api/types.js';
-import type { DeliveryPoint } from '#lib/data/deliveryPoint.js';
-import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '#lib/data/types.js';
+import {
+  isCargoType,
+  flattenCargoType,
+  getMatchJobSourceFn,
+  getInventoryAmount,
+} from './delivery.ts';
+import type { DeliveryJob, DeliveryPointInfo, InputInventoryElement } from '#lib/api/types.ts';
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+import type { DeliveryCargo, DeliveryCargoKey, DeliveryCargoType } from '#lib/data/types.ts';
 
 describe('delivery utilities', () => {
   describe('isCargoType', () => {

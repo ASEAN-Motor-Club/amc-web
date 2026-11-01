@@ -1,15 +1,15 @@
 <script lang="ts">
   import { PUBLIC_DISCORD_EVENT_BASE } from '$app/env/public';
-  import type { ScheduledEvent } from '#lib/api/types.js';
+  import type { ScheduledEvent } from '#lib/api/types.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
-  import { format, isBefore, isSameDay, isSameYear } from '#lib/date.js';
+  import { format, isBefore, isSameDay, isSameYear } from '#lib/date.ts';
   import MarkdownText from '#lib/ui/MarkdownText/MarkdownText.svelte';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
-  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.js';
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
-  import { RichTextTag } from './types';
+  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.ts';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
+  import { RichTextTag } from './types.ts';
 
   interface EventCardProps {
     event: ScheduledEvent;

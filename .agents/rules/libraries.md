@@ -1,5 +1,5 @@
 ---
-description: Which library to reach for — dates through #lib/date.js, es-toolkit utilities, markdown through MarkdownText, the portal action for overlays, Lottie wrapper, GSAP only for timelines.
+description: Which library to reach for — dates through #lib/date.ts, es-toolkit utilities, markdown through MarkdownText, the portal action for overlays, Lottie wrapper, GSAP only for timelines.
 globs:
   - src/**/*.ts
   - src/**/*.svelte
@@ -7,7 +7,7 @@ globs:
 
 # Library choices
 
-## Dates — `#lib/date.js` only
+## Dates — `#lib/date.ts` only
 
 Importing `date-fns` directly is an eslint error. `src/lib/date.ts` re-exports an explicit allowlist and wraps `format`, `formatDistanceStrict` and `formatDuration` with the active locale already injected — callers take `Omit<FormatOptions, 'locale'>` and must not pass one. Need another function? Extend the barrel.
 
@@ -23,10 +23,10 @@ All markdown and remote HTML renders through `src/lib/ui/MarkdownText/MarkdownTe
 
 ## Overlays — the `portal` action
 
-Floating UI escapes the tree with `use:portal` from `#lib/utils/portal.js` (`use:portal={'body' | element}`). `svelte-portal` is not a dependency and must not be reintroduced. Prefer extending `Modal` or `Tooltip`, and use `ClickAwayBlock` for dismiss-on-outside-click.
+Floating UI escapes the tree with `use:portal` from `#lib/utils/portal.ts` (`use:portal={'body' | element}`). `svelte-portal` is not a dependency and must not be reintroduced. Prefer extending `Modal` or `Tooltip`, and use `ClickAwayBlock` for dismiss-on-outside-click.
 
 ## Animation
 
-- Default to Svelte transitions or UnoCSS classes, timed with `defaultTransitionDurationMs` (`#lib/tw-var.js`) and `cssTransitionToMs`, and gated on `prefersReducedMotion` from `svelte/motion`.
+- Default to Svelte transitions or UnoCSS classes, timed with `defaultTransitionDurationMs` (`#lib/tw-var.ts`) and `cssTransitionToMs`, and gated on `prefersReducedMotion` from `svelte/motion`.
 - GSAP is only for timeline choreography. Register `ScrollTrigger` in `onMount`, branch motion inside `gsap.matchMedia()` on `default` / `reduced` conditions, and keep the context for cleanup.
 - Pre-authored vector animations go through `src/lib/ui/Lottie/Lottie.svelte` (the `lottie_light` svg build) with JSON under `src/lib/assets/lottie/`. Never import `lottie-web` in feature code.

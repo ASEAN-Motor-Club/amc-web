@@ -1,10 +1,10 @@
 <script>
-  import '#lib/font-sans-em.js';
+  import '#lib/font-sans-em.ts';
   import { PUBLIC_SEASON_START_DATE } from '$app/env/public';
   import CalendarGroup from '#lib/components/Championship/CalendarGroup.svelte';
   import Standing from '#lib/components/Championship/Standing.svelte';
   import { m } from '#messages';
-  import { format } from '#lib/date.js';
+  import { format } from '#lib/date.ts';
 
   const startDate = new Date(PUBLIC_SEASON_START_DATE);
 </script>

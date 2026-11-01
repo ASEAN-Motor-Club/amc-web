@@ -21,7 +21,7 @@ description: Directory shape — what each top-level tree is for, the ui vs comp
 | `vite-plugins/`       | Repo-local Vite plugins                                                   |
 | `static/`             | Served as-is at the site root                                             |
 
-Loose files in `src/lib/` (`tw-var.ts`, `date.ts`, `realtimeDate.svelte.ts`, …) are single-purpose modules imported as `#lib/<name>.js`.
+Loose files in `src/lib/` (`tw-var.ts`, `date.ts`, `realtimeDate.svelte.ts`, …) are single-purpose modules imported by their real file name (`#lib/date.ts`, `#lib/realtimeDate.svelte.ts`).
 
 ## Where new files go
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import type { DeliveryJob } from '#lib/api/types.js';
-import { deliveryPoints } from '#lib/data/deliveryPoint.js';
-import { getJobValidPoints } from './validPoints';
+import type { DeliveryJob } from '#lib/api/types.ts';
+import { deliveryPoints } from '#lib/data/deliveryPoint.ts';
+import { getJobValidPoints } from './validPoints.ts';
 
 const baseJob: DeliveryJob = {
   cargos: [],

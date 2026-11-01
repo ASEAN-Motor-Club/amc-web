@@ -1,6 +1,6 @@
-import type { DeliveryCargo, DeliveryCargoKey } from '#lib/data/types.js';
-import type { Track } from '#lib/schema/track.js';
-import type { Vector3 } from '../types';
+import type { DeliveryCargo, DeliveryCargoKey } from '#lib/data/types.ts';
+import type { Track } from '#lib/schema/track.ts';
+import type { Vector3 } from '../types/index.ts';
 
 export type HouseData = Record<string, House>;
 

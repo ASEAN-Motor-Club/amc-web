@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '#lib/ui/Button/Button.svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
-  import type { Color } from '#lib/ui/shared.js';
+  import type { Color } from '#lib/ui/shared.ts';
   import type { ClassValue } from 'svelte/elements';
   import { prefersReducedMotion } from 'svelte/motion';
   import { slide } from 'svelte/transition';

@@ -1,4 +1,4 @@
-import { siteOrigin, sitemapPaths } from '#lib/data/site.js';
+import { siteOrigin, sitemapPaths } from '#lib/data/site.ts';
 
 export const prerender = true;
 

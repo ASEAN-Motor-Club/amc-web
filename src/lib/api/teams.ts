@@ -1,7 +1,7 @@
 import { PUBLIC_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions } from '@tanstack/svelte-query';
-import type { Team } from './types';
-import { apiClient, type QueryOverrides, type QueryParam } from './_api';
+import type { Team } from './types.ts';
+import { apiClient, type QueryOverrides, type QueryParam } from './_api.ts';
 
 export interface TeamsQueryInput {
   /** Overrides spread over the endpoint's defaults. */

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
-  import { createFrequencyBands } from '../Radio/GlobalPlayer/frequency.svelte';
+  import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context.ts';
+  import { createFrequencyBands } from '../Radio/GlobalPlayer/frequency.svelte.ts';
 
   const BAR_COUNT = 3;
   const PERCENT = 100;

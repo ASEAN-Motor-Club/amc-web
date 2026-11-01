@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import { eventInfoQueryOptions } from './event';
+import { eventInfoQueryOptions } from './event.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

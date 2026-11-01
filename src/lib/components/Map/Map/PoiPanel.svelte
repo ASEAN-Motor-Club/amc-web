@@ -4,11 +4,11 @@
   import Card from '#lib/ui/Card/Card.svelte';
   import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import Button from '#lib/ui/Button/Button.svelte';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { dev } from '$app/env';
   import { m } from '#messages';
   import PoiItem from './PoiItem.svelte';
-  import { PoiType, type MapState } from './types';
+  import { PoiType, type MapState } from './types.ts';
 
   interface Props {
     mapState: MapState;

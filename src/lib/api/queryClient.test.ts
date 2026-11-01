@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
 import type { QueryClient } from '@tanstack/svelte-query';
-import { createQueryClient } from './queryClient';
+import { createQueryClient } from './queryClient.ts';
 
 const DEFAULT_STALE_TIME_MS = 30_000;
 const WITHIN_STALE_TIME_MS = DEFAULT_STALE_TIME_MS - 1;

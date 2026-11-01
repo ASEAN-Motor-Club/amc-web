@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { apiClient, isAbortError } from './_api';
+import { apiClient, isAbortError } from './_api.ts';
 
 describe('apiClient', () => {
   const mockFetch = vi.fn();

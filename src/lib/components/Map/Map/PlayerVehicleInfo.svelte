@@ -1,8 +1,8 @@
 <script lang="ts">
   import vehiclesName from '#lib/assets/data/out_vehicles_name.json';
   import { m } from '#messages';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
-  import type { MtNameRecord } from '#lib/types/index.js';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
+  import type { MtNameRecord } from '#lib/types/index.ts';
 
   export interface playerVehicleInfoProps {
     vehicleKey: keyof typeof vehiclesName | 'None' | string;

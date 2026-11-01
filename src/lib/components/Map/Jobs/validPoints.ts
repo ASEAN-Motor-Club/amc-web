@@ -1,6 +1,6 @@
-import type { DeliveryJob } from '#lib/api/types.js';
-import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
-import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
+import type { DeliveryJob } from '#lib/api/types.ts';
+import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
 
 export interface JobValidPoints {
   /** Points that stock the job's cargo and clear its pickup allowlist. */

@@ -5,7 +5,7 @@ import {
   createEventSourceStream,
   createWebSocketStream,
   type StreamResult,
-} from './_stream.svelte';
+} from './_stream.svelte.ts';
 
 const SSE_URL = 'https://stream.test/events';
 const WS_URL = 'wss://stream.test/socket';

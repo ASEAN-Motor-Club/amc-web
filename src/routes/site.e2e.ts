@@ -2,7 +2,7 @@
 // robots/sitemap, axe-core accessibility and keyboard reachability on every sitemap route.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { chromium, type Browser } from 'playwright';
-import { siteOrigin, sitemapPaths } from '#lib/data/site.js';
+import { siteOrigin, sitemapPaths } from '#lib/data/site.ts';
 import { m } from '#messages';
 import {
   axeViolations,

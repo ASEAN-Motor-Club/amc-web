@@ -1,10 +1,10 @@
 <script lang="ts">
-  import '#lib/font-sans-em.js';
+  import '#lib/font-sans-em.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Modal from '#lib/ui/Modal/Modal.svelte';
   import { fly } from 'svelte/transition';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import NavbarItem from './NavbarItem.svelte';
   import NavbarIcon from './NavbarIcon.svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
@@ -12,12 +12,12 @@
   import NavbarPageLoading from './NavbarPageLoading.svelte';
   import { prefersReducedMotion } from 'svelte/motion';
   import SettingsMenu from './SettingsMenu.svelte';
-  import type { NavbarItem as NavbarItemType } from './types';
+  import type { NavbarItem as NavbarItemType } from './types.ts';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
-  import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context';
+  import { getGlobalPlayerContext } from '../Radio/GlobalPlayer/context.ts';
   import SoundBarIcon from './SoundBarIcon.svelte';
-  import { isLg } from '#lib/utils/media.svelte.js';
+  import { isLg } from '#lib/utils/media.svelte.ts';
 
   const playerContext = getGlobalPlayerContext();
 

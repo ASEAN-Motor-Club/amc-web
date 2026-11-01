@@ -2,22 +2,22 @@
   import Card from '#lib/ui/Card/Card.svelte';
   import TextInput from '#lib/ui/TextInput/TextInput.svelte';
   import type { FormEventHandler } from 'svelte/elements';
-  import { deliveryPoints as unmappedDeliveryPoints } from '#lib/data/deliveryPoint.js';
-  import { houses as unmappedHouse } from '#lib/data/house.js';
-  import { PointType, type PlayerData } from './types';
-  import { cargoName } from '#lib/data/cargo.js';
+  import { deliveryPoints as unmappedDeliveryPoints } from '#lib/data/deliveryPoint.ts';
+  import { houses as unmappedHouse } from '#lib/data/house.ts';
+  import { PointType, type PlayerData } from './types.ts';
+  import { cargoName } from '#lib/data/cargo.ts';
   import HighlightText from '#lib/ui/HighlightText/HighlightText.svelte';
   import { goto } from '$app/navigation';
-  import type { Vector2 } from '#lib/types/index.js';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import type { Vector2 } from '#lib/types/index.ts';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { fade } from 'svelte/transition';
-  import type { HouseData } from '#lib/api/types.js';
+  import type { HouseData } from '#lib/api/types.ts';
   import { m } from '#messages';
   import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
-  import type { Pins } from '#lib/schema/pin.js';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
-  import { formatLocationAtPoint, getSelectionClearedParams } from '../utils';
+  import type { Pins } from '#lib/schema/pin.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
+  import { formatLocationAtPoint, getSelectionClearedParams } from '../utils.ts';
 
   export type SearchPoint = {
     guid?: string;

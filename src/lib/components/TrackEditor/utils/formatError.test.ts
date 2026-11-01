@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { m } from '#messages';
-import type { TrackIssue } from '#lib/schema/track.js';
-import { formatTrackError } from './formatError';
+import type { TrackIssue } from '#lib/schema/track.ts';
+import { formatTrackError } from './formatError.ts';
 
 describe('formatTrackError', () => {
   const cases: { issue: TrackIssue; expected: string }[] = [

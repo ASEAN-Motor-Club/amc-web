@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import { teleportsQueryOptions, type TeleportResponse } from './teleport';
+import { teleportsQueryOptions, type TeleportResponse } from './teleport.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

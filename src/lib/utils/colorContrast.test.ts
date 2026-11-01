@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { checkContrastCompliance, isValidHexColor } from './colorContrast';
+import { checkContrastCompliance, isValidHexColor } from './colorContrast.ts';
 
 describe('isValidHexColor', () => {
   it('accepts 3- and 6-digit hex colors with a leading hash', () => {

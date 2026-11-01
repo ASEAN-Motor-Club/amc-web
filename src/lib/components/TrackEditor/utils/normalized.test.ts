@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { normalizedWaypoints } from './normalized';
-import type { Waypoint } from '#lib/schema/track.js';
+import { normalizedWaypoints } from './normalized.ts';
+import type { Waypoint } from '#lib/schema/track.ts';
 
 describe('normalizedWaypoints', () => {
   it('should return an empty array when given an empty array', () => {

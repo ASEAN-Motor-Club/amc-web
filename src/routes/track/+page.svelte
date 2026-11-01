@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import SelectTrack from '#lib/components/TrackEditor/Editor/SelectTrack.svelte';
-  import type { Track } from '#lib/schema/track.js';
+  import type { Track } from '#lib/schema/track.ts';
   import { m } from '#messages';
-  import { trackData } from '#lib/components/TrackEditor/trackData.svelte.js';
-  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.js';
+  import { trackData } from '#lib/components/TrackEditor/trackData.svelte.ts';
+  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.ts';
 
   const title = $derived(
     m['track_editor.head']({

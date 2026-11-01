@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mergeTeleportPoints } from './teleport';
+import { mergeTeleportPoints } from './teleport.ts';
 
 describe('mergeTeleportPoints', () => {
   it('returns nothing for no teleports', () => {

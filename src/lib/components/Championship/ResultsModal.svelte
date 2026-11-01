@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { EventResult, ScheduledEvent } from '#lib/api/types.js';
-  import { createEventResultsQuery } from '#lib/api/championship.js';
+  import type { EventResult, ScheduledEvent } from '#lib/api/types.ts';
+  import { createEventResultsQuery } from '#lib/api/championship.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
   import Modal from '#lib/ui/Modal/Modal.svelte';
-  import { formatTime } from '#lib/utils/formatTime.js';
+  import { formatTime } from '#lib/utils/formatTime.ts';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
   import { page } from '$app/state';
   import Table from '#lib/ui/Table/Table.svelte';

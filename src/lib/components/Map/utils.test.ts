@@ -10,7 +10,7 @@ vi.mock('$app/state', () => ({
   page: mockPage,
 }));
 
-vi.mock('#lib/utils/media.svelte.js', () => ({
+vi.mock('#lib/utils/media.svelte.ts', () => ({
   isSm: mockIsSm,
 }));
 
@@ -21,7 +21,7 @@ import {
   getLinkHref,
   getSelectionClearedParams,
   getViewHref,
-} from './utils';
+} from './utils.ts';
 
 // getSelectionClearedParams reads page.url.searchParams through clientSearchParams,
 // which bails out unless `window` exists; the node test env has none.

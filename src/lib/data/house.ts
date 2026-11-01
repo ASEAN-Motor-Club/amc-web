@@ -1,4 +1,4 @@
-import type { Vector2, Vector3 } from '#lib/types/index.js';
+import type { Vector2, Vector3 } from '#lib/types/index.ts';
 import houseJson from '#lib/assets/data/out_house.json';
 import { PUBLIC_HOUSE_PRICE_MULTIPLIER } from '$app/env/public';
 

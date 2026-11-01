@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import { formatHex, oklch, type Color } from 'culori';
-import type { PoiDotStyle } from './constants';
+import type { PoiDotStyle } from './constants.ts';
 
 /** Converts an oklch() string to hex (three's Color cannot parse oklch), via culori. */
 const convertOklchToHex = (oklchStr: string): string => {

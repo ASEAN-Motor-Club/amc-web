@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cssTimeToMs } from './cssTransitionToMs';
+import { cssTimeToMs } from './cssTransitionToMs.ts';
 
 describe('cssTimeToMs', () => {
   describe('valid CSS time syntax', () => {

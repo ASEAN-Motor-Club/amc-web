@@ -39,11 +39,11 @@
     colorCyan600,
     colorCyan500,
     colorCyan950,
-  } from '#lib/tw-var.js';
+  } from '#lib/tw-var.ts';
   import OlMap from '#lib/ui/OlMap/OlMap.svelte';
   import { Collection, Feature, type MapBrowserEvent, type MapEvent } from 'ol';
   import type OlMapType from 'ol/Map';
-  import { isMouse } from '#lib/utils/media.svelte.js';
+  import { isMouse } from '#lib/utils/media.svelte.ts';
   import { prefersReducedMotion } from 'svelte/motion';
   import { LineString, Point, Polygon } from 'ol/geom';
   import VectorLayer from 'ol/layer/Vector';
@@ -56,19 +56,19 @@
     type MapState,
     type PlayerData,
     type TeleportPoint,
-  } from './types';
-  import { DeliveryLineType, type DeliveryJob, type HouseData } from '#lib/api/types.js';
-  import type { ShortcutZone } from '#lib/api/shortcutZone.js';
-  import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
+  } from './types.ts';
+  import { DeliveryLineType, type DeliveryJob, type HouseData } from '#lib/api/types.ts';
+  import type { ShortcutZone } from '#lib/api/shortcutZone.ts';
+  import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
   import { m } from '#messages';
-  import type { DeliveryLineData } from './deliveryLine';
-  import { reProjectPoint, reProjectVec2 } from '#lib/ui/OlMap/utils.js';
+  import type { DeliveryLineData } from './deliveryLine.ts';
+  import { reProjectPoint, reProjectVec2 } from '#lib/ui/OlMap/utils.ts';
   import { dev } from '$app/env';
-  import type { Pins } from '#lib/schema/pin.js';
-  import { houses } from '#lib/data/house.js';
-  import { areaBoundaries, areaNameFontSize } from '#lib/data/area.js';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  import type { Pins } from '#lib/schema/pin.ts';
+  import { houses } from '#lib/data/house.ts';
+  import { areaBoundaries, areaNameFontSize } from '#lib/data/area.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
   import type { MtNameRecord } from '#lib/types/index.ts';
   import type { Pixel } from 'ol/pixel';
 

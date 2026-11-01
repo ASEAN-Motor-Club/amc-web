@@ -8,6 +8,8 @@ import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
+import importX from 'eslint-plugin-import-x';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import { loadConfig } from '@sveltejs/load-config';
 import { defineConfig } from 'eslint/config';
 
@@ -26,6 +28,27 @@ export default defineConfig(
   ...svelte.configs.recommended,
   prettier,
   ...svelte.configs.prettier,
+  {
+    plugins: { 'import-x': importX },
+    settings: {
+      'import-x/resolver-next': [
+        createTypeScriptImportResolver({ extensions: ['.ts', '.js', '.svelte', '.d.ts'] }),
+      ],
+    },
+    rules: {
+      // Local specifiers name the real file on disk (`#lib/date.ts`, `./paraglide/runtime.js`,
+      // `../utils/index.ts`); `.js` → `.ts` mismatches are reported because the resolved file wins.
+      'import-x/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          checkTypeImports: true,
+          // SvelteKit virtual modules have no file behind them.
+          pathGroupOverrides: [{ pattern: '$app/**', action: 'ignore' }],
+        },
+      ],
+    },
+  },
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
@@ -69,7 +92,7 @@ export default defineConfig(
           patterns: [
             {
               group: ['date-fns', 'date-fns/*'],
-              message: 'Use unified imports from #lib/date.js instead',
+              message: 'Use unified imports from #lib/date.ts instead',
               allowTypeImports: true,
             },
             {

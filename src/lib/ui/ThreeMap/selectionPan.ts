@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { prefersReducedMotion } from 'svelte/motion';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { SELECTION_PAN_DURATION_S, SELECTION_PAN_SNAP_EPSILON } from './constants';
+import { SELECTION_PAN_DURATION_S, SELECTION_PAN_SNAP_EPSILON } from './constants.ts';
 
 /** Glides the camera until the selected POI sits under the screen center - the
  * 3D counterpart of the OL view's `animate({ center })`. */

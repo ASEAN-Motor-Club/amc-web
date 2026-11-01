@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { autoRotateAllWaypoints, autoRotateWaypoint } from './autoRotate';
+import { autoRotateAllWaypoints, autoRotateWaypoint } from './autoRotate.ts';
 
 describe('autoRotate', () => {
   describe('autoRotateWaypoint', () => {

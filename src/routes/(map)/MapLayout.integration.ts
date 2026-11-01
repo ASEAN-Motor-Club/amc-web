@@ -3,11 +3,11 @@ import { page } from 'vitest/browser';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { m } from '#messages';
 import MapLayout from './MapLayout.integration.svelte';
-import type * as playerApi from '#lib/api/player.js';
-import type * as housingApi from '#lib/api/housing.js';
-import type * as deliveryApi from '#lib/api/delivery.js';
-import { deliveryPointsMap } from '#lib/data/deliveryPoint.js';
-import { getMtLocale } from '#lib/utils/getMtLocale.js';
+import type * as playerApi from '#lib/api/player.ts';
+import type * as housingApi from '#lib/api/housing.ts';
+import type * as deliveryApi from '#lib/api/delivery.ts';
+import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
+import { getMtLocale } from '#lib/utils/getMtLocale.ts';
 
 // The (map) layout derives its panels from the route in $app/state and pushes streams/queries
 // that would hit the production API. The route and the data sources are mocked per-test so the
@@ -49,7 +49,7 @@ const { mockJobs, setJobs } = vi.hoisted(() => {
   return { mockJobs: jobs, setJobs };
 });
 
-vi.mock('#lib/api/player.js', async (importOriginal) => {
+vi.mock('#lib/api/player.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof playerApi>();
   return {
     ...actual,
@@ -63,7 +63,7 @@ vi.mock('#lib/api/player.js', async (importOriginal) => {
   };
 });
 
-vi.mock('#lib/api/housing.js', async (importOriginal) => {
+vi.mock('#lib/api/housing.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof housingApi>();
   return {
     ...actual,
@@ -71,7 +71,7 @@ vi.mock('#lib/api/housing.js', async (importOriginal) => {
   };
 });
 
-vi.mock('#lib/api/delivery.js', async (importOriginal) => {
+vi.mock('#lib/api/delivery.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof deliveryApi>();
   return {
     ...actual,

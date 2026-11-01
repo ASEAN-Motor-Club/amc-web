@@ -1,13 +1,13 @@
 <script lang="ts">
-  import '#lib/font-sans-em.js';
+  import '#lib/font-sans-em.ts';
   import ScrollHint from '#lib/components/Home/ScrollHint.svelte';
   import { m } from '#messages';
   import posterVid from '#lib/assets/videos/background_trailer.mp4';
   import Button from '#lib/ui/Button/Button.svelte';
   import { PUBLIC_DISCORD_LINK, PUBLIC_PATREON_LINK } from '$app/env/public';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { rtDate } from '#lib/realtimeDate.svelte.js';
-  import { createPlayerCountStream } from '#lib/api/player.js';
+  import { rtDate } from '#lib/realtimeDate.svelte.ts';
+  import { createPlayerCountStream } from '#lib/api/player.ts';
 
   const playerCountStream = createPlayerCountStream();
 

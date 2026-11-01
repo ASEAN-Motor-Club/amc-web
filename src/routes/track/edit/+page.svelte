@@ -3,8 +3,8 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { m } from '#messages';
-  import { trackData } from '#lib/components/TrackEditor/trackData.svelte.js';
-  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.js';
+  import { trackData } from '#lib/components/TrackEditor/trackData.svelte.ts';
+  import { clientSearchParams } from '#lib/utils/clientSearchParamsGet.ts';
 
   onMount(() => {
     if (!trackData.value) {

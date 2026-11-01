@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as THREE from 'three';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { SELECTION_PAN_DURATION_S } from './constants';
-import { createSelectionPan } from './selectionPan';
+import { SELECTION_PAN_DURATION_S } from './constants.ts';
+import { createSelectionPan } from './selectionPan.ts';
 
 /** Camera high above the map looking down at the origin, tilted so the
  * view axis actually crosses ground planes. */

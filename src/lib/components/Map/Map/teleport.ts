@@ -1,5 +1,5 @@
-import type { TeleportResponse } from '#lib/api/teleport.js';
-import type { TeleportPoint } from './types';
+import type { TeleportResponse } from '#lib/api/teleport.ts';
+import type { TeleportPoint } from './types.ts';
 
 /**
  * Collapses teleport points sharing the exact same coordinate into a single point:

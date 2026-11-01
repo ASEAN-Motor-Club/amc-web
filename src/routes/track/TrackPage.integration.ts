@@ -3,7 +3,7 @@ import { page } from 'vitest/browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { goto } from '$app/navigation';
 import { m } from '#messages';
-import { trackData } from '#lib/components/TrackEditor/trackData.svelte.js';
+import { trackData } from '#lib/components/TrackEditor/trackData.svelte.ts';
 import TrackPage from './TrackPage.integration.svelte';
 
 vi.mock('$app/navigation', () => ({ goto: vi.fn(), beforeNavigate: vi.fn() }));

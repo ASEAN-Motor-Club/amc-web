@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { gamePlaneToWorldXZ, worldXZToGamePlane } from './coords';
-import type { TilesMeta } from './three-map-types';
+import { gamePlaneToWorldXZ, worldXZToGamePlane } from './coords.ts';
+import type { TilesMeta } from './three-map-types.ts';
 
 const meta: TilesMeta = {
   widthMeters: 22000,

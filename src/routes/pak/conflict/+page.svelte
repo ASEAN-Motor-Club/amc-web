@@ -5,7 +5,7 @@
   import MarkdownText from '#lib/ui/MarkdownText/MarkdownText.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
   import Divider from '#lib/ui/Divider/Divider.svelte';
-  import { Status } from '#lib/utils/status.js';
+  import { Status } from '#lib/utils/status.ts';
   import mappings from '#lib/assets/mappings/Mappings718.usmap?url';
   import ExpandableRows from './ExpandableRows.svelte';
 

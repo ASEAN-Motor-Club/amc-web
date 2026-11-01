@@ -2,31 +2,31 @@
   import { onMount } from 'svelte';
   import * as THREE from 'three';
   import Feature from 'ol/Feature';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
   import {
     PointType,
     type MapSelection,
     type MapState,
     type PlayerData,
     type TeleportPoint,
-  } from '#lib/components/Map/Map/types.js';
-  import { getMtLocale } from '#lib/utils/getMtLocale.js';
+  } from '#lib/components/Map/Map/types.ts';
+  import { getMtLocale } from '#lib/utils/getMtLocale.ts';
   import {
     deliveryPoints as deliveryPointsList,
     type DeliveryPoint,
-  } from '#lib/data/deliveryPoint.js';
-  import { areaBoundaries } from '#lib/data/area.js';
-  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.js';
-  import { houses as housesList } from '#lib/data/house.js';
-  import type { House } from '#lib/data/house.js';
-  import type { Pins } from '#lib/schema/pin.js';
-  import { createThreeMapScene, type ThreeMapScene } from '#lib/ui/ThreeMap/scene.js';
-  import { ZOOM_BUTTON_LOG_STEP } from '#lib/ui/ThreeMap/constants.js';
-  import { PoiState } from '#lib/ui/ThreeMap/poi.js';
-  import type { PoiMarker, PoiInput } from '#lib/ui/ThreeMap/poiManager.js';
+  } from '#lib/data/deliveryPoint.ts';
+  import { areaBoundaries } from '#lib/data/area.ts';
+  import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
+  import { houses as housesList } from '#lib/data/house.ts';
+  import type { House } from '#lib/data/house.ts';
+  import type { Pins } from '#lib/schema/pin.ts';
+  import { createThreeMapScene, type ThreeMapScene } from '#lib/ui/ThreeMap/scene.ts';
+  import { ZOOM_BUTTON_LOG_STEP } from '#lib/ui/ThreeMap/constants.ts';
+  import { PoiState } from '#lib/ui/ThreeMap/poi.ts';
+  import type { PoiMarker, PoiInput } from '#lib/ui/ThreeMap/poiManager.ts';
   import { m } from '#messages';
-  import { reProjectPointInverse } from '#lib/ui/OlMap/utils.js';
-  import type { Vector3 } from '#lib/types/index.js';
+  import { reProjectPointInverse } from '#lib/ui/OlMap/utils.ts';
+  import type { Vector3 } from '#lib/types/index.ts';
   import Button from '#lib/ui/Button/Button.svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import clsx from 'clsx';

@@ -1,6 +1,6 @@
-import type { Waypoint } from '#lib/schema/track.js';
-import { WP_EULER_ORDER } from '.';
-import { averageRotation } from './average';
+import type { Waypoint } from '#lib/schema/track.ts';
+import { WP_EULER_ORDER } from './index.ts';
+import { averageRotation } from './average.ts';
 import Quat from 'quaternion';
 
 export const autoRotateWaypoint = (

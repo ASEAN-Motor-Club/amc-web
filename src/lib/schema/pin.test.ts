@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pinSchema, pinsSchema } from './pin';
+import { pinSchema, pinsSchema } from './pin.ts';
 
 describe('pinSchema', () => {
   it('accepts a minimal pin with only coordinates', () => {

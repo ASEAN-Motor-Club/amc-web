@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { trackSchema } from './track';
+import { trackSchema } from './track.ts';
 
 describe('trackSchema', () => {
   const validWaypoint = {

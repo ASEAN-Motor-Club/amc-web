@@ -8,7 +8,7 @@
     FullAutoFill,
     HTMLInputAttributes,
   } from 'svelte/elements';
-  import { getInputGroupContext } from '../InputGroup/context';
+  import { getInputGroupContext } from '../InputGroup/context.ts';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
   import Button from '../Button/Button.svelte';

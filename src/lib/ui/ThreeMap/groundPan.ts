@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants';
+import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants.ts';
 
 export function createGroundPan(
   renderer: Renderer,

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
-  import { setInputGroupContext } from './context';
+  import { setInputGroupContext } from './context.ts';
   import { twMerge } from 'tailwind-merge';
   import clsx from 'clsx';
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizedRotation } from './normalized';
+import { normalizedRotation } from './normalized.ts';
 
 describe('normalizedRotation', () => {
   it('should normalize angles within (-π, π] range', () => {

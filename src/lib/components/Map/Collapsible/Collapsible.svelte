@@ -4,20 +4,20 @@
   import { slide } from 'svelte/transition';
   import { type SvelteMap, SvelteURLSearchParams } from 'svelte/reactivity';
   import { prefersReducedMotion } from 'svelte/motion';
-  import { isSm } from '#lib/utils/media.svelte.js';
+  import { isSm } from '#lib/utils/media.svelte.ts';
   import { m } from '#messages';
-  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
+  import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
   import DeliveryDetails from '../Delivery/DeliveryDetails.svelte';
-  import type { PlayerData } from '../Map/types';
+  import type { PlayerData } from '../Map/types.ts';
   import Players from '../Players/Players.svelte';
   import Jobs from '../Jobs/Jobs.svelte';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
   import JobDetails from '../Jobs/JobDetails.svelte';
 
   import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';
   import CollapsibleButton from './CollapsibleButton.svelte';
   import CollapsibleActionButton from './CollapsibleActionButton.svelte';
-  import type { CollapsibleType, CollapsibleTypeWithId } from '../types';
+  import type { CollapsibleType, CollapsibleTypeWithId } from '../types.ts';
   import { untrack } from 'svelte';
 
   interface Props {

@@ -1,5 +1,5 @@
 import { focusManager } from '@tanstack/svelte-query';
-import type { QueryParam } from './_api';
+import type { QueryParam } from './_api.ts';
 
 /** Mirrors TanStack's query status, applied to a push stream instead of a fetch. */
 export type StreamStatus = 'pending' | 'success' | 'error';

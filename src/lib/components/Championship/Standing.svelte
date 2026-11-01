@@ -1,6 +1,6 @@
 <script lang="ts">
   import { m } from '#messages';
-  import { createPersonalStandingsQuery, createTeamStandingsQuery } from '#lib/api/championship.js';
+  import { createPersonalStandingsQuery, createTeamStandingsQuery } from '#lib/api/championship.ts';
   import { PUBLIC_SEASON_NO } from '$app/env/public';
   import StandingCard from './StandingCard.svelte';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';

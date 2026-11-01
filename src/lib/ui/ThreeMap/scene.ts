@@ -14,17 +14,17 @@ import {
   ZOOM_LOG_PER_WHEEL_DELTA,
   WHEEL_NOTCH_DELTA_Y,
   ZOOM_LOG_PER_WHEEL_NOTCH,
-} from './constants';
-import { createSelectionPan, type SelectionPan } from './selectionPan';
-import { createGroundPan } from './groundPan';
-import { TILES_META } from './heightmap';
-import { createPoiManager, type PoiManager } from './poiManager';
-import { createTileManager } from './tileManager';
-import type { TileManager } from './tileManager';
-import { createGroundHeights, type GroundHeights } from './groundHeights';
-import { createAreaLabelLayer, type AreaLabelLayer } from './areaLabels';
-import { viewportScale, type ViewportScale } from './poi';
-import type { TilesMeta } from './three-map-types';
+} from './constants.ts';
+import { createSelectionPan, type SelectionPan } from './selectionPan.ts';
+import { createGroundPan } from './groundPan.ts';
+import { TILES_META } from './heightmap.ts';
+import { createPoiManager, type PoiManager } from './poiManager.ts';
+import { createTileManager } from './tileManager.ts';
+import type { TileManager } from './tileManager.ts';
+import { createGroundHeights, type GroundHeights } from './groundHeights.ts';
+import { createAreaLabelLayer, type AreaLabelLayer } from './areaLabels.ts';
+import { viewportScale, type ViewportScale } from './poi.ts';
+import type { TilesMeta } from './three-map-types.ts';
 
 export interface CameraRig {
   camera: THREE.PerspectiveCamera;

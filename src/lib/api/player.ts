@@ -1,9 +1,12 @@
 import { PUBLIC_API_BASE } from '$app/env/public';
 import { fromBinary } from '@bufbuild/protobuf';
-import { PlayerPositionsSchema, type PlayerPositions } from './proto/generated/player_positions_pb';
-import type { PlayerEventData } from './types';
-import type { QueryParam } from './_api';
-import { createEventSourceStream, createWebSocketStream } from './_stream.svelte';
+import {
+  PlayerPositionsSchema,
+  type PlayerPositions,
+} from './proto/generated/player_positions_pb.ts';
+import type { PlayerEventData } from './types.ts';
+import type { QueryParam } from './_api.ts';
+import { createEventSourceStream, createWebSocketStream } from './_stream.svelte.ts';
 
 export interface PlayerStreamInput {
   /** Gate for the connection; defaults to open. */

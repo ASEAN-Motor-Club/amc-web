@@ -22,7 +22,7 @@
 <script lang="ts" generics="T extends string | number">
   import type { Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
-  import { getSelectContext } from './context';
+  import { getSelectContext } from './context.ts';
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';
 

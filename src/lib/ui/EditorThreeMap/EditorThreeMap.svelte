@@ -4,15 +4,15 @@
   import clsx from 'clsx';
   import { twMerge } from 'tailwind-merge';
   import type { ClassValue } from 'svelte/elements';
-  import type { Vector2, Vector3 } from '#lib/types/index.js';
+  import type { Vector2, Vector3 } from '#lib/types/index.ts';
   import type { MapViewState } from '#lib/ui/OlMap/OlMap.svelte';
-  import type { Waypoint } from '#lib/schema/track.js';
+  import type { Waypoint } from '#lib/schema/track.ts';
   import { Quaternion } from 'quaternion';
-  import { createThreeMapScene, type ThreeMapScene } from '#lib/ui/ThreeMap/scene.js';
-  import { TRACK_EDITOR_MIN_DISTANCE_M } from '#lib/ui/ThreeMap/constants.js';
-  import { TILES_META } from '#lib/ui/ThreeMap/heightmap.js';
-  import { gameCoordToWorld, worldXZToGamePlane } from '#lib/ui/ThreeMap/coords.js';
-  import { createTrackGates, type GateSpec, type TrackGates } from './trackGates';
+  import { createThreeMapScene, type ThreeMapScene } from '#lib/ui/ThreeMap/scene.ts';
+  import { TRACK_EDITOR_MIN_DISTANCE_M } from '#lib/ui/ThreeMap/constants.ts';
+  import { TILES_META } from '#lib/ui/ThreeMap/heightmap.ts';
+  import { gameCoordToWorld, worldXZToGamePlane } from '#lib/ui/ThreeMap/coords.ts';
+  import { createTrackGates, type GateSpec, type TrackGates } from './trackGates.ts';
 
   export interface EditorThreeMapProps {
     /** The class to apply to the map element */

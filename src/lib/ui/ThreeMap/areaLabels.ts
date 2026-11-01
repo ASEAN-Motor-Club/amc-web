@@ -4,17 +4,17 @@ import {
   AREA_NAME_TEXT_OPACITY,
   AREA_NAME_TIERS,
   OVERLAY_GROUND_OFFSET_M,
-} from './constants';
-import { gamePlaneToWorldXZ, ringInteriorPoint } from './coords';
-import { tileWorldRect } from './heightmap';
-import type { GroundHeights } from './groundHeights';
-import { makeTextSprite, type TextSprite, type ViewportScale } from './poi';
-import type { TileManager } from './tileManager';
-import type { TilesMeta } from './three-map-types';
-import { areaBoundaries, areaNameFontSize } from '#lib/data/area.js';
-import { getMtLocale } from '#lib/utils/getMtLocale.js';
-import type { MtNameRecord } from '#lib/types/index.js';
-import { adjustOpacity, colorBlue300, colorGray950, colorTextDark, fontSans } from '#lib/tw-var.js';
+} from './constants.ts';
+import { gamePlaneToWorldXZ, ringInteriorPoint } from './coords.ts';
+import { tileWorldRect } from './heightmap.ts';
+import type { GroundHeights } from './groundHeights.ts';
+import { makeTextSprite, type TextSprite, type ViewportScale } from './poi.ts';
+import type { TileManager } from './tileManager.ts';
+import type { TilesMeta } from './three-map-types.ts';
+import { areaBoundaries, areaNameFontSize } from '#lib/data/area.ts';
+import { getMtLocale } from '#lib/utils/getMtLocale.ts';
+import type { MtNameRecord } from '#lib/types/index.ts';
+import { adjustOpacity, colorBlue300, colorGray950, colorTextDark, fontSans } from '#lib/tw-var.ts';
 
 export interface AreaLabelLayer {
   /** Re-applies localized text (re-runs on locale changes, like OL's label effect). */

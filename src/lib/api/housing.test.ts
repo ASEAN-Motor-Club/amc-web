@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import { housingQueryOptions } from './housing';
+import { housingQueryOptions } from './housing.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

@@ -4,8 +4,8 @@
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
   import Divider from '#lib/ui/Divider/Divider.svelte';
-  import { MarkdownText } from '#lib/ui/MarkdownText/index.js';
-  import { Status } from '#lib/utils/status.js';
+  import { MarkdownText } from '#lib/ui/MarkdownText/index.ts';
+  import { Status } from '#lib/utils/status.ts';
   import mappings from '#lib/assets/mappings/Mappings718.usmap?url';
 
   const title = $derived(

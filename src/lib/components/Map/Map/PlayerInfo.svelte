@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { PlayerData } from './types';
+  import type { PlayerData } from './types.ts';
   import PlayerVehicleInfo from './PlayerVehicleInfo.svelte';
-  import { parsePlayerRoles } from '#lib/utils/parsePlayerRole.js';
+  import { parsePlayerRoles } from '#lib/utils/parsePlayerRole.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
 

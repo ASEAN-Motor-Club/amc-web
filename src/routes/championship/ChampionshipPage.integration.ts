@@ -4,15 +4,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { tick } from 'svelte';
 import { PUBLIC_SEASON_NO, PUBLIC_SEASON_START_DATE } from '$app/env/public';
 import { m } from '#messages';
-import { format } from '#lib/date.js';
-import type * as teamsApi from '#lib/api/teams.js';
+import { format } from '#lib/date.ts';
+import type * as teamsApi from '#lib/api/teams.ts';
 import ChampionshipPage from './ChampionshipPage.integration.svelte';
 
 const { createTeamsQueryMock } = vi.hoisted(() => ({
   createTeamsQueryMock: vi.fn(),
 }));
 
-vi.mock('#lib/api/teams.js', async (importOriginal) => ({
+vi.mock('#lib/api/teams.ts', async (importOriginal) => ({
   ...(await importOriginal<typeof teamsApi>()),
   createTeamsQuery: createTeamsQueryMock,
 }));

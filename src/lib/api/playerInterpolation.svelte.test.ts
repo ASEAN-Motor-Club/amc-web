@@ -7,13 +7,13 @@ import {
   PlayerPositionsSchema,
   type PlayerPosition,
   type PlayerPositions,
-} from './proto/generated/player_positions_pb';
+} from './proto/generated/player_positions_pb.ts';
 import { prefersReducedMotion } from 'svelte/motion';
 import {
   createPlayerInterpolator,
   createInterpolatedPlayerPositionsStream,
   type InterpolatedPlayerPositions,
-} from './playerInterpolation.svelte';
+} from './playerInterpolation.svelte.ts';
 
 class FakeWebSocket {
   static instances: FakeWebSocket[] = [];

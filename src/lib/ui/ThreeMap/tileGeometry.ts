@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
-import { COLOR_MAX_ZOOM, SKIRT_DROP } from './constants';
-import { rawHeightToWorldZMeters } from './heightmap';
+import { COLOR_MAX_ZOOM, SKIRT_DROP } from './constants.ts';
+import { rawHeightToWorldZMeters } from './heightmap.ts';
 
 const COLOR_BASE_URL = '/map_tiles/719a/colors';
 const HEIGHT_BASE_URL = '/map_tiles/719a/heights';

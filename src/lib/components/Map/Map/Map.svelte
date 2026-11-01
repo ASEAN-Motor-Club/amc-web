@@ -3,25 +3,31 @@
   import { onMount } from 'svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
-  import { PointType, PoiType, type MapSelection, type MapState, type PlayerData } from './types';
+  import {
+    PointType,
+    PoiType,
+    type MapSelection,
+    type MapState,
+    type PlayerData,
+  } from './types.ts';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
-  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
-  import { getDeliveryLine } from './deliveryLine';
+  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+  import { getDeliveryLine } from './deliveryLine.ts';
   import Search from './Search.svelte';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.js';
-  import { createTeleportsQuery } from '#lib/api/teleport.js';
-  import { mergeTeleportPoints } from './teleport';
-  import { createShortcutZonesQuery } from '#lib/api/shortcutZone.js';
+  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
+  import { createTeleportsQuery } from '#lib/api/teleport.ts';
+  import { mergeTeleportPoints } from './teleport.ts';
+  import { createShortcutZonesQuery } from '#lib/api/shortcutZone.ts';
   import { m } from '#messages';
-  import { pinsSchema, type Pins } from '#lib/schema/pin.js';
+  import { pinsSchema, type Pins } from '#lib/schema/pin.ts';
   import * as z from 'zod/mini';
   import OlMapWrapper from './OlMapWrapper.svelte';
   import ThreeMapWrapper from './ThreeMapWrapper.svelte';
   import { goto } from '$app/navigation';
-  import { getSelectionClearedParams } from '../utils';
-  import { isMouse, isSm } from '#lib/utils/media.svelte.js';
-  import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.js';
-  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
+  import { getSelectionClearedParams } from '../utils.ts';
+  import { isMouse, isSm } from '#lib/utils/media.svelte.ts';
+  import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
 
   interface Props {
     jobsData: DeliveryJob[];

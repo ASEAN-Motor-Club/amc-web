@@ -2,8 +2,8 @@ import { render } from 'vitest-browser-svelte';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { tick } from 'svelte';
 import { QueryClient } from '@tanstack/svelte-query';
-import { deliveryPointQueryOptions } from '#lib/api/delivery.js';
-import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.js';
+import { deliveryPointQueryOptions } from '#lib/api/delivery.ts';
+import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
 import Harness from './DeliveryInfo.test.svelte';
 
 /** Mirrors the component's hover debounce so the boundary can be driven exactly. */

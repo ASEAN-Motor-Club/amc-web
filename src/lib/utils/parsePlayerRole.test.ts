@@ -4,7 +4,7 @@ import {
   stripPlayerRoleTag,
   hasPoliceRole,
   hasCriminalRole,
-} from './parsePlayerRole';
+} from './parsePlayerRole.ts';
 
 describe('parsePlayerRoles', () => {
   it('returns empty array for names without role tag', () => {

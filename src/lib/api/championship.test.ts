@@ -6,7 +6,7 @@ import {
   eventsQueryOptions,
   personalStandingsQueryOptions,
   teamStandingsQueryOptions,
-} from './championship';
+} from './championship.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,

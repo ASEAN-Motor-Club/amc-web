@@ -1,8 +1,8 @@
 import cargoNameJson from '#lib/assets/data/out_cargo_name.json';
 import cargoTypeNameJson from '#lib/assets/data/out_cargo_type_name.json';
 import cargoMetadataJson from '#lib/assets/data/out_cargo_metadata.json';
-import type { DeliveryCargo, DeliveryCargoType, DeliveryCargoKey } from './types';
-import type { MtNameRecord } from '#lib/types/index.js';
+import type { DeliveryCargo, DeliveryCargoType, DeliveryCargoKey } from './types.ts';
+import type { MtNameRecord } from '#lib/types/index.ts';
 
 export const cargoName = { ...cargoNameJson, ...cargoTypeNameJson } as Record<
   DeliveryCargo,

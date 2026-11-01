@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { DeliveryJob } from '#lib/api/types.js';
+  import type { DeliveryJob } from '#lib/api/types.ts';
   import type { ClassValue } from 'svelte/elements';
-  import { DetailsFeatures, getLinkHref } from '../utils';
+  import { DetailsFeatures, getLinkHref } from '../utils.ts';
 
   export interface DeliveryLinkProps {
     fullScreen: boolean;

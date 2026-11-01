@@ -1,12 +1,12 @@
 <script lang="ts">
   import { m } from '#messages';
   import Calendar from './Calendar.svelte';
-  import { addMilliseconds, eachDayOfInterval, format } from '#lib/date.js';
+  import { addMilliseconds, eachDayOfInterval, format } from '#lib/date.ts';
   import Button from '#lib/ui/Button/Button.svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
-  import { EventType } from './types';
+  import { EventType } from './types.ts';
   import { SvelteMap } from 'svelte/reactivity';
-  import { getChampionshipContext } from './context';
+  import { getChampionshipContext } from './context.ts';
 
   const championshipContext = getChampionshipContext();
 

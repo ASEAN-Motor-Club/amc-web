@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { adjustOpacity } from './tw-var';
+import { adjustOpacity } from './tw-var.ts';
 
 describe('adjustOpacity', () => {
   it('builds a color-mix expression with the given opacity', () => {

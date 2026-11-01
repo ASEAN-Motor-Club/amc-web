@@ -10,16 +10,16 @@
   import ImageTile from 'ol/source/ImageTile';
   import { getCenter, type Extent } from 'ol/extent';
   import type BaseLayer from 'ol/layer/Base';
-  import { MAP_REAL_SIZE } from './utils';
+  import { MAP_REAL_SIZE } from './utils.ts';
   import type { MapBrowserEvent, MapEvent } from 'ol';
   import { defaults } from 'ol/interaction';
-  import { defaultTransitionDurationMs } from '#lib/tw-var.js';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { prefersReducedMotion } from 'svelte/motion';
   import type { SimpleGeometry } from 'ol/geom';
   import type { Coordinate } from 'ol/coordinate';
   import Button from '../Button/Button.svelte';
   import Icon from '../Icon/Icon.svelte';
-  import { isSm } from '#lib/utils/media.svelte.js';
+  import { isSm } from '#lib/utils/media.svelte.ts';
 
   let map: Map;
 

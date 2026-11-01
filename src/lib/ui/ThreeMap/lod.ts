@@ -5,9 +5,9 @@ import {
   MIN_RENDER_ZOOM,
   RING_EXTENT_COARSER_MULTIPLIER,
   RING_EXTENT_FINEST_MULTIPLIER,
-} from './constants';
-import { tileWorldRect } from './heightmap';
-import type { TilesMeta, RingExtents, LeafTile } from './three-map-types';
+} from './constants.ts';
+import { tileWorldRect } from './heightmap.ts';
+import type { TilesMeta, RingExtents, LeafTile } from './three-map-types.ts';
 
 export function computeRingExtents(
   camera: THREE.Camera,

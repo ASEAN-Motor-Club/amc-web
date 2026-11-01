@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getMsgModalContext } from '#lib/components/MsgModal/context.js';
+  import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
   import { m } from '#messages';
   import Button from '#lib/ui/Button/Button.svelte';
   import Card from '#lib/ui/Card/Card.svelte';
-  import type { Track } from '#lib/schema/track.js';
+  import type { Track } from '#lib/schema/track.ts';
 
   interface Props {
     edited: boolean;
