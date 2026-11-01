@@ -65,18 +65,31 @@ export async function serveBuild() {
 
 const LOAD_SETTLE_MS = 1500;
 
+export interface PageOptions {
+  theme?: 'light' | 'dark';
+  /** Emulated `prefers-contrast` */
+  contrast?: 'more' | 'no-preference';
+}
+
 /**
- * A page at the given width with reduced motion and the light theme. Every request off the local
- * server is aborted: the live API, radio stream and Discord widget would make results depend on
- * the network and on whatever data is live, so pages render their loading/empty states instead.
+ * A page at the given width with reduced motion and, by default, the light theme. Every request
+ * off the local server is aborted: the live API, radio stream and Discord widget would make results
+ * depend on the network and on whatever data is live, so pages render their loading/empty states.
  */
-export async function openPage(browser: Browser, origin: string, path: string, width: number) {
+export async function openPage(
+  browser: Browser,
+  origin: string,
+  path: string,
+  width: number,
+  { theme = 'light', contrast = 'no-preference' }: PageOptions = {},
+) {
   const context = await browser.newContext({
     viewport: { width, height: 900 },
     reducedMotion: 'reduce',
-    colorScheme: 'light',
+    colorScheme: theme,
+    contrast,
   });
-  await context.addInitScript(() => localStorage.setItem('theme', 'light'));
+  await context.addInitScript((value) => localStorage.setItem('theme', value), theme);
   await context.route(
     (url) => url.origin !== origin,
     (route) => route.abort(),
@@ -99,10 +112,18 @@ export interface AxeViolation {
   targets: string[];
 }
 
+export interface AxeOptions {
+  /** Also require 7:1 text contrast (WCAG AAA `color-contrast-enhanced`) */
+  enhancedContrast?: boolean;
+}
+
 /** axe-core (WCAG 2.1 A/AA + best-practice) — the engine behind Lighthouse's accessibility score. */
-export async function axeViolations(page: Page): Promise<AxeViolation[]> {
+export async function axeViolations(
+  page: Page,
+  { enhancedContrast = false }: AxeOptions = {},
+): Promise<AxeViolation[]> {
   await page.addScriptTag({ content: axeSource });
-  return page.evaluate(async () => {
+  return page.evaluate(async (enhanced) => {
     const { axe } = window as unknown as {
       axe: {
         run: (
@@ -114,14 +135,18 @@ export async function axeViolations(page: Page): Promise<AxeViolation[]> {
       };
     };
     const result = await axe.run(document, {
-      runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+      runOnly: {
+        type: 'tag',
+        values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+      },
+      rules: { 'color-contrast-enhanced': { enabled: enhanced } },
     });
     return result.violations.map((v) => ({
       id: v.id,
       help: v.help,
       targets: v.nodes.map((n) => n.target.join(' ')),
     }));
-  });
+  }, enhancedContrast);
 }
 
 export interface FocusStop {

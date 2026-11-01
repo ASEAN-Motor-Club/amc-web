@@ -90,7 +90,7 @@
           <Button
             variant="contained"
             color="custom"
-            class=" bg-[#4e5ae8] hover:bg-[color-mix(in_oklab,#4e5ae8_90%,white)] active:bg-[color-mix(in_oklab,#4e5ae8_95%,black)]"
+            class=" bg-[#4e5ae8] hover:bg-[color-mix(in_oklab,#4e5ae8_90%,white)] active:bg-[color-mix(in_oklab,#4e5ae8_95%,black)] contrast-more:bg-[#3e47b7] contrast-more:hover:bg-[#353d9e]"
             tag="a"
             href={PUBLIC_DISCORD_LINK}
             target="_blank"
@@ -100,7 +100,7 @@
             <Button
               variant="contained"
               color="custom"
-              class=" bg-[#f96854] text-text hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)]"
+              class=" bg-[#f96854] text-text hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)] contrast-more:bg-[#f96e5b]"
               tag="a"
               href={PUBLIC_PATREON_LINK}
               target="_blank"

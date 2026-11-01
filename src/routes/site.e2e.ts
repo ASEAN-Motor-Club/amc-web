@@ -94,6 +94,14 @@ describe.each([mobile, desktop])('accessibility at %ipx', (width) => {
   });
 });
 
+describe.each(['light', 'dark'] as const)('prefers-contrast: more, %s theme', (theme) => {
+  it.each(sitemapPaths)('%s reaches 7:1 text contrast with no axe violations', async (path) => {
+    const page = await openPage(browser, server.origin, path, desktop, { theme, contrast: 'more' });
+    expect.soft(await axeViolations(page, { enhancedContrast: true })).toEqual([]);
+    await page.context().close();
+  });
+});
+
 describe('keyboard and interaction states', () => {
   it('the skip link is the first Tab stop and moves focus to main', async () => {
     const page = await openPage(browser, server.origin, '/radio', desktop);

@@ -23,7 +23,7 @@
   class="mx-auto flex h-auto w-full max-w-175 flex-col overflow-hidden rounded-lg border-3 border-[#5a2c00] bg-[#8b4513] shadow-lg shadow-gray-950/30"
 >
   <div
-    class="border-b-2 border-gray-950/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg"
+    class="border-b-2 border-gray-950/20 bg-[#5a2c00] px-4 py-1.5 text-center font-medium text-[#d2b48c] shadow-lg contrast-more:text-[#ddc7a9]"
   >
     {m['radio.station_name']()}
   </div>

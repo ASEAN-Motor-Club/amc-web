@@ -143,11 +143,11 @@
     switch (variant) {
       case 'contained': {
         const baseClass =
-          'focus:outline-solid focus:outline-1 focus:bg-gray-500/10 dark:focus:bg-gray-500/10';
+          'focus:outline-solid focus:outline-1 focus:bg-gray-500/10 dark:focus:bg-gray-500/10 contrast-more:ring-1 contrast-more:ring-inset';
         if (error) {
-          return `${baseClass} placeholder-danger-500 dark:placeholder-danger-700 bg-danger-500/20 dark:bg-danger-600/10 hover:bg-danger-500/30 group-hover:bg-danger-500/30 dark:hover:bg-danger-600/20 dark:group-hover:bg-danger-600/20 outline-danger-500 dark:outline-danger-800`;
+          return `${baseClass} placeholder-danger-500 dark:placeholder-danger-700 bg-danger-500/20 dark:bg-danger-600/10 hover:bg-danger-500/30 group-hover:bg-danger-500/30 dark:hover:bg-danger-600/20 dark:group-hover:bg-danger-600/20 outline-danger-500 dark:outline-danger-800 contrast-more:ring-danger-600`;
         } else {
-          return `${baseClass} bg-gray-900/10 outline-gray-400 hover:bg-gray-900/20 group-hover:bg-gray-900/20 dark:bg-gray-100/10 dark:outline-gray-600 dark:hover:bg-gray-100/20 dark:group-hover:bg-gray-100/20`;
+          return `${baseClass} bg-gray-900/10 outline-gray-400 hover:bg-gray-900/20 group-hover:bg-gray-900/20 dark:bg-gray-100/10 dark:outline-gray-600 dark:hover:bg-gray-100/20 dark:group-hover:bg-gray-100/20 contrast-more:ring-gray-500`;
         }
       }
       case 'outlined': {

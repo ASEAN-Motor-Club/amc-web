@@ -160,7 +160,7 @@
       name="search"
       type="search"
       placeholder={m['map.search_placeholder']()}
-      class="pointer-events-auto w-full !border-none !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+      class="pointer-events-auto w-full !border-none !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),
@@ -183,7 +183,7 @@
         }}
       >
         <Card
-          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17 contrast-more:bg-gray-950! contrast-more:ring-white/60!"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
@@ -290,7 +290,7 @@
         }}
       >
         <Card
-          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm not-pointer-fine:mr-17 contrast-more:bg-gray-950! contrast-more:ring-white/60!"
         >
           <div class="px-3 py-2 text-text-300 italic">
             {searchValue ? m['map.no_results']() : m['map.start_search']()}

@@ -249,7 +249,7 @@
     <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
       {#if !disablePip && pipSupported}
         <Button
-          class="pointer-events-auto rounded-sm !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          class="pointer-events-auto rounded-sm !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
           color="custom"
           size="sm"
           icon
@@ -261,7 +261,7 @@
       {/if}
       {#if onToggleMapMode}
         <Button
-          class="pointer-events-auto rounded-sm !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          class="pointer-events-auto rounded-sm !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
           color="custom"
           size="sm"
           icon
@@ -271,9 +271,11 @@
           <Icon class="icon-[material-symbols--3d-2-rounded]" />
         </Button>
       {/if}
-      <div class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5">
+      <div
+        class="flex flex-col rounded-sm shadow ring !shadow-white/3 !ring-white/5 contrast-more:ring-white/60!"
+      >
         <Button
-          class="pointer-events-auto rounded-b-none !bg-gray-900/50 text-text-dark backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          class="pointer-events-auto rounded-b-none !bg-gray-900/50 text-text-dark backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
           color="custom"
           size="sm"
           icon
@@ -286,9 +288,11 @@
         >
           <Icon class="icon-[material-symbols--add-2-rounded]" />
         </Button>
-        <div class="w-full border-b border-b-white/25 bg-gray-900/50"></div>
+        <div
+          class="w-full border-b border-b-white/25 bg-gray-900/50 contrast-more:border-b-white/60 contrast-more:bg-gray-950!"
+        ></div>
         <Button
-          class="pointer-events-auto rounded-t-none !bg-gray-900/50 text-text-dark backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+          class="pointer-events-auto rounded-t-none !bg-gray-900/50 text-text-dark backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
           color="custom"
           size="sm"
           icon

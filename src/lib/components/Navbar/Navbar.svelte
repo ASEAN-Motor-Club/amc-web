@@ -195,7 +195,7 @@
     <Button
       variant="contained-light"
       color="custom"
-      class="bg-[#5865f2]/15 !text-[#4752c4] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:!text-[#9ba3f7] dark:hover:bg-[#5865f2]/20"
+      class="bg-[#5865f2]/15 !text-[#4752c4] hover:bg-[#5865f2]/25 contrast-more:text-[#2f3699]! dark:bg-[#5865f2]/10 dark:!text-[#9ba3f7] dark:hover:bg-[#5865f2]/20 dark:contrast-more:text-[#c5cafb]!"
       tag="a"
       href={PUBLIC_DISCORD_LINK}
       target="_blank"

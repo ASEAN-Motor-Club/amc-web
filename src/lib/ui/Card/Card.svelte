@@ -44,7 +44,7 @@
     'rounded-md p-4',
     loading
       ? 'relative bg-transparent'
-      : 'bg-background-50 shadow-md ring ring-gray-950/5 dark:bg-background-900 dark:shadow-white/3 dark:ring-white/5',
+      : 'bg-background-50 shadow-md ring ring-gray-950/5 contrast-more:ring-gray-950/50 dark:bg-background-900 dark:shadow-white/3 dark:ring-white/5 dark:contrast-more:ring-white/50',
     clsx(propsClass),
   )}
   aria-busy={loading ? 'true' : undefined}

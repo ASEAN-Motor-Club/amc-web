@@ -87,4 +87,32 @@
   .dark body {
     @apply bg-background-950 text-text-dark;
   }
+
+  /* prefers-contrast: more. Muted text moves toward the extremes, which raises contrast without
+     knowing the surface: 100-400 only ever sit on dark surfaces (dark theme, and the always-dark map
+     overlays in both themes) so they get lighter; 600-900 only sit on light ones so they get darker.
+     500 is used on both, so it follows the theme. */
+  @media (prefers-contrast: more) {
+    :root {
+      --color-text: var(--color-slate-950);
+      --color-text-dark: var(--color-slate-50);
+      --color-text-100: var(--color-slate-50);
+      --color-text-200: var(--color-slate-50);
+      --color-text-300: var(--color-slate-100);
+      --color-text-400: var(--color-slate-200);
+      --color-text-500: var(--color-slate-700);
+      --color-text-600: var(--color-slate-800);
+      --color-text-700: var(--color-slate-900);
+      --color-text-800: var(--color-slate-950);
+      --color-text-900: var(--color-slate-950);
+    }
+
+    :root.dark {
+      --color-text-500: var(--color-slate-300);
+    }
+
+    ::placeholder {
+      color: color-mix(in oklab, currentcolor 80%, transparent);
+    }
+  }
 }

@@ -36,7 +36,7 @@
           transition:fade={{ duration: defaultTransitionDurationMs }}
         >
           <Card
-            class="pointer-events-auto min-h-0 flex-1 overflow-y-auto !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+            class="pointer-events-auto min-h-0 flex-1 overflow-y-auto !bg-gray-900/50 !p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
           >
             <div class="flex flex-col">
               <!-- Delivery -->
@@ -220,7 +220,7 @@
         </div>
       {/if}
       <Button
-        class="pointer-events-auto !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+        class="pointer-events-auto !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
         color="custom"
         onClick={() => (poiOpen = !poiOpen)}
         size="sm"

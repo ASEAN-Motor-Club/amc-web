@@ -170,11 +170,11 @@
         const outlinedBase = 'border';
         switch (color) {
           case 'primary':
-            return `${outlinedBase} text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-700/15`;
+            return `${outlinedBase} text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 border-primary-700 dark:border-primary-500 active:bg-primary-700/15 contrast-more:text-primary-900 contrast-more:border-primary-900 dark:contrast-more:text-primary-300 dark:contrast-more:border-primary-300`;
           case 'danger':
-            return `${outlinedBase} text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 border-danger-700 dark:border-danger-500 active:bg-danger-700/15`;
+            return `${outlinedBase} text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 border-danger-700 dark:border-danger-500 active:bg-danger-700/15 contrast-more:text-danger-900 contrast-more:border-danger-900 dark:contrast-more:text-danger-300 dark:contrast-more:border-danger-300`;
           case 'gray':
-            return `${outlinedBase} text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 border-gray-700 dark:border-gray-500 active:bg-gray-700/15`;
+            return `${outlinedBase} text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 border-gray-700 dark:border-gray-500 active:bg-gray-700/15 contrast-more:text-gray-900 contrast-more:border-gray-900 dark:contrast-more:text-gray-300 dark:contrast-more:border-gray-300`;
           default:
             return outlinedBase;
         }
@@ -182,11 +182,11 @@
       case 'text': {
         switch (color) {
           case 'primary':
-            return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 active:bg-primary-800/20`;
+            return `text-primary-700 dark:text-primary-500 hover:bg-primary-700/10 active:bg-primary-800/20 contrast-more:text-primary-900 dark:contrast-more:text-primary-300`;
           case 'danger':
-            return `text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 active:bg-danger-800/20`;
+            return `text-danger-700 dark:text-danger-500 hover:bg-danger-700/10 active:bg-danger-800/20 contrast-more:text-danger-900 dark:contrast-more:text-danger-300`;
           case 'gray':
-            return 'text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 active:bg-gray-800/20';
+            return 'text-gray-600 dark:text-gray-400 hover:bg-gray-700/10 active:bg-gray-800/20 contrast-more:text-gray-900 dark:contrast-more:text-gray-300';
           default:
             return '';
         }

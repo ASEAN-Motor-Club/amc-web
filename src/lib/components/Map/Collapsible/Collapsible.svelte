@@ -182,7 +182,7 @@
         class={[
           'h-12 flex-1 hover:bg-emerald-700/20 hover:text-emerald-800 active:bg-emerald-800/20 sm:w-full hover:dark:text-emerald-500',
           openCollapsible === 'players' &&
-            'bg-emerald-800/20 text-emerald-800 dark:text-emerald-500',
+            'bg-emerald-800/20 text-emerald-800 contrast-more:text-emerald-950 dark:text-emerald-500 dark:contrast-more:text-emerald-300',
         ]}
         icon="icon-[material-symbols--person-outline-rounded]"
         text={m['map.side_menu.players']()}
@@ -192,7 +192,8 @@
       <CollapsibleButton
         class={[
           'h-12 flex-1 hover:bg-blue-700/20 hover:text-blue-800 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
-          openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-800 dark:text-blue-500',
+          openCollapsible === 'housing' &&
+            'bg-blue-800/20 text-blue-800 contrast-more:text-blue-950 dark:text-blue-500 dark:contrast-more:text-blue-300',
         ]}
         icon="icon-[material-symbols--home-outline-rounded]"
         text={m['map.side_menu.housing']()}
@@ -202,7 +203,8 @@
       <CollapsibleButton
         class={[
           'h-12 flex-1 hover:bg-orange-700/20 hover:text-orange-800 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
-          openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-800 dark:text-orange-500',
+          openCollapsible === 'jobs' &&
+            'bg-orange-800/20 text-orange-800 contrast-more:text-orange-950 dark:text-orange-500 dark:contrast-more:text-orange-300',
         ]}
         icon="icon-[material-symbols--delivery-truck-speed-outline-rounded]"
         text={m['map.side_menu.jobs']()}
@@ -218,7 +220,7 @@
         }}
       >
         <CollapsibleButton
-          class="h-12 w-12 bg-yellow-800/20 text-yellow-800 hover:bg-yellow-700/20 hover:text-yellow-800 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
+          class="h-12 w-12 bg-yellow-800/20 text-yellow-800 hover:bg-yellow-700/20 hover:text-yellow-800 active:bg-yellow-800/20 contrast-more:text-yellow-950 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500 dark:contrast-more:text-yellow-300"
           icon="icon-[material-symbols--box-outline-rounded]"
           text={m['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}

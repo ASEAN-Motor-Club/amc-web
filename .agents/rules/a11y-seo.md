@@ -39,6 +39,12 @@ Enforced by the e2e smoke suite `src/routes/site.e2e.ts` (`pnpm build && pnpm te
 
 **Contrast.** Text needs 4.5:1 (3:1 for ≥24px or ≥18.7px bold), including tinted states such as active tabs and dimmed labels. Brand colours fail easily: Discord `#5865f2` with white text or as text on its own 15% tint is below 4.5:1 — use `#4e5ae8` as a background and `#4752c4` as text (light theme). Use `-800` text on `-800/20` tints, not `-700`.
 
+**High contrast (`prefers-contrast: more`).** Every sitemap route must reach 7:1 text contrast in both themes when the OS asks for more contrast; the e2e suite checks it (axe `color-contrast-enhanced`, light and dark, 1440px).
+
+- Muted `text-text-*` needs nothing: `src/app.css` remaps the tokens — 100–400 lighter, 600–900 darker, 500 per theme. That only holds while light tokens sit on dark surfaces and dark tokens on light ones; never put `text-text-300` on a light surface.
+- Coloured text (brand, `primary`/`danger`, active-tab tints) needs a `contrast-more:` shade, plus `dark:contrast-more:` when the dark theme uses a different colour — a bare `contrast-more:` would override the `dark:` one. `Button`'s `outlined`/`text` variants already do.
+- Translucent surfaces over imagery (the map's `bg-gray-900/50` controls) go opaque with a visible ring: `contrast-more:bg-gray-950!`, `contrast-more:ring-white/60!`, and a `contrast-more:hover:`/`focus:` shade so states still differ.
+
 ## SEO
 
 - Global head tags (description, OpenGraph/Twitter image, canonical, `og:url`, schema.org JSON-LD) are injected at prerender time in `src/hooks.server.ts` — see `rule://app-shell`. Don't duplicate them in `+layout.svelte`.
