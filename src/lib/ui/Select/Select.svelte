@@ -149,20 +149,23 @@
   <!-- The input is display-only: hidden from AT and covered by the trigger button rather than nested
        inside it, since a focusable control inside a button is announced inconsistently. The button
        carries the id so an InputGroup <label for> names it. -->
-  <TextInput
-    class={twMerge('pointer-events-none w-full pr-10', clsx(inputClass))}
-    type="text"
-    autocomplete="off"
-    value={displayedValue}
-    {round}
-    {size}
-    {variant}
-    {error}
-    {placeholder}
-    {name}
-    {disabled}
-    additionalAttributes={{ tabindex: -1, readonly: true, 'aria-hidden': 'true' }}
-  />
+  <!-- TextInput's root is flex-none; this wrapper keeps it at the select's width. -->
+  <div class="w-full min-w-0">
+    <TextInput
+      class={twMerge('pointer-events-none w-full pr-10', clsx(inputClass))}
+      type="text"
+      autocomplete="off"
+      value={displayedValue}
+      {round}
+      {size}
+      {variant}
+      {error}
+      {placeholder}
+      {name}
+      {disabled}
+      additionalAttributes={{ tabindex: -1, readonly: true, 'aria-hidden': 'true' }}
+    />
+  </div>
   <button
     type="button"
     class={twMerge(

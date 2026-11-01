@@ -65,7 +65,7 @@
     <MsgModal>
       <a
         href="#main-content"
-        class="bg-background-50 dark:bg-background-900 sr-only fixed top-2 left-2 z-1000001 rounded-md px-4 py-2 font-semibold shadow-md focus:not-sr-only"
+        class="bg-background-50 dark:bg-background-900 fixed top-2 left-2 z-1000001 -translate-y-[200%] rounded-md px-4 py-2 font-semibold shadow-md focus:translate-y-0"
         >{m['a11y.skip_to_content']()}</a
       >
       <Navbar />
