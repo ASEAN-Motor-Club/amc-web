@@ -127,7 +127,7 @@
         id={subMenuId}
         class={mobile
           ? 'contents'
-          : 'bg-background-200 dark:bg-background-900 absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full px-3 shadow-gray-950/10'}
+          : 'absolute top-full left-0 z-10 -mx-3 box-content w-max min-w-full bg-background-200 px-3 shadow-gray-950/10 dark:bg-background-900'}
         transition:slide={{
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}

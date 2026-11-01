@@ -1,6 +1,6 @@
 # ASEAN Motor Club Web - AI Coding Agent Instructions
 
-A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScript, UnoCSS (Wind4 preset), and Paraglide i18n, built for the ASEAN Motor Club community.
+A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScript, Tailwind CSS v4, and Paraglide i18n, built for the ASEAN Motor Club community.
 
 ## Where the guidance lives
 

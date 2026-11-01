@@ -20,7 +20,7 @@
 </script>
 
 <div class="ml-2 border-l-2 border-gray-500/10 px-2 py-0.5">
-  <div class="text-text-500 mb-1 text-[0.625rem]">{m['pak.conflict.entry_missing']()}</div>
+  <div class="mb-1 text-[0.625rem] text-text-500">{m['pak.conflict.entry_missing']()}</div>
   <div bind:this={container} class={['flex flex-wrap gap-1 overflow-hidden', !expanded && 'h-5']}>
     {#each rows as row, i (i)}
       <span
@@ -31,7 +31,7 @@
   </div>
   {#if overflows}
     <button
-      class="text-text-500 mt-1 inline text-[0.625rem] hover:underline"
+      class="mt-1 inline text-[0.625rem] text-text-500 hover:underline"
       onclick={() => (expanded = !expanded)}
     >
       {expanded ? m['pak.conflict.show_less']() : m['pak.conflict.show_more']()}

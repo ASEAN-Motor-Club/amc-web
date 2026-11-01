@@ -60,7 +60,7 @@
     onClick={prevMonth}
     aria-label={m['a11y.previous_month']()}
   >
-    <Icon class="i-material-symbols:arrow-left-rounded" />
+    <Icon class="icon-[material-symbols--arrow-left-rounded]" />
   </Button>
   <Calendar
     month={currentMonth}
@@ -71,6 +71,6 @@
     {nextMonth}
   />
   <Button icon round class="hidden sm:flex" onClick={nextMonth} aria-label={m['a11y.next_month']()}>
-    <Icon class="i-material-symbols:arrow-right-rounded" />
+    <Icon class="icon-[material-symbols--arrow-right-rounded]" />
   </Button>
 </div>

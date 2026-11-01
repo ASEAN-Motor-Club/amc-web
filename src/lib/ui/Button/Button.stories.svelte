@@ -51,13 +51,13 @@
   {#snippet template({ children: _, icon: __, ...args })}
     <div class="flex flex-wrap gap-2">
       <Button {...args} icon color="primary">
-        <Icon class="i-material-symbols:home-outline-rounded" size="md" />
+        <Icon class="icon-[material-symbols--home-outline-rounded]" size="md" />
       </Button>
       <Button {...args} icon color="gray">
-        <Icon class="i-material-symbols:dashboard-outline" size="md" />
+        <Icon class="icon-[material-symbols--dashboard-outline]" size="md" />
       </Button>
       <Button {...args} icon color="danger">
-        <Icon class="i-material-symbols:link-rounded" size="md" />
+        <Icon class="icon-[material-symbols--link-rounded]" size="md" />
       </Button>
     </div>
   {/snippet}
@@ -68,25 +68,25 @@
     <div class="flex flex-wrap gap-2">
       <Button {...args} size="xs">
         {#snippet prependIcon()}
-          <Icon class="i-material-symbols:pause-rounded" />
+          <Icon class="icon-[material-symbols--pause-rounded]" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="sm">
         {#snippet prependIcon()}
-          <Icon class="i-material-symbols:pause-rounded" />
+          <Icon class="icon-[material-symbols--pause-rounded]" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="md">
         {#snippet prependIcon()}
-          <Icon class="i-material-symbols:pause-rounded" />
+          <Icon class="icon-[material-symbols--pause-rounded]" />
         {/snippet}
         Pause
       </Button>
       <Button {...args} size="lg">
         {#snippet prependIcon()}
-          <Icon class="i-material-symbols:pause-rounded" />
+          <Icon class="icon-[material-symbols--pause-rounded]" />
         {/snippet}
         Pause
       </Button>

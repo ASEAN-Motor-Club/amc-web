@@ -43,5 +43,5 @@ globs:
 
 ## Icons & styling
 
-- `<Icon class="i-material-symbols:…-rounded" size="sm" />` — `class` is required; inside a `Button` the button context **overrides** `size`.
-- UnoCSS Wind4 utilities; a class with no effect usually doesn't exist in the preset. Values needed from TS come from `#lib/tw-var.ts`.
+- `<Icon class="icon-[material-symbols--…-rounded]" size="sm" />` — `class` is required; inside a `Button` the button context **overrides** `size`.
+- Tailwind CSS v4 utilities; theme tokens, custom variants (`dark`, `media-*`) and plugins live in `src/app.css` — add tokens there, never a JS config. Class names must appear as complete literal strings in `src/` to be generated. Values needed from TS come from `#lib/tw-var.ts`.

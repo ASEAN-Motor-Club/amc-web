@@ -26,9 +26,7 @@
 
   const discordTime: TokenizerAndRendererExtension = {
     name: 'discordTime',
-    // @unocss-skip-start
     level: 'inline',
-    // @unocss-skip-end
     start(src: string) {
       return /<t:/.exec(src)?.index;
     },
@@ -64,9 +62,7 @@
 
   const discordMentions: TokenizerAndRendererExtension = {
     name: 'discordMentions',
-    // @unocss-skip-start
     level: 'inline',
-    // @unocss-skip-end
     start(src: string) {
       return /<@/.exec(src)?.index;
     },
@@ -99,17 +95,17 @@
   import { marked, type Tokens, type TokenizerAndRendererExtension } from 'marked';
   import DOMPurify from 'dompurify';
 
-  // @unocss-skip-start
   export interface MarkdownTextProps {
     /**
      * The markdown text to render
      */
     text: string;
     /**
-     * The size of the prose text. This also load prose classes (it huge)
+     * The size of the prose text. Each size ships a large stylesheet, so it is spelled as a
+     * template type: only sizes passed as literal `prose-*` strings by callers get generated.
      * @default 'prose-base'
      */
-    size?: 'prose-sm' | 'prose-base' | 'prose-lg' | 'prose-xl' | 'prose-2xl';
+    size?: `prose-${'sm' | 'base' | 'lg' | 'xl' | '2xl'}`;
     /**
      * Skip HTML sanitization. Only use this when you know the content is fully safe
      * (i.e. from static text or i18n messages). Never use with user-generated content.
@@ -123,7 +119,6 @@
      */
     textOnly?: boolean;
   }
-  // @unocss-skip-end
 
   const { size = 'prose-base', text, noSanitize, textOnly = false }: MarkdownTextProps = $props();
 
@@ -156,7 +151,7 @@
   {@html sanitizedHtml}
 {:else}
   <section
-    class={['prose dark:prose-invert prose-slate !prose-cyan contents', size]}
+    class={['prose contents prose-slate !prose-cyan dark:prose-invert', size]}
     bind:this={textContainer}
   >
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->

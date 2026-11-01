@@ -84,8 +84,8 @@
           {status === Status.Loading ? m['pak.inspect.parsing']() : m['pak.inspect.select_file']()}
         </Button>
         <div class="min-w-0 flex-1">
-          <p class="text-text-600 dark:text-text-400 text-sm">{m['pak.inspect.description']()}</p>
-          <p class="text-text-500 text-xs">{m['pak.inspect.privacy_note']()}</p>
+          <p class="text-sm text-text-600 dark:text-text-400">{m['pak.inspect.description']()}</p>
+          <p class="text-xs text-text-500">{m['pak.inspect.privacy_note']()}</p>
         </div>
       </div>
       <Divider spacing={false} />
@@ -95,11 +95,11 @@
         {#if error}
           <p class="text-sm text-red-400">{error}</p>
         {:else if status === Status.Loading}
-          <p class="text-text-500 flex h-full items-center justify-center text-sm">
+          <p class="flex h-full items-center justify-center text-sm text-text-500">
             {m['pak.inspect.parsing']()}
           </p>
         {:else if status === Status.Done}
-          <p class="text-text-500 mb-3 text-sm">
+          <p class="mb-3 text-sm text-text-500">
             {m['pak.inspect.files_found']({ count: files.length })}
           </p>
           <ul
@@ -114,7 +114,7 @@
                 >
                   {f.path}
                   <br />
-                  <span class="text-text-600 dark:text-text-400 text-[0.625rem]">{f.hash}</span>
+                  <span class="text-[0.625rem] text-text-600 dark:text-text-400">{f.hash}</span>
                 </button>
               </li>
             {/each}
@@ -123,7 +123,7 @@
       </div>
     </Card>
     <div
-      class="text-text-600 dark:text-text-400 mt-3 w-full max-w-4xl text-right text-xs [&_a]:underline"
+      class="mt-3 w-full max-w-4xl text-right text-xs text-text-600 dark:text-text-400 [&_a]:underline"
     >
       <MarkdownText text={m['pak.conflict.repak_credit']()} noSanitize textOnly />
     </div>

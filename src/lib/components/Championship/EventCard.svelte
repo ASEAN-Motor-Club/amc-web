@@ -94,7 +94,7 @@
     {event.name}
   </h1>
   {#if formattedDesc}
-    <div class="text-text-700 dark:text-text-300 mb-8 text-sm wrap-anywhere">
+    <div class="mb-8 text-sm wrap-anywhere text-text-700 dark:text-text-300">
       <MarkdownText size="prose-sm" text={formattedDesc} />
     </div>
   {/if}

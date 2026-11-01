@@ -5,9 +5,9 @@ import Icon from './Icon.svelte';
 
 describe('Icon', () => {
   it('renders the icon class with the default md size', async () => {
-    const output = await render(Icon, { class: 'i-material-symbols:home' });
+    const output = await render(Icon, { class: 'icon-[material-symbols--home]' });
     const icon = output.container.firstElementChild as HTMLElement;
-    expect(icon.className).toContain('i-material-symbols:home');
+    expect(icon.className).toContain('icon-[material-symbols--home]');
     expect(icon.className).toContain('!text-[1.5rem]');
   });
 

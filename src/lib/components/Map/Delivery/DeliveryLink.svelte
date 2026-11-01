@@ -49,7 +49,7 @@
     >
   {/if}
   <Button
-    class="translate-y-0.4 flex bg-transparent text-yellow-950 hover:bg-yellow-600/20 active:bg-yellow-800/20 dark:text-yellow-100"
+    class="flex translate-y-[0.1rem] bg-transparent text-yellow-950 hover:bg-yellow-600/20 active:bg-yellow-800/20 dark:text-yellow-100"
     size="xs"
     icon
     tag="a"
@@ -57,6 +57,6 @@
     variant="contained-light"
     aria-label={m['a11y.view_on_map']()}
   >
-    <Icon class="i-material-symbols:map-search-rounded" size="sm" />
+    <Icon class="icon-[material-symbols--map-search-rounded]" size="sm" />
   </Button>
 </span>

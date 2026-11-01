@@ -203,14 +203,14 @@
   />
   {#if onClear && value}
     <Button
-      class={twMerge('text-text dark:text-text-dark absolute right-0 mx-1', clsx(clearBtnClass))}
+      class={twMerge('absolute right-0 mx-1 text-text dark:text-text-dark', clsx(clearBtnClass))}
       variant="text"
       size="sm"
       onClick={() => onClear()}
       icon
       aria-label={m['a11y.clear']()}
     >
-      <Icon class="i-material-symbols:close-rounded" size="!text-lg" />
+      <Icon class="icon-[material-symbols--close-rounded]" size="!text-lg" />
     </Button>
   {/if}
 </div>

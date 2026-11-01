@@ -14,7 +14,7 @@
 
 <div
   class={twMerge(
-    'text-text-600 dark:text-text-400 flex flex-1 items-center justify-center p-4 text-center text-sm italic',
+    'flex flex-1 items-center justify-center p-4 text-center text-sm text-text-600 italic dark:text-text-400',
     clsx(propsClass),
   )}
 >

@@ -191,25 +191,25 @@
     class="flex h-svh w-full flex-col items-center justify-center p-8 pt-24 md:p-20 md:pt-36"
     bind:this={headerTrigger}
   >
-    <div class="aspect-ratio-1818/1162 min-h-0 w-full max-w-250 flex-shrink-1">
+    <div class="aspect-1818/1162 min-h-0 w-full max-w-250 flex-shrink-1">
       <img
         srcset={`${poster455} 455w, ${poster909} 909w, ${poster1364} 1364w, ${poster1818} 1818w, ${poster2727} 2727w, ${poster3636} 3636w`}
         alt="ASEAN Poster"
-        class="aspect-ratio-1818/1162 h-full w-full object-contain"
+        class="aspect-1818/1162 h-full w-full object-contain"
         fetchpriority="high"
         bind:this={imageContainer}
       />
     </div>
     <div class="contents" bind:this={textContainer}>
-      <h3 class="text-text-600 dark:text-text-400 pt-8 pb-5 font-semibold">
+      <h3 class="pt-8 pb-5 font-semibold text-text-600 dark:text-text-400">
         {m['championship.starting_from']({
           date: format(startDate, m['format.dateFull']()),
         })}
       </h3>
-      <h1 class="font-sans-em pb-8 text-center text-4xl font-bold tracking-wide sm:text-7xl">
+      <h1 class="pb-8 text-center font-sans-em text-4xl font-bold tracking-wide sm:text-7xl">
         {m['championship.title']()}
       </h1>
-      <h2 class="font-sans-em pb-8 text-2xl font-semibold tracking-wide sm:text-3xl">
+      <h2 class="pb-8 font-sans-em text-2xl font-semibold tracking-wide sm:text-3xl">
         {m['championship.season']({ seasonNo: PUBLIC_SEASON_NO })}
       </h2>
       <div class="flex gap-3">
@@ -241,7 +241,7 @@
                     team: team.name,
                   })}
                   class={[
-                    'aspect-1 mx-auto h-full overflow-hidden rounded-2xl bg-gray-500/10 object-contain',
+                    'mx-auto aspect-square h-full overflow-hidden rounded-2xl bg-gray-500/10 object-contain',
                     team.logo ? '' : 'invisible',
                   ]}
                   fetchpriority="high"

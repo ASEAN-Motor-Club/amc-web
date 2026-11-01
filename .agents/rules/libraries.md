@@ -27,6 +27,6 @@ Floating UI escapes the tree with `use:portal` from `#lib/utils/portal.ts` (`use
 
 ## Animation
 
-- Default to Svelte transitions or UnoCSS classes, timed with `defaultTransitionDurationMs` (`#lib/tw-var.ts`) and `cssTransitionToMs`, and gated on `prefersReducedMotion` from `svelte/motion`.
+- Default to Svelte transitions or Tailwind classes, timed with `defaultTransitionDurationMs` (`#lib/tw-var.ts`) and `cssTransitionToMs`, and gated on `prefersReducedMotion` from `svelte/motion`.
 - GSAP is only for timeline choreography. Register `ScrollTrigger` in `onMount`, branch motion inside `gsap.matchMedia()` on `default` / `reduced` conditions, and keep the context for cleanup.
 - Pre-authored vector animations go through `src/lib/ui/Lottie/Lottie.svelte` (the `lottie_light` svg build) with JSON under `src/lib/assets/lottie/`. Never import `lottie-web` in feature code.

@@ -45,7 +45,7 @@
   <Modal open={modalOpen} onClose={() => (modalOpen = false)}>
     <Card class="flex max-w-120 flex-col p-5">
       <h2 class="pb-4.5 text-2xl font-bold tracking-tight">Title</h2>
-      <p class="text-text/80 dark:text-text-dark/80 pb-6 text-sm whitespace-pre-line">
+      <p class="pb-6 text-sm whitespace-pre-line text-text/80 dark:text-text-dark/80">
         {msg}
       </p>
       <div class="-mx-3 -my-3 flex justify-end gap-2">

@@ -109,21 +109,21 @@
 
 {#snippet toolsIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:build-outline-rounded group-hover:text-rose-500"
+    class="icon-[material-symbols--build-outline-rounded] group-hover:text-rose-500"
     {pathMatch}
   />
 {/snippet}
 
 {#snippet mapIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:map-outline-rounded group-hover:text-green-500"
+    class="icon-[material-symbols--map-outline-rounded] group-hover:text-green-500"
     {pathMatch}
   />
 {/snippet}
 
 {#snippet housingIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:home-outline-rounded group-hover:text-blue-500"
+    class="icon-[material-symbols--home-outline-rounded] group-hover:text-blue-500"
     {pathMatch}
   />
 {/snippet}
@@ -132,11 +132,11 @@
   {#if playerContext.isPlaying && !pathMatch && !prefersReducedMotion.current}
     <SoundBarIcon />
   {:else if prefersReducedMotion.current}
-    <NavbarIcon class="i-material-symbols:play-circle-rounded !text-orange-500" {pathMatch} />
+    <NavbarIcon class="icon-[material-symbols--play-circle-rounded] !text-orange-500" {pathMatch} />
   {:else}
     <NavbarIcon
       class={[
-        'i-material-symbols:radio-outline-rounded group-hover:text-orange-500',
+        'icon-[material-symbols--radio-outline-rounded] group-hover:text-orange-500',
         playerContext.isPlaying && '!text-orange-500',
       ]}
       {pathMatch}
@@ -145,44 +145,44 @@
 {/snippet}
 
 {#snippet trackIcon(pathMatch: boolean)}
-  <NavbarIcon class="i-material-symbols:route-outline group-hover:text-red-500" {pathMatch} />
+  <NavbarIcon class="icon-[material-symbols--route-outline] group-hover:text-red-500" {pathMatch} />
 {/snippet}
 
 {#snippet pakIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:folder-zip-outline-rounded group-hover:text-yellow-500"
+    class="icon-[material-symbols--folder-zip-outline-rounded] group-hover:text-yellow-500"
     {pathMatch}
   />
 {/snippet}
 
 {#snippet wikiIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:book-outline-rounded group-hover:text-teal-500"
+    class="icon-[material-symbols--book-outline-rounded] group-hover:text-teal-500"
     {pathMatch}
   />
 {/snippet}
 
 <!-- {#snippet champDetailsIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:calendar-month-outline-rounded group-hover:text-yellow-500"
+    class="icon-[material-symbols--calendar-month-outline-rounded] group-hover:text-yellow-500"
     {pathMatch}
   />
 {/snippet}
 
 {#snippet trophyIcon()}
-  <NavbarIcon class="i-material-symbols:trophy-rounded text-amber-500" pathMatch />
+  <NavbarIcon class="icon-[material-symbols--trophy-rounded] text-amber-500" pathMatch />
 {/snippet} -->
 
 {#snippet jobIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:delivery-truck-speed-outline-rounded group-hover:text-orange-500"
+    class="icon-[material-symbols--delivery-truck-speed-outline-rounded] group-hover:text-orange-500"
     {pathMatch}
   />
 {/snippet}
 
 {#snippet playerIcon(pathMatch: boolean)}
   <NavbarIcon
-    class="i-material-symbols:person-outline-rounded group-hover:text-emerald-500"
+    class="icon-[material-symbols--person-outline-rounded] group-hover:text-emerald-500"
     {pathMatch}
   />
 {/snippet}
@@ -206,7 +206,7 @@
 
 <nav
   aria-label={m['a11y.main_navigation']()}
-  class="bg-background-200 dark:bg-background-900 fixed z-100000 flex h-16 w-full items-center px-4 ring shadow-gray-950/10 ring-gray-950/1 select-none"
+  class="fixed z-100000 flex h-16 w-full items-center bg-background-200 px-4 ring shadow-gray-950/10 ring-gray-950/1 select-none dark:bg-background-900"
 >
   <Button
     class="mr-2 -ml-2 lg:hidden"
@@ -216,9 +216,9 @@
     aria-label={m['a11y.open_menu']()}
     aria-expanded={menu}
   >
-    <Icon class="i-material-symbols:menu-rounded" />
+    <Icon class="icon-[material-symbols--menu-rounded]" />
   </Button>
-  <a href="/" class="font-sans-em mr-6 text-2xl leading-none tracking-wide">
+  <a href="/" class="mr-6 font-sans-em text-2xl leading-none tracking-wide">
     {m.site_name()}
   </a>
   {#if isLg.current}
@@ -229,11 +229,11 @@
     <Modal
       open={menu}
       onClose={() => setMenu(false)}
-      class="align-start justify-start p-0"
+      class="justify-start p-0 align-top"
       aria-label={m['a11y.main_navigation']()}
     >
       <div
-        class="bg-background-200 dark:bg-background-900 flex h-dvh flex-col px-4 py-8"
+        class="flex h-dvh flex-col bg-background-200 px-4 py-8 dark:bg-background-900"
         transition:fly={{
           x: '-100%',
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
@@ -241,7 +241,7 @@
       >
         <a
           href="/"
-          class="font-sans-em mb-10 text-2xl tracking-wide"
+          class="mb-10 font-sans-em text-2xl tracking-wide"
           onclick={() => setMenu(false)}
         >
           {m.site_name()}

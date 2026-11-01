@@ -27,7 +27,7 @@ const openMenu = async (): Promise<void> => {
 
 describe('Select', () => {
   beforeEach(() => {
-    // The app stylesheet (UnoCSS) is not loaded in the test iframe, so the
+    // The app stylesheet (Tailwind) is not loaded in the test iframe, so the
     // `hidden` utility used by the closed menu has no effect. Restore just
     // that one rule so closed options behave as they do in the app.
     const style = document.createElement('style');

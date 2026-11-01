@@ -121,7 +121,7 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if matchJobs.length > 0}
         <Card class="flex-1 p-0">
-          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold text-text-600 dark:text-text-400">
             {m['delivery.job_supply']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -138,7 +138,7 @@
       {/if}
       {#if matchJobsDest.length > 0}
         <Card class="flex-1 p-0">
-          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold text-text-600 dark:text-text-400">
             {m['delivery.job_demand']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -160,7 +160,7 @@
     <div class={['flex flex-col gap-8 px-8 pb-8', fullScreen && 'sm:flex-row sm:gap-8']}>
       {#if deliveryPoint.allSupply.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold text-text-600 dark:text-text-400">
             {m['delivery.supply']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>
@@ -186,7 +186,7 @@
       {/if}
       {#if deliveryPoint.allDemand.length > 0}
         <Card class={['overflow-hidden p-0', fullScreen && 'sm:flex-1']}>
-          <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
+          <div class="bg-gray-500/10 p-4 font-semibold text-text-600 dark:text-text-400">
             {m['delivery.demand']()}
           </div>
           <Table gridClass="grid-cols-[1fr_auto]" skeletonCount={5}>

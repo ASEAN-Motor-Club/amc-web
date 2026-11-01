@@ -3,7 +3,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv, type UserConfig } from 'vite';
-import UnoCSS from 'unocss/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
 import envCi from 'env-ci';
 import { webmanifestPlugin } from './vite-plugins/webmanifest.ts';
@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       dotnetWasmAssetPlugin(),
-      UnoCSS(),
+      tailwindcss(),
       sveltekit({
         preprocess: vitePreprocess(),
         adapter: adapter({ fallback: 'fallback.html' }),

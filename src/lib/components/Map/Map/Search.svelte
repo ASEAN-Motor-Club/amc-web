@@ -160,7 +160,7 @@
       name="search"
       type="search"
       placeholder={m['map.search_placeholder']()}
-      class="text-text-dark pointer-events-auto w-full !border-none !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+      class="pointer-events-auto w-full !border-none !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
       onInput={handleInput}
       additionalAttributes={{
         onclick: () => (focus = true),
@@ -183,7 +183,7 @@
         }}
       >
         <Card
-          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm media-not-mouse:mr-17"
         >
           {#each foundValuesSliced as point, i (`${point.name}${point.guid}`)}
             {#if i > 0}
@@ -206,7 +206,7 @@
                 ]}
               ></div>
               <div class="flex flex-col gap-0.5">
-                <div class="text-text-dark font-semibold">
+                <div class="font-semibold text-text-dark">
                   <HighlightText
                     text={point.pointType === PointType.House
                       ? point.name
@@ -222,7 +222,7 @@
                   />
                 </div>
                 {#if point.pointType === PointType.Delivery}
-                  <div class="text-text-300 flex flex-col">
+                  <div class="flex flex-col text-text-300">
                     {#if point.supplyText}
                       <div class="text-xs">
                         {m['delivery.supply']()}: <HighlightText
@@ -247,7 +247,7 @@
                     {/if}
                   </div>
                 {:else if point.pointType === PointType.House}
-                  <div class="text-text-300 text-xs">
+                  <div class="text-xs text-text-300">
                     {m['housing.id']()}: <HighlightText
                       text={point.guid || m.unknown()}
                       highlight={searchValue}
@@ -257,18 +257,18 @@
                     />
                   </div>
                 {:else if point.pointType === PointType.Player}
-                  <div class="text-text-300 text-xs">
+                  <div class="text-xs text-text-300">
                     <PlayerVehicleInfo vehicleKey={playerVehicleMap.get(point.guid ?? '') ?? ''} />
                   </div>
                 {/if}
-                <div class="text-text-400 text-xs font-semibold">
+                <div class="text-xs font-semibold text-text-400">
                   {formatLocationAtPoint(point.coord)}
                 </div>
               </div>
             </a>
           {/each}
           {#if searchValue && foundValues.length > maxShow}
-            <div class="text-text-300 px-3 py-2 italic">
+            <div class="px-3 py-2 text-text-300 italic">
               {m['map.more_results']({
                 count: foundValues.length - maxShow,
               })}
@@ -290,9 +290,9 @@
         }}
       >
         <Card
-          class="media-not-mouse:mr-17 pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm"
+          class="pointer-events-auto min-h-0 min-w-full flex-1 overflow-y-auto !bg-gray-900/50 p-0 !shadow-white/3 !ring-white/5 backdrop-blur-sm media-not-mouse:mr-17"
         >
-          <div class="text-text-300 px-3 py-2 italic">
+          <div class="px-3 py-2 text-text-300 italic">
             {searchValue ? m['map.no_results']() : m['map.start_search']()}
           </div>
         </Card>

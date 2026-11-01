@@ -32,7 +32,7 @@
     transition:fade={{ duration: defaultTransitionDurationMs }}
   >
     <Icon
-      class="i-material-symbols:keyboard-arrow-down-rounded text-text dark:text-text-dark"
+      class="icon-[material-symbols--keyboard-arrow-down-rounded] text-text dark:text-text-dark"
       size="lg"
     />
   </div>

@@ -56,9 +56,9 @@
     {/if}
   </div>
 
-  <div class="text-text-700 dark:text-text-300 mt-2 flex justify-between gap-1 text-sm">
+  <div class="mt-2 flex justify-between gap-1 text-sm text-text-700 dark:text-text-300">
     <div class="truncate">
-      <div class="text-text-500 text-xs font-semibold">{m['map.player_info.vehicle']()}</div>
+      <div class="text-xs font-semibold text-text-500">{m['map.player_info.vehicle']()}</div>
       <div class={[hidden || vehicleKey === 'None' ? 'italic' : '']}>
         {hidden
           ? hiddenLabel
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="text-right">
-      <div class="text-text-500 text-xs font-semibold">{m['map.player_info.location']()}</div>
+      <div class="text-xs font-semibold text-text-500">{m['map.player_info.location']()}</div>
       <div class={[hidden ? 'italic' : '']}>
         {hidden ? hiddenLabel : player ? formatLocationAtPoint(player.coord) : '.'}
       </div>

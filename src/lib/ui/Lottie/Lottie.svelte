@@ -18,7 +18,6 @@
   let animation: AnimationItem;
 
   onMount(() => {
-    // @unocss-skip-start
     animation = lottie.loadAnimation({
       container: lottieEl,
       renderer: 'svg',
@@ -26,7 +25,6 @@
       autoplay,
       animationData,
     });
-    // @unocss-skip-end
 
     return () => {
       animation.destroy();

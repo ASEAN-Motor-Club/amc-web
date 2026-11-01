@@ -1,7 +1,6 @@
 import '../src/app.css';
 import type { Preview, SvelteRenderer } from '@storybook/sveltekit';
 import { withThemeByClassName } from '@storybook/addon-themes';
-import 'virtual:uno.css';
 
 const preview: Preview = {
   parameters: {

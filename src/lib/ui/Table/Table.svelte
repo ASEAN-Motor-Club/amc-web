@@ -7,7 +7,6 @@
   import TableRow from './TableRow.svelte';
   import { twMerge } from 'tailwind-merge';
 
-  // @unocss-skip-start
   export interface TableProps {
     skeletonCount: number;
     gridClass: `grid-cols-${number}` | `grid-cols-[${string}]`;
@@ -19,7 +18,6 @@
     rowClass?: ClassValue;
     head?: Snippet;
   }
-  // @unocss-skip-end
 
   const {
     gridClass,
@@ -33,13 +31,11 @@
     head,
   }: TableProps = $props();
 
-  // @unocss-skip-start
   const colCount = $derived(
     gridClass.startsWith('grid-cols-[')
       ? gridClass.slice(11).split('_').length
       : +gridClass.slice(10),
   );
-  // @unocss-skip-end
 
   setTableContext({
     get gridClass() {

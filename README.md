@@ -6,8 +6,8 @@ Website for ASEAN Motor Club
 
 - **Framework**: [Svelte](https://svelte.dev/) with [SvelteKit](https://kit.svelte.dev/) using [Static Adapter](https://kit.svelte.dev/docs/adapter-static)
 - **Package Manager**: [pnpm](https://pnpm.io/) for fast, disk space efficient dependency management
-- **Styling**: [UnoCSS](https://unocss.dev/) with [Wind4 preset (Tailwind CSS v4.0 syntax)](https://unocss.dev/presets/wind4)
-- **Icons**: [UnoCSS Icons preset](https://unocss.dev/presets/icons) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography); theme in `src/app.css`
+- **Icons**: [Iconify for Tailwind CSS 4](https://iconify.design/docs/usage/css/tailwind/tailwind4/) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/)
 - **Testing**: [Vitest](https://vitest.dev/) with [Playwright](https://playwright.dev/) browser provider for component testing
 - **Internationalization**: [Paraglide](https://inlang.com/paraglide)
 - **Component Development**: [Storybook](https://storybook.js.org/)
@@ -29,7 +29,7 @@ Website for ASEAN Motor Club
   ```
 - **VS Code Extensions** (optional, highly recommended):
   - [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
-  - [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) ([Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) should work too)
+  - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
   - [Vitest](https://marketplace.visualstudio.com/items?itemName=vitest.explorer)
@@ -141,39 +141,25 @@ Example usage:
 
 ## 🎨 Styling
 
-This project uses **UnoCSS** with the **Wind4 preset**, which mimics the syntax and utility classes of Tailwind CSS v4.0.
+This project uses **Tailwind CSS v4** through `@tailwindcss/vite`. There is no JS config: the theme (fonts, the `background` / `text` / `primary` / `accent` / `danger` palettes), the class-based `dark` variant, the `media-*` pointer variants and the plugins all live in `src/app.css`.
 
-### UnoCSS Quirks
-
-UnoCSS has a quirk where it can interpret text in comments and even variable names as utility classes. This can lead to unexpected or unmatched classes being generated in your CSS output.
-
-### UnoCSS vs Tailwind CSS Compatibility
-
-While UnoCSS with the Wind4 preset aims to match Tailwind CSS syntax as closely as possible, **some Tailwind CSS classes might not work** in UnoCSS. This can happen because:
-
-- UnoCSS may not have implemented certain Tailwind utilities yet
-- There might be slight differences in class naming or behavior
-- Custom Tailwind plugins or configurations may not be available in UnoCSS
-
-### Debugging UnoCSS Issues
-
-For both UnoCSS quirks and compatibility issues, you can use [http://localhost:5173/\_\_unocss](http://localhost:5173/__unocss) while running the dev server to debug your styling problems. This tool helps you check for unexpected classes being generated, identify why a class isn't being applied, and find unmatched or ignored classes in your project. If you find classes that should work but aren't being processed, check the [UnoCSS documentation](https://unocss.dev/) for alternatives or configuration options.
+Tailwind only generates classes it finds as complete strings in `src/` (test-only `*.test.ts`, `*.spec.ts`, `*.integration.ts` and `*.e2e.ts` files are excluded). Never build class names by concatenation (`` `text-${color}-500` ``); map to full class strings instead.
 
 ## 🔣 Using Icons
 
-This project uses the **UnoCSS Icons preset** with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/).
+Icons come from the [Iconify Tailwind 4 plugin](https://iconify.design/docs/usage/css/tailwind/tailwind4/) with [Iconify Material Symbols](https://icon-sets.iconify.design/material-symbols/).
 
 - **Prefer the rounded version** of icons if available (e.g., `-rounded` suffix)
 - Use the `<Icon />` component for standard icon usage:
 
   ```svelte
-  <Icon class="i-material-symbols:favorite-outline-rounded" size="sm" />
+  <Icon class="icon-[material-symbols--favorite-outline-rounded]" size="sm" />
   ```
 
-  - The `class` attribute specifies the icon (using UnoCSS icon utility)
+  - The `class` attribute specifies the icon as `icon-[<set>--<name>]`
   - The `size` prop sets the icon size (`xs`, `sm`, `md`, `lg`)
 
-Refer to the [UnoCSS Icons documentation](https://unocss.dev/presets/icons) and [Material Symbols](https://icon-sets.iconify.design/material-symbols/) for available icons and usage details.
+Find icon names on [Material Symbols](https://icon-sets.iconify.design/material-symbols/).
 
 ## 🧪 Testing
 

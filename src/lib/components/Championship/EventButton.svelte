@@ -44,7 +44,7 @@
   class={[
     month === currentMonth ? 'opacity-100' : 'opacity-50',
     {
-      'ring-primary-700 ring': today,
+      'ring ring-primary-700': today,
     },
     haveEvent &&
       !today && {

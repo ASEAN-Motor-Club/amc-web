@@ -41,22 +41,22 @@
   const locale = $derived.by(getLocale);
 </script>
 
-<div class="text-text-300 flex flex-col text-xs">
+<div class="flex flex-col text-xs text-text-300">
   <div>
-    <div class="text-text-200 font-semibold">{m['housing.id']()}</div>
+    <div class="font-semibold text-text-200">{m['housing.id']()}</div>
     {hoverInfo.info.name}
   </div>
   <div>
-    <div class="text-text-200 font-semibold">{m['housing.size']()}</div>
+    <div class="font-semibold text-text-200">{m['housing.size']()}</div>
     {hoverInfo.info.size.x / 100} x {hoverInfo.info.size.y / 100}
   </div>
   <div>
-    <div class="text-text-200 font-semibold">{m['housing.rent_price']()}</div>
+    <div class="font-semibold text-text-200">{m['housing.rent_price']()}</div>
     {(hoverInfo.info.cost / 10).toLocaleString(locale)}
   </div>
   {#if currentHouseData?.ownerName}
     <div>
-      <div class="text-text-200 font-semibold">{m['housing.rent_left']()}</div>
+      <div class="font-semibold text-text-200">{m['housing.rent_left']()}</div>
       {rentLeftText}
     </div>
   {/if}

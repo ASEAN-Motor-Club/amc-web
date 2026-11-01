@@ -24,7 +24,7 @@
     {#if index < 3}
       <div
         class={[
-          'i-material-symbols:trophy-rounded h-full w-full',
+          'icon-[material-symbols--trophy-rounded] h-full w-full',
           {
             'text-amber-500': index === 0,
             'text-gray-500': index === 1,
@@ -33,7 +33,7 @@
         ]}
       ></div>
     {/if}
-    <div class={['font-bold', index < 3 && 'text-text-dark absolute top-2.25 text-sm']}>
+    <div class={['font-bold', index < 3 && 'absolute top-2.25 text-sm text-text-dark']}>
       {index + 1}
     </div>
     {#if index < 3}
@@ -61,7 +61,7 @@
       >
         {loading ? '.' : time?.character.name}
       </div>
-      <div class="text-text-700 dark:text-text-300 text-xs">
+      <div class="text-xs text-text-700 dark:text-text-300">
         {#if loading}
           .
         {:else if time?.championship_point}
@@ -88,7 +88,7 @@
         {/if}
       </div>
 
-      <div class="text-text-800 dark:text-text-200 text-center text-xs sm:text-right">
+      <div class="text-center text-xs text-text-800 sm:text-right dark:text-text-200">
         {#if loading}
           .
         {:else if time?.finished}

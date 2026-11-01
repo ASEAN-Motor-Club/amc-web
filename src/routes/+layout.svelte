@@ -1,6 +1,5 @@
 <script lang="ts">
   import '@fontsource-variable/noto-sans';
-  import 'virtual:uno.css';
   import '../app.css';
   import MsgModal from '#lib/components/MsgModal/MsgModal.svelte';
   import Navbar from '#lib/components/Navbar/Navbar.svelte';
@@ -65,7 +64,7 @@
     <MsgModal>
       <a
         href="#main-content"
-        class="bg-background-50 dark:bg-background-900 fixed top-2 left-2 z-1000001 -translate-y-[200%] rounded-md px-4 py-2 font-semibold shadow-md focus:translate-y-0"
+        class="fixed top-2 left-2 z-1000001 -translate-y-[200%] rounded-md bg-background-50 px-4 py-2 font-semibold shadow-md focus:translate-y-0 dark:bg-background-900"
         >{m['a11y.skip_to_content']()}</a
       >
       <Navbar />

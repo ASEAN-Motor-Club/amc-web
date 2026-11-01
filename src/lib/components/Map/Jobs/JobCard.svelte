@@ -66,33 +66,33 @@
     {job?.quantity_fulfilled} <span class="text-text-500">/</span>
     {job?.quantity_requested}
   </div>
-  <div class="text-text-700 dark:text-text-300 mb-2 flex justify-between gap-1 text-sm">
+  <div class="mb-2 flex justify-between gap-1 text-sm text-text-700 dark:text-text-300">
     <div>
-      <div class="text-text-500 text-xs font-bold">Time Left</div>
+      <div class="text-xs font-bold text-text-500">Time Left</div>
       <div>
         {timeLeftText}
       </div>
     </div>
     <div class="text-center">
-      <div class="text-text-500 text-xs font-bold">{m['jobs.bonus_multiplier']()}</div>
+      <div class="text-xs font-bold text-text-500">{m['jobs.bonus_multiplier']()}</div>
       <div>
         {Math.round((job?.bonus_multiplier ?? 0) * 100)}%
       </div>
     </div>
     <div class="text-right">
-      <div class="text-text-500 text-xs font-bold">{m['jobs.completion_bonus']()}</div>
+      <div class="text-xs font-bold text-text-500">{m['jobs.completion_bonus']()}</div>
       <div>
         ${job?.completion_bonus}
       </div>
     </div>
   </div>
-  <div class="text-text-700 dark:text-text-300 mb-2 text-sm">
-    <div class="text-text-500 text-xs font-bold">{m['jobs.constrains_cargo']()}</div>
+  <div class="mb-2 text-sm text-text-700 dark:text-text-300">
+    <div class="text-xs font-bold text-text-500">{m['jobs.constrains_cargo']()}</div>
     <div class="mb-2">
       {job?.cargos.map((point) => getMtLocale(cargoName[point])).join(', ')}
     </div>
     {#if cardPoints.supply.length > 0}
-      <div class="text-text-500 text-xs font-bold">{m['jobs.job_supply']()}</div>
+      <div class="text-xs font-bold text-text-500">{m['jobs.job_supply']()}</div>
       <div class="mb-2">
         {#each cardPoints.supply as point, i (point.guid)}
           <DeliveryLink {fullScreen} guid={point.guid} />{i < cardPoints.supply.length - 1
@@ -102,7 +102,7 @@
       </div>
     {/if}
     {#if cardPoints.demand.length > 0}
-      <div class="text-text-500 text-xs font-bold">{m['jobs.job_demand']()}</div>
+      <div class="text-xs font-bold text-text-500">{m['jobs.job_demand']()}</div>
       <div class="mb-2">
         {#each cardPoints.demand as point, i (point.guid)}
           <DeliveryLink {fullScreen} guid={point.guid} />{i < cardPoints.demand.length - 1
@@ -113,7 +113,7 @@
     {/if}
   </div>
   {#if job?.description}
-    <div class="text-text-600 dark:text-text-400 mb-2 text-sm">
+    <div class="mb-2 text-sm text-text-600 dark:text-text-400">
       {job.description}
     </div>
   {/if}

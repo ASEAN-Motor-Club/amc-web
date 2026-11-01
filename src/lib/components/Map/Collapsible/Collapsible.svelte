@@ -139,15 +139,15 @@
 {/if}
 <div
   class={[
-    'bg-background-100 dark:bg-background-950 absolute bottom-0 z-1  flex w-full flex-col sm:static sm:w-auto sm:flex-row',
-    isSm.current && showFullAnimate && '!sm:absolute top-0 right-0',
+    'absolute bottom-0 z-1 flex w-full  flex-col bg-background-100 sm:static sm:w-auto sm:flex-row dark:bg-background-950',
+    isSm.current && showFullAnimate && 'top-0 right-0 sm:absolute!',
   ]}
 >
   <div class="z-1 flex w-full flex-row sm:h-full sm:w-11 sm:flex-col">
     {#if validOpenCollapsible && isSm.current && !showFull}
       <CollapsibleActionButton
         color="danger"
-        icon="i-material-symbols:close-rounded"
+        icon="icon-[material-symbols--close-rounded]"
         label={m['action.close']()}
         href={closeHref}
       />
@@ -157,8 +157,8 @@
         color="primary"
         class="hidden sm:flex"
         icon={showFull
-          ? 'i-material-symbols:collapse-content-rounded'
-          : 'i-material-symbols:expand-content-rounded'}
+          ? 'icon-[material-symbols--collapse-content-rounded]'
+          : 'icon-[material-symbols--expand-content-rounded]'}
         label={showFull ? m['a11y.collapse']() : m['a11y.expand']()}
         href={toggleFullHref}
       />
@@ -173,7 +173,7 @@
       >
         <CollapsibleButton
           class="h-full min-h-0 w-full min-w-12 hover:bg-green-700/20 hover:text-green-800 active:bg-green-800/20 sm:min-h-11 sm:min-w-0 hover:dark:text-green-500"
-          icon="i-material-symbols:map-outline-rounded"
+          icon="icon-[material-symbols--map-outline-rounded]"
           text={m['map.side_menu.map']()}
           href={closeHref}
         />
@@ -184,7 +184,7 @@
           openCollapsible === 'players' &&
             'bg-emerald-800/20 text-emerald-800 dark:text-emerald-500',
         ]}
-        icon="i-material-symbols:person-outline-rounded"
+        icon="icon-[material-symbols--person-outline-rounded]"
         text={m['map.side_menu.players']()}
         href={getCollapsibleHref('players')}
         current={openCollapsible === 'players'}
@@ -194,7 +194,7 @@
           'h-12 flex-1 hover:bg-blue-700/20 hover:text-blue-800 active:bg-blue-800/20 sm:w-full hover:dark:text-blue-500',
           openCollapsible === 'housing' && 'bg-blue-800/20 text-blue-800 dark:text-blue-500',
         ]}
-        icon="i-material-symbols:home-outline-rounded"
+        icon="icon-[material-symbols--home-outline-rounded]"
         text={m['map.side_menu.housing']()}
         href={getCollapsibleHref('housing')}
         current={openCollapsible === 'housing'}
@@ -204,7 +204,7 @@
           'h-12 flex-1 hover:bg-orange-700/20 hover:text-orange-800 active:bg-orange-800/20 sm:w-full hover:dark:text-orange-500',
           openCollapsible === 'jobs' && 'bg-orange-800/20 text-orange-800 dark:text-orange-500',
         ]}
-        icon="i-material-symbols:delivery-truck-speed-outline-rounded"
+        icon="icon-[material-symbols--delivery-truck-speed-outline-rounded]"
         text={m['map.side_menu.jobs']()}
         href={getCollapsibleHref('jobs')}
         current={openCollapsible === 'jobs'}
@@ -219,7 +219,7 @@
       >
         <CollapsibleButton
           class="h-12 w-12 bg-yellow-800/20 text-yellow-800 hover:bg-yellow-700/20 hover:text-yellow-800 active:bg-yellow-800/20 sm:h-13 sm:w-11 dark:text-yellow-500 hover:dark:text-yellow-500"
-          icon="i-material-symbols:box-outline-rounded"
+          icon="icon-[material-symbols--box-outline-rounded]"
           text={m['map.side_menu.delivery']()}
           href={getCollapsibleHref(`deliveries/${openCollapsibleId}`)}
         />

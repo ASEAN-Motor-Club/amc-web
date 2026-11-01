@@ -47,7 +47,7 @@
 <Modal open={modalOpen} onClose={hideModal} aria-labelledby={titleId}>
   <Card class="flex max-w-120 min-w-60 flex-col p-5">
     <h2 id={titleId} class="pb-4.5 text-2xl font-bold tracking-tight">{modalParams.title}</h2>
-    <p class="text-text-700 dark:text-text-300 text-sm whitespace-pre-line">
+    <p class="text-sm whitespace-pre-line text-text-700 dark:text-text-300">
       {modalParams.message}
     </p>
     <div class="-mx-3 -my-3 flex justify-end gap-2 pt-6">

@@ -71,8 +71,8 @@
 </script>
 
 {#if hoverInfo.info.allSupply.length}
-  <div class="text-text-300 flex flex-col text-xs">
-    <div class="text-text-200 font-semibold">
+  <div class="flex flex-col text-xs text-text-300">
+    <div class="font-semibold text-text-200">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-green-500"></span>
       {m['delivery.supply']()}
     </div>
@@ -96,8 +96,8 @@
   </div>
 {/if}
 {#if hoverInfo.info.allDemand.length}
-  <div class="text-text-300 flex flex-col text-xs">
-    <div class="text-text-200 font-semibold">
+  <div class="flex flex-col text-xs text-text-300">
+    <div class="font-semibold text-text-200">
       <span class="mr-0.5 inline-block size-2 rounded-full bg-blue-500"></span>
       {m['delivery.demand']()}
     </div>
@@ -106,7 +106,7 @@
         <div class="flex items-center gap-1">
           {getMtLocale(cargoName[item])}
           {#if hoverInfo.info.parent || hasDropPoint(item)}
-            <Icon class="i-material-symbols:link-rounded -mb-0.5 text-yellow-500" size="xs" />
+            <Icon class="-mb-0.5 icon-[material-symbols--link-rounded] text-yellow-500" size="xs" />
           {/if}
         </div>
         <div class="relative">
@@ -126,8 +126,8 @@
   </div>
 {/if}
 {#if differenceInSeconds(rtDate.d.getTime(), lastUpdated) > DELIVERY_STALE_WARN_SECONDS}
-  <div class="text-text-300 text-xs">
-    <span class="text-text-dark font-semibold">
+  <div class="text-xs text-text-300">
+    <span class="font-semibold text-text-dark">
       <b class="mr-0.5 inline-block size-2 text-center text-red-500">!</b>
       {m['map.last_updated']()}:
       {#if deliveryPointInfoLoading}

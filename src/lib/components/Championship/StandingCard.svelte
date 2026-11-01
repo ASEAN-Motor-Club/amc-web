@@ -23,7 +23,7 @@
   };
 </script>
 
-<Card class="sm:min-w-unset h-101 min-w-full overflow-hidden p-0 sm:w-90 sm:flex-1">
+<Card class="h-101 min-w-full overflow-hidden p-0 sm:w-90 sm:min-w-[unset] sm:flex-1">
   <h4 class="bg-gray-500/10 p-4 text-xl font-medium">
     {title}
   </h4>

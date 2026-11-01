@@ -220,13 +220,13 @@
         </div>
       {/if}
       <Button
-        class="text-text-dark pointer-events-auto !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
+        class="pointer-events-auto !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
         color="custom"
         onClick={() => (poiOpen = !poiOpen)}
         size="sm"
       >
         {#snippet prependIcon()}
-          <Icon class="i-material-symbols:location-on-rounded" />
+          <Icon class="icon-[material-symbols--location-on-rounded]" />
         {/snippet}
         {m['map.point_of_interests']()}
       </Button>

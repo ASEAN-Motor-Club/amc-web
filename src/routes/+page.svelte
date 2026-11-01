@@ -69,7 +69,7 @@
           </Button>
         </div>
         <h1
-          class="text-text-dark font-sans-em pointer-events-none z-100 mb-4 text-center text-7xl select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
+          class="pointer-events-none z-100 mb-4 text-center font-sans-em text-7xl text-text-dark select-none sm:mb-9 sm:text-left sm:text-8xl lg:text-9xl"
         >
           {m.site_name()}
         </h1>
@@ -100,7 +100,7 @@
             <Button
               variant="contained"
               color="custom"
-              class=" text-text bg-[#f96854] hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)]"
+              class=" bg-[#f96854] text-text hover:bg-[color-mix(in_oklab,#f96854_90%,white)] active:bg-[color-mix(in_oklab,#f96854_95%,black)]"
               tag="a"
               href={PUBLIC_PATREON_LINK}
               target="_blank"
@@ -111,7 +111,7 @@
             variant="outlined"
             tag="a"
             href="/radio"
-            class="!bg-text-dark/10 !border-text-dark/40 !text-text-dark !hover:bg-text-dark/12.5 backdrop-blur-xs"
+            class="!border-text-dark/40 !bg-text-dark/10 !text-text-dark backdrop-blur-xs hover:bg-text-dark/12.5!"
             >{m['home.listen_radio']()}</Button
           >
         </div>
@@ -126,11 +126,11 @@
     class="-mt-16 grid min-h-svh w-full max-w-340 items-center gap-8 px-8 py-16 pt-32 sm:px-16 md:grid-cols-2"
   >
     <div>
-      <h2 id="home-about" class="font-sans-em mb-3 text-2xl tracking-wide">
+      <h2 id="home-about" class="mb-3 font-sans-em text-2xl tracking-wide">
         {m['home.desc_title']()}
       </h2>
       <p class="text-text-700 dark:text-text-300">{m['home.description']()}</p>
-      <div class="text-text-500 mt-2 text-xs">
+      <div class="mt-2 text-xs text-text-500">
         {m['home.copyright']({ year })}
       </div>
     </div>

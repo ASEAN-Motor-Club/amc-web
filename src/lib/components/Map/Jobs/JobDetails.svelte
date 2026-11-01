@@ -133,16 +133,16 @@
           {job?.quantity_requested}
         {/if}
       </div>
-      <div class="text-text-700 dark:text-text-300 mb-8 font-semibold">
+      <div class="mb-8 font-semibold text-text-700 dark:text-text-300">
         {#if loading}
           <TextSkeleton class="w-full max-w-50" />
         {:else}
           {timeLeftText}
         {/if}
       </div>
-      <div class="text-text-700 dark:text-text-300 mb-8 flex gap-8">
+      <div class="mb-8 flex gap-8 text-text-700 dark:text-text-300">
         <div>
-          <div class="text-text-600 dark:text-text-400 text-sm font-semibold">
+          <div class="text-sm font-semibold text-text-600 dark:text-text-400">
             {m['jobs.bonus_multiplier']()}
           </div>
           {#if loading}
@@ -152,7 +152,7 @@
           {/if}
         </div>
         <div>
-          <div class="text-text-600 dark:text-text-400 text-sm font-semibold">
+          <div class="text-sm font-semibold text-text-600 dark:text-text-400">
             {m['jobs.completion_bonus']()}
           </div>
           {#if loading}
@@ -163,7 +163,7 @@
         </div>
       </div>
       {#if job?.description}
-        <div class="text-text-600 dark:text-text-400 text-sm">
+        <div class="text-sm text-text-600 dark:text-text-400">
           {job.description}
         </div>
       {/if}
@@ -173,11 +173,11 @@
           <TextSkeleton class="mt-2 w-full" lines={8} />
         {:else}
           <div class="mb-4">
-            <div class="text-text-600 dark:text-text-400 font-semibold">
+            <div class="font-semibold text-text-600 dark:text-text-400">
               {m['jobs.constrains_cargo']()}
             </div>
             <ul
-              class={['marker:text-text-500 list-disc', fullScreen && 'lg:columns-2 2xl:columns-3']}
+              class={['list-disc marker:text-text-500', fullScreen && 'lg:columns-2 2xl:columns-3']}
             >
               {#each job?.cargos ?? [] as cargo (cargo)}
                 <li class="ml-8">{getMtLocale(cargoName[cargo])}</li>
@@ -186,12 +186,12 @@
           </div>
           {#if validPoints.supply.length > 0}
             <div class="mb-4">
-              <div class="text-text-600 dark:text-text-400 font-semibold">
+              <div class="font-semibold text-text-600 dark:text-text-400">
                 {m['jobs.job_supply']()}
               </div>
               <ul
                 class={[
-                  'marker:text-text-500 list-disc',
+                  'list-disc marker:text-text-500',
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
@@ -205,12 +205,12 @@
           {/if}
           {#if validPoints.demand.length > 0}
             <div>
-              <div class="text-text-600 dark:text-text-400 font-semibold">
+              <div class="font-semibold text-text-600 dark:text-text-400">
                 {m['jobs.job_demand']()}
               </div>
               <ul
                 class={[
-                  'marker:text-text-500 list-disc',
+                  'list-disc marker:text-text-500',
                   fullScreen && 'lg:columns-2 2xl:columns-3',
                 ]}
               >
@@ -230,7 +230,7 @@
       <Card
         class="flex max-h-[calc(100dvh-11rem)] flex-1 flex-col overflow-hidden p-0 lg:max-h-[calc(100dvh-8rem)]"
       >
-        <div class="text-text-600 dark:text-text-400 bg-gray-500/10 p-4 font-semibold">
+        <div class="bg-gray-500/10 p-4 font-semibold text-text-600 dark:text-text-400">
           {m['jobs.contributors']()}
         </div>
         <Table
@@ -276,7 +276,7 @@
     </div>
   </div>
 {:else}
-  <div class="text-text-600 dark:text-text-400 flex h-full items-center justify-center p-8 text-sm">
+  <div class="flex h-full items-center justify-center p-8 text-sm text-text-600 dark:text-text-400">
     {m['jobs.job_not_found']()}
   </div>
 {/if}

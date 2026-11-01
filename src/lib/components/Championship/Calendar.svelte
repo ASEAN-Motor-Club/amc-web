@@ -83,7 +83,7 @@
         variant="contained-light"
         aria-label={m['a11y.previous_month']()}
       >
-        <Icon class="i-material-symbols:arrow-left-rounded" />
+        <Icon class="icon-[material-symbols--arrow-left-rounded]" />
       </Button>
       <Button
         icon
@@ -94,14 +94,14 @@
         variant="contained-light"
         aria-label={m['a11y.next_month']()}
       >
-        <Icon class="i-material-symbols:arrow-right-rounded" />
+        <Icon class="icon-[material-symbols--arrow-right-rounded]" />
       </Button>
     </div>
   </div>
 
   <div class="-mx-3 grid grid-cols-7 place-items-center gap-1 pb-2 sm:m-0 sm:gap-2 sm:pb-4">
     {#each Array(7) as _, i (i)}
-      <span class="text-text-700 dark:text-text-300 text-xs font-semibold">
+      <span class="text-xs font-semibold text-text-700 dark:text-text-300">
         {days[(i + firstDayOfWeek) % 7]}
       </span>
     {/each}

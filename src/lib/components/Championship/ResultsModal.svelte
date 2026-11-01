@@ -65,7 +65,7 @@
         ? m['championship.event.event_results']({ event: event.name })
         : m['championship.event.results']()}
       {#if event?.championship}
-        <span class="text-text-600 dark:text-text-400 block text-sm font-semibold">
+        <span class="block text-sm font-semibold text-text-600 dark:text-text-400">
           {event.championship.name}
         </span>
       {/if}
@@ -74,7 +74,7 @@
       gridClass="grid-cols-[1fr_4fr_2fr_1fr_2fr]"
       skeletonCount={32}
       {loading}
-      class="md:aspect-1 aspect-9/16 w-full overflow-y-auto border-t border-b border-gray-500/10"
+      class="aspect-9/16 w-full overflow-y-auto border-t border-b border-gray-500/10 md:aspect-square"
       rowClass="px-5 text-sm sm:text-base"
       empty={results.length === 0}
     >
@@ -105,7 +105,7 @@
                   {result.championship_point.points}
                 </div>
               {:else}
-                <div class="text-text-600 dark:text-text-400 text-xs font-bold">-</div>
+                <div class="text-xs font-bold text-text-600 dark:text-text-400">-</div>
               {/if}
             {/if}
           </div>
@@ -114,7 +114,7 @@
               {#if result.finished}
                 {formatResultTime(result)}
               {:else}
-                <span class="text-text-600 dark:text-text-400 text-xs italic">
+                <span class="text-xs text-text-600 italic dark:text-text-400">
                   {m['championship.event.dnf']()}
                 </span>
               {/if}

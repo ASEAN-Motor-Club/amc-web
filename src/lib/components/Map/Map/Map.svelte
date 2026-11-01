@@ -427,10 +427,10 @@
 {#if pipActive}
   <button
     type="button"
-    class="text-text-700 dark:text-text-300 flex h-full w-full flex-col items-center justify-center gap-2"
+    class="flex h-full w-full flex-col items-center justify-center gap-2 text-text-700 dark:text-text-300"
     onclick={exitPip}
   >
-    <Icon class="i-material-symbols:picture-in-picture-center-outline-rounded" size="lg" />
+    <Icon class="icon-[material-symbols--picture-in-picture-center-outline-rounded]" size="lg" />
     {m['map.pip_exit']()}
   </button>
 {/if}

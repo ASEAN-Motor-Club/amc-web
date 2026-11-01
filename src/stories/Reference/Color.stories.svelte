@@ -19,13 +19,13 @@
 
       <div class="text-sm text-gray-500">Background</div>
       <div
-        class="bg-background-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-50 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-background-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-100 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-background-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-200 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
         class="grid aspect-1/1 w-6 place-items-center rounded-sm bg-red-50 outline -outline-offset-1 outline-red-400/50 sm:rounded-md dark:bg-red-950/20"
@@ -58,108 +58,108 @@
         <span class="text-xs leading-none font-bold text-red-400">✕</span>
       </div>
       <div
-        class="bg-background-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-800 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-background-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-900 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-background-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-background-950 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
 
       <div class="text-sm text-gray-500">Primary</div>
       <div
-        class="bg-primary-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-50 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-100 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-200 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-300 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-400 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-500 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-600 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-700 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-800 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-900 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-primary-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-primary-950 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
 
       <div class="text-sm text-gray-500">Danger (Red)</div>
       <div
-        class="bg-danger-50 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-50 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-100 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-100 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-200 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-200 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-300 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-300 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-400 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-400 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-500 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-500 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-600 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-700 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-700 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-800 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-800 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-900 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-900 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div
-        class="bg-danger-950 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-danger-950 outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
 
       <div class="col-span-12 border-t border-black/10 dark:border-white/10"></div>
 
       <div class="text-sm text-gray-500">Accent</div>
       <div
-        class="bg-accent aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-accent outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div class="col-span-10"></div>
 
       <div class="text-sm text-gray-500">Accent Secondary</div>
       <div
-        class="bg-accent-secondary aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-accent-secondary outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div class="col-span-10"></div>
 
       <div class="text-sm text-gray-500">Text</div>
       <div
-        class="bg-text aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-text outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div class="col-span-10"></div>
 
       <div class="text-sm text-gray-500">Text Dark</div>
       <div
-        class="bg-text-dark aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
+        class="aspect-1/1 w-6 rounded-sm bg-text-dark outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"
       ></div>
       <div class="col-span-10"></div>
     </div>

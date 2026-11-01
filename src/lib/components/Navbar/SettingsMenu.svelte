@@ -160,7 +160,7 @@
   aria-label={m['a11y.settings']()}
   aria-expanded={menu}
 >
-  <Icon class="i-material-symbols:settings-rounded" size="sm" />
+  <Icon class="icon-[material-symbols--settings-rounded]" size="sm" />
 </Button>
 
 <ClickAwayBlock onClickAway={() => setMenu(false)} active={menu}>
@@ -179,8 +179,8 @@
               <Icon
                 class={[
                   darkMode
-                    ? `i-material-symbols:dark-mode-outline-rounded`
-                    : `i-material-symbols:light-mode-outline-rounded`,
+                    ? `icon-[material-symbols--dark-mode-outline-rounded]`
+                    : `icon-[material-symbols--light-mode-outline-rounded]`,
                 ]}
               />
             {/snippet}

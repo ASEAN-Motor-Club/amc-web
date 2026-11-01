@@ -74,7 +74,7 @@
       <div class="mb-2 text-sm tracking-[0.3em] text-amber-700/60 uppercase dark:text-amber-400/50">
         All Hail
       </div>
-      <h1 class="font-cursive mb-2 text-7xl leading-tight">AnkhR</h1>
+      <h1 class="mb-2 font-cursive text-7xl leading-tight">AnkhR</h1>
       <div class="font-serif text-xl text-amber-800/70 italic dark:text-amber-300/60">
         {epithet}
       </div>
@@ -196,7 +196,7 @@
       <p class="text-sm tracking-[0.3em] text-amber-700/40 uppercase dark:text-amber-400/30">
         Still on the Road
       </p>
-      <p class="font-cursive mt-2 text-3xl text-amber-700/40 dark:text-amber-400/30">AnkhR</p>
+      <p class="mt-2 font-cursive text-3xl text-amber-700/40 dark:text-amber-400/30">AnkhR</p>
     </footer>
   </div>
 </div>

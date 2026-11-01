@@ -1,12 +1,95 @@
-html,
-body {
-  --at-apply: h-full;
+/* Scan only src/: auto-detection would also pick up graphify-out/graph.json, wasm/ and docs. */
+@import 'tailwindcss' source('.');
+/* Test assertions mention class names that no rendered markup uses. */
+@source not './**/*.{test,spec}.ts';
+@source not './**/*.{integration,e2e}.ts';
+@plugin '@tailwindcss/typography';
+@plugin '@iconify/tailwind4';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@custom-variant media-touch (@media (hover: none) and (pointer: coarse));
+@custom-variant media-stylus (@media (hover: none) and (pointer: fine));
+@custom-variant media-pointer (@media (hover) and (pointer: coarse));
+@custom-variant media-mouse (@media (hover) and (pointer: fine));
+@custom-variant media-not-touch (@media not ((hover: none) and (pointer: coarse)));
+@custom-variant media-not-stylus (@media not ((hover: none) and (pointer: fine)));
+@custom-variant media-not-pointer (@media not ((hover) and (pointer: coarse)));
+@custom-variant media-not-mouse (@media not ((hover) and (pointer: fine)));
+
+@theme {
+  --font-sans:
+    'Noto Sans Variable', 'Noto Sans SC Variable', 'Noto Sans JP Variable', 'Noto Sans KR Variable',
+    'Noto Sans Thai Variable', sans-serif;
+  --font-sans-em: Koulen, Kanit, sans-serif;
+  --font-mono: 'Noto Sans Mono Variable', monospace;
+  --font-cursive: 'Great Vibes', cursive;
+
+  --color-background-50: oklch(0.998 0.001 287.3);
+  --color-background-100: oklch(0.981 0.003 264.6);
+  --color-background-200: oklch(0.96 0.006 263.19);
+  --color-background-800: oklch(0.285 0.02 252.32);
+  --color-background-900: oklch(0.189 0.015 251.9);
+  --color-background-950: oklch(0.15 0.015 252.27);
+
+  --color-text: var(--color-slate-900);
+  --color-text-dark: var(--color-slate-100);
+  --color-text-100: var(--color-slate-100);
+  --color-text-200: var(--color-slate-200);
+  --color-text-300: var(--color-slate-300);
+  --color-text-400: var(--color-slate-400);
+  --color-text-500: var(--color-slate-500);
+  --color-text-600: var(--color-slate-600);
+  --color-text-700: var(--color-slate-700);
+  --color-text-800: var(--color-slate-800);
+  --color-text-900: var(--color-slate-900);
+
+  --color-primary: oklch(0.376 0.183 262.64);
+  --color-primary-50: oklch(0.965 0.017 259.43);
+  --color-primary-100: oklch(0.93 0.033 259.42);
+  --color-primary-200: oklch(0.862 0.068 260.12);
+  --color-primary-300: oklch(0.784 0.11 259.17);
+  --color-primary-400: oklch(0.717 0.148 257.91);
+  --color-primary-500: oklch(0.65 0.189 256.38);
+  --color-primary-600: oklch(0.583 0.204 256.6);
+  --color-primary-700: oklch(0.516 0.199 258.95);
+  --color-primary-800: oklch(0.44 0.189 260.88);
+  --color-primary-900: oklch(0.376 0.183 262.64);
+  --color-primary-950: oklch(0.255 0.109 260.86);
+
+  --color-accent: oklch(0.622 0.221 23.47);
+  --color-accent-secondary: oklch(0.911 0.192 103.79);
+
+  --color-danger-50: var(--color-red-50);
+  --color-danger-100: var(--color-red-100);
+  --color-danger-200: var(--color-red-200);
+  --color-danger-300: var(--color-red-300);
+  --color-danger-400: var(--color-red-400);
+  --color-danger-500: var(--color-red-500);
+  --color-danger-600: var(--color-red-600);
+  --color-danger-700: var(--color-red-700);
+  --color-danger-800: var(--color-red-800);
+  --color-danger-900: var(--color-red-900);
+  --color-danger-950: var(--color-red-950);
 }
 
-body {
-  --at-apply: font-sans bg-background-100 text-text transition-colors;
+/* Rules use slate-500 in both themes; the typography plugin defaults to slate-200 / slate-700. */
+@utility prose-slate {
+  --tw-prose-hr: var(--color-slate-500);
+  --tw-prose-invert-hr: var(--color-slate-500);
 }
 
-.dark body {
-  --at-apply: bg-background-950 text-text-dark;
+@layer base {
+  html,
+  body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background-100 font-sans text-text transition-colors;
+  }
+
+  .dark body {
+    @apply bg-background-950 text-text-dark;
+  }
 }

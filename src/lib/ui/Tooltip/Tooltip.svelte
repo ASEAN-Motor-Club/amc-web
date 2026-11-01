@@ -161,7 +161,6 @@
       }
     };
 
-    // @unocss-skip-start
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll, true);
 
@@ -172,7 +171,6 @@
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll, true);
     };
-    // @unocss-skip-end
   });
 
   const show = $derived(showTooltip && !disabled);

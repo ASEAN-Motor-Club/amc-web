@@ -394,7 +394,7 @@
       />
       {#if codeErrors.length}
         <div
-          class="text-danger-700 dark:text-danger-500 bg-danger-700/10 max-h-40 shrink-0 overflow-y-auto px-4 py-3 text-sm"
+          class="max-h-40 shrink-0 overflow-y-auto bg-danger-700/10 px-4 py-3 text-sm text-danger-700 dark:text-danger-500"
         >
           <div class="font-medium">{m['track_editor.code_editor.errors_title']()}</div>
           <ul class="list-inside list-disc">
@@ -451,7 +451,7 @@
   <div class="flex flex-row justify-between gap-4 md:w-70 md:flex-col">
     <Card class="flex flex-row gap-4 overflow-x-auto md:flex-col md:overflow-y-auto">
       {#if codeView}
-        <div class="text-text-600 dark:text-text-400 font-medium">
+        <div class="font-medium text-text-600 dark:text-text-400">
           {m['track_editor.code_editor.editing']()}
         </div>
         <div class="flex flex-col gap-2">
@@ -661,7 +661,7 @@
           {/if}
         </div>
       {:else}
-        <div class="text-text-600 dark:text-text-400 font-medium">
+        <div class="font-medium text-text-600 dark:text-text-400">
           {m['track_editor.editor.select_point_to_edit']()}
         </div>
         <Divider vertical spacing={false} class="md:hidden" />

@@ -61,14 +61,14 @@
       <div class="flex items-center gap-1">
         {#if filter}
           <Icon
-            class="i-material-symbols:filter-alt text-text-300"
+            class="icon-[material-symbols--filter-alt] text-text-300"
             size="sm"
             title={m['map.poi.filter_desc']()}
           />
         {/if}
-        <span class="text-text-dark text-sm font-semibold">{label}</span>
+        <span class="text-sm font-semibold text-text-dark">{label}</span>
       </div>
-      <span class="text-text-300 text-xs">{desc}</span>
+      <span class="text-xs text-text-300">{desc}</span>
     </div>
   </div>
 </button>
