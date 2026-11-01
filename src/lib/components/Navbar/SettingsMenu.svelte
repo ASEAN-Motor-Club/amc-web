@@ -12,6 +12,7 @@
   import { getLocale, type Locale } from '#lib/paraglide/runtime.js';
   import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
   import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { page } from '$app/state';
   import { goto } from '$app/navigation';
@@ -167,7 +168,7 @@
   {#if menu}
     <div
       transition:fade={{
-        duration: defaultTransitionDurationMs,
+        duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
       }}
       class="absolute top-14 right-0 z-10000 w-full max-w-104 px-5"
     >
