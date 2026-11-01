@@ -5,7 +5,9 @@ import {
   colorAmber950,
   colorBlue500,
   colorBlue600,
+  colorCyan200,
   colorCyan300,
+  colorCyan400,
   colorCyan500,
   colorCyan600,
   colorCyan950,
@@ -234,4 +236,14 @@ export const POI_DELIVERY_JOB_DEST: PoiDotStyle = {
   strokeWidth: 2,
   hover: { fill: colorOrange300 },
   selected: { fill: colorOrange600, stroke: colorBlue500 },
+};
+
+/** Vacant house variant, mirroring the OL house layer's `vacant` switch (the POI menu's
+ * vacant-only dot color). */
+export const POI_HOUSE_VACANT: PoiDotStyle = {
+  fill: colorCyan300,
+  stroke: colorCyan950,
+  diameterPx: dotSize(6),
+  hover: { fill: colorCyan200 },
+  selected: { fill: colorCyan400, stroke: colorWhite },
 };

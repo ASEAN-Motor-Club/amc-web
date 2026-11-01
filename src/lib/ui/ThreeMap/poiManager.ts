@@ -15,6 +15,7 @@ import {
   POI_DELIVERY_JOB_DEST,
   POI_DELIVERY_JOB_SOURCE,
   POI_DELIVERY_RESIDENT,
+  POI_HOUSE_VACANT,
   type PoiDotStyle,
 } from './constants';
 import {
@@ -39,6 +40,8 @@ export interface PoiInput {
   info: DeliveryPoint | House | PlayerData | Pin | TeleportPoint;
   /** 1 = source of an active job, 2 = destination, 0/absent = no job (OL delivery style). */
   jobs?: 0 | 1 | 2;
+  /** House nobody rents (OL house style). */
+  vacant?: boolean;
 }
 
 export interface PoiMarker {
@@ -51,6 +54,8 @@ export interface PoiMarker {
   info: DeliveryPoint | House | PlayerData | Pin | TeleportPoint;
   /** Job role for delivery points: 1 = source, 2 = destination, else 0/undefined. */
   jobs?: 0 | 1 | 2;
+  /** Vacant house - drawn with the vacant palette. */
+  vacant?: boolean;
   /** User-facing visibility (POI toggle). */
   visible: boolean;
   /** Resident LOD gate: true when the marker sits in the z5 ring. */
@@ -86,7 +91,7 @@ export interface PoiManager {
  * One instanced sprite PER distinct dot palette (the three.js `webgpu_instance_sprites`
  * pattern, which the WebGPURenderer also runs under WebGL2 when WebGPU is unavailable).
  * Instancing only steps reliably when every instance shares the same texture, so each
- * palette - delivery base, resident, job source, job dest, house, player, pin, teleport -
+ * palette - delivery base, resident, job source, job dest, house, vacant house, player, pin, teleport -
  * gets its own sprite + one dot ATLAS texture whose three cells hold the visual states
  * (normal | hover | selected); a per-instance state attribute shifts the sampled cell.
  * The per-type scale is constant, so it goes through a `uniform()` (like the example's
@@ -118,11 +123,13 @@ function deliveryDotStyle(info: DeliveryPoint, jobs?: 0 | 1 | 2): PoiDotStyle {
   return POI_CONFIG[PointType.Delivery].dot;
 }
 
-/** Palette for a marker; delivery points resolve their variant, everything else uses its type. */
+/** Palette for a marker; deliveries and houses resolve their variant, everything else uses its type. */
 function paletteFor(input: PoiInput): PoiDotStyle {
-  return input.pointType === PointType.Delivery
-    ? deliveryDotStyle(input.info as DeliveryPoint, input.jobs)
-    : dotStyleFor(input.pointType);
+  if (input.pointType === PointType.Delivery) {
+    return deliveryDotStyle(input.info as DeliveryPoint, input.jobs);
+  }
+  if (input.pointType === PointType.House && input.vacant) return POI_HOUSE_VACANT;
+  return dotStyleFor(input.pointType);
 }
 
 /** One instanced sprite + its backing buffers, for a single dot atlas texture. */
@@ -317,6 +324,7 @@ export function createPoiManager(
       id: input.id,
       info: input.info,
       jobs: input.jobs,
+      vacant: input.vacant,
       visible: true,
       lodOk: true,
       groupKey: group.key,
@@ -349,8 +357,10 @@ export function createPoiManager(
         existing.info = input.info;
         existing.world = gameCoordToWorld(input.coord, meta);
         const jobs = input.jobs;
-        if (jobs !== (existing.jobs ?? 0)) {
+        const vacant = input.vacant;
+        if ((jobs ?? 0) !== (existing.jobs ?? 0) || !!vacant !== !!existing.vacant) {
           existing.jobs = jobs;
+          existing.vacant = vacant;
           const newGroup = groupFor(paletteFor(input));
           if (newGroup.key !== existing.groupKey) {
             const oldGroup = groupOf(existing.groupKey);

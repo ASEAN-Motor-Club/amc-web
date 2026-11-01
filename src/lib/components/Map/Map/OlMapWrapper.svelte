@@ -33,7 +33,9 @@
     colorYellow600,
     colorYellow950,
     colorAmber950,
+    colorCyan200,
     colorCyan300,
+    colorCyan400,
     colorCyan600,
     colorCyan500,
     colorCyan950,
@@ -67,7 +69,7 @@
   import { houses } from '#lib/data/house.js';
   import { areaBoundaries, areaNameFontSize } from '#lib/data/area.js';
   import { getMtLocale } from '#lib/utils/getMtLocale.js';
-  import type { MtNameRecord } from '#lib/types/index.js';
+  import type { MtNameRecord } from '#lib/types/index.ts';
   import type { Pixel } from 'ol/pixel';
 
   interface Props {
@@ -244,17 +246,17 @@
       'circle-opacity': [
         'case',
         ['var', 'houseVacantOnly'],
-        ['match', ['>', ['get', 'jobs'], 0], true, 1, 0],
+        ['match', ['get', 'vacant'], 1, 1, 0],
         1,
       ],
       'circle-radius': 6,
       'circle-fill-color': [
         'case',
         ['==', ['get', 'hover'], 1],
-        colorCyan300,
+        ['match', ['get', 'vacant'], 1, colorCyan200, colorCyan300],
         ['==', ['get', 'selected'], 1],
-        colorCyan600,
-        colorCyan500,
+        ['match', ['get', 'vacant'], 1, colorCyan400, colorCyan600],
+        ['match', ['get', 'vacant'], 1, colorCyan300, colorCyan500],
       ],
       'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorCyan950],
       'circle-stroke-width': 1,

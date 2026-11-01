@@ -110,12 +110,20 @@
 
   const housePois = $derived.by(() => {
     if (!mapState.house) return [];
-    return housesList.map((point) => ({
-      pointType: PointType.House,
-      id: point.name,
-      coord: point.coord,
-      info: point,
-    }));
+    const vacantOnly = mapState.houseVacantOnly;
+    const pois: PoiInput[] = [];
+    for (const point of housesList) {
+      const vacant = !houseData?.[point.name]?.ownerName;
+      if (vacantOnly && !vacant) continue;
+      pois.push({
+        pointType: PointType.House,
+        id: point.name,
+        coord: point.coord,
+        info: point,
+        vacant,
+      });
+    }
+    return pois;
   });
 
   const playerPois = $derived.by(() => {
@@ -211,19 +219,9 @@
     void housePois;
     const pm = three.poiManager;
     const show = mapState.houseLabels;
-    const vacantOnly = mapState.houseVacantOnly;
     for (const marker of pm.markersOf(PointType.House)) {
-      if (!show) {
-        pm.setLabel(marker.id, '');
-        continue;
-      }
-      const house = marker.info as House;
-      const owner = houseData?.[house.name]?.ownerName;
-      if (vacantOnly && !owner) {
-        pm.setLabel(marker.id, '');
-        continue;
-      }
-      pm.setLabel(marker.id, owner ?? m['housing.vacant']());
+      const owner = houseData?.[(marker.info as House).name]?.ownerName;
+      pm.setLabel(marker.id, show ? (owner ?? m['housing.vacant']()) : '');
     }
   });
 

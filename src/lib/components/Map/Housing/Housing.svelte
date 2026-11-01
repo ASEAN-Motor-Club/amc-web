@@ -36,7 +36,7 @@
       const searchLower = searchValue.trim().toLowerCase();
       return (
         house.name.toLowerCase().includes(searchLower) ||
-        (houseData?.[house.name].ownerName || m['housing.vacant']())
+        (houseData?.[house.name]?.ownerName || m['housing.vacant']())
           .toLowerCase()
           .includes(searchLower)
       );
