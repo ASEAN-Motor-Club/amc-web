@@ -6,7 +6,7 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 `.agents/rules/*.md` — one rule per area, listed with their globs in your prompt. Read the ones matching the files you are about to touch, and `rule://architecture` before anything structural. Prefer `glob`/`read` over any doc for what currently exists on disk.
 
-`.claude/skills/*/SKILL.md` — repeatable procedures. `visual-diff` screenshots the build against main to catch layout regressions; use it after touching shared ui components, the navbar, layout or global styles. Agents without skill support can follow the SKILL.md by hand — its scripts only need `node` and the repo's `playwright`.
+`.agents/skills/*/SKILL.md` — repeatable procedures (`.claude/skills` is a symlink to it, so Claude Code loads them natively). `visual-diff` screenshots the build against main to catch layout regressions; use it after touching shared ui components, the navbar, layout or global styles. Agents without skill support can follow the SKILL.md by hand — its scripts only need `node` and the repo's `playwright`.
 
 ### Rule catalog (frontmatter digest)
 

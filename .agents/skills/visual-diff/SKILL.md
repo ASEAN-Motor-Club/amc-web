@@ -7,7 +7,7 @@ description: Screenshot the built site on this branch and on main and pixel-diff
 
 Accessibility and SEO are covered by the automated e2e smoke suite (`pnpm build && pnpm test:e2e`, `src/routes/site.e2e.ts`; conventions in `.agents/rules/a11y-seo.md`). What it cannot tell you is whether a page still _looks_ right — markup refactors routinely change layout (e.g. moving an input out of a `w-full` button made the Select overflow its container). That needs a before/after comparison and a human-style judgement, which is this skill.
 
-Scripts are in `scripts/` next to this file and need only `node` and the repo's `playwright`. `$SKILL` = `.claude/skills/visual-diff`, `<scratch>` = your scratch directory.
+Scripts are in `scripts/` next to this file and need only `node` and the repo's `playwright`. `$SKILL` = `.agents/skills/visual-diff`, `<scratch>` = your scratch directory.
 
 ## 1. Build both revisions
 
