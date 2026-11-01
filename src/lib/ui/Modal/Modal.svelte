@@ -36,6 +36,14 @@
      * CSS class to apply to the modal component
      */
     class?: ClassValue;
+    /**
+     * Accessible name of the dialog, when it has no visible heading to point at
+     */
+    'aria-label'?: string;
+    /**
+     * Id of the element (usually the heading) that names the dialog
+     */
+    'aria-labelledby'?: string;
   }
 
   const {
@@ -45,6 +53,8 @@
     portal: usePortal = true,
     portalTarget = 'body',
     class: propsClass,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
   }: ModalProps = $props();
 
   const id = Math.random().toString(36).substring(2, 15);
@@ -92,6 +102,8 @@
   <div
     role="dialog"
     aria-modal="true"
+    aria-label={ariaLabel}
+    aria-labelledby={ariaLabelledby}
     class={twMerge(
       'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
       clsx(propsClass),

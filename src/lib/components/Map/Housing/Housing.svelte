@@ -95,7 +95,6 @@
       placeholder={m['housing.search_placeholder']()}
       name="search"
       type="search"
-      additionalAttributes={{ 'aria-label': m['housing.search_placeholder']() }}
       class={['w-full min-w-0', fullScreen && 'sm:max-w-80 sm:flex-1']}
       onInput={onSearch}
       disabled={!houseData}

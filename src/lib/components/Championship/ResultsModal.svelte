@@ -20,6 +20,8 @@
 
   const { event, onClose, openEvent }: ResultsModalProps = $props();
 
+  const titleId = $props.id();
+
   const resultsQuery = createEventResultsQuery(() => ({ id: event?.id }));
 
   const loading = $derived(resultsQuery.isPending);
@@ -56,9 +58,9 @@
   };
 </script>
 
-<Modal open={!!event} {onClose}>
+<Modal open={!!event} {onClose} aria-labelledby={titleId}>
   <Card class="flex max-h-full w-150 max-w-full flex-col p-0">
-    <h1 class="p-5 text-2xl font-bold tracking-tight">
+    <h1 id={titleId} class="p-5 text-2xl font-bold tracking-tight">
       {event
         ? m['championship.event.event_results']({ event: event.name })
         : m['championship.event.results']()}

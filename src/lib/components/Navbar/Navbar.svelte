@@ -195,7 +195,7 @@
     <Button
       variant="contained-light"
       color="custom"
-      class="bg-[#5865f2]/15 !text-[#5865f2] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:hover:bg-[#5865f2]/20"
+      class="bg-[#5865f2]/15 !text-[#4752c4] hover:bg-[#5865f2]/25 dark:bg-[#5865f2]/10 dark:!text-[#9ba3f7] dark:hover:bg-[#5865f2]/20"
       tag="a"
       href={PUBLIC_DISCORD_LINK}
       target="_blank"
@@ -226,7 +226,12 @@
       {@render menuItems()}
     </ul>
   {:else}
-    <Modal open={menu} onClose={() => setMenu(false)} class="align-start justify-start p-0">
+    <Modal
+      open={menu}
+      onClose={() => setMenu(false)}
+      class="align-start justify-start p-0"
+      aria-label={m['a11y.main_navigation']()}
+    >
       <div
         class="bg-background-200 dark:bg-background-900 flex h-dvh flex-col px-4 py-8"
         transition:fly={{

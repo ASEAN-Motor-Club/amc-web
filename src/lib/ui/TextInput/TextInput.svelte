@@ -133,6 +133,10 @@
 
   const contextId = inputGroupContext?.getId();
 
+  // A placeholder alone vanishes once typed into, so without an InputGroup <label> it doubles as
+  // the accessible name. An explicit aria-label in additionalAttributes still wins (spread below).
+  const ariaLabel = $derived(inputGroupContext ? undefined : propsPlaceholder || undefined);
+
   const id = $derived(propsId ?? contextId ?? '');
 
   const variantClass = $derived.by(() => {
@@ -189,6 +193,7 @@
     {autocomplete}
     {value}
     {placeholder}
+    aria-label={ariaLabel}
     {name}
     {id}
     {disabled}

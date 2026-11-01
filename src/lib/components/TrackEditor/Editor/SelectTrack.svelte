@@ -154,6 +154,7 @@
     open={fetchFromUri}
     onClose={noop}
     class="text-text-dark bg-black/50 text-xl font-semibold"
+    aria-label={m['track_editor.select_track.loading_track']()}
   >
     {m['track_editor.select_track.loading_track']()}
   </Modal>

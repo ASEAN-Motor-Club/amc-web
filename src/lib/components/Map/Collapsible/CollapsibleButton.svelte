@@ -8,9 +8,11 @@
     href: string;
     icon: string;
     text?: string;
+    /** Marks the tab whose panel is open */
+    current?: boolean;
   }
 
-  const { class: propsClass, href, icon, text }: Props = $props();
+  const { class: propsClass, href, icon, text, current = false }: Props = $props();
 </script>
 
 <Button
@@ -18,6 +20,7 @@
   variant="contained-light"
   tag="a"
   {href}
+  aria-current={current ? 'page' : undefined}
 >
   <Icon class={icon} />
   {text}

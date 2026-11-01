@@ -6,7 +6,7 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 `.agents/rules/*.md` — one rule per area, listed with their globs in your prompt. Read the ones matching the files you are about to touch, and `rule://architecture` before anything structural. Prefer `glob`/`read` over any doc for what currently exists on disk.
 
-`.claude/skills/*/SKILL.md` — repeatable procedures. `a11y-seo-audit` builds the site and runs axe-core, SEO, keyboard and visual-regression checks; use it after touching shared ui components, layout, navigation or head tags. Agents without skill support can follow the SKILL.md by hand — its scripts only need `node` and the repo's `playwright`.
+`.claude/skills/*/SKILL.md` — repeatable procedures. `visual-diff` screenshots the build against main to catch layout regressions; use it after touching shared ui components, the navbar, layout or global styles. Agents without skill support can follow the SKILL.md by hand — its scripts only need `node` and the repo's `playwright`.
 
 ### Rule catalog (frontmatter digest)
 
@@ -16,7 +16,7 @@ If you cannot read the rule files directly, this catalog from their frontmatter 
 | ----------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | api-layer         | `src/lib/api/**`                                                                                       | TanStack Query option factories, the apiClient queryFn, reactive SSE/WebSocket stream wrappers, protobuf decoding                                                                           |
 | app-shell         | `src/hooks.ts`, `src/hooks.server.ts`, `src/app.html`, `src/globals.d.ts`, `vite-plugins/**`           | Prerender-time head injection, app.html placeholders and theme bootstrap, URL delocalization, asset import suffixes                                                                         |
-| a11y-seo          | `src/**/*.svelte`, `src/hooks.server.ts`, `src/lib/data/site.ts`, `static/robots.txt`                  | Accessible names for icon-only controls, ARIA on shared ui components, no a11y suppressions, skeleton semantics, per-page title/og/twitter tags, sitemap/robots/canonical                   |
+| a11y-seo          | `src/**/*.svelte`, `src/hooks.server.ts`, `src/lib/data/site.ts`, `static/robots.txt`                  | Accessible names, ARIA on shared ui components, no a11y suppressions, contrast, per-page title/og/twitter tags, sitemap/robots/canonical — enforced by `pnpm test:e2e`                      |
 | architecture      | `package.json`, `vite.config.ts`, `pnpm-workspace.yaml`                                                | Build and deploy model — static output, Kit config in the Vite plugin, the generated trees and their commands, non-obvious Vite config knobs                                                |
 | code-style        | `src/**/*.ts`, `src/**/*.svelte`                                                                       | Required TS/Svelte 5 style — const enums, runes, props interfaces, class merging, context composition, icons, banned imports, file placement                                                |
 | env-config        | `.env*`, `src/env.ts`, `vite.config.ts`, `.github/workflows/*.yml`                                     | `PUBLIC_*` app config declared in `src/env.ts` and imported from `$app/env/public` vs `VITE_*` dev-proxy targets; the four places a new var must be registered                              |
@@ -27,7 +27,7 @@ If you cannot read the rule files directly, this catalog from their frontmatter 
 | pakop-wasm        | `wasm/**`, `src/routes/pak/**`                                                                         | The pakop C#/.NET WASM module — when to rebuild, how to import it, build wiring keeping the dotnet runtime out of the main bundle                                                           |
 | project-structure | —                                                                                                      | Directory shape — what each top-level tree is for, the ui vs components split, where new files go                                                                                           |
 | schemas           | `src/lib/schema/**`                                                                                    | Validation schemas — zod/mini only (eslint-enforced), functional API, i18n-aware error factories, derived types                                                                             |
-| testing           | `src/**/*.test.ts`, `src/**/*.spec.ts`, `vitest.config.ts`                                             | Vitest setup — comp (browser components), inte (browser pages) and unit (node) projects, the file name that picks one, runes and harnesses in tests                                         |
+| testing           | `src/**/*.test.ts`, `src/**/*.spec.ts`, `src/**/*.e2e.ts`, `vitest*.config.ts`                         | Vitest setup — comp (browser components), inte (browser pages) and unit (node) projects, the file name that picks one, runes and harnesses in tests, the e2e smoke suite over the build     |
 | three-map         | `src/lib/ui/ThreeMap/**`, `src/lib/components/Map/Map/ThreeMapWrapper.svelte`                          | 3D terrain map (three.js) — three-stage tile pipeline, quadtree LOD rings + altitude cap, inertial camera controls, instanced POI sprites, game-to-world coordinates via `gameCoordToWorld` |
 | track-editor      | `src/lib/components/TrackEditor/**`, `src/lib/ui/CodeEditor/**`                                        | Track editor and its Monaco JSON view — code view is a view not a modal, three dirty flags, quaternion rotations, monaco bump hazards and its single import choke point                     |
 
@@ -46,6 +46,7 @@ pnpm format              # write formatting
 pnpm lint                # prettier check + eslint (lint:fix to autofix)
 pnpm check               # svelte-check (check:watch for watch mode)
 pnpm test                # single run — prefer over test:unit, which watches
+pnpm test:e2e            # a11y (axe-core + keyboard) and SEO smoke test over build/ — run pnpm build first
 ```
 
 ## Non-negotiables

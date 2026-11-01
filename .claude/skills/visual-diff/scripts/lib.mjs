@@ -1,7 +1,4 @@
-import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 
 /** Indexable routes, read from the single source of truth the sitemap uses. */
 export function sitemapPaths() {
@@ -26,21 +23,6 @@ export function parseArgs(argv) {
 
 export const list = (value, fallback) =>
   typeof value === 'string' ? value.split(',').filter(Boolean) : fallback;
-
-const AXE_VERSION = '4.10.2';
-
-/** axe-core source, installed once into the OS temp dir (it is not a project dependency). */
-export function axeSource() {
-  const dir = join(tmpdir(), `amc-axe-core-${AXE_VERSION}`);
-  const file = join(dir, 'node_modules', 'axe-core', 'axe.min.js');
-  if (!existsSync(file)) {
-    mkdirSync(dir, { recursive: true });
-    execFileSync('npm', ['install', '--silent', '--prefix', dir, `axe-core@${AXE_VERSION}`], {
-      stdio: 'inherit',
-    });
-  }
-  return readFileSync(file, 'utf8');
-}
 
 /** A browser context matching how screenshots/audits should look: fixed theme, no animation. */
 export async function newContext(browser, { width, theme = 'light' }) {

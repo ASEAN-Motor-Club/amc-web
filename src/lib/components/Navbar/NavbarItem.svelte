@@ -98,7 +98,7 @@
   {#if href || mobile}
     <a
       {href}
-      class={['h-full', baseLinkClass, mobile && !href && 'pointer-events-none opacity-65']}
+      class={['h-full', baseLinkClass, mobile && !href && 'pointer-events-none opacity-80']}
       onclick={onClick}
       onmouseenter={handleMouseEnter}
       target={external ? '_blank' : undefined}
