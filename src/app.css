@@ -3,6 +3,9 @@
 /* Test assertions mention class names that no rendered markup uses. */
 @source not './**/*.{test,spec}.ts';
 @source not './**/*.{integration,e2e}.ts';
+/* Plain words in code (`container:` options, `static: true` env flags, the 'resize' event) that the
+   scanner would otherwise emit as utilities. Unused as classes; variants like `sm:static` still work. */
+@source not inline('container static resize');
 @plugin '@tailwindcss/typography';
 @plugin '@iconify/tailwind4';
 
