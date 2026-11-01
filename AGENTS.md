@@ -6,6 +6,8 @@ A **SvelteKit static/SPA hybrid** site using **Svelte 5** (runes) with TypeScrip
 
 `.agents/rules/*.md` — one rule per area, listed with their globs in your prompt. Read the ones matching the files you are about to touch, and `rule://architecture` before anything structural. Prefer `glob`/`read` over any doc for what currently exists on disk.
 
+`.claude/skills/*/SKILL.md` — repeatable procedures. `a11y-seo-audit` builds the site and runs axe-core, SEO, keyboard and visual-regression checks; use it after touching shared ui components, layout, navigation or head tags. Agents without skill support can follow the SKILL.md by hand — its scripts only need `node` and the repo's `playwright`.
+
 ### Rule catalog (frontmatter digest)
 
 If you cannot read the rule files directly, this catalog from their frontmatter tells you what each rule governs — read the matching rule file before touching those globs.
@@ -14,6 +16,7 @@ If you cannot read the rule files directly, this catalog from their frontmatter 
 | ----------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | api-layer         | `src/lib/api/**`                                                                                       | TanStack Query option factories, the apiClient queryFn, reactive SSE/WebSocket stream wrappers, protobuf decoding                                                                           |
 | app-shell         | `src/hooks.ts`, `src/hooks.server.ts`, `src/app.html`, `src/globals.d.ts`, `vite-plugins/**`           | Prerender-time head injection, app.html placeholders and theme bootstrap, URL delocalization, asset import suffixes                                                                         |
+| a11y-seo          | `src/**/*.svelte`, `src/hooks.server.ts`, `src/lib/data/site.ts`, `static/robots.txt`                  | Accessible names for icon-only controls, ARIA on shared ui components, no a11y suppressions, skeleton semantics, per-page title/og/twitter tags, sitemap/robots/canonical                   |
 | architecture      | `package.json`, `vite.config.ts`, `pnpm-workspace.yaml`                                                | Build and deploy model — static output, Kit config in the Vite plugin, the generated trees and their commands, non-obvious Vite config knobs                                                |
 | code-style        | `src/**/*.ts`, `src/**/*.svelte`                                                                       | Required TS/Svelte 5 style — const enums, runes, props interfaces, class merging, context composition, icons, banned imports, file placement                                                |
 | env-config        | `.env*`, `src/env.ts`, `vite.config.ts`, `.github/workflows/*.yml`                                     | `PUBLIC_*` app config declared in `src/env.ts` and imported from `$app/env/public` vs `VITE_*` dev-proxy targets; the four places a new var must be registered                              |
@@ -51,3 +54,5 @@ pnpm test                # single run — prefer over test:unit, which watches
 - Never hand-edit `src/lib/paraglide/`, `src/lib/api/proto/generated/` or `wasm/pakop/bin|obj` — regenerate them.
 - Never hardcode user-facing strings; they come from `#messages`.
 - Runes only — no `$:`, no `export let`.
+- Accessible by default: every control has an accessible name (icon-only buttons get a translated `aria-label`), clickable things are `<button>`/`<a>`, and `svelte-ignore a11y_*` is not a fix — see `rule://a11y-seo`.
+- Every page sets `<title>`, `og:title` (`property=`) and `twitter:title`; new indexable routes go in `sitemapPaths` (`src/lib/data/site.ts`).

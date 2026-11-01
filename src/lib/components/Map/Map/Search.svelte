@@ -163,6 +163,7 @@
       class="text-text-dark pointer-events-auto w-full !border-none !bg-gray-900/50 shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60"
       onInput={handleInput}
       additionalAttributes={{
+        'aria-label': m['map.search_placeholder'](),
         onclick: () => (focus = true),
       }}
       onClear={() => (searchValue = '')}
