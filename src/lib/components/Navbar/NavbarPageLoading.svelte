@@ -49,7 +49,7 @@
     <div
       class={[
         'fixed top-0 flex h-16 bg-gray-500/10 transition-all ease-[cubic-bezier(0.16,1,0.3,1)]',
-        { 'w-[90%] duration-[30s]': widthFull && !speedUp },
+        { 'w-9/10 duration-30000': widthFull && !speedUp },
         { 'w-full duration-300': widthFull && speedUp },
         { 'w-0 duration-300': !widthFull },
       ]}

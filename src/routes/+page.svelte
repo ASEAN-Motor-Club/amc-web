@@ -59,9 +59,9 @@
           >
             <div class="relative mr-2 flex size-2" aria-hidden="true">
               <div
-                class="absolute size-full rounded-full bg-[currentColor] motion-safe:animate-ping motion-reduce:hidden"
+                class="absolute size-full rounded-full bg-current motion-safe:animate-ping motion-reduce:hidden"
               ></div>
-              <div class="size-full rounded-full bg-[currentColor]"></div>
+              <div class="size-full rounded-full bg-current"></div>
             </div>
             {playerCount != null
               ? m['home.live_server']({ players: playerCount })

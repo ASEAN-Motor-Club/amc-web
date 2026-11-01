@@ -33,7 +33,7 @@
       class="flex aspect-2/1 h-full flex-[1_0_auto] items-center justify-center bg-[#6b3410] [background-image:linear-gradient(135deg,#a58a69_0%,#8a6f52_20%,#a58a69_40%,#8a6f52_60%,#a58a69_80%,#8a6f52_100%)] p-4 md:aspect-square"
     >
       <div
-        class="relative aspect-square h-[85%] origin-center overflow-hidden rounded-full border-3 border-solid border-[#555] bg-background-950 bg-linear-to-b from-[#333] to-[#111] [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)] ease-out before:absolute before:inset-0 before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)] before:content-[''] motion-safe:transition-transform"
+        class="relative aspect-square h-17/20 origin-center overflow-hidden rounded-full border-3 border-solid border-[#555] bg-background-950 bg-linear-to-b from-[#333] to-[#111] [box-shadow:inset_0_0_10px_rgba(0,0,0,0.5)] ease-out before:absolute before:inset-0 before:[background-image:repeating-linear-gradient(0deg,#444,#444_2px,transparent_2px,transparent_7px),repeating-linear-gradient(90deg,#444,#444_2px,transparent_2px,transparent_7px)] before:content-[''] motion-safe:transition-transform"
         style:transform={`rotate(${grillRotate}deg) scale(${grillScale})`}
       ></div>
     </div>

@@ -64,7 +64,7 @@
     <MsgModal>
       <a
         href="#main-content"
-        class="fixed top-2 left-2 z-1000001 -translate-y-[200%] rounded-md bg-background-50 px-4 py-2 font-semibold shadow-md focus:translate-y-0 dark:bg-background-900"
+        class="fixed top-2 left-2 z-1000001 -translate-y-2/1 rounded-md bg-background-50 px-4 py-2 font-semibold shadow-md focus:translate-y-0 dark:bg-background-900"
         >{m['a11y.skip_to_content']()}</a
       >
       <Navbar />

@@ -226,7 +226,7 @@
     <div class="flex w-full flex-col">
       {#each teams as team, i (team.id)}
         <div
-          class="h-lvh bg-[var(--team-bg)] text-[var(--team-text)]"
+          class="h-lvh bg-(--team-bg) text-(--team-text)"
           style="--team-bg:{team.bg_color};--team-text:{team.text_color}"
           bind:this={teamTriggers[i]}
         >
@@ -249,10 +249,10 @@
               </div>
             {/if}
             <div class="flex flex-col gap-4 sm:gap-8" bind:this={teamText[i]}>
-              <h4 class="text-center text-4xl font-semibold tracking-tight text-[var(--team-text)]">
+              <h4 class="text-center text-4xl font-semibold tracking-tight text-(--team-text)">
                 [{team.tag}] {team.name}
               </h4>
-              <p class="text-center text-sm text-[var(--team-text)]">
+              <p class="text-center text-sm text-(--team-text)">
                 {team.description}
               </p>
             </div>

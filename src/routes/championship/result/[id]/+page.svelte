@@ -72,7 +72,7 @@
   {:else}
     <div class="pb-5"></div>
   {/if}
-  <div class="sm:items-[unset] flex flex-col items-center gap-4 pb-8 sm:flex-row">
+  <div class="flex flex-col items-center gap-4 pb-8 sm:flex-row sm:items-stretch">
     <Button
       variant="text"
       tag="a"
