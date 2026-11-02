@@ -90,7 +90,7 @@ mesh inside out. GLB URLs carry `?v=<ExporterVersion>` so a bump also busts brow
 ## Known POC gaps
 
 - Materials: base color texture × tint only (no normal/ORM). Color comes from CUE4Parse's known
-  parameter names, then name heuristics (`PM_Diffuse`, `BaseColor_Tint`); a material whose color
+  parameter names, then name heuristics (`PM_Diffuse`, `BaseTexture`, `BaseColor_Tint`); a material whose color
   is computed in the parent material graph can still come out wrong. Lights' `PointLightComponent`s
   are ignored.
 - Blueprint construction scripts are not executed. Handled by rule: row `MeshScale` replaces the
