@@ -49,12 +49,6 @@
       icon: toolsIcon,
       subItems: [
         {
-          href: 'https://wiki.aseanmotorclub.com/',
-          label: m['navbar.wiki'](),
-          icon: wikiIcon,
-          external: true,
-        },
-        {
           href: '/track',
           label: m['navbar.track_editor'](),
           icon: trackIcon,
@@ -65,6 +59,36 @@
           label: m['navbar.pak_conflict'](),
           icon: pakIcon,
           exact: false,
+        },
+      ],
+    },
+    {
+      label: m['navbar.community'](),
+      icon: communityIcon,
+      subItems: [
+        {
+          href: 'https://wiki.aseanmotorclub.com/',
+          label: m['navbar.wiki'](),
+          icon: wikiIcon,
+          external: true,
+        },
+        {
+          href: 'https://docs.aseanmotorclub.com/',
+          label: m['navbar.docs'](),
+          icon: docsIcon,
+          external: true,
+        },
+        {
+          href: 'https://gov.aseanmotorclub.com/',
+          label: m['navbar.government'](),
+          icon: governmentIcon,
+          external: true,
+        },
+        {
+          href: 'https://mods.aseanmotorclub.com/',
+          label: m['navbar.tire_mod_creator'](),
+          icon: tireModIcon,
+          external: true,
         },
       ],
     },
@@ -110,6 +134,34 @@
 {#snippet toolsIcon(pathMatch: boolean)}
   <NavbarIcon
     class="icon-[material-symbols--build-outline-rounded] group-hover:text-rose-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet communityIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="icon-[material-symbols--groups-outline-rounded] group-hover:text-violet-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet docsIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="icon-[material-symbols--description-outline-rounded] group-hover:text-sky-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet governmentIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="icon-[material-symbols--account-balance-outline-rounded] group-hover:text-indigo-500"
+    {pathMatch}
+  />
+{/snippet}
+
+{#snippet tireModIcon(pathMatch: boolean)}
+  <NavbarIcon
+    class="icon-[material-symbols--tire-repair-outline-rounded] group-hover:text-cyan-500"
     {pathMatch}
   />
 {/snippet}
