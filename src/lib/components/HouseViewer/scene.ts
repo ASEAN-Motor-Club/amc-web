@@ -72,12 +72,13 @@ export function createHouseScene(
   data: HouseViewerData,
   options: HouseSceneOptions,
 ): HouseScene {
-  // Log depth: game meshes stack coplanar layers (floors, trims, decals) a few cm apart, which
-  // z-fight badly at orbit distance with a linear buffer.
+  // Linear depth on purpose: log depth writes gl_FragDepth in the fragment shader, which drops the
+  // hardware depth path and shows up as ragged, crawling geometry edges. The scene is small (plot
+  // plus a few metres of ground) and CAMERA_NEAR_M is set wide enough that a linear 24-bit buffer
+  // still separates the coplanar floors and decals.
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
-    logarithmicDepthBuffer: true,
   });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(container.clientWidth, container.clientHeight);
