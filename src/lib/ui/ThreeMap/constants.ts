@@ -68,6 +68,16 @@ export const LOOK_UP_ANGLE_FAR_DEG = 60;
 export const LOOK_UP_ANGLE_NEAR_DEG = 90;
 export const SKIRT_DROP = 400;
 export const OCEAN_QUAD_SIZE = 200000;
+
+/**
+ * Motor Town's sun at 14:00, taken from the game itself (AMTSunSky, whose date is frozen at
+ * 2021-07-03, lat 33 / lon 126, so the arc is identical every in-game day). World axes are
+ * north = -Z and east = +X, so the light direction is
+ * `(cos el·sin az, sin el, -cos el·cos az)`.
+ */
+export const SUN_AZIMUTH_DEG = 245.17;
+export const SUN_ELEVATION_DEG = 69.77;
+export const SUN_DISTANCE = 20000;
 export const TILE_UPDATE_INTERVAL_MS = 150;
 export const RESIZE_DEBOUNCE_MS = 100;
 

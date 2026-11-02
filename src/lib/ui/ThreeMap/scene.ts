@@ -9,6 +9,9 @@ import {
   RESIZE_DEBOUNCE_MS,
   ROTATE_SPEED_FAR,
   ROTATE_SPEED_NEAR,
+  SUN_AZIMUTH_DEG,
+  SUN_DISTANCE,
+  SUN_ELEVATION_DEG,
   TILE_UPDATE_INTERVAL_MS,
   ZOOM_DAMPING_FACTOR,
   ZOOM_LOG_PER_WHEEL_DELTA,
@@ -183,7 +186,14 @@ export function createThreeMapScene(container: HTMLElement): ThreeMapScene {
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);
-  sun.position.set(-8000, 12000, 6000);
+  // Motor Town's 14:00 sun: the game's own azimuth/elevation, with north = -Z in world space.
+  const sunAz = THREE.MathUtils.degToRad(SUN_AZIMUTH_DEG);
+  const sunEl = THREE.MathUtils.degToRad(SUN_ELEVATION_DEG);
+  sun.position.set(
+    SUN_DISTANCE * Math.cos(sunEl) * Math.sin(sunAz),
+    SUN_DISTANCE * Math.sin(sunEl),
+    -SUN_DISTANCE * Math.cos(sunEl) * Math.cos(sunAz),
+  );
   scene.add(sun);
   scene.add(sun.target);
 
