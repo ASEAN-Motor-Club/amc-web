@@ -14,7 +14,7 @@
   import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
   import { getDeliveryLine } from './deliveryLine.ts';
   import Search from './Search.svelte';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
+  import type { DeliveryJob, DepotData, HouseData } from '#lib/api/types.ts';
   import { createTeleportsQuery } from '#lib/api/teleport.ts';
   import { mergeTeleportPoints } from './teleport.ts';
   import { createShortcutZonesQuery } from '#lib/api/shortcutZone.ts';
@@ -33,6 +33,7 @@
     jobsData: DeliveryJob[];
     playerData: PlayerData[];
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     onPlayerLayerDataEnabledChange?: (enabled: boolean) => void;
     /** Fired when the map switches between 2D and 3D mode (the sidebar speeds up in 3D). */
     onThreeDModeChange?: (mode: boolean) => void;
@@ -42,6 +43,7 @@
     jobsData,
     playerData,
     houseData,
+    depotData,
     onPlayerLayerDataEnabledChange,
     onThreeDModeChange,
   }: Props = $props();
@@ -76,6 +78,7 @@
     areaBound: false,
     jobOnly: false,
     houseVacantOnly: false,
+    houseSevereOnly: false,
     houseLabels: false,
     // playerCopsOnly: false,
     // playerCriminalOnly: false,
@@ -88,6 +91,7 @@
     playerName: z.optional(z.boolean()),
     jobOnly: z.optional(z.boolean()),
     houseVacantOnly: z.optional(z.boolean()),
+    houseSevereOnly: z.optional(z.boolean()),
     houseLabels: z.optional(z.boolean()),
     playerCopsOnly: z.optional(z.boolean()),
     playerCriminalOnly: z.optional(z.boolean()),
@@ -143,6 +147,7 @@
           playerName: mapState.playerName,
           jobOnly: mapState.jobOnly,
           houseVacantOnly: mapState.houseVacantOnly,
+          houseSevereOnly: mapState.houseSevereOnly,
           houseLabels: mapState.houseLabels,
           teleport: mapState.teleport,
           teleportLabels: mapState.teleportLabels,
@@ -256,6 +261,13 @@
         break;
       case PoiType.HouseVacantOnly:
         mapState.houseVacantOnly = !mapState.houseVacantOnly;
+        // The two house filters are exclusive: showing only vacant houses and
+        // only starved depots at once can never match the same house set.
+        if (mapState.houseVacantOnly) mapState.houseSevereOnly = false;
+        break;
+      case PoiType.HouseSevereOnly:
+        mapState.houseSevereOnly = !mapState.houseSevereOnly;
+        if (mapState.houseSevereOnly) mapState.houseVacantOnly = false;
         break;
       case PoiType.Player:
         mapState.player = !mapState.player;
@@ -441,6 +453,7 @@
       {jobsData}
       {playerData}
       {houseData}
+      {depotData}
       {pinsData}
       {teleportData}
       {selection}
@@ -457,6 +470,7 @@
       {jobsData}
       {playerData}
       {houseData}
+      {depotData}
       {pinsData}
       {teleportData}
       {shortcutZoneData}
@@ -490,6 +504,7 @@
   <HoverInfoTooltip
     {hoverInfo}
     {houseData}
+    {depotData}
     onClick={handleInfoClick}
     onCopyTeleport={handleCopyTeleport}
     {teleportCopied}

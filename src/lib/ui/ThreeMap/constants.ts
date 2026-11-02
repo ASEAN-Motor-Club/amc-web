@@ -247,3 +247,14 @@ export const POI_HOUSE_VACANT: PoiDotStyle = {
   hover: { fill: colorCyan200 },
   selected: { fill: colorCyan400, stroke: colorWhite },
 };
+
+/** House whose depot is nearly out of stock - the OL house layer's red outline
+ * (`severe` attribute) at the same thickness. */
+export const POI_HOUSE_SEVERE: PoiDotStyle = {
+  fill: colorCyan500,
+  stroke: colorRed500,
+  diameterPx: dotSize(6),
+  strokeWidth: 2,
+  hover: { fill: colorCyan300 },
+  selected: { fill: colorCyan600, stroke: colorWhite },
+};

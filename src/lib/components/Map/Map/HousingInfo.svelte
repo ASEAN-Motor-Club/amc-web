@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { House } from '#lib/data/house.ts';
-  import type { HouseData } from '#lib/api/types.ts';
+  import type { DepotData, HouseData } from '#lib/api/types.ts';
+  import { depotStorageLeftPercent, isDepotSevere } from '#lib/api/depot.ts';
   import { isBefore } from '#lib/date.ts';
   import { formatDistanceStrict } from '#lib/date.ts';
   import { m } from '#messages';
@@ -14,9 +15,12 @@
   export interface HoverInfoTooltipProps {
     hoverInfo: HoverInfo;
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
   }
 
-  const { hoverInfo, houseData }: HoverInfoTooltipProps = $props();
+  const { hoverInfo, houseData, depotData }: HoverInfoTooltipProps = $props();
+
+  const depots = $derived(depotData?.[hoverInfo.info.name] ?? []);
 
   const currentHouseData = $derived.by(() => {
     return houseData?.[hoverInfo.info.name];
@@ -60,10 +64,18 @@
       {rentLeftText}
     </div>
   {/if}
-  <!-- <div>
-    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
-  </div>
-  <div>
-    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
-  </div> -->
+  {#each depots as depot (depot.guid)}
+    <div>
+      <div class="font-semibold text-text-200">{m['housing.depot']()}</div>
+      {depot.name}
+    </div>
+    <div>
+      <div class="font-semibold text-text-200">{m['housing.depot_storage_left']()}</div>
+      <span class={isDepotSevere(depot) ? 'font-semibold text-red-500' : ''}>
+        {m['housing.percent']({
+          value: depotStorageLeftPercent(depot).toLocaleString(locale),
+        })}
+      </span>
+    </div>
+  {/each}
 </div>

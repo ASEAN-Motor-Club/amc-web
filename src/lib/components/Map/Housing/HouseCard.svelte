@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { HouseData } from '#lib/api/types.ts';
+  import type { DepotData, HouseData } from '#lib/api/types.ts';
+  import { depotStorageLeftPercent, isDepotSevere } from '#lib/api/depot.ts';
   import type { House } from '#lib/data/house.ts';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '#lib/date.ts';
   import { m } from '#messages';
@@ -14,11 +15,14 @@
   export interface Props {
     house: House;
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     highlight: string;
     loading: boolean;
   }
 
-  const { house, houseData, highlight, loading }: Props = $props();
+  const { house, houseData, depotData, highlight, loading }: Props = $props();
+
+  const depots = $derived(depotData?.[house.name] ?? []);
 
   const currentHouseData = $derived.by(() => {
     return houseData?.[house.name];
@@ -122,10 +126,20 @@
     </div>
   </div>
 
-  <!-- <div>
-    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
-  </div>
-  <div>
-    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
-  </div> -->
+  {#each depots as depot (depot.guid)}
+    <div class="flex justify-between gap-1 text-sm text-text-700 dark:text-text-300">
+      <div class="truncate">
+        <div class="text-xs font-bold text-text-500">{m['housing.depot']()}</div>
+        {depot.name}
+      </div>
+      <div class="text-right">
+        <div class="text-xs font-bold text-text-500">{m['housing.depot_storage_left']()}</div>
+        <div class={isDepotSevere(depot) ? 'font-semibold text-red-500' : ''}>
+          {m['housing.percent']({
+            value: depotStorageLeftPercent(depot).toLocaleString(locale),
+          })}
+        </div>
+      </div>
+    </div>
+  {/each}
 </Card>

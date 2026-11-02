@@ -11,7 +11,7 @@
   import type { PlayerData } from '../Map/types.ts';
   import Players from '../Players/Players.svelte';
   import Jobs from '../Jobs/Jobs.svelte';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
+  import type { DeliveryJob, DepotData, HouseData } from '#lib/api/types.ts';
   import JobDetails from '../Jobs/JobDetails.svelte';
 
   import CollapsibleContentWrapper from './CollapsibleContentWrapper.svelte';
@@ -31,6 +31,7 @@
     playerDataLoading: boolean;
     houseData: HouseData | undefined;
     houseDataLoading: boolean;
+    depotData: DepotData | undefined;
     jobsData: DeliveryJob[];
     jobsDataLoading: boolean;
     jobsCache: SvelteMap<number, DeliveryJob>;
@@ -46,6 +47,7 @@
     playerDataLoading,
     houseData,
     houseDataLoading,
+    depotData,
     jobsData,
     jobsDataLoading,
     jobsCache,
@@ -239,7 +241,7 @@
   >
     {#if openCollapsible === 'housing'}
       <CollapsibleContentWrapper>
-        <Housing {houseData} loading={houseDataLoading} fullScreen={showFull} />
+        <Housing {houseData} {depotData} loading={houseDataLoading} fullScreen={showFull} />
       </CollapsibleContentWrapper>
     {:else if openCollapsible === 'players'}
       <CollapsibleContentWrapper>

@@ -2,7 +2,8 @@
   import { onMount } from 'svelte';
   import * as THREE from 'three';
   import Feature from 'ol/Feature';
-  import type { DeliveryJob, HouseData } from '#lib/api/types.ts';
+  import type { DeliveryJob, DepotData, HouseData } from '#lib/api/types.ts';
+  import { hasSevereDepot } from '#lib/api/depot.ts';
   import {
     PointType,
     type MapSelection,
@@ -42,6 +43,7 @@
     jobsData: DeliveryJob[];
     playerData: PlayerData[];
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     pinsData: Pins;
     teleportData: TeleportPoint[];
     /** Point to highlight and lock the map onto, driven by the URL */
@@ -56,6 +58,7 @@
     mapState,
     playerData,
     houseData,
+    depotData,
     pinsData,
     teleportData,
     selection,
@@ -111,16 +114,20 @@
   const housePois = $derived.by(() => {
     if (!mapState.house) return [];
     const vacantOnly = mapState.houseVacantOnly;
+    const severeOnly = mapState.houseSevereOnly;
     const pois: PoiInput[] = [];
     for (const point of housesList) {
       const vacant = !houseData?.[point.name]?.ownerName;
       if (vacantOnly && !vacant) continue;
+      const severe = hasSevereDepot(depotData?.[point.name]);
+      if (severeOnly && !severe) continue;
       pois.push({
         pointType: PointType.House,
         id: point.name,
         coord: point.coord,
         info: point,
         vacant,
+        severe,
       });
     }
     return pois;

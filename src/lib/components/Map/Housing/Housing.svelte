@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { HouseData } from '#lib/api/types.ts';
+  import type { DepotData, HouseData } from '#lib/api/types.ts';
   import HouseCard from '#lib/components/Map/Housing/HouseCard.svelte';
   import { houses } from '#lib/data/house.ts';
   import TextInput from '#lib/ui/TextInput/TextInput.svelte';
@@ -14,11 +14,19 @@
 
   interface Props {
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     loading: boolean;
     fullScreen: boolean;
   }
 
-  const { houseData, loading, fullScreen }: Props = $props();
+  const { houseData, depotData, loading, fullScreen }: Props = $props();
+
+  /** Lowest storage-left fraction of the house's depots; houses without one sort last. */
+  const lowestDepotStorage = (houseName: string) => {
+    const depots = depotData?.[houseName];
+    if (!depots?.length) return Infinity;
+    return Math.min(...depots.map((depot) => depot.storage));
+  };
 
   let searchValue = $state('');
 
@@ -67,9 +75,10 @@
           const bRentLeft = houseB?.ownerName ? houseB.rentLeft.getTime() || 0 : -Infinity;
           return aRentLeft - bRentLeft;
         });
-      // case 'depotStorage':
-      //   // TODO: not implemented yet
-      //   return filteredHouses.toSorted((a, b) => a.name.localeCompare(b.name));
+      case 'depotStorage':
+        return filteredHouses.toSorted(
+          (a, b) => lowestDepotStorage(a.name) - lowestDepotStorage(b.name),
+        );
       default:
         return filteredHouses;
     }
@@ -110,7 +119,7 @@
       <SelectOption id="name" value={m['housing.sort.name']()} />
       <SelectOption id="id" value={m['housing.sort.id']()} />
       <SelectOption id="rentLeft" value={m['housing.sort.rent_left']()} />
-      <!-- <SelectOption id="depotStorage" value={m['housing.sort.depot_storage']()} /> -->
+      <SelectOption id="depotStorage" value={m['housing.sort.depot_storage']()} />
     </Select>
   </div>
   <div class={loading ? 'overflow-y-hidden' : 'overflow-y-auto'}>
@@ -122,7 +131,7 @@
         ]}
       >
         {#each sortedHouses as house (house.name)}
-          <HouseCard {house} {houseData} highlight={searchValue} {loading} />
+          <HouseCard {house} {houseData} {depotData} highlight={searchValue} {loading} />
         {/each}
       </div>
     {:else}

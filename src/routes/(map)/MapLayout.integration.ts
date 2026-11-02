@@ -5,6 +5,7 @@ import { m } from '#messages';
 import MapLayout from './MapLayout.integration.svelte';
 import type * as playerApi from '#lib/api/player.ts';
 import type * as housingApi from '#lib/api/housing.ts';
+import type * as depotApi from '#lib/api/depot.ts';
 import type * as deliveryApi from '#lib/api/delivery.ts';
 import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
 import { getMtLocale } from '#lib/utils/getMtLocale.ts';
@@ -68,6 +69,14 @@ vi.mock('#lib/api/housing.ts', async (importOriginal) => {
   return {
     ...actual,
     createHousingQuery: () => ({ data: undefined, isPending: false, isError: false }),
+  };
+});
+
+vi.mock('#lib/api/depot.ts', async (importOriginal) => {
+  const actual = await importOriginal<typeof depotApi>();
+  return {
+    ...actual,
+    createDepotQuery: () => ({ data: undefined, isPending: false, isError: false }),
   };
 });
 
