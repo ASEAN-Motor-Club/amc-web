@@ -70,10 +70,15 @@
       : m['housing.vacant_house'](),
   );
 
-  const title = $derived(
+  // The prerendered copy has no API data yet, so it names the plot by its key: that is what the
+  // unfurler shows, and it keeps every shared link's embed distinct.
+  const headName = $derived(
     data
-      ? m['house_viewer.head']({ house: houseName, siteName: m.site_name_short() })
-      : m['house_viewer.head_loading']({ siteName: m.site_name_short() }),
+      ? houseName
+      : (housingKey ?? m['house_viewer.head_loading']({ siteName: m.site_name_short() })),
+  );
+  const title = $derived(
+    m['house_viewer.head']({ house: headName, siteName: m.site_name_short() }),
   );
 </script>
 
