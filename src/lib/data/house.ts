@@ -6,6 +6,8 @@ export interface House {
   name: string;
   coord: Vector3;
   size: Vector2;
+  /** Plot rotation about the vertical, Unreal degrees (the House actor's yaw). */
+  yaw: number;
   /** server rent cost should be divide by 10 */
   cost: number;
 }

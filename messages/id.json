@@ -336,7 +336,9 @@
       "area_desc": "Tampilkan nama area di peta",
       "area_bound": "Tampilkan batas",
       "area_bound_desc": "Gambar garis batas area (debug)"
-    }
+    },
+    "click_view_3d": "Klik kiri untuk melihat dalam 3D",
+    "click_here_view_3d": "Sentuh di sini untuk melihat dalam 3D"
   },
   "home": {
     "desc_title": "Server komunitas Motor Town utama di Asia Tenggara",
@@ -498,5 +500,24 @@
     "radio_desc": "Dengarkan AMC Radio",
     "map_desc": "Lihat peta interaktif",
     "jobs_desc": "Lihat pekerjaan yang tersedia"
+  },
+  "house_viewer": {
+    "head": "{siteName} | {house} dalam 3D",
+    "head_loading": "{siteName} | Tampilan rumah 3D",
+    "plot": "Kavling",
+    "size": "Ukuran lahan",
+    "buildings": "Barang terpasang",
+    "back_to_map": "Kembali ke peta",
+    "previous_house": "Rumah sebelumnya",
+    "next_house": "Rumah berikutnya",
+    "canvas_label": "Tampilan 3D {house}. Seret untuk memutar, gulir untuk zoom.",
+    "loading_models": "Memuat model {loaded}/{total}",
+    "models_failed": "{count} model gagal dimuat",
+    "pause_rotation": "Jeda rotasi",
+    "resume_rotation": "Lanjutkan rotasi",
+    "cannot_load": {
+      "title": "Tidak dapat memuat rumah",
+      "desc": "Gagal memuat rumah ini. Server penampil rumah mungkin sedang offline."
+    }
   }
 }

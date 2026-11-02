@@ -343,7 +343,9 @@
       "area_desc": "Display area names across the map",
       "area_bound": "Show boundaries",
       "area_bound_desc": "Draw area boundary outlines (debug)"
-    }
+    },
+    "click_view_3d": "Left click to view in 3D",
+    "click_here_view_3d": "Touch here to view in 3D"
   },
   "home": {
     "desc_title": "Motor Town's premier community server in Southeast Asia",
@@ -532,5 +534,24 @@
     "vi": "Tiếng Việt",
     "th": "ภาษาไทย",
     "id": "Bahasa Indonesia"
+  },
+  "house_viewer": {
+    "head": "{siteName} | {house} in 3D",
+    "head_loading": "{siteName} | House 3D view",
+    "plot": "Plot",
+    "size": "Plot size",
+    "buildings": "Placed items",
+    "back_to_map": "Back to map",
+    "previous_house": "Previous house",
+    "next_house": "Next house",
+    "canvas_label": "3D view of {house}. Drag to orbit, scroll to zoom.",
+    "loading_models": "Loading models {loaded}/{total}",
+    "models_failed": "{count} models could not be loaded",
+    "pause_rotation": "Pause rotation",
+    "resume_rotation": "Resume rotation",
+    "cannot_load": {
+      "title": "Cannot load house",
+      "desc": "Failed to load this house. The house viewer server may be offline."
+    }
   }
 }

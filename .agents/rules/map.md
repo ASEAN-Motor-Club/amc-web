@@ -44,7 +44,7 @@ So "view on map", search results and clicks all just navigate — build the link
 
 ## Click semantics
 
-- **Left click** (gated on `isMouse.current`): delivery or house → lock it and open its panel; teleport → copy its `/tp` command; anything else → clear. On touch a tap only opens the tooltip.
+- **Left click** (gated on `isMouse.current`): delivery → lock it and open its panel; house → open the 3D house viewer page `/house/<housingKey>` (POC, see `HANDOFF-house-viewer.md`); teleport → copy its `/tp` command; anything else → clear. On touch a tap only opens the tooltip, whose button does the same navigation.
 - **Right click** always clears the selection, whatever it hits.
 
 Teleport entries can share a coordinate; `mergeTeleportPoints` collapses them (longest name wins, the rest become aliases) and is unit-tested — extend it there, not at the callsite.

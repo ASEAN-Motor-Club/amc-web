@@ -182,8 +182,13 @@
           class="mb-0.5 bg-white/10 px-2 text-text-300 not-pointer-fine:pointer-events-auto"
           {onClick}
         >
-          <span class="hidden pointer-fine:inline">{m['map.click_info']()}</span>
-          <span class="hidden not-pointer-fine:inline">{m['map.click_here_info']()}</span>
+          {#if hoverInfo.pointType === PointType.House}
+            <span class="hidden pointer-fine:inline">{m['map.click_view_3d']()}</span>
+            <span class="hidden not-pointer-fine:inline">{m['map.click_here_view_3d']()}</span>
+          {:else}
+            <span class="hidden pointer-fine:inline">{m['map.click_info']()}</span>
+            <span class="hidden not-pointer-fine:inline">{m['map.click_here_info']()}</span>
+          {/if}
         </Button>
       {/if}
     </Card>
