@@ -1,4 +1,5 @@
 import type { Vector2, Vector3 } from '#lib/types/index.ts';
+import { houses } from '#lib/data/house.ts';
 import { PUBLIC_HOUSE_VIEWER_API_BASE } from '$app/env/public';
 import { createQuery, queryOptions, skipToken } from '@tanstack/svelte-query';
 import { apiClient, type QueryOverrides, type QueryParam } from './_api.ts';
@@ -24,15 +25,24 @@ export interface HouseBuilding {
   modelUrl: string;
 }
 
+/** What the endpoint answers: ownership, placement and asset URLs — no plot geometry. */
+export interface HouseViewerResponse {
+  housingKey: string;
+  ownerName: string | null;
+  /** Absolute URLs of the landscape grass the plot sits on (UE base color + DirectX normal map). */
+  groundTextures: { color: string; normal: string };
+  buildings: HouseBuilding[];
+}
+
 export interface HouseViewerData {
   housingKey: string;
-  /** Plot centre, Unreal world cm. */
+  /** Plot centre, Unreal world cm — from the site's own `out_house.json`. */
   coord: Vector3;
-  /** Plot extent, cm. */
+  /** Plot extent, cm — same source. */
   size: Vector2;
   /** Plot rotation about the vertical, UE degrees (the House actor's yaw). */
   yaw: number;
-  /** Raw `Cost` from the game's Houses table; the site shows rent as `cost × multiplier / 10`. */
+  /** Plot `Cost` with the site's price multiplier applied; rent is `cost / 10`. */
   cost: number;
   ownerName: string | null;
   /** Absolute URLs of the landscape grass the plot sits on (UE base color + DirectX normal map). */
@@ -59,13 +69,23 @@ export const houseViewerQueryOptions = (input: QueryParam<HouseViewerQueryInput>
       housingKey === undefined
         ? skipToken
         : async ({ signal }): Promise<HouseViewerData> => {
-            const data = await apiClient<HouseViewerData>(
+            const data = await apiClient<HouseViewerResponse>(
               `${PUBLIC_HOUSE_VIEWER_API_BASE}/api/houses/${encodeURIComponent(housingKey)}`,
               signal,
             );
+            // Plot geometry is the site's own copy of the game's Houses table; the server only
+            // knows ownership and placement. A house it has no plot for cannot be framed.
+            const plot = houses.find((house) => house.name === data.housingKey);
+            if (plot === undefined) {
+              throw new Error(`No plot data for ${data.housingKey}`);
+            }
             const absolute = (url: string) => new URL(url, PUBLIC_HOUSE_VIEWER_API_BASE).href;
             return {
               ...data,
+              coord: plot.coord,
+              size: plot.size,
+              yaw: plot.yaw,
+              cost: plot.cost,
               groundTextures: {
                 color: absolute(data.groundTextures.color),
                 normal: absolute(data.groundTextures.normal),
