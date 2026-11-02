@@ -67,10 +67,11 @@
   {/if}
   {#each depots as depot (depot.guid)}
     <div>
-      <div class="font-semibold text-text-200">
-        {m['housing.depot']()}: {depot.name}
-      </div>
-      <div class="text-text-400">{m['housing.depot_storage_left']()}</div>
+      <div class="font-semibold text-text-200">{m['housing.depot']()}</div>
+      {depot.name}
+    </div>
+    <div>
+      <div class="font-semibold text-text-200">{m['housing.depot_storage_left']()}</div>
       <ProgressBar
         class="mt-0.5"
         variant="line"
