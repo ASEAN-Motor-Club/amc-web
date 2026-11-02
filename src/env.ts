@@ -8,5 +8,7 @@ export const variables = defineEnvVars({
   PUBLIC_SEASON_START_DATE: { public: true, static: true },
   PUBLIC_DISCORD_EVENT_BASE: { public: true, static: true },
   PUBLIC_HOUSE_PRICE_MULTIPLIER: { public: true, static: true },
+  /** Base URL of the house-viewer POC server (mt-map-extract/house-server): house JSON + building GLBs. */
+  PUBLIC_HOUSE_VIEWER_API_BASE: { public: true, static: true },
   PUBLIC_API_BASE: { public: true, static: true },
 });

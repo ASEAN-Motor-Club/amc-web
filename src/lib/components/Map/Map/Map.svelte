@@ -394,13 +394,7 @@
     }
     if (feature && pointType === PointType.House) {
       const { name } = feature.get('info') as { name: string };
-      const newParams = getSelectionClearedParams();
-      if (isSm.current) {
-        newParams.set('menu', 'housing');
-      }
-      newParams.set('house', name);
-      newParams.set('hf', name);
-      goto(`/map?${newParams.toString()}`);
+      goto(`/house/${encodeURIComponent(name)}`);
       return;
     }
     if (pointType === PointType.Teleport) {
@@ -426,10 +420,7 @@
       newParams.set('delivery', hoverInfo.info.guid);
       goto(`/deliveries/${hoverInfo.info.guid}?${newParams.toString()}`);
     } else if (hoverInfo.pointType === PointType.House) {
-      const newParams = getSelectionClearedParams();
-      newParams.set('house', hoverInfo.info.name);
-      newParams.set('hf', hoverInfo.info.name);
-      goto(`/housing?${newParams.toString()}`);
+      goto(`/house/${encodeURIComponent(hoverInfo.info.name)}`);
     }
     hoverPoint?.f.set('hover', false);
     hoverPoint = undefined;
