@@ -60,6 +60,8 @@ export interface MapState {
   areaBound: boolean;
   jobOnly: boolean;
   houseVacantOnly: boolean;
+  /** Houses whose depot is nearly out of stock - mutually exclusive with vacantOnly. */
+  houseSevereOnly: boolean;
   houseLabels: boolean;
   // playerCopsOnly: boolean;
   // playerCriminalOnly: boolean;
@@ -71,6 +73,7 @@ export const enum PoiType {
   House,
   HouseLabels,
   HouseVacantOnly,
+  HouseSevereOnly,
   Player,
   PlayerName,
   PlayerCopsOnly,

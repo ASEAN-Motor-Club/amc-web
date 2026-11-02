@@ -5,6 +5,7 @@
   import ClickAwayBlock from '#lib/ui/ClickAwayBlock/ClickAwayBlock.svelte';
   import Button from '#lib/ui/Button/Button.svelte';
   import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
+  import { DEPOT_SEVERE_STORAGE } from '#lib/api/depot.ts';
   import { dev } from '$app/env';
   import { m } from '#messages';
   import PoiItem from './PoiItem.svelte';
@@ -83,6 +84,16 @@
                 desc={m['map.poi.house_vacant_only_desc']()}
                 enabled={mapState.houseVacantOnly}
                 onclick={() => onToggle(PoiType.HouseVacantOnly)}
+                parentEnabled={mapState.house}
+                filter
+                sub
+              />
+              <PoiItem
+                dotClass="border-red-500 bg-cyan-500"
+                label={m['map.poi.house_severe_only']()}
+                desc={m['map.poi.house_severe_only_desc']({ percent: DEPOT_SEVERE_STORAGE * 100 })}
+                enabled={mapState.houseSevereOnly}
+                onclick={() => onToggle(PoiType.HouseSevereOnly)}
                 parentEnabled={mapState.house}
                 filter
                 sub

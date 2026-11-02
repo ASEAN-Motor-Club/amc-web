@@ -57,7 +57,13 @@
     type PlayerData,
     type TeleportPoint,
   } from './types.ts';
-  import { DeliveryLineType, type DeliveryJob, type HouseData } from '#lib/api/types.ts';
+  import {
+    DeliveryLineType,
+    type DeliveryJob,
+    type DepotData,
+    type HouseData,
+  } from '#lib/api/types.ts';
+  import { hasSevereDepot } from '#lib/api/depot.ts';
   import type { ShortcutZone } from '#lib/api/shortcutZone.ts';
   import { deliveryPoints, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
   import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
@@ -79,6 +85,7 @@
     jobsData: DeliveryJob[];
     playerData: PlayerData[];
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     pinsData: Pins;
     teleportData: TeleportPoint[];
     shortcutZoneData: ShortcutZone[];
@@ -100,6 +107,7 @@
     jobsData,
     playerData,
     houseData,
+    depotData,
     pinsData,
     teleportData,
     shortcutZoneData,
@@ -241,12 +249,15 @@
     source: houseSource,
     variables: {
       houseVacantOnly: false,
+      houseSevereOnly: false,
     },
     style: {
       'circle-opacity': [
         'case',
         ['var', 'houseVacantOnly'],
         ['match', ['get', 'vacant'], 1, 1, 0],
+        ['var', 'houseSevereOnly'],
+        ['match', ['get', 'severe'], 1, 1, 0],
         1,
       ],
       'circle-radius': 6,
@@ -258,8 +269,15 @@
         ['match', ['get', 'vacant'], 1, colorCyan400, colorCyan600],
         ['match', ['get', 'vacant'], 1, colorCyan300, colorCyan500],
       ],
-      'circle-stroke-color': ['match', ['get', 'selected'], 1, colorWhite, colorCyan950],
-      'circle-stroke-width': 1,
+      'circle-stroke-color': [
+        'case',
+        ['==', ['get', 'severe'], 1],
+        colorRed500,
+        ['==', ['get', 'selected'], 1],
+        colorWhite,
+        colorCyan950,
+      ],
+      'circle-stroke-width': ['case', ['==', ['get', 'severe'], 1], 2, 1],
       'circle-rotate-with-view': false,
       'circle-displacement': [0, 0],
     },
@@ -334,6 +352,7 @@
     visible: false,
     style: (feature) => {
       if (mapState.houseVacantOnly && !feature.get('vacant')) return [];
+      if (mapState.houseSevereOnly && !feature.get('severe')) return [];
       houseNameStyle.getText()?.setText(feature.get('label') as string);
       return houseNameStyle;
     },
@@ -741,8 +760,10 @@
       const info = f.get('info') as { name: string };
       const ownerName = houseData?.[info.name]?.ownerName;
       f.set('vacant', !ownerName ? 1 : 0);
+      f.set('severe', hasSevereDepot(depotData?.[info.name]) ? 1 : 0);
       f.set('label', ownerName ?? m['housing.vacant']());
     }
+    houseLayer.changed();
     houseNameLayer.changed();
   });
 
@@ -759,6 +780,7 @@
   $effect(() => {
     houseLayer.updateStyleVariables({
       houseVacantOnly: mapState.houseVacantOnly,
+      houseSevereOnly: mapState.houseSevereOnly,
     });
     houseNameLayer.changed();
   });

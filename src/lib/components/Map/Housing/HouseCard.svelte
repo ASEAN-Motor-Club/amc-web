@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { HouseData } from '#lib/api/types.ts';
+  import type { DepotData, HouseData } from '#lib/api/types.ts';
+  import { depotStorageLeftPercent, isDepotSevere } from '#lib/api/depot.ts';
   import type { House } from '#lib/data/house.ts';
   import { formatDuration, getDateFnsLocale, intervalToDuration, isBefore } from '#lib/date.ts';
   import { m } from '#messages';
@@ -9,16 +10,20 @@
   import { getLocale } from '#lib/paraglide/runtime.js';
   import { rtDate } from '#lib/realtimeDate.svelte.ts';
   import { Features, getViewHref } from '../utils.ts';
+  import ProgressBar from '#lib/ui/ProgressBar/ProgressBar.svelte';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {
     house: House;
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     highlight: string;
     loading: boolean;
   }
 
-  const { house, houseData, highlight, loading }: Props = $props();
+  const { house, houseData, depotData, highlight, loading }: Props = $props();
+
+  const depots = $derived(depotData?.[house.name] ?? []);
 
   const currentHouseData = $derived.by(() => {
     return houseData?.[house.name];
@@ -122,10 +127,31 @@
     </div>
   </div>
 
-  <!-- <div>
-    <span class="font-semibold">{m['housing.depot']()}:</span> TODO
-  </div>
-  <div>
-    <span class="font-semibold">{m['housing.depot_storage']()}:</span> TODO
-  </div> -->
+  {#if depots.length}
+    {#each depots as depot (depot.guid)}
+      <div class="mt-2 text-sm text-text-700 dark:text-text-300">
+        <div class="truncate text-xs font-bold text-text-500">
+          {m['housing.depot']()}:
+          <span class="font-normal text-text-700 dark:text-text-300">{depot.name}</span>
+        </div>
+        <ProgressBar
+          class="mt-1"
+          value={depot.storage}
+          danger={isDepotSevere(depot)}
+          ariaLabel={`${m['housing.depot_storage_left']()}: ${depot.name}`}
+          label={m['housing.percent']({
+            value: depotStorageLeftPercent(depot).toLocaleString(locale),
+          })}
+        />
+      </div>
+    {/each}
+  {:else}
+    <div class="mt-2 text-sm text-text-700 dark:text-text-300">
+      <div class="truncate text-xs font-bold text-text-500">
+        {m['housing.depot']()}:
+        <span class="font-normal text-text-500 dark:text-text-400">{m['housing.no_depot']()}</span>
+      </div>
+      <div class="mt-1 h-5"></div>
+    </div>
+  {/if}
 </Card>

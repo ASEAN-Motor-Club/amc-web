@@ -8,7 +8,7 @@
   import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
   import type { House } from '#lib/data/house.ts';
   import Button from '#lib/ui/Button/Button.svelte';
-  import type { HouseData } from '#lib/api/types.ts';
+  import type { DepotData, HouseData } from '#lib/api/types.ts';
   import { m } from '#messages';
   import PlayerInfo from './PlayerInfo.svelte';
   import TeleportInfo from './TeleportInfo.svelte';
@@ -39,14 +39,21 @@
 
   export interface HoverInfoTooltipProps {
     houseData: HouseData | undefined;
+    depotData: DepotData | undefined;
     hoverInfo: HoverInfo | undefined;
     onClick?: () => void;
     onCopyTeleport?: () => void;
     teleportCopied?: boolean;
   }
 
-  const { hoverInfo, onClick, houseData, onCopyTeleport, teleportCopied }: HoverInfoTooltipProps =
-    $props();
+  const {
+    hoverInfo,
+    onClick,
+    houseData,
+    depotData,
+    onCopyTeleport,
+    teleportCopied,
+  }: HoverInfoTooltipProps = $props();
 
   const typeText = $derived.by(() => {
     if (!hoverInfo) {
@@ -137,7 +144,7 @@
         {#if hoverInfo.pointType === PointType.Delivery}
           <DeliveryInfo {hoverInfo} />
         {:else if hoverInfo.pointType === PointType.House}
-          <HousingInfo {hoverInfo} {houseData} />
+          <HousingInfo {hoverInfo} {houseData} {depotData} />
         {:else if hoverInfo.pointType === PointType.Player}
           <PlayerInfo {hoverInfo} />
         {:else}

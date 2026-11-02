@@ -16,6 +16,7 @@ import {
   POI_DELIVERY_JOB_SOURCE,
   POI_DELIVERY_RESIDENT,
   POI_HOUSE_VACANT,
+  POI_HOUSE_SEVERE,
   type PoiDotStyle,
 } from './constants.ts';
 import {
@@ -42,6 +43,8 @@ export interface PoiInput {
   jobs?: 0 | 1 | 2;
   /** House nobody rents (OL house style). */
   vacant?: boolean;
+  /** House whose depot is nearly out of stock (OL house style). */
+  severe?: boolean;
 }
 
 export interface PoiMarker {
@@ -56,6 +59,8 @@ export interface PoiMarker {
   jobs?: 0 | 1 | 2;
   /** Vacant house - drawn with the vacant palette. */
   vacant?: boolean;
+  /** House with a nearly-empty depot - drawn with the severe palette. */
+  severe?: boolean;
   /** User-facing visibility (POI toggle). */
   visible: boolean;
   /** Resident LOD gate: true when the marker sits in the z5 ring. */
@@ -129,6 +134,7 @@ function paletteFor(input: PoiInput): PoiDotStyle {
     return deliveryDotStyle(input.info as DeliveryPoint, input.jobs);
   }
   if (input.pointType === PointType.House && input.vacant) return POI_HOUSE_VACANT;
+  if (input.pointType === PointType.House && input.severe) return POI_HOUSE_SEVERE;
   return dotStyleFor(input.pointType);
 }
 
@@ -358,9 +364,15 @@ export function createPoiManager(
         existing.world = gameCoordToWorld(input.coord, meta);
         const jobs = input.jobs;
         const vacant = input.vacant;
-        if ((jobs ?? 0) !== (existing.jobs ?? 0) || !!vacant !== !!existing.vacant) {
+        const severe = input.severe;
+        if (
+          (jobs ?? 0) !== (existing.jobs ?? 0) ||
+          !!vacant !== !!existing.vacant ||
+          !!severe !== !!existing.severe
+        ) {
           existing.jobs = jobs;
           existing.vacant = vacant;
+          existing.severe = severe;
           const newGroup = groupFor(paletteFor(input));
           if (newGroup.key !== existing.groupKey) {
             const oldGroup = groupOf(existing.groupKey);

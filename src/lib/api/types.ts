@@ -10,6 +10,18 @@ export interface House {
   rentLeft: Date;
 }
 
+/** Depots grouped by housing key - a house can own more than one depot. */
+export type DepotData = Record<string, Depot[]>;
+
+export interface Depot {
+  /** Building guid of the depot. */
+  guid: string;
+  name: string;
+  /** Fraction of the depot's capacity still in stock (0..1) - lower is worse. */
+  storage: number;
+  taxiDispatchLevel: number;
+}
+
 export type PlayerEventData = Record<string, Vector3 & { vehicle_key: string; unique_id: string }>;
 
 export const enum DeliveryLineType {

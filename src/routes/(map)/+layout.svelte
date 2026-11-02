@@ -3,6 +3,7 @@
   import { page } from '$app/state';
   import { createDeliveryJobsQuery } from '#lib/api/delivery.ts';
   import { createHousingQuery } from '#lib/api/housing.ts';
+  import { createDepotQuery } from '#lib/api/depot.ts';
   import { createInterpolatedPlayerPositionsStream } from '#lib/api/playerInterpolation.svelte.ts';
   import type { DeliveryJob } from '#lib/api/types.ts';
   import Collapsible from '#lib/components/Map/Collapsible/Collapsible.svelte';
@@ -95,6 +96,12 @@
   const houseData = $derived(housingQuery.data);
   const houseDataLoading = $derived(housingQuery.isPending);
 
+  const depotQuery = createDepotQuery(() => ({
+    options: { enabled: showMap || openCollapsible === 'housing' },
+  }));
+
+  const depotData = $derived(depotQuery.data);
+
   const jobsQuery = createDeliveryJobsQuery(() => ({
     options: { enabled: showMap || openCollapsible === 'jobs' },
   }));
@@ -123,6 +130,7 @@
         <Map
           {jobsData}
           {houseData}
+          {depotData}
           playerData={mapPlayerData}
           onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
           onThreeDModeChange={(m) => (threeDMode = m)}
@@ -141,6 +149,7 @@
     {playerDataLoading}
     {houseData}
     {houseDataLoading}
+    {depotData}
     {jobsData}
     {jobsDataLoading}
     {jobsCache}
