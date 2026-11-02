@@ -377,6 +377,7 @@
     "rent_price": "Rent price",
     "rent_left": "Rent left",
     "depot": "Depot",
+    "no_depot": "No depot",
     "depot_storage": "Depot storage",
     "depot_storage_left": "Storage left",
     "percent": "{value}%",

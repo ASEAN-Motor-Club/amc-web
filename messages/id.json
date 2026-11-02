@@ -370,6 +370,7 @@
     "rent_price": "Harga Sewa",
     "rent_left": "Sisa Sewa",
     "depot": "Depo",
+    "no_depot": "Tidak ada depo",
     "depot_storage": "Penyimpanan Depo",
     "depot_storage_left": "Stok tersisa",
     "percent": "{value}%",

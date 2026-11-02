@@ -364,6 +364,7 @@
     "rent_price": "ราคาค่าเช่า",
     "rent_left": "เวลาเช่าคงเหลือ",
     "depot": "คลังสินค้า",
+    "no_depot": "ไม่มีคลังสินค้า",
     "depot_storage": "คลังคงเหลือ",
     "depot_storage_left": "คลังคงเหลือ",
     "percent": "{value}%",

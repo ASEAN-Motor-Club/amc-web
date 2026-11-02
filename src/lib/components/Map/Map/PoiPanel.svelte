@@ -89,7 +89,7 @@
                 sub
               />
               <PoiItem
-                dotClass="border-red-950 bg-red-500"
+                dotClass="border-red-500 bg-cyan-500"
                 label={m['map.poi.house_severe_only']()}
                 desc={m['map.poi.house_severe_only_desc']({ percent: DEPOT_SEVERE_STORAGE * 100 })}
                 enabled={mapState.houseSevereOnly}
