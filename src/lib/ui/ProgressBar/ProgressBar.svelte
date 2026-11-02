@@ -24,7 +24,10 @@
 
 <div
   class={clsx(
-    'relative flex h-5 w-full items-center justify-center overflow-hidden rounded-sm bg-text-200 text-xs leading-none font-bold text-text-800 tabular-nums dark:bg-text-700 dark:text-text-100',
+    'relative flex h-5 w-full items-center justify-center overflow-hidden rounded-sm text-xs leading-none font-bold tabular-nums',
+    danger
+      ? 'bg-red-200 text-red-950 dark:bg-red-950/70 dark:text-red-100'
+      : 'bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-slate-100',
     propsClass,
   )}
   role="progressbar"
@@ -34,7 +37,10 @@
   aria-label={ariaLabel ?? label}
 >
   <div
-    class={clsx('absolute inset-y-0 left-0', danger ? 'bg-red-500/80' : 'bg-cyan-400/70')}
+    class={clsx(
+      'absolute inset-y-0 left-0',
+      danger ? 'bg-red-500' : 'bg-slate-400 dark:bg-slate-600',
+    )}
     style:width="{widthPercent}%"
   ></div>
   <span class="relative">{label}</span>
