@@ -5,6 +5,7 @@
   import { isBefore } from '#lib/date.ts';
   import { formatDistanceStrict } from '#lib/date.ts';
   import { m } from '#messages';
+  import ProgressBar from '#lib/ui/ProgressBar/ProgressBar.svelte';
   import { getLocale } from '#lib/paraglide/runtime.js';
   import { rtDate } from '#lib/realtimeDate.svelte.ts';
 
@@ -66,16 +67,20 @@
   {/if}
   {#each depots as depot (depot.guid)}
     <div>
-      <div class="font-semibold text-text-200">{m['housing.depot']()}</div>
-      {depot.name}
-    </div>
-    <div>
-      <div class="font-semibold text-text-200">{m['housing.depot_storage_left']()}</div>
-      <span class={isDepotSevere(depot) ? 'font-semibold text-red-500' : ''}>
-        {m['housing.percent']({
+      <div class="font-semibold text-text-200">
+        {m['housing.depot']()}: {depot.name}
+      </div>
+      <div class="text-text-400">{m['housing.depot_storage_left']()}</div>
+      <ProgressBar
+        class="mt-0.5"
+        variant="line"
+        value={depot.storage}
+        danger={isDepotSevere(depot)}
+        ariaLabel={`${m['housing.depot_storage_left']()}: ${depot.name}`}
+        label={m['housing.percent']({
           value: depotStorageLeftPercent(depot).toLocaleString(locale),
         })}
-      </span>
+      />
     </div>
   {/each}
 </div>
