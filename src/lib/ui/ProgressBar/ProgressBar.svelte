@@ -26,7 +26,7 @@
   class={clsx(
     'relative flex h-5 w-full items-center justify-center overflow-hidden rounded-sm text-xs leading-none font-bold tabular-nums',
     danger
-      ? 'bg-red-200 text-red-950 dark:bg-red-950/70 dark:text-red-100'
+      ? 'bg-red-200 text-red-500 dark:bg-red-950/70 dark:text-red-500'
       : 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-200',
     propsClass,
   )}
@@ -39,7 +39,7 @@
   <div
     class={clsx(
       'absolute inset-y-0 left-0',
-      danger ? 'bg-red-500' : 'bg-slate-400 dark:bg-slate-600',
+      danger ? 'bg-red-500' : 'bg-slate-400/70 dark:bg-slate-500/60',
     )}
     style:width="{widthPercent}%"
   ></div>
