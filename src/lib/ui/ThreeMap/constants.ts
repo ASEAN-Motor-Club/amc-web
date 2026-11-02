@@ -79,7 +79,7 @@ export const OCEAN_QUAD_SIZE = 200000;
  *
  * 08:00 = 28 800 000 · 14:00 = 50 400 000 · 16:00 = 57 600 000
  */
-export const TIME_OF_DAY_MS = 50_400_000;
+export const TIME_OF_DAY_MS = 57_600_000 ;
 export const SUN_DISTANCE = 20000;
 export const TILE_UPDATE_INTERVAL_MS = 150;
 export const RESIZE_DEBOUNCE_MS = 100;
