@@ -48,7 +48,7 @@
       aria-label={ariaLabel ?? label}
     >
       <div
-        class={clsx('h-full rounded-full', danger ? 'bg-red-400' : 'bg-slate-100')}
+        class={clsx('h-full', danger ? 'bg-red-400' : 'bg-slate-100')}
         style:width="{widthPercent}%"
       ></div>
     </div>
