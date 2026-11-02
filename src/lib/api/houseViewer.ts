@@ -25,12 +25,10 @@ export interface HouseBuilding {
   modelUrl: string;
 }
 
-/** What the endpoint answers: ownership, placement and asset URLs — no plot geometry. */
+/** What the endpoint answers: ownership and placement — no plot geometry, no shared assets. */
 export interface HouseViewerResponse {
   housingKey: string;
   ownerName: string | null;
-  /** Absolute URLs of the landscape grass the plot sits on (UE base color + DirectX normal map). */
-  groundTextures: { color: string; normal: string };
   buildings: HouseBuilding[];
 }
 
@@ -60,6 +58,15 @@ export interface HouseViewerQueryInput {
 /** The server re-reads the 7 MB world dump at most every 30 minutes; no point asking sooner. */
 const HOUSE_VIEWER_STALE_MS = 5 * 60 * 1000;
 
+/**
+ * Version of the two ground PNGs, mirroring amc-backend's `HOUSE_MODELS_VERSION`.
+ *
+ * They are identical for every plot, so the endpoint no longer sends their URLs. The assets are
+ * served `immutable` for a year, which makes this the only way to evict a retextured ground —
+ * bump it together with the backend setting.
+ */
+const GROUND_TEXTURE_VERSION = 1;
+
 export const houseViewerQueryOptions = (input: QueryParam<HouseViewerQueryInput>) => () => {
   const { housingKey, options } = input();
 
@@ -80,16 +87,15 @@ export const houseViewerQueryOptions = (input: QueryParam<HouseViewerQueryInput>
               throw new Error(`No plot data for ${data.housingKey}`);
             }
             const absolute = (url: string) => new URL(url, PUBLIC_HOUSE_VIEWER_API_BASE).href;
+            const ground = (kind: 'color' | 'normal') =>
+              absolute(`/api/houses/ground/${kind}.png?v=${GROUND_TEXTURE_VERSION}`);
             return {
               ...data,
               coord: plot.coord,
               size: plot.size,
               yaw: plot.yaw,
               cost: plot.cost,
-              groundTextures: {
-                color: absolute(data.groundTextures.color),
-                normal: absolute(data.groundTextures.normal),
-              },
+              groundTextures: { color: ground('color'), normal: ground('normal') },
               buildings: data.buildings.map((b) => ({ ...b, modelUrl: absolute(b.modelUrl) })),
             };
           },
