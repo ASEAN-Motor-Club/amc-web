@@ -16,10 +16,7 @@ export const depotStorageLeftPercent = (depot: Depot) => Math.round(depot.storag
 export const hasSevereDepot = (depots: Depot[] | undefined) =>
   !!depots?.some((depot) => isDepotSevere(depot));
 
-/**
- * Storage moves whenever cargo is delivered, so it is polled. The owner mapping does not: depots
- * are not built or destroyed inside a session, so that half is fetched once and kept.
- */
+/** Storage moves whenever cargo is delivered, so the endpoint is polled at this cadence. */
 const DEPOT_POLL_INTERVAL_MS = 30_000;
 
 /** Depots carry their building guid; `owner` is the housing key only with `?owner=true`. */
@@ -39,26 +36,18 @@ export interface DepotQueryInput {
   options?: QueryOverrides<DepotData>;
 }
 
-export interface DepotStorageQueryInput {
-  /** Overrides spread over the endpoint's defaults. */
-  options?: QueryOverrides<GetDepotDataResponse>;
-}
-
-const toDepot = (item: DepotApiItem): Depot => ({
-  guid: item.guid,
-  name: item.name,
-  storage: item.storage,
-  taxiDispatchLevel: item.taxiDispatchLevel,
-});
-
 /**
- * Housing key -> depots, worst storage first. Fetched once per session: the guid -> housing key
- * assignment is stable, so only the polling query below carries the live storage.
+ * Depots grouped by housing key (the same key `HouseData` uses), worst storage first.
+ *
+ * Polled rather than fetched once: storage drops as cargo is delivered. The `owner` mapping comes
+ * along on every tick — TanStack Query keeps the previous list rendered while a poll is in flight,
+ * so the extra field costs nothing beyond the payload it was already fetching.
+ *
  * Depots whose building has no housing key are dropped - nothing can attach them to a house.
  */
-export const depotOwnersQueryOptions = (input?: QueryParam<DepotQueryInput>) => () =>
+export const depotQueryOptions = (input?: QueryParam<DepotQueryInput>) => () =>
   queryOptions({
-    queryKey: ['depots', 'owners'],
+    queryKey: ['depots'],
     queryFn: async ({ signal }): Promise<DepotData> => {
       const data = await apiClient<GetDepotDataResponse>(
         `${PUBLIC_API_BASE}/api/depots/?owner=true`,
@@ -67,7 +56,13 @@ export const depotOwnersQueryOptions = (input?: QueryParam<DepotQueryInput>) => 
 
       const grouped = data.reduce<DepotData>((acc, item) => {
         if (!item.owner) return acc;
-        (acc[item.owner] ??= []).push(toDepot(item));
+        const depot: Depot = {
+          guid: item.guid,
+          name: item.name,
+          storage: item.storage,
+          taxiDispatchLevel: item.taxiDispatchLevel,
+        };
+        (acc[item.owner] ??= []).push(depot);
         return acc;
       }, {});
 
@@ -77,48 +72,10 @@ export const depotOwnersQueryOptions = (input?: QueryParam<DepotQueryInput>) => 
 
       return grouped;
     },
-    staleTime: Number.POSITIVE_INFINITY,
-    ...input?.().options,
-  });
-
-/** Live storage for every depot, polled. Keyless on purpose - the owner mapping is not needed. */
-export const depotStorageQueryOptions = (input?: QueryParam<DepotStorageQueryInput>) => () =>
-  queryOptions({
-    queryKey: ['depots', 'storage'],
-    queryFn: ({ signal }) =>
-      apiClient<GetDepotDataResponse>(`${PUBLIC_API_BASE}/api/depots/`, signal),
     refetchInterval: DEPOT_POLL_INTERVAL_MS,
     staleTime: DEPOT_POLL_INTERVAL_MS,
     ...input?.().options,
   });
 
-/**
- * Swap the polled storage onto the owner mapping, matching by building guid.
- *
- * A depot the poll has not reported (first load, or a failed poll) keeps its last known storage
- * rather than vanishing, and each house is re-sorted worst storage first.
- */
-export const mergeDepotStorage = (
-  owned: DepotData | undefined,
-  polled: GetDepotDataResponse | undefined,
-): DepotData | undefined => {
-  if (!owned || !polled) return owned;
-
-  const storageByGuid = new Map(polled.map((item) => [item.guid, item.storage]));
-
-  return Object.entries(owned).reduce<DepotData>((acc, [housingKey, depots]) => {
-    acc[housingKey] = depots
-      .map((depot) => {
-        const storage = storageByGuid.get(depot.guid);
-        return storage === undefined ? depot : { ...depot, storage };
-      })
-      .sort((a, b) => a.storage - b.storage);
-    return acc;
-  }, {});
-};
-
-export const createDepotOwnersQuery = (input?: QueryParam<DepotQueryInput>) =>
-  createQuery(depotOwnersQueryOptions(input));
-
-export const createDepotStorageQuery = (input?: QueryParam<DepotStorageQueryInput>) =>
-  createQuery(depotStorageQueryOptions(input));
+export const createDepotQuery = (input?: QueryParam<DepotQueryInput>) =>
+  createQuery(depotQueryOptions(input));

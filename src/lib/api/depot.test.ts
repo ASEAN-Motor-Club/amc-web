@@ -1,14 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient } from '@tanstack/svelte-query';
-import type { DepotData } from './types.ts';
-import {
-  DEPOT_SEVERE_STORAGE,
-  depotOwnersQueryOptions,
-  depotStorageQueryOptions,
-  hasSevereDepot,
-  isDepotSevere,
-  mergeDepotStorage,
-} from './depot.ts';
+import { DEPOT_SEVERE_STORAGE, depotQueryOptions, hasSevereDepot, isDepotSevere } from './depot.ts';
 
 const jsonResponse = (data: unknown) => ({
   ok: true,
@@ -69,7 +61,7 @@ describe('depot query options', () => {
   it('requests the depot endpoint with owner mapping enabled', async () => {
     mockFetch.mockResolvedValue(jsonResponse([]));
 
-    await queryClient.fetchQuery(depotOwnersQueryOptions()());
+    await queryClient.fetchQuery(depotQueryOptions()());
 
     const url = mockFetch.mock.calls[0][0] as string;
     expect(url).toContain('/api/depots/');
@@ -79,7 +71,7 @@ describe('depot query options', () => {
   it('groups depots under their housing key, dropping unmapped depots', async () => {
     mockFetch.mockResolvedValue(jsonResponse(depotResponse));
 
-    const depots = await queryClient.fetchQuery(depotOwnersQueryOptions()());
+    const depots = await queryClient.fetchQuery(depotQueryOptions()());
 
     expect(Object.keys(depots).sort()).toEqual([GAPA_KEY, SANHO_KEY].sort());
     expect(depots[SANHO_KEY].map((depot) => depot.name)).toEqual(['Kaifeng', 'Ryza Motorworks']);
@@ -90,7 +82,7 @@ describe('depot query options', () => {
   it('sorts each house worst storage first and drops the owner field', async () => {
     mockFetch.mockResolvedValue(jsonResponse(depotResponse));
 
-    const depots = await queryClient.fetchQuery(depotOwnersQueryOptions()());
+    const depots = await queryClient.fetchQuery(depotQueryOptions()());
 
     expect(depots[SANHO_KEY].map((depot) => depot.storage)).toEqual([0.25, 1]);
     expect(depots[SANHO_KEY][0]).toEqual({
@@ -101,89 +93,19 @@ describe('depot query options', () => {
     });
   });
 
-  it('yields an empty map for an empty response', async () => {
-    mockFetch.mockResolvedValue(jsonResponse([]));
-
-    const depots = await queryClient.fetchQuery(depotOwnersQueryOptions()());
-
-    expect(depots).toEqual({});
-  });
-});
-
-describe('depot storage poll', () => {
-  const mockFetch = vi.fn();
-  const originalFetch = global.fetch;
-  let queryClient: QueryClient;
-
-  beforeEach(() => {
-    global.fetch = mockFetch;
-    queryClient = new QueryClient();
-  });
-
-  afterEach(() => {
-    queryClient.clear();
-    global.fetch = originalFetch;
-    vi.clearAllMocks();
-  });
-
-  it('polls the keyless endpoint, keeping the owner mapping out of the payload', async () => {
-    mockFetch.mockResolvedValue(jsonResponse([]));
-
-    await queryClient.fetchQuery(depotStorageQueryOptions()());
-
-    const url = mockFetch.mock.calls[0][0] as string;
-    expect(url).toContain('/api/depots/');
-    expect(url).not.toContain('owner');
-  });
-
-  it('refetches storage on an interval', () => {
-    const options = depotStorageQueryOptions()();
+  it('polls the endpoint so storage stays current', () => {
+    const options = depotQueryOptions()();
 
     expect(options.refetchInterval).toBe(30_000);
     expect(options.staleTime).toBe(30_000);
   });
 
-  it('keeps the owner mapping cached for the session instead of refetching', () => {
-    expect(depotOwnersQueryOptions()().staleTime).toBe(Number.POSITIVE_INFINITY);
-  });
+  it('yields an empty map for an empty response', async () => {
+    mockFetch.mockResolvedValue(jsonResponse([]));
 
-  it('caches the mapping and the poll under different keys', () => {
-    expect(depotOwnersQueryOptions()().queryKey).not.toEqual(depotStorageQueryOptions()().queryKey);
-  });
-});
+    const depots = await queryClient.fetchQuery(depotQueryOptions()());
 
-describe('merge depot storage', () => {
-  const owned: DepotData = {
-    [SANHO_KEY]: [
-      { guid: 'guid-mid', name: 'Kaifeng', storage: 0.25, taxiDispatchLevel: 0 },
-      { guid: 'guid-full', name: 'Ryza Motorworks', storage: 1, taxiDispatchLevel: 0 },
-    ],
-  };
-
-  const polled = (guid: string, storage: number) => ({
-    guid,
-    name: guid,
-    storage,
-    taxiDispatchLevel: 0,
-  });
-
-  it('swaps in the polled storage by guid and re-sorts worst first', () => {
-    const merged = mergeDepotStorage(owned, [polled('guid-mid', 0.9), polled('guid-full', 0.02)]);
-
-    expect(merged?.[SANHO_KEY].map((depot) => depot.guid)).toEqual(['guid-full', 'guid-mid']);
-    expect(merged?.[SANHO_KEY][0].storage).toBe(0.02);
-  });
-
-  it('keeps the last known storage for a depot the poll did not report', () => {
-    const merged = mergeDepotStorage(owned, [polled('guid-mid', 0.5)]);
-
-    expect(merged?.[SANHO_KEY].find((depot) => depot.guid === 'guid-full')?.storage).toBe(1);
-    expect(merged?.[SANHO_KEY].find((depot) => depot.guid === 'guid-mid')?.storage).toBe(0.5);
-  });
-
-  it('falls back to the mapping while the first poll is still in flight', () => {
-    expect(mergeDepotStorage(owned, undefined)).toBe(owned);
-    expect(mergeDepotStorage(undefined, [polled('guid-mid', 0.5)])).toBeUndefined();
+    expect(depots).toEqual({});
   });
 });
 
