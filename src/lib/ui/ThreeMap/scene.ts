@@ -9,16 +9,16 @@ import {
   RESIZE_DEBOUNCE_MS,
   ROTATE_SPEED_FAR,
   ROTATE_SPEED_NEAR,
-  SUN_AZIMUTH_DEG,
   SUN_DISTANCE,
-  SUN_ELEVATION_DEG,
   TILE_UPDATE_INTERVAL_MS,
+  TIME_OF_DAY_MS,
   ZOOM_DAMPING_FACTOR,
   ZOOM_LOG_PER_WHEEL_DELTA,
   WHEEL_NOTCH_DELTA_Y,
   ZOOM_LOG_PER_WHEEL_NOTCH,
 } from './constants.ts';
 import { createSelectionPan, type SelectionPan } from './selectionPan.ts';
+import { motorTownSun } from './sun.ts';
 import { createGroundPan } from './groundPan.ts';
 import { TILES_META } from './heightmap.ts';
 import { createPoiManager, type PoiManager } from './poiManager.ts';
@@ -256,9 +256,11 @@ export function createThreeMapScene(
 
   scene.add(new THREE.HemisphereLight(0xbfe0ff, 0x4a3d2a, 8));
   const sun = new THREE.DirectionalLight(0xfff3df, 6);
-  // Motor Town's 14:00 sun: the game's own azimuth/elevation, with north = -Z in world space.
-  const sunAz = THREE.MathUtils.degToRad(SUN_AZIMUTH_DEG);
-  const sunEl = THREE.MathUtils.degToRad(SUN_ELEVATION_DEG);
+  // Motor Town's sun at TIME_OF_DAY_MS. World axes are north = -Z, east = +X, so the light
+  // sits at (cos el·sin az, sin el, -cos el·cos az) × distance.
+  const { azimuth, elevation } = motorTownSun(TIME_OF_DAY_MS / 3_600_000);
+  const sunAz = THREE.MathUtils.degToRad(azimuth);
+  const sunEl = THREE.MathUtils.degToRad(elevation);
   sun.position.set(
     SUN_DISTANCE * Math.cos(sunEl) * Math.sin(sunAz),
     SUN_DISTANCE * Math.sin(sunEl),
