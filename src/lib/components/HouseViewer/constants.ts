@@ -28,7 +28,12 @@ export const SHADOW_NORMAL_BIAS = 0.03;
 export const SUN_DISTANCE_FACTOR = 3;
 
 export const CAMERA_FOV_DEG = 40;
-export const CAMERA_NEAR_M = 0.1;
+/**
+ * Near plane, metres. Well inside the closest orbit distance (`radius * CAMERA_MIN_DISTANCE_FACTOR`)
+ * but far enough out to spend the linear depth buffer's precision where the geometry is, which is
+ * what keeps stacked floors and decals from z-fighting now that log depth is off.
+ */
+export const CAMERA_NEAR_M = 0.5;
 /** Initial orbit distance and the zoom limits, as multiples of the framing radius. */
 export const CAMERA_DISTANCE_FACTOR = 2.6;
 export const CAMERA_MIN_DISTANCE_FACTOR = 0.3;
