@@ -27,7 +27,7 @@
     'relative flex h-5 w-full items-center justify-center overflow-hidden rounded-sm text-xs leading-none font-bold tabular-nums',
     danger
       ? 'bg-red-200 text-red-950 dark:bg-red-950/70 dark:text-red-100'
-      : 'bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-slate-100',
+      : 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-200',
     propsClass,
   )}
   role="progressbar"
