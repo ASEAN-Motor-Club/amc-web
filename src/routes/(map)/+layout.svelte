@@ -3,7 +3,11 @@
   import { page } from '$app/state';
   import { createDeliveryJobsQuery } from '#lib/api/delivery.ts';
   import { createHousingQuery } from '#lib/api/housing.ts';
-  import { createDepotQuery } from '#lib/api/depot.ts';
+  import {
+    createDepotOwnersQuery,
+    createDepotStorageQuery,
+    mergeDepotStorage,
+  } from '#lib/api/depot.ts';
   import { createInterpolatedPlayerPositionsStream } from '#lib/api/playerInterpolation.svelte.ts';
   import type { DeliveryJob } from '#lib/api/types.ts';
   import Collapsible from '#lib/components/Map/Collapsible/Collapsible.svelte';
@@ -96,11 +100,15 @@
   const houseData = $derived(housingQuery.data);
   const houseDataLoading = $derived(housingQuery.isPending);
 
-  const depotQuery = createDepotQuery(() => ({
+  // The guid -> housing key mapping is fetched once; storage is polled and merged onto it.
+  const depotOwnersQuery = createDepotOwnersQuery(() => ({
+    options: { enabled: showMap || openCollapsible === 'housing' },
+  }));
+  const depotStorageQuery = createDepotStorageQuery(() => ({
     options: { enabled: showMap || openCollapsible === 'housing' },
   }));
 
-  const depotData = $derived(depotQuery.data);
+  const depotData = $derived(mergeDepotStorage(depotOwnersQuery.data, depotStorageQuery.data));
 
   const jobsQuery = createDeliveryJobsQuery(() => ({
     options: { enabled: showMap || openCollapsible === 'jobs' },

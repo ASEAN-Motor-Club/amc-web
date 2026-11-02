@@ -76,7 +76,8 @@ vi.mock('#lib/api/depot.ts', async (importOriginal) => {
   const actual = await importOriginal<typeof depotApi>();
   return {
     ...actual,
-    createDepotQuery: () => ({ data: undefined, isPending: false, isError: false }),
+    createDepotOwnersQuery: () => ({ data: undefined, isPending: false, isError: false }),
+    createDepotStorageQuery: () => ({ data: undefined, isPending: false, isError: false }),
   };
 });
 
