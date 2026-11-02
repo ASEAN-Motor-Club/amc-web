@@ -10,6 +10,7 @@
   import { getLocale } from '#lib/paraglide/runtime.js';
   import { rtDate } from '#lib/realtimeDate.svelte.ts';
   import { Features, getViewHref } from '../utils.ts';
+  import ProgressBar from '#lib/ui/ProgressBar/ProgressBar.svelte';
   import TruncateText from '#lib/ui/TruncateText/TruncateText.svelte';
 
   export interface Props {
@@ -128,27 +129,29 @@
 
   {#if depots.length}
     {#each depots as depot (depot.guid)}
-      <div class="mt-2 flex justify-between gap-1 text-sm text-text-700 dark:text-text-300">
-        <div class="truncate">
-          <div class="text-xs font-bold text-text-500">{m['housing.depot']()}</div>
-          {depot.name}
+      <div class="mt-2 text-sm text-text-700 dark:text-text-300">
+        <div class="truncate text-xs font-bold text-text-500">
+          {m['housing.depot']()}:
+          <span class="font-normal text-text-700 dark:text-text-300">{depot.name}</span>
         </div>
-        <div class="text-right">
-          <div class="text-xs font-bold text-text-500">{m['housing.depot_storage_left']()}</div>
-          <div class={isDepotSevere(depot) ? 'font-semibold text-red-500' : ''}>
-            {m['housing.percent']({
-              value: depotStorageLeftPercent(depot).toLocaleString(locale),
-            })}
-          </div>
-        </div>
+        <ProgressBar
+          class="mt-1"
+          value={depot.storage}
+          danger={isDepotSevere(depot)}
+          ariaLabel={`${m['housing.depot_storage_left']()}: ${depot.name}`}
+          label={m['housing.percent']({
+            value: depotStorageLeftPercent(depot).toLocaleString(locale),
+          })}
+        />
       </div>
     {/each}
   {:else}
-    <div class="mt-2 flex justify-between gap-1 text-sm text-text-700 dark:text-text-300">
-      <div class="truncate">
-        <div class="text-xs font-bold text-text-500">{m['housing.depot']()}</div>
-        <span class="text-text-500 dark:text-text-400">{m['housing.no_depot']()}</span>
+    <div class="mt-2 text-sm text-text-700 dark:text-text-300">
+      <div class="truncate text-xs font-bold text-text-500">
+        {m['housing.depot']()}:
+        <span class="font-normal text-text-500 dark:text-text-400">{m['housing.no_depot']()}</span>
       </div>
+      <div class="mt-1 h-5"></div>
     </div>
   {/if}
 </Card>
