@@ -12,33 +12,22 @@
     data: HouseViewerData;
     /** Orbit the camera around the house. */
     autoRotate: boolean;
-    /** Slice the shell open at head height so the furniture inside shows. */
-    cutView: boolean;
     /** The user started orbiting or zooming the camera themselves. */
     onUserControl?: () => void;
     /** CSS class to apply to the component */
     class?: ClassValue;
   }
 
-  const {
-    data,
-    autoRotate,
-    cutView,
-    onUserControl,
-    class: propsClass,
-  }: HouseViewerProps = $props();
+  const { data, autoRotate, onUserControl, class: propsClass }: HouseViewerProps = $props();
 
   let container: HTMLDivElement | undefined = $state();
-  // Raw state, not $state: the proxy would wrap a three.js handle. Reactive so the viewer's
-  // props are re-applied when a new scene is built for the next house.
-  let houseScene = $state.raw<HouseScene>();
+  let houseScene: HouseScene | undefined;
   let progress: HouseSceneProgress | undefined = $state();
 
   $effect(() => {
     if (!container) return;
     const scene = createHouseScene(container, data, {
       autoRotate: untrack(() => autoRotate),
-      cutView: untrack(() => cutView),
       onProgress: (p) => {
         progress = p;
       },
@@ -53,10 +42,6 @@
 
   $effect(() => {
     houseScene?.setAutoRotate(autoRotate);
-  });
-
-  $effect(() => {
-    houseScene?.setCutView(cutView);
   });
 
   const loading = $derived(progress !== undefined && progress.loaded < progress.total);
