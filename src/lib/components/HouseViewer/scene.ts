@@ -80,7 +80,9 @@ export function createHouseScene(
     antialias: true,
     alpha: true,
   });
-  renderer.setPixelRatio(window.devicePixelRatio);
+  // Houses carry a lot of texture; with 4x MSAA a DPR-3 canvas can blow the GPU budget on its own.
+  // 2 is the standard cap and is visually indistinguishable at this size.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.shadowMap.enabled = true;
@@ -89,7 +91,8 @@ export function createHouseScene(
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const environment = pmrem.fromScene(new RoomEnvironment()).texture;
+  const room = new RoomEnvironment();
+  const environment = pmrem.fromScene(room).texture;
   scene.environment = environment;
   scene.environmentIntensity = ENVIRONMENT_INTENSITY;
 
@@ -185,6 +188,7 @@ export function createHouseScene(
       controls.autoRotate = on;
     },
     dispose() {
+      if (disposed) return;
       disposed = true;
       renderer.setAnimationLoop(null);
       resizeObserver.disconnect();
@@ -193,10 +197,15 @@ export function createHouseScene(
       // (sources are never attached) plus the GLTF sources covers everything.
       disposeObject(scene);
       for (const gltf of gltfs) disposeObject(gltf.scene);
+      disposeObject(room);
       environment.dispose();
       pmrem.dispose();
       timer.dispose();
       renderer.dispose();
+      // `dispose()` only drops three's bookkeeping; the GPU context and everything uploaded to it
+      // stay alive until the canvas is garbage collected. Browsers cap live contexts, so walking
+      // through a few houses kills the renderer tab ("Aw, Snap"). Losing the context frees them now.
+      renderer.forceContextLoss();
       renderer.domElement.remove();
     },
   };
