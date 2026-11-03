@@ -549,8 +549,6 @@
     "models_failed": "{count} models could not be loaded",
     "pause_rotation": "Pause rotation",
     "resume_rotation": "Resume rotation",
-    "cut_view": "Cut view",
-    "whole_house": "Whole house",
     "cannot_load": {
       "title": "Cannot load house",
       "desc": "Failed to load this house. The house viewer server may be offline."
