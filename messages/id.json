@@ -515,6 +515,8 @@
     "models_failed": "{count} model gagal dimuat",
     "pause_rotation": "Jeda rotasi",
     "resume_rotation": "Lanjutkan rotasi",
+    "cut_view": "Tampilan potong",
+    "whole_house": "Rumah utuh",
     "cannot_load": {
       "title": "Tidak dapat memuat rumah",
       "desc": "Gagal memuat rumah ini. Server penampil rumah mungkin sedang offline."

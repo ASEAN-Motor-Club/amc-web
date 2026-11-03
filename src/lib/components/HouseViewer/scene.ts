@@ -35,6 +35,7 @@ import {
   SUN_DISTANCE_FACTOR,
   SUN_INTENSITY,
 } from './constants.ts';
+import { createCutView, type CutView } from './cutView.ts';
 
 const CM_PER_M = 100;
 const MS_PER_HOUR = 3_600_000;
@@ -50,6 +51,8 @@ export interface HouseSceneProgress {
 export interface HouseSceneOptions {
   /** Start with the camera orbiting. */
   autoRotate: boolean;
+  /** Start with the shell sliced open. */
+  cutView: boolean;
   onProgress?: (progress: HouseSceneProgress) => void;
   /** The user started orbiting or zooming the camera themselves. */
   onUserControl?: () => void;
@@ -57,6 +60,8 @@ export interface HouseSceneOptions {
 
 export interface HouseScene {
   setAutoRotate: (on: boolean) => void;
+  /** Slice the shell open at head height so the furniture inside shows. */
+  setCutView: (on: boolean) => void;
   dispose: () => void;
 }
 
@@ -86,6 +91,8 @@ export function createHouseScene(
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.shadowMap.enabled = true;
+  // Cut view clips the shell's materials (see cutView.ts).
+  renderer.localClippingEnabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   container.appendChild(renderer.domElement);
 
@@ -131,6 +138,8 @@ export function createHouseScene(
 
   const buildings = new THREE.Group();
   scene.add(buildings);
+  const cut = createCutView();
+  cut.setEnabled(options.cutView);
 
   const camera = new THREE.PerspectiveCamera(
     CAMERA_FOV_DEG,
@@ -164,7 +173,7 @@ export function createHouseScene(
   if (options.onUserControl) controls.addEventListener('start', options.onUserControl);
 
   const gltfs: GLTF[] = [];
-  loadBuildings(data, buildings, gltfs, options.onProgress, () => disposed);
+  loadBuildings(data, buildings, gltfs, options.onProgress, () => disposed, cut);
 
   const resizeObserver = new ResizeObserver(() => {
     const width = container.clientWidth;
@@ -179,13 +188,18 @@ export function createHouseScene(
   const timer = new THREE.Timer();
   renderer.setAnimationLoop((timestamp) => {
     timer.update(timestamp);
-    controls.update(Math.min(timer.getDelta(), MAX_FRAME_DELTA_S));
+    const delta = Math.min(timer.getDelta(), MAX_FRAME_DELTA_S);
+    cut.update(delta);
+    controls.update(delta);
     renderer.render(scene, camera);
   });
 
   return {
     setAutoRotate(on) {
       controls.autoRotate = on;
+    },
+    setCutView(on) {
+      cut.setEnabled(on);
     },
     dispose() {
       if (disposed) return;
@@ -286,6 +300,7 @@ function loadBuildings(
   gltfs: GLTF[],
   onProgress: HouseSceneOptions['onProgress'],
   isDisposed: () => boolean,
+  cut: CutView,
 ) {
   const urls = [...new Set(data.buildings.map((b) => b.modelUrl))];
   const progress: HouseSceneProgress = { loaded: 0, total: urls.length, failed: 0 };
@@ -316,6 +331,7 @@ function loadBuildings(
           instance.quaternion.copy(ueRotatorToThreeQuaternion(building.rotation));
           instance.name = building.buildingKey;
           parent.add(instance);
+          cut.register(instance);
         }
       })
       .catch(() => {
