@@ -5,7 +5,6 @@
   import { m } from '#messages';
   import { getLocale } from '#lib/paraglide/runtime.js';
   import { createHouseViewerQuery } from '#lib/api/houseViewer.ts';
-  import { createHousingQuery } from '#lib/api/housing.ts';
   import { houses } from '#lib/data/house.ts';
   import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
   import HouseViewer from '#lib/components/HouseViewer/HouseViewer.svelte';
@@ -30,24 +29,20 @@
 
   let autoRotate = $state(!prefersReducedMotion.current);
 
-  const housingQuery = createHousingQuery();
+  // Order comes from the static plot list, not the live housing panel: that query is a network
+  // round trip, which left the buttons missing on first paint and absent from the prerendered HTML
+  // altogether. Alphabetical by plot key keeps the targets stable while the page is open, and
+  // vacant plots stay in the rotation because they have a 3D view too.
+  const plotKeys = houses.map((h) => h.name).toSorted();
 
-  // Owned houses in the housing panel's default order (owner name); vacant plots are bare slabs.
-  const ownedHouseKeys = $derived(
-    Object.values(housingQuery.data ?? {})
-      .filter((h) => h.ownerName && houses.some((p) => p.name === h.housingKey))
-      .toSorted((a, b) => a.ownerName.localeCompare(b.ownerName))
-      .map((h) => h.housingKey),
-  );
-
-  // Wraps at both ends; from a vacant plot, next is the first owned house and previous the last.
+  // Wraps at both ends, so the first plot's previous is the last one and vice versa.
   const neighbours = $derived.by(() => {
-    const count = ownedHouseKeys.length;
-    const index = housingKey ? ownedHouseKeys.indexOf(housingKey) : -1;
-    if (count === 0 || (count === 1 && index === 0)) return undefined;
+    const count = plotKeys.length;
+    const index = housingKey ? plotKeys.indexOf(housingKey) : -1;
+    if (count < 2) return undefined;
     return {
-      previous: ownedHouseKeys[index < 0 ? count - 1 : (index - 1 + count) % count],
-      next: ownedHouseKeys[(index + 1) % count],
+      previous: plotKeys[index < 0 ? count - 1 : (index - 1 + count) % count],
+      next: plotKeys[(index + 1) % count],
     };
   });
 
