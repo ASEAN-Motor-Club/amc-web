@@ -29,7 +29,9 @@
   }: HouseViewerProps = $props();
 
   let container: HTMLDivElement | undefined = $state();
-  let houseScene: HouseScene | undefined;
+  // Raw state, not $state: the proxy would wrap a three.js handle. Reactive so the viewer's
+  // props are re-applied when a new scene is built for the next house.
+  let houseScene = $state.raw<HouseScene>();
   let progress: HouseSceneProgress | undefined = $state();
 
   $effect(() => {
