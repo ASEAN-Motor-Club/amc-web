@@ -12,13 +12,21 @@
     data: HouseViewerData;
     /** Orbit the camera around the house. */
     autoRotate: boolean;
+    /** Slice the shell open at head height so the furniture inside shows. */
+    cutView: boolean;
     /** The user started orbiting or zooming the camera themselves. */
     onUserControl?: () => void;
     /** CSS class to apply to the component */
     class?: ClassValue;
   }
 
-  const { data, autoRotate, onUserControl, class: propsClass }: HouseViewerProps = $props();
+  const {
+    data,
+    autoRotate,
+    cutView,
+    onUserControl,
+    class: propsClass,
+  }: HouseViewerProps = $props();
 
   let container: HTMLDivElement | undefined = $state();
   let houseScene: HouseScene | undefined;
@@ -28,6 +36,7 @@
     if (!container) return;
     const scene = createHouseScene(container, data, {
       autoRotate: untrack(() => autoRotate),
+      cutView: untrack(() => cutView),
       onProgress: (p) => {
         progress = p;
       },
@@ -42,6 +51,10 @@
 
   $effect(() => {
     houseScene?.setAutoRotate(autoRotate);
+  });
+
+  $effect(() => {
+    houseScene?.setCutView(cutView);
   });
 
   const loading = $derived(progress !== undefined && progress.loaded < progress.total);

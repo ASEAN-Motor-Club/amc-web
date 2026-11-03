@@ -28,6 +28,8 @@
   const locale = $derived.by(getLocale);
 
   let autoRotate = $state(!prefersReducedMotion.current);
+  /** Slice the shell open so the furniture inside shows. */
+  let cutView = $state(false);
 
   // Order comes from the static plot list, not the live housing panel: that query is a network
   // round trip, which left the buttons missing on first paint and absent from the prerendered HTML
@@ -164,6 +166,23 @@
         variant="outlined"
         size="sm"
         onClick={() => {
+          cutView = !cutView;
+        }}
+      >
+        {#snippet prependIcon()}
+          <Icon
+            class={cutView
+              ? 'icon-[material-symbols--home-rounded]'
+              : 'icon-[material-symbols--content-cut-rounded]'}
+            size="sm"
+          />
+        {/snippet}
+        {cutView ? m['house_viewer.whole_house']() : m['house_viewer.cut_view']()}
+      </Button>
+      <Button
+        variant="outlined"
+        size="sm"
+        onClick={() => {
           autoRotate = !autoRotate;
         }}
       >
@@ -187,6 +206,7 @@
       <HouseViewer
         {data}
         {autoRotate}
+        {cutView}
         onUserControl={() => {
           // Taking the camera means looking at something; don't swing it away.
           autoRotate = false;

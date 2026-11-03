@@ -45,6 +45,11 @@ export const CAMERA_POLAR_DEG = 58;
 export const CAMERA_MAX_POLAR_RAD = Math.PI * 0.47;
 /** Every plot gets one of these at its road edge; its heading is the plot's front. */
 export const MAILBOX_BUILDING_KEY = 'MailBox_01';
+/** Cut view: the shell is sliced this far above its floor, metres — walls gone, room readable. */
+export const CUT_HEIGHT_M = 1.5;
+/** Seconds for the roof to drop (and to lift back). */
+export const CUT_ANIM_S = 0.6;
+
 /** OrbitControls units: 2 ≈ one revolution per 30 s. */
 export const AUTO_ROTATE_SPEED = 1.2;
 export const ORBIT_DAMPING = 0.08;
