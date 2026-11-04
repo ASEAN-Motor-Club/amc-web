@@ -11,6 +11,7 @@
     type PlayerData,
   } from './types.ts';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
+  import PickCoordCard from './PickCoordCard.svelte';
   import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
   import { getDeliveryLine } from './deliveryLine.ts';
   import Search from './Search.svelte';
@@ -28,6 +29,7 @@
   import { isMouse, isSm } from '#lib/utils/media.svelte.ts';
   import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
   import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
+  import type { Vector2 } from '#lib/types/index.ts';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -51,6 +53,12 @@
   const MAP_STATE_STORAGE_KEY = 'mapState';
   /** The active map mode - 3D renders the terrain through ThreeMapWrapper. */
   let threeDMode = $state(false);
+  /**
+   * Coordinate picker: while armed every map click reports its game coordinate
+   * and drops a pointer there, instead of selecting whatever is under the cursor.
+   */
+  let pickMode = $state(false);
+  let pickCoord = $state<Vector2 | undefined>();
 
   let pinsData = $state<Pins>([]);
   const havePins = $derived(pinsData.length > 0);
@@ -410,6 +418,24 @@
 
   const toggleMapMode = () => {
     threeDMode = !threeDMode;
+    // The picker button lives on the 2D map, so leaving 3D must not strand it armed.
+    if (threeDMode) {
+      pickMode = false;
+      pickCoord = undefined;
+    }
+  };
+
+  const togglePickMode = () => {
+    pickMode = !pickMode;
+    if (!pickMode) pickCoord = undefined;
+  };
+
+  const handlePick = (coord: Vector2) => {
+    pickCoord = { x: coord.x, y: coord.y };
+  };
+
+  const clearPickCoord = () => {
+    pickCoord = undefined;
   };
 
   const handleInfoClick = () => {
@@ -467,6 +493,10 @@
       {shortcutZoneData}
       {deliveryLineData}
       {selection}
+      {pickMode}
+      pickPoint={pickCoord}
+      onPick={handlePick}
+      onTogglePickMode={togglePickMode}
       onToggleMapMode={toggleMapMode}
       onHover={handleHover}
       onClick={handleMapClick}
@@ -490,6 +520,22 @@
       {haveShortcutZones}
       onToggle={handlePoiToggle}
     />
+
+    {#if pickMode}
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-4 flex flex-wrap justify-center gap-2 px-4"
+      >
+        {#if pickCoord}
+          <PickCoordCard coord={pickCoord} onClear={clearPickCoord} />
+        {:else}
+          <div
+            class="rounded-sm bg-gray-900/50 px-3 py-2 text-xs text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
+          >
+            {m['map.pick_hint']()}
+          </div>
+        {/if}
+      </div>
+    {/if}
   {/if}
 
   <HoverInfoTooltip
