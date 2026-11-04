@@ -38,6 +38,8 @@
     "picture_in_picture": "Gambar-dalam-gambar",
     "switch_to_3d": "Beralih ke peta 3D",
     "switch_to_2d": "Beralih ke peta 2D",
+    "pick_coordinates": "Pilih koordinat di peta",
+    "copy_coordinates": "Salin koordinat",
     "volume": "Volume"
   },
   "or": "atau",
@@ -256,6 +258,8 @@
     "teleport_copy_hint": "Klik kiri untuk menyalin perintah /tp",
     "teleport_copied": "Disalin!",
     "teleport_coord": "Koordinat",
+    "pick_hint": "Klik peta untuk menaruh penanda",
+    "coord_xy": "X {x}, Y {y}",
     "teleport_alias": "Alias",
     "player_name": "Nama Pemain",
     "search_placeholder": "Cari lokasi",

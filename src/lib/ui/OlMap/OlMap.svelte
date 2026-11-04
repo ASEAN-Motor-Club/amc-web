@@ -78,6 +78,14 @@
      */
     onToggleMapMode?: () => void;
     /**
+     * Whether the coordinate picker is armed, highlighting its button
+     */
+    pickModeActive?: boolean;
+    /**
+     * Callback for the coordinate picker button, shown above the zoom control
+     */
+    onTogglePickMode?: () => void;
+    /**
      * Centre and zoom to open at, e.g. one captured with `getViewState` before an unmount.
      * Defaults to the whole map.
      */
@@ -99,6 +107,8 @@
     disablePip,
     initialView,
     onToggleMapMode,
+    pickModeActive,
+    onTogglePickMode,
   }: OlMapProps = $props();
 
   const pipSupported = $derived(
@@ -269,6 +279,23 @@
           aria-label={m['a11y.switch_to_3d']()}
         >
           <Icon class="icon-[material-symbols--3d-2-rounded]" />
+        </Button>
+      {/if}
+      {#if onTogglePickMode}
+        <Button
+          class={[
+            'pointer-events-auto rounded-sm shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm',
+            pickModeActive
+              ? '!bg-blue-600/70 text-text-dark hover:!bg-blue-600/60 focus:!bg-blue-600/80 contrast-more:bg-blue-700!'
+              : '!bg-gray-900/50 text-text-dark hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!',
+          ]}
+          color="custom"
+          size="sm"
+          icon
+          onClick={onTogglePickMode}
+          aria-label={m['a11y.pick_coordinates']()}
+        >
+          <Icon class="icon-[material-symbols--pin-drop-rounded]" />
         </Button>
       {/if}
       <div

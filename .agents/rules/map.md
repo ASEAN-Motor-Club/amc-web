@@ -46,5 +46,13 @@ So "view on map", search results and clicks all just navigate — build the link
 
 - **Left click** (gated on `isMouse.current`): delivery → lock it and open its panel; house → open the 3D house viewer page `/house/<housingKey>` (POC, see `HANDOFF-house-viewer.md`); teleport → copy its `/tp` command; anything else → clear. On touch a tap only opens the tooltip, whose button does the same navigation.
 - **Right click** always clears the selection, whatever it hits.
+- **Coordinate picker** (`pickMode`, off by default, 2D only): the pin-drop button in the map
+  control stack arms it, the cursor turns into a crosshair and every left click reports its GAME
+  coordinate through `onPick` instead of selecting — `handleMapClick` never runs while it is armed.
+  `OlMapWrapper` converts the pixel coordinate back with `reProjectPointInverse`, draws the pointer
+  with `pickLayer` from the `pickPoint` prop, and `Map.svelte` follows it with `PickCoordCard`
+  (rounded `X, Y` plus a copy button). Hover tooltips are suppressed while armed, disarming or
+  clearing drops the pointer, and switching to 3D disarms the picker (its button lives on the 2D
+  map).
 
 Teleport entries can share a coordinate; `mergeTeleportPoints` collapses them (longest name wins, the rest become aliases) and is unit-tested — extend it there, not at the callsite.

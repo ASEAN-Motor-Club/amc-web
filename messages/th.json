@@ -38,6 +38,8 @@
     "picture_in_picture": "ภาพซ้อนภาพ",
     "switch_to_3d": "สลับเป็นแผนที่ 3 มิติ",
     "switch_to_2d": "สลับเป็นแผนที่ 2 มิติ",
+    "pick_coordinates": "เลือกพิกัดบนแผนที่",
+    "copy_coordinates": "คัดลอกพิกัด",
     "volume": "ระดับเสียง"
   },
   "or": "หรือ",
@@ -252,6 +254,8 @@
     "teleport_copy_hint": "คลิกซ้ายเพื่อคัดลอกคำสั่ง /tp",
     "teleport_copied": "คัดลอกแล้ว!",
     "teleport_coord": "พิกัด",
+    "pick_hint": "คลิกบนแผนที่เพื่อวางหมุด",
+    "coord_xy": "X {x}, Y {y}",
     "teleport_alias": "ชื่ออื่น",
     "player_name": "ชื่อผู้เล่น",
     "search_placeholder": "ค้นหาสถานที่",

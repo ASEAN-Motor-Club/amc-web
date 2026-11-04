@@ -38,6 +38,8 @@
     "picture_in_picture": "Picture-in-picture",
     "switch_to_3d": "Switch to 3D map",
     "switch_to_2d": "Switch to 2D map",
+    "pick_coordinates": "Pick coordinates on the map",
+    "copy_coordinates": "Copy coordinates",
     "volume": "Volume"
   },
   "or": "or",
@@ -256,6 +258,8 @@
     "teleport_copy_hint": "Left click to copy /tp command",
     "teleport_copied": "Copied!",
     "teleport_coord": "Coordinate",
+    "pick_hint": "Click the map to place a pointer",
+    "coord_xy": "X {x}, Y {y}",
     "teleport_alias": "Alias",
     "player_name": "Player Name",
     "search_placeholder": "Search for a location",

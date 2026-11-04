@@ -49,7 +49,7 @@
   import VectorLayer from 'ol/layer/Vector';
   import WebGLVectorLayer from 'ol/layer/WebGLVector';
   import VectorSource from 'ol/source/Vector';
-  import { Fill, Stroke, Style, Text } from 'ol/style';
+  import { Fill, Stroke, Style, Text, Circle as CircleStyle } from 'ol/style';
   import {
     PointType,
     type MapSelection,
@@ -69,13 +69,13 @@
   import { getMatchJobDestFn, getMatchJobSourceFn } from '#lib/utils/delivery.ts';
   import { m } from '#messages';
   import type { DeliveryLineData } from './deliveryLine.ts';
-  import { reProjectPoint, reProjectVec2 } from '#lib/ui/OlMap/utils.ts';
+  import { reProjectPoint, reProjectPointInverse, reProjectVec2 } from '#lib/ui/OlMap/utils.ts';
   import { dev } from '$app/env';
   import type { Pins } from '#lib/schema/pin.ts';
   import { houses } from '#lib/data/house.ts';
   import { areaBoundaries, areaNameFontSize } from '#lib/data/area.ts';
   import { getMtLocale } from '#lib/utils/getMtLocale.ts';
-  import type { MtNameRecord } from '#lib/types/index.ts';
+  import type { MtNameRecord, Vector2 } from '#lib/types/index.ts';
   import type { Pixel } from 'ol/pixel';
 
   interface Props {
@@ -93,6 +93,14 @@
     deliveryLineData?: DeliveryLineData;
     /** Point to highlight and lock the map onto, driven by the URL */
     selection?: MapSelection;
+    /** Whether the coordinate picker is armed: clicks report their game coordinate instead of selecting */
+    pickMode?: boolean;
+    /** Game coordinate of the pointer dropped by the picker */
+    pickPoint?: Vector2;
+    /** Fired with the game coordinate of every click while `pickMode` is on */
+    onPick?: (coord: Vector2) => void;
+    /** Callback for the coordinate picker button rendered over the map */
+    onTogglePickMode?: () => void;
     onHover?: (feature: Feature | undefined, pixel: [x: number, y: number]) => void;
     onClick?: (feature: Feature | undefined) => void;
     onRightClick?: (feature: Feature | undefined) => void;
@@ -113,6 +121,10 @@
     shortcutZoneData,
     deliveryLineData,
     selection,
+    pickMode,
+    pickPoint,
+    onPick,
+    onTogglePickMode,
     onHover,
     onClick,
     onRightClick,
@@ -329,6 +341,27 @@
       PinLabelsStyle.getText()?.setText(feature.get('label') as string);
       return PinLabelsStyle;
     },
+  });
+
+  /** The pointer dropped by the coordinate picker: a white marker that reads on any map colour. */
+  const pickSource = new VectorSource({
+    features: [] as Feature<Point>[],
+  });
+
+  const pickMarkerStyle = new Style({
+    image: new CircleStyle({
+      radius: 6,
+      fill: new Fill({ color: colorWhite }),
+      stroke: new Stroke({ color: colorGray950, width: 2 }),
+    }),
+    zIndex: 10,
+  });
+
+  const pickLayer = new VectorLayer({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderOrder: null as any,
+    source: pickSource,
+    style: pickMarkerStyle,
   });
 
   const houseNameStyle = new Style({
@@ -632,6 +665,7 @@
     playerNameLayer,
     ...(haveTeleports ? [teleportLabelsLayer] : []),
     ...(havePins ? [pinLabelsLayer] : []),
+    pickLayer,
     ...(dev ? [areaBoundLayer] : []),
     ...areaNameLayers,
   ]);
@@ -871,6 +905,12 @@
     };
   });
 
+  $effect(() => {
+    pickSource.clear();
+    if (!pickPoint) return;
+    pickSource.addFeature(new Feature({ geometry: new Point(reProjectVec2(pickPoint)) }));
+  });
+
   const getLockedFeature = (locked: MapSelection) => {
     switch (locked.pointType) {
       case PointType.House:
@@ -977,6 +1017,16 @@
     onHover?.(undefined, [-1, -1]);
   };
 
+  $effect(() => {
+    // Arming the picker must not leave a point's tooltip floating over the map.
+    if (pickMode) clearHoverFeature();
+  });
+
+  $effect(() => {
+    const viewport = map.getMap().getViewport();
+    if (viewport) viewport.style.cursor = pickMode ? 'crosshair' : '';
+  });
+
   /**
    * Touch has no hover, so the tapped feature stays picked while the map moves,
    * its tooltip anchor follows the feature instead of the stale tap pixel.
@@ -998,7 +1048,7 @@
   };
 
   const handlePointerMove = (e: MapBrowserEvent) => {
-    if (!isMouse.current) return;
+    if (!isMouse.current || pickMode) return;
     updateHoverAt(e.map, e.pixel);
   };
 
@@ -1013,12 +1063,17 @@
       followHoverFeature(e.map);
       return;
     }
-    if (lastPixel) {
+    if (lastPixel && !pickMode) {
       updateHoverAt(e.map, lastPixel);
     }
   };
 
   const handleClick = (e: MapBrowserEvent) => {
+    if (pickMode) {
+      const [x, y] = e.coordinate;
+      onPick?.(reProjectPointInverse([x, y]));
+      return;
+    }
     // Touch never fires a pointermove, so the hover state is only resolved here.
     if (!isMouse.current) {
       updateHoverAt(e.map, e.pixel);
@@ -1043,5 +1098,7 @@
   {pipActive}
   onEnterPip={enterPip}
   {onToggleMapMode}
+  pickModeActive={pickMode}
+  {onTogglePickMode}
   bind:this={map}
 />
