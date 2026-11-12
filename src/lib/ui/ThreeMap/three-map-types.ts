@@ -27,8 +27,9 @@ export interface RingExtents {
 
 export interface ActiveTile {
   mesh: THREE.Mesh;
-  geometry: THREE.BufferGeometry;
-  material: THREE.MeshStandardMaterial;
+  /** The tile's own terrain geometry; null for flat tiles, which share one unit square. */
+  geometry: THREE.BufferGeometry | null;
+  material: THREE.Material;
   texture: THREE.Texture;
   z: number;
   x: number;

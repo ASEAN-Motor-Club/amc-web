@@ -23,8 +23,6 @@
   interface Props {
     showFull: boolean;
     validOpenCollapsible: boolean;
-    /** 3D map mode - the sidebar slides faster while the canvas is blurred. */
-    threeDMode: boolean;
     openCollapsible: CollapsibleType;
     openCollapsibleId: string;
     playerData: PlayerData[];
@@ -40,7 +38,6 @@
   const {
     showFull,
     validOpenCollapsible,
-    threeDMode,
     openCollapsible,
     openCollapsibleId,
     playerData,
@@ -168,9 +165,8 @@
     <div class="flex flex-1 flex-row sm:w-11 sm:flex-col">
       <div
         class={[
-          'overflow-hidden transition-[width,height]',
+          'overflow-hidden transition-[width,height] duration-1000',
           showMapBtn ? 'h-12 w-1/4 sm:h-1/4 sm:w-full ' : 'h-full w-0 sm:h-0 sm:w-full',
-          threeDMode ? 'duration-500' : 'duration-1000',
         ]}
       >
         <CollapsibleButton
@@ -232,8 +228,7 @@
   </div>
   <div
     class={[
-      'overflow-hidden motion-safe:transition-[width,height] sm:-ml-11 sm:h-full sm:pl-11',
-      threeDMode ? 'duration-500' : 'duration-1000',
+      'overflow-hidden duration-1000 motion-safe:transition-[width,height] sm:-ml-11 sm:h-full sm:pl-11',
       validOpenCollapsible
         ? ['h-[calc(100dvh-7rem)] w-screen', !showFull && openCollapsibleClass]
         : 'h-0 sm:w-11',

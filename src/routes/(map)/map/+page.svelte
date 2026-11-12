@@ -13,4 +13,5 @@
   <meta name="twitter:title" content={title} />
 </svelte:head>
 
-<!-- will be handled by layout -->
+<!-- The map itself is drawn by the layout; the page contributes its heading for assistive tech. -->
+<h1 class="sr-only">{m['navbar.map']()}</h1>

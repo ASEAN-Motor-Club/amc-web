@@ -1,13 +1,17 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
-import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import type { MapControls } from './cameraRig.ts';
 import { PAN_DAMPING_FACTOR, PAN_FLING_SAMPLE_MS } from './constants.ts';
+import { getViewCssSize } from './viewRect.ts';
 
 export function createGroundPan(
   renderer: Renderer,
   camera: THREE.Camera,
-  controls: OrbitControls,
+  controls: MapControls,
   tileGroup: THREE.Group,
+  /** Height of the plane grabbed when the press lands off every tile (the void past the map
+   * edge, ocean beyond the tile grid), so a drag always pans. */
+  fallbackPlaneY: number,
   /** Returns true when this press must not start a pan (e.g. a track-gate drag).
    * Queried synchronously inside pointerdown, before any state is taken. */
   isBlocked?: (event: PointerEvent) => boolean,
@@ -15,8 +19,10 @@ export function createGroundPan(
   const raycaster = new THREE.Raycaster();
   const pointerNDC = new THREE.Vector2();
   const panPlane = new THREE.Plane();
+  const fallbackPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0));
   const grabbedPoint = new THREE.Vector3();
   const currentPoint = new THREE.Vector3();
+  const viewCss = new THREE.Vector2();
 
   let panning = false;
 
@@ -30,8 +36,9 @@ export function createGroundPan(
 
   function setPointerNDC(event: PointerEvent): void {
     const rect = renderer.domElement.getBoundingClientRect();
-    pointerNDC.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    pointerNDC.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    getViewCssSize(renderer, viewCss);
+    pointerNDC.x = ((event.clientX - rect.left) / viewCss.x) * 2 - 1;
+    pointerNDC.y = -((event.clientY - rect.top) / viewCss.y) * 2 + 1;
   }
 
   function onPointerDown(event: PointerEvent): void {
@@ -45,8 +52,12 @@ export function createGroundPan(
     setPointerNDC(event);
     raycaster.setFromCamera(pointerNDC, camera);
     const hits = raycaster.intersectObjects(tileGroup.children, false);
-    if (hits.length === 0) return;
-    grabbedPoint.copy(hits[0].point);
+    if (hits.length > 0) {
+      grabbedPoint.copy(hits[0].point);
+    } else {
+      fallbackPlane.constant = -fallbackPlaneY;
+      if (!raycaster.ray.intersectPlane(fallbackPlane, grabbedPoint)) return;
+    }
     panPlane.setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 1, 0), grabbedPoint);
     panning = true;
     renderer.domElement.setPointerCapture(event.pointerId);
@@ -83,6 +94,14 @@ export function createGroundPan(
     samples.length = 0;
   }
 
+  /** Ends a pan in progress without a fling (a second finger took over, a gesture started). */
+  function cancel(): void {
+    if (!panning) return;
+    panning = false;
+    samples.length = 0;
+    panVelocity = null;
+  }
+
   const dom = renderer.domElement;
   dom.addEventListener('pointerdown', onPointerDown);
   dom.addEventListener('pointermove', onPointerMove);
@@ -100,6 +119,7 @@ export function createGroundPan(
 
   return {
     update,
+    cancel,
     dispose() {
       dom.removeEventListener('pointerdown', onPointerDown);
       dom.removeEventListener('pointermove', onPointerMove);

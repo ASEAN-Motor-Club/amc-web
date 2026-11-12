@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
-import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants.ts';
+import type { MapControls } from './cameraRig.ts';
+import { CACHE_MAX_ZOOM, FLAT_CACHE_MAX_ZOOM, MIN_RENDER_ZOOM } from './constants.ts';
+import { createFlatTileFactory, flatTileZoom, selectFlatTiles } from './flatTiles.ts';
 import { tileWorldRect } from './heightmap.ts';
 import { selectLeafTiles } from './lod.ts';
 import { fetchHeightTile, loadColorTexture, buildTileGeometry } from './tileGeometry.ts';
 import type { TilesMeta, ActiveTile } from './three-map-types.ts';
+
+/** What the manager builds: lit 3D terrain patches picked by the quadtree LOD, or - for the 2D
+ * view - one flat, unlit quad per tile of a single zoom (no height fetches, no skirts). */
+export type TileMode =
+  { kind: 'terrain' } | { kind: 'flat'; camera: THREE.OrthographicCamera; zoom: () => number };
 
 export interface TileManager {
   tileGroup: THREE.Group;
@@ -29,7 +35,8 @@ interface CachedTile {
   z: number;
   x: number;
   y: number;
-  rawHeights: Uint16Array;
+  /** Absent for flat tiles. */
+  rawHeights?: Uint16Array;
   texture: THREE.Texture;
 }
 
@@ -38,10 +45,16 @@ export function createTileManager(
   meta: TilesMeta,
   renderer: Renderer,
   camera: THREE.Camera,
-  controls: OrbitControls,
+  controls: MapControls,
   signal: AbortSignal,
   loadingManager: THREE.LoadingManager,
+  /** Called whenever the set of mounted tiles changes - the scene renders on demand. */
+  invalidate: () => void,
+  mode: TileMode = { kind: 'terrain' },
 ): TileManager {
+  const flat = mode.kind === 'flat';
+  const flatFactory = flat ? createFlatTileFactory(meta) : undefined;
+  const cacheMaxZoom = flat ? FLAT_CACHE_MAX_ZOOM : CACHE_MAX_ZOOM;
   const tileGroup = new THREE.Group();
   scene.add(tileGroup);
 
@@ -61,8 +74,8 @@ export function createTileManager(
     loading.add(key);
     try {
       const [rawHeights, texture] = await Promise.all([
-        fetchHeightTile(z, x, y, signal),
-        loadColorTexture(z, x, y, renderer, loadingManager),
+        flat ? undefined : fetchHeightTile(z, x, y, signal),
+        loadColorTexture(z, x, y, renderer, loadingManager, flat),
       ]);
       dataCache.set(key, { z, x, y, rawHeights, texture });
     } catch (_err) {
@@ -130,6 +143,11 @@ export function createTileManager(
 
   function buildTile(cached: CachedTile): ActiveTile {
     const { z, x, y, rawHeights, texture } = cached;
+    if (flatFactory) {
+      const { mesh, material } = flatFactory.build(texture, z, x, y);
+      return { mesh, geometry: null, material, texture, z, x, y };
+    }
+    if (!rawHeights) throw new Error(`terrain tile ${z}_${x}_${y} has no heights`);
     const { worldX0, worldZ0, tileSize } = tileWorldRect(meta, z, x, y);
     const geometry = buildTileGeometry(rawHeights, worldX0, worldZ0, tileSize);
     const material = new THREE.MeshStandardMaterial({
@@ -152,13 +170,15 @@ export function createTileManager(
     }
     tileGroup.add(tile.mesh);
     activeTiles.set(key, tile);
+    invalidate();
   }
 
   function unmountTile(tile: ActiveTile): void {
     tileGroup.remove(tile.mesh);
     const key = keyOf(tile.z, tile.x, tile.y);
     activeTiles.delete(key);
-    if (tile.z > CACHE_MAX_ZOOM) {
+    invalidate();
+    if (tile.z > cacheMaxZoom) {
       const cached = dataCache.get(key);
       if (cached) {
         cached.texture.dispose();
@@ -166,7 +186,7 @@ export function createTileManager(
       }
       const built = builtTiles.get(key);
       if (built) {
-        built.geometry.dispose();
+        built.geometry?.dispose();
         built.material.dispose();
         builtTiles.delete(key);
       }
@@ -177,7 +197,11 @@ export function createTileManager(
     // 1. LOD: pick the leaf tiles the camera can see.
     const desired: DesiredTile[] = [];
     const desiredKeys = new Set<string>();
-    for (const [z, x, y] of selectLeafTiles(camera, meta, controls.target)) {
+    const leaves =
+      mode.kind === 'flat'
+        ? selectFlatTiles(mode.camera, meta, flatTileZoom(mode.zoom()))
+        : selectLeafTiles(camera, meta, controls.target);
+    for (const [z, x, y] of leaves) {
       const key = keyOf(z, x, y);
       desiredKeys.add(key);
       desired.push({ key, z, x, y, ...tileWorldRect(meta, z, x, y) });
@@ -205,9 +229,10 @@ export function createTileManager(
       // through builtTiles - nothing is disposed twice, nothing is missed.
       for (const cached of dataCache.values()) cached.texture.dispose();
       for (const tile of builtTiles.values()) {
-        tile.geometry.dispose();
+        tile.geometry?.dispose();
         tile.material.dispose();
       }
+      flatFactory?.dispose();
       dataCache.clear();
       builtTiles.clear();
       activeTiles.clear();

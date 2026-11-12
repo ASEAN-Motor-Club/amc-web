@@ -1,9 +1,10 @@
 # 3D map module (`src/lib/ui/ThreeMap/`)
 
-A Three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer. It drapes the
-same `static/map_tiles/719` color+height pyramids that OpenLayers uses over a quadtree of 3D
-terrain patches. Rendered in place of the OL map through the `onToggleMapMode` toggle button both
-map wrappers expose above their zoom control.
+The map renderer: a Three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer
+(the 3D view: the `static/map_tiles/719` color+height pyramids draped over a quadtree of 3D terrain
+patches) plus a flat, north-up 2D view of the same scene that replaced OpenLayers. The mode toggle
+is the `onToggleMapMode` button the wrapper renders above its zoom control. The current rules live in
+`rule://three-map` and `rule://map`; this note keeps the module mechanics.
 
 ## File layout
 
@@ -75,12 +76,9 @@ until all four of its finer replacements have loaded, so zooming never flashes a
 - `src/lib/ui/ThreeMap/scene.ts` exports `createThreeMapScene(container)`; the Svelte wrapper
   (`src/lib/components/Map/Map/ThreeMapWrapper.svelte`) creates it in `onMount` and disposes it on
   unmount (`dispose()` cancels RAF, removes listeners, disposes the renderer).
-- `Map.svelte` toggles between `OlMapWrapper` and `ThreeMapWrapper` via the `onToggleMapMode`
-  button both wrappers render above the zoom control. The Wrapper carries the same props shape as
-  `OlMapWrapper`, minus the PiP pair (`pipActive`/`enterPip` — no PiP in 3D); POI layers and
-  input callbacks (hover/click/right-click) are wired. Delivery lines are not drawn yet.
-- The OL base tile layer (`src/lib/ui/OlMap/OlMap.svelte`) reads its zoom range from
-  `TILES_META` instead of hardcoded values.
+- `Map.svelte` renders `ThreeMapWrapper` in both modes and flips its `view` prop (`'ortho'` 2D /
+  `'perspective'` 3D); the wrapper re-creates the scene on a switch and carries the viewport over.
+  POI layers, vector overlays, the coordinate picker and the input callbacks are all wired there.
 
 ## Asset URLs
 

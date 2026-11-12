@@ -1,55 +1,84 @@
 ---
-description: The 3D terrain map (three.js) — the three-stage tile pipeline, quadtree LOD selection, inertial camera controls, instanced POI sprites, game-to-world coordinates, and the ThreeMapWrapper bridge.
+description: The map renderer (three.js) — the 2D orthographic and 3D perspective views, the tile pipelines, camera rigs, instanced POI dots and labels, vector overlays, game-to-world coordinates, and the ThreeMapWrapper bridge.
 globs:
   - src/lib/ui/ThreeMap/**
   - src/lib/components/Map/Map/ThreeMapWrapper.svelte
 ---
 
-# 3D map module (three.js)
+# Map renderer (three.js)
 
-A three.js port of the `mt-map-extract/script/terrain-viewer` standalone viewer: the same
-`static/map_tiles/{version}` color+height pyramids the OL map serves, draped over a quadtree of
-3D terrain patches. Rendered in place of `OlMapWrapper` when the user toggles the map mode —
-the toggle is the `onToggleMapMode` prop both wrappers accept, rendered as an icon button above
-the zoom control (`material-symbols:3d-2-rounded` in 2D, `material-symbols:2d-2-rounded` in 3D).
-No picture-in-picture in 3D: the wrapper takes no PiP props and Map.svelte hides its PiP button
-in 3D mode. Shortcut zones and delivery lines are not drawn in 3D (the wrappers no longer
-take that data) — staged work on a WIP branch, not a bug to fix blindly.
+The whole in-game map is one renderer with two views, chosen at scene creation
+(`createThreeMapScene(container, { view })`) and fixed for the scene's lifetime:
+
+- **`ortho` (2D, the default)** — a flat, north-up map. One unlit quad per tile of a single zoom,
+  colour AVIF only (no `.bin` height fetches, no skirts, no ocean quad, no lights), OL's pan/zoom
+  limits and tile colour grading. Pixel-faithful to the OpenLayers map it replaced.
+- **`perspective` (3D)** — the tilting terrain: the same `static/map_tiles/{version}` colour+height
+  pyramids draped over a quadtree of 3D terrain patches (a port of
+  `mt-map-extract/script/terrain-viewer`).
+
+Everything else — dots, labels, area names, zones, delivery lines, the picker pointer, hover/click
+— is shared by both views and camera-agnostic. The mode toggle is the `onToggleMapMode` prop the
+wrapper renders as an icon button above the zoom control; the wrapper re-creates the scene when
+`view` changes and carries the viewport over (see `rule://map`). Picture-in-picture is 2D only: the
+wrapper takes `pipActive`/`enterPip` and shows the PiP button only in the ortho view.
 
 Follow map.md's one-way data flow for everything around this module; this rule covers only the
-things unique to the 3D side.
+things unique to the renderer.
 
 ## Layering
 
-- `components/Map/Map/ThreeMapWrapper.svelte` — the only Svelte boundary. Same props shape as
-  `OlMapWrapper`. Turns app data into per-type `PoiInput` `$derived`s and pushes them with one
-  `setPoisFor(PointType, …)` `$effect` per type (so a churning source like live players never
-  disturbs other types' markers); owns the hover/click/right-click bridge and selection
-  centering.
-- `ui/ThreeMap/scene.ts` — the entry point `createThreeMapScene(container)`: renderer, lights,
-  ocean quad, camera rig, tile manager, POI manager, RAF loop. Everything it creates needs a
-  matching step in its returned `dispose()`.
-- `lod.ts`, `tileGeometry.ts`, `tileManager.ts`, `groundPan.ts`, `poi.ts`, `poiManager.ts`,
-  `coords.ts`, `heightmap.ts`, `groundHeights.ts`, `areaLabels.ts`, `constants.ts` — one
-  concern each, described below.
+- `components/Map/Map/ThreeMapWrapper.svelte` — the only Svelte boundary. Turns app data into
+  per-type `PoiInput` `$derived`s and pushes them with one `setPoisFor(PointType, …)` `$effect` per
+  type (so a churning source like live players never disturbs other types' markers); owns the
+  hover/click/right-click/pick bridge, selection centring and lock-follow, and the control stack.
+- `ui/ThreeMap/scene.ts` — the entry point: renderer, camera rig (`perspectiveRig.ts` or
+  `orthoRig.ts` behind the `CameraRig` interface in `cameraRig.ts`), tile manager, POI manager,
+  overlays, RAF loop. Everything it creates needs a matching step in its returned `dispose()`.
+- `lod.ts`, `tileGeometry.ts`, `tileManager.ts`, `flatTiles.ts`, `groundPan.ts`, `poi.ts`,
+  `poiManager.ts`, `screenQuads.ts`, `screenLines.ts`, `coords.ts`, `view.ts`, `orthoView.ts`,
+  `heightmap.ts`, `groundHeights.ts`, `areaLabels.ts`, `constants.ts` — one concern each, described
+  below.
 
-## Coordinates
+## Views and the zoom scale
 
-Game coords are UE-style centimeters (x right, y down, z up). Every coordinate entering a three
-object goes through `gameCoordToWorld(coord, meta)` from `coords.ts` → world meters centered on
-the map origin; UE y-increasing-south maps to `-worldZ`, so north is -Z and terrain color
-textures read correctly from above. Pins live in OL px-space and convert with
-`reProjectPointInverse` first (`pxToGame` in the wrapper). Raw game coordinates off-map, same
-invariant as the OL map.
+A view is described by `MapViewState` (`view.ts`): a px-space centre (0..`MAP_REAL_SIZE`, y up) and
+an OL-style fractional zoom. `metersPerCssPx(zoom)` = `MAP_REAL_SIZE / 256 / 100 / 2^zoom` is the
+2D scale (zoom 0 = the whole map across one 256 px tile); the 3D camera reports the zoom whose
+scale equals its visible ground height over the canvas height, so a view survives a 2D↔3D switch.
 
-Metadata is bundled, never fetched: `TILES_META` (`heightmap.ts`) is the static import of
-`src/lib/assets/data/tiles.json` converted cm→m at build time. Raw tile heights convert with
-`(rawHeight - 32768) / 128`; `tileWorldRect()` maps tile grid keys to world rects.
+**Ortho rig (`orthoRig.ts`, maths in `orthoView.ts`)** reproduces OL's `View`:
+
+- opens on the whole map at zoom 1; max zoom 8; min zoom `orthoMinZoom` (the view extent — the
+  map plus one map size on every side — across the viewport width; 0.69 at 1236 px, 0 at 756 px);
+  the viewport may pan to the extent edge (the void shows `ORTHO_BACKGROUND`), no further;
+- wheel/trackpad zoom is inertial toward the cursor with 3D's wheel constants; zoom buttons and
+  double click (shift = out) step one whole zoom level and land exactly on it; two-finger pinch
+  zooms and pans; shift-drag draws a box zoom; left-drag pans through the shared `groundPan`;
+- `animateTo({x, z, zoom?}, seconds)` is OL's `animate`: eased, cancelled by a drag or wheel,
+  and a 0-second call mid-glide only retargets the centre (lock-follow of a moving player);
+- **keyboard pan/zoom is deliberately absent**: OL's keyboard interactions never worked in this app
+  (the viewport had no `tabindex`, so arrows/+ did nothing - verified), and there is no
+  accessible-name story for a focusable canvas. Add them only together with that.
+
+**Tile zoom and tiers (2D)**: the drawn tile zoom is `flatTileZoom(viewZoom)` = round(zoom) within
+`FLAT_MIN_TILE_ZOOM`..`COLOR_MAX_ZOOM` (5); deeper views magnify the z5 tiles with plain bilinear
+filtering (like OL). The resident-delivery layer (`RESIDENT_MIN_COVER_Z`) and the area-name tiers
+(`AREA_NAME_TIERS`) key off the **view zoom, exclusive** (`zoom > 5`, `> 3`, `> 4` — OL's layer
+`minZoom`), in 3D off the covering tile's zoom (`>=`). `setViewZoom()` switches them.
+
+**Colour pipeline (2D)**: the ortho scene is **display-referred**: `renderer.outputColorSpace` is
+linear, so there is no output pass and no half-float framebuffer; translucent layers blend on
+sRGB-encoded values exactly like OL's canvas did. So every colour fed to it is an encoded number
+(`colorComponents(color, displayReferred)`, `makeDisplayColor`), baked canvases are `NoColorSpace`
+(`ViewportScale.displayReferred` tells the texture makers), and flat tiles apply OL's
+`exposure: 0.5, gamma: 1.5` to the raw bytes (`clamp((exposure + 1) * c)`, `pow(c, 1/gamma)`).
+The 3D scene keeps the linear pipeline with the output transform.
 
 ## Constants
 
 Every numeric tunable lives in `constants.ts` (zoom inertia factors, LOD ring multipliers,
-altitude cap bounds, skirt drop, ocean size, `POI_CONFIG`). Adding a knob means adding it there
+altitude cap bounds, skirt drop, `POI_CONFIG`). Adding a knob means adding it there
 — don't hardcode a magic number next to a callsite.
 
 ## Tile pipeline (tileManager.ts)
@@ -104,10 +133,38 @@ active (`activeTiles`), like `syncCovers()` does — not a recomputation of the 
   `CameraRig.update(dt)`.
 
 Renderer is `WebGPURenderer` with `logarithmicDepthBuffer` — required by the huge clip range
-(30..100000-ish scene). `renderer.setAnimationLoop` drives frames, the node-material update
+(30..100000-ish scene). `renderer.setAnimationLoop` drives ticks, the node-material update
 pass, and awaits async backend init (WebGL2 fallback when WebGPU is missing); `dispose()`
-cancels it. Container resizes blur the canvas and run through the debounced `ResizeObserver` —
-don't resize the renderer anywhere else.
+cancels it.
+
+**Rendering is on demand.** The loop ticks every frame (inertia, servo, tile ticks) but only
+calls `renderer.render` when `dirty`. OrbitControls' `change` event (raised by every
+`controls.update()` that moved the camera: drags, damping, zoom, ground pan, selection glide)
+sets it; tile mount/unmount and every `poiManager` / `areaLabels` write call the `invalidate`
+callback they are constructed with; the scene exposes `invalidate()` for outside mutators (the
+track editor calls it after every gate edit). Anything async that changes what is drawn must
+invalidate when it lands, and anything new that animates on its own must keep invalidating
+while it runs — an idle map issues zero GPU frames. The camera target is clamped to the map
+rect (`mapRect.ts`) each tick; the ocean quad is exactly that rect, nothing is drawn past it.
+
+Resizes are applied immediately by one `ResizeObserver` (and a `devicePixelRatio` watcher,
+`dpr.ts`, since browser zoom / a monitor move fires no resize) and rendered synchronously —
+`setSize` clears the canvas — so never resize the renderer anywhere else.
+
+**Canvas vs view (`viewRect.ts`).** The canvas and the view are two rectangles. The canvas is the
+container's box and is what `setSize` sizes; the **view** is its top-left part that is actually
+drawn: `setViewRect` writes it into the renderer's viewport and everything reads it back from
+there (`getViewBufferSize` for device px, `getViewCssSize` for CSS px) or from `scene.viewSize`.
+Camera aspect, the ortho rig's size and zoom centre, pointer NDC (`groundPan`, the wrapper's picker
+and hover-follow), the pick grid, label pixel snapping and `viewportScale` use the view, never
+`domElement.clientWidth` / `getBoundingClientRect().width`. The screen-space shaders measure
+`viewportSize`, not `screenSize`, for the same reason. By default the view is the whole canvas;
+`createThreeMapScene(container, { viewportElement })` makes it track another element instead, so a
+layout that animates the visible area (the map sidebar sliding open) costs one camera-aspect +
+viewport update and a synchronous render per frame, with no `setSize` and no rebuild of the
+DPR-baked atlases and label canvases (`onResize` runs those only when the canvas or the ratio
+changed). `setViewRect` stores the viewport as a whole device-pixel count plus a 1e-3 px sliver
+because three floors `viewport * pixelRatio` while the shaders read the unfloored product.
 
 ## POIs (poi.ts + poiManager.ts)
 
@@ -117,27 +174,34 @@ don't resize the renderer anywhere else.
   `THREE.Color` cannot parse: always via `makeColor`/`convertOklchToHex` (culori) from `poi.ts`.
   Each style also carries optional `hover`/`selected` color overrides, ported 1:1 from the
   OL layers' `hover`/`selected` attribute switches.
-- Dots are **one `THREE.Sprite` per distinct palette** (`dotPaletteKey` = fill|stroke|
-  strokeWidth), backed by `SpriteNodeMaterial` with instanced position+opacity+state
-  `InstancedBufferAttribute`s and a uniform scale (palette size is constant per group).
-  Each palette's dot texture is a **three-cell atlas** (`PoiState`: normal | hover |
-  selected) built by `makeDotAtlasTexture`; the per-instance state attribute shifts the
-  sampled cell inside `material.colorNode` (`dotAtlasColorNode`) — instancing stays
-  single-texture, which is what keeps it reliable. Capacity starts at `MIN_CAPACITY` and
-  doubles on demand. Mutations happen only through `setPoisFor` (buffers) and
-  `setMarkerState` (a single state slot, `applyVisibility`-style) — writing those buffers
-  anywhere else desyncs slot bookkeeping (layer toggles add/remove markers through
-  `setPoisFor`; there is no separate visibility setter).
+- Dots are **one instanced screen-space quad mesh per distinct palette** (`dotPaletteKey` = fill|
+  stroke|strokeWidth, `screenQuads.ts`). The vertex stage (`MeshBasicNodeMaterial.vertexNode`)
+  projects each world anchor with whatever camera renders, rounds the centre to the drawing-buffer
+  pixel grid and adds a fixed device-pixel corner offset — no fov maths, so perspective and
+  orthographic cameras behave the same and the dot never straddles pixels. Each palette's dot
+  texture is a **three-cell atlas** (`PoiState`: normal | hover | selected) built by
+  `makeDotAtlasTexture` (even side, `NearestFilter`) at device size; the per-instance state
+  attribute shifts the sampled cell. Instance attributes are anchor, opacity (0 clips the slot
+  away) and state. Capacity starts at `MIN_CAPACITY` and doubles on demand (`ensureCapacity`
+  rebuilds the mesh). Groups draw in OL's layer order through `renderOrder` (delivery < house <
+  player < teleport < pin, `DOT_LAYER_RANK`). Mutations happen only through `setPoisFor`
+  (buffers) and `setMarkerState` (a single state slot) — writing those buffers anywhere else
+  desyncs slot bookkeeping (layer toggles add/remove markers through `setPoisFor`; there is no
+  separate visibility setter). A DPR change redraws the atlases (`setViewport`).
 - Hover/selected paint is driven by the wrapper: it resolves each marker's state with OL's
   precedence (hover > selected > normal) and applies it via `poiManager.setMarkerState`;
   the selection effect re-applies on its type's marker-set changes so re-created markers
   regain the selected paint.
-- Sprites render with `depthTest: false` + `renderOrder: 1`, so ordinary raycasting cannot hit
-  them. Hit-testing goes through `pick(raycaster, ndc)`: project each drawable marker to NDC and
-  compare against the constant screen radius implied by `sizeAttenuation: false`, nearest-first.
+- Dots never depth-test (`depthTest: false`, `renderOrder: 1+`), so ordinary raycasting cannot hit
+  them. Hit-testing goes through `pick(x, y)` (canvas CSS px): projected dots live in a
+  screen-space hash grid (`pickGrid.ts`) rebuilt only when the camera, canvas size or marker layout
+  changed, so each pick is a few cell lookups; the topmost drawn dot under the pointer wins.
   Extend `pick()`; never add real 3D raycasts against dots.
-- Labels cannot instance — one `makeTextSprite` Sprite per labelled marker, repositioned above
-  its dot along screen-up in `poiManager.update(camera)` every frame.
+- Labels cannot instance — one `makeTextSprite` Sprite per labelled marker, anchored bottom-centre
+  on its dot (the glyph lift is baked into the canvas). Crispness: the canvas is rasterised at
+  device size with an even width, sampled with `NearestFilter`, and every rendered frame
+  `snapLabelToPixelGrid` (poi.ts) moves the quad via `sprite.center` so its corners land on whole
+  drawing-buffer pixels — derived from the actual buffer size, so fractional DPRs work.
 - Resident delivery points draw only within the finest LOD ring: `draws()` gates them on their
   covering tile reaching `RESIDENT_MIN_COVER_Z`.
 
@@ -146,6 +210,8 @@ don't resize the renderer anywhere else.
 Everything here drapes over the terrain and draws UNDER the POI dots/labels (transparent,
 `depthTest: false`, `renderOrder: 0` — the ground itself renders in the opaque pass first, so
 "behind every other layer except ground" is exactly this).
+Exception: delivery lines are straight chords between their end points' ground heights (only the
+two ends are sampled) and never follow the terrain between them.
 
 - `groundHeights.ts` owns the height-tile fetches for overlays, separate from tileManager's
   cache (tileManager evicts fine tiles outside the camera ring; overlays sit in fixed places).
@@ -157,26 +223,61 @@ Everything here drapes over the terrain and draws UNDER the POI dots/labels (tra
   from `refreshVisibleTiles` right after `updateVisibleTiles()` like `poiManager.syncCovers`).
   `setTexts()` re-applies localized text — the wrapper re-runs it on locale changes.
 
+## Vector overlays (polygonLayer + screenLines)
+
+Shortcut zones, area bounds and delivery lines are ports of OL's vector layers, drawn with two
+camera-agnostic pieces:
+
+- `screenLines.ts` — instanced constant-pixel-width line segments with anti-aliased round caps and an
+  optional dash pattern whose phase flows with the `time` node. Everything is measured in device px
+  in the vertex/fragment stage, so width, dash length and flow speed read the same at any zoom,
+  tilt or DPR, and alpha blends normally (three's `Line2NodeMaterial` blends by re-reading the
+  framebuffer and its dashes are in world units, so it is not used). A segment with an end behind
+  the camera is dropped, not trimmed.
+- `polygonLayer.ts` — triangulates rings once (`polygons.ts`: `ShapeUtils`, holes supported,
+  midpoint subdivision capped at `MAX_EDGE_M`), fills them with vertex colours in one merged mesh
+  and strokes the ring through `ScreenLines`. Heights come from `groundHeights.sampleMany`;
+  geometry for a polygon builds once its ground tiles are cached (`update()` polls, like
+  `areaLabels`), and `setFlat(true)` drops everything to y=0 for the orthographic view.
+- Draw order mirrors OL's layer array through `renderOrder`: delivery lines (0.5) < dots (1.0+) <
+  shortcut zones (1.5) < POI labels (2) < picker pointer (2.1) < area bounds (2.15) < area names
+  (2.2); constants in `constants.ts` (`*_RENDER_ORDER`, widths, dashes, opacities - copy them from
+  the OL style objects, never invent).
+- Nothing here is clickable: overlays never enter `pick()`, so polygons cannot swallow clicks.
+- A layer that animates by itself (the delivery lines' flow) reports it through
+  `onAnimatingChange`; the scene's `animating` set keeps it drawing while any animation runs and
+  renders nothing once the set is empty. Reduced motion freezes the flow (`setFlow(0)`).
+
 ## App bridge (the wrapper)
 
-Pointer input exits as the same OL-compatible callbacks (`onHover` / `onClick` /
-`onRightClick`) carrying `ol/Feature` stubs holding `pointType` + `info`, or `undefined` for
-empty map — this parity is what lets `Map.svelte`'s tooltip/panels/click semantics stay
-wrapper-agnostic. Pointer coordinates passed upward are container-relative, not client.
+Pointer input exits as `onHover` / `onClick` / `onRightClick` / `onPick` carrying a plain `MapFeature`
+(`pointType` + `info`, from `components/Map/Map/types.ts`) or `undefined` for empty map; `Map.svelte`'s
+tooltip, panels and click semantics are written against that. Pointer coordinates passed upward are
+container-relative, not client. A press is a click only on release without a 5 px move (a drag pans);
+touch has no hover, so a tap resolves its pick on release, and the tapped dot's tooltip follows it while
+the map moves (hidden while a finger pans, dropped when the dot leaves the view). Mouse hover is
+re-resolved at the pointer every rendered frame the map moves under it (cleared while a drag pans).
+Only delivery, house, player and teleport dots are pickable; pins are display-only.
 
-Selection arrives as the same URL-driven `selection` prop — pan the marker to screen center
-without changing zoom or orbit: raycast the screen-center ray onto a horizontal plane at the
-marker's world height, then translate camera AND `controls.target` by the same XZ delta, which
-preserves orbit/zoom by construction. The instant form lives in `centerOnSelection()`
-(ThreeMapWrapper); the gliding re-targetable servo lives in `ui/ThreeMap/selectionPan.ts`
-(`panTo`/`update`, the OL `animate({ center })` counterpart). Both share this geometry — never
-"animate" by lerping toward a target while also moving the plane you measure against, and guard
-against parallel-to-plane rays (`remainingDistance()` holds instead of stepping toward garbage).
-The effect tolerates the marker arriving after the selection (it references the owning type's
-derived set) and repeats are guarded by `lastCenteredSelection`.
+The scene lives in a `$effect` keyed on `view`: switching it disposes the old scene (releasing its
+WebGL context) and creates the new one at `carriedView`, the old scene's `getViewState()`. The component
+also exports `getViewState()`.
+
+Selection arrives as the URL-driven `selection` prop. A _new_ lock glides the marker to the screen
+centre — 2D: `ortho.animateTo` also zooms to 5 like OL's `centerOn`; 3D: the `selectionPan` servo (below)
+keeps zoom and orbit. A locked **player or pin** is then followed on every reconcile (`markerRevision`
+makes the effect re-run after each `setPoisFor`; `markerById` itself is not reactive); houses and
+deliveries are centred once. A drag past the click threshold sets `lockBroken` until the selection id
+changes.
+
+3D selection glide: raycast the screen-centre ray onto a horizontal plane at the marker's world height,
+then translate camera AND `controls.target` by the same XZ delta, which preserves orbit/zoom by
+construction (`ui/ThreeMap/selectionPan.ts`, `panTo`/`update`). Never "animate" by lerping toward a
+target while also moving the plane you measure against, and guard against parallel-to-plane rays
+(`remainingDistance()` holds instead of stepping toward garbage).
 
 ## Asset URLs
 
-Tiles serve from `static/map_tiles/{version}/colors/` and `heights/`, same directories the OL
-map uses. The color dir is plural — `colors/`, not `color/` (a missed plural was the one real
+Tiles serve from `static/map_tiles/{version}/colors/` and `heights/` (the 2D view fetches only
+`colors/`). The color dir is plural — `colors/`, not `color/` (a missed plural was the one real
 port bug).

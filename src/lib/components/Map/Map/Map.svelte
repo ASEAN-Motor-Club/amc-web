@@ -1,18 +1,18 @@
 <script lang="ts">
-  import type Feature from 'ol/Feature';
   import { onMount } from 'svelte';
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import PoiPanel from './PoiPanel.svelte';
   import {
     PointType,
     PoiType,
+    type MapFeature,
     type MapSelection,
     type MapState,
     type PlayerData,
   } from './types.ts';
   import HoverInfoTooltip, { type HoverInfo } from './HoverInfoTooltip.svelte';
   import PickCoordCard from './PickCoordCard.svelte';
-  import { deliveryPointsMap, type DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+  import { deliveryPointsMap } from '#lib/data/deliveryPoint.ts';
   import { getDeliveryLine } from './deliveryLine.ts';
   import Search from './Search.svelte';
   import type { DeliveryJob, DepotData, HouseData } from '#lib/api/types.ts';
@@ -22,7 +22,6 @@
   import { m } from '#messages';
   import { pinsSchema, type Pins } from '#lib/schema/pin.ts';
   import * as z from 'zod/mini';
-  import OlMapWrapper from './OlMapWrapper.svelte';
   import ThreeMapWrapper from './ThreeMapWrapper.svelte';
   import { goto } from '$app/navigation';
   import { getSelectionClearedParams } from '../utils.ts';
@@ -37,18 +36,10 @@
     houseData: HouseData | undefined;
     depotData: DepotData | undefined;
     onPlayerLayerDataEnabledChange?: (enabled: boolean) => void;
-    /** Fired when the map switches between 2D and 3D mode (the sidebar speeds up in 3D). */
-    onThreeDModeChange?: (mode: boolean) => void;
   }
 
-  const {
-    jobsData,
-    playerData,
-    houseData,
-    depotData,
-    onPlayerLayerDataEnabledChange,
-    onThreeDModeChange,
-  }: Props = $props();
+  const { jobsData, playerData, houseData, depotData, onPlayerLayerDataEnabledChange }: Props =
+    $props();
 
   const MAP_STATE_STORAGE_KEY = 'mapState';
   /** The active map mode - 3D renders the terrain through ThreeMapWrapper. */
@@ -170,21 +161,11 @@
   $effect(() => {
     onPlayerLayerDataEnabledChange?.(mapState.player);
   });
-  $effect(() => {
-    onThreeDModeChange?.(threeDMode);
-  });
+  let hoverPoint: { feature: MapFeature; pixel: [x: number, y: number] } | undefined = $state();
 
-  let hoverPoint: { f: Feature; pixel: [x: number, y: number] } | undefined = $state();
-
-  const hoverInfo: HoverInfo | undefined = $derived.by(() => {
-    if (hoverPoint) {
-      return {
-        pointType: hoverPoint.f.get('pointType'),
-        pixelCoord: hoverPoint.pixel,
-        info: hoverPoint.f.get('info'),
-      };
-    }
-  });
+  const hoverInfo: HoverInfo | undefined = $derived(
+    hoverPoint && { ...hoverPoint.feature, pixelCoord: hoverPoint.pixel },
+  );
 
   const selection = $derived.by<MapSelection | undefined>(() => {
     const house = clientSearchParamsGet('house');
@@ -229,9 +210,9 @@
     }
   });
 
-  let handleHover = (feature: Feature | undefined, pixel: [x: number, y: number]) => {
+  let handleHover = (feature: MapFeature | undefined, pixel: [x: number, y: number]) => {
     if (feature) {
-      hoverPoint = { f: feature, pixel };
+      hoverPoint = { feature, pixel };
     } else {
       hoverPoint = undefined;
     }
@@ -296,11 +277,9 @@
         mapState.teleportLabels = !mapState.teleportLabels;
         break;
       case PoiType.ShortcutZone:
-        if (threeDMode) break;
         mapState.shortcutZone = !mapState.shortcutZone;
         break;
       case PoiType.ShortcutZoneLabels:
-        if (threeDMode) break;
         mapState.shortcutZoneLabels = !mapState.shortcutZoneLabels;
         break;
       case PoiType.AreaName:
@@ -381,16 +360,15 @@
     goto(`?${getSelectionClearedParams().toString()}`);
   };
 
-  const handleMapClick = (feature: Feature | undefined) => {
+  const handleMapClick = (feature: MapFeature | undefined) => {
     if (!isMouse.current) {
       // Touch only opens the tooltip, its buttons carry the point actions.
       if (!feature) clearSelection();
       return;
     }
 
-    const pointType = feature?.get('pointType') as PointType | undefined;
-    if (feature && pointType === PointType.Delivery) {
-      const { guid } = feature.get('info') as DeliveryPoint;
+    if (feature?.pointType === PointType.Delivery) {
+      const { guid } = feature.info;
       const newParams = getSelectionClearedParams();
       // The menu covers the map on mobile, only wider layouts open it alongside.
       if (isSm.current) {
@@ -400,12 +378,11 @@
       goto(`/map?${newParams.toString()}`);
       return;
     }
-    if (feature && pointType === PointType.House) {
-      const { name } = feature.get('info') as { name: string };
-      goto(`/house/${encodeURIComponent(name)}`);
+    if (feature?.pointType === PointType.House) {
+      goto(`/house/${encodeURIComponent(feature.info.name)}`);
       return;
     }
-    if (pointType === PointType.Teleport) {
+    if (feature?.pointType === PointType.Teleport) {
       handleCopyTeleport();
       return;
     }
@@ -448,7 +425,6 @@
     } else if (hoverInfo.pointType === PointType.House) {
       goto(`/house/${encodeURIComponent(hoverInfo.info.name)}`);
     }
-    hoverPoint?.f.set('hover', false);
     hoverPoint = undefined;
   };
 </script>
@@ -464,45 +440,29 @@
   </button>
 {/if}
 <div class="relative h-full w-full" bind:this={mapRootEl}>
-  {#if threeDMode}
-    <ThreeMapWrapper
-      {mapState}
-      {jobsData}
-      {playerData}
-      {houseData}
-      {depotData}
-      {pinsData}
-      {teleportData}
-      {selection}
-      onToggleMapMode={toggleMapMode}
-      onHover={handleHover}
-      onClick={handleMapClick}
-      onRightClick={handleMapRightClick}
-    />
-  {:else}
-    <OlMapWrapper
-      {pipActive}
-      {enterPip}
-      {mapState}
-      {jobsData}
-      {playerData}
-      {houseData}
-      {depotData}
-      {pinsData}
-      {teleportData}
-      {shortcutZoneData}
-      {deliveryLineData}
-      {selection}
-      {pickMode}
-      pickPoint={pickCoord}
-      onPick={handlePick}
-      onTogglePickMode={togglePickMode}
-      onToggleMapMode={toggleMapMode}
-      onHover={handleHover}
-      onClick={handleMapClick}
-      onRightClick={handleMapRightClick}
-    />
-  {/if}
+  <ThreeMapWrapper
+    view={threeDMode ? 'perspective' : 'ortho'}
+    {pipActive}
+    {enterPip}
+    {mapState}
+    {jobsData}
+    {playerData}
+    {houseData}
+    {depotData}
+    {pinsData}
+    {teleportData}
+    {shortcutZoneData}
+    {deliveryLineData}
+    {selection}
+    {pickMode}
+    pickPoint={pickCoord}
+    onPick={handlePick}
+    onTogglePickMode={threeDMode ? undefined : togglePickMode}
+    onToggleMapMode={toggleMapMode}
+    onHover={handleHover}
+    onClick={handleMapClick}
+    onRightClick={handleMapRightClick}
+  />
 
   {#if !pipActive}
     <!-- Search overlay (top, overflow-hidden to contain dropdown) -->
@@ -514,7 +474,6 @@
 
     <PoiPanel
       {mapState}
-      {threeDMode}
       {havePins}
       {haveTeleports}
       {haveShortcutZones}

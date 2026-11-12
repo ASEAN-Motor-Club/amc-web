@@ -1,22 +1,39 @@
 import * as THREE from 'three';
 import type { Renderer } from 'three/webgpu';
-import { formatHex, oklch, type Color } from 'culori';
+import { formatHex, parse } from 'culori';
 import type { PoiDotStyle } from './constants.ts';
+import { getViewBufferSize } from './viewRect.ts';
 
-/** Converts an oklch() string to hex (three's Color cannot parse oklch), via culori. */
-const convertOklchToHex = (oklchStr: string): string => {
-  try {
-    return formatHex(oklch(oklchStr) as Color);
-  } catch {
-    return '#fff';
-  }
-};
+/** Converts any CSS colour string (oklch(), lab(), ...) to hex via culori; white if unparseable. */
+const convertToHex = (css: string): string => formatHex(parse(css)) ?? '#fff';
 
-/** Reads a hex or oklch color (three's Color can't parse oklch). */
+/** Reads a hex number or a CSS colour string; three's Color cannot parse oklch()/lab(). */
 export function makeColor(color: string | number): THREE.Color {
-  return typeof color === 'string' && color.startsWith('oklch(')
-    ? new THREE.Color(convertOklchToHex(color))
+  return typeof color === 'string' && /^(oklch|lab)\(/.test(color)
+    ? new THREE.Color(convertToHex(color))
     : new THREE.Color(color);
+}
+
+/**
+ * The RGB triple to feed a GPU buffer for `color`. A normal (3D) scene works in linear light and
+ * lets the output pass encode it; the flat 2D scene is display-referred - it renders straight to
+ * the canvas so blending happens on sRGB-encoded values exactly like OL's canvas - and needs the
+ * encoded numbers.
+ */
+export function colorComponents(
+  color: THREE.Color,
+  displayReferred: boolean,
+): [r: number, g: number, b: number] {
+  if (!displayReferred) return [color.r, color.g, color.b];
+  const { r, g, b } = color.getRGB(new THREE.Color(), THREE.SRGBColorSpace);
+  return [r, g, b];
+}
+
+/** A Color that reads back as `color` through a display-referred pipeline (clear colour, scene
+ * background): its working components are the sRGB-encoded numbers. */
+export function makeDisplayColor(color: string | number): THREE.Color {
+  const [r, g, b] = colorComponents(makeColor(color), true);
+  return new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
 }
 
 /** Default outline thickness in CSS px - OL's circle-stroke-width when unspecified. */
@@ -27,23 +44,32 @@ const DOT_AA_PAD_PX = 2;
 export interface ViewportScale {
   /** Device px per CSS px on the drawing surface. */
   dpr: number;
-  /** Device px covered by one world unit for a sizeAttenuation:false sprite. */
+  /** The renderer draws straight to the canvas with no output colour conversion (the 2D scene):
+   * baked textures stay raw sRGB bytes and buffer colours must be sRGB-encoded numbers. */
+  displayReferred: boolean;
+  /** Device px covered by one world unit for a sizeAttenuation:false sprite (any camera type). */
   pxPerWorld: number;
 }
 
 const _bufferSize = new THREE.Vector2();
 
 /**
- * Sprite screen metrics for the current drawing buffer. A sizeAttenuation:false sprite's
- * NDC extent is scale/tan(fovY/2), so one world unit spans f*bufferHeight/2 device px -
- * the exact factor that divides a native-size canvas into sprite scale.
+ * Device px covered by one world unit for a sizeAttenuation:false sprite: its NDC extent is
+ * scale * projection[1][1] (perspective: three multiplies the scale by view depth, which the
+ * projection divide cancels; orthographic: the scale is used as-is), so one world unit spans
+ * P11 * bufferHeight / 2 px. The same expression holds for both camera types.
  */
-export function viewportScale(camera: THREE.PerspectiveCamera, renderer: Renderer): ViewportScale {
-  renderer.getDrawingBufferSize(_bufferSize);
-  const f = 1 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+export function pxPerWorldUnit(camera: THREE.Camera, bufferHeight: number): number {
+  return Math.max((camera.projectionMatrix.elements[5] * bufferHeight) / 2, 1e-6);
+}
+
+/** Sprite screen metrics for the current view rectangle (see `viewRect.ts`). */
+export function viewportScale(camera: THREE.Camera, renderer: Renderer): ViewportScale {
+  getViewBufferSize(renderer, _bufferSize);
   return {
-    dpr: _bufferSize.y / Math.max(renderer.domElement.clientHeight, 1),
-    pxPerWorld: Math.max((f * _bufferSize.y) / 2, 1e-6),
+    dpr: renderer.getPixelRatio(),
+    displayReferred: renderer.outputColorSpace === THREE.LinearSRGBColorSpace,
+    pxPerWorld: pxPerWorldUnit(camera, _bufferSize.y),
   };
 }
 
@@ -79,15 +105,12 @@ export function dotStrokeCssPx(palette: PoiDotStyle): number {
 }
 
 /** Canvas side in device px: the stroke-cleared dot at native size plus an AA margin. */
-function dotCanvasSidePx(palette: PoiDotStyle, viewport: ViewportScale): number {
+export function dotCanvasSidePx(palette: PoiDotStyle, viewport: ViewportScale): number {
   const radiusDevice = (palette.diameterPx / 2) * viewport.dpr;
   const strokeDevice = dotStrokeCssPx(palette) * viewport.dpr;
-  return Math.ceil(2 * (radiusDevice + strokeDevice / 2 + DOT_AA_PAD_PX));
-}
-
-/** Sprite scaleNode value mapping the dot canvas 1:1 onto device pixels. */
-export function dotSpriteScale(palette: PoiDotStyle, viewport: ViewportScale): number {
-  return dotCanvasSidePx(palette, viewport) / viewport.pxPerWorld;
+  const side = Math.ceil(2 * (radiusDevice + strokeDevice / 2 + DOT_AA_PAD_PX));
+  // Even, so a centred quad's corners land on whole device pixels.
+  return side + (side & 1);
 }
 
 /**
@@ -123,9 +146,10 @@ export function makeDotAtlasTexture(
   }
 
   const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.colorSpace = viewport.displayReferred ? THREE.NoColorSpace : THREE.SRGBColorSpace;
   texture.generateMipmaps = false;
-  texture.minFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.NearestFilter;
+  texture.magFilter = THREE.NearestFilter;
   return texture;
 }
 
@@ -140,6 +164,12 @@ export interface LabelStyle {
   strokeStyle: string;
   /** Outline thickness in CSS px. */
   strokeWidthCss: number;
+  /** Where the sprite's position sits: `above` (default) hangs the glyphs `liftCss` over it,
+   * bottom-centre anchored, for labels on a dot; `center` centres the glyphs on it, for names
+   * drawn over an area or zone. */
+  anchor?: 'above' | 'center';
+  /** Glyph-centre height above the anchor for `above` labels, CSS px (OL's text `offsetY`). */
+  liftCss?: number;
 }
 
 export interface TextSprite {
@@ -150,16 +180,21 @@ export interface TextSprite {
   /** Canvas size in device px - rescale with viewportScale.pxPerWorld on viewport changes. */
   widthDevice: number;
   heightDevice: number;
+  /** Fraction of the canvas height below the sprite position: 0 (bottom-anchored) or 0.5 (centred). */
+  anchorY: number;
 }
 
 /** Device-px margin around the glyph ink so the AA fringe survives linear filtering. */
 const LABEL_AA_PAD_PX = 2;
-/** Glyph-center height above the sprite's bottom anchor, in CSS px - matches the old
- * half-texture lift and OL's 12-14px label offsetY. */
+/** Default glyph-centre height above the sprite's bottom anchor, in CSS px. */
 const LABEL_LIFT_CSS_PX = 15;
 
-/** A text sprite always facing the camera, kept at a constant screen size. Ink is measured
- * and packed at native device size, so remake it when the DPR changes. */
+/**
+ * A text sprite always facing the camera, kept at a constant screen size. Text is drawn the way
+ * OL's canvas text was - `textAlign: center`, `textBaseline: middle` at the label's anchor point -
+ * so glyphs sit exactly where OL put them regardless of descenders. Ink is measured and packed at
+ * native device size, so remake it when the DPR changes.
+ */
 export function makeTextSprite(
   text: string,
   style: LabelStyle,
@@ -168,36 +203,52 @@ export function makeTextSprite(
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('no 2d context for text');
-  ctx.font = `${style.weight} ${style.sizeCss * viewport.dpr}px ${style.family}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
+  const font = `${style.weight} ${style.sizeCss * viewport.dpr}px ${style.family}`;
+  // Fetch the font subset this text needs; if it was not loaded yet the scene redraws every label
+  // when it arrives (`watchFontLoads`). A no-op once loaded.
+  void document.fonts.load(font, text);
+  ctx.font = font;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
   const ink = ctx.measureText(text);
-  const inkW = ink.actualBoundingBoxLeft + ink.actualBoundingBoxRight;
-  const inkH = ink.actualBoundingBoxAscent + ink.actualBoundingBoxDescent;
+  const halfW = Math.max(ink.actualBoundingBoxLeft, ink.actualBoundingBoxRight);
+  const ascent = ink.actualBoundingBoxAscent;
+  const descent = ink.actualBoundingBoxDescent;
   const strokeDevice = style.strokeWidthCss * viewport.dpr;
   const pad = strokeDevice / 2 + LABEL_AA_PAD_PX;
-  // Resizing the canvas resets the context - set font/alignment again before drawing.
-  canvas.width = Math.ceil(inkW + pad * 2);
-  canvas.height = Math.ceil(inkH / 2 + LABEL_LIFT_CSS_PX * viewport.dpr + pad);
-  ctx.font = `${style.weight} ${style.sizeCss * viewport.dpr}px ${style.family}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
+  // The anchor point (where OL drew the text) is the canvas centre horizontally; the width is even
+  // so that half-width is a whole pixel (see snapLabelToPixelGrid).
+  const width = Math.ceil((halfW + pad) * 2);
+  canvas.width = width + (width & 1);
+  const centered = style.anchor === 'center';
+  const lift = (style.liftCss ?? LABEL_LIFT_CSS_PX) * viewport.dpr;
+  // Centred: the anchor is the canvas centre. Above: the anchor sits `lift` over the bottom edge.
+  const height = centered
+    ? Math.ceil(Math.max(ascent, descent) * 2 + pad * 2)
+    : Math.ceil(Math.max(lift + ascent + pad, lift + descent + pad));
+  // Even too: a centred quad's half-height is then a whole pixel.
+  canvas.height = height + (height & 1);
+  const anchorY = centered ? canvas.height / 2 : canvas.height - lift;
+  // Resizing the canvas resets the context - set the text state again before drawing.
+  ctx.font = font;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
-  // Anchor the ink box: its left/top edge sits pad in from the canvas corner.
-  const ax = pad + ink.actualBoundingBoxLeft;
-  const ay = pad + ink.actualBoundingBoxAscent;
   if (strokeDevice > 0) {
     ctx.strokeStyle = style.strokeStyle;
     ctx.lineWidth = strokeDevice;
-    ctx.strokeText(text, ax, ay);
+    ctx.strokeText(text, canvas.width / 2, anchorY);
   }
   ctx.fillStyle = style.fillStyle;
-  ctx.fillText(text, ax, ay);
+  ctx.fillText(text, canvas.width / 2, anchorY);
 
   const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.colorSpace = viewport.displayReferred ? THREE.NoColorSpace : THREE.SRGBColorSpace;
   texture.generateMipmaps = false;
-  texture.minFilter = THREE.LinearFilter;
+  // The sprite is snapped so every texel lands on one device pixel: nearest keeps the glyph
+  // edges as sharp as the canvas rasterised them.
+  texture.minFilter = THREE.NearestFilter;
+  texture.magFilter = THREE.NearestFilter;
   const material = new THREE.SpriteMaterial({
     map: texture,
     transparent: true,
@@ -208,7 +259,8 @@ export function makeTextSprite(
     depthTest: false,
   });
   const sprite = new THREE.Sprite(material);
-  sprite.center.set(0.5, 0);
+  const spriteAnchorY = centered ? 0.5 : 0;
+  sprite.center.set(0.5, spriteAnchorY);
   sprite.renderOrder = 2;
   // Map the canvas 1:1 onto device pixels (sizeAttenuation:false: NDC extent = scale*f).
   sprite.scale.set(canvas.width / viewport.pxPerWorld, canvas.height / viewport.pxPerWorld, 1);
@@ -218,5 +270,37 @@ export function makeTextSprite(
     style,
     widthDevice: canvas.width,
     heightDevice: canvas.height,
+    anchorY: spriteAnchorY,
   };
+}
+
+const _snapPos = new THREE.Vector3();
+
+/**
+ * Nudges a label sprite (anchored at its position, see `LabelStyle.anchor`) so its quad corners sit on whole
+ * device pixels, the only way a 1:1 canvas texture stays crisp: a quad that lands between pixels
+ * is resampled and blurs, and the perspective projection puts it between pixels almost always.
+ * Works through `sprite.center`, so the world position stays the true anchor. `buffer` is the
+ * drawing buffer size in device px; call after the camera's matrices are current.
+ */
+export function snapLabelToPixelGrid(
+  label: TextSprite,
+  camera: THREE.Camera,
+  buffer: THREE.Vector2,
+): void {
+  const { sprite, widthDevice, heightDevice, anchorY } = label;
+  _snapPos.copy(sprite.position).project(camera);
+  // Behind the camera or outside the clip volume: nothing to align (and nothing visible).
+  if (_snapPos.z < -1 || _snapPos.z > 1) return;
+  // The sprite's world size follows the projection: constant under perspective, but an
+  // orthographic zoom changes how many world units one pixel covers.
+  const pxPerWorld = pxPerWorldUnit(camera, buffer.y);
+  sprite.scale.set(widthDevice / pxPerWorld, heightDevice / pxPerWorld, 1);
+  const px = (_snapPos.x * 0.5 + 0.5) * buffer.x;
+  const py = (_snapPos.y * 0.5 + 0.5) * buffer.y;
+  // The quad's left edge is px - W/2 and its bottom edge py - anchorY*H (both even, so whole
+  // numbers away from px/py).
+  const left = Math.round(px - widthDevice / 2);
+  const bottom = Math.round(py - anchorY * heightDevice);
+  sprite.center.set((px - left) / widthDevice, (py - bottom) / heightDevice);
 }

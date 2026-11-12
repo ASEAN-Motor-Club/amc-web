@@ -10,7 +10,13 @@ import {
   TRACK_LINE_WIDTH_M,
   TRACK_LINE_XRAY_OPACITY,
 } from '../ThreeMap/constants.ts';
-import { makeColor, makeTextSprite, type TextSprite, type ViewportScale } from '../ThreeMap/poi.ts';
+import {
+  makeColor,
+  makeTextSprite,
+  snapLabelToPixelGrid,
+  type TextSprite,
+  type ViewportScale,
+} from '../ThreeMap/poi.ts';
 import {
   adjustOpacity,
   colorAmber500,
@@ -70,8 +76,9 @@ export interface TrackGates {
   ) => GatePick | null;
   /** Repositions the selected overlay during a drag (world XZ meters; height is kept). */
   dragTo: (x: number, z: number) => void;
-  /** Per-frame: applies the distance fade and hangs the number labels above their dots. */
-  update: (camera: THREE.PerspectiveCamera) => void;
+  /** Per-frame: applies the distance fade and pixel-aligns the number labels (`buffer` is the
+   * drawing buffer size in device px). */
+  update: (camera: THREE.PerspectiveCamera, buffer: THREE.Vector2) => void;
   /** Re-renders the dot textures and labels after a viewport (DPR) change. */
   refit: () => void;
   dispose: () => void;
@@ -532,10 +539,6 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
   const selectedBaseCenter3 = new THREE.Vector3();
   /** Pick scratch for the dragged overlay's center. */
   const _selectedPickCenter = new THREE.Vector3();
-  /** Label scratch vectors — update() runs every frame. */
-  const _labelUpView = new THREE.Vector3();
-  const _labelUpWorld = new THREE.Vector3();
-  const _labelPosition = new THREE.Vector3();
 
   let numbers = false;
   /** Label rebuild keys — labels are canvas sprites, so only remake them when needed. */
@@ -878,7 +881,7 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
       selectedCenter3.copy(selectedBaseCenter3).add(selectedDragOffset);
     },
 
-    update(camera) {
+    update(camera, buffer) {
       // Distance fade: the dot is the far waypoint marker, the gate face + opaque edges
       // take over up close. Both ramp smoothly over the same range.
       const nearSpan = GATE_FADE_FAR_M - GATE_FADE_NEAR_M;
@@ -931,13 +934,14 @@ export function createTrackGates(scene: THREE.Scene, getViewport: () => Viewport
         }
       }
 
-      // Number labels hang above their dots along the screen-up direction.
+      // Number labels hang bottom-centre on their dots (the lift is baked into the canvas);
+      // only their sub-pixel alignment follows the camera.
       if (numbers) {
-        camera.getWorldDirection(_labelUpView);
-        _labelUpWorld.copy(camera.up).projectOnPlane(_labelUpView).normalize();
+        camera.updateMatrixWorld();
         for (const entry of entries) {
           if (!entry.label) continue;
-          entry.label.sprite.position.copy(_labelUpWorld).add(_labelPosition.copy(entry.center3));
+          entry.label.sprite.position.copy(entry.center3);
+          snapLabelToPixelGrid(entry.label, camera, buffer);
         }
       }
     },

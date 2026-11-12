@@ -39,3 +39,30 @@ node $SKILL/scripts/compare.mjs <scratch>/shots/main <scratch>/shots/branch <scr
 Read each PNG in `shots/cmp`. Live data differs between runs and is not a regression: player counts, rent/job timers, map markers, the home video frame. Every other difference must be explained by an intended change; anything else is a regression to fix, then rebuild and re-run only the affected shots with `--only`.
 
 Report what you compared, what differed and why, and what was not covered (dark mode unless run with `--theme dark`, file-driven views such as `/pak` results).
+
+# Map renderer regression gate
+
+The in-game map is one three.js renderer (a flat 2D view and a tilting 3D view, `rule://three-map`).
+`scripts/golden.mjs` is its pixel gate: it renders the dev-only harness `src/routes/dev/map-harness` (404s
+outside `vite dev`; fixed-seed mock data in `mockData.ts`, no API calls) in a fixed set of scenes and diffs two
+captures taken on different revisions. Run it on main (a `git worktree`) and on the branch:
+
+```bash
+node $SKILL/scripts/golden.mjs capture <scratch>/main --base http://localhost:5173   # `pnpm dev` of main
+node $SKILL/scripts/golden.mjs capture <scratch>/branch --base http://localhost:5174 # `pnpm dev --port 5174` of the branch
+node $SKILL/scripts/golden.mjs compare <scratch>/main <scratch>/branch --out <scratch>/diff
+```
+
+- Scenes: every dot palette in the normal/hover/selected states, the whole map at several zooms, and each
+  layer alone at three zooms (`--view three` for the 3D camera, `--dpr 1,1.5` for DPRs, `--swiftshader` to force
+  software GL like a GPU-less CI runner). `compare` tolerates 1 px of anti-alias drift and reports the share of
+  changed pixels per scene (red in the `*-diff.png`).
+- Harness query: `r=ortho|three`, `at=<delivery index>` or `x,y` (px space), `z` (zoom), `on=`/`off=` mapState keys,
+  `line=<index>`, `sel=<index>`, `selplayer=<index>`, `drift=1`, `pick=x,y|anchor&pickmode=1`, `chrome=0`, `seed=`.
+  `window.__mapHarness.getViewState()` reports where the map looks, for interaction probes.
+- `scripts/perf.mjs` measures the same harness: GPU frames while idle (rAF intervals with GL draw calls), pan/zoom
+  frame intervals, JS heap. `scripts/bundle.mjs <buildDir>` reports per-route JS/CSS bytes and first-contentful-paint
+  of a production build. Baselines, budgets and the final OL-vs-three parity numbers (measured while OpenLayers
+  still existed) are in `.hermes/plans/threemap-replaces-ol.md`.
+- three's WebGPURenderer falls back to WebGL2 when WebGPU is missing, the only path headless Chromium has;
+  `--swiftshader` forces software GL so the run matches a GPU-less runner.

@@ -36,8 +36,8 @@ describe('track edit page', () => {
       );
     });
     expect(document.title).toBe(m['track_editor.head']({ siteName: m.site_name_short() }));
-    // The Editor (and its OpenLayers map) must not mount without a track.
-    expect(output.container.querySelector('.ol-viewport')).toBeNull();
+    // The Editor (and its map canvas) must not mount without a track.
+    expect(output.container.querySelector('canvas')).toBeNull();
   });
 
   it('renders the editor with the editing title when a track is loaded', async () => {

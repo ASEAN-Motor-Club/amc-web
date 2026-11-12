@@ -1,6 +1,6 @@
 import type { MtNameRecord, Vector2 } from '#lib/types/index.ts';
 import areaVolume from '#lib/assets/data/out_area_volume.json';
-import { MAP_REAL_SIZE, MAP_REAL_X_LEFT, MAP_REAL_Y_TOP } from '#lib/ui/OlMap/utils.ts';
+import { MAP_REAL_SIZE, MAP_REAL_X_LEFT, MAP_REAL_Y_TOP } from '#lib/utils/mapProjection.ts';
 
 const flagOrder = {
   '': 0,
@@ -25,7 +25,7 @@ const areaVolumeWithBBox = areaVolume.map((area) => {
   return { ...area, order: flagOrder[area.flag], box: { minX, minY, maxX, maxY } };
 });
 
-// Playable world bounds in game coordinates (the map extent in $lib/ui/OlMap/utils)
+// Playable world bounds in game coordinates (the map extent in $lib/utils/mapProjection)
 const mapBounds = {
   minX: MAP_REAL_X_LEFT,
   minY: MAP_REAL_Y_TOP,

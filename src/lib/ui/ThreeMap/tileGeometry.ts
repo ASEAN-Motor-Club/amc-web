@@ -23,6 +23,8 @@ export function loadColorTexture(
   y: number,
   renderer: Renderer,
   manager?: THREE.LoadingManager,
+  /** Flat (2D) tiles are sampled raw and un-mipmapped, like OL's WebGL tile layer. */
+  flat = false,
 ): Promise<THREE.Texture> {
   const { promise, resolve, reject } = Promise.withResolvers<THREE.Texture>();
   const depth = Math.max(0, z - COLOR_MAX_ZOOM);
@@ -36,8 +38,17 @@ export function loadColorTexture(
     `${COLOR_BASE_URL}/${colorZ}_${colorX}_${colorY}.avif`,
     (texture) => {
       texture.flipY = false;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = renderer.getMaxAnisotropy();
+      if (flat) {
+        // The flat material applies OL's exposure/gamma to the stored bytes and handles the
+        // output transform itself, so no sRGB decode; plain bilinear filtering like OL.
+        texture.colorSpace = THREE.NoColorSpace;
+        texture.generateMipmaps = false;
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+      } else {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = renderer.getMaxAnisotropy();
+      }
       if (depth > 0) {
         texture.repeat.set(frac, frac);
         texture.offset.set(offX, offY);

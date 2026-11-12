@@ -1,3 +1,5 @@
+import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
+import type { House } from '#lib/data/house.ts';
 import type { Vector2, Vector3 } from '#lib/types/index.ts';
 
 export const enum PointType {
@@ -15,6 +17,14 @@ export interface TeleportPoint {
   aliases?: string[];
   coord: Vector3;
 }
+
+/** What the map reports for the dot under the pointer: its kind and the data behind it. Only
+ * these four kinds are hoverable/clickable - pins, zones, lines and bounds are never hit-tested. */
+export type MapFeature =
+  | { pointType: PointType.Delivery; info: DeliveryPoint }
+  | { pointType: PointType.House; info: House }
+  | { pointType: PointType.Player; info: PlayerData }
+  | { pointType: PointType.Teleport; info: TeleportPoint };
 
 /** Point the map locks onto, driven by the URL: "view on map", search, or a map click */
 export interface MapSelection {

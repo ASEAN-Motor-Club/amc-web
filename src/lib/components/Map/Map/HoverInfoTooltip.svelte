@@ -1,12 +1,10 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { PointType, type PlayerData, type TeleportPoint } from './types.ts';
+  import { PointType, type MapFeature } from './types.ts';
   import Card from '#lib/ui/Card/Card.svelte';
   import DeliveryInfo from './DeliveryInfo.svelte';
   import HousingInfo from './HousingInfo.svelte';
   import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
-  import type { DeliveryPoint } from '#lib/data/deliveryPoint.ts';
-  import type { House } from '#lib/data/house.ts';
   import Button from '#lib/ui/Button/Button.svelte';
   import type { DepotData, HouseData } from '#lib/api/types.ts';
   import { m } from '#messages';
@@ -16,26 +14,7 @@
   import { getMtLocale } from '#lib/utils/getMtLocale.ts';
   import { stripPlayerRoleTag } from '#lib/utils/parsePlayerRole.ts';
 
-  export type HoverInfo = {
-    pixelCoord: [x: number, y: number];
-  } & (
-    | {
-        pointType: PointType.Delivery;
-        info: DeliveryPoint;
-      }
-    | {
-        pointType: PointType.Player;
-        info: PlayerData;
-      }
-    | {
-        pointType: PointType.House;
-        info: House;
-      }
-    | {
-        pointType: PointType.Teleport;
-        info: TeleportPoint;
-      }
-  );
+  export type HoverInfo = { pixelCoord: [x: number, y: number] } & MapFeature;
 
   export interface HoverInfoTooltipProps {
     houseData: HouseData | undefined;

@@ -9,6 +9,15 @@ export interface GroundHeights {
    * the fetch is kicked automatically, so re-sample on a later frame. Never throws.
    */
   sample: (x: number, z: number, zoom: number) => number | null;
+  /**
+   * `sample()` for every point at once, each lifted by `offset` meters. Returns null while any of
+   * the tiles is still loading (the fetches are kicked), so callers retry on a later frame.
+   */
+  sampleMany: (
+    points: readonly (readonly [x: number, z: number])[],
+    zoom: number,
+    offset?: number,
+  ) => Float32Array | null;
   /** Finest zoom whose tile grid keeps a bbox within maxTiles tiles (bounds fetches). */
   zoomForBox: (minX: number, minZ: number, maxX: number, maxZ: number, maxTiles: number) => number;
   dispose: () => void;
@@ -51,29 +60,41 @@ export function createGroundHeights(meta: TilesMeta, signal: AbortSignal): Groun
       });
   }
 
-  return {
-    sample(x, z, zoom) {
-      const tile = tileAt(meta, x, z, zoom);
-      if (!tile) return null;
-      requestTile(zoom, tile.tx, tile.ty);
-      const heights = cache.get(`${zoom}_${tile.tx}_${tile.ty}`);
-      if (!heights) return null;
+  function sample(x: number, z: number, zoom: number): number | null {
+    const tile = tileAt(meta, x, z, zoom);
+    if (!tile) return null;
+    requestTile(zoom, tile.tx, tile.ty);
+    const heights = cache.get(`${zoom}_${tile.tx}_${tile.ty}`);
+    if (!heights) return null;
 
-      const haloSize = Math.round(Math.sqrt(heights.length));
-      const innerSize = haloSize - 2;
-      const { worldX0, worldZ0, tileSize } = tileWorldRect(meta, zoom, tile.tx, tile.ty);
-      // Continuous inner-sample coordinates; buildTileGeometry maps u∈[0,1] to halo
-      // index u*(innerSize-1)+1, so the halo cell around a sample spans [x0+1, x0+2].
-      const fx = Math.min(Math.max((x - worldX0) / tileSize, 0), 1) * (innerSize - 1);
-      const fz = Math.min(Math.max((z - worldZ0) / tileSize, 0), 1) * (innerSize - 1);
-      const x0 = Math.floor(fx);
-      const z0 = Math.floor(fz);
-      const ax = fx - x0;
-      const az = fz - z0;
-      const at = (hx: number, hz: number) => rawHeightToWorldZMeters(heights[hz * haloSize + hx]);
-      const top = at(x0 + 1, z0 + 1) * (1 - ax) + at(x0 + 2, z0 + 1) * ax;
-      const bottom = at(x0 + 1, z0 + 2) * (1 - ax) + at(x0 + 2, z0 + 2) * ax;
-      return top * (1 - az) + bottom * az;
+    const haloSize = Math.round(Math.sqrt(heights.length));
+    const innerSize = haloSize - 2;
+    const { worldX0, worldZ0, tileSize } = tileWorldRect(meta, zoom, tile.tx, tile.ty);
+    // Continuous inner-sample coordinates; buildTileGeometry maps u∈[0,1] to halo
+    // index u*(innerSize-1)+1, so the halo cell around a sample spans [x0+1, x0+2].
+    const fx = Math.min(Math.max((x - worldX0) / tileSize, 0), 1) * (innerSize - 1);
+    const fz = Math.min(Math.max((z - worldZ0) / tileSize, 0), 1) * (innerSize - 1);
+    const x0 = Math.floor(fx);
+    const z0 = Math.floor(fz);
+    const ax = fx - x0;
+    const az = fz - z0;
+    const at = (hx: number, hz: number) => rawHeightToWorldZMeters(heights[hz * haloSize + hx]);
+    const top = at(x0 + 1, z0 + 1) * (1 - ax) + at(x0 + 2, z0 + 1) * ax;
+    const bottom = at(x0 + 1, z0 + 2) * (1 - ax) + at(x0 + 2, z0 + 2) * ax;
+    return top * (1 - az) + bottom * az;
+  }
+
+  return {
+    sample,
+
+    sampleMany(points, zoom, offset = 0) {
+      const out = new Float32Array(points.length);
+      for (let i = 0; i < points.length; i++) {
+        const h = sample(points[i][0], points[i][1], zoom);
+        if (h === null) return null;
+        out[i] = h + offset;
+      }
+      return out;
     },
 
     zoomForBox(minX, minZ, maxX, maxZ, maxTiles) {

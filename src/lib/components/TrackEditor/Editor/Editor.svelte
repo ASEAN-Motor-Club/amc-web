@@ -29,19 +29,16 @@
   import DownloadCard from './DownloadCard.svelte';
   import CodeEditor from '#lib/ui/CodeEditor/CodeEditor.svelte';
   import { cloneDeep, isEqual } from 'es-toolkit';
-  import { WP_EULER_ORDER, fromEulerWp, toEulerWp } from '../utils/index.ts';
+  import { fromEulerWp, toEulerWp } from '../utils/index.ts';
   import { formatTrackError } from '../utils/formatError.ts';
-  import { Quaternion } from 'quaternion';
-  import { toRad } from '#lib/utils/math/vectors.ts';
   import { normalizedWaypoints } from '../utils/normalized.ts';
   import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
   import { fetchTerrainZcm } from '#lib/api/terrain.ts';
   import { autoRotateAllWaypoints, autoRotateWaypoint } from '../utils/autoRotate.ts';
   import Slider from '#lib/ui/Slider/Slider.svelte';
   import type { Track, WaypointEuler } from '#lib/schema/track.ts';
-  import EditorOlMap from '#lib/ui/EditorOlMap/EditorOlMap.svelte';
   import EditorThreeMap from '#lib/ui/EditorThreeMap/EditorThreeMap.svelte';
-  import type { MapViewState } from '#lib/ui/OlMap/OlMap.svelte';
+  import type { MapViewState } from '#lib/ui/ThreeMap/view.ts';
   import { onMount, untrack } from 'svelte';
   import type { Vector2 } from '#lib/types/index.ts';
   import { beforeNavigate, goto } from '$app/navigation';
@@ -55,14 +52,8 @@
   }
   const { initialTrackData }: EditorProps = $props();
 
-  /** Whichever map flavor is mounted — both expose `zoomFit`; `getViewState` is 2D-only
-   * (the 3D map has no convertible view state and returns undefined). */
-  interface EditorMap {
-    zoomFit: () => void;
-    getViewState: () => MapViewState | undefined;
-  }
   // Only one of the map and the code editor is mounted at a time, so this is unset in code view.
-  let map = $state<EditorMap | undefined>(undefined);
+  let map = $state<EditorThreeMap | undefined>(undefined);
   /** Where the map was looking when it unmounted, handed back so the view survives a view switch. */
   let mapView = $state<MapViewState | undefined>(undefined);
 
@@ -73,17 +64,6 @@
   let trackData = $state(cloneDeep(initialTrackData));
   let selectedPointIndex = $state<number | undefined>(undefined);
   let showHidden = $state(false);
-
-  const points = $derived(
-    trackData.waypoints.map((wp) => {
-      const q = new Quaternion(wp.rotation);
-      return {
-        coord: wp.translation,
-        yaw: q.toEuler(WP_EULER_ORDER)[2],
-        scaleY: wp.scale3D.y,
-      };
-    }),
-  );
 
   const dirty = $derived(!isEqual(initialTrackData, trackData));
 
@@ -135,17 +115,6 @@
       initialEditingPoint = cloneDeep(editingPoint);
     }
   };
-
-  const selectedPoint = $derived(
-    selectedPointIndex !== undefined
-      ? {
-          index: selectedPointIndex,
-          yaw: toRad(editingPoint.rotation.z),
-          scaleY: editingPoint.scale3D.y,
-          coord: editingPoint.translation,
-        }
-      : undefined,
-  );
 
   const handlePointMove = (e: Vector2) => {
     editingPoint.translation.x = e.x;
@@ -362,21 +331,9 @@
   let gateMode = $state(false);
   let showNum = $state(true);
 
-  // The 3D map always renders gates, so the gate-mode toggle only exists in 2D. The 2D
-  // viewport is parked while in 3D (which has no convertible view state) and restored back.
+  // The 3D map always renders gates, so the gate-mode toggle only exists in 2D. Switching views
+  // keeps the viewport: the map re-creates its scene where the old one was looking.
   let threeDView = $state(false);
-  let parkedMapView: MapViewState | undefined = undefined;
-
-  const enter3dView = () => {
-    parkedMapView = map?.getViewState();
-    mapView = undefined;
-    threeDView = true;
-  };
-
-  const exit3dView = () => {
-    threeDView = false;
-    mapView = parkedMapView;
-  };
 
   const mapBtnClass = 'text-text bg-white/80 hover:bg-white active:bg-gray-50 backdrop-blur-xs';
 </script>
@@ -404,24 +361,15 @@
           </ul>
         </div>
       {/if}
-    {:else if threeDView}
+    {:else}
       <EditorThreeMap
         class="h-full"
+        view={threeDView ? 'perspective' : 'ortho'}
         waypoints={trackData.waypoints}
         selectedWaypoint={selectedPointIndex !== undefined
           ? { index: selectedPointIndex, waypoint: fromEulerWp(editingPoint) }
           : undefined}
         onPointClick={handlePointClick}
-        bind:this={map}
-        onSelectedPointMove={handlePointMove}
-        {showNum}
-      />
-    {:else}
-      <EditorOlMap
-        class="h-full"
-        {points}
-        onPointClick={handlePointClick}
-        {selectedPoint}
         bind:this={map}
         onSelectedPointMove={handlePointMove}
         {gateMode}
@@ -441,7 +389,7 @@
       <Button size="sm" onClick={() => (showNum = !showNum)} class={mapBtnClass}>
         {showNum ? m['track_editor.editor.hide_number']() : m['track_editor.editor.show_number']()}
       </Button>
-      <Button size="sm" onClick={threeDView ? exit3dView : enter3dView} class={mapBtnClass}>
+      <Button size="sm" onClick={() => (threeDView = !threeDView)} class={mapBtnClass}>
         {threeDView
           ? m['track_editor.editor.switch_to_2d']()
           : m['track_editor.editor.switch_to_3d']()}

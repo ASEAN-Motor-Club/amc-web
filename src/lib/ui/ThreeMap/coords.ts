@@ -63,32 +63,47 @@ function pointInRing(px: number, pz: number, ring: [x: number, z: number][]): bo
 }
 
 /**
- * A point inside the ring (odd-even test), for anchoring polygon labels: the bbox center
- * when it lies inside, otherwise a grid scan (mirrors OL's interior-point text placement).
- * Returns the first ring vertex as a last resort for degenerate rings.
+ * A point inside the ring for anchoring its label - OL's `Polygon#getInteriorPoint`, ported so
+ * names land where OL put them: cut the ring with the horizontal line through the centre of its
+ * bounding box, and take the middle of the longest cut segment whose middle is inside the ring.
+ * Falls back to the bounding-box centre when no segment qualifies (a degenerate ring). A closing
+ * point repeating the first is fine; the ring is closed implicitly either way.
  */
 export function ringInteriorPoint(ring: [x: number, z: number][]): [x: number, z: number] {
   if (ring.length === 0) throw new Error('ring has no points');
-  let minX = Infinity,
-    minZ = Infinity,
-    maxX = -Infinity,
-    maxZ = -Infinity;
+  let minX = Infinity;
+  let minZ = Infinity;
+  let maxX = -Infinity;
+  let maxZ = -Infinity;
   for (const [x, z] of ring) {
     if (x < minX) minX = x;
     if (x > maxX) maxX = x;
     if (z < minZ) minZ = z;
     if (z > maxZ) maxZ = z;
   }
-  const center: [x: number, z: number] = [(minX + maxX) / 2, (minZ + maxZ) / 2];
-  if (pointInRing(center[0], center[1], ring)) return center;
-  for (let fz = 0.25; fz < 1; fz += 0.25) {
-    for (let fx = 0.25; fx < 1; fx += 0.25) {
-      const candidate: [x: number, z: number] = [
-        minX + (maxX - minX) * fx,
-        minZ + (maxZ - minZ) * fz,
-      ];
-      if (pointInRing(candidate[0], candidate[1], ring)) return candidate;
+  const centerX = (minX + maxX) / 2;
+  const centerZ = (minZ + maxZ) / 2;
+
+  const crossings: number[] = [];
+  let [x1, z1] = ring[ring.length - 1];
+  for (const [x2, z2] of ring) {
+    if ((centerZ <= z1 && z2 <= centerZ) || (z1 <= centerZ && centerZ <= z2)) {
+      crossings.push(((centerZ - z1) / (z2 - z1)) * (x2 - x1) + x1);
+    }
+    x1 = x2;
+    z1 = z2;
+  }
+  crossings.sort((a, b) => a - b);
+
+  let pointX = NaN;
+  let longest = -Infinity;
+  for (let i = 1; i < crossings.length; i++) {
+    const length = Math.abs(crossings[i] - crossings[i - 1]);
+    const mid = (crossings[i - 1] + crossings[i]) / 2;
+    if (length > longest && pointInRing(mid, centerZ, ring)) {
+      pointX = mid;
+      longest = length;
     }
   }
-  return ring[0];
+  return [Number.isNaN(pointX) ? centerX : pointX, centerZ];
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as THREE from 'three';
-import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import type { MapControls } from './cameraRig.ts';
 import { SELECTION_PAN_DURATION_S } from './constants.ts';
 import { createSelectionPan } from './selectionPan.ts';
 
@@ -21,7 +21,7 @@ function makeRig() {
     update: () => {
       camera.updateMatrixWorld();
     },
-  } as unknown as OrbitControls;
+  } as unknown as MapControls;
   return { camera, controls };
 }
 /** Ground-plane distance from what the screen center covers to the marker -

@@ -12,7 +12,7 @@
   import { PointType, type PlayerData } from '#lib/components/Map/Map/types.ts';
   import type { CollapsibleType } from '#lib/components/Map/types.ts';
   import { vehicleKeyToString } from '#lib/api/proto/vehicleKeyUtils.ts';
-  import { reProjectVec2 } from '#lib/ui/OlMap/utils.ts';
+  import { reProjectVec2 } from '#lib/utils/mapProjection.ts';
   import { clientSearchParams, clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
   import { isSm } from '#lib/utils/media.svelte.ts';
   import { onMount } from 'svelte';
@@ -86,8 +86,6 @@
   const mapPlayerData: PlayerData[] = $derived(playerData.filter((player) => !player.hidden));
 
   const playerDataLoading = $derived(playerPositionsStream.isPending);
-  /** Map mode drives the sidebar transition speed (faster in 3D). */
-  let threeDMode = $state(false);
 
   const housingQuery = createHousingQuery(() => ({
     options: { enabled: showMap || openCollapsible === 'housing' },
@@ -133,7 +131,6 @@
           {depotData}
           playerData={mapPlayerData}
           onPlayerLayerDataEnabledChange={(e) => (playerLayerDataEnabled = e)}
-          onThreeDModeChange={(m) => (threeDMode = m)}
         />
       </div>
     </div>
@@ -142,7 +139,6 @@
   <Collapsible
     {validOpenCollapsible}
     {showFull}
-    {threeDMode}
     {openCollapsible}
     {openCollapsibleId}
     {playerData}

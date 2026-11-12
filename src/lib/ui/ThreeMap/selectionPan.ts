@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { prefersReducedMotion } from 'svelte/motion';
-import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import type { MapControls } from './cameraRig.ts';
 import { SELECTION_PAN_DURATION_S, SELECTION_PAN_SNAP_EPSILON } from './constants.ts';
 
 /** Glides the camera until the selected POI sits under the screen center - the
@@ -24,7 +24,7 @@ const _hit = new THREE.Vector3();
 export function createSelectionPan(
   dom: HTMLElement,
   camera: THREE.Camera,
-  controls: OrbitControls,
+  controls: MapControls,
 ): SelectionPan {
   /** Ground-plane travel remaining, captured once per flight. Translating
    * camera and target rigidly leaves the center-ray hit moving with them, so
