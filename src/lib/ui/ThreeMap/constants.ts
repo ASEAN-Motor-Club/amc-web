@@ -50,6 +50,10 @@ export const FOG_NEAR = 70_000;
 export const FOG_FAR = 200_000;
 export const ROTATE_SPEED_NEAR = 0.15;
 export const ROTATE_SPEED_FAR = 1.0;
+/** Two-finger travel (CSS px) before the 3D gesture commits to tilt or zoom+rotate. */
+export const TOUCH_GESTURE_LOCK_PX = 10;
+/** Tilt per view-height of two-finger vertical drag (radians). */
+export const TOUCH_TILT_RAD_PER_VIEW_HEIGHT = Math.PI;
 export const ZOOM_LOG_PER_WHEEL_DELTA = 0.0012;
 
 /** Factor for a discrete wheel DETENT (mouse wheel notch, |deltaY| >= 50 in one

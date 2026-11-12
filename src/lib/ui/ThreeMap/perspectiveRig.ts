@@ -12,6 +12,8 @@ import {
   PERSPECTIVE_START_DISTANCE,
   ROTATE_SPEED_NEAR,
   ROTATION_LERP_DISTANCE,
+  TOUCH_GESTURE_LOCK_PX,
+  TOUCH_TILT_RAD_PER_VIEW_HEIGHT,
   ZOOM_DAMPING_FACTOR,
 } from './constants.ts';
 import type { TilesMeta } from './three-map-types.ts';
@@ -28,9 +30,10 @@ export interface PerspectiveRig extends CameraRig {
  * RIGHT: ROTATE }`, no pan, no built-in zoom. Custom drivers replace the defaults: an inertial
  * exponential wheel/button zoom here, and the ground-anchored one-finger/left-drag pan in
  * `groundPan.ts`. On touch one finger only pans; two fingers drive the camera here like a phone
- * map: pinch zooms, twisting rotates the map with the fingers (it follows them, as if grabbed),
- * and dragging both fingers vertically tilts (Google Maps' direction: down tilts toward the
- * horizon, the inverse of a grab).
+ * map, in one of two mutually exclusive modes picked by the first clear movement and held until
+ * a finger lifts (Google Maps): pinch zooms and twisting rotates the map with the fingers (as if
+ * grabbed), or dragging both fingers vertically tilts (up tilts toward the horizon, the inverse
+ * of a grab).
  * Rotate speed and the look-up cap lerp with the zoom fraction in `update(dt)`.
  */
 export function createPerspectiveRig(
@@ -98,7 +101,9 @@ export function createPerspectiveRig(
   }
 
   // Two-finger gesture, applied straight from the finger deltas (no inertia, the fingers are the
-  // damping): spread -> zoom, twist -> azimuth, midpoint's vertical travel -> tilt.
+  // damping). The first clear movement locks one mode until a finger lifts, so tilting never
+  // jitters with zoom/rotate noise and vice versa: `tilt` (midpoint's vertical travel) or
+  // `zoomRotate` (spread -> zoom, twist -> azimuth).
   /** The view's CSS height (not the canvas's: the canvas may be larger), set by `resize`. */
   let viewHeight = renderer.domElement.clientHeight;
   const touches = new Map<number, { x: number; y: number }>();
@@ -107,7 +112,10 @@ export function createPerspectiveRig(
     angle: number;
     midY: number;
   }
+  const wrapAngle = (a: number): number => Math.atan2(Math.sin(a), Math.cos(a));
   let pinch: Pinch | undefined;
+  let pinchStart: Pinch | undefined;
+  let pinchMode: 'pending' | 'tilt' | 'zoomRotate' = 'pending';
   const readPinch = (): Pinch | undefined => {
     if (touches.size !== 2) return undefined;
     const [a, b] = [...touches.values()];
@@ -122,6 +130,17 @@ export function createPerspectiveRig(
     if (event.pointerType === 'mouse') return;
     touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
     pinch = readPinch();
+    pinchStart = pinch;
+    pinchMode = 'pending';
+  };
+  /** Picks the gesture's mode once one movement clearly dominates; undefined while ambiguous. */
+  const chooseMode = (start: Pinch, next: Pinch): 'tilt' | 'zoomRotate' | undefined => {
+    const drag = Math.abs(next.midY - start.midY);
+    const spreadTravel = Math.abs(next.spread - start.spread);
+    // The arc each finger sweeps around the midpoint, in px.
+    const twistTravel = Math.abs(wrapAngle(next.angle - start.angle)) * (next.spread / 2);
+    if (Math.max(drag, spreadTravel, twistTravel) < TOUCH_GESTURE_LOCK_PX) return undefined;
+    return drag > spreadTravel && drag > twistTravel ? 'tilt' : 'zoomRotate';
   };
   const onPointerMove = (event: PointerEvent): void => {
     const touch = touches.get(event.pointerId);
@@ -129,23 +148,32 @@ export function createPerspectiveRig(
     touch.x = event.clientX;
     touch.y = event.clientY;
     const next = readPinch();
-    if (!pinch || !next) return;
+    if (!pinch || !pinchStart || !next) return;
+    if (pinchMode === 'pending') {
+      const chosen = chooseMode(pinchStart, next);
+      if (!chosen) return;
+      pinchMode = chosen;
+      // Measure from here: the deadzone's travel is discarded rather than jumping on lock.
+      pinch = next;
+      zoomLog = 0;
+      return;
+    }
     zoomLog = 0;
-    const factor = next.spread > 0 && pinch.spread > 0 ? pinch.spread / next.spread : 1;
-    // Wrap the twist to (-PI, PI] so crossing the atan2 seam does not spin the map.
-    const twist = Math.atan2(
-      Math.sin(next.angle - pinch.angle),
-      Math.cos(next.angle - pinch.angle),
-    );
-    const tilt =
-      ((next.midY - pinch.midY) / Math.max(viewHeight, 1)) * 2 * Math.PI * controls.rotateSpeed;
-    // The map follows a clockwise twist, so the camera orbits the other way round (+theta).
-    orbitBy(factor, twist, tilt);
+    if (pinchMode === 'tilt') {
+      // Fingers up (negative dy) tilt toward the horizon (+phi).
+      const dy = next.midY - pinch.midY;
+      orbitBy(1, 0, (-dy / Math.max(viewHeight, 1)) * TOUCH_TILT_RAD_PER_VIEW_HEIGHT);
+    } else {
+      const factor = next.spread > 0 && pinch.spread > 0 ? pinch.spread / next.spread : 1;
+      // The map follows a clockwise twist, so the camera orbits the other way round (+theta).
+      orbitBy(factor, wrapAngle(next.angle - pinch.angle));
+    }
     pinch = next;
   };
   const onPointerEnd = (event: PointerEvent): void => {
     touches.delete(event.pointerId);
     pinch = undefined;
+    pinchStart = undefined;
   };
   const dom = renderer.domElement;
   dom.addEventListener('pointerdown', onPointerDown);

@@ -131,11 +131,12 @@ active (`activeTiles`), like `syncCovers()` does — not a recomputation of the 
   because this takes over left-drag.
 - **Touch** — one finger pans through `groundPan` and never rotates. A second finger cancels that
   pan (`groundPan` tracks its own pointer and ignores every other, so two fingers never fight over
-  the map) and the pinch takes over. 3D (`perspectiveRig`; OrbitControls' touches are off): spread
-  zooms, a twist rotates the map WITH the fingers (grab semantics, camera azimuth `+theta`), and
-  dragging both fingers vertically tilts in Google Maps' direction (down = toward the horizon, the
-  inverse of a grab); all applied straight from finger deltas through `orbitBy`. 2D (`orthoRig`)
-  pinch zooms and pans.
+  the map) and the pinch takes over. 3D (`perspectiveRig`; OrbitControls' touches are off) runs two
+  mutually exclusive modes, locked by the first clear movement (`TOUCH_GESTURE_LOCK_PX`) until a
+  finger lifts, like Google Maps: spread zooms and a twist rotates the map WITH the fingers (grab
+  semantics, camera azimuth `+theta`), or dragging both fingers vertically tilts (up = toward the
+  horizon, the inverse of a grab). Applied straight from finger deltas through `orbitBy`. 2D
+  (`orthoRig`) pinch zooms and pans.
 - Rotate speed and the look-up cap (`maxPolarAngle`) lerp with the zoom fraction in
   `CameraRig.update(dt)`.
 
