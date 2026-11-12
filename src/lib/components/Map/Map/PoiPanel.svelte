@@ -10,6 +10,7 @@
   import { m } from '#messages';
   import PoiItem from './PoiItem.svelte';
   import { PoiType, type MapState } from './types.ts';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     mapState: MapState;
@@ -17,9 +18,12 @@
     haveTeleports: boolean;
     haveShortcutZones: boolean;
     onToggle: (poi: PoiType) => void;
+    /** Controls stacked under the trigger button, e.g. the coordinate picker readout */
+    footer?: Snippet;
   }
 
-  const { mapState, havePins, haveTeleports, haveShortcutZones, onToggle }: Props = $props();
+  const { mapState, havePins, haveTeleports, haveShortcutZones, onToggle, footer }: Props =
+    $props();
 
   let poiOpen = $state(false);
 </script>
@@ -224,6 +228,9 @@
             </div>
           </Card>
         </div>
+      {/if}
+      {#if footer}
+        {@render footer()}
       {/if}
       <Button
         class="pointer-events-auto !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus-visible:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus-visible:bg-gray-800!"

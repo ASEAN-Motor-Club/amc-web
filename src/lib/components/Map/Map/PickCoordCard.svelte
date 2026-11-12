@@ -4,6 +4,9 @@
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import type { Vector2 } from '#lib/types/index.ts';
   import Tooltip from '#lib/ui/Tooltip/Tooltip.svelte';
+  import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
 
   interface Props {
     /** Game coordinate of the pointer on the map */
@@ -31,6 +34,9 @@
 
 <div
   class="pointer-events-auto flex max-w-full items-center gap-3 rounded-md bg-gray-900/50 py-1.5 pr-1.5 pl-3 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
+  transition:fade|global={{
+    duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+  }}
 >
   <div class="flex min-w-0 flex-col text-xs">
     <span class="font-semibold">{m['map.teleport_coord']()}</span>

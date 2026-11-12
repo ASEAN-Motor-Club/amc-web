@@ -60,6 +60,7 @@ describe('Tooltip', () => {
 
     hover(anchor, 'mouseleave');
     await tick();
+    // Only the intro is animated, so the tooltip is torn down immediately.
     expect(page.getByRole('tooltip').all()).toHaveLength(0);
   });
 
