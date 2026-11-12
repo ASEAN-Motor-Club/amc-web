@@ -105,8 +105,11 @@
   });
 
   onMount(() => {
+    const stored = localStorage.getItem(MAP_STATE_STORAGE_KEY);
+    // A first visit has no stored state; parsing '' would throw on every page load.
+    if (!stored) return;
     try {
-      const raw = JSON.parse(localStorage.getItem(MAP_STATE_STORAGE_KEY) ?? '');
+      const raw = JSON.parse(stored);
       const result = mapStateSchema.safeParse(raw);
       if (result.success) {
         mapState = { ...mapState, ...result.data };
