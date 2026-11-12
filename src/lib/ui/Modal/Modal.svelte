@@ -2,6 +2,7 @@
   import { m } from '#messages';
   import { onMount, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
   import { portal } from '#lib/utils/portal.ts';
   import type { ClassValue } from 'svelte/elements';
   import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
@@ -108,8 +109,8 @@
       'fixed inset-0 z-1000000 flex items-center justify-center overscroll-none bg-black/50 p-5',
       clsx(propsClass),
     )}
-    transition:fade={{
-      duration: defaultTransitionDurationMs,
+    transition:fade|global={{
+      duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
     }}
   >
     <button
