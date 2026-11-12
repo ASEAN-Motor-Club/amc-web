@@ -286,7 +286,7 @@
     >
       <div
         class="flex h-dvh flex-col bg-background-200 px-4 py-8 dark:bg-background-900"
-        transition:fly={{
+        transition:fly|global={{
           x: '-100%',
           duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
         }}
