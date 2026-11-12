@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { noop } from 'es-toolkit';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { WebGPURenderer } from 'three/webgpu';
 import {
@@ -202,7 +201,6 @@ export function createThreeMapScene(
   };
 
   const initialWorld = opts.initialView ? pxToWorldXZ(opts.initialView.center, meta) : undefined;
-  let cancelGroundPan: () => void = noop;
   let ortho: OrthoRig | undefined;
   let rig: CameraRig;
   if (isOrtho) {
@@ -213,7 +211,6 @@ export function createThreeMapScene(
         z: initialWorld[1],
         zoom: opts.initialView?.zoom,
       },
-      onPinchStart: () => cancelGroundPan(),
     });
     rig = ortho;
   } else {
@@ -283,7 +280,6 @@ export function createThreeMapScene(
     isOrtho ? 0 : (meta.oceanLevelMeters ?? 0),
     opts.groundPanBlocked,
   );
-  cancelGroundPan = panPhys.cancel;
   const poiManager = createPoiManager(scene, meta, tileManager, camera, renderer, invalidate);
 
   // Ground overlays: own height-tile fetches (fixed places, never evicted), shared abort.

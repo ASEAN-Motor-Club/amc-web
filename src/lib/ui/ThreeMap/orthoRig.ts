@@ -36,8 +36,6 @@ export interface OrthoRig extends CameraRig {
 export interface OrthoRigOptions {
   size: { width: number; height: number };
   initial?: Pick<OrthoView, 'x' | 'z'> & { zoom?: number };
-  /** Called when a second finger lands: the single-finger pan must hand over to the pinch. */
-  onPinchStart?: () => void;
 }
 
 class OrthoControls extends THREE.EventDispatcher<{ change: object }> implements MapControls {
@@ -221,10 +219,7 @@ export function createOrthoRig(
     if (event.button === 0) animation = undefined;
     if (event.pointerType !== 'mouse') {
       touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
-      if (touches.size === 2) {
-        pinch = readPinch();
-        options.onPinchStart?.();
-      }
+      if (touches.size === 2) pinch = readPinch();
       return;
     }
     if (event.button === 0 && event.shiftKey) {

@@ -129,6 +129,10 @@ active (`activeTiles`), like `syncCovers()` does — not a recomputation of the 
 - **Left-drag** — ground-anchored pan (`groundPan.ts`): raycasts the grabbed terrain point under
   the cursor for the whole drag; release seeds a decaying fling. `LEFT: null` exists precisely
   because this takes over left-drag.
+- **Touch** — one finger pans through `groundPan` and never rotates (`touches.ONE = null`); a
+  second finger cancels that pan (`groundPan` tracks its own pointer and ignores every other, so
+  two fingers never fight over the map) and the pinch takes over: 3D zooms by the finger spread
+  (`perspectiveRig`) and rotates through `DOLLY_ROTATE`, 2D zooms and pans in `orthoRig`.
 - Rotate speed and the look-up cap (`maxPolarAngle`) lerp with the zoom fraction in
   `CameraRig.update(dt)`.
 

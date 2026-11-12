@@ -26,7 +26,9 @@ export interface PerspectiveRig extends CameraRig {
 /**
  * The tilting 3D rig. `OrbitControls` is deliberately hobbled: `{ LEFT: null, MIDDLE: DOLLY,
  * RIGHT: ROTATE }`, no pan, no built-in zoom. Custom drivers replace the defaults: an inertial
- * exponential wheel/button zoom here, and the ground-anchored left-drag pan in `groundPan.ts`.
+ * exponential wheel/button zoom here, and the ground-anchored one-finger/left-drag pan in
+ * `groundPan.ts`. On touch one finger only pans; a two-finger pinch zooms (here) and rotates
+ * (OrbitControls' `DOLLY_ROTATE`, its dolly half disabled with `enableZoom`).
  * Rotate speed and the look-up cap lerp with the zoom fraction in `update(dt)`.
  */
 export function createPerspectiveRig(
@@ -54,6 +56,7 @@ export function createPerspectiveRig(
   controls.mouseButtons = { LEFT: null, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
   controls.enablePan = false;
   controls.enableZoom = false;
+  controls.touches = { ONE: null, TWO: THREE.TOUCH.DOLLY_ROTATE };
 
   let zoomLog = 0;
   const onWheel = (event: WheelEvent): void => {
@@ -66,20 +69,60 @@ export function createPerspectiveRig(
   };
   renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
 
-  function integrateZoom(dt: number): void {
-    if (zoomLog === 0) return;
+  /** Scales the camera-to-target distance by `factor`, within the zoom limits. */
+  function scaleDistance(factor: number): void {
     const offset = camera.position.clone().sub(controls.target);
-    const distance = offset.length();
     const newDistance = THREE.MathUtils.clamp(
-      distance * Math.exp(zoomLog),
+      offset.length() * factor,
       controls.minDistance,
       controls.maxDistance,
     );
     offset.setLength(newDistance);
     camera.position.copy(controls.target).add(offset);
+  }
+
+  function integrateZoom(dt: number): void {
+    if (zoomLog === 0) return;
+    scaleDistance(Math.exp(zoomLog));
     zoomLog *= Math.pow(1 - ZOOM_DAMPING_FACTOR, dt * 60);
     if (Math.abs(zoomLog) < 0.002) zoomLog = 0;
   }
+
+  // Two-finger pinch zoom: the distance follows the finger spread directly (no inertia, the
+  // fingers are the damping). OrbitControls rotates from the same two touches.
+  const touches = new Map<number, { x: number; y: number }>();
+  let pinchSpread = 0;
+  const spread = (): number => {
+    const [a, b] = [...touches.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
+  const onPointerDown = (event: PointerEvent): void => {
+    if (event.pointerType === 'mouse') return;
+    touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (touches.size === 2) pinchSpread = spread();
+  };
+  const onPointerMove = (event: PointerEvent): void => {
+    const touch = touches.get(event.pointerId);
+    if (!touch) return;
+    touch.x = event.clientX;
+    touch.y = event.clientY;
+    if (touches.size !== 2) return;
+    const next = spread();
+    if (pinchSpread > 0 && next > 0) {
+      zoomLog = 0;
+      scaleDistance(pinchSpread / next);
+    }
+    pinchSpread = next;
+  };
+  const onPointerEnd = (event: PointerEvent): void => {
+    touches.delete(event.pointerId);
+  };
+  const dom = renderer.domElement;
+  dom.addEventListener('pointerdown', onPointerDown);
+  dom.addEventListener('pointermove', onPointerMove);
+  dom.addEventListener('pointerup', onPointerEnd);
+  dom.addEventListener('pointercancel', onPointerEnd);
+
   /** Pending zoom-button travel in accumulator log-units. Buttons feed this
    * instead of teleporting the camera, so each click glides. */
   let buttonZoomPending = 0;
@@ -155,6 +198,10 @@ export function createPerspectiveRig(
     },
     dispose() {
       renderer.domElement.removeEventListener('wheel', onWheel);
+      dom.removeEventListener('pointerdown', onPointerDown);
+      dom.removeEventListener('pointermove', onPointerMove);
+      dom.removeEventListener('pointerup', onPointerEnd);
+      dom.removeEventListener('pointercancel', onPointerEnd);
       window.removeEventListener('keydown', setShiftRotate);
       window.removeEventListener('keyup', clearShiftRotate);
       window.removeEventListener('blur', clearShiftRotateOnBlur);

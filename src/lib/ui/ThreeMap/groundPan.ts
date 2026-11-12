@@ -25,6 +25,10 @@ export function createGroundPan(
   const viewCss = new THREE.Vector2();
 
   let panning = false;
+  /** The pointer driving the pan; every other pointer's moves/ups are ignored. */
+  let panPointerId = -1;
+  /** Touches currently down: a second finger is a pinch (the rig's), never a second pan. */
+  const touchIds = new Set<number>();
 
   interface PanSample {
     time: number;
@@ -42,6 +46,13 @@ export function createGroundPan(
   }
 
   function onPointerDown(event: PointerEvent): void {
+    if (event.pointerType === 'touch') {
+      touchIds.add(event.pointerId);
+      if (touchIds.size > 1) {
+        cancel();
+        return;
+      }
+    }
     if (event.button !== 0) return;
     // Shift+left-drag rotates the camera (the rig hands LEFT to OrbitControls while
     // shift is held), so the pan must not grab that press.
@@ -60,11 +71,12 @@ export function createGroundPan(
     }
     panPlane.setFromNormalAndCoplanarPoint(new THREE.Vector3(0, 1, 0), grabbedPoint);
     panning = true;
+    panPointerId = event.pointerId;
     renderer.domElement.setPointerCapture(event.pointerId);
   }
 
   function onPointerMove(event: PointerEvent): void {
-    if (!panning) return;
+    if (!panning || event.pointerId !== panPointerId) return;
     setPointerNDC(event);
     raycaster.setFromCamera(pointerNDC, camera);
     if (!raycaster.ray.intersectPlane(panPlane, currentPoint)) return;
@@ -76,7 +88,8 @@ export function createGroundPan(
   }
 
   function endPan(event: PointerEvent): void {
-    if (!panning) return;
+    touchIds.delete(event.pointerId);
+    if (!panning || event.pointerId !== panPointerId) return;
     panning = false;
     if (renderer.domElement.hasPointerCapture(event.pointerId)) {
       renderer.domElement.releasePointerCapture(event.pointerId);
@@ -94,12 +107,15 @@ export function createGroundPan(
     samples.length = 0;
   }
 
-  /** Ends a pan in progress without a fling (a second finger took over, a gesture started). */
+  /** Ends a pan in progress without a fling (a second finger took over). */
   function cancel(): void {
     if (!panning) return;
     panning = false;
     samples.length = 0;
     panVelocity = null;
+    if (renderer.domElement.hasPointerCapture(panPointerId)) {
+      renderer.domElement.releasePointerCapture(panPointerId);
+    }
   }
 
   const dom = renderer.domElement;
@@ -119,7 +135,6 @@ export function createGroundPan(
 
   return {
     update,
-    cancel,
     dispose() {
       dom.removeEventListener('pointerdown', onPointerDown);
       dom.removeEventListener('pointermove', onPointerMove);
