@@ -6,6 +6,7 @@
   import { twMerge } from 'tailwind-merge';
   import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
   import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
 
   export interface TooltipProps {
     /**
@@ -187,7 +188,7 @@
     bind:this={tooltipElement}
     class={twMerge('absolute top-0 left-0 z-1000001', clsx(propsClass))}
     role="tooltip"
-    transition:fade={{ duration: defaultTransitionDurationMs }}
+    in:fade|global={{ duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs }}
   >
     {@render children()}
   </div>

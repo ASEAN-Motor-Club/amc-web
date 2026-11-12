@@ -29,6 +29,9 @@
   import { clientSearchParamsGet } from '#lib/utils/clientSearchParamsGet.ts';
   import { getMsgModalContext } from '#lib/components/MsgModal/context.ts';
   import type { Vector2 } from '#lib/types/index.ts';
+  import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
 
   interface Props {
     jobsData: DeliveryJob[];
@@ -472,29 +475,27 @@
       <Search {pinsData} {playerData} {houseData} />
     </div>
 
-    <PoiPanel
-      {mapState}
-      {havePins}
-      {haveTeleports}
-      {haveShortcutZones}
-      onToggle={handlePoiToggle}
-    />
-
-    {#if pickMode}
-      <div
-        class="pointer-events-none absolute inset-x-0 bottom-4 flex flex-wrap justify-center gap-2 px-4"
-      >
-        {#if pickCoord}
-          <PickCoordCard coord={pickCoord} onClear={clearPickCoord} />
-        {:else}
-          <div
-            class="rounded-md bg-gray-900/50 px-3 py-2 text-xs text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
-          >
-            {m['map.pick_hint']()}
+    <PoiPanel {mapState} {havePins} {haveTeleports} {haveShortcutZones} onToggle={handlePoiToggle}>
+      <!-- The pick readout shares the POI stack so it never overlaps the trigger or the card. -->
+      {#snippet footer()}
+        {#if pickMode}
+          <div class="pointer-events-none flex w-full flex-wrap justify-center gap-2">
+            {#if pickCoord}
+              <PickCoordCard coord={pickCoord} onClear={clearPickCoord} />
+            {:else}
+              <div
+                class="rounded-md bg-gray-900/50 px-3 py-2 text-xs text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
+                transition:fade={{
+                  duration: prefersReducedMotion.current ? 0 : defaultTransitionDurationMs,
+                }}
+              >
+                {m['map.pick_hint']()}
+              </div>
+            {/if}
           </div>
         {/if}
-      </div>
-    {/if}
+      {/snippet}
+    </PoiPanel>
   {/if}
 
   <HoverInfoTooltip
