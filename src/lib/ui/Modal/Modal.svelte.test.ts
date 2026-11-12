@@ -39,7 +39,8 @@ describe('Modal', () => {
     const output = await render(Harness, { open: true });
     await expect.element(page.getByText('Content')).toBeVisible();
     await output.rerender({ open: false });
-    expect(page.getByText('Content').all()).toHaveLength(0);
+    // The close transition keeps the content mounted until the outro finishes.
+    await expect.element(page.getByText('Content')).not.toBeInTheDocument();
   });
 
   it('locks page scroll while open and restores it on close', async () => {
