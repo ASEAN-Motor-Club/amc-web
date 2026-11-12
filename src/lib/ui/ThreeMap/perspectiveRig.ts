@@ -27,8 +27,10 @@ export interface PerspectiveRig extends CameraRig {
  * The tilting 3D rig. `OrbitControls` is deliberately hobbled: `{ LEFT: null, MIDDLE: DOLLY,
  * RIGHT: ROTATE }`, no pan, no built-in zoom. Custom drivers replace the defaults: an inertial
  * exponential wheel/button zoom here, and the ground-anchored one-finger/left-drag pan in
- * `groundPan.ts`. On touch one finger only pans; a two-finger pinch zooms (here) and rotates
- * (OrbitControls' `DOLLY_ROTATE`, its dolly half disabled with `enableZoom`).
+ * `groundPan.ts`. On touch one finger only pans; two fingers drive the camera here like a phone
+ * map: pinch zooms, twisting rotates the map with the fingers (it follows them, as if grabbed),
+ * and dragging both fingers vertically tilts (Google Maps' direction: down tilts toward the
+ * horizon, the inverse of a grab).
  * Rotate speed and the look-up cap lerp with the zoom fraction in `update(dt)`.
  */
 export function createPerspectiveRig(
@@ -56,7 +58,7 @@ export function createPerspectiveRig(
   controls.mouseButtons = { LEFT: null, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
   controls.enablePan = false;
   controls.enableZoom = false;
-  controls.touches = { ONE: null, TWO: THREE.TOUCH.DOLLY_ROTATE };
+  controls.touches = { ONE: null, TWO: null };
 
   let zoomLog = 0;
   const onWheel = (event: WheelEvent): void => {
@@ -69,53 +71,81 @@ export function createPerspectiveRig(
   };
   renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
 
-  /** Scales the camera-to-target distance by `factor`, within the zoom limits. */
-  function scaleDistance(factor: number): void {
-    const offset = camera.position.clone().sub(controls.target);
-    const newDistance = THREE.MathUtils.clamp(
-      offset.length() * factor,
+  /**
+   * Moves the camera on its orbit around the target: scales the distance by `factor` (within the
+   * zoom limits), turns the azimuth by `theta` (counter-clockwise from above for positive) and
+   * the polar angle by `phi` (positive tilts toward the horizon, up to `maxPolarAngle`).
+   */
+  function orbitBy(factor: number, theta = 0, phi = 0): void {
+    const spherical = new THREE.Spherical().setFromVector3(
+      camera.position.clone().sub(controls.target),
+    );
+    spherical.radius = THREE.MathUtils.clamp(
+      spherical.radius * factor,
       controls.minDistance,
       controls.maxDistance,
     );
-    offset.setLength(newDistance);
-    camera.position.copy(controls.target).add(offset);
+    spherical.theta += theta;
+    spherical.phi = THREE.MathUtils.clamp(spherical.phi + phi, 1e-4, controls.maxPolarAngle);
+    camera.position.setFromSpherical(spherical).add(controls.target);
   }
 
   function integrateZoom(dt: number): void {
     if (zoomLog === 0) return;
-    scaleDistance(Math.exp(zoomLog));
+    orbitBy(Math.exp(zoomLog));
     zoomLog *= Math.pow(1 - ZOOM_DAMPING_FACTOR, dt * 60);
     if (Math.abs(zoomLog) < 0.002) zoomLog = 0;
   }
 
-  // Two-finger pinch zoom: the distance follows the finger spread directly (no inertia, the
-  // fingers are the damping). OrbitControls rotates from the same two touches.
+  // Two-finger gesture, applied straight from the finger deltas (no inertia, the fingers are the
+  // damping): spread -> zoom, twist -> azimuth, midpoint's vertical travel -> tilt.
+  /** The view's CSS height (not the canvas's: the canvas may be larger), set by `resize`. */
+  let viewHeight = renderer.domElement.clientHeight;
   const touches = new Map<number, { x: number; y: number }>();
-  let pinchSpread = 0;
-  const spread = (): number => {
+  interface Pinch {
+    spread: number;
+    angle: number;
+    midY: number;
+  }
+  let pinch: Pinch | undefined;
+  const readPinch = (): Pinch | undefined => {
+    if (touches.size !== 2) return undefined;
     const [a, b] = [...touches.values()];
-    return Math.hypot(a.x - b.x, a.y - b.y);
+    return {
+      spread: Math.hypot(a.x - b.x, a.y - b.y),
+      // Screen y points down, so an increasing angle is a clockwise twist.
+      angle: Math.atan2(b.y - a.y, b.x - a.x),
+      midY: (a.y + b.y) / 2,
+    };
   };
   const onPointerDown = (event: PointerEvent): void => {
     if (event.pointerType === 'mouse') return;
     touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    if (touches.size === 2) pinchSpread = spread();
+    pinch = readPinch();
   };
   const onPointerMove = (event: PointerEvent): void => {
     const touch = touches.get(event.pointerId);
     if (!touch) return;
     touch.x = event.clientX;
     touch.y = event.clientY;
-    if (touches.size !== 2) return;
-    const next = spread();
-    if (pinchSpread > 0 && next > 0) {
-      zoomLog = 0;
-      scaleDistance(pinchSpread / next);
-    }
-    pinchSpread = next;
+    const next = readPinch();
+    if (!pinch || !next) return;
+    zoomLog = 0;
+    const factor = next.spread > 0 && pinch.spread > 0 ? pinch.spread / next.spread : 1;
+    // Wrap the twist to (-PI, PI] so crossing the atan2 seam does not spin the map.
+    const twist = Math.atan2(
+      Math.sin(next.angle - pinch.angle),
+      Math.cos(next.angle - pinch.angle),
+    );
+    const tilt =
+      ((next.midY - pinch.midY) / Math.max(viewHeight, 1)) * 2 * Math.PI * controls.rotateSpeed;
+    // The map follows a clockwise twist, so the camera orbits the other way round (+theta).
+    orbitBy(factor, twist, tilt);
+    pinch = next;
   };
   const onPointerEnd = (event: PointerEvent): void => {
     touches.delete(event.pointerId);
+    pinch = undefined;
   };
   const dom = renderer.domElement;
   dom.addEventListener('pointerdown', onPointerDown);
@@ -150,8 +180,6 @@ export function createPerspectiveRig(
   };
   window.addEventListener('blur', clearShiftRotateOnBlur);
 
-  /** The view's CSS height (not the canvas's: the canvas may be larger), set by `resize`. */
-  let viewHeight = renderer.domElement.clientHeight;
   return {
     camera,
     controls,
