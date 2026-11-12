@@ -660,7 +660,7 @@
     <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
       {#if isOrtho && enterPip && pipSupported}
         <Button
-          class="pointer-events-auto rounded-md !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
+          class="pointer-events-auto rounded-md !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus-visible:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus-visible:bg-gray-800!"
           color="custom"
           size="sm"
           icon
@@ -675,8 +675,8 @@
           class={[
             'pointer-events-auto rounded-md shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm',
             pickMode
-              ? '!bg-blue-600/70 text-text-dark hover:!bg-blue-600/60 focus:!bg-blue-600/80 contrast-more:bg-blue-700!'
-              : '!bg-gray-900/50 text-text-dark hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!',
+              ? '!bg-blue-600/70 text-text-dark hover:!bg-blue-600/60 focus-visible:!bg-blue-600/80 contrast-more:bg-blue-700!'
+              : '!bg-gray-900/50 text-text-dark hover:!bg-gray-900/40 focus-visible:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:hover:bg-gray-800! contrast-more:focus-visible:bg-gray-800!',
           ]}
           color="custom"
           size="sm"
@@ -689,7 +689,7 @@
       {/if}
       {#if onToggleMapMode}
         <Button
-          class="pointer-events-auto rounded-md !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus:bg-gray-800!"
+          class="pointer-events-auto rounded-md !bg-gray-900/50 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm hover:!bg-gray-900/40 focus-visible:!bg-gray-900/60 contrast-more:bg-gray-950! contrast-more:ring-white/60! contrast-more:hover:bg-gray-800! contrast-more:focus-visible:bg-gray-800!"
           color="custom"
           size="sm"
           icon

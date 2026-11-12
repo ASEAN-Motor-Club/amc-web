@@ -40,6 +40,11 @@
      * @default false
      */
     disabled?: boolean;
+    /**
+     * Controls visibility from the parent. When set, the tooltip ignores anchor hover
+     * and shows exactly while this is `true`; leave `undefined` for hover behavior.
+     */
+    open?: boolean;
   }
 
   const {
@@ -50,6 +55,7 @@
     class: propsClass,
     offset = 8,
     disabled = false,
+    open,
   }: TooltipProps = $props();
 
   const VIEWPORT_PADDING = 8;
@@ -71,13 +77,13 @@
   };
 
   const handleMouseEnter = () => {
-    if (disabled) return;
+    if (disabled || open !== undefined) return;
     clearTimeouts();
     showTooltip = true;
   };
 
   const handleMouseLeave = () => {
-    if (disabled) return;
+    if (disabled || open !== undefined) return;
     clearTimeouts();
     showTooltip = false;
   };
@@ -139,7 +145,7 @@
 
   $effect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (showTooltip && tooltipElement) {
+    if (show && tooltipElement) {
       updateTooltipPosition();
     }
   });
@@ -150,13 +156,13 @@
     anchor.addEventListener('mouseleave', handleMouseLeave);
 
     const handleResize = () => {
-      if (showTooltip) {
+      if (show) {
         updateTooltipPosition();
       }
     };
 
     const handleScroll = () => {
-      if (showTooltip) {
+      if (show) {
         updateTooltipPosition();
       }
     };
@@ -173,7 +179,7 @@
     };
   });
 
-  const show = $derived(showTooltip && !disabled);
+  const show = $derived((open ?? showTooltip) && !disabled);
 </script>
 
 {#snippet tooltipBase()}

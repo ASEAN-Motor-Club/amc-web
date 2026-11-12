@@ -21,6 +21,9 @@
       disabled: {
         control: 'boolean',
       },
+      open: {
+        control: 'boolean',
+      },
       anchor: {
         control: false,
       },

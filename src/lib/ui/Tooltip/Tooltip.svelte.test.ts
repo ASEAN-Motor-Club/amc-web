@@ -73,6 +73,44 @@ describe('Tooltip', () => {
     expect(page.getByRole('tooltip').all()).toHaveLength(0);
   });
 
+  describe('controlled by `open`', () => {
+    it('shows while open is true without any hover', async () => {
+      await renderTooltip({ anchor: createAnchor(), children: tooltipChildren(), open: true });
+
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent(TOOLTIP_TEXT);
+    });
+
+    it('ignores anchor hover and leave', async () => {
+      const anchor = createAnchor();
+      await renderTooltip({ anchor, children: tooltipChildren(), open: false });
+
+      hover(anchor, 'mouseenter');
+      await tick();
+      expect(page.getByRole('tooltip').all()).toHaveLength(0);
+    });
+
+    it('stays shown through mouseleave while open', async () => {
+      const anchor = createAnchor();
+      await renderTooltip({ anchor, children: tooltipChildren(), open: true });
+
+      hover(anchor, 'mouseleave');
+      await tick();
+      await expect.element(page.getByRole('tooltip')).toBeVisible();
+    });
+
+    it('stays hidden while disabled even if open', async () => {
+      await renderTooltip({
+        anchor: createAnchor(),
+        children: tooltipChildren(),
+        open: true,
+        disabled: true,
+      });
+      await tick();
+
+      expect(page.getByRole('tooltip').all()).toHaveLength(0);
+    });
+  });
+
   it('renders inside the render container when portal is false', async () => {
     const anchor = createAnchor();
     const output = await renderTooltip({ anchor, children: tooltipChildren(), portal: false });
