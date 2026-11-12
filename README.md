@@ -18,11 +18,15 @@ Website for ASEAN Motor Club
 ## 🚀 Prerequisites
 
 - **Node.js**: LTS version recommended, download [here](https://nodejs.org/en/download/current)
-- **pnpm**: This project uses [pnpm](https://pnpm.io/) as the package manager. Install it using [Corepack](https://pnpm.io/installation#using-corepack) (recommended):
+- **pnpm**: This project uses [pnpm](https://pnpm.io/) as the package manager. Install it with the [official pnpm installer](https://pnpm.io/installation) — pnpm no longer recommends Corepack:
   ```bash
-  npm install --global corepack@latest
-  corepack enable
+  # Any platform (Node.js 22.13+)
+  npx get-pnpm
+
+  # No Node.js yet on Linux / macOS
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
   ```
+  The repo pins pnpm 12 via the `packageManager` field in `package.json`, and pnpm switches to that version automatically. On Windows, pnpm recommends an npm-based install like `npx get-pnpm` over the standalone script, since Windows Defender can block it.
 - **.NET SDK 10.0**: Required for building the WASM module ([CUE4Parse](https://github.com/FabianFG/CUE4Parse)-based). Download [here](https://dotnet.microsoft.com/download/dotnet/10.0), then install the WebAssembly workload:
   ```bash
   dotnet workload install wasm-tools
@@ -54,11 +58,10 @@ Add the following to your VS Code `settings.json` for proper ESLint support in S
    cd amc-web
    ```
 
-2. **Enable pnpm** (if not already done)
+2. **Install pnpm** (if not already installed) — see [pnpm installation](https://pnpm.io/installation)
 
    ```bash
-   npm install --global corepack@latest
-   corepack enable
+   npx get-pnpm
    ```
 
 3. **Install dependencies**
