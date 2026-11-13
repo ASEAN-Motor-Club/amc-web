@@ -35,9 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CUE4Parse" Version="1.2.2.202607" />
+    <PackageReference Include="CUE4Parse" Version="1.2.2.202611" />
     <!-- Override CUE4Parse's transitive 9.0.0, which has a known vulnerability (GHSA-73j8-2gch-69rq) -->
-    <PackageReference Include="Microsoft.Bcl.Memory" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Bcl.Memory" Version="10.0.15" />
     <TrimmerRootAssembly Include="CUE4Parse" />
     <TrimmerRootAssembly Include="Newtonsoft.Json" />
   </ItemGroup>
