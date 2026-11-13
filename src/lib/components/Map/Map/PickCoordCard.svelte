@@ -4,6 +4,11 @@
   import Icon from '#lib/ui/Icon/Icon.svelte';
   import type { Vector2 } from '#lib/types/index.ts';
   import Tooltip from '#lib/ui/Tooltip/Tooltip.svelte';
+  import { fade } from 'svelte/transition';
+  import { prefersReducedMotion } from 'svelte/motion';
+  import { defaultTransitionDurationMs } from '#lib/tw-var.ts';
+
+  const transitionDuration = () => (prefersReducedMotion.current ? 0 : defaultTransitionDurationMs);
 
   interface Props {
     /** Game coordinate of the pointer, or null while the pointer is still unplaced */
@@ -34,6 +39,8 @@
   class="pointer-events-auto flex max-w-full items-center gap-3 rounded-md bg-gray-900/50 px-3 py-1.5 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
   role="status"
   data-pick-readout
+  in:fade|global={{ duration: transitionDuration() }}
+  out:fade|global={{ duration: transitionDuration() }}
 >
   {#if coord}
     <div class="flex min-w-0 flex-col text-xs">
