@@ -12,6 +12,27 @@ const clickButton = async (base: HTMLElement, label: string) => {
 };
 
 describe('PickCoordCard', () => {
+  it('shows the hint while no pointer is placed', async () => {
+    const output = await render(PickCoordCard, { coord: null, onClear: vi.fn() });
+
+    expect(output.baseElement.textContent).toContain(m['map.pick_hint']());
+    expect(output.baseElement.querySelector('button')).toBeNull();
+  });
+
+  it('keeps the same readout element when a coordinate arrives', async () => {
+    const output = await render(PickCoordCard, { coord: null, onClear: vi.fn() });
+    const before = output.baseElement.querySelector('[data-pick-readout]');
+    expect(before?.textContent).toContain(m['map.pick_hint']());
+
+    await output.rerender({ coord: { x: -445_547.4, y: 938_125.6 }, onClear: vi.fn() });
+    await tick();
+
+    const after = output.baseElement.querySelector('[data-pick-readout]');
+    expect(after).toBe(before);
+    expect(after?.textContent).toContain('X -445547, Y 938126');
+    expect(after?.textContent).not.toContain(m['map.pick_hint']());
+  });
+
   it('renders the picked game coordinate rounded', async () => {
     const output = await render(PickCoordCard, {
       coord: { x: -445_547.4, y: 938_125.6 },
