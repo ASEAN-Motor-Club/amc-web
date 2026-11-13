@@ -36,7 +36,9 @@
 
 <!-- One readout with two states: the hint before a pointer is placed, the coordinate after. -->
 <div
-  class="pointer-events-auto flex max-w-full items-center gap-3 rounded-md bg-gray-900/50 px-3 py-1.5 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60!"
+  class="pointer-events-auto flex max-w-full items-center gap-3 rounded-md bg-gray-900/50 py-1.5 pl-3 text-text-dark shadow ring !shadow-white/3 !ring-white/5 backdrop-blur-sm contrast-more:bg-gray-950! contrast-more:ring-white/60! {coord
+    ? 'pr-1.5'
+    : 'pr-3'}"
   role="status"
   data-pick-readout
   in:fade|global={{ duration: transitionDuration() }}
