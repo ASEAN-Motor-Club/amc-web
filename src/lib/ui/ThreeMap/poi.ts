@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import type { Renderer } from 'three/webgpu';
+import { SpriteNodeMaterial, type NodeBuilder, type Renderer } from 'three/webgpu';
+import { modelScale, modelViewMatrix, positionGeometry, reference, vec4 } from 'three/tsl';
 import { formatHex, parse } from 'culori';
 import type { PoiDotStyle } from './constants.ts';
 import { getViewBufferSize } from './viewRect.ts';
@@ -190,6 +191,30 @@ const LABEL_AA_PAD_PX = 2;
 const LABEL_LIFT_CSS_PX = 15;
 
 /**
+ * three's `SpriteNodeMaterial` reads `sprite.center` through `reference('center', 'vec2', object)`
+ * bound to the object it was first built for, and the node-builder state is shared by every sprite
+ * with matching material settings - so all labels would take the centre of whichever label was
+ * built first (a centred area name pulled dot labels onto their dots). This is
+ * `setupPositionView` reduced to what labels use (constant screen size, no rotation) with the
+ * reference left unbound, so each sprite's own centre is read per rendered object.
+ * Re-check against `SpriteNodeMaterial.setupPositionView` when upgrading three.
+ */
+class LabelSpriteMaterial extends SpriteNodeMaterial {
+  override setupPositionView(builder: NodeBuilder & { camera: THREE.Camera }) {
+    const mvPosition = modelViewMatrix.mul(vec4(0, 0, 0, 1));
+    const objectScale = modelScale.xy;
+    // sizeAttenuation is false: a perspective sprite scales with its depth to stay a constant size.
+    const scale = (builder.camera as THREE.PerspectiveCamera).isPerspectiveCamera
+      ? objectScale.mul(mvPosition.z.negate())
+      : objectScale;
+    // A null object makes the reference follow the object being rendered.
+    const center = reference('center', 'vec2', null as unknown as object);
+    const aligned = positionGeometry.xy.sub(center.sub(0.5)).mul(scale);
+    return vec4(mvPosition.xy.add(aligned), mvPosition.zw);
+  }
+}
+
+/**
  * A text sprite always facing the camera, kept at a constant screen size. Text is drawn the way
  * OL's canvas text was - `textAlign: center`, `textBaseline: middle` at the label's anchor point -
  * so glyphs sit exactly where OL put them regardless of descenders. Ink is measured and packed at
@@ -249,7 +274,7 @@ export function makeTextSprite(
   // edges as sharp as the canvas rasterised them.
   texture.minFilter = THREE.NearestFilter;
   texture.magFilter = THREE.NearestFilter;
-  const material = new THREE.SpriteMaterial({
+  const material = new LabelSpriteMaterial({
     map: texture,
     transparent: true,
     depthWrite: false,
