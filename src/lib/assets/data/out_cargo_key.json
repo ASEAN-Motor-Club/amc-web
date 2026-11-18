@@ -58,8 +58,13 @@
     "Tank_250kL",
     "Transformer_5MVA"
   ],
-  "_TFinalProduct": ["ToyBoxes", "BottlePallete"],
-  "_TWood": ["WoodPlank_14ft_5t"],
+  "_TFinalProduct": [
+    "ToyBoxes",
+    "BottlePallete"
+  ],
+  "_TWood": [
+    "WoodPlank_14ft_5t"
+  ],
   "_TContainer": [
     "Container_30ft_5t",
     "Container_30ft_10t",
@@ -67,13 +72,42 @@
     "Container_20ft_01",
     "Container_40ft_01"
   ],
-  "_TLog": ["Log_30ft_30t", "Log_Oak_12ft", "Log_Oak_24ft", "Log_20ft"],
-  "_TSand": ["Sand", "FineSand"],
-  "_TCoal": ["Coal"],
-  "_TStone": ["LimestoneRock", "Limestone", "IronOre", "CopperOre", "CopperConcentrate"],
-  "_TConcrete": ["Concrete"],
-  "_TGarbage": ["TrashBag", "Trash_Big"],
-  "_TFurniture": ["Sofa_01", "Sofa_02", "Sofa_03", "Sofa_04", "Bed_01", "Bed_02", "Bed_03"],
+  "_TLog": [
+    "Log_30ft_30t",
+    "Log_Oak_12ft",
+    "Log_Oak_24ft",
+    "Log_20ft"
+  ],
+  "_TSand": [
+    "Sand",
+    "FineSand"
+  ],
+  "_TCoal": [
+    "Coal"
+  ],
+  "_TStone": [
+    "LimestoneRock",
+    "Limestone",
+    "IronOre",
+    "CopperOre",
+    "CopperConcentrate"
+  ],
+  "_TConcrete": [
+    "Concrete"
+  ],
+  "_TGarbage": [
+    "TrashBag",
+    "Trash_Big"
+  ],
+  "_TFurniture": [
+    "Sofa_01",
+    "Sofa_02",
+    "Sofa_03",
+    "Sofa_04",
+    "Bed_01",
+    "Bed_02",
+    "Bed_03"
+  ],
   "_TFood": [
     "Pizza_01",
     "Pizza_02",
@@ -84,5 +118,7 @@
     "Burger_01",
     "Burger_01_Signature"
   ],
-  "_TMilitarySupply": ["MilitarySupplyBox_01"]
+  "_TMilitarySupply": [
+    "MilitarySupplyBox_01"
+  ]
 }
