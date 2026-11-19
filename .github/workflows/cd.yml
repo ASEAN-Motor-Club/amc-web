@@ -87,7 +87,7 @@ jobs:
       - name: 🚀 Deploy
         uses: burnett01/rsync-deployments@v9
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --exclude=vehicles/
           path: './build/'
           remote_path: '/'
           remote_user: 'sftpuser'
