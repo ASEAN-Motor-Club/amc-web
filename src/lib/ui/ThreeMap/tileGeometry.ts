@@ -3,8 +3,10 @@ import type { Renderer } from 'three/webgpu';
 import { COLOR_MAX_ZOOM, SKIRT_DROP } from './constants.ts';
 import { rawHeightToWorldZMeters } from './heightmap.ts';
 
-const COLOR_BASE_URL = '/map_tiles/719a/colors';
-const HEIGHT_BASE_URL = '/map_tiles/719a/heights';
+// Colour and height tiles are re-baked per game version; the directory name is the cache
+// buster for Cloudflare, so both move together on a data refresh.
+const COLOR_BASE_URL = '/map_tiles/720a/colors';
+const HEIGHT_BASE_URL = '/map_tiles/720a/heights';
 
 export async function fetchHeightTile(
   z: number,
